@@ -26,4 +26,6 @@
     <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>*.xhtml</url-pattern>
   </servlet-mapping>
+  
+  <context-param> <param-name>com.sun.faces.enableRestoreView11Compatibility</param-name> <param-value>true</param-value> </context-param>
 </web-app>
