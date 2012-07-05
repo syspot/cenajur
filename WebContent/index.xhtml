@@ -49,12 +49,15 @@
 					
 					<ui:insert name="body">
 					 <h:form>
-						<h:inputText  value="#{usuarioFaces.usuario.nome}" />
-						<h:inputText value="#{usuarioFaces.usuario.login}" />
-						<h:inputText value="#{usuarioFaces.usuario.password}" />
-						<h:inputText value="#{usuarioFaces.usuario.email}" />
-							
-						<h:button value="#{usuarioFaces.salvar()}"></h:button>
+						Nome:<h:inputText  value="#{usuarioFaces.usuario.nome}" />
+						<br/>
+						Login:<h:inputText value="#{usuarioFaces.usuario.login}" />
+						<br/>
+						Senha:<h:inputText value="#{usuarioFaces.usuario.password}" />
+						<br/>
+						Email:<h:inputText value="#{usuarioFaces.usuario.email}" />
+						<br/>	
+						<h:commandButton action="#{usuarioFaces.salvar()}" value="Salvar" /> 
 	
 						</h:form>
 					</ui:insert>
