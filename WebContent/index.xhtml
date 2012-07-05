@@ -1,4 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
@@ -26,7 +27,7 @@
 			}
 		</style>
 		</head>
-
+<f:view>
 <body bgcolor="#ffffff">
 <table style="border:1px solid #CAD6E0"  align="center" cellpadding="0" cellspacing="0" border="0" width="400">
 <tbody>
@@ -53,13 +54,38 @@
 						<br/>
 						Login:<h:inputText value="#{usuarioFaces.usuario.login}" />
 						<br/>
-						Senha:<h:inputText value="#{usuarioFaces.usuario.password}" />
+						Senha:<h:inputSecret value="#{usuarioFaces.usuario.password}" />
 						<br/>
 						Email:<h:inputText value="#{usuarioFaces.usuario.email}" />
+						<br/>	
 						<br/>	
 						<h:commandButton action="#{usuarioFaces.salvar()}" value="Salvar" /> 
 	
 						</h:form>
+						<br/>	
+						<br/>
+						<br/>	
+						<br/>
+						<h:dataTable value="#{usuarioFaces.usuarios}" var="usuario">
+							
+							<h:column>
+							 <f:facet name="header">Nome</f:facet> 
+								#{usuario.nome}	
+							</h:column>
+							
+							<h:column>
+							<f:facet name="header">Login</f:facet> 
+								#{usuario.login}	
+							</h:column>
+							
+							<h:column>
+							<f:facet name="header">Email</f:facet> 
+								#{usuario.email}	
+							</h:column>
+						
+						</h:dataTable>
+						
+						
 					</ui:insert>
 					
 					</td>
@@ -75,5 +101,5 @@
 </tbody>
 </table>
 </body>
-		
+</f:view>		
 </html>
