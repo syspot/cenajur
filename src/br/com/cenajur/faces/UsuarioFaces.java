@@ -41,6 +41,10 @@ public class UsuarioFaces implements Serializable  {
 			e.printStackTrace();
 		}
 	}
+	
+	public void pesquisar(){
+		this.usuarios = this.usuario.findByModel();
+	}
 
 
 	public Usuario getUsuario() {
