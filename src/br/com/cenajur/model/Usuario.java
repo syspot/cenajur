@@ -23,13 +23,6 @@ public class Usuario extends TSActiveRecordAb<Usuario>  {
 	private String password;
 	private String email;
 	
-	public Usuario(String nome, String login, String password, String email) {
-		super();
-		this.nome = nome;
-		this.login = login;
-		this.password = password;
-		this.email = email;
-	}
 	
 	public Usuario(){
 		
