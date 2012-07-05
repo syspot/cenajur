@@ -1,7 +1,6 @@
 package br.com.cenajur.faces;
 
 import javax.faces.bean.ManagedBean;
-import javax.persistence.MappedSuperclass;
 
 import br.com.cenajur.model.Usuario;
 import br.com.topsys.exception.TSApplicationException;
@@ -31,6 +30,16 @@ public class UsuarioFaces  {
 			
 			e.printStackTrace();
 		}
+	}
+
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 
