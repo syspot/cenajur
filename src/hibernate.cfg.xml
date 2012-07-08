@@ -11,11 +11,11 @@
 <property name="current_session_context_class">thread</property>
 
  
-		<property name="hibernate.dialect">org.hibernate.dialect.HSQLDialect</property>
-		<property name="hibernate.connection.url">jdbc:hsqldb:mem:cenajurDB</property>
-		<property name="hibernate.connection.driver_class">org.hsqldb.jdbcDriver</property>
-		<property name="hibernate.connection.username">sa</property>
-		<property name="hibernate.connection.password"></property>
+		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/cenajur</property>
+		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+		<property name="hibernate.connection.username">postgres</property>
+		<property name="hibernate.connection.password">nayara</property>
 
 		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.hbm2ddl.auto">create</property>
@@ -23,6 +23,7 @@
 
 
  		<mapping class="br.com.cenajur.model.Usuario" />
+ 		<mapping class="br.com.cenajur.model.TipoProcessoModel" />
 
 
 

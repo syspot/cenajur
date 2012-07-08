@@ -50,40 +50,29 @@
 					
 					<ui:insert name="body">
 					 <h:form>
-						Nome:<h:inputText  value="#{usuarioFaces.usuario.nome}" />
+						Nome:<h:inputText  value="#{tipoProcessoFaces.tipoProcessoModel.descricao}" />
 						<br/>
-						Login:<h:inputText value="#{usuarioFaces.usuario.login}" />
-						<br/>
-						Senha:<h:inputSecret value="#{usuarioFaces.usuario.password}" />
-						<br/>
-						Email:<h:inputText value="#{usuarioFaces.usuario.email}" />
 						<br/>	
-						<br/>	
-						<h:commandButton action="#{usuarioFaces.insertEvent}" value="Salvar" /> 
-						<h:commandButton action="#{usuarioFaces.pesquisar}" value="Pesquisar" /> 
+						<h:commandButton action="#{tipoProcessoFaces.insertEvent()}" value="Salvar" /> 
+						<h:commandButton action="#{tipoProcessoFaces.findEvent()}" value="Pesquisar" /> 
 	
 						</h:form>
 						<br/>	
 						<br/>
 						<br/>	
 						<br/>
-						<h:dataTable value="#{usuarioFaces.usuarios}" var="usuario">
+						<h:dataTable value="#{tipoProcessoFaces.listTipoProcessoModel}" var="tipoProcesso">
 							
 							<h:column>
-							 <f:facet name="header">Nome</f:facet> 
-								#{usuario.nome}	
+							 <f:facet name="header">ID</f:facet> 
+								#{tipoProcesso.id}	
 							</h:column>
 							
 							<h:column>
-							<f:facet name="header">Login</f:facet> 
-								#{usuario.login}	
+							<f:facet name="header">Descrição</f:facet> 
+								#{tipoProcesso.descricao}	
 							</h:column>
 							
-							<h:column>
-							<f:facet name="header">Email</f:facet> 
-								#{usuario.email}	
-							</h:column>
-						
 						</h:dataTable>
 						
 						

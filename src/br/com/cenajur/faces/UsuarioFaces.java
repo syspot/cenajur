@@ -32,8 +32,9 @@ public class UsuarioFaces extends TSMainFaces {
 		return null;
 	}
 	
-	public void pesquisar() {
+	public String pesquisar() {
 		this.usuarios = this.usuario.findByModel();
+		return null;
 	}
 	
 	
