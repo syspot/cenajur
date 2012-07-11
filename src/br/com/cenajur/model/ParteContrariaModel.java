@@ -1,24 +1,15 @@
 package br.com.cenajur.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public class ParteContrariaModel {
 
-import br.com.topsys.database.hibernate.TSActiveRecordAb;
-
-@Entity
-@Table(name="tipo_processo")  
-public class TipoProcessoModel extends TSActiveRecordAb<TipoProcessoModel>{
-
-	@Id
-	@GeneratedValue
 	private Long id;
 	
-	@Column(nullable = false, length = 50)
 	private String descricao;
 	
+	private TipoDocumentoModel tipoDocumentoModel;
+	
+	private String numeroDocumento;
+
 	public Long getId() {
 		return id;
 	}
@@ -33,6 +24,22 @@ public class TipoProcessoModel extends TSActiveRecordAb<TipoProcessoModel>{
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public TipoDocumentoModel getTipoDocumentoModel() {
+		return tipoDocumentoModel;
+	}
+
+	public void setTipoDocumentoModel(TipoDocumentoModel tipoDocumentoModel) {
+		this.tipoDocumentoModel = tipoDocumentoModel;
+	}
+
+	public String getNumeroDocumento() {
+		return numeroDocumento;
+	}
+
+	public void setNumeroDocumento(String numeroDocumento) {
+		this.numeroDocumento = numeroDocumento;
 	}
 
 	@Override
@@ -51,7 +58,7 @@ public class TipoProcessoModel extends TSActiveRecordAb<TipoProcessoModel>{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TipoProcessoModel other = (TipoProcessoModel) obj;
+		ParteContrariaModel other = (ParteContrariaModel) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -59,5 +66,7 @@ public class TipoProcessoModel extends TSActiveRecordAb<TipoProcessoModel>{
 			return false;
 		return true;
 	}
+	
+	
 	
 }

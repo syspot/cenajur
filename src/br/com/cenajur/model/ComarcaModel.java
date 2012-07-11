@@ -1,24 +1,11 @@
 package br.com.cenajur.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public class ComarcaModel {
 
-import br.com.topsys.database.hibernate.TSActiveRecordAb;
-
-@Entity
-@Table(name="tipo_processo")  
-public class TipoProcessoModel extends TSActiveRecordAb<TipoProcessoModel>{
-
-	@Id
-	@GeneratedValue
 	private Long id;
 	
-	@Column(nullable = false, length = 50)
 	private String descricao;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -51,7 +38,7 @@ public class TipoProcessoModel extends TSActiveRecordAb<TipoProcessoModel>{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TipoProcessoModel other = (TipoProcessoModel) obj;
+		ComarcaModel other = (ComarcaModel) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -59,5 +46,6 @@ public class TipoProcessoModel extends TSActiveRecordAb<TipoProcessoModel>{
 			return false;
 		return true;
 	}
+	
 	
 }
