@@ -1,0 +1,112 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+	  <ui:param name="acaoCadastrar" value="insertEvent" />
+	  <ui:param name="acaoAlterar" value="updateEvent" />
+	  <ui:param name="acaoExcluir" value="deleteEvent" />
+	  <ui:param name="acaoObter" value="detailEvent" />
+	  <ui:param name="acaoCancelar" value="limpar" />
+	  <ui:param name="acaoLimpar" value="limparPesquisa" />
+	  <ui:param name="acaoPesquisar" value="findEvent" />			
+	  <ui:param name="flagAlterar" value="alterar" />
+	  <ui:param name="lista" value="grid" />
+
+	<p:tabView id="tabview" dynamic="false">
+
+		<p:tab id="tabCadastro" title="#{mbean[flagAlterar] ? 'Alterar' : 'Cadastro'}" >
+        
+			<h:form id="formCadastro" prependId="false" enctype="multipart/form-data">
+        		
+				<p:outputPanel id="opMsgCadastro" layout="block" autoUpdate="#{empty autoUpdateCadastro ? true : autoUpdateCadastro}" style="width: 98%;">									
+					
+					<p:fieldset legend="Informações de Cadastro" toggleable="true" collapsed="true" style="width: 95%" rendered="#{empty informacoesCadastro ? true : informacoesCadastro}">
+					
+						<ui:insert name="informacoes" />
+					   
+					</p:fieldset>
+				 
+					<ui:insert name="cadastro" />
+				 
+				</p:outputPanel>
+	          
+			</h:form>
+			
+			<ui:insert name="cadastroSemForm" />
+          
+        </p:tab>
+
+        <ui:insert name="tabs" />
+
+		<p:tab id="tabPesquisa" title="Pesquisa">
+		
+			<h:form id="formPesquisa" prependId="false" enctype="charset=UTF-8">
+			
+				<p:outputPanel id="opMsgPesquisa" layout="block" autoUpdate="#{empty autoUpdatePesquisa ? true : autoUpdatePesquisa}" style="width: 97.5%;">
+				
+					<p:fieldset legend="Filtro" style="width: 97.5%">
+					
+						<ui:insert name="pesquisaCampos" />
+					  
+					</p:fieldset>                        
+					
+					<br/>
+					
+					<p:fieldset style="width: 97.5%">
+					
+						<p:outputPanel id="opDataTable" autoUpdate="#{empty autoUpdateDatatable ? false : autoUpdateDatatable}">
+					
+							<p:dataTable id="gridPesquisa" emptyMessage="Nenhum registro encontrado" style="width: 100%" paginator="true"
+									paginatorAlwaysVisible="false" rows="10" value="#{mbean[lista]}" var="linha">
+								
+								<ui:insert name="colunasTabela" />
+								
+								<p:column headerText="Editar" styleClass="coluna5">
+								  
+									<div align="center">
+									
+										<p:commandLink action="#{mbean[acaoObter]}" ajax="false">
+										
+											<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />	                     
+											<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+										  	
+										</p:commandLink>
+								
+									</div>
+								  
+								</p:column>
+								
+								<p:column headerText="Excluir" styleClass="coluna5" rendered="#{autenticacaoFaces.permissaoPrimeModel.flagExcluir}">
+								  
+									<div align="center">
+									  
+										<p:commandLink type="button" icon="delete16" id="clExcluir" onclick="cdExcluir.show()">
+										
+											<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+											<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+											
+										</p:commandLink>
+									                  
+									</div>
+								      
+								</p:column>
+							
+							</p:dataTable>
+							
+						</p:outputPanel>
+					
+					</p:fieldset>
+				         
+				</p:outputPanel>
+				
+			</h:form>
+		
+		</p:tab>
+
+		<ui:insert name="tabsfim" />
+  
+	</p:tabView>
+
+</ui:composition>

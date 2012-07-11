@@ -1,71 +1,36 @@
 package br.com.cenajur.model;
 
+public class CidadeModel {
 
-
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import br.com.topsys.database.hibernate.TSActiveRecordAb;
-
-
-
-
-@Entity
-@Table(name = "grupos")
-public class GrupoModel extends TSActiveRecordAb<GrupoModel>  {
-
-	
-	@Id
-	@GeneratedValue
 	private Long id;
 	
-	@Column(name = "descricao")
 	private String descricao;
 	
-	@OneToMany(mappedBy = "grupoModel")
-	private List<Usuario> usuarios;
-	
-		
-	public GrupoModel(){
-		
-	}
-
+	private EstadoModel estadoModel;
 
 	public Long getId() {
 		return id;
 	}
 
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 
 	public String getDescricao() {
 		return descricao;
 	}
 
-
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
 
-
-	public List<Usuario> getUsuario() {
-		return usuarios;
+	public EstadoModel getEstadoModel() {
+		return estadoModel;
 	}
 
-
-	public void setUsuario(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
+	public void setEstadoModel(EstadoModel estadoModel) {
+		this.estadoModel = estadoModel;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -75,7 +40,6 @@ public class GrupoModel extends TSActiveRecordAb<GrupoModel>  {
 		return result;
 	}
 
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -84,7 +48,7 @@ public class GrupoModel extends TSActiveRecordAb<GrupoModel>  {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		GrupoModel other = (GrupoModel) obj;
+		CidadeModel other = (CidadeModel) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -92,6 +56,5 @@ public class GrupoModel extends TSActiveRecordAb<GrupoModel>  {
 			return false;
 		return true;
 	}
-	
 	
 }

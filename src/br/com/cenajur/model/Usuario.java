@@ -2,16 +2,20 @@ package br.com.cenajur.model;
 
 
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 
 
 
 
-@Entity()
+@Entity
 public class Usuario extends TSActiveRecordAb<Usuario>  {
 
 	
@@ -22,6 +26,10 @@ public class Usuario extends TSActiveRecordAb<Usuario>  {
 	private String login;
 	private String password;
 	private String email;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "grupo_id")
+	private GrupoModel grupoModel;
 	
 	
 	public Usuario(){
@@ -63,6 +71,14 @@ public class Usuario extends TSActiveRecordAb<Usuario>  {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public GrupoModel getGrupoModel() {
+		return grupoModel;
+	}
+	public void setGrupoModel(GrupoModel grupoModel) {
+		this.grupoModel = grupoModel;
+	}
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

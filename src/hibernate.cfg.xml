@@ -24,6 +24,7 @@
 
  		<mapping class="br.com.cenajur.model.Usuario" />
  		<mapping class="br.com.cenajur.model.TipoProcessoModel" />
+ 		<mapping class="br.com.cenajur.model.GrupoModel" />
 
 
 

@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
+import br.com.cenajur.model.GrupoModel;
 import br.com.cenajur.model.Usuario;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.web.faces.TSMainFaces;
@@ -25,6 +26,13 @@ public class UsuarioFaces extends TSMainFaces {
 	@Override
 	protected String insert() throws TSApplicationException {
 
+		GrupoModel grupoModel = new GrupoModel();
+		
+		grupoModel.setId(2L);
+		grupoModel.setDescricao("Administrador");
+		
+		usuario.setGrupoModel(grupoModel);
+		
 		usuario.save();
 
 		this.usuarios = this.usuario.findAll();
