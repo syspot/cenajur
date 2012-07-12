@@ -1,9 +1,22 @@
 package br.com.cenajur.model;
 
-public class EstadoModel {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+import br.com.topsys.database.hibernate.TSActiveRecordAb;
+
+@Entity
+@Table(name = "estados")
+public class EstadoModel extends TSActiveRecordAb<EstadoModel>{
+
+	@Id
+	@GeneratedValue
 	private Integer id;
 	
+	@Column(name = "descricao")
 	private String descricao;
 
 	public Integer getId() {

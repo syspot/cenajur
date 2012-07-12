@@ -3,7 +3,7 @@
   <display-name>Cenajur</display-name>
   <context-param>
     <param-name>primefaces.THEME</param-name>
-    <param-value>start</param-value>
+    <param-value>south-street</param-value>
   </context-param>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

@@ -5,6 +5,7 @@ import java.util.List;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.web.faces.TSMainFaces;
+import br.com.topsys.web.util.TSFacesUtil;
 
 public class CrudFaces <T extends TSActiveRecordAb<T>> extends TSMainFaces{
 
@@ -20,11 +21,15 @@ public class CrudFaces <T extends TSActiveRecordAb<T>> extends TSMainFaces{
 	}
 	
 	protected boolean validaCampos(){
-		return true;
+		return false;
 	}
 	
 	@Override
 	protected String insert() throws TSApplicationException {
+		
+		this.setClearFields(Boolean.FALSE);
+		
+		this.setDefaultMessage(Boolean.FALSE);
 		
 		if(validaCampos()){
 			return null;
@@ -39,6 +44,10 @@ public class CrudFaces <T extends TSActiveRecordAb<T>> extends TSMainFaces{
 	
 	@Override
 	protected String update() throws TSApplicationException {
+		
+		this.setClearFields(Boolean.FALSE);
+		
+		this.setDefaultMessage(Boolean.FALSE);
 
 		if(validaCampos()){
 			return null;
@@ -64,6 +73,8 @@ public class CrudFaces <T extends TSActiveRecordAb<T>> extends TSMainFaces{
 	protected String find() {
 		
 		this.grid = this.crudPesquisaModel.findByModel();
+		
+		TSFacesUtil.gerarResultadoLista(this.grid);
 		
 		return SUCESSO;
 		

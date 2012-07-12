@@ -1,11 +1,25 @@
 package br.com.cenajur.model;
 
-public class TipoAcessoModel {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+import br.com.topsys.database.hibernate.TSActiveRecordAb;
+
+@Entity
+@Table(name = "tipos_acessos")
+public class TipoAcessoModel extends TSActiveRecordAb<TipoAcessoModel>{
+
+	@Id
+	@GeneratedValue
 	private Integer id;
 	
+	@Column(name = "descricao")
 	private String descricao;
 
+	
 	public Integer getId() {
 		return id;
 	}

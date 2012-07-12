@@ -12,7 +12,12 @@ import br.com.cenajur.model.TipoProcessoModel;
 public class TipoProcessoFaces extends CrudFaces<TipoProcessoModel> {
 
 	public TipoProcessoFaces() {
-		
+		this.clearFields();		
+	}
+	
+	@Override
+	protected void clearFields() {
+
 		this.crudModel = new TipoProcessoModel();
 		
 		this.crudPesquisaModel = new TipoProcessoModel();

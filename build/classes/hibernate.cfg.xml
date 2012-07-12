@@ -25,6 +25,12 @@
  		<mapping class="br.com.cenajur.model.Usuario" />
  		<mapping class="br.com.cenajur.model.TipoProcessoModel" />
  		<mapping class="br.com.cenajur.model.GrupoModel" />
+ 		<mapping class="br.com.cenajur.model.ColaboradorModel" />
+ 		<mapping class="br.com.cenajur.model.CidadeModel" />
+ 		<mapping class="br.com.cenajur.model.EstadoModel" />
+ 		<mapping class="br.com.cenajur.model.TipoColaboradorModel" />
+ 		<mapping class="br.com.cenajur.model.TipoAcessoModel" />
+ 		<mapping class="br.com.cenajur.model.GrupoModel" />
 
 
 

@@ -2,7 +2,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core">
 
-<f:view contentType="text/html" encoding="UTF-8">
+<f:view contentType="text/html" encoding="ISO-8859-1">
 
 	<h:head>
 		<title>Cenajur</title>
@@ -26,23 +26,22 @@
 				<ui:include id="uiMenu" src="/pages/menu.xhtml" />
 			</p:layoutUnit>
 
-			<p:layoutUnit id="areaTrabalho" position="center" header="Cadastro">
-				<ui:include id="uiMenu2" src="/pages/crud/tipo_processo.xhtml" />
+			<p:layoutUnit id="areaTrabalho" position="center" header="#{autenticacaoFaces.nomeTela}">
+				<ui:include id="uiMenu2" src="#{autenticacaoFaces.tela}" />
 			</p:layoutUnit>
 
 			<p:layoutUnit position="south" size="35">
 				<h:panelGrid columns="5" width="100%" style="height: 100%;" columnClasses="colunaInformativo40, colunaInformativo20, colunaInformativo20, colunaInformativo10, colunaInformativoVermelho10">
 					<h:column>
-<!-- 						<h:outputText value="#{autenticacaoFaces.operadorModel.aviso}" rendered="#{!empty autenticacaoFaces.operadorModel.aviso}" /> -->
-<!-- 						<h:outputText value="ATarde ADM - Portal - Gestão da Informação." rendered="#{empty autenticacaoFaces.operadorModel.aviso}" /> -->
+						<h:outputText value="Cenajur - Gest�o da Informa��o." />
 					</h:column>
 
 					<h:column>
-<!-- 						<h:outputText value="#{autenticacaoFaces.operadorModel.nome}" /> -->
+						<h:outputText value="#{autenticacaoFaces.colaboradorModel.nome}" />
 					</h:column>
 
 					<h:column>
-<!-- 						<h:outputText value="#{autenticacaoFaces.sistemaModel.nome}" /> -->
+						<h:outputText value="Cenajur" />
 					</h:column>
 
 					<h:column>
@@ -59,7 +58,7 @@
 
 					<h:column>
 						<h:form>
-<!-- 							<p:commandLink ajax="false" value="Desconectar" style="font-weight: 700; text-decoration: none;  color:#FFFFFF; text-align: center" action="#{autenticacaoFaces.limpar}" /> -->
+							<p:commandLink ajax="false" value="Desconectar" style="font-weight: 700; text-decoration: none;  color:#FFFFFF; text-align: center" action="#{autenticacaoFaces.limpar}" />
 						</h:form>
 					</h:column>
 				</h:panelGrid>
