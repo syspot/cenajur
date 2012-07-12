@@ -15,16 +15,23 @@ import br.com.topsys.web.faces.TSMainFaces;
 public class TipoProcessoFaces extends TSMainFaces {
 
 	private TipoProcessoModel tipoProcessoModel;
-	private List<TipoProcessoModel> listTipoProcessoModel;
+	
+	private TipoProcessoModel tipoProcessoPesquisaModel;
+	
+	private List<TipoProcessoModel> grid;
+	
 	
 	public TipoProcessoFaces() {
-		this.tipoProcessoModel = new TipoProcessoModel();  
-		this.listTipoProcessoModel = Collections.emptyList();
+		this.tipoProcessoModel = new TipoProcessoModel();
+		this.tipoProcessoModel.setFlagAtivo(Boolean.TRUE);
+		this.tipoProcessoPesquisaModel = new TipoProcessoModel();  
+		this.grid = Collections.emptyList();
 	}
 	
 	@Override
 	protected void clearFields() {
 		this.tipoProcessoModel = new TipoProcessoModel();  
+		this.tipoProcessoPesquisaModel = new TipoProcessoModel();  
 	}
 	
 	@Override
@@ -32,7 +39,7 @@ public class TipoProcessoFaces extends TSMainFaces {
 		
 		this.tipoProcessoModel.save();
 		
-		this.listTipoProcessoModel = this.tipoProcessoModel.findAll();
+		this.grid = this.tipoProcessoModel.findAll();
 		
 		return null;
 	}
@@ -40,7 +47,7 @@ public class TipoProcessoFaces extends TSMainFaces {
 	@Override
 	protected String find() {
 		
-		this.listTipoProcessoModel = this.tipoProcessoModel.findByModel();
+		this.grid = this.tipoProcessoModel.findByModel();
 		
 		return null;
 	}
@@ -53,13 +60,21 @@ public class TipoProcessoFaces extends TSMainFaces {
 		this.tipoProcessoModel = tipoProcessoModel;
 	}
 
-	public List<TipoProcessoModel> getListTipoProcessoModel() {
-		return listTipoProcessoModel;
+	public List<TipoProcessoModel> getGrid() {
+		return grid;
 	}
 
-	public void setListTipoProcessoModel(
-			List<TipoProcessoModel> listTipoProcessoModel) {
-		this.listTipoProcessoModel = listTipoProcessoModel;
+	public void setGrid(List<TipoProcessoModel> grid) {
+		this.grid = grid;
 	}
-	
+
+	public TipoProcessoModel getTipoProcessoPesquisaModel() {
+		return tipoProcessoPesquisaModel;
+	}
+
+	public void setTipoProcessoPesquisaModel(
+			TipoProcessoModel tipoProcessoPesquisaModel) {
+		this.tipoProcessoPesquisaModel = tipoProcessoPesquisaModel;
+	}
+
 }

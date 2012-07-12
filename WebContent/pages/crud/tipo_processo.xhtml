@@ -1,0 +1,29 @@
+<ui:composition template="/resources/templates/templateCRUD.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+	<ui:param name="mbean" value="${tipoProcessoFaces}" />
+  	<ui:param name="mbeanModel" value="${tipoProcessoFaces.tipoProcessoModel}" />
+  	
+  	<ui:define name="cadastro">
+  	
+	  	<h:outputLabel value="Descricao*:" /><br/>
+	  	<p:inputText value="#{tipoProcessoFaces.tipoProcessoModel.descricao}" size="50" maxlength="50"/>
+	  	
+  	</ui:define>
+  	
+  	<ui:define name="pesquisaCampos">
+  	
+  		<h:outputLabel value="Descricao:" /><br/>
+	  	<p:inputText value="#{tipoProcessoFaces.tipoProcessoPesquisaModel.descricao}" size="50" maxlength="50"/>
+	  	
+  	</ui:define>
+  	
+  	<ui:define name="colunasTabela">
+  	
+  	
+  	</ui:define>
+  	
+</ui:composition>

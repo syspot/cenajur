@@ -19,6 +19,9 @@ public class TipoProcessoModel extends TSActiveRecordAb<TipoProcessoModel>{
 	@Column(nullable = false, length = 50)
 	private String descricao;
 	
+	@Column(name = "flag_ativo", nullable = false)
+	private Boolean flagAtivo;
+	
 	public Long getId() {
 		return id;
 	}
@@ -33,6 +36,14 @@ public class TipoProcessoModel extends TSActiveRecordAb<TipoProcessoModel>{
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public Boolean getFlagAtivo() {
+		return flagAtivo;
+	}
+
+	public void setFlagAtivo(Boolean flagAtivo) {
+		this.flagAtivo = flagAtivo;
 	}
 
 	@Override

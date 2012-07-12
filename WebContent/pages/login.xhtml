@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+  
+  <h:head>
+    <title>ATarde ADM - Portal</title>   
+    <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/geral.css" />
+  </h:head>
+
+  <h:body onload="javascript:document.getElementById('usuario').focus();" >
+
+    <p:layout fullPage="true" >
+
+      <p:layoutUnit position="north" size="100"  >
+
+      </p:layoutUnit>
+
+      <p:layoutUnit position="center" style="margin-top: 8%" >
+        <h:form id="formLogin" prependId="false">
+          <div align="center">
+            <p:panel id="panelLogin" header="Controle de Acesso" style="width: 280px; text-align: left">
+              <p:messages id="msgLogin" globalOnly="false" showDetail="true" showSummary="false" />
+              <h:panelGrid styleClass="coluna100" columns="2" columnClasses="coluna30,coluna70">
+                <h:outputLabel value="Usuário:"/>
+                <h:inputText required="true" requiredMessage="Usuário: Obrigatório" value="#{autenticacaoFaces.operadorModel.email}" style="width: 97%;" tabindex="1" id="usuario"/>
+                <h:outputLabel rendered="#{autenticacaoFaces.opcao==1 || autenticacaoFaces.opcao==3}" value="Senha:"/>
+                <h:inputSecret required="true" requiredMessage="Senha: Obrigatório" rendered="#{autenticacaoFaces.opcao==1 || autenticacaoFaces.opcao==3}" value="#{autenticacaoFaces.operadorModel.senha}" maxlength="300" style="width: 97%;" tabindex="2" id="senha"/>
+                <h:outputLabel rendered="#{autenticacaoFaces.opcao==3}" value="Nova senha:" for="novaSenha" id="lbNovaSenha" styleClass="negrito" title="Nova senha" />
+                <h:inputSecret required="true" requiredMessage="Nova senha: Obrigatório" rendered="#{autenticacaoFaces.opcao==3}" id="novaSenha" value="#{autenticacaoFaces.novaSenha}" title="Nova senha" maxlength="300" style="width: 97%;"/>
+              </h:panelGrid>
+              <h:panelGrid columns="2" styleClass="coluna100" columnClasses="coluna30, coluna70">
+                <h:outputText value="Ação"/>
+                <h:selectOneMenu value="#{autenticacaoFaces.opcao}" id="tipoAutenticar" styleClass="coluna100" tabindex="3">
+                  <f:ajax event="change" render="panelLogin" />
+                  <f:selectItem itemValue="1" itemLabel="Autenticar" />
+                  <f:selectItem itemValue="2" itemLabel="Lembrar senha" />
+                  <f:selectItem itemValue="3" itemLabel="Trocar senha" />
+                </h:selectOneMenu>
+              </h:panelGrid>
+              <div align="right">
+                <p:commandButton ajax="false" title="Acessar" value="Acessar" id="btnAcessar" style="text-align: right; height: 40px; width: 110px;" icon="cadeado" action="#{autenticacaoFaces.entrar}" tabindex="4" rendered="#{autenticacaoFaces.opcao==1}">
+                  <f:setPropertyActionListener target="#{autenticacaoFaces.sistemaModel.id}" value="78" />
+                </p:commandButton>
+                <p:commandButton ajax="false" title="Enviar" value="Enviar" id="btnEnviar" style="text-align: right; height: 40px; width: 110px;" icon="email" action="#{autenticacaoFaces.enviarSenha}" tabindex="4" rendered="#{autenticacaoFaces.opcao==2}">
+                  <f:setPropertyActionListener target="#{autenticacaoFaces.sistemaModel.id}" value="78" />
+                </p:commandButton>
+                <p:commandButton ajax="false" title="Alterar" value="Alterar" id="btnAlterar" style="text-align: right; height: 40px; width: 110px;" icon="key" action="#{autenticacaoFaces.alterarSenha}" tabindex="4" rendered="#{autenticacaoFaces.opcao==3}">
+                  <f:setPropertyActionListener target="#{autenticacaoFaces.sistemaModel.id}" value="78" />
+                </p:commandButton>
+              </div>
+            </p:panel>
+          </div>
+        </h:form>
+      </p:layoutUnit>
+
+      <p:layoutUnit position="south" size="35">
+        <h:panelGrid columns="1" width="100%" style="height: 100%" columnClasses="colunaInformativo100">
+          <h:column>
+            <h:outputText value="ATarde ADM - Portal - Gestão da Informação." />
+          </h:column>
+        </h:panelGrid>
+      </p:layoutUnit>
+    </p:layout>
+
+  </h:body>
+
+
+</html>
+
+

@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view contentType="text/html" encoding="ISO-8859-1">
+
+	<h:head>
+		<title>Cenajur</title>
+		<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/cenajur.css" />
+		<script src="#{request.contextPath}/resources/js/funcoes.js" type="text/javascript" />					
+	</h:head>
+
+	<h:body>
+
+		<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();" onerror="statusDialog.hide();" oncomplete="statusDialog.hide();" />
+
+		<p:dialog modal="true" widgetVar="statusDialog" header="Processando..." draggable="false" closable="false" resizable="false">
+			<p:graphicImage value="../resources/images/ajaxloadingbar.gif" />
+		</p:dialog>
+
+		<p:growl id="growl" showDetail="true" showSummary="false" sticky="false" autoUpdate="true" globalOnly="true" />
+
+		<p:layout fullPage="true">
+
+			<p:layoutUnit position="west" size="220" resizable="true" header="Menu">
+				<ui:include id="uiMenu" src="/pages/menu.xhtml" />
+			</p:layoutUnit>
+
+			<p:layoutUnit id="areaTrabalho" position="center" header="Cadastro">
+				<ui:include id="uiMenu2" src="/pages/crud/tipo_processo.xhtml" />
+			</p:layoutUnit>
+
+			<p:layoutUnit position="south" size="35">
+				<h:panelGrid columns="5" width="100%" style="height: 100%;" columnClasses="colunaInformativo40, colunaInformativo20, colunaInformativo20, colunaInformativo10, colunaInformativoVermelho10">
+					<h:column>
+<!-- 						<h:outputText value="#{autenticacaoFaces.operadorModel.aviso}" rendered="#{!empty autenticacaoFaces.operadorModel.aviso}" /> -->
+<!-- 						<h:outputText value="ATarde ADM - Portal - Gestão da Informação." rendered="#{empty autenticacaoFaces.operadorModel.aviso}" /> -->
+					</h:column>
+
+					<h:column>
+<!-- 						<h:outputText value="#{autenticacaoFaces.operadorModel.nome}" /> -->
+					</h:column>
+
+					<h:column>
+<!-- 						<h:outputText value="#{autenticacaoFaces.sistemaModel.nome}" /> -->
+					</h:column>
+
+					<h:column>
+						<p:ajaxStatus style="width:100%">
+							<f:facet name="start">
+								<h:graphicImage value="../resources/images/ajax-loader-barra.gif" style="border: 0px;width:100%" />
+							</f:facet>
+
+							<f:facet name="complete">
+								<h:outputText value="" />
+							</f:facet>
+						</p:ajaxStatus>
+					</h:column>
+
+					<h:column>
+						<h:form>
+<!-- 							<p:commandLink ajax="false" value="Desconectar" style="font-weight: 700; text-decoration: none;  color:#FFFFFF; text-align: center" action="#{autenticacaoFaces.limpar}" /> -->
+						</h:form>
+					</h:column>
+				</h:panelGrid>
+			</p:layoutUnit>
+		</p:layout>
+
+	</h:body>
+
+</f:view>
+
+</html>
+
