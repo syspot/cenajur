@@ -68,7 +68,6 @@ public class CrudFaces <T extends TSActiveRecordAb<T>> extends TSMainFaces{
 		
 	}
 	
-	
 	@Override
 	protected String find() {
 		

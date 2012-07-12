@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 
 @Entity
-@Table(name="tipo_processo")  
+@Table(name="tipos_processos")  
 public class TipoProcessoModel extends TSActiveRecordAb<TipoProcessoModel>{
 
 	@Id
