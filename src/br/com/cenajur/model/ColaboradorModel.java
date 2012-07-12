@@ -2,53 +2,100 @@ package br.com.cenajur.model;
 
 import java.util.Date;
 
-public class ColaboradorModel {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
+import br.com.topsys.database.hibernate.TSActiveRecordAb;
+
+@Entity
+@Table(name = "colaboradores")
+public class ColaboradorModel extends TSActiveRecordAb<ColaboradorModel>{
+
+	@Id
+	@GeneratedValue
 	private Long id;
 	
+	@Column(name = "codigo")
 	private Long codigo;
 	
+	@Column(name = "nome")
 	private String nome;
 	
+	@Column(name = "email")
 	private String email;
 	
+	@Column(name = "cpf")
 	private String cpf;
 	
+	@Column(name = "rg")
 	private String rg;
 	
+	@Column(name = "ctps")
 	private String ctps;
 	
+	@Column(name = "pis")
 	private String pis;
 	
+	@Column(name = "data_nascimento")
 	private Date dataNascimento;
 	
+	@Column(name = "endereco")
 	private String endereco;
 	
+	@Column(name = "bairro")
 	private String bairro;
 	
+	@OneToOne
+	@JoinColumn(name = "cidade_id")
 	private CidadeModel cidadeModel;
-	
-	private EstadoModel estadoModel;
-	
+
+	@Column(name = "cep")
 	private String cep;
 	
+	@Column(name = "telefone")
 	private String telefone;
 	
+	@Column(name = "celular")
 	private String celular;
 	
+	@Column(name = "data_admissao")
 	private Date dataAdmissao;
 	
+	@Column(name = "flag_agenda")
 	private Boolean flagAgenda;
 	
+	@OneToOne
+	@JoinColumn(name = "tipo_colaborador_id")
 	private TipoColaboradorModel tipoColaboradorModel;
 	
+	@OneToOne
+	@JoinColumn(name = "tipo_acesso_id")
 	private TipoAcessoModel tipoAcessoModel;
 	
+	@Column(name = "flag_situacao")
 	private Boolean flagSituacao;
 	
+	@Column(name = "data_desligamento")
 	private Date dataDesligamento;
 	
+	@Column(name = "observacao")
 	private String observacao;
+	
+	@OneToOne
+	@JoinColumn(name = "grupo_id")
+	private GrupoModel grupoModel;
+	
+	@Column(name = "login")
+	private String login;
+	
+	@Column(name = "senha")
+	private String senha;
+	
 
 	public Long getId() {
 		return id;
@@ -146,14 +193,6 @@ public class ColaboradorModel {
 		this.cidadeModel = cidadeModel;
 	}
 
-	public EstadoModel getEstadoModel() {
-		return estadoModel;
-	}
-
-	public void setEstadoModel(EstadoModel estadoModel) {
-		this.estadoModel = estadoModel;
-	}
-
 	public String getCep() {
 		return cep;
 	}
@@ -234,6 +273,30 @@ public class ColaboradorModel {
 		this.observacao = observacao;
 	}
 
+	public GrupoModel getGrupoModel() {
+		return grupoModel;
+	}
+
+	public void setGrupoModel(GrupoModel grupoModel) {
+		this.grupoModel = grupoModel;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -258,5 +321,9 @@ public class ColaboradorModel {
 			return false;
 		return true;
 	}
+	
+	public ColaboradorModel autenticarPorLogin() {
+		return super.get(" from ColaboradorModel c where c.login = ? ", login);
+	}	
 	
 }

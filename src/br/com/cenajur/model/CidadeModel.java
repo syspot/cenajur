@@ -1,11 +1,28 @@
 package br.com.cenajur.model;
 
-public class CidadeModel {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
+import br.com.topsys.database.hibernate.TSActiveRecordAb;
+
+@Entity
+@Table(name = "cidades")
+public class CidadeModel extends TSActiveRecordAb<CidadeModel>{
+
+	@Id
+	@GeneratedValue
 	private Long id;
 	
+	@Column(name = "descricao")
 	private String descricao;
 	
+	@OneToOne
+	@JoinColumn(name = "estado_id")
 	private EstadoModel estadoModel;
 
 	public Long getId() {

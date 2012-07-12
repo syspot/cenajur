@@ -1,31 +1,45 @@
 package br.com.cenajur.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 
 @Entity
-@Table(name="tipo_processo")  
-public class TipoProcessoModel extends TSActiveRecordAb<TipoProcessoModel>{
+@Table(name = "permissoes")
+public class PermissaoModel extends TSActiveRecordAb<PermissaoModel> {
 
 	@Id
 	@GeneratedValue
 	private Long id;
 	
-	@Column(nullable = false, length = 50)
+	@Column(name = "descricao", nullable = false)
 	private String descricao;
+	
+	@Column(name = "faces", nullable = false)
+	private String faces;
+	
+	@Column(name = "url", nullable = false)
+	private String url;
+	
+	@ManyToOne
+	@JoinColumn(name = "menu_id", nullable = false)
+	private MenuModel menuModel;
 	
 	@Column(name = "flag_ativo", nullable = false)
 	private Boolean flagAtivo;
 	
-	public TipoProcessoModel() {
-		this.flagAtivo = Boolean.TRUE;
-	}
-	
+	@ManyToMany
+	private List<GrupoModel> grupos;
+
 	public Long getId() {
 		return id;
 	}
@@ -42,12 +56,44 @@ public class TipoProcessoModel extends TSActiveRecordAb<TipoProcessoModel>{
 		this.descricao = descricao;
 	}
 
+	public String getFaces() {
+		return faces;
+	}
+
+	public void setFaces(String faces) {
+		this.faces = faces;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public MenuModel getMenuModel() {
+		return menuModel;
+	}
+
+	public void setMenuModel(MenuModel menuModel) {
+		this.menuModel = menuModel;
+	}
+
 	public Boolean getFlagAtivo() {
 		return flagAtivo;
 	}
 
 	public void setFlagAtivo(Boolean flagAtivo) {
 		this.flagAtivo = flagAtivo;
+	}
+
+	public List<GrupoModel> getGrupos() {
+		return grupos;
+	}
+
+	public void setGrupos(List<GrupoModel> grupos) {
+		this.grupos = grupos;
 	}
 
 	@Override
@@ -66,7 +112,7 @@ public class TipoProcessoModel extends TSActiveRecordAb<TipoProcessoModel>{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TipoProcessoModel other = (TipoProcessoModel) obj;
+		PermissaoModel other = (PermissaoModel) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

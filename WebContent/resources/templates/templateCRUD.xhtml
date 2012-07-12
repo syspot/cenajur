@@ -16,19 +16,15 @@
 
 	<p:tabView id="tabview" dynamic="false">
 
-		<p:tab id="tabCadastro" title="#{mbean[flagAlterar] ? 'Alterar' : 'Cadastro'}" >
+		<p:tab id="tabCadastro" title="Cadastro" >
         
-			<h:form id="formCadastro" prependId="false" enctype="multipart/form-data">
+			<h:form id="formCadastro">
         		
 				<p:outputPanel id="opMsgCadastro" layout="block" autoUpdate="#{empty autoUpdateCadastro ? true : autoUpdateCadastro}" style="width: 98%;">									
 					
-					<p:fieldset legend="Informações de Cadastro" toggleable="true" collapsed="true" style="width: 95%" rendered="#{empty informacoesCadastro ? true : informacoesCadastro}">
-					
-						<ui:insert name="informacoes" />
-					   
-					</p:fieldset>
-				 
 					<ui:insert name="cadastro" />
+					
+					<p:commandButton value="Cadastrar" action="#{mbean[acaoCadastrar]}" />
 				 
 				</p:outputPanel>
 	          
@@ -42,13 +38,15 @@
 
 		<p:tab id="tabPesquisa" title="Pesquisa">
 		
-			<h:form id="formPesquisa" prependId="false" enctype="charset=UTF-8">
+			<h:form id="formPesquisa">
 			
 				<p:outputPanel id="opMsgPesquisa" layout="block" autoUpdate="#{empty autoUpdatePesquisa ? true : autoUpdatePesquisa}" style="width: 97.5%;">
 				
 					<p:fieldset legend="Filtro" style="width: 97.5%">
 					
 						<ui:insert name="pesquisaCampos" />
+						
+						<p:commandButton value="Pesquisar" action="#{mbean[acaoPesquisar]}" />
 					  
 					</p:fieldset>                        
 					

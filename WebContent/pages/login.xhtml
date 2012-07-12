@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+  
+  <h:head>
+    <title>Cenajur</title>   
+    <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/geral.css" />
+  </h:head>
+
+  <h:body onload="javascript:document.getElementById('usuario').focus();" >
+
+    <p:layout fullPage="true" >
+
+      <p:layoutUnit position="north" style="text-align: center" size="160">
+		<img src="#{request.contextPath}/resources/images/top2b.jpg" />
+      </p:layoutUnit>
+
+      <p:layoutUnit position="center" style="margin-top: 8%" >
+        <h:form id="formLogin" prependId="false">
+          <div align="center">
+            <p:panel id="panelLogin" header="Controle de Acesso" style="width: 280px; text-align: left">
+              <p:messages id="msgLogin" globalOnly="false" showDetail="true" showSummary="false" />
+              <h:panelGrid styleClass="coluna100" columns="2" columnClasses="coluna30,coluna70">
+                <h:outputLabel value="Usuario:"/>
+                <h:inputText required="true" requiredMessage="Usuario: Obrigatorio" value="#{autenticacaoFaces.colaboradorModel.login}" style="width: 97%;" tabindex="1" id="usuario"/>
+                <h:outputLabel value="Senha:"/>
+                <h:inputSecret required="true" requiredMessage="Senha: Obrigatorio" value="#{autenticacaoFaces.colaboradorModel.senha}" maxlength="300" style="width: 97%;" tabindex="2" id="senha"/>
+              </h:panelGrid>
+              <div align="right">
+                <p:commandButton ajax="false" title="Acessar" value="Acessar" id="btnAcessar" style="text-align: right; height: 40px; width: 110px;" icon="cadeado" action="#{autenticacaoFaces.entrar}" tabindex="4" />
+              </div>
+            </p:panel>
+          </div>
+        </h:form>
+      </p:layoutUnit>
+
+      <p:layoutUnit position="south" size="35">
+        <h:panelGrid columns="1" width="100%" style="height: 100%" columnClasses="colunaInformativo100">
+          <h:column>
+            <h:outputText value="Cenajur - Gestao da Informacao." />
+          </h:column>
+        </h:panelGrid>
+      </p:layoutUnit>
+    </p:layout>
+
+  </h:body>
+
+
+</html>
+
+
