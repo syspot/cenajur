@@ -18,6 +18,9 @@ public class UsuarioFaces extends TSMainFaces {
 
 	private Usuario usuario;
 	private List<Usuario> usuarios;
+	
+	
+
 
 	public UsuarioFaces() {
 		this.usuarios = Collections.emptyList();
