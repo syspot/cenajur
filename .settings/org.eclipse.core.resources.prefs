@@ -1,2 +1,8 @@
 eclipse.preferences.version=1
+encoding//WebContent/pages/crud/tipo_processo.xhtml=ISO-8859-1
+encoding//WebContent/pages/dashboard.xhtml=ISO-8859-1
+encoding//WebContent/pages/index.xhtml=ISO-8859-1
+encoding//WebContent/pages/login.xhtml=ISO-8859-1
+encoding//WebContent/pages/menu.xhtml=ISO-8859-1
+encoding//WebContent/resources/templates/templateCRUD.xhtml=ISO-8859-1
 encoding/<project>=ISO-8859-1

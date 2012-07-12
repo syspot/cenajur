@@ -22,6 +22,10 @@ public class TipoProcessoModel extends TSActiveRecordAb<TipoProcessoModel>{
 	@Column(name = "flag_ativo", nullable = false)
 	private Boolean flagAtivo;
 	
+	public TipoProcessoModel() {
+		this.flagAtivo = Boolean.TRUE;
+	}
+	
 	public Long getId() {
 		return id;
 	}
