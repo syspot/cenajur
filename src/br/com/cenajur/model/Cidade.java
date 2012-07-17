@@ -4,27 +4,30 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 
 @Entity
-@Table(name = "tipos_acessos")
-public class TipoAcessoModel extends TSActiveRecordAb<TipoAcessoModel>{
+@Table(name = "cidades")
+public class Cidade extends TSActiveRecordAb<Cidade>{
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	
-	@Column(name = "descricao")
 	private String descricao;
-
 	
-	public Integer getId() {
+	@OneToOne
+	private Estado estado;
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -34,6 +37,14 @@ public class TipoAcessoModel extends TSActiveRecordAb<TipoAcessoModel>{
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
 	}
 
 	@Override
@@ -52,7 +63,7 @@ public class TipoAcessoModel extends TSActiveRecordAb<TipoAcessoModel>{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TipoAcessoModel other = (TipoAcessoModel) obj;
+		Cidade other = (Cidade) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -60,6 +71,5 @@ public class TipoAcessoModel extends TSActiveRecordAb<TipoAcessoModel>{
 			return false;
 		return true;
 	}
-	
 	
 }

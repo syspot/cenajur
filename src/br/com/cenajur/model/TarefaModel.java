@@ -12,9 +12,9 @@ public class TarefaModel {
 	
 	private SituacaoTarefaModel situacaoTarefaModel;
 	
-	private ColaboradorModel colaboradorResponsavel;
+	private Colaborador colaboradorResponsavel;
 	
-	private ColaboradorModel colaboradorSupervisor;
+	private Colaborador colaboradorSupervisor;
 	
 	private String descricao;
 	
@@ -52,19 +52,19 @@ public class TarefaModel {
 		this.situacaoTarefaModel = situacaoTarefaModel;
 	}
 
-	public ColaboradorModel getColaboradorResponsavel() {
+	public Colaborador getColaboradorResponsavel() {
 		return colaboradorResponsavel;
 	}
 
-	public void setColaboradorResponsavel(ColaboradorModel colaboradorResponsavel) {
+	public void setColaboradorResponsavel(Colaborador colaboradorResponsavel) {
 		this.colaboradorResponsavel = colaboradorResponsavel;
 	}
 
-	public ColaboradorModel getColaboradorSupervisor() {
+	public Colaborador getColaboradorSupervisor() {
 		return colaboradorSupervisor;
 	}
 
-	public void setColaboradorSupervisor(ColaboradorModel colaboradorSupervisor) {
+	public void setColaboradorSupervisor(Colaborador colaboradorSupervisor) {
 		this.colaboradorSupervisor = colaboradorSupervisor;
 	}
 

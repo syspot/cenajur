@@ -1,16 +1,16 @@
 package br.com.cenajur.model;
 
-public class SituacaoModel {
+public class TipoAndamentoProcesso {
 
-	private Integer id;
+	private Long id;
 	
 	private String descricao;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -38,7 +38,7 @@ public class SituacaoModel {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		SituacaoModel other = (SituacaoModel) obj;
+		TipoAndamentoProcesso other = (TipoAndamentoProcesso) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

@@ -1,9 +1,22 @@
 package br.com.cenajur.model;
 
-public class TipoClienteModel {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+import br.com.topsys.database.hibernate.TSActiveRecordAb;
+
+@Entity
+@Table(name = "estados")
+public class Estado extends TSActiveRecordAb<Estado>{
+
+	@Id
+	@GeneratedValue
 	private Integer id;
 	
+	@Column(name = "descricao")
 	private String descricao;
 
 	public Integer getId() {
@@ -38,7 +51,7 @@ public class TipoClienteModel {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TipoClienteModel other = (TipoClienteModel) obj;
+		Estado other = (Estado) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -46,6 +59,5 @@ public class TipoClienteModel {
 			return false;
 		return true;
 	}
-	
 	
 }

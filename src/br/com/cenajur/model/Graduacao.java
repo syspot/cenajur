@@ -1,22 +1,9 @@
 package br.com.cenajur.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public class Graduacao {
 
-import br.com.topsys.database.hibernate.TSActiveRecordAb;
-
-@Entity
-@Table(name = "tipos_colaboradores")
-public class TipoColaboradorModel extends TSActiveRecordAb<TipoColaboradorModel>{
-
-	@Id
-	@GeneratedValue
 	private Integer id;
 	
-	@Column(name = "descricao")
 	private String descricao;
 
 	public Integer getId() {
@@ -51,7 +38,7 @@ public class TipoColaboradorModel extends TSActiveRecordAb<TipoColaboradorModel>
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TipoColaboradorModel other = (TipoColaboradorModel) obj;
+		Graduacao other = (Graduacao) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -59,6 +46,5 @@ public class TipoColaboradorModel extends TSActiveRecordAb<TipoColaboradorModel>
 			return false;
 		return true;
 	}
-	
 	
 }

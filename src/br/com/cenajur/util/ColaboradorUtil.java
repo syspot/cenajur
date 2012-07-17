@@ -3,7 +3,7 @@ package br.com.cenajur.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.cenajur.model.ColaboradorModel;
+import br.com.cenajur.model.Colaborador;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.util.TSFacesUtil;
 
@@ -22,22 +22,22 @@ public class ColaboradorUtil {
         return factory;
     }
 
-    public ColaboradorModel obterColaboradorConectado() {
-        return (ColaboradorModel) TSFacesUtil.getObjectInSession(OPERADOR_CONECTADO);
+    public Colaborador obterColaboradorConectado() {
+        return (Colaborador) TSFacesUtil.getObjectInSession(OPERADOR_CONECTADO);
     }
 
     @SuppressWarnings("unchecked")
-	public List<ColaboradorModel> obterColaboradoresConectados() {
-        return (List<ColaboradorModel>) TSFacesUtil.getRequest().getSession().getServletContext().getAttribute(OPERADORES_CONECTADOS);
+	public List<Colaborador> obterColaboradoresConectados() {
+        return (List<Colaborador>) TSFacesUtil.getRequest().getSession().getServletContext().getAttribute(OPERADORES_CONECTADOS);
     }
 
     @SuppressWarnings("unchecked")
-	public void adicionar(ColaboradorModel colaborador) {
+	public void adicionar(Colaborador colaborador) {
     	
-        List<ColaboradorModel> colaboradoresConectados = (List<ColaboradorModel>) TSFacesUtil.getRequest().getSession().getServletContext().getAttribute("colaboradoresConectados");
+        List<Colaborador> colaboradoresConectados = (List<Colaborador>) TSFacesUtil.getRequest().getSession().getServletContext().getAttribute("colaboradoresConectados");
 
         if (TSUtil.isEmpty(colaboradoresConectados)) {
-        	colaboradoresConectados = new ArrayList<ColaboradorModel>();
+        	colaboradoresConectados = new ArrayList<Colaborador>();
         }
 
         TSFacesUtil.addObjectInSession(OPERADOR_CONECTADO, colaborador);
@@ -52,7 +52,7 @@ public class ColaboradorUtil {
     @SuppressWarnings("unchecked")
 	public void remover() {
     	
-        List<ColaboradorModel> colaboradoresConectados = (List<ColaboradorModel>) TSFacesUtil.getRequest().getSession().getServletContext().getAttribute("operadoresConectados");
+        List<Colaborador> colaboradoresConectados = (List<Colaborador>) TSFacesUtil.getRequest().getSession().getServletContext().getAttribute("operadoresConectados");
 
         if (!TSUtil.isEmpty(colaboradoresConectados)) {
         	colaboradoresConectados.remove(obterColaboradoresConectados());
@@ -62,9 +62,9 @@ public class ColaboradorUtil {
     
     }
 
-    public static ColaboradorModel autenticar(ColaboradorModel model) {
+    public static Colaborador autenticar(Colaborador model) {
     	
-    	ColaboradorModel colaboradorModel = model.autenticarPorLogin();
+    	Colaborador colaboradorModel = model.autenticarPorLogin();
 
         if ((!TSUtil.isEmpty(colaboradorModel)) && (!colaboradorModel.getSenha().equals(Utilitarios.gerarHash(model.getSenha())))) {
         	colaboradorModel = null;

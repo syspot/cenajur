@@ -6,39 +6,40 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 
 @Entity
 @Table(name = "menus")
-public final class MenuModel extends TSActiveRecordAb<MenuModel> {
+public final class Menu extends TSActiveRecordAb<Menu> {
 
 	@Id
 	@GeneratedValue
     private Long id;
 	
-	@Column(name = "nome", nullable = false)
     private String nome;
-	
-	@Column(name = "flag_ativo", nullable = false)
+    
+    @Column(name = "flag_ativo")
     private Boolean flagAtivo;
-	
-	@Column(name = "ordem", nullable = false)
+    
     private Integer ordem;
-	
-	@Column(name = "flag_expandido", nullable = false)
+    
+    @Column(name = "flag_expandido")
     private Boolean flagExpandido;
-	
-	@OneToMany(mappedBy = "menuModel")
-    private List<PermissaoModel> permissoes;
+    
+	@OneToMany(mappedBy = "menu")
+    private List<Permissao> permissoes;
 
-	
-	public MenuModel() {
-	
+	public Menu() {
 	}
 	
+	public Menu(Boolean flagAtivo){
+		this.flagAtivo = flagAtivo;
+	}
 	
 	public Long getId() {
 		return id;
@@ -80,11 +81,11 @@ public final class MenuModel extends TSActiveRecordAb<MenuModel> {
 		this.flagExpandido = flagExpandido;
 	}
 
-	public List<PermissaoModel> getPermissoes() {
+	public List<Permissao> getPermissoes() {
 		return permissoes;
 	}
 
-	public void setPermissoes(List<PermissaoModel> permissoes) {
+	public void setPermissoes(List<Permissao> permissoes) {
 		this.permissoes = permissoes;
 	}
 
@@ -104,7 +105,7 @@ public final class MenuModel extends TSActiveRecordAb<MenuModel> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MenuModel other = (MenuModel) obj;
+		Menu other = (Menu) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -113,5 +114,4 @@ public final class MenuModel extends TSActiveRecordAb<MenuModel> {
 		return true;
 	}
 
-    
 }

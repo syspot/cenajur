@@ -6,39 +6,36 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 
 @Entity
 @Table(name = "permissoes")
-public class PermissaoModel extends TSActiveRecordAb<PermissaoModel> {
+public class Permissao extends TSActiveRecordAb<Permissao> {
 
 	@Id
 	@GeneratedValue
 	private Long id;
 	
-	@Column(name = "descricao", nullable = false)
 	private String descricao;
 	
-	@Column(name = "faces", nullable = false)
 	private String faces;
 	
-	@Column(name = "url", nullable = false)
 	private String url;
 	
 	@ManyToOne
-	@JoinColumn(name = "menu_id", nullable = false)
-	private MenuModel menuModel;
+	private Menu menu;
 	
-	@Column(name = "flag_ativo", nullable = false)
+	@Column(name = "flag_ativo")
 	private Boolean flagAtivo;
 	
-	@ManyToMany
-	private List<GrupoModel> grupos;
+	@OneToMany(mappedBy="permissao")
+	private List<PermissaoGrupo> permissoesGrupos;
+	
 
 	public Long getId() {
 		return id;
@@ -72,12 +69,12 @@ public class PermissaoModel extends TSActiveRecordAb<PermissaoModel> {
 		this.url = url;
 	}
 
-	public MenuModel getMenuModel() {
-		return menuModel;
+	public Menu getMenu() {
+		return menu;
 	}
 
-	public void setMenuModel(MenuModel menuModel) {
-		this.menuModel = menuModel;
+	public void setMenu(Menu menu) {
+		this.menu = menu;
 	}
 
 	public Boolean getFlagAtivo() {
@@ -88,12 +85,12 @@ public class PermissaoModel extends TSActiveRecordAb<PermissaoModel> {
 		this.flagAtivo = flagAtivo;
 	}
 
-	public List<GrupoModel> getGrupos() {
-		return grupos;
+	public List<PermissaoGrupo> getPermissoesGrupos() {
+		return permissoesGrupos;
 	}
 
-	public void setGrupos(List<GrupoModel> grupos) {
-		this.grupos = grupos;
+	public void setPermissoesGrupos(List<PermissaoGrupo> permissoesGrupos) {
+		this.permissoesGrupos = permissoesGrupos;
 	}
 
 	@Override
@@ -112,7 +109,7 @@ public class PermissaoModel extends TSActiveRecordAb<PermissaoModel> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PermissaoModel other = (PermissaoModel) obj;
+		Permissao other = (Permissao) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

@@ -1,16 +1,16 @@
 package br.com.cenajur.model;
 
-public class ObjetoModel {
+public class TipoCliente {
 
-	private Long id;
+	private Integer id;
 	
 	private String descricao;
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -38,7 +38,7 @@ public class ObjetoModel {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ObjetoModel other = (ObjetoModel) obj;
+		TipoCliente other = (TipoCliente) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

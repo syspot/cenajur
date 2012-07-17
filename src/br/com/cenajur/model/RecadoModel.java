@@ -12,9 +12,9 @@ public class RecadoModel {
 	
 	private String remetente;
 	
-	private ColaboradorModel destinatario;
+	private Colaborador destinatario;
 	
-	private ColaboradorModel operadorCadastro;
+	private Colaborador operadorCadastro;
 	
 	private String descricao;
 
@@ -50,19 +50,19 @@ public class RecadoModel {
 		this.remetente = remetente;
 	}
 
-	public ColaboradorModel getDestinatario() {
+	public Colaborador getDestinatario() {
 		return destinatario;
 	}
 
-	public void setDestinatario(ColaboradorModel destinatario) {
+	public void setDestinatario(Colaborador destinatario) {
 		this.destinatario = destinatario;
 	}
 
-	public ColaboradorModel getOperadorCadastro() {
+	public Colaborador getOperadorCadastro() {
 		return operadorCadastro;
 	}
 
-	public void setOperadorCadastro(ColaboradorModel operadorCadastro) {
+	public void setOperadorCadastro(Colaborador operadorCadastro) {
 		this.operadorCadastro = operadorCadastro;
 	}
 

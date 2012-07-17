@@ -1,16 +1,27 @@
 package br.com.cenajur.model;
 
-public class TipoAndamentoProcessoModel {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-	private Long id;
+import br.com.topsys.database.hibernate.TSActiveRecordAb;
+
+@Entity
+@Table(name = "tipos_colaboradores")
+public class TipoColaborador extends TSActiveRecordAb<TipoColaborador>{
+
+	@Id
+	@GeneratedValue
+	private Integer id;
 	
 	private String descricao;
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -38,7 +49,7 @@ public class TipoAndamentoProcessoModel {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TipoAndamentoProcessoModel other = (TipoAndamentoProcessoModel) obj;
+		TipoColaborador other = (TipoColaborador) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

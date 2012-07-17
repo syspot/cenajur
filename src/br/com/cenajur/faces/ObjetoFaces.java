@@ -6,11 +6,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import br.com.cenajur.model.TipoProcesso;
+import br.com.cenajur.model.Objeto;
 
 @SessionScoped
-@ManagedBean(name = "tipoProcessoFaces")
-public class TipoProcessoFaces extends CrudFaces<TipoProcesso> {
+@ManagedBean(name = "objetoFaces")
+public class ObjetoFaces extends CrudFaces<Objeto> {
 
 	@PostConstruct
 	protected void init() {
@@ -19,13 +19,13 @@ public class TipoProcessoFaces extends CrudFaces<TipoProcesso> {
 	
 	@Override
 	public String limpar(){
-		this.crudModel = new TipoProcesso();
+		this.crudModel = new Objeto();
 		return super.limpar();
 	}
 	
 	@Override
 	public String limparPesquisa(){
-		this.crudPesquisaModel = new TipoProcesso();
+		this.crudPesquisaModel = new Objeto();
 		this.grid = Collections.emptyList();
 		this.fieldOrdem = "descricao";
 		return super.limparPesquisa();

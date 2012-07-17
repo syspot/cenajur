@@ -1,16 +1,27 @@
 package br.com.cenajur.model;
 
-public class BancoModel {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-	private Integer id;
+import br.com.topsys.database.hibernate.TSActiveRecordAb;
+
+@Entity
+@Table(name = "objetos")
+public class Objeto extends TSActiveRecordAb<Objeto>{
+
+	@Id
+	@GeneratedValue
+	private Long id;
 	
 	private String descricao;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -38,7 +49,7 @@ public class BancoModel {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		BancoModel other = (BancoModel) obj;
+		Objeto other = (Objeto) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

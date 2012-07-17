@@ -22,15 +22,27 @@
     <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>*.xhtml</url-pattern>
   </servlet-mapping>
-  
-   <filter>
+  <filter>
     <filter-name>TSActiveRecordFilter</filter-name>
     <filter-class>br.com.topsys.web.filter.TSHibernateFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>TSActiveRecordFilter</filter-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/pages/*</url-pattern>
   </filter-mapping>
-  
-  <context-param> <param-name>com.sun.faces.enableRestoreView11Compatibility</param-name> <param-value>true</param-value> </context-param>
+  <filter>  
+    <filter-name>CenajurFilter</filter-name>  
+    <filter-class>br.com.cenajur.util.CenajurFilter</filter-class>  
+  </filter>
+  <filter-mapping>  
+    <filter-name>CenajurFilter</filter-name>  
+    <url-pattern>/pages/*</url-pattern>  
+  </filter-mapping>
+  <context-param>
+    <param-name>com.sun.faces.enableRestoreView11Compatibility</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <session-config>
+    <session-timeout>1</session-timeout>
+  </session-config>
 </web-app>

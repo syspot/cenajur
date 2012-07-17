@@ -1,22 +1,9 @@
 package br.com.cenajur.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public class Situacao {
 
-import br.com.topsys.database.hibernate.TSActiveRecordAb;
-
-@Entity
-@Table(name = "estados")
-public class EstadoModel extends TSActiveRecordAb<EstadoModel>{
-
-	@Id
-	@GeneratedValue
 	private Integer id;
 	
-	@Column(name = "descricao")
 	private String descricao;
 
 	public Integer getId() {
@@ -51,7 +38,7 @@ public class EstadoModel extends TSActiveRecordAb<EstadoModel>{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		EstadoModel other = (EstadoModel) obj;
+		Situacao other = (Situacao) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -59,5 +46,6 @@ public class EstadoModel extends TSActiveRecordAb<EstadoModel>{
 			return false;
 		return true;
 	}
+	
 	
 }

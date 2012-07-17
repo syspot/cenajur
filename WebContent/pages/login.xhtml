@@ -14,20 +14,20 @@
 
     <p:layout fullPage="true" >
 
-      <p:layoutUnit position="north" style="text-align: center" size="160">
-		<img src="#{request.contextPath}/resources/images/top2b.jpg" />
+      <p:layoutUnit position="north" size="100">
+		
       </p:layoutUnit>
 
       <p:layoutUnit position="center" style="margin-top: 8%" >
         <h:form id="formLogin" prependId="false">
+          <p:growl id="msgLogin" globalOnly="false" showDetail="true" showSummary="false" />
           <div align="center">
             <p:panel id="panelLogin" header="Controle de Acesso" style="width: 280px; text-align: left">
-              <p:messages id="msgLogin" globalOnly="false" showDetail="true" showSummary="false" />
               <h:panelGrid styleClass="coluna100" columns="2" columnClasses="coluna30,coluna70">
-                <h:outputLabel value="Usuario:"/>
-                <h:inputText required="true" requiredMessage="Usuario: Obrigatorio" value="#{autenticacaoFaces.colaboradorModel.login}" style="width: 97%;" tabindex="1" id="usuario"/>
-                <h:outputLabel value="Senha:"/>
-                <h:inputSecret required="true" requiredMessage="Senha: Obrigatorio" value="#{autenticacaoFaces.colaboradorModel.senha}" maxlength="300" style="width: 97%;" tabindex="2" id="senha"/>
+                <p:outputLabel for="usuario" value="Usuário:"/>
+                <p:inputText id="usuario" required="true" requiredMessage="Usuário: Obrigatório" value="#{autenticacaoFaces.colaborador.login}" style="width: 97%;" />
+                <p:outputLabel for="senha" value="Senha:"/>
+                <p:password id="senha" required="true" requiredMessage="Senha: Obrigatório" value="#{autenticacaoFaces.colaborador.senha}" maxlength="100" style="width: 97%;" />
               </h:panelGrid>
               <div align="right">
                 <p:commandButton ajax="false" title="Acessar" value="Acessar" id="btnAcessar" style="text-align: right; height: 40px; width: 110px;" icon="cadeado" action="#{autenticacaoFaces.entrar}" tabindex="4" />
@@ -40,7 +40,7 @@
       <p:layoutUnit position="south" size="35">
         <h:panelGrid columns="1" width="100%" style="height: 100%" columnClasses="colunaInformativo100">
           <h:column>
-            <h:outputText value="Cenajur - Gestao da Informacao." />
+            <h:outputText value="Cenajur - Gestão da Informação." />
           </h:column>
         </h:panelGrid>
       </p:layoutUnit>

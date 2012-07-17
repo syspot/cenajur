@@ -13,7 +13,7 @@ import br.com.topsys.database.hibernate.TSActiveRecordAb;
 
 @Entity
 @Table(name = "processo")
-public class ProcessoModel extends TSActiveRecordAb<ProcessoModel>{
+public class Processo extends TSActiveRecordAb<Processo>{
 
 	@Id
 	@GeneratedValue
@@ -21,22 +21,22 @@ public class ProcessoModel extends TSActiveRecordAb<ProcessoModel>{
 	
 	private Long numero;
 	
-	private List<ClienteModel> clientes;
+	private List<Cliente> clientes;
 	
-	private ObjetoModel objetoModel;
+	private Objeto objetoModel;
 	
 	private Integer lote;
 	
 	private List<ParteContrariaModel> parteContrariaModel;
 	
 	@Column(name = "tipo_processo_id")
-	private TipoProcessoModel tipoProcessoModel;
+	private TipoProcesso tipoProcessoModel;
 	
-	private VaraModel varaModel;
+	private Vara varaModel;
 	
 	private ComarcaModel comarcaModel;
 	
-	private ColaboradorModel advogado;
+	private Colaborador advogado;
 	
 	private Date dataAbertura;
 	
@@ -46,7 +46,7 @@ public class ProcessoModel extends TSActiveRecordAb<ProcessoModel>{
 	
 	private Date dataArquivamento;
 	
-	private ProcessoModel processoPrincipal;
+	private Processo processoPrincipal;
 	
 	private String observacao;
 
@@ -66,19 +66,19 @@ public class ProcessoModel extends TSActiveRecordAb<ProcessoModel>{
 		this.numero = numero;
 	}
 
-	public List<ClienteModel> getClientes() {
+	public List<Cliente> getClientes() {
 		return clientes;
 	}
 
-	public void setClientes(List<ClienteModel> clientes) {
+	public void setClientes(List<Cliente> clientes) {
 		this.clientes = clientes;
 	}
 
-	public ObjetoModel getObjetoModel() {
+	public Objeto getObjetoModel() {
 		return objetoModel;
 	}
 
-	public void setObjetoModel(ObjetoModel objetoModel) {
+	public void setObjetoModel(Objeto objetoModel) {
 		this.objetoModel = objetoModel;
 	}
 
@@ -98,19 +98,19 @@ public class ProcessoModel extends TSActiveRecordAb<ProcessoModel>{
 		this.parteContrariaModel = parteContrariaModel;
 	}
 
-	public TipoProcessoModel getTipoProcessoModel() {
+	public TipoProcesso getTipoProcessoModel() {
 		return tipoProcessoModel;
 	}
 
-	public void setTipoProcessoModel(TipoProcessoModel tipoProcessoModel) {
+	public void setTipoProcessoModel(TipoProcesso tipoProcessoModel) {
 		this.tipoProcessoModel = tipoProcessoModel;
 	}
 
-	public VaraModel getVaraModel() {
+	public Vara getVaraModel() {
 		return varaModel;
 	}
 
-	public void setVaraModel(VaraModel varaModel) {
+	public void setVaraModel(Vara varaModel) {
 		this.varaModel = varaModel;
 	}
 
@@ -122,11 +122,11 @@ public class ProcessoModel extends TSActiveRecordAb<ProcessoModel>{
 		this.comarcaModel = comarcaModel;
 	}
 
-	public ColaboradorModel getAdvogado() {
+	public Colaborador getAdvogado() {
 		return advogado;
 	}
 
-	public void setAdvogado(ColaboradorModel advogado) {
+	public void setAdvogado(Colaborador advogado) {
 		this.advogado = advogado;
 	}
 
@@ -162,11 +162,11 @@ public class ProcessoModel extends TSActiveRecordAb<ProcessoModel>{
 		this.dataArquivamento = dataArquivamento;
 	}
 
-	public ProcessoModel getProcessoPrincipal() {
+	public Processo getProcessoPrincipal() {
 		return processoPrincipal;
 	}
 
-	public void setProcessoPrincipal(ProcessoModel processoPrincipal) {
+	public void setProcessoPrincipal(Processo processoPrincipal) {
 		this.processoPrincipal = processoPrincipal;
 	}
 
@@ -194,7 +194,7 @@ public class ProcessoModel extends TSActiveRecordAb<ProcessoModel>{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ProcessoModel other = (ProcessoModel) obj;
+		Processo other = (Processo) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

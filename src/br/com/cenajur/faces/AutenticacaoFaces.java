@@ -1,15 +1,17 @@
 package br.com.cenajur.faces;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import br.com.cenajur.model.ColaboradorModel;
-import br.com.cenajur.model.MenuModel;
-import br.com.cenajur.model.PermissaoModel;
+import br.com.cenajur.model.Colaborador;
+import br.com.cenajur.model.Menu;
+import br.com.cenajur.model.Permissao;
+import br.com.cenajur.model.PermissaoGrupo;
+import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.faces.TSMainFaces;
@@ -19,10 +21,12 @@ import br.com.topsys.web.util.TSFacesUtil;
 @ManagedBean(name = "autenticacaoFaces")
 public class AutenticacaoFaces extends TSMainFaces{
 
-    private ColaboradorModel colaboradorModel;
-    private PermissaoModel permissaoSelecionada;
-    private List<MenuModel> menus;
-    private List<ColaboradorModel> colaboradoresConectados;
+    private Colaborador colaborador;
+    private Permissao permissaoSelecionada;
+    private PermissaoGrupo permissaoGrupoSelecionada;
+    private List<Menu> menus;
+    private List<Menu> menusPrime;
+    private List<Colaborador> colaboradoresConectados;
     private Integer tabAtiva;
     private String tela;
     private String nomeTela;
@@ -35,7 +39,7 @@ public class AutenticacaoFaces extends TSMainFaces{
 
         setTabAtiva(new Integer(-1));
 
-        setNomeTela("√Årea de Trabalho");
+        setNomeTela("¡Årea de Trabalho");
         
         currentFaces = "";
     }
@@ -43,9 +47,12 @@ public class AutenticacaoFaces extends TSMainFaces{
     public String redirecionar() {
         this.removeObjectInSession(this.currentFaces);
         setTela(this.permissaoSelecionada.getUrl());
-        setNomeTela("√Årea de Trabalho > " + this.permissaoSelecionada.getMenuModel().getNome() + " > " + this.permissaoSelecionada.getDescricao());
+        setNomeTela("¡rea de Trabalho > " + this.permissaoSelecionada.getMenu().getNome() + " > " + this.permissaoSelecionada.getDescricao());
         //setTabAtiva(Integer.valueOf(this.menusPrime.indexOf(this.permissaoPrimeModel.getMenuModel())));
         this.currentFaces = this.permissaoSelecionada.getFaces();
+//        this.permissaoGrupoSelecionada.setGrupo(this.colaborador.getGrupo());
+//        this.permissaoGrupoSelecionada.setPermissao(this.permissaoSelecionada);
+//        this.permissaoGrupoSelecionada = this.permissaoGrupoSelecionada.getByModel(CenajurUtil.getVetor("flagInserir", "flagAlterar", "flagExcluir"), "flagInserir");
         return "sucesso";
     }
 
@@ -56,9 +63,14 @@ public class AutenticacaoFaces extends TSMainFaces{
 
     protected void clearFields() {
     	
-        this.colaboradorModel = new ColaboradorModel();
+        this.colaborador = new Colaborador();
 
         this.menus = Collections.emptyList();
+        
+        this.menusPrime = new ArrayList<Menu>();
+        
+        this.permissaoGrupoSelecionada = new PermissaoGrupo();
+        //this.permissaoGrupoSelecionada.setPermissaoGrupoPK(new PermissaoGrupoPK());
 
     }
 
@@ -79,100 +91,82 @@ public class AutenticacaoFaces extends TSMainFaces{
 
     public String entrar() {
     	
-        if (!validaCampos()) {
-            return null;
-        }
-
-        colaboradorModel = ColaboradorUtil.autenticar(colaboradorModel);
+        Colaborador colaborador = ColaboradorUtil.autenticar(this.colaborador);
         
-        if (!TSUtil.isEmpty(colaboradorModel)) {
+        if (!TSUtil.isEmpty(colaborador)) {
         	
-        	this.menus = new MenuModel().findAll();
+        	this.colaborador = colaborador;
+        	this.menus = new Menu(true).findByModel(CenajurUtil.getVetor("flagExpandido"), "ordem");
 
-        	ColaboradorUtil.getInstance().adicionar(colaboradorModel);
+        	ColaboradorUtil.getInstance().adicionar(colaborador);
+        	
+        	this.menusPrime.clear();
+        	List<Permissao> permissoes; 
+        	
+        	for(PermissaoGrupo p: colaborador.getGrupo().getPermissoesGrupos()){
+        		System.out.println("--- " + p.getId());
+        	}
+        	
+        	for(Menu menu : this.menus){
+        		
+        		permissoes = new ArrayList<Permissao>();
+        		
+        		for(Permissao permissao : menu.getPermissoes()){
+        			
+        			for(PermissaoGrupo permissaoGrupo : permissao.getPermissoesGrupos()){
+        				
+        				if(colaborador.getGrupo().getPermissoesGrupos().contains(permissaoGrupo)){
+
+    						permissoes.add(permissao);
+    						
+        				}
+        				
+        			}
+        			
+        		}
+        		
+        		menu.setPermissoes(permissoes);
+        		this.menusPrime.add(menu);
+        		
+        	}
         	
         	return "entrar";
         }
-
-        super.addErrorMessage("Dados inv√°lidos!");
+        
+        CenajurUtil.addErrorMessage("Dados inv·lidos!");
 
         return null;
     }
 
-    private boolean validaCampos() {
-    	
-        boolean retorno = true;
-
-        if (TSUtil.isEmpty(this.colaboradorModel.getLogin())) {
-            TSFacesUtil.addErrorMessage("usuario", " campo obrigat√≥rio");
-
-            retorno = false;
-        }
-
-        if (TSUtil.isEmpty(this.colaboradorModel.getSenha())) {
-            TSFacesUtil.addErrorMessage("senha", " campo obrigat√≥rio");
-
-            retorno = false;
-        }
-
-        return retorno;
-    }
-
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-	public void obterColaboradoresConectados() {
-    	
-        this.colaboradoresConectados = ColaboradorUtil.getInstance().obterColaboradoresConectados();
-
-        if (!TSUtil.isEmpty(this.colaboradoresConectados)) {
-        	
-            Comparator ordem = new Comparator() {
-
-                public int compare(Object o1, Object o2) {
-                	
-                    ColaboradorModel n1 = (ColaboradorModel) o1;
-
-                    ColaboradorModel n2 = (ColaboradorModel) o2;
-
-                    int primeiraComparacao = n1.getNome().compareTo(n2.getNome());
-
-                    return primeiraComparacao != 0 ? primeiraComparacao : n1.getNome().compareTo(n2.getNome());
-                }
-            };
-            
-            Collections.sort(this.colaboradoresConectados, ordem);
-        }
-    }
-
-	public ColaboradorModel getColaboradorModel() {
-		return colaboradorModel;
+	public Colaborador getColaborador() {
+		return colaborador;
 	}
 
-	public void setColaboradorModel(ColaboradorModel colaboradorModel) {
-		this.colaboradorModel = colaboradorModel;
+	public void setColaborador(Colaborador colaborador) {
+		this.colaborador = colaborador;
 	}
 
-	public PermissaoModel getPermissaoSelecionada() {
+	public Permissao getPermissaoSelecionada() {
 		return permissaoSelecionada;
 	}
 
-	public void setPermissaoSelecionada(PermissaoModel permissaoSelecionada) {
+	public void setPermissaoSelecionada(Permissao permissaoSelecionada) {
 		this.permissaoSelecionada = permissaoSelecionada;
 	}
 
-	public List<MenuModel> getMenus() {
+	public List<Menu> getMenus() {
 		return menus;
 	}
 
-	public void setMenus(List<MenuModel> menus) {
+	public void setMenus(List<Menu> menus) {
 		this.menus = menus;
 	}
 
-	public List<ColaboradorModel> getColaboradoresConectados() {
+	public List<Colaborador> getColaboradoresConectados() {
 		return colaboradoresConectados;
 	}
 
-	public void setColaboradoresConectados(
-			List<ColaboradorModel> colaboradoresConectados) {
+	public void setColaboradoresConectados(List<Colaborador> colaboradoresConectados) {
 		this.colaboradoresConectados = colaboradoresConectados;
 	}
 
@@ -206,6 +200,22 @@ public class AutenticacaoFaces extends TSMainFaces{
 
 	public void setCurrentFaces(String currentFaces) {
 		this.currentFaces = currentFaces;
+	}
+
+	public List<Menu> getMenusPrime() {
+		return menusPrime;
+	}
+
+	public void setMenusPrime(List<Menu> menusPrime) {
+		this.menusPrime = menusPrime;
+	}
+
+	public PermissaoGrupo getPermissaoGrupoSelecionada() {
+		return permissaoGrupoSelecionada;
+	}
+
+	public void setPermissaoGrupoSelecionada(PermissaoGrupo permissaoGrupoSelecionada) {
+		this.permissaoGrupoSelecionada = permissaoGrupoSelecionada;
 	}
 
 }

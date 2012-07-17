@@ -2,11 +2,11 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core">
 
-<f:view contentType="text/html" encoding="ISO-8859-1">
+<f:view contentType="text/html">
 
 	<h:head>
 		<title>Cenajur</title>
-		<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/cenajur.css" />
+		<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/geral.css" />
 		<script src="#{request.contextPath}/resources/js/funcoes.js" type="text/javascript" />					
 	</h:head>
 
@@ -18,11 +18,11 @@
 			<p:graphicImage value="../resources/images/ajaxloadingbar.gif" />
 		</p:dialog>
 
-		<p:growl id="growl" showDetail="true" showSummary="false" sticky="false" autoUpdate="true" globalOnly="true" />
+		<p:growl id="growl" showDetail="true" showSummary="false" sticky="false" autoUpdate="true" globalOnly="false" />
 
 		<p:layout fullPage="true">
 
-			<p:layoutUnit position="west" size="220" resizable="true" header="Menu">
+			<p:layoutUnit position="west" size="230" resizable="true" header="Menu">
 				<ui:include id="uiMenu" src="/pages/menu.xhtml" />
 			</p:layoutUnit>
 
@@ -33,11 +33,11 @@
 			<p:layoutUnit position="south" size="35">
 				<h:panelGrid columns="5" width="100%" style="height: 100%;" columnClasses="colunaInformativo40, colunaInformativo20, colunaInformativo20, colunaInformativo10, colunaInformativoVermelho10">
 					<h:column>
-						<h:outputText value="Cenajur - Gest�o da Informa��o." />
+						<h:outputText value="Cenajur - Gestão da Informação." />
 					</h:column>
 
 					<h:column>
-						<h:outputText value="#{autenticacaoFaces.colaboradorModel.nome}" />
+						<h:outputText value="#{autenticacaoFaces.colaborador.nome}" />
 					</h:column>
 
 					<h:column>

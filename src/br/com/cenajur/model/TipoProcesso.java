@@ -10,7 +10,7 @@ import br.com.topsys.database.hibernate.TSActiveRecordAb;
 
 @Entity
 @Table(name="tipos_processos")  
-public class TipoProcessoModel extends TSActiveRecordAb<TipoProcessoModel>{
+public class TipoProcesso extends TSActiveRecordAb<TipoProcesso>{
 
 	@Id
 	@GeneratedValue
@@ -22,7 +22,7 @@ public class TipoProcessoModel extends TSActiveRecordAb<TipoProcessoModel>{
 	@Column(name = "flag_ativo", nullable = false)
 	private Boolean flagAtivo;
 	
-	public TipoProcessoModel() {
+	public TipoProcesso() {
 		this.flagAtivo = Boolean.TRUE;
 	}
 	
@@ -66,7 +66,7 @@ public class TipoProcessoModel extends TSActiveRecordAb<TipoProcessoModel>{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TipoProcessoModel other = (TipoProcessoModel) obj;
+		TipoProcesso other = (TipoProcesso) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

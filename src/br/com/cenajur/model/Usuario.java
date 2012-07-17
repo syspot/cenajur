@@ -29,7 +29,7 @@ public class Usuario extends TSActiveRecordAb<Usuario>  {
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "grupo_id")
-	private GrupoModel grupoModel;
+	private Grupo grupoModel;
 	
 	
 	public Usuario(){
@@ -71,10 +71,10 @@ public class Usuario extends TSActiveRecordAb<Usuario>  {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public GrupoModel getGrupoModel() {
+	public Grupo getGrupoModel() {
 		return grupoModel;
 	}
-	public void setGrupoModel(GrupoModel grupoModel) {
+	public void setGrupoModel(Grupo grupoModel) {
 		this.grupoModel = grupoModel;
 	}
 

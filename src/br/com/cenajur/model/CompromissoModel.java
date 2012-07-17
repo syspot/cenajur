@@ -6,7 +6,7 @@ public class CompromissoModel {
 
 	private Long id;
 	
-	private ProcessoModel processoModel;
+	private Processo processoModel;
 	
 	private Date dataCompromisso;
 	
@@ -14,7 +14,7 @@ public class CompromissoModel {
 	
 	private String local;
 	
-	private ColaboradorModel advogado;
+	private Colaborador advogado;
 	
 	private String descricao;
 
@@ -26,11 +26,11 @@ public class CompromissoModel {
 		this.id = id;
 	}
 
-	public ProcessoModel getProcessoModel() {
+	public Processo getProcessoModel() {
 		return processoModel;
 	}
 
-	public void setProcessoModel(ProcessoModel processoModel) {
+	public void setProcessoModel(Processo processoModel) {
 		this.processoModel = processoModel;
 	}
 
@@ -50,11 +50,11 @@ public class CompromissoModel {
 		this.local = local;
 	}
 
-	public ColaboradorModel getAdvogado() {
+	public Colaborador getAdvogado() {
 		return advogado;
 	}
 
-	public void setAdvogado(ColaboradorModel advogado) {
+	public void setAdvogado(Colaborador advogado) {
 		this.advogado = advogado;
 	}
 

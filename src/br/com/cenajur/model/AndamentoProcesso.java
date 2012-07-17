@@ -2,17 +2,17 @@ package br.com.cenajur.model;
 
 import java.util.Date;
 
-public class AndamentoProcessoModel {
+public class AndamentoProcesso {
 
 	private Long id;
 	
-	private ProcessoModel processoModel;
+	private Processo processo;
 	
 	private String descricao;
 	
 	private Date dataAndamento;
 
-	private TipoAndamentoProcessoModel tipoAndamentoProcessoModel;
+	private TipoAndamentoProcesso tipoAndamentoProcesso;
 	
 	public Long getId() {
 		return id;
@@ -22,14 +22,14 @@ public class AndamentoProcessoModel {
 		this.id = id;
 	}
 	
-	public ProcessoModel getProcessoModel() {
-		return processoModel;
+	public Processo getProcesso() {
+		return processo;
 	}
-	
-	public void setProcessoModel(ProcessoModel processoModel) {
-		this.processoModel = processoModel;
+
+	public void setProcesso(Processo processo) {
+		this.processo = processo;
 	}
-	
+
 	public String getDescricao() {
 		return descricao;
 	}
@@ -46,12 +46,12 @@ public class AndamentoProcessoModel {
 		this.dataAndamento = dataAndamento;
 	}
 	
-	public TipoAndamentoProcessoModel getTipoAndamentoProcessoModel() {
-		return tipoAndamentoProcessoModel;
+	public TipoAndamentoProcesso getTipoAndamentoProcesso() {
+		return tipoAndamentoProcesso;
 	}
 
-	public void setTipoAndamentoProcessoModel(TipoAndamentoProcessoModel tipoAndamentoProcessoModel) {
-		this.tipoAndamentoProcessoModel = tipoAndamentoProcessoModel;
+	public void setTipoAndamentoProcesso(TipoAndamentoProcesso tipoAndamentoProcesso) {
+		this.tipoAndamentoProcesso = tipoAndamentoProcesso;
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class AndamentoProcessoModel {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AndamentoProcessoModel other = (AndamentoProcessoModel) obj;
+		AndamentoProcesso other = (AndamentoProcesso) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

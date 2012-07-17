@@ -1,16 +1,16 @@
 package br.com.cenajur.model;
 
-public class VaraModel {
+public class EstadoCivil {
 
-	private Long id;
+	private Integer id;
 	
 	private String descricao;
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -38,7 +38,7 @@ public class VaraModel {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		VaraModel other = (VaraModel) obj;
+		EstadoCivil other = (EstadoCivil) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -46,6 +46,5 @@ public class VaraModel {
 			return false;
 		return true;
 	}
-	
 	
 }

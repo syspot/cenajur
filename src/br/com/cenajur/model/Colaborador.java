@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -14,53 +15,40 @@ import br.com.topsys.database.hibernate.TSActiveRecordAb;
 
 @Entity
 @Table(name = "colaboradores")
-public class ColaboradorModel extends TSActiveRecordAb<ColaboradorModel>{
+public class Colaborador extends TSActiveRecordAb<Colaborador>{
 
 	@Id
 	@GeneratedValue
 	private Long id;
 	
-	@Column(name = "codigo")
 	private Long codigo;
 	
-	@Column(name = "nome")
 	private String nome;
 	
-	@Column(name = "email")
 	private String email;
 	
-	@Column(name = "cpf")
 	private String cpf;
 	
-	@Column(name = "rg")
 	private String rg;
 	
-	@Column(name = "ctps")
 	private String ctps;
 	
-	@Column(name = "pis")
 	private String pis;
 	
 	@Column(name = "data_nascimento")
 	private Date dataNascimento;
 	
-	@Column(name = "endereco")
 	private String endereco;
 	
-	@Column(name = "bairro")
 	private String bairro;
 	
-	@OneToOne
-	@JoinColumn(name = "cidade_id")
-	private CidadeModel cidadeModel;
+	@ManyToOne
+	private Cidade cidade;
 
-	@Column(name = "cep")
 	private String cep;
 	
-	@Column(name = "telefone")
 	private String telefone;
 	
-	@Column(name = "celular")
 	private String celular;
 	
 	@Column(name = "data_admissao")
@@ -71,11 +59,11 @@ public class ColaboradorModel extends TSActiveRecordAb<ColaboradorModel>{
 	
 	@OneToOne
 	@JoinColumn(name = "tipo_colaborador_id")
-	private TipoColaboradorModel tipoColaboradorModel;
+	private TipoColaborador tipoColaborador;
 	
 	@OneToOne
 	@JoinColumn(name = "tipo_acesso_id")
-	private TipoAcessoModel tipoAcessoModel;
+	private TipoAcesso tipoAcesso;
 	
 	@Column(name = "flag_situacao")
 	private Boolean flagSituacao;
@@ -83,12 +71,11 @@ public class ColaboradorModel extends TSActiveRecordAb<ColaboradorModel>{
 	@Column(name = "data_desligamento")
 	private Date dataDesligamento;
 	
-	@Column(name = "observacao")
 	private String observacao;
 	
 	@OneToOne
 	@JoinColumn(name = "grupo_id")
-	private GrupoModel grupoModel;
+	private Grupo grupo;
 	
 	@Column(name = "login")
 	private String login;
@@ -185,12 +172,12 @@ public class ColaboradorModel extends TSActiveRecordAb<ColaboradorModel>{
 		this.bairro = bairro;
 	}
 
-	public CidadeModel getCidadeModel() {
-		return cidadeModel;
+	public Cidade getCidade() {
+		return cidade;
 	}
 
-	public void setCidadeModel(CidadeModel cidadeModel) {
-		this.cidadeModel = cidadeModel;
+	public void setCidade(Cidade cidade) {
+		this.cidade = cidade;
 	}
 
 	public String getCep() {
@@ -233,22 +220,6 @@ public class ColaboradorModel extends TSActiveRecordAb<ColaboradorModel>{
 		this.flagAgenda = flagAgenda;
 	}
 
-	public TipoColaboradorModel getTipoColaboradorModel() {
-		return tipoColaboradorModel;
-	}
-
-	public void setTipoColaboradorModel(TipoColaboradorModel tipoColaboradorModel) {
-		this.tipoColaboradorModel = tipoColaboradorModel;
-	}
-
-	public TipoAcessoModel getTipoAcessoModel() {
-		return tipoAcessoModel;
-	}
-
-	public void setTipoAcessoModel(TipoAcessoModel tipoAcessoModel) {
-		this.tipoAcessoModel = tipoAcessoModel;
-	}
-
 	public Boolean getFlagSituacao() {
 		return flagSituacao;
 	}
@@ -273,14 +244,6 @@ public class ColaboradorModel extends TSActiveRecordAb<ColaboradorModel>{
 		this.observacao = observacao;
 	}
 
-	public GrupoModel getGrupoModel() {
-		return grupoModel;
-	}
-
-	public void setGrupoModel(GrupoModel grupoModel) {
-		this.grupoModel = grupoModel;
-	}
-
 	public String getLogin() {
 		return login;
 	}
@@ -295,6 +258,30 @@ public class ColaboradorModel extends TSActiveRecordAb<ColaboradorModel>{
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public TipoColaborador getTipoColaborador() {
+		return tipoColaborador;
+	}
+
+	public void setTipoColaborador(TipoColaborador tipoColaborador) {
+		this.tipoColaborador = tipoColaborador;
+	}
+
+	public TipoAcesso getTipoAcesso() {
+		return tipoAcesso;
+	}
+
+	public void setTipoAcesso(TipoAcesso tipoAcesso) {
+		this.tipoAcesso = tipoAcesso;
+	}
+
+	public Grupo getGrupo() {
+		return grupo;
+	}
+
+	public void setGrupo(Grupo grupo) {
+		this.grupo = grupo;
 	}
 
 	@Override
@@ -313,7 +300,7 @@ public class ColaboradorModel extends TSActiveRecordAb<ColaboradorModel>{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ColaboradorModel other = (ColaboradorModel) obj;
+		Colaborador other = (Colaborador) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -322,8 +309,9 @@ public class ColaboradorModel extends TSActiveRecordAb<ColaboradorModel>{
 		return true;
 	}
 	
-	public ColaboradorModel autenticarPorLogin() {
-		return super.get(" from ColaboradorModel c where c.login = ? ", login);
+	public Colaborador autenticarPorLogin() {
+		return super.get(" from Colaborador c where c.login = ? ", login);
 	}	
 	
 }
+	

@@ -2,19 +2,19 @@ package br.com.cenajur.model;
 
 import java.util.Date;
 
-public class AudienciaModel {
+public class Audiencia {
 
 	private Long id;
 	
-	private ProcessoModel processoModel;
+	private Processo processo;
 	
 	private Date dataAudiencia;
 	
-	private SituacaoAudienciaModel situacaoAudienciaModel;
+	private SituacaoAudiencia situacaoAudiencia;
 	
-	private VaraModel varaModel;
+	private Vara vara;
 	
-	private ColaboradorModel advogado;
+	private Colaborador advogado;
 	
 	private String descricao;
 
@@ -26,12 +26,12 @@ public class AudienciaModel {
 		this.id = id;
 	}
 
-	public ProcessoModel getProcessoModel() {
-		return processoModel;
+	public Processo getProcesso() {
+		return processo;
 	}
 
-	public void setProcessoModel(ProcessoModel processoModel) {
-		this.processoModel = processoModel;
+	public void setProcesso(Processo processo) {
+		this.processo = processo;
 	}
 
 	public Date getDataAudiencia() {
@@ -42,28 +42,27 @@ public class AudienciaModel {
 		this.dataAudiencia = dataAudiencia;
 	}
 
-	public SituacaoAudienciaModel getSituacaoAudienciaModel() {
-		return situacaoAudienciaModel;
+	public SituacaoAudiencia getSituacaoAudiencia() {
+		return situacaoAudiencia;
 	}
 
-	public void setSituacaoAudienciaModel(
-			SituacaoAudienciaModel situacaoAudienciaModel) {
-		this.situacaoAudienciaModel = situacaoAudienciaModel;
+	public void setSituacaoAudiencia(SituacaoAudiencia situacaoAudiencia) {
+		this.situacaoAudiencia = situacaoAudiencia;
 	}
 
-	public VaraModel getVaraModel() {
-		return varaModel;
+	public Vara getVara() {
+		return vara;
 	}
 
-	public void setVaraModel(VaraModel varaModel) {
-		this.varaModel = varaModel;
+	public void setVara(Vara vara) {
+		this.vara = vara;
 	}
 
-	public ColaboradorModel getAdvogado() {
+	public Colaborador getAdvogado() {
 		return advogado;
 	}
 
-	public void setAdvogado(ColaboradorModel advogado) {
+	public void setAdvogado(Colaborador advogado) {
 		this.advogado = advogado;
 	}
 
@@ -91,7 +90,7 @@ public class AudienciaModel {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AudienciaModel other = (AudienciaModel) obj;
+		Audiencia other = (Audiencia) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

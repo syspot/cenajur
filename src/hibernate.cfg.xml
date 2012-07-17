@@ -18,19 +18,21 @@
 		<property name="hibernate.connection.password">nayara</property>
 
 		<property name="hibernate.show_sql">true</property>
-		<property name="hibernate.hbm2ddl.auto">create</property>
-	
-
+		<property name="hibernate.hbm2ddl.auto">create-drop</property>
 
  		<mapping class="br.com.cenajur.model.Usuario" />
- 		<mapping class="br.com.cenajur.model.TipoProcessoModel" />
- 		<mapping class="br.com.cenajur.model.GrupoModel" />
- 		<mapping class="br.com.cenajur.model.ColaboradorModel" />
- 		<mapping class="br.com.cenajur.model.CidadeModel" />
- 		<mapping class="br.com.cenajur.model.EstadoModel" />
- 		<mapping class="br.com.cenajur.model.TipoColaboradorModel" />
- 		<mapping class="br.com.cenajur.model.TipoAcessoModel" />
- 		<mapping class="br.com.cenajur.model.GrupoModel" />
+ 		<mapping class="br.com.cenajur.model.TipoProcesso" />
+ 		<mapping class="br.com.cenajur.model.Grupo" />
+ 		<mapping class="br.com.cenajur.model.Colaborador" />
+ 		<mapping class="br.com.cenajur.model.Cidade" />
+ 		<mapping class="br.com.cenajur.model.Estado" />
+ 		<mapping class="br.com.cenajur.model.TipoColaborador" />
+ 		<mapping class="br.com.cenajur.model.TipoAcesso" />
+ 		<mapping class="br.com.cenajur.model.Grupo" />
+ 		<mapping class="br.com.cenajur.model.Menu" />
+ 		<mapping class="br.com.cenajur.model.Permissao" />
+ 		<mapping class="br.com.cenajur.model.PermissaoGrupo" />
+ 		<mapping class="br.com.cenajur.model.Objeto" />
 
 
 

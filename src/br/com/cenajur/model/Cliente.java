@@ -2,7 +2,7 @@ package br.com.cenajur.model;
 
 import java.util.Date;
 
-public class ClienteModel {
+public class Cliente {
 
 	private Long id;
 	
@@ -22,9 +22,9 @@ public class ClienteModel {
 	
 	private String bairro;
 	
-	private CidadeModel cidadeModel;
+	private Cidade cidade;
 	
-	private EstadoModel estadoModel;
+	private Estado estado;
 	
 	private String cep;
 	
@@ -38,7 +38,7 @@ public class ClienteModel {
 	
 	private String nomeMae;
 	
-	private EstadoCivilModel estadoCivilModel;
+	private EstadoCivil estadoCivil;
 	
 	private Date dataAdesao;
 	
@@ -46,19 +46,19 @@ public class ClienteModel {
 	
 	private Boolean flagAgenda;
 	
-	private TipoClienteModel tipoClienteModel;
+	private TipoCliente tipoCliente;
 	
-	private SituacaoModel situacaoModel;
+	private Situacao situacao;
 	
-	private TipoPagamentoModel tipoPagamentoModel;
+	private TipoPagamento tipoPagamento;
 	
 	private Date dataDesligamento;
 	
 	private String motivoCancelamento;
 	
-	private ClienteModel titular;
+	private Cliente titular;
 	
-	private BancoModel bancoModel;
+	private Banco banco;
 	
 	private String agencia;
 	
@@ -72,15 +72,15 @@ public class ClienteModel {
 	
 	private String telefoneFuncional;
 	
-	private CidadeModel cidadeFuncional;
+	private Cidade cidadeFuncional;
 	
-	private EstadoModel estadoFuncional;
+	private Estado estadoFuncional;
 	
-	private GraduacaoModel graduacaoModel;
+	private Graduacao graduacao;
 	
 	private String cadastroPM;
 	
-	private Boolean situacao;
+	private Boolean flagSituacao;
 	
 	private String observacao;
 	
@@ -158,22 +158,6 @@ public class ClienteModel {
 		this.bairro = bairro;
 	}
 
-	public CidadeModel getCidadeModel() {
-		return cidadeModel;
-	}
-
-	public void setCidadeModel(CidadeModel cidadeModel) {
-		this.cidadeModel = cidadeModel;
-	}
-
-	public EstadoModel getEstadoModel() {
-		return estadoModel;
-	}
-
-	public void setEstadoModel(EstadoModel estadoModel) {
-		this.estadoModel = estadoModel;
-	}
-
 	public String getCep() {
 		return cep;
 	}
@@ -222,14 +206,6 @@ public class ClienteModel {
 		this.nomeMae = nomeMae;
 	}
 
-	public EstadoCivilModel getEstadoCivilModel() {
-		return estadoCivilModel;
-	}
-
-	public void setEstadoCivilModel(EstadoCivilModel estadoCivilModel) {
-		this.estadoCivilModel = estadoCivilModel;
-	}
-
 	public Date getDataAdesao() {
 		return dataAdesao;
 	}
@@ -254,30 +230,6 @@ public class ClienteModel {
 		this.flagAgenda = flagAgenda;
 	}
 
-	public TipoClienteModel getTipoClienteModel() {
-		return tipoClienteModel;
-	}
-
-	public void setTipoClienteModel(TipoClienteModel tipoClienteModel) {
-		this.tipoClienteModel = tipoClienteModel;
-	}
-
-	public SituacaoModel getSituacaoModel() {
-		return situacaoModel;
-	}
-
-	public void setSituacaoModel(SituacaoModel situacaoModel) {
-		this.situacaoModel = situacaoModel;
-	}
-
-	public TipoPagamentoModel getTipoPagamentoModel() {
-		return tipoPagamentoModel;
-	}
-
-	public void setTipoPagamentoModel(TipoPagamentoModel tipoPagamentoModel) {
-		this.tipoPagamentoModel = tipoPagamentoModel;
-	}
-
 	public Date getDataDesligamento() {
 		return dataDesligamento;
 	}
@@ -294,20 +246,12 @@ public class ClienteModel {
 		this.motivoCancelamento = motivoCancelamento;
 	}
 
-	public ClienteModel getTitular() {
+	public Cliente getTitular() {
 		return titular;
 	}
 
-	public void setTitular(ClienteModel titular) {
+	public void setTitular(Cliente titular) {
 		this.titular = titular;
-	}
-
-	public BancoModel getBancoModel() {
-		return bancoModel;
-	}
-
-	public void setBancoModel(BancoModel bancoModel) {
-		this.bancoModel = bancoModel;
 	}
 
 	public String getAgencia() {
@@ -358,28 +302,20 @@ public class ClienteModel {
 		this.telefoneFuncional = telefoneFuncional;
 	}
 
-	public CidadeModel getCidadeFuncional() {
+	public Cidade getCidadeFuncional() {
 		return cidadeFuncional;
 	}
 
-	public void setCidadeFuncional(CidadeModel cidadeFuncional) {
+	public void setCidadeFuncional(Cidade cidadeFuncional) {
 		this.cidadeFuncional = cidadeFuncional;
 	}
 
-	public EstadoModel getEstadoFuncional() {
+	public Estado getEstadoFuncional() {
 		return estadoFuncional;
 	}
 
-	public void setEstadoFuncional(EstadoModel estadoFuncional) {
+	public void setEstadoFuncional(Estado estadoFuncional) {
 		this.estadoFuncional = estadoFuncional;
-	}
-
-	public GraduacaoModel getGraduacaoModel() {
-		return graduacaoModel;
-	}
-
-	public void setGraduacaoModel(GraduacaoModel graduacaoModel) {
-		this.graduacaoModel = graduacaoModel;
 	}
 
 	public String getCadastroPM() {
@@ -388,14 +324,6 @@ public class ClienteModel {
 
 	public void setCadastroPM(String cadastroPM) {
 		this.cadastroPM = cadastroPM;
-	}
-
-	public Boolean getSituacao() {
-		return situacao;
-	}
-
-	public void setSituacao(Boolean situacao) {
-		this.situacao = situacao;
 	}
 
 	public String getObservacao() {
@@ -414,6 +342,78 @@ public class ClienteModel {
 		this.recado = recado;
 	}
 
+	public Cidade getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(Cidade cidade) {
+		this.cidade = cidade;
+	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+
+	public EstadoCivil getEstadoCivil() {
+		return estadoCivil;
+	}
+
+	public void setEstadoCivil(EstadoCivil estadoCivil) {
+		this.estadoCivil = estadoCivil;
+	}
+
+	public TipoCliente getTipoCliente() {
+		return tipoCliente;
+	}
+
+	public void setTipoCliente(TipoCliente tipoCliente) {
+		this.tipoCliente = tipoCliente;
+	}
+
+	public Boolean getFlagSituacao() {
+		return flagSituacao;
+	}
+
+	public void setFlagSituacao(Boolean flagSituacao) {
+		this.flagSituacao = flagSituacao;
+	}
+
+	public void setSituacao(Situacao situacao) {
+		this.situacao = situacao;
+	}
+
+	public TipoPagamento getTipoPagamento() {
+		return tipoPagamento;
+	}
+
+	public void setTipoPagamento(TipoPagamento tipoPagamento) {
+		this.tipoPagamento = tipoPagamento;
+	}
+
+	public Banco getBanco() {
+		return banco;
+	}
+
+	public void setBanco(Banco banco) {
+		this.banco = banco;
+	}
+
+	public Graduacao getGraduacao() {
+		return graduacao;
+	}
+
+	public void setGraduacao(Graduacao graduacao) {
+		this.graduacao = graduacao;
+	}
+
+	public Situacao getSituacao() {
+		return situacao;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -430,7 +430,7 @@ public class ClienteModel {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ClienteModel other = (ClienteModel) obj;
+		Cliente other = (Cliente) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

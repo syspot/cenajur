@@ -1,35 +1,28 @@
 package br.com.cenajur.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 
 @Entity
-@Table(name = "cidades")
-public class CidadeModel extends TSActiveRecordAb<CidadeModel>{
+@Table(name = "tipos_acessos")
+public class TipoAcesso extends TSActiveRecordAb<TipoAcesso>{
 
 	@Id
 	@GeneratedValue
-	private Long id;
+	private Integer id;
 	
-	@Column(name = "descricao")
 	private String descricao;
-	
-	@OneToOne
-	@JoinColumn(name = "estado_id")
-	private EstadoModel estadoModel;
 
-	public Long getId() {
+	
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -39,14 +32,6 @@ public class CidadeModel extends TSActiveRecordAb<CidadeModel>{
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
-	}
-
-	public EstadoModel getEstadoModel() {
-		return estadoModel;
-	}
-
-	public void setEstadoModel(EstadoModel estadoModel) {
-		this.estadoModel = estadoModel;
 	}
 
 	@Override
@@ -65,7 +50,7 @@ public class CidadeModel extends TSActiveRecordAb<CidadeModel>{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CidadeModel other = (CidadeModel) obj;
+		TipoAcesso other = (TipoAcesso) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -73,5 +58,6 @@ public class CidadeModel extends TSActiveRecordAb<CidadeModel>{
 			return false;
 		return true;
 	}
+	
 	
 }

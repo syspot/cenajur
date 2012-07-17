@@ -10,9 +10,9 @@ public class VisitaClienteModel {
 	
 	private SituacaoVisitaModel situacaoVisitaModel;
 	
-	private ClienteModel clienteModel;
+	private Cliente clienteModel;
 	
-	private ColaboradorModel advogado;
+	private Colaborador advogado;
 	
 	private String descricao;
 
@@ -40,19 +40,19 @@ public class VisitaClienteModel {
 		this.situacaoVisitaModel = situacaoVisitaModel;
 	}
 
-	public ClienteModel getClienteModel() {
+	public Cliente getClienteModel() {
 		return clienteModel;
 	}
 
-	public void setClienteModel(ClienteModel clienteModel) {
+	public void setClienteModel(Cliente clienteModel) {
 		this.clienteModel = clienteModel;
 	}
 
-	public ColaboradorModel getAdvogado() {
+	public Colaborador getAdvogado() {
 		return advogado;
 	}
 
-	public void setAdvogado(ColaboradorModel advogado) {
+	public void setAdvogado(Colaborador advogado) {
 		this.advogado = advogado;
 	}
 

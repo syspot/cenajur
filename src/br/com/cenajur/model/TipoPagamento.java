@@ -1,6 +1,6 @@
 package br.com.cenajur.model;
 
-public class GraduacaoModel {
+public class TipoPagamento {
 
 	private Integer id;
 	
@@ -38,7 +38,7 @@ public class GraduacaoModel {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		GraduacaoModel other = (GraduacaoModel) obj;
+		TipoPagamento other = (TipoPagamento) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -46,5 +46,6 @@ public class GraduacaoModel {
 			return false;
 		return true;
 	}
+	
 	
 }

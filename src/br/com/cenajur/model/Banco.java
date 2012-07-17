@@ -1,6 +1,6 @@
 package br.com.cenajur.model;
 
-public class EstadoCivilModel {
+public class Banco {
 
 	private Integer id;
 	
@@ -38,7 +38,7 @@ public class EstadoCivilModel {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		EstadoCivilModel other = (EstadoCivilModel) obj;
+		Banco other = (Banco) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -46,5 +46,6 @@ public class EstadoCivilModel {
 			return false;
 		return true;
 	}
+	
 	
 }
