@@ -26,6 +26,10 @@
  		<mapping class="br.com.cenajur.model.Colaborador" />
  		<mapping class="br.com.cenajur.model.Cidade" />
  		<mapping class="br.com.cenajur.model.Estado" />
+ 		<mapping class="br.com.cenajur.model.Banco" />
+ 		<mapping class="br.com.cenajur.model.Graduacao" />
+ 		<mapping class="br.com.cenajur.model.Comarca" />
+ 		<mapping class="br.com.cenajur.model.Vara" />
  		<mapping class="br.com.cenajur.model.TipoColaborador" />
  		<mapping class="br.com.cenajur.model.TipoAcesso" />
  		<mapping class="br.com.cenajur.model.Grupo" />

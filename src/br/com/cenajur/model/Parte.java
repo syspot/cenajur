@@ -1,6 +1,6 @@
 package br.com.cenajur.model;
 
-public class ParteModel {
+public class Parte {
 
 	private Long id;
 	
@@ -38,7 +38,7 @@ public class ParteModel {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ParteModel other = (ParteModel) obj;
+		Parte other = (Parte) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

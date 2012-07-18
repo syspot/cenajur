@@ -27,20 +27,20 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	
 	private Integer lote;
 	
-	private List<ParteContrariaModel> parteContrariaModel;
+	private List<ParteContraria> parteContrariaModel;
 	
 	@Column(name = "tipo_processo_id")
 	private TipoProcesso tipoProcessoModel;
 	
 	private Vara varaModel;
 	
-	private ComarcaModel comarcaModel;
+	private Comarca comarcaModel;
 	
 	private Colaborador advogado;
 	
 	private Date dataAbertura;
 	
-	private ParteModel parteModel;
+	private Parte parteModel;
 	
 	private SituacaoProcessoModel situacaoProcessoModel;
 	
@@ -90,11 +90,11 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		this.lote = lote;
 	}
 
-	public List<ParteContrariaModel> getParteContrariaModel() {
+	public List<ParteContraria> getParteContrariaModel() {
 		return parteContrariaModel;
 	}
 
-	public void setParteContrariaModel(List<ParteContrariaModel> parteContrariaModel) {
+	public void setParteContrariaModel(List<ParteContraria> parteContrariaModel) {
 		this.parteContrariaModel = parteContrariaModel;
 	}
 
@@ -114,11 +114,11 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		this.varaModel = varaModel;
 	}
 
-	public ComarcaModel getComarcaModel() {
+	public Comarca getComarcaModel() {
 		return comarcaModel;
 	}
 
-	public void setComarcaModel(ComarcaModel comarcaModel) {
+	public void setComarcaModel(Comarca comarcaModel) {
 		this.comarcaModel = comarcaModel;
 	}
 
@@ -138,11 +138,11 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		this.dataAbertura = dataAbertura;
 	}
 
-	public ParteModel getParteModel() {
+	public Parte getParteModel() {
 		return parteModel;
 	}
 
-	public void setParteModel(ParteModel parteModel) {
+	public void setParteModel(Parte parteModel) {
 		this.parteModel = parteModel;
 	}
 

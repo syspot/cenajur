@@ -1,7 +1,18 @@
 package br.com.cenajur.model;
 
-public class ComarcaModel {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+import br.com.topsys.database.hibernate.TSActiveRecordAb;
+
+@Entity
+@Table(name = "comarcas")
+public class Comarca extends TSActiveRecordAb<Comarca> {
+
+	@Id
+	@GeneratedValue
 	private Long id;
 	
 	private String descricao;
@@ -38,7 +49,7 @@ public class ComarcaModel {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ComarcaModel other = (ComarcaModel) obj;
+		Comarca other = (Comarca) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

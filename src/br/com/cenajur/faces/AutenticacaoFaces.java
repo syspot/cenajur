@@ -50,10 +50,30 @@ public class AutenticacaoFaces extends TSMainFaces{
         setNomeTela("Área de Trabalho > " + this.permissaoSelecionada.getMenu().getNome() + " > " + this.permissaoSelecionada.getDescricao());
         //setTabAtiva(Integer.valueOf(this.menusPrime.indexOf(this.permissaoPrimeModel.getMenuModel())));
         this.currentFaces = this.permissaoSelecionada.getFaces();
+        
+        this.obterPermissaoGrupoSelecionada();
+        
+//        this.permissaoGrupoSelecionada = new PermissaoGrupo();
 //        this.permissaoGrupoSelecionada.setGrupo(this.colaborador.getGrupo());
 //        this.permissaoGrupoSelecionada.setPermissao(this.permissaoSelecionada);
-//        this.permissaoGrupoSelecionada = this.permissaoGrupoSelecionada.getByModel(CenajurUtil.getVetor("flagInserir", "flagAlterar", "flagExcluir"), "flagInserir");
+//        
+//        int i = this.colaborador.getGrupo().getPermissoesGrupos().indexOf(permissaoGrupoSelecionada);
+//        
+//        this.permissaoGrupoSelecionada = this.colaborador.getGrupo().getPermissoesGrupos().get(i);
+        
+        //this.permissaoGrupoSelecionada = this.permissaoGrupoSelecionada.getByModel(CenajurUtil.getVetor("grupo", "permissao", "flagInserir", "flagAlterar", "flagExcluir"), "id");
+        
         return "sucesso";
+    }
+    
+    public void obterPermissaoGrupoSelecionada(){
+    	
+        this.permissaoGrupoSelecionada.setGrupo(this.colaborador.getGrupo());
+        this.permissaoGrupoSelecionada.setPermissao(this.permissaoSelecionada);
+        
+        int posicao = this.colaborador.getGrupo().getPermissoesGrupos().indexOf(permissaoGrupoSelecionada);
+        
+        this.permissaoGrupoSelecionada = this.colaborador.getGrupo().getPermissoesGrupos().get(posicao);
     }
 
     public String logout() {

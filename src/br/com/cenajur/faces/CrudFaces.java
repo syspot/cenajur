@@ -103,7 +103,7 @@ public class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFaces{
 	@Override
 	protected String detail() {
 
-		this.crudModel = this.crudModel.getByModel();
+		this.crudModel = this.crudModel.getById();
 		
 		this.tabIndex = 0;
 		

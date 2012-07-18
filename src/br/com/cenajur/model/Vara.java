@@ -1,7 +1,18 @@
 package br.com.cenajur.model;
 
-public class Vara {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+import br.com.topsys.database.hibernate.TSActiveRecordAb;
+
+@Entity
+@Table(name = "varas")
+public class Vara extends TSActiveRecordAb<Vara>{
+
+	@Id
+	@GeneratedValue
 	private Long id;
 	
 	private String descricao;

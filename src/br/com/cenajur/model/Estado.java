@@ -1,6 +1,5 @@
 package br.com.cenajur.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,16 +13,15 @@ public class Estado extends TSActiveRecordAb<Estado>{
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	
-	@Column(name = "descricao")
 	private String descricao;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -1,16 +1,27 @@
 package br.com.cenajur.model;
 
-public class Graduacao {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-	private Integer id;
+import br.com.topsys.database.hibernate.TSActiveRecordAb;
+
+@Entity
+@Table(name = "graduacoes")
+public class Graduacao extends TSActiveRecordAb<Graduacao>{
+
+	@Id
+	@GeneratedValue
+	private Long id;
 	
 	private String descricao;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
