@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="/resources/templates/templateCRUD.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+	<ui:param name="mbean" value="${colaboradorFaces}" />
+  	<ui:param name="mbeanModel" value="${colaboradorFaces.crudModel}" />
+  	<ui:param name="mbeanPesquisaModel" value="${colaboradorFaces.crudPesquisaModel}" />
+  	
+  	<ui:define name="cadastro">
+  	
+  		<p:fieldset legend="Informações Gerais">
+  		
+  			<h:panelGrid columns="1" styleClass="coluna50">
+	  		
+		  		<p:outputLabel for="nome" value="Nome"/>
+		  		<p:inputText id="nome" required="true" requiredMessage="Nome: Campo Obrigatório" value="#{mbeanModel.nome}" maxlength="100" styleClass="coluna90"/>
+		  	
+		  		<p:outputLabel for="email" value="E-mail"/>
+		  		<p:inputText id="email" required="true" requiredMessage="E-mail: Campo Obrigatório" value="#{mbeanModel.email}" maxlength="50" styleClass="coluna65"/>
+		  	
+	  		</h:panelGrid>
+	  		
+	  		<h:panelGrid columns="2" styleClass="coluna30">
+	  		
+		  		<p:outputLabel for="cpf" value="CPF"/>
+		  		<p:outputLabel for="rg" value="RG"/>
+		  	
+		  		<p:inputText id="cpf" required="true" requiredMessage="CPF: Campo Obrigatório" value="#{mbeanModel.cpf}" maxlength="15" styleClass="coluna90"/>
+		  		<p:inputText id="rg" required="true" requiredMessage="RG: Campo Obrigatório" value="#{mbeanModel.rg}" maxlength="20" styleClass="coluna80"/>
+		  		
+  			</h:panelGrid>
+  			
+  		</p:fieldset>
+  		
+  		<br/>
+  		
+  		<p:fieldset legend="Endereço">
+  		
+  			<h:panelGrid columns="2" styleClass="coluna70">
+
+				<p:outputLabel for="cep" value="Cep"/>
+		  		<p:outputLabel for="logradouro" value="Logradouro"/>
+		  			  		
+		  		<p:inputText id="cep" required="true" requiredMessage="Cep: Campo Obrigatório" value="#{mbeanModel.cep}" maxlength="10" styleClass="coluna90"/>
+		  		<p:inputText id="logradouro" required="true" requiredMessage="Logradouro: Campo Obrigatório" value="#{mbeanModel.logradouro}" maxlength="200" styleClass="coluna90"/>
+		  	
+		  	</h:panelGrid>
+		  	
+		  	<h:panelGrid columns="2" styleClass="coluna10, coluna40">
+		  	
+		  		<p:outputLabel for="numero" value="Número"/>
+		  		<p:outputLabel for="complemento" value="Complemento"/>
+		  	
+		  		<p:inputText id="numero" required="true" requiredMessage="Número: Campo Obrigatório" value="#{mbeanModel.numero}" maxlength="6" styleClass="coluna90"/>
+		  		<p:inputText id="complemento" required="true" requiredMessage="Complemento: Campo Obrigatório" value="#{mbeanModel.complemento}" maxlength="14" styleClass="coluna90"/>
+		  	
+		  	</h:panelGrid>
+		  		
+	  		<h:panelGrid columns="3" styleClass="coluna50">
+	  		
+		  		<p:outputLabel for="bairro" value="Bairro"/>
+			  	<p:outputLabel for="estado" value="Estado"/>
+			  	<p:outputLabel for="cidade" value="Cidade"/>
+		  	
+		  		<p:inputText id="bairro" required="true" requiredMessage="Bairro: Campo Obrigatório" value="#{mbeanModel.bairro}" maxlength="80" styleClass="coluna90"/>
+		  		<p:inputText id="estado" required="true" requiredMessage="Estado: Campo Obrigatório" value="#{mbeanModel.cidade.estado}" maxlength="80" styleClass="coluna90"/>
+		  		<p:inputText id="cidade" required="true" requiredMessage="Cidade: Campo Obrigatório" value="#{mbeanModel.cidade}" maxlength="80" styleClass="coluna90"/>
+		  	
+		  	</h:panelGrid>
+		  	
+		  	<h:panelGrid columns="2" styleClass="coluna30">
+		  		
+		  		<p:outputLabel for="telefone" value="Telefone"/>
+		  		<p:outputLabel for="celular" value="Celular"/>
+		  	
+		  		<p:inputText id="telefone" required="true" requiredMessage="Telefone: Campo Obrigatório" value="#{mbeanModel.telefone}" maxlength="14" styleClass="coluna90"/>
+		  		<p:inputText id="celular" required="true" requiredMessage="Celular: Campo Obrigatório" value="#{mbeanModel.celular}" maxlength="14" styleClass="coluna90"/>
+		  		
+	  		</h:panelGrid>
+  		
+  		</p:fieldset>
+  		
+  	</ui:define>
+  	
+  	<ui:define name="pesquisaCampos">
+  	
+  		
+  	
+  	</ui:define>
+  	
+  	<ui:define name="colunasTabela">
+  	
+  		
+  	
+  	</ui:define>
+  	
+</ui:composition>

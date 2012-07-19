@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
@@ -20,8 +19,6 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 	@Id
 	@GeneratedValue
 	private Long id;
-	
-	private Long codigo;
 	
 	private String nome;
 	
@@ -38,14 +35,18 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 	@Column(name = "data_nascimento")
 	private Date dataNascimento;
 	
-	private String endereco;
+	private String cep;
+
+	private String logradouro;
+	
+	private Integer numero;
+	
+	private String complemento;
 	
 	private String bairro;
 	
 	@ManyToOne
 	private Cidade cidade;
-
-	private String cep;
 	
 	private String telefone;
 	
@@ -57,11 +58,11 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 	@Column(name = "flag_agenda")
 	private Boolean flagAgenda;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "tipo_colaborador_id")
 	private TipoColaborador tipoColaborador;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "tipo_acesso_id")
 	private TipoAcesso tipoAcesso;
 	
@@ -73,14 +74,11 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 	
 	private String observacao;
 	
-	@OneToOne
-	@JoinColumn(name = "grupo_id")
+	@ManyToOne
 	private Grupo grupo;
 	
-	@Column(name = "login")
 	private String login;
 	
-	@Column(name = "senha")
 	private String senha;
 	
 
@@ -90,14 +88,6 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Long getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(Long codigo) {
-		this.codigo = codigo;
 	}
 
 	public String getNome() {
@@ -156,12 +146,28 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 		this.dataNascimento = dataNascimento;
 	}
 
-	public String getEndereco() {
-		return endereco;
+	public String getLogradouro() {
+		return logradouro;
 	}
 
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
+	}
+
+	public Integer getNumero() {
+		return numero;
+	}
+
+	public void setNumero(Integer numero) {
+		this.numero = numero;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
 	}
 
 	public String getBairro() {

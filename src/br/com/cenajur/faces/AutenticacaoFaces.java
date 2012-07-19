@@ -11,6 +11,7 @@ import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.Menu;
 import br.com.cenajur.model.Permissao;
 import br.com.cenajur.model.PermissaoGrupo;
+import br.com.cenajur.model.Vara;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.topsys.util.TSUtil;
@@ -53,15 +54,23 @@ public class AutenticacaoFaces extends TSMainFaces{
         
         this.obterPermissaoGrupoSelecionada();
         
-//        this.permissaoGrupoSelecionada = new PermissaoGrupo();
-//        this.permissaoGrupoSelecionada.setGrupo(this.colaborador.getGrupo());
-//        this.permissaoGrupoSelecionada.setPermissao(this.permissaoSelecionada);
-//        
-//        int i = this.colaborador.getGrupo().getPermissoesGrupos().indexOf(permissaoGrupoSelecionada);
-//        
-//        this.permissaoGrupoSelecionada = this.colaborador.getGrupo().getPermissoesGrupos().get(i);
+        //this.permissaoGrupoSelecionada = new PermissaoGrupo();
         
-        //this.permissaoGrupoSelecionada = this.permissaoGrupoSelecionada.getByModel(CenajurUtil.getVetor("grupo", "permissao", "flagInserir", "flagAlterar", "flagExcluir"), "id");
+        //this.permissaoGrupoSelecionada.setId(1L);
+        //this.permissaoGrupoSelecionada.setGrupo(this.colaborador.getGrupo());
+        //this.permissaoGrupoSelecionada.setPermissao(this.permissaoSelecionada);
+        
+        //int i = this.colaborador.getGrupo().getPermissoesGrupos().indexOf(permissaoGrupoSelecionada);
+        
+        //this.permissaoGrupoSelecionada = this.colaborador.getGrupo().getPermissoesGrupos().get(i);
+        
+//        Vara vara = new Vara();
+//        
+//        vara.setId(1L);
+//        
+//        Vara vara2 = vara.getByModel();
+//        
+//        this.permissaoGrupoSelecionada = this.permissaoGrupoSelecionada.getByModel();
         
         return "sucesso";
     }
@@ -123,9 +132,9 @@ public class AutenticacaoFaces extends TSMainFaces{
         	this.menusPrime.clear();
         	List<Permissao> permissoes; 
         	
-        	for(PermissaoGrupo p: colaborador.getGrupo().getPermissoesGrupos()){
-        		System.out.println("--- " + p.getId());
-        	}
+//        	for(PermissaoGrupo p: colaborador.getGrupo().getPermissoesGrupos()){
+//        		System.out.println("--- " + p.getId());
+//        	}
         	
         	for(Menu menu : this.menus){
         		
