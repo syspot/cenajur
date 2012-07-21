@@ -55,9 +55,6 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 	@Column(name = "data_admissao")
 	private Date dataAdmissao;
 	
-	@Column(name = "flag_agenda")
-	private Boolean flagAgenda;
-	
 	@ManyToOne
 	@JoinColumn(name = "tipo_colaborador_id")
 	private TipoColaborador tipoColaborador;
@@ -216,14 +213,6 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 
 	public void setDataAdmissao(Date dataAdmissao) {
 		this.dataAdmissao = dataAdmissao;
-	}
-
-	public Boolean getFlagAgenda() {
-		return flagAgenda;
-	}
-
-	public void setFlagAgenda(Boolean flagAgenda) {
-		this.flagAgenda = flagAgenda;
 	}
 
 	public Boolean getFlagSituacao() {

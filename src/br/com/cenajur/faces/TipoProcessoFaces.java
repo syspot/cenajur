@@ -1,7 +1,5 @@
 package br.com.cenajur.faces;
 
-import java.util.Collections;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -17,17 +15,10 @@ public class TipoProcessoFaces extends CrudFaces<TipoProcesso> {
 		this.clearFields();
 	}
 	
-	@Override
-	public String limpar(){
-		this.crudModel = new TipoProcesso();
-		return super.limpar();
-	}
-	
+		
 	@Override
 	public String limparPesquisa(){
-		this.crudPesquisaModel = new TipoProcesso();
-		this.grid = Collections.emptyList();
-		this.fieldOrdem = "descricao";
+		this.setFieldOrdem("descricao");
 		return super.limparPesquisa();
 	}
 	

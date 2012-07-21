@@ -17,17 +17,10 @@ public class GraduacaoFaces extends CrudFaces<Graduacao> {
 		this.clearFields();
 	}
 	
-	@Override
-	public String limpar(){
-		this.crudModel = new Graduacao();
-		return super.limpar();
-	}
-	
+		
 	@Override
 	public String limparPesquisa(){
-		this.crudPesquisaModel = new Graduacao();
-		this.grid = Collections.emptyList();
-		this.fieldOrdem = "descricao";
+		this.setFieldOrdem("descricao");
 		return super.limparPesquisa();
 	}
 	

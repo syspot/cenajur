@@ -65,9 +65,13 @@
 			  	<p:outputLabel for="estado" value="Estado"/>
 			  	<p:outputLabel for="cidade" value="Cidade"/>
 		  	
-		  		<p:inputText id="bairro" required="true" requiredMessage="Bairro: Campo Obrigatório" value="#{mbeanModel.bairro}" maxlength="80" styleClass="coluna90"/>
-		  		<p:inputText id="estado" required="true" requiredMessage="Estado: Campo Obrigatório" value="#{mbeanModel.cidade.estado}" maxlength="80" styleClass="coluna90"/>
-		  		<p:inputText id="cidade" required="true" requiredMessage="Cidade: Campo Obrigatório" value="#{mbeanModel.cidade}" maxlength="80" styleClass="coluna90"/>
+		  		<p:inputText id="bairro" required="true" requiredMessage="Bairro: Campo obrigatório" value="#{mbeanModel.bairro}" maxlength="80" styleClass="coluna90"/>
+	  			<p:selectOneMenu id="estado" value="#{mbeanModel.cidade.estado.id}" required="true" requiredMessage="Estado: Campo obrigatório">
+	  				<f:selectItems value="#{mbean.estados}" noSelectionValue="Não Selecionado" />
+	  			</p:selectOneMenu>
+	  			<p:selectOneMenu id="cidade" value="#{mbeanModel.cidade.id}" required="true" requiredMessage="Cidade: Campo obrigatório">
+	  				<f:selectItems value="#{mbean.cidades}" noSelectionValue="Não Selecionado" />
+	  			</p:selectOneMenu>
 		  	
 		  	</h:panelGrid>
 		  	
@@ -80,6 +84,18 @@
 		  		<p:inputText id="celular" required="true" requiredMessage="Celular: Campo Obrigatório" value="#{mbeanModel.celular}" maxlength="14" styleClass="coluna90"/>
 		  		
 	  		</h:panelGrid>
+  		
+  		</p:fieldset>
+  		
+  		<p:fieldset legend="Informações Cenajur">
+  		
+  			<p:outputLabel for="data_admissao" value="Data de Admissão" />
+  			<p:calendar id="data_admissao" required="true" requiredMessage="Data de Admissão: Campo obrigatório" value="#{mbeanModel.dataAdmissao}" />
+  			
+  			<p:outputLabel for="tipo_colaborador" value="Tipo de Colaborador" />
+  			<p:selectOneMenu id="tipo_colaborador" value="#{mbeanModel.tipoColaborador.id}" required="true" requiredMessage="Tipo de Colaborador: Campo obrigatório">
+  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+  			</p:selectOneMenu>
   		
   		</p:fieldset>
   		

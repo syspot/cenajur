@@ -27,6 +27,9 @@ public class Permissao extends TSActiveRecordAb<Permissao> {
 	
 	private String url;
 	
+	@Column(name = "tab_ativa")
+	private Integer tabAtiva;
+	
 	@ManyToOne
 	private Menu menu;
 	
@@ -67,6 +70,14 @@ public class Permissao extends TSActiveRecordAb<Permissao> {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public Integer getTabAtiva() {
+		return tabAtiva;
+	}
+
+	public void setTabAtiva(Integer tabAtiva) {
+		this.tabAtiva = tabAtiva;
 	}
 
 	public Menu getMenu() {

@@ -38,7 +38,7 @@ public class AutenticacaoFaces extends TSMainFaces{
     	
         clearFields();
 
-        setTabAtiva(new Integer(-1));
+        setTabAtiva(new Integer(0));
 
         setNomeTela("Área de Trabalho");
         
@@ -46,10 +46,11 @@ public class AutenticacaoFaces extends TSMainFaces{
     }
 
     public String redirecionar() {
+    	
         this.removeObjectInSession(this.currentFaces);
         setTela(this.permissaoSelecionada.getUrl());
         setNomeTela("Área de Trabalho > " + this.permissaoSelecionada.getMenu().getNome() + " > " + this.permissaoSelecionada.getDescricao());
-        //setTabAtiva(Integer.valueOf(this.menusPrime.indexOf(this.permissaoPrimeModel.getMenuModel())));
+        setTabAtiva(this.permissaoSelecionada.getTabAtiva());
         this.currentFaces = this.permissaoSelecionada.getFaces();
         
         this.obterPermissaoGrupoSelecionada();
