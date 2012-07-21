@@ -6,11 +6,9 @@
 <hibernate-configuration>
 
 	<session-factory>
-
 		
-<property name="current_session_context_class">thread</property>
+		<property name="current_session_context_class">thread</property>
 
- 
 		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
 		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/cenajur</property>
 		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
@@ -22,7 +20,6 @@
 
  		<mapping class="br.com.cenajur.model.Usuario" />
  		<mapping class="br.com.cenajur.model.TipoProcesso" />
- 		<mapping class="br.com.cenajur.model.Grupo" />
  		<mapping class="br.com.cenajur.model.Colaborador" />
  		<mapping class="br.com.cenajur.model.Cidade" />
  		<mapping class="br.com.cenajur.model.Estado" />
@@ -37,8 +34,6 @@
  		<mapping class="br.com.cenajur.model.Permissao" />
  		<mapping class="br.com.cenajur.model.PermissaoGrupo" />
  		<mapping class="br.com.cenajur.model.Objeto" />
-
-
 
 	</session-factory>
 

@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 
@@ -28,9 +29,7 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 	
 	private String rg;
 	
-	private String ctps;
-	
-	private String pis;
+	private String oab;
 	
 	@Column(name = "data_nascimento")
 	private Date dataNascimento;
@@ -78,6 +77,9 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 	
 	private String senha;
 	
+	@Transient
+	private String senha2;
+	
 
 	public Long getId() {
 		return id;
@@ -119,20 +121,12 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 		this.rg = rg;
 	}
 
-	public String getCtps() {
-		return ctps;
+	public String getOab() {
+		return oab;
 	}
 
-	public void setCtps(String ctps) {
-		this.ctps = ctps;
-	}
-
-	public String getPis() {
-		return pis;
-	}
-
-	public void setPis(String pis) {
-		this.pis = pis;
+	public void setOab(String oab) {
+		this.oab = oab;
 	}
 
 	public Date getDataNascimento() {
@@ -277,6 +271,14 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 
 	public void setGrupo(Grupo grupo) {
 		this.grupo = grupo;
+	}
+
+	public String getSenha2() {
+		return senha2;
+	}
+
+	public void setSenha2(String senha2) {
+		this.senha2 = senha2;
 	}
 
 	@Override

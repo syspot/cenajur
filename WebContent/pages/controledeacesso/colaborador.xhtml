@@ -28,7 +28,7 @@
 		  		<p:outputLabel for="cpf" value="CPF"/>
 		  		<p:outputLabel for="rg" value="RG"/>
 		  	
-		  		<p:inputText id="cpf" required="true" requiredMessage="CPF: Campo Obrigatório" value="#{mbeanModel.cpf}" maxlength="15" styleClass="coluna90"/>
+		  		<p:inputMask id="cpf" required="true" requiredMessage="CPF: Campo Obrigatório" mask="999.999.999-99" value="#{mbeanModel.cpf}" maxlength="15" styleClass="coluna90"/>
 		  		<p:inputText id="rg" required="true" requiredMessage="RG: Campo Obrigatório" value="#{mbeanModel.rg}" maxlength="20" styleClass="coluna80"/>
 		  		
   			</h:panelGrid>
@@ -39,77 +39,156 @@
   		
   		<p:fieldset legend="Endereço">
   		
-  			<h:panelGrid columns="2" styleClass="coluna70">
+  			<h:panelGrid columns="3" columnClasses="coluna15, coluna72, coluna15" style="width:65%">
 
 				<p:outputLabel for="cep" value="Cep"/>
 		  		<p:outputLabel for="logradouro" value="Logradouro"/>
-		  			  		
-		  		<p:inputText id="cep" required="true" requiredMessage="Cep: Campo Obrigatório" value="#{mbeanModel.cep}" maxlength="10" styleClass="coluna90"/>
-		  		<p:inputText id="logradouro" required="true" requiredMessage="Logradouro: Campo Obrigatório" value="#{mbeanModel.logradouro}" maxlength="200" styleClass="coluna90"/>
-		  	
-		  	</h:panelGrid>
-		  	
-		  	<h:panelGrid columns="2" styleClass="coluna10, coluna40">
-		  	
 		  		<p:outputLabel for="numero" value="Número"/>
-		  		<p:outputLabel for="complemento" value="Complemento"/>
-		  	
+		  			  		
+		  		<p:inputMask id="cep" required="true" requiredMessage="Cep: Campo Obrigatório" mask="99.999-999" value="#{mbeanModel.cep}" maxlength="10" styleClass="coluna85"/>
+		  		<p:inputText id="logradouro" required="true" requiredMessage="Logradouro: Campo Obrigatório" value="#{mbeanModel.logradouro}" maxlength="200" styleClass="coluna95"/>
 		  		<p:inputText id="numero" required="true" requiredMessage="Número: Campo Obrigatório" value="#{mbeanModel.numero}" maxlength="6" styleClass="coluna90"/>
-		  		<p:inputText id="complemento" required="true" requiredMessage="Complemento: Campo Obrigatório" value="#{mbeanModel.complemento}" maxlength="14" styleClass="coluna90"/>
 		  	
 		  	</h:panelGrid>
-		  		
-	  		<h:panelGrid columns="3" styleClass="coluna50">
-	  		
+		  	
+		  	<h:panelGrid columns="4" columnClasses="coluna30, coluna30, coluna20, coluna20" style="width:70%">
+		  	
+		  		<p:outputLabel for="complemento" value="Complemento"/>
 		  		<p:outputLabel for="bairro" value="Bairro"/>
 			  	<p:outputLabel for="estado" value="Estado"/>
 			  	<p:outputLabel for="cidade" value="Cidade"/>
 		  	
+		  		<p:inputText id="complemento" value="#{mbeanModel.complemento}" maxlength="30" styleClass="coluna90"/>
 		  		<p:inputText id="bairro" required="true" requiredMessage="Bairro: Campo obrigatório" value="#{mbeanModel.bairro}" maxlength="80" styleClass="coluna90"/>
-	  			<p:selectOneMenu id="estado" value="#{mbeanModel.cidade.estado.id}" required="true" requiredMessage="Estado: Campo obrigatório">
-	  				<f:selectItems value="#{mbean.estados}" noSelectionValue="Não Selecionado" />
+	  			<p:selectOneMenu id="estado" value="#{mbeanModel.cidade.estado.id}" required="true" requiredMessage="Estado: Campo obrigatório" styleClass="coluna90">
+	  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+	  				<f:selectItems value="#{mbean.estados}" />
 	  			</p:selectOneMenu>
-	  			<p:selectOneMenu id="cidade" value="#{mbeanModel.cidade.id}" required="true" requiredMessage="Cidade: Campo obrigatório">
-	  				<f:selectItems value="#{mbean.cidades}" noSelectionValue="Não Selecionado" />
+	  			<p:selectOneMenu id="cidade" value="#{mbeanModel.cidade.id}" required="true" requiredMessage="Cidade: Campo obrigatório" styleClass="coluna90">
+	  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+	  				<f:selectItems value="#{mbean.cidades}" />
 	  			</p:selectOneMenu>
 		  	
 		  	</h:panelGrid>
-		  	
-		  	<h:panelGrid columns="2" styleClass="coluna30">
+		  		
+		  	<h:panelGrid columns="2" columnClasses="coluna10, coluna10" style="width: 30%">
 		  		
 		  		<p:outputLabel for="telefone" value="Telefone"/>
 		  		<p:outputLabel for="celular" value="Celular"/>
 		  	
-		  		<p:inputText id="telefone" required="true" requiredMessage="Telefone: Campo Obrigatório" value="#{mbeanModel.telefone}" maxlength="14" styleClass="coluna90"/>
-		  		<p:inputText id="celular" required="true" requiredMessage="Celular: Campo Obrigatório" value="#{mbeanModel.celular}" maxlength="14" styleClass="coluna90"/>
+		  		<p:inputMask id="telefone" required="true" requiredMessage="Telefone: Campo Obrigatório" mask="(99) 9999-9999" value="#{mbeanModel.telefone}" maxlength="14" styleClass="coluna90"/>
+		  		<p:inputMask id="celular" required="true" requiredMessage="Celular: Campo Obrigatório" mask="(99) 9999-9999" value="#{mbeanModel.celular}" maxlength="14" styleClass="coluna90"/>
 		  		
 	  		</h:panelGrid>
   		
   		</p:fieldset>
   		
+  		<br/>
+  		
   		<p:fieldset legend="Informações Cenajur">
   		
-  			<p:outputLabel for="data_admissao" value="Data de Admissão" />
-  			<p:calendar id="data_admissao" required="true" requiredMessage="Data de Admissão: Campo obrigatório" value="#{mbeanModel.dataAdmissao}" />
+  			<h:panelGrid columns="3" style="width:48%">
   			
-  			<p:outputLabel for="tipo_colaborador" value="Tipo de Colaborador" />
-  			<p:selectOneMenu id="tipo_colaborador" value="#{mbeanModel.tipoColaborador.id}" required="true" requiredMessage="Tipo de Colaborador: Campo obrigatório">
-  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-  			</p:selectOneMenu>
-  		
+  				<p:outputLabel for="usuario" value="Usuário" />
+  				<p:outputLabel for="senha" value="Senha" />
+  				<p:outputLabel for="senha2" value="Confirmar Senha" />
+  				
+  				<p:inputText id="usuario" required="true" requiredMessage="Usuário: Campo obrigatório" value="#{mbeanModel.login}" maxlength="20"/>
+  				<p:password id="senha" required="true" requiredMessage="Senha: Campo obrigatório" value="#{mbeanModel.senha}" maxlength="20" match="senha2" />
+  				<p:password id="senha2" required="true" requiredMessage="Confirmar Senha: Campo obrigatório" value="#{mbeanModel.senha2}" maxlength="20"/>
+  			
+  			</h:panelGrid>
+  			
+  			<h:panelGrid id="pgGrid" columns="3" columnClasses="coluna33, coluna35, coluna33" style="width:48%">
+  			
+	  			<p:outputLabel for="dataAdmissao" value="Data de Admissão" />
+	  			<p:outputLabel for="tipoColaborador" value="Tipo" />
+	  			<p:outputLabel for="oab" value="OAB" />
+	  			
+	  			<p:calendar id="dataAdmissao" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Admissão: Campo obrigatório" value="#{mbeanModel.dataAdmissao}" style="width:95%"/>
+	  			<p:selectOneMenu id="tipoColaborador" required="true" requiredMessage="Tipo de Colaborador: Campo obrigatório" value="#{mbeanModel.tipoColaborador.id}" style="width:93%">
+	  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+	  				<f:selectItems value="#{mbean.tiposColaborador}"/>
+	  				<p:ajax update="pgGrid" />
+	  			</p:selectOneMenu>
+	  			<p:inputText id="oab" required="true" requiredMessage="OAB: Campo obrigatório" value="#{mbeanModel.oab}" maxlength="20" disabled="#{!mbean.advogado}" styleClass="coluna90"/>
+
+			</h:panelGrid>
+			
+			<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:32%">
+				  			
+	  			<p:outputLabel for="grupo" value="Grupo de Acesso" />
+	  			<p:outputLabel for="situacao" value="Ativo" />
+	  			
+	  			<p:selectOneMenu id="grupo" value="#{mbeanModel.grupo.id}" required="true" requiredMessage="Grupo de Acesso: Campo obrigatório" style="width:95%">
+	  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+	  				<f:selectItems value="#{mbean.grupos}"/>
+	  			</p:selectOneMenu>
+	  			<p:selectBooleanCheckbox id="situacao" value="#{mbeanModel.flagSituacao}">
+	  				<p:ajax update="pgDataDesligamento" />
+	  			</p:selectBooleanCheckbox>
+  			
+  			</h:panelGrid>
+	  			
+  			<h:panelGrid columns="1" style="width:30%">
+	  			
+	  			<h:panelGrid id="pgDataDesligamento">
+		  			<p:outputLabel for="dataDesligamento" value="Data de Desligamento" rendered="#{!mbeanModel.flagSituacao}"/>
+		  			<p:calendar id="dataDesligamento" pattern="dd/MM/yyyy" value="#{mbeanModel.dataDesligamento}" styleClass="coluna90" rendered="#{!mbeanModel.flagSituacao}"/>
+  				</h:panelGrid>
+  				
+  			</h:panelGrid>
+  			
   		</p:fieldset>
   		
   	</ui:define>
   	
   	<ui:define name="pesquisaCampos">
   	
+  		<h:panelGrid columns="1" styleClass="coluna30">
   		
+	  		<p:outputLabel for="nomePesquisa" value="Nome" />
+	  		<p:inputText id="nomePesquisa" value="#{mbeanPesquisaModel.nome}" maxlength="100" styleClass="coluna92" />
+	  	
+	  		<p:outputLabel for="emailPesquisa" value="E-mail" />
+	  		<p:inputText id="emailPesquisa" value="#{mbeanPesquisaModel.email}" maxlength="50" styleClass="coluna92"/>
+	  		
+  		</h:panelGrid>
+  		
+  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" styleClass="coluna30">
+	  		
+	  		<p:outputLabel for="grupoPesquisa" value="Grupo de Acesso" />
+	  		<p:outputLabel for="tipoColaboradorPesquisa" value="Tipo" />
+	  		
+	  		<p:selectOneMenu id="grupoPesquisa" value="#{mbeanPesquisaModel.grupo.id}" style="width:90%">
+				<f:selectItem itemLabel="Não Selecionado" itemValue="0" />
+				<f:selectItems value="#{mbean.grupos}"/>
+			</p:selectOneMenu>
+	  		<p:selectOneMenu id="tipoColaboradorPesquisa" value="#{mbeanPesquisaModel.tipoColaborador.id}" style="width:90%">
+  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+  				<f:selectItems value="#{mbean.tiposColaborador}"/>
+  			</p:selectOneMenu>
+			
+		</h:panelGrid>
+		
+		<h:panelGrid>
+		
+			<p:outputLabel for="situacaoPesquisa" value="Situação"/>
+			<p:selectBooleanCheckbox id="situacaoPesquisa" value="#{mbeanPesquisaModel.flagSituacao}" />
+		
+		</h:panelGrid>
   	
   	</ui:define>
   	
   	<ui:define name="colunasTabela">
   	
-  		
+  		<p:column headerText="Nome">
+  			<h:outputText value="#{linha.nome}" />
+  		</p:column>
+  	
+  		<p:column headerText="Tipo">
+  			<h:outputText value="#{linha.tipoColaborador.descricao}" />
+  		</p:column>
   	
   	</ui:define>
   	

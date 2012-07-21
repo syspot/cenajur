@@ -1,5 +1,6 @@
 package br.com.cenajur.faces;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -12,6 +13,8 @@ import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.Estado;
 import br.com.cenajur.model.Grupo;
 import br.com.cenajur.model.TipoColaborador;
+import br.com.cenajur.util.Constantes;
+import br.com.cenajur.util.Utilitarios;
 
 @SessionScoped
 @ManagedBean(name = "colaboradorFaces")
@@ -29,16 +32,47 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 	}
 	
 	private void initCombos() {
+		this.grupos = super.initCombo(new Grupo().findAll(), "id", "descricao");
 		this.estados = super.initCombo(new Estado().findAll(), "id", "descricao");
 		this.cidades = super.initCombo(new Cidade().findAll(), "id", "descricao");
 		this.tiposColaborador = super.initCombo(new TipoColaborador().findAll(), "id", "descricao");
-		this.grupos = super.initCombo(new Grupo().findAll(), "id", "descricao");
 	}
 	
 	@Override
-	public String limparPesquisa(){	
+	public String limpar() {
+		setCrudModel(new Colaborador());
+		getCrudModel().setFlagSituacao(Boolean.TRUE);
+		getCrudModel().setCidade(new Cidade());
+		getCrudModel().getCidade().setEstado(new Estado());
+		getCrudModel().setTipoColaborador(new TipoColaborador());
+		getCrudModel().setGrupo(new Grupo());
+		setFlagAlterar(Boolean.FALSE);
+		return SUCESSO;
+	}
+	
+	@Override
+	public String limparPesquisa(){
 		super.setFieldOrdem("nome");
-		return super.limparPesquisa();
+		setCrudPesquisaModel(new Colaborador());
+		getCrudPesquisaModel().setGrupo(new Grupo());
+		getCrudPesquisaModel().setTipoColaborador(new TipoColaborador());
+		getCrudPesquisaModel().setFlagSituacao(Boolean.TRUE);
+		setGrid(new ArrayList<Colaborador>());
+		return SUCESSO;
+	}
+	
+	@Override
+	protected void preInsert() {
+		getCrudModel().setSenha(Utilitarios.gerarHash(getCrudModel().getSenha()));
+	}
+	
+	@Override
+	protected void posDetail() {
+		getCrudModel().setSenha2(getCrudModel().getSenha());
+	}
+	
+	public boolean isAdvogado(){
+		return Constantes.TIPO_COLABORADOR_ADVOGADO.equals(getCrudModel().getTipoColaborador().getId());
 	}
 
 	public List<SelectItem> getEstados() {

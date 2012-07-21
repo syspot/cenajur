@@ -11,7 +11,6 @@ import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.Menu;
 import br.com.cenajur.model.Permissao;
 import br.com.cenajur.model.PermissaoGrupo;
-import br.com.cenajur.model.Vara;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.topsys.util.TSUtil;
@@ -38,7 +37,7 @@ public class AutenticacaoFaces extends TSMainFaces{
     	
         clearFields();
 
-        setTabAtiva(new Integer(0));
+        setTabAtiva(new Integer(1));
 
         setNomeTela("¡Årea de Trabalho");
         
@@ -54,24 +53,6 @@ public class AutenticacaoFaces extends TSMainFaces{
         this.currentFaces = this.permissaoSelecionada.getFaces();
         
         this.obterPermissaoGrupoSelecionada();
-        
-        //this.permissaoGrupoSelecionada = new PermissaoGrupo();
-        
-        //this.permissaoGrupoSelecionada.setId(1L);
-        //this.permissaoGrupoSelecionada.setGrupo(this.colaborador.getGrupo());
-        //this.permissaoGrupoSelecionada.setPermissao(this.permissaoSelecionada);
-        
-        //int i = this.colaborador.getGrupo().getPermissoesGrupos().indexOf(permissaoGrupoSelecionada);
-        
-        //this.permissaoGrupoSelecionada = this.colaborador.getGrupo().getPermissoesGrupos().get(i);
-        
-//        Vara vara = new Vara();
-//        
-//        vara.setId(1L);
-//        
-//        Vara vara2 = vara.getByModel();
-//        
-//        this.permissaoGrupoSelecionada = this.permissaoGrupoSelecionada.getByModel();
         
         return "sucesso";
     }
@@ -100,13 +81,12 @@ public class AutenticacaoFaces extends TSMainFaces{
         this.menusPrime = new ArrayList<Menu>();
         
         this.permissaoGrupoSelecionada = new PermissaoGrupo();
-        //this.permissaoGrupoSelecionada.setPermissaoGrupoPK(new PermissaoGrupoPK());
 
     }
 
     public String limpar() {
     	
-    	ColaboradorUtil.getInstance().remover();
+    	ColaboradorUtil.remover();
 
         TSFacesUtil.getRequest().getSession().getServletContext().setAttribute("colaboradoresConectados", colaboradoresConectados);
 
@@ -126,16 +106,12 @@ public class AutenticacaoFaces extends TSMainFaces{
         if (!TSUtil.isEmpty(colaborador)) {
         	
         	this.colaborador = colaborador;
-        	this.menus = new Menu(true).findByModel(CenajurUtil.getVetor("flagExpandido"), "ordem");
+        	this.menus = new Menu(true).findByModel("ordem");
 
-        	ColaboradorUtil.getInstance().adicionar(colaborador);
+        	ColaboradorUtil.adicionar(colaborador);
         	
         	this.menusPrime.clear();
         	List<Permissao> permissoes; 
-        	
-//        	for(PermissaoGrupo p: colaborador.getGrupo().getPermissoesGrupos()){
-//        		System.out.println("--- " + p.getId());
-//        	}
         	
         	for(Menu menu : this.menus){
         		
@@ -155,8 +131,10 @@ public class AutenticacaoFaces extends TSMainFaces{
         			
         		}
         		
-        		menu.setPermissoes(permissoes);
-        		this.menusPrime.add(menu);
+        		if(!TSUtil.isEmpty(permissoes)){
+        			menu.setPermissoes(permissoes);
+        			this.menusPrime.add(menu);
+        		}
         		
         	}
         	

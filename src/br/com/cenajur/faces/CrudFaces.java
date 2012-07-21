@@ -4,13 +4,9 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Collections;
 import java.util.List;
 
-import br.com.cenajur.model.Colaborador;
 import br.com.topsys.database.hibernate.TSActiveRecordIf;
-import br.com.topsys.database.hibernate.TSHibernateAb;
-import br.com.topsys.database.hibernate.TSHibernateBrokerAb;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.exception.TSSystemException;
-import br.com.topsys.util.TSInstanceUtil;
 import br.com.topsys.web.faces.TSMainFaces;
 import br.com.topsys.web.util.TSFacesUtil;
 
@@ -36,15 +32,13 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 	
 	private boolean flagAlterar;
 	
-	protected Class<T> modelClass=(Class<T>) ((ParameterizedType) getClass()
-	.getGenericSuperclass()).getActualTypeArguments()[0];;
+	private Class<T> modelClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	
 	@Override
 	protected void clearFields() {
 		this.limpar();
 		this.limparPesquisa();
 		this.tabIndex = 0;
-		this.flagAlterar = false;
 	}
 	
 	public String limpar(){
@@ -72,6 +66,12 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 		return false;
 	}
 	
+	protected void preInsert(){
+	}
+	
+	protected void posDetail(){
+	}
+	
 	@Override
 	protected String insert() throws TSApplicationException {
 		
@@ -82,6 +82,8 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 		if(validaCampos()){
 			return null;
 		}
+		
+		this.preInsert();
 		
 		this.crudModel.save();
 		
@@ -138,6 +140,8 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 		this.tabIndex = 0;
 		
 		this.flagAlterar = true;
+		
+		this.posDetail();
 		
 		return SUCESSO;
 		

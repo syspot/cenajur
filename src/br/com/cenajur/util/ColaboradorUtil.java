@@ -9,30 +9,24 @@ import br.com.topsys.web.util.TSFacesUtil;
 
 public class ColaboradorUtil {
 	
-	private final String OPERADOR_CONECTADO = "colaboradorConectado";
-    private final String OPERADORES_CONECTADOS = "colaboradoresConectados";
+	private static final String OPERADOR_CONECTADO = "colaboradorConectado";
+    private static final String OPERADORES_CONECTADOS = "colaboradoresConectados";
     
-    private static ColaboradorUtil factory;
-
-    public static ColaboradorUtil getInstance() {
-        if (factory == null) {
-            factory = new ColaboradorUtil();
-        }
-
-        return factory;
+    private ColaboradorUtil(){
+    	
     }
-
-    public Colaborador obterColaboradorConectado() {
+    
+    public static Colaborador obterColaboradorConectado() {
         return (Colaborador) TSFacesUtil.getObjectInSession(OPERADOR_CONECTADO);
     }
 
     @SuppressWarnings("unchecked")
-	public List<Colaborador> obterColaboradoresConectados() {
+	public static List<Colaborador> obterColaboradoresConectados() {
         return (List<Colaborador>) TSFacesUtil.getRequest().getSession().getServletContext().getAttribute(OPERADORES_CONECTADOS);
     }
 
     @SuppressWarnings("unchecked")
-	public void adicionar(Colaborador colaborador) {
+	public static void adicionar(Colaborador colaborador) {
     	
         List<Colaborador> colaboradoresConectados = (List<Colaborador>) TSFacesUtil.getRequest().getSession().getServletContext().getAttribute("colaboradoresConectados");
 
@@ -50,7 +44,7 @@ public class ColaboradorUtil {
     }
 
     @SuppressWarnings("unchecked")
-	public void remover() {
+	public static void remover() {
     	
         List<Colaborador> colaboradoresConectados = (List<Colaborador>) TSFacesUtil.getRequest().getSession().getServletContext().getAttribute("operadoresConectados");
 
@@ -73,4 +67,5 @@ public class ColaboradorUtil {
         return colaboradorModel;
             
     }
+    
 }
