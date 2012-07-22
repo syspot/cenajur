@@ -17,7 +17,8 @@ import br.com.topsys.database.hibernate.TSActiveRecordAb;
 @Table(name = "grupos")
 public class Grupo extends TSActiveRecordAb<Grupo>  {
 
-	
+	private static final long serialVersionUID = 840573356188706050L;
+
 	@Id
 	@GeneratedValue
 	private Long id;

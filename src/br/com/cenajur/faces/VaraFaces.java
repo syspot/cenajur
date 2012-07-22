@@ -4,11 +4,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import br.com.cenajur.model.Objeto;
+import br.com.cenajur.model.Vara;
 
 @SessionScoped
-@ManagedBean(name = "objetoFaces")
-public class ObjetoFaces extends CrudFaces<Objeto> {
+@ManagedBean(name = "varaFaces")
+public class VaraFaces extends CrudFaces<Vara> {
 
 	@PostConstruct
 	protected void init() {

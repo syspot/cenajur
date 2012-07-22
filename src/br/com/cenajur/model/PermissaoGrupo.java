@@ -84,7 +84,8 @@ public class PermissaoGrupo extends TSActiveRecordAb<PermissaoGrupo> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((grupo == null) ? 0 : grupo.hashCode());
+		result = prime * result + ((permissao == null) ? 0 : permissao.hashCode());
 		return result;
 	}
 
@@ -97,10 +98,15 @@ public class PermissaoGrupo extends TSActiveRecordAb<PermissaoGrupo> {
 		if (getClass() != obj.getClass())
 			return false;
 		PermissaoGrupo other = (PermissaoGrupo) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (grupo == null) {
+			if (other.grupo != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!grupo.equals(other.grupo))
+			return false;
+		if (permissao == null) {
+			if (other.permissao != null)
+				return false;
+		} else if (!permissao.equals(other.permissao))
 			return false;
 		return true;
 	}

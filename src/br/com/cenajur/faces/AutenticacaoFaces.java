@@ -37,7 +37,7 @@ public class AutenticacaoFaces extends TSMainFaces{
     	
         clearFields();
 
-        setTabAtiva(new Integer(-1));
+        setTabAtiva(new Integer(1));
 
         setNomeTela("Área de Trabalho");
         
@@ -45,15 +45,26 @@ public class AutenticacaoFaces extends TSMainFaces{
     }
 
     public String redirecionar() {
+    	
         this.removeObjectInSession(this.currentFaces);
         setTela(this.permissaoSelecionada.getUrl());
         setNomeTela("Área de Trabalho > " + this.permissaoSelecionada.getMenu().getNome() + " > " + this.permissaoSelecionada.getDescricao());
-        //setTabAtiva(Integer.valueOf(this.menusPrime.indexOf(this.permissaoPrimeModel.getMenuModel())));
+        setTabAtiva(this.permissaoSelecionada.getTabAtiva());
         this.currentFaces = this.permissaoSelecionada.getFaces();
-//        this.permissaoGrupoSelecionada.setGrupo(this.colaborador.getGrupo());
-//        this.permissaoGrupoSelecionada.setPermissao(this.permissaoSelecionada);
-//        this.permissaoGrupoSelecionada = this.permissaoGrupoSelecionada.getByModel(CenajurUtil.getVetor("flagInserir", "flagAlterar", "flagExcluir"), "flagInserir");
+        
+        this.obterPermissaoGrupoSelecionada();
+        
         return "sucesso";
+    }
+    
+    public void obterPermissaoGrupoSelecionada(){
+    	
+        this.permissaoGrupoSelecionada.setGrupo(this.colaborador.getGrupo());
+        this.permissaoGrupoSelecionada.setPermissao(this.permissaoSelecionada);
+        
+        int posicao = this.colaborador.getGrupo().getPermissoesGrupos().indexOf(permissaoGrupoSelecionada);
+        
+        this.permissaoGrupoSelecionada = this.colaborador.getGrupo().getPermissoesGrupos().get(posicao);
     }
 
     public String logout() {
@@ -70,13 +81,12 @@ public class AutenticacaoFaces extends TSMainFaces{
         this.menusPrime = new ArrayList<Menu>();
         
         this.permissaoGrupoSelecionada = new PermissaoGrupo();
-        //this.permissaoGrupoSelecionada.setPermissaoGrupoPK(new PermissaoGrupoPK());
 
     }
 
     public String limpar() {
     	
-    	ColaboradorUtil.getInstance().remover();
+    	ColaboradorUtil.remover();
 
         TSFacesUtil.getRequest().getSession().getServletContext().setAttribute("colaboradoresConectados", colaboradoresConectados);
 
@@ -96,16 +106,12 @@ public class AutenticacaoFaces extends TSMainFaces{
         if (!TSUtil.isEmpty(colaborador)) {
         	
         	this.colaborador = colaborador;
-        	this.menus = new Menu(true).findByModel(CenajurUtil.getVetor("flagExpandido"), "ordem");
+        	this.menus = new Menu(true).findByModel("ordem");
 
-        	ColaboradorUtil.getInstance().adicionar(colaborador);
+        	ColaboradorUtil.adicionar(colaborador);
         	
         	this.menusPrime.clear();
         	List<Permissao> permissoes; 
-        	
-        	for(PermissaoGrupo p: colaborador.getGrupo().getPermissoesGrupos()){
-        		System.out.println("--- " + p.getId());
-        	}
         	
         	for(Menu menu : this.menus){
         		
@@ -125,8 +131,10 @@ public class AutenticacaoFaces extends TSMainFaces{
         			
         		}
         		
-        		menu.setPermissoes(permissoes);
-        		this.menusPrime.add(menu);
+        		if(!TSUtil.isEmpty(permissoes)){
+        			menu.setPermissoes(permissoes);
+        			this.menusPrime.add(menu);
+        		}
         		
         	}
         	

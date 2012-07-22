@@ -866,6 +866,14 @@ img.right {
     vertical-align: bottom;
 }
 
+.coluna71 {
+    width: 71%;
+}
+
+.coluna72 {
+    width: 72%;
+}
+
 .coluna75 {
     width: 75%;
 }
@@ -892,8 +900,28 @@ img.right {
     vertical-align: top;
 }
 
+.coluna92 {
+    width: 92%;
+}
+
 .coluna95 {
     width: 95%;
+}
+
+.coluna96 {
+    width: 96%;
+}
+
+.coluna97 {
+    width: 97%;
+}
+
+.coluna98 {
+    width: 98%;
+}
+
+.coluna99 {
+    width: 99%;
 }
 
 .coluna95_2 {

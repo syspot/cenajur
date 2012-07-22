@@ -1,6 +1,6 @@
 package br.com.cenajur.model;
 
-public class ParteContrariaModel {
+public class ParteContraria {
 
 	private Long id;
 	
@@ -58,7 +58,7 @@ public class ParteContrariaModel {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ParteContrariaModel other = (ParteContrariaModel) obj;
+		ParteContraria other = (ParteContraria) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

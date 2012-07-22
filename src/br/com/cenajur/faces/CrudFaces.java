@@ -1,45 +1,75 @@
 package br.com.cenajur.faces;
 
+import java.lang.reflect.ParameterizedType;
+import java.util.Collections;
 import java.util.List;
 
 import br.com.topsys.database.hibernate.TSActiveRecordIf;
 import br.com.topsys.exception.TSApplicationException;
+import br.com.topsys.exception.TSSystemException;
 import br.com.topsys.web.faces.TSMainFaces;
 import br.com.topsys.web.util.TSFacesUtil;
 
-public class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFaces{
+public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFaces{
 
-	protected T crudModel;
+	private T crudModel;
 	
-	protected T crudPesquisaModel;
+	private T crudPesquisaModel;
 	
-	protected List<T> grid;
+	private List<T> grid;
 	
-	protected String fieldOrdem;
+	private String fieldOrdem;
 	
+	public String getFieldOrdem() {
+		return fieldOrdem;
+	}
+
+	public void setFieldOrdem(String fieldOrdem) {
+		this.fieldOrdem = fieldOrdem;
+	}
+
 	private Integer tabIndex;
 	
 	private boolean flagAlterar;
+	
+	private Class<T> modelClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	
 	@Override
 	protected void clearFields() {
 		this.limpar();
 		this.limparPesquisa();
 		this.tabIndex = 0;
-		this.flagAlterar = false;
 	}
 	
 	public String limpar(){
 		this.flagAlterar = false;
+		try {
+			this.crudModel = modelClass.newInstance();
+		} catch (Exception e) {
+			throw new TSSystemException(e);
+		}
 		return SUCESSO;
 	}
 	
 	public String limparPesquisa(){
+		this.grid = Collections.emptyList();
+		try {
+			this.crudPesquisaModel = modelClass.newInstance();
+		} catch (Exception e) {
+			throw new TSSystemException(e);
+		}
+		
 		return SUCESSO;
 	}
 	
 	protected boolean validaCampos(){
 		return false;
+	}
+	
+	protected void preInsert(){
+	}
+	
+	protected void posDetail(){
 	}
 	
 	@Override
@@ -52,6 +82,8 @@ public class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFaces{
 		if(validaCampos()){
 			return null;
 		}
+		
+		this.preInsert();
 		
 		this.crudModel.save();
 		
@@ -103,11 +135,13 @@ public class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFaces{
 	@Override
 	protected String detail() {
 
-		this.crudModel = this.crudModel.getByModel();
+		this.crudModel = this.crudModel.getById();
 		
 		this.tabIndex = 0;
 		
 		this.flagAlterar = true;
+		
+		this.posDetail();
 		
 		return SUCESSO;
 		
@@ -116,7 +150,7 @@ public class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFaces{
 	@Override
 	protected String find() {
 		
-		this.grid = this.crudPesquisaModel.findByModel(fieldOrdem);
+		this.grid = this.crudPesquisaModel.findByModel(getFieldOrdem());
 		
 		TSFacesUtil.gerarResultadoLista(this.grid);
 		

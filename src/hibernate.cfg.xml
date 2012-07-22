@@ -6,11 +6,9 @@
 <hibernate-configuration>
 
 	<session-factory>
-
 		
-<property name="current_session_context_class">thread</property>
+		<property name="current_session_context_class">thread</property>
 
- 
 		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
 		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/cenajur</property>
 		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
@@ -18,14 +16,17 @@
 		<property name="hibernate.connection.password">nayara</property>
 
 		<property name="hibernate.show_sql">true</property>
-		<property name="hibernate.hbm2ddl.auto">create-drop</property>
+		<property name="hibernate.hbm2ddl.auto">create</property>
 
  		<mapping class="br.com.cenajur.model.Usuario" />
  		<mapping class="br.com.cenajur.model.TipoProcesso" />
- 		<mapping class="br.com.cenajur.model.Grupo" />
  		<mapping class="br.com.cenajur.model.Colaborador" />
  		<mapping class="br.com.cenajur.model.Cidade" />
  		<mapping class="br.com.cenajur.model.Estado" />
+ 		<mapping class="br.com.cenajur.model.Banco" />
+ 		<mapping class="br.com.cenajur.model.Graduacao" />
+ 		<mapping class="br.com.cenajur.model.Comarca" />
+ 		<mapping class="br.com.cenajur.model.Vara" />
  		<mapping class="br.com.cenajur.model.TipoColaborador" />
  		<mapping class="br.com.cenajur.model.TipoAcesso" />
  		<mapping class="br.com.cenajur.model.Grupo" />
@@ -33,8 +34,6 @@
  		<mapping class="br.com.cenajur.model.Permissao" />
  		<mapping class="br.com.cenajur.model.PermissaoGrupo" />
  		<mapping class="br.com.cenajur.model.Objeto" />
-
-
 
 	</session-factory>
 

@@ -37,7 +37,7 @@ public class CenajurFilter implements Filter {
 	    if (uri != null) {
 	      uri = uri.substring(uri.lastIndexOf("/"), uri.length());
 	    }
-	    if (!TSUtil.isEmpty(r.getSession().getAttribute(Constantes.COLABORADOR_CONECTADO)) || uri.equals("/login.xhtml")) {
+	    if ((!TSUtil.isEmpty(r.getSession().getAttribute(Constantes.COLABORADOR_CONECTADO)) && (uri.equals("/dashboard.xhtml"))) || uri.equals("/login.xhtml")) {
 	      chain.doFilter(request, response);
 	    } else {
 	      r.getRequestDispatcher("/pages/login.xhtml").forward(request, response);
