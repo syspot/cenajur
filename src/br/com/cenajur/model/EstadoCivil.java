@@ -1,9 +1,19 @@
 package br.com.cenajur.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
-public class EstadoCivil {
+@Entity
+@Table(name = "estados_civis")
+public class EstadoCivil extends TSActiveRecordAb<EstadoCivil>{
 
+	@Id
+	@GeneratedValue
 	private Long id;
 	
 	private String descricao;

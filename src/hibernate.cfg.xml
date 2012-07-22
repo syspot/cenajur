@@ -16,7 +16,6 @@
 		<property name="hibernate.connection.password">nayara</property>
 
 		<property name="hibernate.show_sql">true</property>
-<!-- 		<property name="hibernate.hbm2ddl.auto">create</property> -->
 
  		<mapping class="br.com.cenajur.model.Usuario" />
  		<mapping class="br.com.cenajur.model.TipoProcesso" />
@@ -34,6 +33,10 @@
  		<mapping class="br.com.cenajur.model.Permissao" />
  		<mapping class="br.com.cenajur.model.PermissaoGrupo" />
  		<mapping class="br.com.cenajur.model.Objeto" />
+ 		<mapping class="br.com.cenajur.model.EstadoCivil" />
+ 		<mapping class="br.com.cenajur.model.TipoPagamento" />
+ 		<mapping class="br.com.cenajur.model.MotivoCancelamento" />
+ 		<mapping class="br.com.cenajur.model.Lotacao" />
 
 	</session-factory>
 

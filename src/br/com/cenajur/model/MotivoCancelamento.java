@@ -6,10 +6,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
+import br.com.topsys.util.TSUtil;
 
 @Entity
-@Table(name = "tipos_pagamentos")
-public class TipoPagamento extends TSActiveRecordAb<TipoPagamento>{
+@Table(name = "motivos_cancelamentos")
+public class MotivoCancelamento extends TSActiveRecordAb<MotivoCancelamento>{
 
 	@Id
 	@GeneratedValue
@@ -18,7 +19,7 @@ public class TipoPagamento extends TSActiveRecordAb<TipoPagamento>{
 	private String descricao;
 
 	public Long getId() {
-		return id;
+		return TSUtil.tratarLong(id);
 	}
 
 	public void setId(Long id) {
@@ -49,7 +50,7 @@ public class TipoPagamento extends TSActiveRecordAb<TipoPagamento>{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TipoPagamento other = (TipoPagamento) obj;
+		MotivoCancelamento other = (MotivoCancelamento) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -57,5 +58,6 @@ public class TipoPagamento extends TSActiveRecordAb<TipoPagamento>{
 			return false;
 		return true;
 	}
-
+	
+	
 }

@@ -2,10 +2,23 @@ package br.com.cenajur.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
-public class Cliente {
+@Entity
+@Table(name = "clientes")
+public class Cliente extends TSActiveRecordAb<Cliente>{
 
+	@Id
+	@GeneratedValue
 	private Long id;
 	
 	private String matricula;
@@ -18,48 +31,58 @@ public class Cliente {
 	
 	private String rg;
 	
+	@Column(name = "data_nascimento")
 	private Date dataNascimento;
 	
-	private String endereco;
+	private String cep;
+	
+	private String logradouro;
+	
+	private String numero;
+	
+	private String complemento;
 	
 	private String bairro;
 	
 	private Cidade cidade;
 	
-	private Estado estado;
-	
-	private String cep;
-	
-	private String telefone1;
-	
-	private String telefone2;
+	private String telefone;
 	
 	private String celular;
 	
+	@Column(name = "nome_pai")
 	private String nomePai;
 	
+	@Column(name = "nome_mae")
 	private String nomeMae;
 	
+	@ManyToOne
+	@JoinColumn(name = "estado_civil_id")
 	private EstadoCivil estadoCivil;
 	
+	@Column(name = "data_adesao")
 	private Date dataAdesao;
 	
-	private Boolean flagRematricula;
+	@Column(name = "flag_ativo")
+	private Boolean flagAtivo;
 	
-	private Boolean flagAgenda;
-	
-	private TipoCliente tipoCliente;
-	
-	private Situacao situacao;
-	
+	@ManyToOne
+	@JoinColumn(name = "tipo_pagamento_id")
 	private TipoPagamento tipoPagamento;
 	
+	@Column(name = "data_desligamento")
 	private Date dataDesligamento;
 	
-	private String motivoCancelamento;
+	@Column(name = "motivo_cancelamento_id")
+	private MotivoCancelamento motivoCancelamento;
 	
+	@Column(name = "flag_entrega_cartao")
+	private Boolean flagEntregaCartao;
+	
+	@ManyToOne
 	private Cliente titular;
 	
+	@ManyToOne
 	private Banco banco;
 	
 	private String agencia;
@@ -68,32 +91,30 @@ public class Cliente {
 	
 	private Integer lote;
 	
-	private String enderecoFuncional;
+	@ManyToOne
+	private Lotacao lotacao;
 	
-	private String bairroFuncional;
-	
-	private String telefoneFuncional;
-	
-	private Cidade cidadeFuncional;
-	
-	private Estado estadoFuncional;
-	
+	@ManyToOne
 	private Graduacao graduacao;
 	
+	@Column(name = "cadastro_pm")
 	private String cadastroPM;
 	
-	private Boolean flagSituacao;
+	@Column(name = "flag_status_pm")
+	private Boolean flagStatusPM;
 	
 	private String observacao;
 	
-	private String recado;
-
+	private Date dataCadastro;
+	
+	private Date dataAtualizacao;
+	
+	private Colaborador colaboradorCadastro;
+	
+	private Colaborador colaboradorAtualizacao;
+	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getMatricula() {
@@ -144,12 +165,52 @@ public class Cliente {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public String getEndereco() {
-		return endereco;
+	public String getCep() {
+		return cep;
 	}
 
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	public String getLogradouro() {
+		return logradouro;
+	}
+
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
+	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
+
+	public Boolean getFlagEntregaCartao() {
+		return flagEntregaCartao;
+	}
+
+	public void setFlagEntregaCartao(Boolean flagEntregaCartao) {
+		this.flagEntregaCartao = flagEntregaCartao;
+	}
+
+	public Lotacao getLotacao() {
+		return lotacao;
+	}
+
+	public void setLotacao(Lotacao lotacao) {
+		this.lotacao = lotacao;
 	}
 
 	public String getBairro() {
@@ -160,28 +221,20 @@ public class Cliente {
 		this.bairro = bairro;
 	}
 
-	public String getCep() {
-		return cep;
+	public Cidade getCidade() {
+		return cidade;
 	}
 
-	public void setCep(String cep) {
-		this.cep = cep;
+	public void setCidade(Cidade cidade) {
+		this.cidade = cidade;
 	}
 
-	public String getTelefone1() {
-		return telefone1;
+	public String getTelefone() {
+		return telefone;
 	}
 
-	public void setTelefone1(String telefone1) {
-		this.telefone1 = telefone1;
-	}
-
-	public String getTelefone2() {
-		return telefone2;
-	}
-
-	public void setTelefone2(String telefone2) {
-		this.telefone2 = telefone2;
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 
 	public String getCelular() {
@@ -208,6 +261,14 @@ public class Cliente {
 		this.nomeMae = nomeMae;
 	}
 
+	public EstadoCivil getEstadoCivil() {
+		return estadoCivil;
+	}
+
+	public void setEstadoCivil(EstadoCivil estadoCivil) {
+		this.estadoCivil = estadoCivil;
+	}
+
 	public Date getDataAdesao() {
 		return dataAdesao;
 	}
@@ -216,20 +277,20 @@ public class Cliente {
 		this.dataAdesao = dataAdesao;
 	}
 
-	public Boolean getFlagRematricula() {
-		return flagRematricula;
+	public Boolean getFlagStatusPM() {
+		return flagStatusPM;
 	}
 
-	public void setFlagRematricula(Boolean flagRematricula) {
-		this.flagRematricula = flagRematricula;
+	public void setFlagStatusPM(Boolean flagStatusPM) {
+		this.flagStatusPM = flagStatusPM;
 	}
 
-	public Boolean getFlagAgenda() {
-		return flagAgenda;
+	public TipoPagamento getTipoPagamento() {
+		return tipoPagamento;
 	}
 
-	public void setFlagAgenda(Boolean flagAgenda) {
-		this.flagAgenda = flagAgenda;
+	public void setTipoPagamento(TipoPagamento tipoPagamento) {
+		this.tipoPagamento = tipoPagamento;
 	}
 
 	public Date getDataDesligamento() {
@@ -240,11 +301,11 @@ public class Cliente {
 		this.dataDesligamento = dataDesligamento;
 	}
 
-	public String getMotivoCancelamento() {
+	public MotivoCancelamento getMotivoCancelamento() {
 		return motivoCancelamento;
 	}
 
-	public void setMotivoCancelamento(String motivoCancelamento) {
+	public void setMotivoCancelamento(MotivoCancelamento motivoCancelamento) {
 		this.motivoCancelamento = motivoCancelamento;
 	}
 
@@ -254,6 +315,14 @@ public class Cliente {
 
 	public void setTitular(Cliente titular) {
 		this.titular = titular;
+	}
+
+	public Banco getBanco() {
+		return banco;
+	}
+
+	public void setBanco(Banco banco) {
+		this.banco = banco;
 	}
 
 	public String getAgencia() {
@@ -280,44 +349,12 @@ public class Cliente {
 		this.lote = lote;
 	}
 
-	public String getEnderecoFuncional() {
-		return enderecoFuncional;
+	public Graduacao getGraduacao() {
+		return graduacao;
 	}
 
-	public void setEnderecoFuncional(String enderecoFuncional) {
-		this.enderecoFuncional = enderecoFuncional;
-	}
-
-	public String getBairroFuncional() {
-		return bairroFuncional;
-	}
-
-	public void setBairroFuncional(String bairroFuncional) {
-		this.bairroFuncional = bairroFuncional;
-	}
-
-	public String getTelefoneFuncional() {
-		return telefoneFuncional;
-	}
-
-	public void setTelefoneFuncional(String telefoneFuncional) {
-		this.telefoneFuncional = telefoneFuncional;
-	}
-
-	public Cidade getCidadeFuncional() {
-		return cidadeFuncional;
-	}
-
-	public void setCidadeFuncional(Cidade cidadeFuncional) {
-		this.cidadeFuncional = cidadeFuncional;
-	}
-
-	public Estado getEstadoFuncional() {
-		return estadoFuncional;
-	}
-
-	public void setEstadoFuncional(Estado estadoFuncional) {
-		this.estadoFuncional = estadoFuncional;
+	public void setGraduacao(Graduacao graduacao) {
+		this.graduacao = graduacao;
 	}
 
 	public String getCadastroPM() {
@@ -328,6 +365,14 @@ public class Cliente {
 		this.cadastroPM = cadastroPM;
 	}
 
+	public Boolean getFlagAtivo() {
+		return flagAtivo;
+	}
+
+	public void setFlagAtivo(Boolean flagAtivo) {
+		this.flagAtivo = flagAtivo;
+	}
+
 	public String getObservacao() {
 		return observacao;
 	}
@@ -336,84 +381,40 @@ public class Cliente {
 		this.observacao = observacao;
 	}
 
-	public String getRecado() {
-		return recado;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public void setRecado(String recado) {
-		this.recado = recado;
+	public Date getDataCadastro() {
+		return dataCadastro;
 	}
 
-	public Cidade getCidade() {
-		return cidade;
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
 	}
 
-	public void setCidade(Cidade cidade) {
-		this.cidade = cidade;
+	public Date getDataAtualizacao() {
+		return dataAtualizacao;
 	}
 
-	public Estado getEstado() {
-		return estado;
+	public void setDataAtualizacao(Date dataAtualizacao) {
+		this.dataAtualizacao = dataAtualizacao;
 	}
 
-	public void setEstado(Estado estado) {
-		this.estado = estado;
+	public Colaborador getColaboradorCadastro() {
+		return colaboradorCadastro;
 	}
 
-	public EstadoCivil getEstadoCivil() {
-		return estadoCivil;
+	public void setColaboradorCadastro(Colaborador colaboradorCadastro) {
+		this.colaboradorCadastro = colaboradorCadastro;
 	}
 
-	public void setEstadoCivil(EstadoCivil estadoCivil) {
-		this.estadoCivil = estadoCivil;
+	public Colaborador getColaboradorAtualizacao() {
+		return colaboradorAtualizacao;
 	}
 
-	public TipoCliente getTipoCliente() {
-		return tipoCliente;
-	}
-
-	public void setTipoCliente(TipoCliente tipoCliente) {
-		this.tipoCliente = tipoCliente;
-	}
-
-	public Boolean getFlagSituacao() {
-		return flagSituacao;
-	}
-
-	public void setFlagSituacao(Boolean flagSituacao) {
-		this.flagSituacao = flagSituacao;
-	}
-
-	public void setSituacao(Situacao situacao) {
-		this.situacao = situacao;
-	}
-
-	public TipoPagamento getTipoPagamento() {
-		return tipoPagamento;
-	}
-
-	public void setTipoPagamento(TipoPagamento tipoPagamento) {
-		this.tipoPagamento = tipoPagamento;
-	}
-
-	public Banco getBanco() {
-		return banco;
-	}
-
-	public void setBanco(Banco banco) {
-		this.banco = banco;
-	}
-
-	public Graduacao getGraduacao() {
-		return graduacao;
-	}
-
-	public void setGraduacao(Graduacao graduacao) {
-		this.graduacao = graduacao;
-	}
-
-	public Situacao getSituacao() {
-		return situacao;
+	public void setColaboradorAtualizacao(Colaborador colaboradorAtualizacao) {
+		this.colaboradorAtualizacao = colaboradorAtualizacao;
 	}
 
 	@Override

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="/resources/templates/templateCRUD.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+  	<ui:param name="mbean" value="${clienteFaces}" />
+  	<ui:param name="mbeanModel" value="${clienteFaces.crudModel}" />
+  	<ui:param name="mbeanPesquisaModel" value="${clienteFaces.crudPesquisaModel}" />
+  	
+  	<ui:define name="cadastro">
+  	
+  		<p:fieldset legend="Informações Gerais">
+  		
+  			<h:panelGrid columns="1" columnClasses="coluna20" style="width:70%">
+  			
+			  	<p:outputLabel for="matricula" value="matrícula" />
+			  	<p:inputText id="matricula" value="#{mbeanModel.matricula}" required="true" requiredMessage="Matrícula: Campo obrigatório" maxlength="30"/>
+			  	
+  			</h:panelGrid>
+  			
+  			<h:panelGrid columns="2" columnClasses="coluna60, coluna40" style="width:55%">
+		  	
+			  	<p:outputLabel for="nome" value="Nome" />
+			  	<p:outputLabel for="email" value="E-mail" />
+		  	
+			  	<p:inputText id="nome" value="#{mbeanModel.nome}" required="true" requiredMessage="Nome: Campo obrigatório" maxlength="100" styleClass="coluna95"/>
+			  	<p:inputText id="email" value="#{mbeanModel.email}" required="true" requiredMessage="E-mail: Campo obrigatório" maxlength="50" styleClass="coluna90"/>
+			  	
+		  	</h:panelGrid>
+		  	
+		  	<h:panelGrid columns="3" columnClasses="coluna30, coluna30, coluna30" style="width:50%">
+		  	
+			  	<p:outputLabel for="cpf" value="CPF"/>
+		  		<p:outputLabel for="rg" value="RG"/>
+		  		<p:outputLabel for="dataNascimento" value="Data de Nascimento"/>
+		  	
+		  		<p:inputMask id="cpf" required="true" requiredMessage="CPF: Campo Obrigatório" mask="999.999.999-99" value="#{mbeanModel.cpf}" maxlength="15" styleClass="coluna90"/>
+		  		<p:inputText id="rg" required="true" requiredMessage="RG: Campo Obrigatório" value="#{mbeanModel.rg}" maxlength="20" styleClass="coluna90"/>
+		  		<p:calendar id="dataNascimento" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Nascimento Campo obrigatório" value="#{mbeanModel.dataNascimento}" style="width:90%"/>
+	  			
+  			</h:panelGrid>
+  			
+  		</p:fieldset>
+  		
+  		<p:fieldset legend="Endereço">
+  		
+  			<h:panelGrid columns="3" columnClasses="coluna15, coluna72, coluna15" style="width:65%">
+
+				<p:outputLabel for="cep" value="Cep"/>
+		  		<p:outputLabel for="logradouro" value="Logradouro"/>
+		  		<p:outputLabel for="numero" value="Número"/>
+		  			  		
+		  		<p:inputMask id="cep" required="true" requiredMessage="Cep: Campo Obrigatório" mask="99.999-999" value="#{mbeanModel.cep}" maxlength="10" styleClass="coluna85"/>
+		  		<p:inputText id="logradouro" required="true" requiredMessage="Logradouro: Campo Obrigatório" value="#{mbeanModel.logradouro}" maxlength="200" styleClass="coluna95"/>
+		  		<p:inputText id="numero" required="true" requiredMessage="Número: Campo Obrigatório" value="#{mbeanModel.numero}" maxlength="6" styleClass="coluna90"/>
+		  	
+		  	</h:panelGrid>
+		  	
+		  	<h:panelGrid columns="4" columnClasses="coluna30, coluna30, coluna20, coluna20" style="width:70%">
+		  	
+		  		<p:outputLabel for="complemento" value="Complemento"/>
+		  		<p:outputLabel for="bairro" value="Bairro"/>
+			  	<p:outputLabel for="estado" value="Estado"/>
+			  	<p:outputLabel for="cidade" value="Cidade"/>
+		  	
+		  		<p:inputText id="complemento" value="#{mbeanModel.complemento}" maxlength="30" styleClass="coluna90"/>
+		  		<p:inputText id="bairro" required="true" requiredMessage="Bairro: Campo obrigatório" value="#{mbeanModel.bairro}" maxlength="80" styleClass="coluna90"/>
+	  			<p:selectOneMenu id="estado" value="#{mbeanModel.cidade.estado.id}" required="true" requiredMessage="Estado: Campo obrigatório" styleClass="coluna90">
+	  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+	  				<f:selectItems value="#{mbean.estados}" />
+	  			</p:selectOneMenu>
+	  			<p:selectOneMenu id="cidade" value="#{mbeanModel.cidade.id}" required="true" requiredMessage="Cidade: Campo obrigatório" styleClass="coluna90">
+	  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+	  				<f:selectItems value="#{mbean.cidades}" />
+	  			</p:selectOneMenu>
+		  	
+		  	</h:panelGrid>
+		  		
+		  	<h:panelGrid columns="2" columnClasses="coluna10, coluna10" style="width: 30%">
+		  		
+		  		<p:outputLabel for="telefone" value="Telefone"/>
+		  		<p:outputLabel for="celular" value="Celular"/>
+		  	
+		  		<p:inputMask id="telefone" required="true" requiredMessage="Telefone: Campo Obrigatório" mask="(99) 9999-9999" value="#{mbeanModel.telefone}" maxlength="14" styleClass="coluna90"/>
+		  		<p:inputMask id="celular" required="true" requiredMessage="Celular: Campo Obrigatório" mask="(99) 9999-9999" value="#{mbeanModel.celular}" maxlength="14" styleClass="coluna90"/>
+		  		
+	  		</h:panelGrid>
+	  		
+	  		<p:outputLabel for="nomeMae" value="Nome da Mãe" />
+		  	<p:inputText id="nomeMae" value="#{mbeanModel.nomeMae}" required="true" requiredMessage="Nome da Mãe: Campo obrigatório" maxlength="100"/>
+	  		
+	  		<p:outputLabel for="nomePai" value="Nome do Pai" />
+		  	<p:inputText id="nomePai" value="#{mbeanModel.nomePai}" required="true" requiredMessage="Nome da Pai: Campo obrigatório" maxlength="100"/>
+		  	
+		  	<p:outputLabel for="estadoCivil" value="Estado Civil" />
+		  	<p:selectOneMenu id="estadoCivil" required="true" requiredMessage="Estado Civil: Campo obrigatório" value="#{mbeanModel.estadoCivil.id}" style="width:20%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.estadosCivis}" />
+		  	</p:selectOneMenu>
+  		
+  		</p:fieldset>
+  		
+	  	<p:fieldset legend="Informações Cenajur">
+	  	
+	  		<p:outputLabel for="dataAdesao" value="Data de Adesão"/>
+	  		<p:calendar id="dataAdesao" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Adesão: Campo obrigatório" value="#{mbeanModel.dataAdesao}" style="width:95%"/>
+	  		
+	  		<p:outputLabel for="tipoPagamento" value="Tipo de Pagamento" />
+		  	<p:selectOneMenu id="tipoPagamento" required="true" requiredMessage="Tipo de Pagamento: Campo obrigatório" value="#{mbeanModel.tipoPagamento.id}" style="width:20%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.tiposPagamentos}" />
+		  	</p:selectOneMenu>
+		  	
+		  	<p:outputLabel for="dataCancelamento" value="Data de Cancelamento"/>
+	  		<p:calendar id="dataCancelamento" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Cancelamento: Campo obrigatório" value="#{mbeanModel.dataDesligamento}" style="width:95%"/>
+	  	
+	  		<p:outputLabel for="motivoCancelamento" value="Motivo de Cancelamento" />
+		  	<p:selectOneMenu id="motivoCancelamento" required="true" requiredMessage="Motivo de Cancelamento: Campo obrigatório" value="#{mbeanModel.estadoCivil.id}" style="width:20%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.motivosCancelamentos}" />
+		  	</p:selectOneMenu>
+		  	
+	  	</p:fieldset>
+	  	
+	  	<p:fieldset legend="Informações Bancárias">
+	  	
+	  		<p:outputLabel for="banco" value="Banco" />
+	  		<p:selectOneMenu id="banco" value="#{mbeanModel.banco.id}" style="width:20%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.bancos}" />
+		  	</p:selectOneMenu>
+		  	
+		  	<p:outputLabel for="agencia" value="Agência" />
+		  	<p:inputText id="agencia" value="#{mbeanModel.agencia}" maxlength="15"/>
+		  	
+		  	<p:outputLabel for="conta" value="Conta" />
+		  	<p:inputText id="conta" value="#{mbeanModel.conta}" maxlength="15"/>
+	  	
+	  	</p:fieldset>
+	  	
+	  	<p:fieldset legend="Informações Funcionais">
+	  	
+	  		<p:outputLabel for="graduacao" value="Graduação" />
+	  		<p:selectOneMenu id="graduacao" value="#{mbeanModel.graduacao.id}" style="width:20%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.graduacoes}" />
+		  	</p:selectOneMenu>
+		  	
+		  	<p:outputLabel for="cadastroPM" value="Cadastro PM" />
+		  	<p:inputText id="cadastroPM" value="#{mbeanModel.cadastroPM}" maxlength="15"/>
+		  	
+	  	</p:fieldset>
+	  	
+  	</ui:define>
+  	
+  	<ui:define name="pesquisaCampos">
+  	
+  		<p:outputLabel for="nomePesquisa" value="Nome" />
+	  	<p:inputText id="nomePesquisa"  value="#{mbeanPesquisaModel.nome}" style="width: 40%" maxlength="50"/>
+	  	
+  	</ui:define>
+  	
+  	<ui:define name="colunasTabela">
+  	
+  		<p:column headerText="Nome">
+  			<h:outputText value="#{linha.nome}" />
+  		</p:column>
+  		
+  	</ui:define>
+  	
+</ui:composition>

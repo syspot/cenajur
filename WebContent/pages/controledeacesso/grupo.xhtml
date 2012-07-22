@@ -51,7 +51,7 @@
 		  			</p:column>
 		  		
 		  			<p:column headerText="Remover" style="text-align: center">
-		  				<p:commandLink action="#{mbean.removePermissao}">
+		  				<p:commandLink action="#{mbean.removePermissao}" process="@this">
 							<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
 							<f:setPropertyActionListener target="#{mbean.permissaoGrupoSelecionada}" value="#{permissaoGrupo}" />
 						</p:commandLink>

@@ -18,16 +18,17 @@ public class PermissaoPesquisaFaces extends PesquisaFaces<Permissao> {
 	
 	@PostConstruct
 	protected void init() {
-		this.limpar();
-		this.initCombo();
 		setFieldOrdem("descricao");
+		this.initCombo();
+		this.limpar();
 	}
 	
 	@Override
 	public String limpar() {
 		setModel(new Permissao());
 		getModel().setMenu(new Menu());
-		return this.find();
+		//return this.find();
+		return "sucesso";
 	}
 	
 	private void initCombo(){

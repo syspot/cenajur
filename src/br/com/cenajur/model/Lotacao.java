@@ -3,19 +3,27 @@ package br.com.cenajur.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 
 @Entity
-@Table(name = "tipos_pagamentos")
-public class TipoPagamento extends TSActiveRecordAb<TipoPagamento>{
+@Table(name = "lotacoes")
+public class Lotacao extends TSActiveRecordAb<Lotacao>{
 
 	@Id
 	@GeneratedValue
 	private Long id;
 	
 	private String descricao;
+	
+	private String bairro;
+	
+	private String telefone;
+	
+	@ManyToOne
+	private Cidade cidade;
 
 	public Long getId() {
 		return id;
@@ -31,6 +39,30 @@ public class TipoPagamento extends TSActiveRecordAb<TipoPagamento>{
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public Cidade getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(Cidade cidade) {
+		this.cidade = cidade;
 	}
 
 	@Override
@@ -49,7 +81,7 @@ public class TipoPagamento extends TSActiveRecordAb<TipoPagamento>{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TipoPagamento other = (TipoPagamento) obj;
+		Lotacao other = (Lotacao) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -57,5 +89,5 @@ public class TipoPagamento extends TSActiveRecordAb<TipoPagamento>{
 			return false;
 		return true;
 	}
-
+	
 }

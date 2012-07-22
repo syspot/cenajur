@@ -128,7 +128,7 @@
 	  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 	  				<f:selectItems value="#{mbean.grupos}"/>
 	  			</p:selectOneMenu>
-	  			<p:selectBooleanCheckbox id="situacao" value="#{mbeanModel.flagSituacao}">
+	  			<p:selectBooleanCheckbox id="situacao" value="#{mbeanModel.flagAtivo}">
 	  				<p:ajax update="pgDataDesligamento" />
 	  			</p:selectBooleanCheckbox>
   			
@@ -137,8 +137,8 @@
   			<h:panelGrid columns="1" style="width:30%">
 	  			
 	  			<h:panelGrid id="pgDataDesligamento">
-		  			<p:outputLabel for="dataDesligamento" value="Data de Desligamento" rendered="#{!mbeanModel.flagSituacao}"/>
-		  			<p:calendar id="dataDesligamento" pattern="dd/MM/yyyy" value="#{mbeanModel.dataDesligamento}" styleClass="coluna90" rendered="#{!mbeanModel.flagSituacao}"/>
+		  			<p:outputLabel for="dataDesligamento" value="Data de Desligamento" rendered="#{!mbeanModel.flagAtivo}"/>
+		  			<p:calendar id="dataDesligamento" pattern="dd/MM/yyyy" value="#{mbeanModel.dataDesligamento}" styleClass="coluna90" rendered="#{!mbeanModel.flagAtivo}"/>
   				</h:panelGrid>
   				
   			</h:panelGrid>
@@ -178,7 +178,7 @@
 		<h:panelGrid>
 		
 			<p:outputLabel for="situacaoPesquisa" value="Situação"/>
-			<p:selectBooleanCheckbox id="situacaoPesquisa" value="#{mbeanPesquisaModel.flagSituacao}" />
+			<p:selectBooleanCheckbox id="situacaoPesquisa" value="#{mbeanPesquisaModel.flagAtivo}" />
 		
 		</h:panelGrid>
   	

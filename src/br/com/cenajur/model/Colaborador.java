@@ -63,8 +63,8 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 	@JoinColumn(name = "tipo_acesso_id")
 	private TipoAcesso tipoAcesso;
 	
-	@Column(name = "flag_situacao")
-	private Boolean flagSituacao;
+	@Column(name = "flag_ativo")
+	private Boolean flagAtivo;
 	
 	@Column(name = "data_desligamento")
 	private Date dataDesligamento;
@@ -210,12 +210,12 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 		this.dataAdmissao = dataAdmissao;
 	}
 
-	public Boolean getFlagSituacao() {
-		return flagSituacao;
+	public Boolean getFlagAtivo() {
+		return flagAtivo;
 	}
 
-	public void setFlagSituacao(Boolean flagSituacao) {
-		this.flagSituacao = flagSituacao;
+	public void setFlagAtivo(Boolean flagAtivo) {
+		this.flagAtivo = flagAtivo;
 	}
 
 	public Date getDataDesligamento() {

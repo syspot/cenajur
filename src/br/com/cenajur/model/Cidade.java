@@ -1,11 +1,9 @@
 package br.com.cenajur.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
@@ -21,7 +19,7 @@ public class Cidade extends TSActiveRecordAb<Cidade>{
 	
 	private String descricao;
 	
-	@OneToOne
+	@ManyToOne
 	private Estado estado;
 
 	public Long getId() {

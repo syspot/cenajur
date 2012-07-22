@@ -42,7 +42,7 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 	@Override
 	public String limpar() {
 		setCrudModel(new Colaborador());
-		getCrudModel().setFlagSituacao(Boolean.TRUE);
+		getCrudModel().setFlagAtivo(Boolean.TRUE);
 		getCrudModel().setLogin(null);
 		getCrudModel().setSenha(null);
 		getCrudModel().setSenha2(null);
@@ -60,7 +60,7 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 		setCrudPesquisaModel(new Colaborador());
 		getCrudPesquisaModel().setGrupo(new Grupo());
 		getCrudPesquisaModel().setTipoColaborador(new TipoColaborador());
-		getCrudPesquisaModel().setFlagSituacao(Boolean.TRUE);
+		getCrudPesquisaModel().setFlagAtivo(Boolean.TRUE);
 		setGrid(new ArrayList<Colaborador>());
 		return SUCESSO;
 	}
@@ -88,7 +88,6 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 	@Override
 	protected void posDetail() {
 		getCrudModel().setSenha(null);
-		//getCrudModel().setSenha2(null);
 	}
 	
 	public boolean isAdvogado(){
