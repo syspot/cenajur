@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
@@ -25,6 +27,7 @@ public class Grupo extends TSActiveRecordAb<Grupo>  {
 	@OneToMany(mappedBy = "grupo")
 	private List<Colaborador> colaboradores;
 	
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	@OneToMany(mappedBy = "grupo", cascade = CascadeType.ALL)
 	private List<PermissaoGrupo> permissoesGrupos;
 	
@@ -65,6 +68,7 @@ public class Grupo extends TSActiveRecordAb<Grupo>  {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((permissoesGrupos == null) ? 0 : permissoesGrupos.hashCode());
 		return result;
 	}
 
@@ -82,8 +86,13 @@ public class Grupo extends TSActiveRecordAb<Grupo>  {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (permissoesGrupos == null) {
+			if (other.permissoesGrupos != null)
+				return false;
+		} else if (!permissoesGrupos.equals(other.permissoesGrupos))
+			return false;
 		return true;
 	}
-	
+
 	
 }

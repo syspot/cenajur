@@ -44,6 +44,7 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	
 	private String bairro;
 	
+	@ManyToOne
 	private Cidade cidade;
 	
 	private String telefone;
@@ -73,11 +74,9 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	@Column(name = "data_desligamento")
 	private Date dataDesligamento;
 	
-	@Column(name = "motivo_cancelamento_id")
+	@ManyToOne
+	@JoinColumn(name = "motivo_cancelamento_id")
 	private MotivoCancelamento motivoCancelamento;
-	
-	@Column(name = "flag_entrega_cartao")
-	private Boolean flagEntregaCartao;
 	
 	@ManyToOne
 	private Cliente titular;
@@ -105,12 +104,18 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	
 	private String observacao;
 	
+	@Column(name = "data_cadastro")
 	private Date dataCadastro;
 	
+	@Column(name = "data_atualizacao")
 	private Date dataAtualizacao;
 	
+	@ManyToOne
+	@JoinColumn(name = "colaborador_cadastro_id")
 	private Colaborador colaboradorCadastro;
 	
+	@ManyToOne
+	@JoinColumn(name = "colaborador_atualizacao_id")
 	private Colaborador colaboradorAtualizacao;
 	
 	public Long getId() {
@@ -195,14 +200,6 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
-	}
-
-	public Boolean getFlagEntregaCartao() {
-		return flagEntregaCartao;
-	}
-
-	public void setFlagEntregaCartao(Boolean flagEntregaCartao) {
-		this.flagEntregaCartao = flagEntregaCartao;
 	}
 
 	public Lotacao getLotacao() {

@@ -14,6 +14,7 @@ import br.com.cenajur.model.Cliente;
 import br.com.cenajur.model.Estado;
 import br.com.cenajur.model.EstadoCivil;
 import br.com.cenajur.model.Graduacao;
+import br.com.cenajur.model.Lotacao;
 import br.com.cenajur.model.MotivoCancelamento;
 import br.com.cenajur.model.TipoPagamento;
 import br.com.cenajur.util.ColaboradorUtil;
@@ -29,6 +30,8 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	private List<SelectItem> motivosCancelamentos;
 	private List<SelectItem> bancos;
 	private List<SelectItem> graduacoes;
+	
+	private Lotacao lotacaoSelecionada;
 	
 	@PostConstruct
 	protected void init() {
@@ -50,13 +53,20 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	public String limpar() {
 		setCrudModel(new Cliente());
 		getCrudModel().setCidade(new Cidade());
+		getCrudModel().getCidade().setEstado(new Estado());
+		getCrudModel().setEstadoCivil(new EstadoCivil());
+		getCrudModel().setBanco(new Banco());
+		getCrudModel().setGraduacao(new Graduacao());
+		getCrudModel().setTipoPagamento(new TipoPagamento());
+		getCrudModel().setFlagAtivo(Boolean.TRUE);
+		getCrudModel().setFlagStatusPM(Boolean.TRUE);
 		setFlagAlterar(Boolean.FALSE);
 		return SUCESSO;
 	}
 
 	@Override
 	public String limparPesquisa(){
-		this.setFieldOrdem("descricao");
+		this.setFieldOrdem("nome");
 		return super.limparPesquisa();
 	}
 
@@ -70,6 +80,11 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	protected void preUpdate(){
 		getCrudModel().setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 		getCrudModel().setDataAtualizacao(new Date());
+	}
+	
+	public String addLotacao(){
+		getCrudModel().setLotacao(this.lotacaoSelecionada);
+		return "sucesso";
 	}
 	
 	public List<SelectItem> getEstados() {
@@ -126,6 +141,14 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 
 	public void setGraduacoes(List<SelectItem> graduacoes) {
 		this.graduacoes = graduacoes;
+	}
+
+	public Lotacao getLotacaoSelecionada() {
+		return lotacaoSelecionada;
+	}
+
+	public void setLotacaoSelecionada(Lotacao lotacaoSelecionada) {
+		this.lotacaoSelecionada = lotacaoSelecionada;
 	}
 	
 }

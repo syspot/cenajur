@@ -37,6 +37,7 @@
  		<mapping class="br.com.cenajur.model.TipoPagamento" />
  		<mapping class="br.com.cenajur.model.MotivoCancelamento" />
  		<mapping class="br.com.cenajur.model.Lotacao" />
+ 		<mapping class="br.com.cenajur.model.Cliente" />
 
 	</session-factory>
 

@@ -773,6 +773,14 @@ img.right {
     vertical-align: bottom;
 }
 
+.coluna32 {
+    width: 32%;
+}
+
+.coluna33 {
+    width: 33%;
+}
+
 .coluna35 {
     width: 35%;
 }
@@ -876,6 +884,10 @@ img.right {
 
 .coluna75 {
     width: 75%;
+}
+
+.coluna78 {
+    width: 78%;
 }
 
 .coluna80 {
