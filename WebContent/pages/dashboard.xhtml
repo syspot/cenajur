@@ -14,6 +14,8 @@
 
 		<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();" onerror="statusDialog.hide();" oncomplete="statusDialog.hide();" />
 
+		<ui:include src="/resources/templates/dialogPermissao.xhtml" />
+		
 		<p:dialog modal="true" widgetVar="statusDialog" header="Processando..." draggable="false" closable="false" resizable="false">
 			<p:graphicImage value="../resources/images/ajaxloadingbar.gif" />
 		</p:dialog>

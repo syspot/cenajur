@@ -69,6 +69,9 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 	protected void preInsert(){
 	}
 	
+	protected void preUpdate(){
+	}
+	
 	protected void posDetail(){
 	}
 	
@@ -106,6 +109,8 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 		if(validaCampos()){
 			return null;
 		}
+		
+		this.preUpdate();
 		
 		this.crudModel.update();
 		

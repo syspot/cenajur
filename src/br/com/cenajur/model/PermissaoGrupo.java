@@ -8,6 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
+import br.com.topsys.util.TSUtil;
 
 @Entity
 @Table(name = "permissoes_grupos")
@@ -33,7 +34,7 @@ public class PermissaoGrupo extends TSActiveRecordAb<PermissaoGrupo> {
 	private Boolean flagExcluir;
 
 	public Long getId() {
-		return id;
+		return TSUtil.tratarLong(id);
 	}
 
 	public void setId(Long id) {

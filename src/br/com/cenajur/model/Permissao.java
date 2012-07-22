@@ -1,17 +1,19 @@
 package br.com.cenajur.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import br.com.cenajur.util.CenajurUtil;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
+import br.com.topsys.util.TSUtil;
 
 @Entity
 @Table(name = "permissoes")
@@ -41,7 +43,7 @@ public class Permissao extends TSActiveRecordAb<Permissao> {
 	
 
 	public Long getId() {
-		return id;
+		return TSUtil.tratarLong(id);
 	}
 
 	public void setId(Long id) {
@@ -129,4 +131,24 @@ public class Permissao extends TSActiveRecordAb<Permissao> {
 		return true;
 	}
 	
+	@Override
+	public List<Permissao> findByModel(String... fieldsOrderBy) {
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" from Permissao p where lower(p.descricao) like ? ");
+		
+		if(!TSUtil.isEmpty(menu) && !TSUtil.isEmpty(menu.getId())){
+			query.append("and p.menu.id = ? ");
+		}
+		
+		List<Object> params = new ArrayList<Object>();
+		params.add(CenajurUtil.tratarString(descricao));
+		
+		if(!TSUtil.isEmpty(menu) && !TSUtil.isEmpty(menu.getId())){
+			params.add(menu.getId());
+		}
+		
+		return super.find(query.toString(), params.toArray());
+	}
 }

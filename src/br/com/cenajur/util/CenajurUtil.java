@@ -41,4 +41,7 @@ public class CenajurUtil {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", msg));
 	}
 	
+	public static String tratarString(String str){
+		return (str == null) ? str : "%" + str.toLowerCase() + "%"; 
+	}
 }

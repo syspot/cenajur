@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="/resources/templates/templateCRUD.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+	<ui:param name="mbean" value="${grupoFaces}" />
+  	<ui:param name="mbeanModel" value="${grupoFaces.crudModel}" />
+  	<ui:param name="mbeanPesquisaModel" value="${grupoFaces.crudPesquisaModel}" />
+  	<ui:param name="adicionarPermissao" value="addPermissao" />
+  	
+  	
+  	<ui:define name="cadastro">
+  	
+  		<h:panelGrid columns="1" style="width:50%">
+  		
+	  		<p:outputLabel for="descricao" value="Descrição" />
+	  		<p:inputText id="descricao" required="true" requiredMessage="Descrição: Campo obrigatório" maxlength="50" value="#{mbeanModel.descricao}" styleClass="coluna90"/>
+	  		
+  		</h:panelGrid>
+  		
+  		<br/>
+  		
+  		<h:panelGrid columns="1" style="width:50%">
+  		
+	  		<p:commandButton type="button" value="Adicionar Permissão" onclick="dlgPermissao.show();" />
+	  		
+	  		<p:outputPanel id="panelPermissaoUpdate" autoUpdate="true">
+	  		
+		  		<p:dataTable id="gridPermissao" emptyMessage="Nenhuma permissão adicionada" value="#{mbeanModel.permissoesGrupos}" var="permissaoGrupo">
+		  		
+		  			<p:column headerText="Menu">
+		  				<h:outputText value="#{permissaoGrupo.permissao.menu.nome}" />
+		  			</p:column>
+		  		
+		  			<p:column headerText="Nome">
+		  				<h:outputText value="#{permissaoGrupo.permissao.descricao}" />
+		  			</p:column>
+		  		
+		  			<p:column headerText="Inserir" style="text-align: center">
+		  				<p:selectBooleanCheckbox value="#{permissaoGrupo.flagInserir}" />
+		  			</p:column>
+		  		
+		  			<p:column headerText="Alterar" style="text-align: center">
+		  				<p:selectBooleanCheckbox value="#{permissaoGrupo.flagAlterar}" />
+		  			</p:column>
+		  		
+		  			<p:column headerText="Excluir" style="text-align: center">
+		  				<p:selectBooleanCheckbox value="#{permissaoGrupo.flagExcluir}" />
+		  			</p:column>
+		  		
+		  			<p:column headerText="Remover" style="text-align: center">
+		  				<p:commandLink action="#{mbean.removePermissao}">
+							<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+							<f:setPropertyActionListener target="#{mbean.permissaoGrupoSelecionada}" value="#{permissaoGrupo}" />
+						</p:commandLink>
+		  			</p:column>
+		  		
+		  		</p:dataTable>
+		  		
+	  		</p:outputPanel>
+	  		
+  		</h:panelGrid>
+  		
+  	</ui:define>
+  	
+  	<ui:define name="pesquisaCampos">
+  	
+  		<h:panelGrid columns="1"  style="width:50%">
+  		
+  			<p:outputLabel for="descricaoPesquisa" value="Descrição"/>
+  			<p:inputText id="descricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" styleClass="coluna90"/>
+  			
+		</h:panelGrid>
+  	
+  	</ui:define>
+  	
+  	<ui:define name="colunasTabela">
+  	
+  		<p:column headerText="Descrição">
+  			<h:outputText value="#{linha.descricao}" />
+  		</p:column>
+  	
+  	</ui:define>
+  	
+</ui:composition>

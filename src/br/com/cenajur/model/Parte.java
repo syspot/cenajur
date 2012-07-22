@@ -1,5 +1,7 @@
 package br.com.cenajur.model;
 
+import br.com.topsys.util.TSUtil;
+
 public class Parte {
 
 	private Long id;
@@ -7,7 +9,7 @@ public class Parte {
 	private String descricao;
 
 	public Long getId() {
-		return id;
+		return TSUtil.tratarLong(id);
 	}
 
 	public void setId(Long id) {

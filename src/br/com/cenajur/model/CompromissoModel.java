@@ -2,6 +2,8 @@ package br.com.cenajur.model;
 
 import java.util.Date;
 
+import br.com.topsys.util.TSUtil;
+
 public class CompromissoModel {
 
 	private Long id;
@@ -19,7 +21,7 @@ public class CompromissoModel {
 	private String descricao;
 
 	public Long getId() {
-		return id;
+		return TSUtil.tratarLong(id);
 	}
 
 	public void setId(Long id) {

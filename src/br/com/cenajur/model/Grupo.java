@@ -2,22 +2,19 @@ package br.com.cenajur.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
+import br.com.topsys.util.TSUtil;
 
 @Entity
 @Table(name = "grupos")
 public class Grupo extends TSActiveRecordAb<Grupo>  {
-
-	private static final long serialVersionUID = 840573356188706050L;
 
 	@Id
 	@GeneratedValue
@@ -28,11 +25,11 @@ public class Grupo extends TSActiveRecordAb<Grupo>  {
 	@OneToMany(mappedBy = "grupo")
 	private List<Colaborador> colaboradores;
 	
-	@OneToMany(mappedBy = "grupo")
+	@OneToMany(mappedBy = "grupo", cascade = CascadeType.ALL)
 	private List<PermissaoGrupo> permissoesGrupos;
 	
 	public Long getId() {
-		return id;
+		return TSUtil.tratarLong(id);
 	}
 
 	public void setId(Long id) {

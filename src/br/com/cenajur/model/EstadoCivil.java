@@ -1,16 +1,18 @@
 package br.com.cenajur.model;
 
+import br.com.topsys.util.TSUtil;
+
 public class EstadoCivil {
 
-	private Integer id;
+	private Long id;
 	
 	private String descricao;
 
-	public Integer getId() {
-		return id;
+	public Long getId() {
+		return TSUtil.tratarLong(id);
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

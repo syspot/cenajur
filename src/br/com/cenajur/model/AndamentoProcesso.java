@@ -2,6 +2,8 @@ package br.com.cenajur.model;
 
 import java.util.Date;
 
+import br.com.topsys.util.TSUtil;
+
 public class AndamentoProcesso {
 
 	private Long id;
@@ -15,7 +17,7 @@ public class AndamentoProcesso {
 	private TipoAndamentoProcesso tipoAndamentoProcesso;
 	
 	public Long getId() {
-		return id;
+		return TSUtil.tratarLong(id);
 	}
 	
 	public void setId(Long id) {

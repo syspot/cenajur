@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:param name="mbeanPesquisa" value="${permissaoPesquisaFaces}" />
+
+	<h:form>
+		
+		<p:dialog id="dialogPermissao" widgetVar="dlgPermissao" header="Pesquisa de Permissões" width="600" height="400" modal="true">
+	  
+	  		<h:panelGrid columns="2" columnClasses="coluna60, coluna40" style="width:90%">
+	  		
+				<p:outputLabel for="dlgDescricaoPermissao" value="Descrição" />
+				<p:outputLabel for="dlgMenuPermissao" value="Menu" />
+				
+				<p:inputText id="dlgDescricaoPermissao" value="#{mbeanPesquisa.model.descricao}" maxlength="100" styleClass="coluna90"/>
+				<p:selectOneMenu id="dlgMenuPermissao" value="#{mbeanPesquisa.model.menu.id}" style="width:90%">
+	  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+	  				<f:selectItems value="#{mbeanPesquisa.menus}"/>
+	  			</p:selectOneMenu>
+				
+				<p:commandButton value="Pesquisar" icon="pesquisar" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="width: 140px; margin-left: 5px;"/>
+				
+			</h:panelGrid>
+			
+			<br/>
+			
+			<p:dataTable id="gridPesquisa" emptyMessage="Nenhuma permissão encontrada" value="#{mbeanPesquisa.grid}" var="permissao">
+			
+				<p:column headerText="Descrição">
+					<h:outputText value="#{permissao.descricao}" />
+				</p:column>
+			
+				<p:column headerText="Menu">
+					<h:outputText value="#{permissao.menu.nome}" />
+				</p:column>
+				
+				<p:column headerText="Adicionar" styleClass="coluna10" style="text-align:center;">
+					<p:commandLink action="#{grupoFaces.addPermissao}" onclick="dlgPermissao.hide()">
+						<h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
+						<f:setPropertyActionListener target="#{grupoFaces.permissaoSelecionada}" value="#{permissao}" />
+					</p:commandLink>
+				</p:column>
+			
+			</p:dataTable>
+	  
+		</p:dialog>
+	
+	</h:form>
+
+</ui:component>

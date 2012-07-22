@@ -2,6 +2,8 @@ package br.com.cenajur.model;
 
 import java.util.Date;
 
+import br.com.topsys.util.TSUtil;
+
 public class Cliente {
 
 	private Long id;
@@ -87,7 +89,7 @@ public class Cliente {
 	private String recado;
 
 	public Long getId() {
-		return id;
+		return TSUtil.tratarLong(id);
 	}
 
 	public void setId(Long id) {

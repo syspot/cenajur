@@ -90,12 +90,16 @@
   			<h:panelGrid columns="3" style="width:48%">
   			
   				<p:outputLabel for="usuario" value="Usuário" />
-  				<p:outputLabel for="senha" value="Senha" />
-  				<p:outputLabel for="senha2" value="Confirmar Senha" />
+  				<p:outputLabel for="senhaEdit" value="Senha" rendered="#{mbeanModel.id != null}"/>
+  				<p:outputLabel for="senhaEdit2" value="Confirmar Senha" rendered="#{mbeanModel.id != null}"/>
+  				<p:outputLabel for="senha" value="Senha" rendered="#{mbeanModel.id == null}"/>
+  				<p:outputLabel for="senha2" value="Confirmar Senha" rendered="#{mbeanModel.id == null}"/>
   				
   				<p:inputText id="usuario" required="true" requiredMessage="Usuário: Campo obrigatório" value="#{mbeanModel.login}" maxlength="20"/>
-  				<p:password id="senha" required="true" requiredMessage="Senha: Campo obrigatório" value="#{mbeanModel.senha}" maxlength="20" match="senha2" />
-  				<p:password id="senha2" required="true" requiredMessage="Confirmar Senha: Campo obrigatório" value="#{mbeanModel.senha2}" maxlength="20"/>
+  				<p:password id="senhaEdit" value="#{mbeanModel.senha}" maxlength="20" match="senhaEdit2" rendered="#{mbeanModel.id != null}"/>
+  				<p:password id="senhaEdit2" value="#{mbeanModel.senha2}" maxlength="20" rendered="#{mbeanModel.id != null}"/>
+  				<p:password id="senha" required="true" requiredMessage="Senha: Campo obrigatório" value="#{mbeanModel.senha}" maxlength="20" match="senha2" rendered="#{mbeanModel.id == null}"/>
+  				<p:password id="senha2" required="true" requiredMessage="Confirmar Senha: Campo obrigatório" value="#{mbeanModel.senha2}" maxlength="20" rendered="#{mbeanModel.id == null}"/>
   			
   			</h:panelGrid>
   			
