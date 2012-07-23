@@ -1,5 +1,6 @@
 package br.com.cenajur.faces;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import br.com.cenajur.model.Lotacao;
 import br.com.cenajur.model.MotivoCancelamento;
 import br.com.cenajur.model.TipoPagamento;
 import br.com.cenajur.util.ColaboradorUtil;
+import br.com.topsys.util.TSUtil;
 
 @SessionScoped
 @ManagedBean(name = "clienteFaces")
@@ -67,7 +69,12 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	@Override
 	public String limparPesquisa(){
 		this.setFieldOrdem("nome");
-		return super.limparPesquisa();
+		setGrid(new ArrayList<Cliente>());
+		setCrudPesquisaModel(new Cliente());
+		getCrudPesquisaModel().setCidade(new Cidade());
+		getCrudPesquisaModel().getCidade().setEstado(new Estado());
+		getCrudPesquisaModel().setFlagAtivo(Boolean.TRUE);
+		return "sucesso";
 	}
 
 	@Override
@@ -80,6 +87,24 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	protected void preUpdate(){
 		getCrudModel().setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 		getCrudModel().setDataAtualizacao(new Date());
+	}
+	@Override
+	protected void posDetail() {
+		if(TSUtil.isEmpty(getCrudModel().getBanco())){
+			getCrudModel().setBanco(new Banco());
+		}
+	}
+	
+	public String mudarStatusCliente(){
+		if(!getCrudModel().getFlagAtivo()){
+			getCrudModel().setMotivoCancelamento(new MotivoCancelamento());
+		}
+		return "sucesso";
+	}
+	
+	public String atualizarComboCidades(){
+		this.cidades = super.initCombo(getCrudModel().getCidade().findByModel("descricao"), "id", "descricao");
+		return "sucesso";
 	}
 	
 	public String addLotacao(){

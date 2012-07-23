@@ -23,7 +23,7 @@ public class Banco extends TSActiveRecordAb<Banco>{
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		this.id = TSUtil.tratarLong(id);
 	}
 
 	public String getDescricao() {

@@ -27,7 +27,7 @@
 	  				<f:selectItems value="#{mbeanPesquisa.estados}"/>
 	  				<p:ajax listener="#{mbeanPesquisa.atualizarComboCidades}" update="pgCampos" />
 	  			</p:selectOneMenu>
-				<p:selectOneMenu id="dlgCidadeLotacao" value="#{mbeanPesquisa.model.cidade.id}" style="width:90%">
+				<p:selectOneMenu id="dlgCidadeLotacao" value="#{mbeanPesquisa.model.cidade.id}" style="width:90%" disabled="#{mbeanPesquisa.model.cidade.estado.id == null}">
 	  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 	  				<f:selectItems value="#{mbeanPesquisa.cidades}"/>
 	  			</p:selectOneMenu>

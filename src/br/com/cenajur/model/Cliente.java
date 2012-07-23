@@ -71,8 +71,8 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	@JoinColumn(name = "tipo_pagamento_id")
 	private TipoPagamento tipoPagamento;
 	
-	@Column(name = "data_desligamento")
-	private Date dataDesligamento;
+	@Column(name = "data_cancelamento")
+	private Date dataCancelamento;
 	
 	@ManyToOne
 	@JoinColumn(name = "motivo_cancelamento_id")
@@ -290,12 +290,12 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		this.tipoPagamento = tipoPagamento;
 	}
 
-	public Date getDataDesligamento() {
-		return dataDesligamento;
+	public Date getDataCancelamento() {
+		return dataCancelamento;
 	}
 
-	public void setDataDesligamento(Date dataDesligamento) {
-		this.dataDesligamento = dataDesligamento;
+	public void setDataCancelamento(Date dataCancelamento) {
+		this.dataCancelamento = dataCancelamento;
 	}
 
 	public MotivoCancelamento getMotivoCancelamento() {
