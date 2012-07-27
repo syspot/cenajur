@@ -2,18 +2,36 @@ package br.com.cenajur.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
-public class AndamentoProcesso {
+@Entity
+@Table(name = "andamentos_processos")
+public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
+	@ManyToOne
 	private Processo processo;
 	
 	private String descricao;
 	
+	@Column(name = "data_andamento")
 	private Date dataAndamento;
 
+	@ManyToOne
+	@JoinColumn(name = "tipo_andamento_processo_id")
 	private TipoAndamentoProcesso tipoAndamentoProcesso;
 	
 	public Long getId() {

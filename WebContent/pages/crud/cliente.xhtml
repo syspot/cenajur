@@ -126,7 +126,7 @@
 	  			
 	  			<p:outputPanel autoUpdate="true">
 		  			<p:outputLabel for="lotacao" value="Lotação" /><br/>
-	  				<p:inputText id="lotacao" required="true" requiredMessage="Lotação: Campo obrigatório" value="#{mbeanModel.lotacao.descricao}" disabled="true" styleClass="coluna70" />
+	  				<p:inputText id="lotacao" required="true" requiredMessage="Lotação: Campo obrigatório" value="#{mbeanModel.lotacao.descricao}" readonly="true" styleClass="coluna70" />
 	  				<p:commandButton type="button" value="Adicionar" onclick="dlgLotacao.show();" />
   				</p:outputPanel>
 	  		

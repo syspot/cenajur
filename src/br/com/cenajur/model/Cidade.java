@@ -1,5 +1,8 @@
 package br.com.cenajur.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import br.com.cenajur.util.CenajurUtil;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
@@ -70,6 +74,28 @@ public class Cidade extends TSActiveRecordAb<Cidade>{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+
+	@Override
+	public List<Cidade> findByModel(String... fieldsOrderBy) {
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" from Cidade c where lower(c.descricao) like ? ");
+		
+		if(!TSUtil.isEmpty(estado) && !TSUtil.isEmpty(estado.getId())){
+			query.append("and c.estado.id = ? ");
+		}
+		
+		List<Object> params = new ArrayList<Object>();
+		params.add(CenajurUtil.tratarString(descricao));
+		
+		if(!TSUtil.isEmpty(estado) && !TSUtil.isEmpty(estado.getId())){
+			params.add(estado.getId());
+		}
+		
+		return super.find(query.toString(), params.toArray());
 	}
 	
 }

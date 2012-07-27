@@ -1,13 +1,26 @@
 package br.com.cenajur.model;
 
-public class TipoAndamentoProcesso {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+import br.com.topsys.database.hibernate.TSActiveRecordAb;
+import br.com.topsys.util.TSUtil;
+
+@Entity
+@Table(name = "tipos_andamentos_processos")
+public class TipoAndamentoProcesso extends TSActiveRecordAb<TipoAndamentoProcesso>{
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
 	private String descricao;
 
 	public Long getId() {
-		return id;
+		return TSUtil.tratarLong(id);
 	}
 
 	public void setId(Long id) {

@@ -18,6 +18,7 @@
 		<property name="hibernate.show_sql">true</property>
 
  		<mapping class="br.com.cenajur.model.Audiencia" />
+ 		<mapping class="br.com.cenajur.model.AndamentoProcesso" />
  		<mapping class="br.com.cenajur.model.Banco" />
  		<mapping class="br.com.cenajur.model.Cidade" />
  		<mapping class="br.com.cenajur.model.Cliente" />
@@ -38,6 +39,7 @@
  		<mapping class="br.com.cenajur.model.SituacaoAudiencia" />
  		<mapping class="br.com.cenajur.model.SituacaoProcesso" />
  		<mapping class="br.com.cenajur.model.TipoAcesso" />
+ 		<mapping class="br.com.cenajur.model.TipoAndamentoProcesso" />
  		<mapping class="br.com.cenajur.model.TipoColaborador" />
  		<mapping class="br.com.cenajur.model.TipoDocumento" />
  		<mapping class="br.com.cenajur.model.TipoPagamento" />

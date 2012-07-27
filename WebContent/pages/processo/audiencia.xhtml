@@ -11,70 +11,91 @@
   	
   	<ui:define name="cadastro">
   	
-  		<p:outputPanel autoUpdate="true">
-			<p:outputLabel for="processo" value="Processo" /><br/>
-			<p:inputText id="processo" value="#{mbeanModel.processo.numeroProcesso}" required="true" requiredMessage="Processo: Campo obrigatório" disabled="true" />
-			<p:commandButton type="button" value="Adicionar" onclick="dlgProcesso.show();" />
-		</p:outputPanel>
+  		<h:panelGrid columns="1" columnClasses="coluna100">
   		
-	  	<p:outputLabel for="dataAudiencia" value="Data da Audiência" />
-  		<p:calendar id="dataAudiencia" pattern="dd/MM/yyyy" required="true" requiredMessage="Data da Audiência: Campo obrigatório" value="#{mbeanModel.dataAudiencia}"/>
+	  		<p:outputPanel autoUpdate="true">
+				<p:outputLabel for="processo" value="Processo" /><br/>
+				<p:inputText id="processo" value="#{mbeanModel.processo.numeroProcesso}" required="true" requiredMessage="Processo: Campo obrigatório" readonly="true" />
+				<p:commandButton type="button" value="Adicionar" onclick="dlgProcesso.show();" />
+			</p:outputPanel>
+	  		
+		  	<p:outputLabel for="dataAudiencia" value="Data da Audiência" />
+	  		<p:calendar id="dataAudiencia" pattern="dd/MM/yyyy" required="true" requiredMessage="Data da Audiência: Campo obrigatório" value="#{mbeanModel.dataAudiencia}"/>
   		
-  		<p:outputLabel for="situacaoAudiencia" value="Situação" />
-  		<p:selectOneMenu id="situacaoAudiencia" required="true" requiredMessage="Situação: Campo obrigatório" value="#{mbeanModel.situacaoAudiencia.id}" style="width:24%">
-	  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-	  		<f:selectItems value="#{mbean.situacoesAudiencias}" />
-	  	</p:selectOneMenu>
+  		</h:panelGrid>
+  		
+  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:38%">
+  		
+	  		<p:outputLabel for="situacaoAudiencia" value="Situação" />
+		  	<p:outputLabel for="vara" value="Vara" />
+		  	
+	  		<p:selectOneMenu id="situacaoAudiencia" required="true" requiredMessage="Situação: Campo obrigatório" value="#{mbeanModel.situacaoAudiencia.id}" style="width:95%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.situacoesAudiencias}" />
+		  	</p:selectOneMenu>
+	  		<p:selectOneMenu id="vara" required="true" requiredMessage="Vara: Campo obrigatório" value="#{mbeanModel.vara.id}" style="width:94%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.varas}" />
+		  	</p:selectOneMenu>
+		  	
+	  	</h:panelGrid>
 	  	
-	  	<p:outputLabel for="vara" value="Vara" />
-  		<p:selectOneMenu id="vara" required="true" requiredMessage="Vara: Campo obrigatório" value="#{mbeanModel.vara.id}" style="width:95%">
-	  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-	  		<f:selectItems value="#{mbean.varas}" />
-	  	</p:selectOneMenu>
+	  	<h:panelGrid columns="1" columnClasses="coluna100" style="width:40%">
 	  	
-	  	<p:outputLabel for="advogado" value="Advogado" />
-  		<p:selectOneMenu id="advogado" required="true" requiredMessage="Advogado: Campo obrigatório" value="#{mbeanModel.advogado.id}" style="width:24%">
-	  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-	  		<f:selectItems value="#{mbean.advogados}" />
-	  	</p:selectOneMenu>
-	  	
-	  	<p:outputLabel for="descricao" value="Descrição" />
-		<p:inputTextarea id="descricao" value="#{mbeanModel.descricao}" maxlength="500" styleClass="coluna90"/>
+		  	<p:outputLabel for="advogado" value="Advogado" />
+	  		<p:selectOneMenu id="advogado" required="true" requiredMessage="Advogado: Campo obrigatório" value="#{mbeanModel.advogado.id}" style="width:92%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.advogados}" />
+		  	</p:selectOneMenu>
+		  	
+		  	<p:outputLabel for="descricao" value="Descrição" />
+			<p:inputTextarea id="descricao" value="#{mbeanModel.descricao}" maxlength="500" styleClass="coluna90"/>
+			
+	  	</h:panelGrid>
 	  	
   	</ui:define>
   	
   	<ui:define name="pesquisaCampos">
   	
-  		<p:outputPanel autoUpdate="true">
-			<p:outputLabel for="processoPesquisa" value="Processo" /><br/>
-			<p:inputText id="processoPesquisa" value="#{mbeanPesquisaModel.processo.numeroProcesso}" disabled="true" />
-			<p:commandButton type="button" value="Adicionar" onclick="dlgCliente.show();" />
-		</p:outputPanel>
+  		<h:panelGrid columns="1" columnClasses="coluna100">
   		
-	  	<p:outputLabel for="dataAudienciaPesquisa" value="Data da Audiência" />
-  		<p:calendar id="dataAudienciaPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataAudiencia}"/>
+			<p:outputLabel for="processoPesquisa" value="Processo" />
+			<p:inputText id="processoPesquisa" value="#{mbeanPesquisaModel.processo.numeroProcesso}" />
+	  		
+		  	<p:outputLabel for="dataAudienciaPesquisa" value="Data da Audiência" />
+	  		<p:calendar id="dataAudienciaPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataAudiencia}"/>
   		
-  		<p:outputLabel for="situacaoAudienciaPesquisa" value="Situação" />
-  		<p:selectOneMenu id="situacaoAudienciaPesquisa" value="#{mbeanPesquisaModel.situacaoAudiencia.id}" style="width:24%">
-	  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-	  		<f:selectItems value="#{mbean.situacoesAudiencias}" />
-	  	</p:selectOneMenu>
-	  	
-	  	<p:outputLabel for="varaPesquisa" value="Vara" />
-  		<p:selectOneMenu id="varaPesquisa" value="#{mbeanPesquisaModel.vara.id}" style="width:95%">
-	  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-	  		<f:selectItems value="#{mbean.varas}" />
-	  	</p:selectOneMenu>
-	  	
-	  	<p:outputLabel for="advogadoPesquisa" value="Advogado" />
-  		<p:selectOneMenu id="advogadoPesquisa" value="#{mbeanPesquisaModel.advogado.id}" style="width:24%">
-	  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-	  		<f:selectItems value="#{mbean.advogados}" />
-	  	</p:selectOneMenu>
-	  	
-		<p:outputLabel for="descricaoPesquisa" value="Descrição" />
-		<p:inputTextarea id="descricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" maxlength="500" styleClass="coluna90"/>
+  		</h:panelGrid>
+  		
+  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:38%">
+  		
+	  		<p:outputLabel for="situacaoAudienciaPesquisa" value="Situação" />
+		  	<p:outputLabel for="varaPesquisa" value="Vara" />
 		  	
+	  		<p:selectOneMenu id="situacaoAudienciaPesquisa" value="#{mbeanPesquisaModel.situacaoAudiencia.id}" style="width:95%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.situacoesAudiencias}" />
+		  	</p:selectOneMenu>
+	  		<p:selectOneMenu id="varaPesquisa" value="#{mbeanPesquisaModel.vara.id}" style="width:94%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.varas}" />
+		  	</p:selectOneMenu>
+		  	
+	  	</h:panelGrid>
+	  	
+	  	<h:panelGrid columns="1" columnClasses="coluna100" style="width:40%">
+	  	
+		  	<p:outputLabel for="advogadoPesquisa" value="Advogado" />
+	  		<p:selectOneMenu id="advogadoPesquisa" value="#{mbeanPesquisaModel.advogado.id}" style="width:92%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.advogados}" />
+		  	</p:selectOneMenu>
+		  	
+			<p:outputLabel for="descricaoPesquisa" value="Descrição" />
+			<p:inputTextarea id="descricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" maxlength="500" styleClass="coluna90"/>
+		  	
+	  	</h:panelGrid>
+	  	
   	</ui:define>
   	
   	<ui:define name="colunasTabela">

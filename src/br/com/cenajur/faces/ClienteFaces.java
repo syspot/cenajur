@@ -18,6 +18,7 @@ import br.com.cenajur.model.Graduacao;
 import br.com.cenajur.model.Lotacao;
 import br.com.cenajur.model.MotivoCancelamento;
 import br.com.cenajur.model.TipoPagamento;
+import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.topsys.util.TSUtil;
 
@@ -75,6 +76,20 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		getCrudPesquisaModel().getCidade().setEstado(new Estado());
 		getCrudPesquisaModel().setFlagAtivo(Boolean.TRUE);
 		return "sucesso";
+	}
+	
+	@Override
+	protected boolean validaCampos() {
+		
+		boolean erro = false;
+		
+		if(TSUtil.isEmpty(getCrudModel().getLotacao().getId())){
+			erro = true;
+			CenajurUtil.addErrorMessage("Lotação: Campo obrigatório");
+		}
+		
+		return erro;
+		
 	}
 
 	@Override

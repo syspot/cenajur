@@ -1,5 +1,6 @@
 package br.com.cenajur.faces;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -37,7 +38,10 @@ public class CidadeFaces extends CrudFaces<Cidade> {
 	@Override
 	public String limparPesquisa(){
 		this.setFieldOrdem("descricao");
-		return super.limparPesquisa();
+		setCrudPesquisaModel(new Cidade());
+		getCrudPesquisaModel().setEstado(new Estado());
+		setGrid(new ArrayList<Cidade>());
+		return "sucesso";
 	}
 
 	public List<SelectItem> getEstados() {

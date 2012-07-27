@@ -14,6 +14,7 @@ import br.com.cenajur.model.SituacaoAudiencia;
 import br.com.cenajur.model.SituacaoProcesso;
 import br.com.cenajur.model.Vara;
 import br.com.cenajur.util.CenajurUtil;
+import br.com.topsys.util.TSUtil;
 
 @SessionScoped
 @ManagedBean(name = "audienciaFaces")
@@ -57,6 +58,19 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 		getCrudPesquisaModel().setSituacaoAudiencia(new SituacaoAudiencia());
 		getCrudPesquisaModel().setVara(new Vara());
 		return "sucesso";
+	}
+	
+	@Override
+	protected boolean validaCampos() {
+		
+		boolean erro = false;
+		
+		if(TSUtil.isEmpty(getCrudModel().getProcesso().getId())){
+			erro = true;
+			CenajurUtil.addErrorMessage("Processo: Campo obrigatório");
+		}
+		
+		return erro;
 	}
 	
 	public String addProcesso(){

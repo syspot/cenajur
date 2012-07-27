@@ -15,8 +15,6 @@ public class EstadoFaces extends CrudFaces<Estado> {
 		this.clearFields();
 	}
 	
-
-	
 	@Override
 	public String limparPesquisa(){
 		this.setFieldOrdem("descricao");

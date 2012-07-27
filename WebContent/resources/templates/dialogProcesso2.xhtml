@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:param name="mbeanPesquisa" value="${processoPesquisaFaces}" />
+
+	<h:form>
+		
+		<p:dialog id="dialogProcesso2" widgetVar="dlgProcesso2" header="Pesquisa de Processos" width="600" height="400" modal="true">
+	  
+	  		<h:panelGrid columns="1" columnClasses="coluna30" style="width:88%">
+  		
+			  	<p:outputLabel for="numeroProcessoPesquisa" value="Número do Processo" />
+			  	<p:inputText id="numeroProcessoPesquisa" value="#{mbeanPesquisa.model.numeroProcesso}" maxlength="30" styleClass="coluna40"/>
+		  		  	
+		  	</h:panelGrid>
+		  	
+			<h:panelGrid columns="2" columnClasses="coluna45, coluna55" style="width:90%">
+			
+			  	<p:outputLabel for="situacaoProcessoPesquisa" value="Situação" />
+				<p:outputLabel for="advogadoPesquisa" value="Advogado" />
+			  	
+		  		<p:selectOneMenu id="situacaoProcessoPesquisa" value="#{mbeanPesquisa.model.situacaoProcesso.id}" style="width:92%">
+			  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+			  		<f:selectItems value="#{mbeanPesquisa.situacoesProcessos}" />
+			  	</p:selectOneMenu>
+		  		<p:selectOneMenu id="advogadoPesquisa" value="#{mbeanPesquisa.model.advogado.id}" style="width:90%">
+			  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+			  		<f:selectItems value="#{mbeanPesquisa.advogados}" />
+			  	</p:selectOneMenu>
+			  	
+			</h:panelGrid>
+	 		
+			<br/>
+			  	
+			<p:commandButton value="Pesquisar" icon="pesquisar" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="width: 140px; margin-left: 5px;"/>
+			
+			<br/>
+			<br/>
+			
+			<p:dataTable id="gridPesquisa" emptyMessage="Nenhum processo encontrado" value="#{mbeanPesquisa.grid}" var="processo">
+			
+				<p:column headerText="Número">
+		  			<h:outputText value="#{processo.numeroProcesso}" />
+		  		</p:column>
+		  	
+		  		<p:column headerText="Advogado">
+		  			<h:outputText value="#{processo.advogado.nome}" />
+		  		</p:column>
+		  	
+		  		<p:column headerText="Situação">
+		  			<h:outputText value="#{processo.situacaoProcesso.descricao}" />
+		  		</p:column>
+		  		
+		  		<p:column headerText="Adicionar" style="text-align:center;">
+					<p:commandLink action="#{andamentoProcessoFaces.addProcesso}" onclick="dlgProcesso2.hide()">
+						<h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
+						<f:setPropertyActionListener target="#{andamentoProcessoFaces.processoSelecionado}" value="#{processo}" />
+					</p:commandLink>
+				</p:column>
+			
+			</p:dataTable>
+	  
+		</p:dialog>
+	
+	</h:form>
+
+</ui:component>
