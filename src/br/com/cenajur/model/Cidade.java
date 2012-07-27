@@ -82,14 +82,21 @@ public class Cidade extends TSActiveRecordAb<Cidade>{
 		
 		StringBuilder query = new StringBuilder();
 		
-		query.append(" from Cidade c where lower(c.descricao) like ? ");
+		query.append(" from Cidade c where 1 = 1 ");
+		
+		if(!TSUtil.isEmpty(descricao)){
+			query.append("and lower(c.descricao) like ? ");
+		}
 		
 		if(!TSUtil.isEmpty(estado) && !TSUtil.isEmpty(estado.getId())){
 			query.append("and c.estado.id = ? ");
 		}
 		
 		List<Object> params = new ArrayList<Object>();
-		params.add(CenajurUtil.tratarString(descricao));
+		
+		if(!TSUtil.isEmpty(descricao)){
+			params.add(CenajurUtil.tratarString(descricao));
+		}
 		
 		if(!TSUtil.isEmpty(estado) && !TSUtil.isEmpty(estado.getId())){
 			params.add(estado.getId());

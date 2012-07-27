@@ -1,6 +1,8 @@
 package br.com.cenajur.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import br.com.cenajur.util.CenajurUtil;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
@@ -316,7 +319,59 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 	
 	public Colaborador autenticarPorLogin() {
 		return super.get(" from Colaborador c where c.login = ? ", login);
-	}	
+	}
+	
+	@Override
+	public List<Colaborador> findByModel(String... fieldsOrderBy) {
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" from Colaborador c where 1 = 1 ");
+		
+		if(!TSUtil.isEmpty(nome)){
+			query.append("and lower(c.nome) like ? ");
+		}
+		
+		if(!TSUtil.isEmpty(email)){
+			query.append("and lower(c.email) like ? ");
+		}
+		
+		if(!TSUtil.isEmpty(grupo) && !TSUtil.isEmpty(grupo.getId())){
+			query.append("and c.grupo.id = ? ");
+		}
+		
+		if(!TSUtil.isEmpty(tipoColaborador) && !TSUtil.isEmpty(tipoColaborador.getId())){
+			query.append("and c.tipoColaborador.id = ? ");
+		}
+		
+		if(!TSUtil.isEmpty(flagAtivo)){
+			query.append("and c.flagAtivo = ? ");
+		}
+		
+		List<Object> params = new ArrayList<Object>();
+		
+		if(!TSUtil.isEmpty(nome)){
+			params.add(CenajurUtil.tratarString(nome));
+		}
+		
+		if(!TSUtil.isEmpty(email)){
+			params.add(CenajurUtil.tratarString(email));
+		}
+		
+		if(!TSUtil.isEmpty(grupo) && !TSUtil.isEmpty(grupo.getId())){
+			params.add(grupo.getId());
+		}
+		
+		if(!TSUtil.isEmpty(tipoColaborador) && !TSUtil.isEmpty(tipoColaborador.getId())){
+			params.add(tipoColaborador.getId());
+		}
+		
+		if(!TSUtil.isEmpty(flagAtivo)){
+			params.add(flagAtivo);
+		}
+		
+		return super.find(query.toString(), params.toArray());
+	}
 	
 }
 	

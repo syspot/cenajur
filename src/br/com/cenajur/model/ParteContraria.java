@@ -95,7 +95,11 @@ public class ParteContraria extends TSActiveRecordAb<ParteContraria>{
 		
 		StringBuilder query = new StringBuilder();
 		
-		query.append(" from ParteContraria pc where lower(pc.descricao) like ? ");
+		query.append(" from ParteContraria pc where 1 = 1 ");
+		
+		if(!TSUtil.isEmpty(descricao)){
+			query.append("and lower(pc.descricao) like ? ");
+		}
 		
 		if(!TSUtil.isEmpty(tipoDocumento) && !TSUtil.isEmpty(tipoDocumento.getId())){
 			query.append("and pc.tipoDocumento.id = ? ");
@@ -106,7 +110,10 @@ public class ParteContraria extends TSActiveRecordAb<ParteContraria>{
 		}
 		
 		List<Object> params = new ArrayList<Object>();
-		params.add(CenajurUtil.tratarString(descricao));
+		
+		if(!TSUtil.isEmpty(descricao)){
+			params.add(CenajurUtil.tratarString(descricao));
+		}
 		
 		if(!TSUtil.isEmpty(tipoDocumento) && !TSUtil.isEmpty(tipoDocumento.getId())){
 			params.add(tipoDocumento.getId());

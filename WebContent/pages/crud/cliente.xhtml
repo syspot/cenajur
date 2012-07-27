@@ -82,7 +82,7 @@
 		  	
 		  	</h:panelGrid>
 		  	
-		  	<h:panelGrid id="pgCidade" columns="4" columnClasses="coluna30, coluna30, coluna20, coluna20" style="width:70%">
+		  	<h:panelGrid columns="4" columnClasses="coluna30, coluna30, coluna20, coluna20" style="width:70%">
 		  	
 		  		<p:outputLabel for="complemento" value="Complemento"/>
 		  		<p:outputLabel for="bairro" value="Bairro"/>
@@ -94,12 +94,14 @@
 	  			<p:selectOneMenu id="estado" value="#{mbeanModel.cidade.estado.id}" required="true" requiredMessage="Estado: Campo obrigatório">
 	  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 	  				<f:selectItems value="#{mbean.estados}" />
-	  				<p:ajax update="pgCidade" listener="#{mbean.atualizarComboCidades}" process="pgCidade" />
+	  				<p:ajax update="opCidade" listener="#{mbean.atualizarComboCidades}" process="@this"/>
 	  			</p:selectOneMenu>
-	  			<p:selectOneMenu id="cidade" value="#{mbeanModel.cidade.id}" required="true" requiredMessage="Cidade: Campo obrigatório" disabled="#{mbeanModel.cidade.estado.id == null}">
-	  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-	  				<f:selectItems value="#{mbean.cidades}" />
-	  			</p:selectOneMenu>
+	  			<p:outputPanel id="opCidade">
+		  			<p:selectOneMenu id="cidade" value="#{mbeanModel.cidade.id}" required="true" requiredMessage="Cidade: Campo obrigatório" disabled="#{mbeanModel.cidade.estado.id == null}">
+		  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  				<f:selectItems value="#{mbean.cidades}" />
+		  			</p:selectOneMenu>
+	  			</p:outputPanel>
 		  	
 		  	</h:panelGrid>
 		  		
@@ -224,12 +226,12 @@
 		  	<p:outputLabel for="estadoPesquisa" value="Estado"/>
 		  	<p:outputLabel for="cidadePesquisa" value="Cidade"/>
 	  	
-  			<p:selectOneMenu id="estadoPesquisa" value="#{mbeanModel.cidade.estado.id}" style="width:95%">
+  			<p:selectOneMenu id="estadoPesquisa" value="#{mbeanPesquisaModel.cidade.estado.id}" style="width:95%">
   				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
   				<f:selectItems value="#{mbean.estados}" />
   				<p:ajax update="pgCidadePesquisa" listener="#{mbean.atualizarComboCidades}" />
   			</p:selectOneMenu>
-  			<p:selectOneMenu id="cidadePesquisa" value="#{mbeanModel.cidade.id}" disabled="#{mbeanModel.cidade.estado.id == null}" style="width:95%">
+  			<p:selectOneMenu id="cidadePesquisa" value="#{mbeanPesquisaModel.cidade.id}" disabled="#{mbeanPesquisaModel.cidade.estado.id == null}" style="width:95%">
   				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
   				<f:selectItems value="#{mbean.cidades}" />
   			</p:selectOneMenu>

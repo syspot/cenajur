@@ -83,7 +83,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		
 		boolean erro = false;
 		
-		if(TSUtil.isEmpty(getCrudModel().getLotacao().getId())){
+		if(TSUtil.isEmpty(getCrudModel().getLotacao()) || TSUtil.isEmpty(getCrudModel().getLotacao().getId())){
 			erro = true;
 			CenajurUtil.addErrorMessage("Lotação: Campo obrigatório");
 		}

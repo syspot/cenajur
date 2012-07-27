@@ -90,6 +90,11 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 		getCrudModel().setSenha(null);
 	}
 	
+	public String atualizarComboCidades(){
+		this.cidades = super.initCombo(getCrudModel().getCidade().findByModel("descricao"), "id", "descricao");
+		return "sucesso";
+	}
+	
 	public boolean isAdvogado(){
 		return Constantes.TIPO_COLABORADOR_ADVOGADO.equals(getCrudModel().getTipoColaborador().getId());
 	}

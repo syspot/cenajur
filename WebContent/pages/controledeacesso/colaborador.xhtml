@@ -63,11 +63,14 @@
 	  			<p:selectOneMenu id="estado" value="#{mbeanModel.cidade.estado.id}" required="true" requiredMessage="Estado: Campo obrigatório" styleClass="coluna90">
 	  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 	  				<f:selectItems value="#{mbean.estados}" />
+	  				<p:ajax update="opCidade" listener="#{mbean.atualizarComboCidades}" process="@this"/>
 	  			</p:selectOneMenu>
-	  			<p:selectOneMenu id="cidade" value="#{mbeanModel.cidade.id}" required="true" requiredMessage="Cidade: Campo obrigatório" styleClass="coluna90">
-	  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-	  				<f:selectItems value="#{mbean.cidades}" />
-	  			</p:selectOneMenu>
+	  			<p:outputPanel id="opCidade">
+		  			<p:selectOneMenu id="cidade" value="#{mbeanModel.cidade.id}" required="true" requiredMessage="Cidade: Campo obrigatório" styleClass="coluna90" disabled="#{mbeanModel.cidade.estado.id == null}">
+		  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  				<f:selectItems value="#{mbean.cidades}" />
+		  			</p:selectOneMenu>
+	  			</p:outputPanel>
 		  	
 		  	</h:panelGrid>
 		  		
@@ -103,7 +106,7 @@
   			
   			</h:panelGrid>
   			
-  			<h:panelGrid id="pgGrid" columns="3" columnClasses="coluna33, coluna35, coluna33" style="width:48%">
+  			<h:panelGrid columns="3" columnClasses="coluna33, coluna35, coluna33" style="width:48%">
   			
 	  			<p:outputLabel for="dataAdmissao" value="Data de Admissão" />
 	  			<p:outputLabel for="tipoColaborador" value="Tipo" />
@@ -113,10 +116,11 @@
 	  			<p:selectOneMenu id="tipoColaborador" required="true" requiredMessage="Tipo de Colaborador: Campo obrigatório" value="#{mbeanModel.tipoColaborador.id}" style="width:93%">
 	  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 	  				<f:selectItems value="#{mbean.tiposColaborador}"/>
-	  				<p:ajax update="pgGrid" />
+	  				<p:ajax update="opOAB" process="@this"/>
 	  			</p:selectOneMenu>
-	  			<p:inputText id="oab" required="true" requiredMessage="OAB: Campo obrigatório" value="#{mbeanModel.oab}" maxlength="20" disabled="#{!mbean.advogado}" styleClass="coluna90"/>
-
+	  			<p:outputPanel id="opOAB">
+	  				<p:inputText id="oab" required="true" requiredMessage="OAB: Campo obrigatório" value="#{mbeanModel.oab}" maxlength="20" disabled="#{!mbean.advogado}" styleClass="coluna90"/>
+				</p:outputPanel>
 			</h:panelGrid>
 			
 			<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:32%">
@@ -129,7 +133,7 @@
 	  				<f:selectItems value="#{mbean.grupos}"/>
 	  			</p:selectOneMenu>
 	  			<p:selectBooleanCheckbox id="situacao" value="#{mbeanModel.flagAtivo}">
-	  				<p:ajax update="pgDataDesligamento" />
+	  				<p:ajax update="pgDataDesligamento" process="@this" />
 	  			</p:selectBooleanCheckbox>
   			
   			</h:panelGrid>

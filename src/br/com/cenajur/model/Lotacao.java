@@ -1,5 +1,8 @@
 package br.com.cenajur.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,7 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import br.com.cenajur.util.CenajurUtil;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
+import br.com.topsys.util.TSUtil;
 
 @Entity
 @Table(name = "lotacoes")
@@ -89,6 +94,50 @@ public class Lotacao extends TSActiveRecordAb<Lotacao>{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+	@Override
+	public List<Lotacao> findByModel(String... fieldsOrderBy) {
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" from Lotacao l where 1 = 1 ");
+		
+		if(!TSUtil.isEmpty(descricao)){
+			query.append("and lower(l.descricao) like ? ");
+		}
+		
+		if(!TSUtil.isEmpty(bairro)){
+			query.append("and lower(l.bairro) like ? ");
+		}
+		
+		if(!TSUtil.isEmpty(cidade) && !TSUtil.isEmpty(cidade.getEstado()) && !TSUtil.isEmpty(cidade.getEstado().getId())){
+			query.append("and l.cidade.estado.id = ? ");
+		}
+		
+		if(!TSUtil.isEmpty(cidade) && !TSUtil.isEmpty(cidade.getId())){
+			query.append("and l.cidade.id = ? ");
+		}
+		
+		List<Object> params = new ArrayList<Object>();
+		
+		if(!TSUtil.isEmpty(descricao)){
+			params.add(CenajurUtil.tratarString(descricao));
+		}
+		
+		if(!TSUtil.isEmpty(bairro)){
+			params.add(CenajurUtil.tratarString(bairro));
+		}
+		
+		if(!TSUtil.isEmpty(cidade) && !TSUtil.isEmpty(cidade.getEstado()) && !TSUtil.isEmpty(cidade.getEstado().getId())){
+			params.add(cidade.getEstado().getId());
+		}
+		
+		if(!TSUtil.isEmpty(cidade) && !TSUtil.isEmpty(cidade.getId())){
+			params.add(cidade.getId());
+		}
+		
+		return super.find(query.toString(), params.toArray());
 	}
 	
 }

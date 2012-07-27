@@ -42,6 +42,6 @@ public class CenajurUtil {
 	}
 	
 	public static String tratarString(String str){
-		return (str == null) ? str : "%" + str.toLowerCase() + "%"; 
+		return "%" + str.toLowerCase() + "%"; 
 	}
 }

@@ -22,7 +22,7 @@
 	  			<p:outputLabel for="dlgEstadoLotacao" value="Estado" />
 				<p:outputLabel for="dlgCidadeLotacao" value="Cidade" />
 				
-				<p:selectOneMenu id="dlgEstadoLotacao" value="#{mbeanPesquisa.model.cidade.estado.id}" style="width:60%">
+				<p:selectOneMenu id="dlgEstadoLotacao" value="#{mbeanPesquisa.model.cidade.estado.id}" style="width:92%">
 	  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 	  				<f:selectItems value="#{mbeanPesquisa.estados}"/>
 	  				<p:ajax listener="#{mbeanPesquisa.atualizarComboCidades}" update="pgCampos" />

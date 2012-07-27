@@ -137,14 +137,21 @@ public class Permissao extends TSActiveRecordAb<Permissao> {
 		
 		StringBuilder query = new StringBuilder();
 		
-		query.append(" from Permissao p where lower(p.descricao) like ? ");
+		query.append(" from Permissao p where 1 = 1 ");
+		
+		if(!TSUtil.isEmpty(descricao)){
+			query.append("and lower(p.descricao) like ? ");
+		}
 		
 		if(!TSUtil.isEmpty(menu) && !TSUtil.isEmpty(menu.getId())){
 			query.append("and p.menu.id = ? ");
 		}
 		
 		List<Object> params = new ArrayList<Object>();
-		params.add(CenajurUtil.tratarString(descricao));
+		
+		if(!TSUtil.isEmpty(descricao)){
+			params.add(CenajurUtil.tratarString(descricao));
+		}
 		
 		if(!TSUtil.isEmpty(menu) && !TSUtil.isEmpty(menu.getId())){
 			params.add(menu.getId());

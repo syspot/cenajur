@@ -1,6 +1,8 @@
 package br.com.cenajur.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import br.com.cenajur.util.CenajurUtil;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
@@ -439,6 +442,50 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+	@Override
+	public List<Cliente> findByModel(String... fieldsOrderBy) {
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" from Cliente c where 1 = 1 ");
+		
+		if(!TSUtil.isEmpty(matricula)){
+			query.append("and lower(c.matricula) like ? ");
+		}
+		
+		if(!TSUtil.isEmpty(nome)){
+			query.append("and lower(c.nome) like ? ");
+		}
+		
+		if(!TSUtil.isEmpty(cidade) && !TSUtil.isEmpty(cidade.getEstado()) && !TSUtil.isEmpty(cidade.getEstado().getId())){
+			query.append("and c.cidade.estado.id = ? ");
+		}
+		
+		if(!TSUtil.isEmpty(cidade) && !TSUtil.isEmpty(cidade.getId())){
+			query.append("and c.cidade.id = ? ");
+		}
+		
+		List<Object> params = new ArrayList<Object>();
+		
+		if(!TSUtil.isEmpty(matricula)){
+			params.add(CenajurUtil.tratarString(matricula));
+		}
+		
+		if(!TSUtil.isEmpty(nome)){
+			params.add(CenajurUtil.tratarString(nome));
+		}
+		
+		if(!TSUtil.isEmpty(cidade) && !TSUtil.isEmpty(cidade.getEstado()) && !TSUtil.isEmpty(cidade.getEstado().getId())){
+			params.add(cidade.getEstado().getId());
+		}
+		
+		if(!TSUtil.isEmpty(cidade) && !TSUtil.isEmpty(cidade.getId())){
+			params.add(cidade.getId());
+		}
+		
+		return super.find(query.toString(), params.toArray());
 	}
 	
 }
