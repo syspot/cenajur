@@ -17,27 +17,34 @@
 
 		<property name="hibernate.show_sql">true</property>
 
- 		<mapping class="br.com.cenajur.model.Usuario" />
- 		<mapping class="br.com.cenajur.model.TipoProcesso" />
- 		<mapping class="br.com.cenajur.model.Colaborador" />
- 		<mapping class="br.com.cenajur.model.Cidade" />
- 		<mapping class="br.com.cenajur.model.Estado" />
+ 		<mapping class="br.com.cenajur.model.Audiencia" />
  		<mapping class="br.com.cenajur.model.Banco" />
- 		<mapping class="br.com.cenajur.model.Graduacao" />
+ 		<mapping class="br.com.cenajur.model.Cidade" />
+ 		<mapping class="br.com.cenajur.model.Cliente" />
+ 		<mapping class="br.com.cenajur.model.Colaborador" />
  		<mapping class="br.com.cenajur.model.Comarca" />
- 		<mapping class="br.com.cenajur.model.Vara" />
- 		<mapping class="br.com.cenajur.model.TipoColaborador" />
- 		<mapping class="br.com.cenajur.model.TipoAcesso" />
+ 		<mapping class="br.com.cenajur.model.Estado" />
+ 		<mapping class="br.com.cenajur.model.EstadoCivil" />
+ 		<mapping class="br.com.cenajur.model.Graduacao" />
  		<mapping class="br.com.cenajur.model.Grupo" />
+ 		<mapping class="br.com.cenajur.model.Lotacao" />
  		<mapping class="br.com.cenajur.model.Menu" />
+ 		<mapping class="br.com.cenajur.model.MotivoCancelamento" />
+ 		<mapping class="br.com.cenajur.model.Objeto" />
+ 		<mapping class="br.com.cenajur.model.ParteContraria" />
  		<mapping class="br.com.cenajur.model.Permissao" />
  		<mapping class="br.com.cenajur.model.PermissaoGrupo" />
- 		<mapping class="br.com.cenajur.model.Objeto" />
- 		<mapping class="br.com.cenajur.model.EstadoCivil" />
+ 		<mapping class="br.com.cenajur.model.Processo" />
+ 		<mapping class="br.com.cenajur.model.SituacaoAudiencia" />
+ 		<mapping class="br.com.cenajur.model.SituacaoProcesso" />
+ 		<mapping class="br.com.cenajur.model.TipoAcesso" />
+ 		<mapping class="br.com.cenajur.model.TipoColaborador" />
+ 		<mapping class="br.com.cenajur.model.TipoDocumento" />
  		<mapping class="br.com.cenajur.model.TipoPagamento" />
- 		<mapping class="br.com.cenajur.model.MotivoCancelamento" />
- 		<mapping class="br.com.cenajur.model.Lotacao" />
- 		<mapping class="br.com.cenajur.model.Cliente" />
+ 		<mapping class="br.com.cenajur.model.TipoParte" />
+ 		<mapping class="br.com.cenajur.model.TipoProcesso" />
+ 		<mapping class="br.com.cenajur.model.Usuario" />
+ 		<mapping class="br.com.cenajur.model.Vara" />
 
 	</session-factory>
 

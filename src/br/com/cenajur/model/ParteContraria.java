@@ -1,15 +1,36 @@
 package br.com.cenajur.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import br.com.cenajur.util.CenajurUtil;
+import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
-public class ParteContraria {
+@Entity
+@Table(name = "partes_contrarias")
+public class ParteContraria extends TSActiveRecordAb<ParteContraria>{
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
 	private String descricao;
 	
-	private TipoDocumentoModel tipoDocumentoModel;
+	@ManyToOne
+	@JoinColumn(name = "tipo_documento_id")
+	private TipoDocumento tipoDocumento;
 	
+	@Column(name = "numero_documento")
 	private String numeroDocumento;
 
 	public Long getId() {
@@ -28,12 +49,12 @@ public class ParteContraria {
 		this.descricao = descricao;
 	}
 
-	public TipoDocumentoModel getTipoDocumentoModel() {
-		return tipoDocumentoModel;
+	public TipoDocumento getTipoDocumento() {
+		return tipoDocumento;
 	}
 
-	public void setTipoDocumentoModel(TipoDocumentoModel tipoDocumentoModel) {
-		this.tipoDocumentoModel = tipoDocumentoModel;
+	public void setTipoDocumento(TipoDocumento tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
 	}
 
 	public String getNumeroDocumento() {
@@ -69,6 +90,33 @@ public class ParteContraria {
 		return true;
 	}
 	
-	
+	@Override
+	public List<ParteContraria> findByModel(String... fieldsOrderBy) {
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" from ParteContraria pc where lower(pc.descricao) like ? ");
+		
+		if(!TSUtil.isEmpty(tipoDocumento) && !TSUtil.isEmpty(tipoDocumento.getId())){
+			query.append("and pc.tipoDocumento.id = ? ");
+		}
+		
+		if(!TSUtil.isEmpty(numeroDocumento)){
+			query.append("and pc.numeroDocumento = ? ");
+		}
+		
+		List<Object> params = new ArrayList<Object>();
+		params.add(CenajurUtil.tratarString(descricao));
+		
+		if(!TSUtil.isEmpty(tipoDocumento) && !TSUtil.isEmpty(tipoDocumento.getId())){
+			params.add(tipoDocumento.getId());
+		}
+		
+		if(!TSUtil.isEmpty(numeroDocumento)){
+			params.add(numeroDocumento);
+		}
+		
+		return super.find(query.toString(), params.toArray());
+	}	
 	
 }

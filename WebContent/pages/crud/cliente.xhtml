@@ -26,7 +26,9 @@
 			  	<p:outputLabel for="email" value="E-mail" />
 		  	
 			  	<p:inputText id="nome" value="#{mbeanModel.nome}" required="true" requiredMessage="Nome: Campo obrigatório" maxlength="100" styleClass="coluna95"/>
-			  	<p:inputText id="email" value="#{mbeanModel.email}" required="true" requiredMessage="E-mail: Campo obrigatório" maxlength="50" styleClass="coluna90"/>
+			  	<p:inputText id="email" value="#{mbeanModel.email}" required="true" requiredMessage="E-mail: Campo obrigatório" validatorMessage="E-mail inválido" maxlength="50" styleClass="coluna90">
+			  		<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" for="email"/>
+			  	</p:inputText>
 			  	
 		  	</h:panelGrid>
 		  	
@@ -38,7 +40,7 @@
 		  	
 		  		<p:inputMask id="cpf" required="true" requiredMessage="CPF: Campo Obrigatório" mask="999.999.999-99" value="#{mbeanModel.cpf}" maxlength="15" styleClass="coluna90"/>
 		  		<p:inputText id="rg" required="true" requiredMessage="RG: Campo Obrigatório" value="#{mbeanModel.rg}" maxlength="20" styleClass="coluna90"/>
-		  		<p:calendar id="dataNascimento" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Nascimento Campo obrigatório" value="#{mbeanModel.dataNascimento}" style="width:90%"/>
+		  		<p:calendar id="dataNascimento" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Nascimento: Campo obrigatório" value="#{mbeanModel.dataNascimento}" style="width:90%"/>
 	  			
   			</h:panelGrid>
   			
@@ -92,7 +94,7 @@
 	  			<p:selectOneMenu id="estado" value="#{mbeanModel.cidade.estado.id}" required="true" requiredMessage="Estado: Campo obrigatório">
 	  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 	  				<f:selectItems value="#{mbean.estados}" />
-	  				<p:ajax update="pgCidade" listener="#{mbean.atualizarComboCidades}" />
+	  				<p:ajax update="pgCidade" listener="#{mbean.atualizarComboCidades}" process="pgCidade" />
 	  			</p:selectOneMenu>
 	  			<p:selectOneMenu id="cidade" value="#{mbeanModel.cidade.id}" required="true" requiredMessage="Cidade: Campo obrigatório" disabled="#{mbeanModel.cidade.estado.id == null}">
 	  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
@@ -124,7 +126,7 @@
 	  			
 	  			<p:outputPanel autoUpdate="true">
 		  			<p:outputLabel for="lotacao" value="Lotação" /><br/>
-	  				<p:inputText id="lotacao" value="#{mbeanModel.lotacao.descricao}" disabled="true" styleClass="coluna70" />
+	  				<p:inputText id="lotacao" required="true" requiredMessage="Lotação: Campo obrigatório" value="#{mbeanModel.lotacao.descricao}" disabled="true" styleClass="coluna70" />
 	  				<p:commandButton type="button" value="Adicionar" onclick="dlgLotacao.show();" />
   				</p:outputPanel>
 	  		

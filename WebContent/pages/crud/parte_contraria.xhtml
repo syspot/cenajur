@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="/resources/templates/templateCRUD.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+  	<ui:param name="mbean" value="${parteContrariaFaces}" />
+  	<ui:param name="mbeanModel" value="${parteContrariaFaces.crudModel}" />
+  	<ui:param name="mbeanPesquisaModel" value="${parteContrariaFaces.crudPesquisaModel}" />
+  	
+  	<ui:define name="cadastro">
+  	
+  		<h:panelGrid columns="1" columnClasses="coluna90" style="width:50%">
+  		
+		  	<p:outputLabel for="descricao" value="Descrição" />
+		  	<p:inputText id="descricao" value="#{mbeanModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" style="width: 90%" maxlength="50"/>
+		  	
+	  	</h:panelGrid>
+	  	
+	  	<h:panelGrid id="pgTipoDocumento" columns="2" columnClasses="coluna40, coluna60" style="width:60%">
+	  	
+		  	<p:outputLabel for="tipoDocumento" value="Tipo de Documento" />
+		  	<p:outputLabel for="numeroDocumento" value="Número" />
+		  	
+		  	<p:selectOneMenu id="tipoDocumento" required="true" requiredMessage="Tipo de Documento: Campo obrigatório" value="#{mbeanModel.tipoDocumento.id}" style="width:90%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.tiposDocumentos}" />
+		  		<p:ajax update="pgTipoDocumento" />
+		  	</p:selectOneMenu>
+		  	<p:inputText id="numeroDocumento" value="#{mbeanModel.numeroDocumento}" required="true" requiredMessage="Número: Campo obrigatório" disabled="#{mbeanModel.tipoDocumento.id == null}" style="width: 90%" maxlength="50"/>
+	  	
+	  	</h:panelGrid>
+	  	
+  	</ui:define>
+  	
+  	<ui:define name="pesquisaCampos">
+  	
+	  	<h:panelGrid columns="1" columnClasses="coluna90" style="width:50%">
+  		
+		  	<p:outputLabel for="descricaoPesquisa" value="Descrição" />
+	  		<p:inputText id="descricaoPesquisa"  value="#{mbeanPesquisaModel.descricao}" style="width: 40%" maxlength="50"/>
+		  	
+	  	</h:panelGrid>
+	  	
+	  	<h:panelGrid columns="2" columnClasses="coluna40, coluna60" style="width:60%">
+	  	
+		  	<p:outputLabel for="tipoDocumentoPesquisa" value="Tipo de Documento" />
+		  	<p:outputLabel for="numeroDocumentoPesquisa" value="Número" />
+		  	
+		  	<p:selectOneMenu id="tipoDocumentoPesquisa" value="#{mbeanPesquisaModel.tipoDocumento.id}" style="width:90%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.tiposDocumentos}" />
+		  	</p:selectOneMenu>
+		  	<p:inputText id="numeroDocumentoPesquisa" value="#{mbeanPesquisaModel.numeroDocumento}" style="width: 90%" maxlength="50"/>
+	  	
+	  	</h:panelGrid>
+	  	
+  	</ui:define>
+  	
+  	<ui:define name="colunasTabela">
+  	
+  		<p:column headerText="Descrição">
+  			<h:outputText value="#{linha.descricao}" />
+  		</p:column>
+  		
+  	</ui:define>
+  	
+</ui:composition>

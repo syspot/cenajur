@@ -1,13 +1,26 @@
 package br.com.cenajur.model;
 
-public class TipoDocumentoModel {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+import br.com.topsys.database.hibernate.TSActiveRecordAb;
+import br.com.topsys.util.TSUtil;
+
+@Entity
+@Table(name = "tipos_documentos")
+public class TipoDocumento extends TSActiveRecordAb<TipoDocumento>{
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
 	private String descricao;
 
 	public Long getId() {
-		return id;
+		return TSUtil.tratarLong(id);
 	}
 
 	public void setId(Long id) {
@@ -38,7 +51,7 @@ public class TipoDocumentoModel {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TipoDocumentoModel other = (TipoDocumentoModel) obj;
+		TipoDocumento other = (TipoDocumento) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

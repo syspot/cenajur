@@ -2,6 +2,7 @@ package br.com.cenajur.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -13,7 +14,7 @@ import br.com.topsys.util.TSUtil;
 public class EstadoCivil extends TSActiveRecordAb<EstadoCivil>{
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private Long id;
 	
 	private String descricao;

@@ -1,8 +1,8 @@
 package br.com.cenajur.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -10,22 +10,14 @@ import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
 @Entity
-@Table(name="tipos_processos")  
+@Table(name="tipos_processos")
 public class TipoProcesso extends TSActiveRecordAb<TipoProcesso>{
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
-	@Column(nullable = false, length = 50)
 	private String descricao;
-	
-	@Column(name = "flag_ativo", nullable = false)
-	private Boolean flagAtivo;
-	
-	public TipoProcesso() {
-		this.flagAtivo = Boolean.TRUE;
-	}
 	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -41,14 +33,6 @@ public class TipoProcesso extends TSActiveRecordAb<TipoProcesso>{
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
-	}
-
-	public Boolean getFlagAtivo() {
-		return flagAtivo;
-	}
-
-	public void setFlagAtivo(Boolean flagAtivo) {
-		this.flagAtivo = flagAtivo;
 	}
 
 	@Override

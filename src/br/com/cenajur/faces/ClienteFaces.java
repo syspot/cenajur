@@ -81,6 +81,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	protected void preInsert() {
 		getCrudModel().setColaboradorCadastro(ColaboradorUtil.obterColaboradorConectado());
 		getCrudModel().setDataCadastro(new Date());
+		getCrudModel().setBanco(null);
 	}
 	
 	@Override

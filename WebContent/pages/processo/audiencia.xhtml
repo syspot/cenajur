@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="/resources/templates/templateCRUD.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+  	<ui:param name="mbean" value="${audienciaFaces}" />
+  	<ui:param name="mbeanModel" value="${audienciaFaces.crudModel}" />
+  	<ui:param name="mbeanPesquisaModel" value="${audienciaFaces.crudPesquisaModel}" />
+  	
+  	<ui:define name="cadastro">
+  	
+  		<p:outputPanel autoUpdate="true">
+			<p:outputLabel for="processo" value="Processo" /><br/>
+			<p:inputText id="processo" value="#{mbeanModel.processo.numeroProcesso}" required="true" requiredMessage="Processo: Campo obrigatório" disabled="true" />
+			<p:commandButton type="button" value="Adicionar" onclick="dlgProcesso.show();" />
+		</p:outputPanel>
+  		
+	  	<p:outputLabel for="dataAudiencia" value="Data da Audiência" />
+  		<p:calendar id="dataAudiencia" pattern="dd/MM/yyyy" required="true" requiredMessage="Data da Audiência: Campo obrigatório" value="#{mbeanModel.dataAudiencia}"/>
+  		
+  		<p:outputLabel for="situacaoAudiencia" value="Situação" />
+  		<p:selectOneMenu id="situacaoAudiencia" required="true" requiredMessage="Situação: Campo obrigatório" value="#{mbeanModel.situacaoAudiencia.id}" style="width:24%">
+	  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+	  		<f:selectItems value="#{mbean.situacoesAudiencias}" />
+	  	</p:selectOneMenu>
+	  	
+	  	<p:outputLabel for="vara" value="Vara" />
+  		<p:selectOneMenu id="vara" required="true" requiredMessage="Vara: Campo obrigatório" value="#{mbeanModel.vara.id}" style="width:95%">
+	  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+	  		<f:selectItems value="#{mbean.varas}" />
+	  	</p:selectOneMenu>
+	  	
+	  	<p:outputLabel for="advogado" value="Advogado" />
+  		<p:selectOneMenu id="advogado" required="true" requiredMessage="Advogado: Campo obrigatório" value="#{mbeanModel.advogado.id}" style="width:24%">
+	  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+	  		<f:selectItems value="#{mbean.advogados}" />
+	  	</p:selectOneMenu>
+	  	
+	  	<p:outputLabel for="descricao" value="Descrição" />
+		<p:inputTextarea id="descricao" value="#{mbeanModel.descricao}" maxlength="500" styleClass="coluna90"/>
+	  	
+  	</ui:define>
+  	
+  	<ui:define name="pesquisaCampos">
+  	
+  		<p:outputPanel autoUpdate="true">
+			<p:outputLabel for="processoPesquisa" value="Processo" /><br/>
+			<p:inputText id="processoPesquisa" value="#{mbeanPesquisaModel.processo.numeroProcesso}" disabled="true" />
+			<p:commandButton type="button" value="Adicionar" onclick="dlgCliente.show();" />
+		</p:outputPanel>
+  		
+	  	<p:outputLabel for="dataAudienciaPesquisa" value="Data da Audiência" />
+  		<p:calendar id="dataAudienciaPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataAudiencia}"/>
+  		
+  		<p:outputLabel for="situacaoAudienciaPesquisa" value="Situação" />
+  		<p:selectOneMenu id="situacaoAudienciaPesquisa" value="#{mbeanPesquisaModel.situacaoAudiencia.id}" style="width:24%">
+	  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+	  		<f:selectItems value="#{mbean.situacoesAudiencias}" />
+	  	</p:selectOneMenu>
+	  	
+	  	<p:outputLabel for="varaPesquisa" value="Vara" />
+  		<p:selectOneMenu id="varaPesquisa" value="#{mbeanPesquisaModel.vara.id}" style="width:95%">
+	  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+	  		<f:selectItems value="#{mbean.varas}" />
+	  	</p:selectOneMenu>
+	  	
+	  	<p:outputLabel for="advogadoPesquisa" value="Advogado" />
+  		<p:selectOneMenu id="advogadoPesquisa" value="#{mbeanPesquisaModel.advogado.id}" style="width:24%">
+	  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+	  		<f:selectItems value="#{mbean.advogados}" />
+	  	</p:selectOneMenu>
+	  	
+		<p:outputLabel for="descricaoPesquisa" value="Descrição" />
+		<p:inputTextarea id="descricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" maxlength="500" styleClass="coluna90"/>
+		  	
+  	</ui:define>
+  	
+  	<ui:define name="colunasTabela">
+  	
+  		<p:column headerText="Nome">
+  			<h:outputText value="#{linha.descricao}" />
+  		</p:column>
+  		
+  	</ui:define>
+  	
+</ui:composition>

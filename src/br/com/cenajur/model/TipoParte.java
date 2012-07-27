@@ -1,9 +1,20 @@
 package br.com.cenajur.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
-public class Parte {
+@Entity
+@Table(name = "tipos_partes")
+public class TipoParte extends TSActiveRecordAb<TipoParte>{
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
 	private String descricao;
@@ -40,7 +51,7 @@ public class Parte {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Parte other = (Parte) obj;
+		TipoParte other = (TipoParte) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

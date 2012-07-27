@@ -2,9 +2,11 @@ package br.com.cenajur.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,7 +20,7 @@ import br.com.topsys.util.TSUtil;
 public class Cliente extends TSActiveRecordAb<Cliente>{
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private Long id;
 	
 	private String matricula;

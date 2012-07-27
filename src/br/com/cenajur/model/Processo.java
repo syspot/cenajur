@@ -6,48 +6,76 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import br.com.cenajur.util.Constantes;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
 @Entity
-@Table(name = "processo")
+@Table(name = "processos")
 public class Processo extends TSActiveRecordAb<Processo>{
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private Long id;
 	
-	private Long numero;
+	@Column(name = "data_ajuizamento")
+	private Date dataAjuizamento;
 	
+	@Column(name = "numero_processo")
+	private Long numeroProcesso;
+	
+	@ManyToMany
+	@JoinTable(name = "processos_clientes", joinColumns = { 
+	@JoinColumn(name = "processo_id") }, inverseJoinColumns = { @JoinColumn(name = "cliente_id") })
 	private List<Cliente> clientes;
 	
-	private Objeto objetoModel;
+	@ManyToOne
+	private Objeto objeto;
 	
 	private Integer lote;
 	
-	private List<ParteContraria> parteContrariaModel;
+	@ManyToMany
+	@JoinTable(name = "processos_partes_contrarias", joinColumns = { 
+	@JoinColumn(name = "processo_id") }, inverseJoinColumns = { @JoinColumn(name = "parte_contraria_id") })
+	private List<ParteContraria> partesContrarias;
 	
-	@Column(name = "tipo_processo_id")
-	private TipoProcesso tipoProcessoModel;
+	@ManyToOne
+	@JoinColumn(name = "tipo_processo_id")
+	private TipoProcesso tipoProcesso;
 	
-	private Vara varaModel;
+	@ManyToOne
+	private Vara vara;
 	
-	private Comarca comarcaModel;
+	@ManyToOne
+	private Comarca comarca;
 	
+	@ManyToOne
 	private Colaborador advogado;
 	
+	@Column(name = "data_abertura")
 	private Date dataAbertura;
 	
-	private Parte parteModel;
+	@ManyToOne
+	@JoinColumn(name = "tipo_parte_id")
+	private TipoParte tipoParte;
 	
-	private SituacaoProcessoModel situacaoProcessoModel;
+	@ManyToOne
+	@JoinColumn(name = "situacao_processo_id")
+	private SituacaoProcesso situacaoProcesso;
 	
+	@Column(name = "data_arquivamento")
 	private Date dataArquivamento;
 	
-	private Processo processoPrincipal;
+	@ManyToOne
+	private Processo processo;
 	
 	private String observacao;
 
@@ -55,16 +83,12 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		return TSUtil.tratarLong(id);
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public Long getNumeroProcesso() {
+		return TSUtil.tratarLong(numeroProcesso);
 	}
 
-	public Long getNumero() {
-		return numero;
-	}
-
-	public void setNumero(Long numero) {
-		this.numero = numero;
+	public void setNumeroProcesso(Long numeroProcesso) {
+		this.numeroProcesso = numeroProcesso;
 	}
 
 	public List<Cliente> getClientes() {
@@ -74,53 +98,53 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	public void setClientes(List<Cliente> clientes) {
 		this.clientes = clientes;
 	}
-
-	public Objeto getObjetoModel() {
-		return objetoModel;
+	
+	public Objeto getObjeto() {
+		return objeto;
 	}
 
-	public void setObjetoModel(Objeto objetoModel) {
-		this.objetoModel = objetoModel;
+	public void setObjeto(Objeto objeto) {
+		this.objeto = objeto;
 	}
 
 	public Integer getLote() {
-		return lote;
+		return TSUtil.tratarInteger(lote);
 	}
 
 	public void setLote(Integer lote) {
 		this.lote = lote;
 	}
 
-	public List<ParteContraria> getParteContrariaModel() {
-		return parteContrariaModel;
+	public List<ParteContraria> getPartesContrarias() {
+		return partesContrarias;
 	}
 
-	public void setParteContrariaModel(List<ParteContraria> parteContrariaModel) {
-		this.parteContrariaModel = parteContrariaModel;
+	public void setPartesContrarias(List<ParteContraria> partesContrarias) {
+		this.partesContrarias = partesContrarias;
 	}
 
-	public TipoProcesso getTipoProcessoModel() {
-		return tipoProcessoModel;
+	public TipoProcesso getTipoProcesso() {
+		return tipoProcesso;
 	}
 
-	public void setTipoProcessoModel(TipoProcesso tipoProcessoModel) {
-		this.tipoProcessoModel = tipoProcessoModel;
+	public void setTipoProcesso(TipoProcesso tipoProcesso) {
+		this.tipoProcesso = tipoProcesso;
 	}
 
-	public Vara getVaraModel() {
-		return varaModel;
+	public Vara getVara() {
+		return vara;
 	}
 
-	public void setVaraModel(Vara varaModel) {
-		this.varaModel = varaModel;
+	public void setVara(Vara vara) {
+		this.vara = vara;
 	}
 
-	public Comarca getComarcaModel() {
-		return comarcaModel;
+	public Comarca getComarca() {
+		return comarca;
 	}
 
-	public void setComarcaModel(Comarca comarcaModel) {
-		this.comarcaModel = comarcaModel;
+	public void setComarca(Comarca comarca) {
+		this.comarca = comarca;
 	}
 
 	public Colaborador getAdvogado() {
@@ -139,20 +163,20 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		this.dataAbertura = dataAbertura;
 	}
 
-	public Parte getParteModel() {
-		return parteModel;
+	public TipoParte getTipoParte() {
+		return tipoParte;
 	}
 
-	public void setParteModel(Parte parteModel) {
-		this.parteModel = parteModel;
+	public void setTipoParte(TipoParte tipoParte) {
+		this.tipoParte = tipoParte;
 	}
 
-	public SituacaoProcessoModel getSituacaoProcessoModel() {
-		return situacaoProcessoModel;
+	public SituacaoProcesso getSituacaoProcesso() {
+		return situacaoProcesso;
 	}
 
-	public void setSituacaoProcessoModel(SituacaoProcessoModel situacaoProcessoModel) {
-		this.situacaoProcessoModel = situacaoProcessoModel;
+	public void setSituacaoProcesso(SituacaoProcesso situacaoProcesso) {
+		this.situacaoProcesso = situacaoProcesso;
 	}
 
 	public Date getDataArquivamento() {
@@ -163,12 +187,12 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		this.dataArquivamento = dataArquivamento;
 	}
 
-	public Processo getProcessoPrincipal() {
-		return processoPrincipal;
+	public Processo getProcesso() {
+		return processo;
 	}
 
-	public void setProcessoPrincipal(Processo processoPrincipal) {
-		this.processoPrincipal = processoPrincipal;
+	public void setProcesso(Processo processo) {
+		this.processo = processo;
 	}
 
 	public String getObservacao() {
@@ -177,6 +201,18 @@ public class Processo extends TSActiveRecordAb<Processo>{
 
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
+	}
+
+	public void setId(Long id) {
+		this.id = TSUtil.tratarLong(id);
+	}
+
+	public Date getDataAjuizamento() {
+		return dataAjuizamento;
+	}
+
+	public void setDataAjuizamento(Date dataAjuizamento) {
+		this.dataAjuizamento = dataAjuizamento;
 	}
 
 	@Override
@@ -204,5 +240,7 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		return true;
 	}
 	
-	
+	public boolean isProcessoArquivado(){
+		return Constantes.SITUACAO_PROCESSO_ARQUIVADO.equals(situacaoProcesso.getId());
+	}
 }

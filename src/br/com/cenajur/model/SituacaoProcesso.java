@@ -1,7 +1,19 @@
 package br.com.cenajur.model;
 
-public class SituacaoProcessoModel {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+import br.com.topsys.database.hibernate.TSActiveRecordAb;
+
+@Entity
+@Table(name = "situacoes_processos")
+public class SituacaoProcesso extends TSActiveRecordAb<SituacaoProcesso>{
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
 	private String descricao;
@@ -38,7 +50,7 @@ public class SituacaoProcessoModel {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		SituacaoProcessoModel other = (SituacaoProcessoModel) obj;
+		SituacaoProcesso other = (SituacaoProcesso) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,7 +20,7 @@ import br.com.topsys.util.TSUtil;
 public class Colaborador extends TSActiveRecordAb<Colaborador>{
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private Long id;
 	
 	private String nome;
@@ -81,6 +82,12 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 	@Transient
 	private String senha2;
 	
+	public Colaborador() {
+	}
+	
+	public Colaborador(TipoColaborador tipoColaborador) {
+		this.tipoColaborador = tipoColaborador;
+	}
 
 	public Long getId() {
 		return TSUtil.tratarLong(id);

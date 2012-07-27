@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core">
@@ -13,9 +14,12 @@
 	<h:body>
 
 		<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();" onerror="statusDialog.hide();" oncomplete="statusDialog.hide();" />
-
+		
 		<ui:include src="/resources/templates/dialogPermissao.xhtml" />
 		<ui:include src="/resources/templates/dialogLotacao.xhtml" />
+		<ui:include src="/resources/templates/dialogCliente.xhtml" />
+		<ui:include src="/resources/templates/dialogParteContraria.xhtml" />
+		<ui:include src="/resources/templates/dialogProcesso.xhtml" />
 		
 		<p:dialog modal="true" widgetVar="statusDialog" header="Processando..." draggable="false" closable="false" resizable="false">
 			<p:graphicImage value="../resources/images/ajaxloadingbar.gif" />

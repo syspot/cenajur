@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="/resources/templates/templateCRUD.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+  	<ui:param name="mbean" value="${processoFaces}" />
+  	<ui:param name="mbeanModel" value="${processoFaces.crudModel}" />
+  	<ui:param name="mbeanPesquisaModel" value="${processoFaces.crudPesquisaModel}" />
+  	
+  	<ui:define name="cadastro">
+  	
+  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:40%">
+  		
+		  	<p:outputLabel for="numeroProcesso" value="Número do Processo" />
+		  	<p:outputLabel for="lote" value="Lote" />
+		  	
+		  	<p:inputText id="numeroProcesso" required="true" requiredMessage="Número do Processo: Campo obrigatório" value="#{mbeanModel.numeroProcesso}" maxlength="30" styleClass="coluna90"/>
+	  		<p:inputText id="lote" value="#{mbeanModel.lote}" maxlength="30" styleClass="coluna90"/>
+		  	
+	  	</h:panelGrid>
+	  	
+	  	<p:fieldset>
+  	
+	  		<p:outputPanel autoUpdate="true">
+		  	
+		  		<p:commandButton type="button" value="Adicionar Cliente" onclick="dlgCliente.show();" />
+		  		<p:dataTable value="#{mbeanModel.clientes}" var="cliente" emptyMessage="Nenhum cliente selecionado" style="width:50%">
+		  	
+		  			<p:column headerText="Nome">
+						<h:outputText value="#{cliente.nome}" />
+		  			</p:column>
+		  			
+		  			<p:column headerText="Remover" styleClass="coluna5" style="text-align: center">
+		  				<p:commandLink action="#{mbean.removeCliente}" process="@this">
+							<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+							<f:setPropertyActionListener target="#{mbean.clienteSelecionado}" value="#{cliente}" />
+						</p:commandLink>
+		  			</p:column>
+		  	
+		  		</p:dataTable>
+		  		
+	  		</p:outputPanel>
+	  	
+	  	</p:fieldset>
+	
+		<h:panelGrid columns="1" style="width:97%">
+	  	
+			<p:outputLabel for="dataAbertura" value="Data de Abertura" />
+	  		<p:calendar id="dataAbertura" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Abertura: Campo obrigatório" value="#{mbeanModel.dataAbertura}"/>  	
+			
+			<p:outputLabel for="parte" value="Tipo de Parte" />
+	  		<p:selectOneMenu id="parte" required="true" requiredMessage="Tipo de Parte: Campo obrigatório" value="#{mbeanModel.tipoParte.id}" style="width:24%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.tiposPartes}" />
+		  	</p:selectOneMenu>
+  		
+  			<p:outputLabel for="advogado" value="Advogado" />
+	  		<p:selectOneMenu id="advogado" required="true" requiredMessage="Advogado: Campo obrigatório" value="#{mbeanModel.advogado.id}" style="width:24%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.advogados}" />
+		  	</p:selectOneMenu>
+	  	
+  		</h:panelGrid>
+  		
+  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:50%">
+  		
+		  	<p:outputLabel for="tipoProcesso" value="Tipo de Processo" />
+		  	<p:outputLabel for="objeto" value="Objeto" />
+		  	
+	  		<p:selectOneMenu id="tipoProcesso" required="true" requiredMessage="Tipo de Processo: Campo obrigatório" value="#{mbeanModel.tipoProcesso.id}" style="width:95%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.tiposProcessos}" />
+		  	</p:selectOneMenu>
+	  		<p:selectOneMenu id="objeto" required="true" requiredMessage="Objeto: Campo obrigatório" value="#{mbeanModel.objeto.id}" style="width:95%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.objetos}" />
+		  	</p:selectOneMenu>
+		  	
+		  	<p:outputLabel for="vara" value="Vara" />
+		  	<p:outputLabel for="comarca" value="Comarca" />
+		  	
+	  		<p:selectOneMenu id="vara" required="true" requiredMessage="Vara: Campo obrigatório" value="#{mbeanModel.vara.id}" style="width:95%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.varas}" />
+		  	</p:selectOneMenu>
+	  		<p:selectOneMenu id="comarca" required="true" requiredMessage="Comarca: Campo obrigatório" value="#{mbeanModel.comarca.id}" style="width:95%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.comarcas}" />
+		  	</p:selectOneMenu>
+		  	
+  		</h:panelGrid>
+	  	
+	  	<h:panelGrid id="pgDataArquivamento" columns="1" columnClasses="coluna100" style="width:97%">
+	  	
+		  	<p:outputLabel for="dataAjuizamento" value="Data de Ajuizamento" />
+		  	<p:calendar id="dataAjuizamento" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Ajuizamento: Campo obrigatório" value="#{mbeanModel.dataAjuizamento}" style="width:90%"/>
+	  	
+		  	<p:outputLabel for="situacaoProcesso" value="Situação" />
+	  		<p:selectOneMenu id="situacaoProcesso" required="true" requiredMessage="Situação Campo obrigatório" value="#{mbeanModel.situacaoProcesso.id}" style="width:24%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.situacoesProcessos}" />
+		  		<p:ajax update="pgDataArquivamento" process="pgDataArquivamento" />
+		  	</p:selectOneMenu>
+	  	
+		  	<p:outputLabel for="dataArquivamento" value="Data de Arquivamento" rendered="#{mbeanModel.processoArquivado}" />
+		  	<p:calendar id="dataArquivamento" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Arquivamento: Campo obrigatório" value="#{mbeanModel.dataArquivamento}" rendered="#{mbeanModel.processoArquivado}" style="width:90%" />
+	  	
+	  	</h:panelGrid>
+	  	
+	  	<p:fieldset>
+	  	
+		  	<p:outputPanel autoUpdate="true">
+		  	
+			  	<p:commandButton type="button" value="Adicionar Parte Contrária" onclick="dlgParteContraria.show();" />
+			  	<p:dataTable value="#{mbeanModel.partesContrarias}" var="parteContraria" emptyMessage="Nenhuma parte contrária selecionada" style="width:50%">
+			  	
+			  		<p:column headerText="Nome">
+						<h:outputText value="#{parteContraria.descricao}" />	  		
+			  		</p:column>
+			  		
+			  		<p:column headerText="Remover" style="text-align: center" styleClass="coluna5">
+		  				<p:commandLink action="#{mbean.removeParteContraria}" process="@this">
+							<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+							<f:setPropertyActionListener target="#{mbean.parteContrariaSelecionada}" value="#{parteContraria}" />
+						</p:commandLink>
+		  			</p:column>
+			  	
+			  	</p:dataTable>
+			  	
+		  	</p:outputPanel>
+		  	
+	  	</p:fieldset>
+	  	
+  	</ui:define>
+  	
+  	<ui:define name="pesquisaCampos">
+  	
+  		<h:panelGrid columns="3" columnClasses="coluna30, coluna30, coluna30" style="width:45%">
+  		
+		  	<p:outputLabel for="numeroProcessoPesquisa" value="Número do Processo" />
+			<p:outputLabel for="dataAberturaPesquisa" value="Data de Abertura" />
+	  		<p:outputLabel for="dataAjuizamentoPesquisa" value="Data de Ajuizamento" />
+	  	
+		  	<p:inputText id="numeroProcessoPesquisa" value="#{mbeanPesquisaModel.numeroProcesso}" maxlength="30" styleClass="coluna85"/>
+	  		<p:calendar id="dataAberturaPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataAbertura}"/>
+		  	<p:calendar id="dataAjuizamentoPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataAjuizamento}" styleClass="coluna90"/>
+	  		  	
+	  	</h:panelGrid>
+	  	
+		<h:panelGrid columns="3" columnClasses="coluna30, coluna30, coluna30" style="width:70%">
+		
+		  	<p:outputLabel for="tipoProcessoPesquisa" value="Tipo de Processo" />
+			<p:outputLabel for="partePesquisa" value="Tipo de Parte" />
+			<p:outputLabel for="advogadoPesquisa" value="Advogado" />
+		
+	  		<p:selectOneMenu id="tipoProcessoPesquisa" value="#{mbeanPesquisaModel.tipoProcesso.id}" style="width:95%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.tiposProcessos}" />
+		  	</p:selectOneMenu>
+	  		<p:selectOneMenu id="partePesquisa" value="#{mbeanPesquisaModel.tipoParte.id}" style="width:95%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.tiposPartes}" />
+		  	</p:selectOneMenu>
+	  		<p:selectOneMenu id="advogadoPesquisa" value="#{mbeanPesquisaModel.advogado.id}" style="width:95%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.advogados}" />
+		  	</p:selectOneMenu>
+		  	
+		</h:panelGrid>
+ 		
+	  	<h:panelGrid columns="3" columnClasses="coluna30, coluna30, coluna30" style="width:70%">
+	  	
+		  	<p:outputLabel for="objetoPesquisa" value="Objeto" />
+	  		<p:outputLabel for="comarcaPesquisa" value="Comarca" />
+		  	<p:outputLabel for="varaPesquisa" value="Vara" />
+	  	
+	  		<p:selectOneMenu id="objetoPesquisa" value="#{mbeanPesquisaModel.objeto.id}" style="width:95%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.objetos}" />
+		  	</p:selectOneMenu>
+	  		<p:selectOneMenu id="comarcaPesquisa" value="#{mbeanPesquisaModel.comarca.id}" style="width:95%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.comarcas}" />
+		  	</p:selectOneMenu>
+	  		<p:selectOneMenu id="varaPesquisa" value="#{mbeanPesquisaModel.vara.id}" style="width:95%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.varas}" />
+		  	</p:selectOneMenu>
+	  	
+	  	</h:panelGrid>
+		  	
+	  	<h:panelGrid id="pgDataArquivamentoPesquisa" columns="2" columnClasses="coluna40, coluna60" style="width:58%">
+	  	
+		  	<p:outputLabel for="situacaoProcessoPesquisa" value="Situação" />
+		  	<p:outputLabel for="dataArquivamentoPesquisa" value="Data de Arquivamento" />
+	  	
+	  		<p:selectOneMenu id="situacaoProcessoPesquisa" value="#{mbeanPesquisaModel.situacaoProcesso.id}" style="width:95%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.situacoesProcessos}" />
+		  		<p:ajax update="pgDataArquivamentoPesquisa" process="pgDataArquivamentoPesquisa" />
+		  	</p:selectOneMenu>
+		  	<p:calendar id="dataArquivamentoPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataArquivamento}" disabled="#{!mbeanPesquisaModel.processoArquivado}" style="width:90%" />
+	  	
+	  	</h:panelGrid>
+	  	
+  	</ui:define>
+  	
+  	<ui:define name="colunasTabela">
+  	
+  		<p:column headerText="Número">
+  			<h:outputText value="#{linha.numeroProcesso}" />
+  		</p:column>
+  	
+  		<p:column headerText="Advogado">
+  			<h:outputText value="#{linha.advogado.nome}" />
+  		</p:column>
+  	
+  		<p:column headerText="Data de Abertura">
+  			<h:outputText value="#{linha.dataAbertura}" />
+  		</p:column>
+  	
+  		<p:column headerText="Situação">
+  			<h:outputText value="#{linha.situacaoProcesso.descricao}" />
+  		</p:column>
+  		
+  	</ui:define>
+  	
+</ui:composition>

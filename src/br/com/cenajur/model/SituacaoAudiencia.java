@@ -1,9 +1,20 @@
 package br.com.cenajur.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
-public class SituacaoAudiencia {
+@Entity
+@Table(name = "situacoes_audiencias")
+public class SituacaoAudiencia extends TSActiveRecordAb<SituacaoAudiencia>{
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
 	private String descricao;
