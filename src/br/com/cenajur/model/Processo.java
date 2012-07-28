@@ -3,6 +3,7 @@ package br.com.cenajur.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +13,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 import br.com.cenajur.util.Constantes;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
@@ -50,6 +54,14 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	@ManyToOne
 	@JoinColumn(name = "tipo_processo_id")
 	private TipoProcesso tipoProcesso;
+	
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL)
+	private List<AndamentoProcesso> andamentos;
+	
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL)
+	private List<Audiencia> audiencias;
 	
 	@ManyToOne
 	private Vara vara;
@@ -129,6 +141,22 @@ public class Processo extends TSActiveRecordAb<Processo>{
 
 	public void setTipoProcesso(TipoProcesso tipoProcesso) {
 		this.tipoProcesso = tipoProcesso;
+	}
+
+	public List<AndamentoProcesso> getAndamentos() {
+		return andamentos;
+	}
+
+	public void setAndamentos(List<AndamentoProcesso> andamentos) {
+		this.andamentos = andamentos;
+	}
+
+	public List<Audiencia> getAudiencias() {
+		return audiencias;
+	}
+
+	public void setAudiencias(List<Audiencia> audiencias) {
+		this.audiencias = audiencias;
 	}
 
 	public Vara getVara() {

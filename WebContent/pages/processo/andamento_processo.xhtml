@@ -60,8 +60,16 @@
   	
   	<ui:define name="colunasTabela">
   	
-  		<p:column headerText="Nome">
-  			<h:outputText value="#{linha.descricao}" />
+  		<p:column headerText="Número do Processo" styleClass="coluna15">
+  			<h:outputText value="#{linha.processo.numeroProcesso}" />
+  		</p:column>
+  	
+  		<p:column headerText="Tipo do Andamento">
+  			<h:outputText value="#{linha.tipoAndamentoProcesso.descricao}" />
+  		</p:column>
+  	
+  		<p:column headerText="Data">
+  			<h:outputText value="#{linha.dataAndamento}" />
   		</p:column>
   		
   	</ui:define>

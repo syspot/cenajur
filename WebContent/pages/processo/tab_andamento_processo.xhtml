@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+	<p:tab id="tabAndamentoProcesso" title="Andamento" rendered="#{mbeanModel.id != null}">
+	
+		<h:form>
+	
+			<h:panelGrid columns="1" columnClasses="coluna100" style="width:40%">
+				
+				<p:outputLabel for="numeroProcessoAndamento" value="Processo" />
+				<p:inputText id="numeroProcessoAndamento" value="#{mbean.andamentoProcesso.processo.numeroProcesso}" readonly="true" />
+		  		
+			  	<p:outputLabel for="dataAndamentoAndamento" value="Data do Andamento" />
+		  		<p:calendar id="dataAndamentoAndamento" pattern="dd/MM/yyyy" required="true" requiredMessage="Data do Andamento: Campo obrigatório" value="#{mbean.andamentoProcesso.dataAndamento}"/>
+		 		
+		  		<p:outputLabel for="tipoAndamentoProcessoAndamento" value="Tipo do Andamento" />
+		  		<p:selectOneMenu id="tipoAndamentoProcessoAndamento" required="true" requiredMessage="Tipo do Andamento: Campo obrigatório" value="#{mbean.andamentoProcesso.tipoAndamentoProcesso.id}" style="width:92%">
+			  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+			  		<f:selectItems value="#{mbean.tiposAndamentosProcessos}" />
+			  	</p:selectOneMenu>
+			  	
+			  	<p:outputLabel for="descricaoAndamento" value="Descrição" />
+				<p:inputTextarea id="descricaoAndamento" value="#{mbean.andamentoProcesso.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" maxlength="500" styleClass="coluna90"/>
+				
+		  	</h:panelGrid>
+		  	
+		  	<p:commandButton id="btnAlterarAndamento" value="Cadastrar" icon="salvar" action="#{mbean.cadastrarAndamentoProcesso}" update="@form" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" rendered="#{mbean.flagAlterar}" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}"/>
+			 
+			<p:remoteCommand action="#{mbean.removerAndamentoProcesso}" name="removerAndamentoProcesso" update="opGridAndamentoProcesso" process="@this"/>
+			  	
+		  	<p:outputPanel id="opGridAndamentoProcesso">
+		  	
+			  	<p:dataTable id="gridAndamentoProcesso" emptyMessage="Nenhum andamento encontrado" style="width: 70%" paginator="true"
+						paginatorAlwaysVisible="false" rows="10" value="#{mbeanModel.andamentos}" var="linha">
+			  	
+			  		<p:column headerText="Número do Processo" styleClass="coluna15">
+			  			<h:outputText value="#{linha.processo.numeroProcesso}" />
+			  		</p:column>
+			  	
+			  		<p:column headerText="Tipo do Andamento">
+			  			<h:outputText value="#{linha.tipoAndamentoProcesso.descricao}" />
+			  		</p:column>
+			  	
+			  		<p:column headerText="Data">
+			  			<h:outputText value="#{linha.dataAndamento}" />
+			  		</p:column>
+			  		
+					<p:column headerText="Excluir" styleClass="coluna5">
+						<p:commandLink type="button" onclick="cdExcluirAndamento.show();" process="@this">
+							<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+							<f:setPropertyActionListener target="#{mbean.andamentoProcessoSelecionado}" value="#{linha}" />
+						</p:commandLink>
+					</p:column>
+			  		
+			  	</p:dataTable>
+			  	
+  			</p:outputPanel>
+  			
+  			<p:confirmDialog message="Confirma exclusão do registro?" appendToBody="true" header="Aviso" severity="alert" widgetVar="cdExcluirAndamento">
+	    
+			    <p:commandButton value="Sim" onclick="removerAndamentoProcesso(); cdExcluirAndamento.hide();" update="opGridAndamentoProcesso" process="opGridAndamentoProcesso" />
+			    <p:commandButton value="Não" onclick="cdExcluirAndamento.hide()" />
+			    
+		  </p:confirmDialog>
+  			
+  		</h:form>
+  		
+  	</p:tab>
+  	
+</ui:composition>

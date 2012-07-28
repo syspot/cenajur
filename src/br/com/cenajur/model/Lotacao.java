@@ -19,7 +19,7 @@ import br.com.topsys.util.TSUtil;
 public class Lotacao extends TSActiveRecordAb<Lotacao>{
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
 	private String descricao;
