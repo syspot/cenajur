@@ -391,10 +391,6 @@ img.right {
     font-size: 98% !important;
 }
 
-.ui-growl {
-    top:115px !important;
-}
-
 .themeMenu {
     overflow: auto;
     height:300px;
@@ -677,6 +673,7 @@ img.right {
 
 .coluna5 {
     width: 5%;
+    text-align: center;
 }
 
 .coluna5_3 {
@@ -737,6 +734,14 @@ img.right {
 
 .coluna25 {
     width: 25%;
+}
+
+.coluna26 {
+    width: 26%;
+}
+
+.coluna27 {
+    width: 27%;
 }
 
 .coluna25_3 {
@@ -831,6 +836,10 @@ img.right {
 .coluna50_3 {
     width: 50%;
     vertical-align: bottom;
+}
+
+.coluna54 {
+    width: 54%;
 }
 
 .coluna60 {
@@ -1012,4 +1021,9 @@ ui-icon.delete {
 
 .colunaPequena {
 	width: 10px; text-align: center;
+}
+
+.ui-fieldset{
+	padding: 0.6em 1em;
+	margin-top:10px;
 }

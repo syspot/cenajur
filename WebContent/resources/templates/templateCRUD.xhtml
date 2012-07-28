@@ -74,33 +74,17 @@
 							<ui:insert name="colunasTabela" />
 							
 							<p:column headerText="Editar" styleClass="coluna5">
-							  
-								<div align="center">
-								
-									<p:commandLink action="#{mbean.detailEvent}" ajax="false">
-									
-										<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />	                     
-										<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
-									  	
-									</p:commandLink>
-							
-								</div>
-							  
+								<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+									<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />	                     
+									<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+								</p:commandLink>
 							</p:column>
 							
 							<p:column headerText="Excluir" styleClass="coluna5">
-							  
-								<div align="center">
-								  
-									<p:commandLink type="button" icon="delete16" id="clExcluir" onclick="cdExcluir.show()" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagExcluir}">
-									
-										<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
-										<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
-										
-									</p:commandLink>
-								                  
-								</div>
-							      
+								<p:commandLink type="button" icon="delete16" id="clExcluir" onclick="cdExcluir.show()" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagExcluir}">
+									<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+									<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+								</p:commandLink>
 							</p:column>
 						
 						</p:dataTable>
