@@ -37,6 +37,10 @@
   	
   	<ui:define name="colunasTabela">
   	
+  		<p:column headerText="Estado" styleClass="coluna20">
+  			<h:outputText value="#{linha.estado.descricao}" />
+  		</p:column>
+  		
   		<p:column headerText="Descrição">
   			<h:outputText value="#{linha.descricao}" />
   		</p:column>

@@ -32,10 +32,14 @@
 	  		<p:outputPanel autoUpdate="true">
 		  	
 		  		<p:commandButton type="button" value="Adicionar Cliente" icon="ui-icon-plus" onclick="dlgCliente.show();" />
-		  		<p:dataTable value="#{mbeanModel.clientes}" var="cliente" emptyMessage="Nenhum cliente selecionado" style="width:50%">
+		  		<p:dataTable value="#{mbeanModel.clientes}" var="cliente" emptyMessage="Nenhum cliente selecionado" style="width:68%">
 		  	
 		  			<p:column headerText="Nome">
 						<h:outputText value="#{cliente.nome}" />
+		  			</p:column>
+		  	
+		  			<p:column headerText="CPF">
+						<h:outputText value="#{cliente.cpf}" />
 		  			</p:column>
 		  			
 		  			<p:column headerText="Remover" styleClass="coluna5" style="text-align: center">
@@ -53,7 +57,7 @@
 	
   		<p:fieldset>
   		
-	  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:50%">
+	  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:70%">
 	  		
 	  			<p:outputLabel for="parte" value="Tipo de Parte" />
 	  			<p:outputLabel for="advogado" value="Advogado" />
@@ -96,19 +100,14 @@
   		</p:fieldset>
 	  	
 	  	<p:fieldset>
+		  	
+		  	<h:panelGrid id="pgDataArquivamento" columns="3" columnClasses="coluna23, coluna45, coluna35" style="width:70%">
 	  	
-		  	<h:panelGrid columns="1" columnClasses="coluna100" style="width:97%">
-		  	
 			  	<p:outputLabel for="dataAjuizamento" value="Data de Ajuizamento" />
-			  	<p:calendar id="dataAjuizamento" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Ajuizamento: Campo obrigatório" value="#{mbeanModel.dataAjuizamento}" style="width:90%"/>
-		  	
-		  	</h:panelGrid>
-		  	
-		  	<h:panelGrid id="pgDataArquivamento" columns="2" columnClasses="coluna50, coluna50" style="width:50%">
-		  	
 			  	<p:outputLabel for="situacaoProcesso" value="Situação" />
 			  	<p:outputLabel for="dataArquivamento" value="Data de Arquivamento" />
 		  	
+			  	<p:calendar id="dataAjuizamento" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Ajuizamento: Campo obrigatório" value="#{mbeanModel.dataAjuizamento}" style="width:90%"/>
 		  		<p:selectOneMenu id="situacaoProcesso" required="true" requiredMessage="Situação Campo obrigatório" value="#{mbeanModel.situacaoProcesso.id}" style="width:95%">
 			  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 			  		<f:selectItems value="#{mbean.situacoesProcessos}" />
@@ -125,7 +124,7 @@
 		  	<p:outputPanel autoUpdate="true">
 		  	
 			  	<p:commandButton type="button" value="Adicionar Parte Contrária" icon="ui-icon-plus" onclick="dlgParteContraria.show();" />
-			  	<p:dataTable value="#{mbeanModel.partesContrarias}" var="parteContraria" emptyMessage="Nenhuma parte contrária selecionada" style="width:50%">
+			  	<p:dataTable value="#{mbeanModel.partesContrarias}" var="parteContraria" emptyMessage="Nenhuma parte contrária selecionada" style="width:68%">
 			  	
 			  		<p:column headerText="Nome">
 						<h:outputText value="#{parteContraria.descricao}" />	  		

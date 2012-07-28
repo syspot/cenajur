@@ -58,6 +58,11 @@ public class LotacaoFaces extends CrudFaces<Lotacao> {
 		setGrid(new ArrayList<Lotacao>());
 		return "sucesso";
 	}
+	
+	@Override
+	protected void posDetail() {
+		this.atualizarComboCidades();
+	}
 
 	public List<SelectItem> getEstados() {
 		return estados;
