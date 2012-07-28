@@ -26,7 +26,7 @@
 		  	<p:selectOneMenu id="tipoDocumento" required="true" requiredMessage="Tipo de Documento: Campo obrigatório" value="#{mbeanModel.tipoDocumento.id}" style="width:90%">
 		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 		  		<f:selectItems value="#{mbean.tiposDocumentos}" />
-		  		<p:ajax update="pgTipoDocumento" />
+		  		<p:ajax update="pgTipoDocumento" global="false"/>
 		  	</p:selectOneMenu>
 		  	<p:inputText id="numeroDocumento" value="#{mbeanModel.numeroDocumento}" required="true" requiredMessage="Número: Campo obrigatório" disabled="#{mbeanModel.tipoDocumento.id == null}" style="width: 90%" maxlength="50"/>
 	  	

@@ -28,7 +28,8 @@
 			
 			<br/>
 			
-			<p:dataTable id="gridPesquisa" emptyMessage="Nenhuma permissão encontrada" value="#{mbeanPesquisa.grid}" var="permissao">
+			<p:dataTable id="gridPesquisa" emptyMessage="Nenhuma permissão encontrada" paginator="true"
+								paginatorAlwaysVisible="false" rows="5" value="#{mbeanPesquisa.grid}" var="permissao">
 			
 				<p:column headerText="Descrição">
 					<h:outputText value="#{permissao.descricao}" />

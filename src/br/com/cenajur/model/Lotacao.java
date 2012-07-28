@@ -32,7 +32,7 @@ public class Lotacao extends TSActiveRecordAb<Lotacao>{
 	private Cidade cidade;
 
 	public Long getId() {
-		return id;
+		return TSUtil.tratarLong(id);
 	}
 
 	public void setId(Long id) {

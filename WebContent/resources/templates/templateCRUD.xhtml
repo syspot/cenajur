@@ -24,9 +24,9 @@
 								
 							</h:panelGrid>
 							
-						</p:fieldset>
-						
 						<ui:include src="comandoCRUDCadastro.xhtml" />
+						
+						</p:fieldset>
 					
 				 	</h:panelGrid>
 				 	
@@ -46,7 +46,7 @@
 				
 					<h:panelGrid columns="1" style="width: 98%">
 					
-						<p:fieldset legend="Filtro" style="width: 100%">
+						<p:fieldset legend="Filtro" style="width: 100%" toggleable="true">
 						
 							<h:panelGrid columns="1" styleClass="coluna100">
 								
@@ -54,17 +54,11 @@
 								
 							</h:panelGrid>
 								
+							<ui:include src="comandoCRUDPesquisa.xhtml" />
+							
 						</p:fieldset>
 					
 					</h:panelGrid>
-					  
-					<br/>
-					<br/>
-					
-					<ui:include src="comandoCRUDPesquisa.xhtml" />
-					
-					<br/>
-					<br/>
 					
 					<p:fieldset style="width: 97.5%">
 					

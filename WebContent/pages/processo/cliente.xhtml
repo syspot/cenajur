@@ -94,7 +94,7 @@
 	  			<p:selectOneMenu id="estado" value="#{mbeanModel.cidade.estado.id}" required="true" requiredMessage="Estado: Campo obrigatório">
 	  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 	  				<f:selectItems value="#{mbean.estados}" />
-	  				<p:ajax update="opCidade" listener="#{mbean.atualizarComboCidades}" process="@this"/>
+	  				<p:ajax update="opCidade" listener="#{mbean.atualizarComboCidades}" process="@this" global="false"/>
 	  			</p:selectOneMenu>
 	  			<p:outputPanel id="opCidade">
 		  			<p:selectOneMenu id="cidade" value="#{mbeanModel.cidade.id}" required="true" requiredMessage="Cidade: Campo obrigatório" disabled="#{mbeanModel.cidade.estado.id == null}">
@@ -161,7 +161,7 @@
 			  		<f:selectItems value="#{mbean.tiposPagamentos}" />
 			  	</p:selectOneMenu>
 		  		<p:selectBooleanCheckbox id="flagAtivo" value="#{mbeanModel.flagAtivo}" >
-		  			<p:ajax update="pgInformacoesCancelamento" listener="#{mbean.mudarStatusCliente}"/>
+		  			<p:ajax update="pgInformacoesCancelamento" listener="#{mbean.mudarStatusCliente}" global="false"/>
 		  		</p:selectBooleanCheckbox>
 			  	
 		  	</h:panelGrid>
@@ -229,7 +229,7 @@
   			<p:selectOneMenu id="estadoPesquisa" value="#{mbeanPesquisaModel.cidade.estado.id}" style="width:95%">
   				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
   				<f:selectItems value="#{mbean.estados}" />
-  				<p:ajax update="pgCidadePesquisa" listener="#{mbean.atualizarComboCidades}" />
+  				<p:ajax update="pgCidadePesquisa" listener="#{mbean.atualizarComboCidades}" global="false"/>
   			</p:selectOneMenu>
   			<p:selectOneMenu id="cidadePesquisa" value="#{mbeanPesquisaModel.cidade.id}" disabled="#{mbeanPesquisaModel.cidade.estado.id == null}" style="width:95%">
   				<f:selectItem itemLabel="Não Selecionado" itemValue="" />

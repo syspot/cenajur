@@ -31,7 +31,7 @@
   	
 	  		<p:outputPanel autoUpdate="true">
 		  	
-		  		<p:commandButton type="button" value="Adicionar Cliente" onclick="dlgCliente.show();" />
+		  		<p:commandButton type="button" value="Adicionar Cliente" icon="ui-icon-plus" onclick="dlgCliente.show();" />
 		  		<p:dataTable value="#{mbeanModel.clientes}" var="cliente" emptyMessage="Nenhum cliente selecionado" style="width:50%">
 		  	
 		  			<p:column headerText="Nome">
@@ -112,7 +112,7 @@
 		  		<p:selectOneMenu id="situacaoProcesso" required="true" requiredMessage="Situação Campo obrigatório" value="#{mbeanModel.situacaoProcesso.id}" style="width:95%">
 			  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 			  		<f:selectItems value="#{mbean.situacoesProcessos}" />
-			  		<p:ajax update="pgDataArquivamento" process="@this" />
+			  		<p:ajax update="pgDataArquivamento" process="@this" global="false"/>
 			  	</p:selectOneMenu>
 			  	<p:calendar id="dataArquivamento" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Arquivamento: Campo obrigatório" value="#{mbeanModel.dataArquivamento}" disabled="#{!mbeanModel.processoArquivado}" style="width:90%" />
 		  	
@@ -124,7 +124,7 @@
 	  	
 		  	<p:outputPanel autoUpdate="true">
 		  	
-			  	<p:commandButton type="button" value="Adicionar Parte Contrária" onclick="dlgParteContraria.show();" />
+			  	<p:commandButton type="button" value="Adicionar Parte Contrária" icon="ui-icon-plus" onclick="dlgParteContraria.show();" />
 			  	<p:dataTable value="#{mbeanModel.partesContrarias}" var="parteContraria" emptyMessage="Nenhuma parte contrária selecionada" style="width:50%">
 			  	
 			  		<p:column headerText="Nome">
@@ -220,7 +220,7 @@
 		  		<p:selectOneMenu id="situacaoProcessoPesquisa" value="#{mbeanPesquisaModel.situacaoProcesso.id}" style="width:95%">
 			  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 			  		<f:selectItems value="#{mbean.situacoesProcessos}" />
-			  		<p:ajax update="pgDataArquivamentoPesquisa" process="pgDataArquivamentoPesquisa" />
+			  		<p:ajax update="pgDataArquivamentoPesquisa" process="pgDataArquivamentoPesquisa" global="false"/>
 			  	</p:selectOneMenu>
 			  	<p:calendar id="dataArquivamentoPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataArquivamento}" disabled="#{!mbeanPesquisaModel.processoArquivado}" style="width:90%" />
 		  	

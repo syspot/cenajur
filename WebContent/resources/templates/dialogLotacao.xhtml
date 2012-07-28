@@ -25,7 +25,7 @@
 				<p:selectOneMenu id="dlgEstadoLotacao" value="#{mbeanPesquisa.model.cidade.estado.id}" style="width:92%">
 	  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 	  				<f:selectItems value="#{mbeanPesquisa.estados}"/>
-	  				<p:ajax listener="#{mbeanPesquisa.atualizarComboCidades}" update="pgCampos" />
+	  				<p:ajax listener="#{mbeanPesquisa.atualizarComboCidades}" update="pgCampos" global="false"/>
 	  			</p:selectOneMenu>
 				<p:selectOneMenu id="dlgCidadeLotacao" value="#{mbeanPesquisa.model.cidade.id}" style="width:90%" disabled="#{mbeanPesquisa.model.cidade.estado.id == null}">
 	  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
@@ -38,7 +38,8 @@
 			
 			<br/>
 			
-			<p:dataTable id="gridPesquisa" emptyMessage="Nenhuma lotação encontrada" value="#{mbeanPesquisa.grid}" var="lotacao">
+			<p:dataTable id="gridPesquisa" emptyMessage="Nenhuma lotação encontrada" paginator="true"
+								paginatorAlwaysVisible="false" rows="5" value="#{mbeanPesquisa.grid}" var="lotacao">
 			
 				<p:column headerText="Descrição">
 					<h:outputText value="#{lotacao.descricao}" />
