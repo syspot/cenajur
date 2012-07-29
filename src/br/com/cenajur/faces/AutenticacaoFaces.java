@@ -39,7 +39,9 @@ public class AutenticacaoFaces extends TSMainFaces{
 
         setTabAtiva(new Integer(0));
 
-        setNomeTela("Área de Trabalho");
+        setNomeTela("Área de Trabalho > Controle de Mensagem > Mensagem");
+        
+        setTela("/pages/mensagem/mensagem.xhtml");
         
         currentFaces = "";
     }
