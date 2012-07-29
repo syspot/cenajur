@@ -28,6 +28,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 
 	private List<SelectItem> estados;
 	private List<SelectItem> cidades;
+	private List<SelectItem> cidadesPesquisa;
 	private List<SelectItem> estadosCivis;
 	private List<SelectItem> tiposPagamentos;
 	private List<SelectItem> motivosCancelamentos;
@@ -44,7 +45,6 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	
 	private void initCombo(){
 		this.estados = super.initCombo(new Estado().findAll("descricao"), "id", "descricao");
-		this.cidades = super.initCombo(new Cidade().findAll("descricao"), "id", "descricao");
 		this.estadosCivis = super.initCombo(new EstadoCivil().findAll("descricao"), "id", "descricao");
 		this.tiposPagamentos = super.initCombo(new TipoPagamento().findAll("descricao"), "id", "descricao");
 		this.motivosCancelamentos = super.initCombo(new MotivoCancelamento().findAll("descricao"), "id", "descricao");
@@ -88,27 +88,57 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 			CenajurUtil.addErrorMessage("Lotação: Campo obrigatório");
 		}
 		
+		if(!TSUtil.isValidCPF(TSUtil.removerNaoDigitos(getCrudModel().getCpf()))){
+			erro = true;
+			CenajurUtil.addErrorMessage("CPF inválido");
+		}
+		
 		return erro;
 		
 	}
 
 	@Override
 	protected void preInsert() {
+		
 		getCrudModel().setColaboradorCadastro(ColaboradorUtil.obterColaboradorConectado());
 		getCrudModel().setDataCadastro(new Date());
-		getCrudModel().setBanco(null);
+		
+		if(TSUtil.isEmpty(getCrudModel().getBanco()) || TSUtil.isEmpty(getCrudModel().getBanco().getId())){
+			getCrudModel().setBanco(null);
+		}
+		
+		if(getCrudModel().getFlagAtivo()){
+			getCrudModel().setDataCancelamento(null);
+			getCrudModel().setMotivoCancelamento(null);
+		}
+		
 	}
 	
 	@Override
 	protected void preUpdate(){
+		
 		getCrudModel().setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 		getCrudModel().setDataAtualizacao(new Date());
+		
+		if(TSUtil.isEmpty(getCrudModel().getBanco()) || TSUtil.isEmpty(getCrudModel().getBanco().getId())){
+			getCrudModel().setBanco(null);
+		}
+		
+		if(getCrudModel().getFlagAtivo()){
+			getCrudModel().setDataCancelamento(null);
+			getCrudModel().setMotivoCancelamento(null);
+		}
 	}
+	
 	@Override
 	protected void posDetail() {
 		if(TSUtil.isEmpty(getCrudModel().getBanco())){
 			getCrudModel().setBanco(new Banco());
 		}
+		if(TSUtil.isEmpty(getCrudModel().getMotivoCancelamento())){
+			getCrudModel().setMotivoCancelamento(new MotivoCancelamento());
+		}
+		this.atualizarComboCidades();
 	}
 	
 	public String mudarStatusCliente(){
@@ -119,7 +149,12 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	}
 	
 	public String atualizarComboCidades(){
-		this.cidades = super.initCombo(getCrudModel().getCidade().findByModel("descricao"), "id", "descricao");
+		this.cidades = super.initCombo(getCrudModel().getCidade().findCombo(), "id", "descricao");
+		return "sucesso";
+	}
+
+	public String atualizarComboCidadesPesquisa(){
+		this.cidadesPesquisa = super.initCombo(getCrudPesquisaModel().getCidade().findCombo(), "id", "descricao");
 		return "sucesso";
 	}
 	
@@ -142,6 +177,14 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 
 	public void setCidades(List<SelectItem> cidades) {
 		this.cidades = cidades;
+	}
+
+	public List<SelectItem> getCidadesPesquisa() {
+		return cidadesPesquisa;
+	}
+
+	public void setCidadesPesquisa(List<SelectItem> cidadesPesquisa) {
+		this.cidadesPesquisa = cidadesPesquisa;
 	}
 
 	public List<SelectItem> getEstadosCivis() {

@@ -13,6 +13,7 @@ import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.Estado;
 import br.com.cenajur.model.Grupo;
 import br.com.cenajur.model.TipoColaborador;
+import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.Constantes;
 import br.com.cenajur.util.Utilitarios;
 import br.com.topsys.util.TSUtil;
@@ -66,6 +67,19 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 	}
 	
 	@Override
+	protected boolean validaCampos() {
+		
+		boolean erro = false;
+		
+		if(!TSUtil.isValidCPF(TSUtil.removerNaoDigitos(getCrudModel().getCpf()))){
+			erro = true;
+			CenajurUtil.addErrorMessage("CPF inválido");
+		}
+		
+		return erro;
+	}
+	
+	@Override
 	protected void preInsert() {
 		getCrudModel().setSenha(Utilitarios.gerarHash(getCrudModel().getSenha()));
 	}
@@ -88,10 +102,11 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 	@Override
 	protected void posDetail() {
 		getCrudModel().setSenha(null);
+		this.atualizarComboCidades();
 	}
 	
 	public String atualizarComboCidades(){
-		this.cidades = super.initCombo(getCrudModel().getCidade().findByModel("descricao"), "id", "descricao");
+		this.cidades = super.initCombo(getCrudModel().getCidade().findCombo(), "id", "descricao");
 		return "sucesso";
 	}
 	

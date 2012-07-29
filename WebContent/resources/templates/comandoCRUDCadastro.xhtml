@@ -7,6 +7,6 @@
 
   <p:commandButton id="btnInserir" value="Cadastrar" icon="salvar" action="#{mbean.insertEvent}" update="@form" style="margin-left: 5px; margin-top: 10px;" rendered="#{!mbean.flagAlterar}" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagInserir}"/>
   
-  <p:commandButton id="btnAlterar" value="Alterar" icon="salvar" action="#{mbean.updateEvent}" update="@form" style="margin-left: 5px; margin-top: 10px;" rendered="#{mbean.flagAlterar}" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}"/>
+  <p:commandButton id="btnAlterar" value="Alterar" icon="salvar" action="#{mbean.updateEvent}" update=":tabview" style="margin-left: 5px; margin-top: 10px;" rendered="#{mbean.flagAlterar}" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}"/>
 
 </ui:component>

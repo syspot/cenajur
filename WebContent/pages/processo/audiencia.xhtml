@@ -16,11 +16,11 @@
 	  		<p:outputPanel autoUpdate="true">
 				<p:outputLabel for="processo" value="Processo" /><br/>
 				<p:inputText id="processo" value="#{mbeanModel.processo.numeroProcesso}" required="true" requiredMessage="Processo: Campo obrigatório" readonly="true" />
-				<p:commandButton type="button" value="Adicionar" onclick="dlgProcesso.show();" />
+				<p:commandButton type="button" value="Adicionar" icon="ui-icon-plus" onclick="dlgProcesso.show();" />
 			</p:outputPanel>
 	  		
 		  	<p:outputLabel for="dataAudiencia" value="Data da Audiência" />
-	  		<p:calendar id="dataAudiencia" pattern="dd/MM/yyyy" required="true" requiredMessage="Data da Audiência: Campo obrigatório" value="#{mbeanModel.dataAudiencia}"/>
+	  		<p:calendar id="dataAudiencia" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data da Audiência: Campo obrigatório" value="#{mbeanModel.dataAudiencia}"/>
   		
   		</h:panelGrid>
   		
@@ -49,7 +49,7 @@
 		  	</p:selectOneMenu>
 		  	
 		  	<p:outputLabel for="descricao" value="Descrição" />
-			<p:inputTextarea id="descricao" value="#{mbeanModel.descricao}" maxlength="500" styleClass="coluna90"/>
+			<p:inputTextarea id="descricao" value="#{mbeanModel.descricao}" maxlength="500" autoResize="false" rows="10" styleClass="coluna90"/>
 			
 	  	</h:panelGrid>
 	  	
@@ -57,42 +57,41 @@
   	
   	<ui:define name="pesquisaCampos">
   	
-  		<h:panelGrid columns="1" columnClasses="coluna100">
+  		<h:panelGrid columns="3" columnClasses="coluna30, coluna30, coluna30" style="width: 45%">
   		
 			<p:outputLabel for="processoPesquisa" value="Processo" />
-			<p:inputText id="processoPesquisa" value="#{mbeanPesquisaModel.processo.numeroProcesso}" />
-	  		
 		  	<p:outputLabel for="dataAudienciaPesquisa" value="Data da Audiência" />
-	  		<p:calendar id="dataAudienciaPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataAudiencia}"/>
-  		
-  		</h:panelGrid>
-  		
-  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:38%">
-  		
 	  		<p:outputLabel for="situacaoAudienciaPesquisa" value="Situação" />
-		  	<p:outputLabel for="varaPesquisa" value="Vara" />
-		  	
+	  		
+			<p:inputText id="processoPesquisa" value="#{mbeanPesquisaModel.processo.numeroProcesso}" />
+	  		<p:calendar id="dataAudienciaPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataAudiencia}"/>
 	  		<p:selectOneMenu id="situacaoAudienciaPesquisa" value="#{mbeanPesquisaModel.situacaoAudiencia.id}" style="width:95%">
 		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 		  		<f:selectItems value="#{mbean.situacoesAudiencias}" />
 		  	</p:selectOneMenu>
-	  		<p:selectOneMenu id="varaPesquisa" value="#{mbeanPesquisaModel.vara.id}" style="width:94%">
+  		
+  		</h:panelGrid>
+  		
+  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:45%">
+  		
+		  	<p:outputLabel for="advogadoPesquisa" value="Advogado" />
+		  	<p:outputLabel for="varaPesquisa" value="Vara" />
+		  	
+	  		<p:selectOneMenu id="advogadoPesquisa" value="#{mbeanPesquisaModel.advogado.id}" style="width:92%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.advogados}" />
+		  	</p:selectOneMenu>
+	  		<p:selectOneMenu id="varaPesquisa" value="#{mbeanPesquisaModel.vara.id}" style="width:97%">
 		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 		  		<f:selectItems value="#{mbean.varas}" />
 		  	</p:selectOneMenu>
 		  	
 	  	</h:panelGrid>
 	  	
-	  	<h:panelGrid columns="1" columnClasses="coluna100" style="width:40%">
-	  	
-		  	<p:outputLabel for="advogadoPesquisa" value="Advogado" />
-	  		<p:selectOneMenu id="advogadoPesquisa" value="#{mbeanPesquisaModel.advogado.id}" style="width:92%">
-		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-		  		<f:selectItems value="#{mbean.advogados}" />
-		  	</p:selectOneMenu>
+	  	<h:panelGrid columns="1" columnClasses="coluna100" style="width:45%">
 		  	
 			<p:outputLabel for="descricaoPesquisa" value="Descrição" />
-			<p:inputTextarea id="descricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" maxlength="500" styleClass="coluna90"/>
+			<p:inputTextarea id="descricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" autoResize="false" rows="10" maxlength="500" styleClass="coluna95"/>
 		  	
 	  	</h:panelGrid>
 	  	
@@ -100,8 +99,18 @@
   	
   	<ui:define name="colunasTabela">
   	
-  		<p:column headerText="Nome">
-  			<h:outputText value="#{linha.descricao}" />
+  		<p:column headerText="Número do Processo" styleClass="coluna20">
+  			<h:outputText value="#{linha.processo.numeroProcesso}" />
+  		</p:column>
+  	
+  		<p:column headerText="Advogado" styleClass="coluna50">
+  			<h:outputText value="#{linha.advogado.nome}" />
+  		</p:column>
+  	
+  		<p:column headerText="Data" styleClass="coluna20" style="text-align: center">
+  			<h:outputText value="#{linha.dataAudiencia}" >
+  				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+  			</h:outputText>
   		</p:column>
   		
   	</ui:define>

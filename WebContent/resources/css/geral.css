@@ -740,6 +740,10 @@ img.right {
     width: 23%;
 }
 
+.coluna23 {
+    width: 24%;
+}
+
 .coluna25 {
     width: 25%;
 }
@@ -920,6 +924,14 @@ img.right {
     width: 85%;
 }
 
+.coluna88 {
+    width: 88%;
+}
+
+.coluna89 {
+    width: 89%;
+}
+
 .coluna90 {
     width: 90%;
 }
@@ -1033,5 +1045,5 @@ ui-icon.delete {
 
 .ui-fieldset{
 	padding: 0.6em 1em;
-	margin-top:10px;
+	margin-top:5px;
 }

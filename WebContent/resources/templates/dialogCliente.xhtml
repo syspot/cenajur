@@ -32,7 +32,7 @@
 	  				<f:selectItems value="#{mbeanPesquisa.estados}" />
 	  				<p:ajax update="pgCidadePesquisa" listener="#{mbeanPesquisa.atualizarComboCidades}" global="false"/>
 	  			</p:selectOneMenu>
-	  			<p:selectOneMenu id="cidadePesquisa" value="#{mbeanPesquisa.model.cidade.id}" disabled="#{mbeanModel.cidade.estado.id == null}" style="width:95%">
+	  			<p:selectOneMenu id="cidadePesquisa" value="#{mbeanPesquisa.model.cidade.id}" disabled="#{mbeanPesquisa.model.cidade.estado.id == null}" style="width:95%">
 	  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 	  				<f:selectItems value="#{mbeanPesquisa.cidades}" />
 	  			</p:selectOneMenu>
@@ -50,12 +50,12 @@
 			<p:dataTable id="gridPesquisa" emptyMessage="Nenhuma lotação encontrada" paginator="true"
 								paginatorAlwaysVisible="false" rows="5" value="#{mbeanPesquisa.grid}" var="cliente">
 			
-				<p:column headerText="Descrição">
-					<h:outputText value="#{cliente.nome}" />
+				<p:column headerText="Matrícula">
+					<h:outputText value="#{cliente.matricula}" />
 				</p:column>
 			
-				<p:column headerText="Cidade">
-					<h:outputText value="#{cliente.cidade.descricao}" />
+				<p:column headerText="Descrição">
+					<h:outputText value="#{cliente.nome}" />
 				</p:column>
 				
 				<p:column headerText="Adicionar" styleClass="coluna10" style="text-align:center;">

@@ -41,7 +41,8 @@
 			<br/>
 			<br/>
 			
-			<p:dataTable id="gridPesquisa" emptyMessage="Nenhum processo encontrado" value="#{mbeanPesquisa.grid}" var="processo">
+			<p:dataTable id="gridPesquisa" emptyMessage="Nenhum processo encontrado" paginator="true"
+					paginatorAlwaysVisible="false" rows="8" value="#{mbeanPesquisa.grid}" var="processo">
 			
 				<p:column headerText="Número">
 		  			<h:outputText value="#{processo.numeroProcesso}" />

@@ -31,12 +31,12 @@ public class LotacaoFaces extends CrudFaces<Lotacao> {
 	}
 	
 	public String atualizarComboCidades(){
-		this.cidades = super.initCombo(getCrudModel().getCidade().findByModel("descricao"), "id", "descricao");
+		this.cidades = super.initCombo(getCrudModel().getCidade().findCombo(), "id", "descricao");
 		return "sucesso";
 	}
 	
 	public String atualizarComboCidadesPesquisa(){
-		this.cidadesPesquisa = super.initCombo(getCrudPesquisaModel().getCidade().findByModel("descricao"), "id", "descricao");
+		this.cidadesPesquisa = super.initCombo(getCrudPesquisaModel().getCidade().findCombo(), "id", "descricao");
 		return "sucesso";
 	}
 	

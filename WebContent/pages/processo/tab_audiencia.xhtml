@@ -15,7 +15,7 @@
 				<p:inputText id="numeroProcessoAudiencia" value="#{mbean.audiencia.processo.numeroProcesso}" readonly="true" />
 		  		
 			  	<p:outputLabel for="dataAudienciaAudiencia" value="Data da Audiência" />
-		  		<p:calendar id="dataAudienciaAudiencia" pattern="dd/MM/yyyy" required="true" requiredMessage="Data da Audiência: Campo obrigatório" value="#{mbean.audiencia.dataAudiencia}"/>
+		  		<p:calendar id="dataAudienciaAudiencia" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data da Audiência: Campo obrigatório" value="#{mbean.audiencia.dataAudiencia}"/>
 	  		
 	  		</h:panelGrid>
 	  		
@@ -44,7 +44,7 @@
 			  	</p:selectOneMenu>
 			  	
 			  	<p:outputLabel for="descricaoAudiencia" value="Descrição" />
-				<p:inputTextarea id="descricaoAudiencia" value="#{mbean.audiencia.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" maxlength="500" styleClass="coluna90"/>
+				<p:inputTextarea id="descricaoAudiencia" value="#{mbean.audiencia.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" autoResize="false" rows="10" maxlength="500" styleClass="coluna90"/>
 				
 		  	</h:panelGrid>
 		  	
@@ -66,7 +66,9 @@
 			  		</p:column>
 			  	
 			  		<p:column headerText="Data">
-			  			<h:outputText value="#{linha.dataAudiencia}" />
+			  			<h:outputText value="#{linha.dataAudiencia}" >
+			  				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+		  				</h:outputText>
 			  		</p:column>
 			  		
 					<p:column headerText="Excluir" styleClass="coluna5">

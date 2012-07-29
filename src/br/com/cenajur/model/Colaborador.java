@@ -63,17 +63,11 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 	@JoinColumn(name = "tipo_colaborador_id")
 	private TipoColaborador tipoColaborador;
 	
-	@ManyToOne
-	@JoinColumn(name = "tipo_acesso_id")
-	private TipoAcesso tipoAcesso;
-	
 	@Column(name = "flag_ativo")
 	private Boolean flagAtivo;
 	
 	@Column(name = "data_desligamento")
 	private Date dataDesligamento;
-	
-	private String observacao;
 	
 	@ManyToOne
 	private Grupo grupo;
@@ -236,14 +230,6 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 		this.dataDesligamento = dataDesligamento;
 	}
 
-	public String getObservacao() {
-		return observacao;
-	}
-
-	public void setObservacao(String observacao) {
-		this.observacao = observacao;
-	}
-
 	public String getLogin() {
 		return login;
 	}
@@ -266,14 +252,6 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 
 	public void setTipoColaborador(TipoColaborador tipoColaborador) {
 		this.tipoColaborador = tipoColaborador;
-	}
-
-	public TipoAcesso getTipoAcesso() {
-		return tipoAcesso;
-	}
-
-	public void setTipoAcesso(TipoAcesso tipoAcesso) {
-		this.tipoAcesso = tipoAcesso;
 	}
 
 	public Grupo getGrupo() {

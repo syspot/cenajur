@@ -33,7 +33,8 @@
 				
 			<p:commandButton value="Pesquisar" icon="pesquisar" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="width: 140px; margin-left: 5px; margin-top:10px; margin-bottom:10px"/>
 				
-			<p:dataTable id="gridPesquisa" emptyMessage="Nenhuma parte contrária encontrada" value="#{mbeanPesquisa.grid}" var="parteContraria">
+			<p:dataTable id="gridPesquisa" emptyMessage="Nenhuma parte contrária encontrada" paginator="true"
+								paginatorAlwaysVisible="false" rows="5" value="#{mbeanPesquisa.grid}" var="parteContraria">
 			
 				<p:column headerText="Descrição">
 					<h:outputText value="#{parteContraria.descricao}" />

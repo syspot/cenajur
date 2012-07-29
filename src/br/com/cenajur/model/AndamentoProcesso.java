@@ -1,6 +1,9 @@
 package br.com.cenajur.model;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import br.com.cenajur.util.CenajurUtil;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
@@ -99,4 +103,51 @@ public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 		return true;
 	}
 	
+	@Override
+	public List<AndamentoProcesso> findByModel(String... fieldsOrderBy) {
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" from AndamentoProcesso a where 1 = 1 ");
+		
+		if(!TSUtil.isEmpty(processo) && !TSUtil.isEmpty(processo.getNumeroProcesso())){
+			query.append("and lower(a.processo.numeroProcesso) like ? ");
+		}
+		
+		if(!TSUtil.isEmpty(dataAndamento)){
+			query.append("and day(a.dataAndamento) = ? and month(a.dataAndamento) = ? and year(a.dataAndamento) = ? ");
+		}
+		
+		if(!TSUtil.isEmpty(tipoAndamentoProcesso) && !TSUtil.isEmpty(tipoAndamentoProcesso.getId())){
+			query.append("and a.tipoAndamentoProcesso.id = ? ");
+		}
+		
+		if(!TSUtil.isEmpty(descricao)){
+			query.append("and lower(a.descricao) like ? ");
+		}
+		
+		List<Object> params = new ArrayList<Object>();
+		
+		if(!TSUtil.isEmpty(processo) && !TSUtil.isEmpty(processo.getNumeroProcesso())){
+			params.add(CenajurUtil.tratarString(processo.getNumeroProcesso()));
+		}
+		
+		if(!TSUtil.isEmpty(dataAndamento)){
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(dataAndamento);
+			params.add(calendar.get(Calendar.DAY_OF_MONTH));
+			params.add(calendar.get(Calendar.MONTH) + 1);
+			params.add(calendar.get(Calendar.YEAR));
+		}
+		
+		if(!TSUtil.isEmpty(tipoAndamentoProcesso) && !TSUtil.isEmpty(tipoAndamentoProcesso.getId())){
+			params.add(tipoAndamentoProcesso.getId());
+		}
+		
+		if(!TSUtil.isEmpty(descricao)){
+			params.add(CenajurUtil.tratarString(descricao));
+		}
+		
+		return super.find(query.toString(), params.toArray());
+	}
 }

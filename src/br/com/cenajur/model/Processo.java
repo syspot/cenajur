@@ -1,5 +1,6 @@
 package br.com.cenajur.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 
+import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.Constantes;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
@@ -34,7 +36,7 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	private Date dataAjuizamento;
 	
 	@Column(name = "numero_processo")
-	private Long numeroProcesso;
+	private String numeroProcesso;
 	
 	@ManyToMany
 	@JoinTable(name = "processos_clientes", joinColumns = { 
@@ -95,11 +97,11 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		return TSUtil.tratarLong(id);
 	}
 
-	public Long getNumeroProcesso() {
-		return TSUtil.tratarLong(numeroProcesso);
+	public String getNumeroProcesso() {
+		return numeroProcesso;
 	}
 
-	public void setNumeroProcesso(Long numeroProcesso) {
+	public void setNumeroProcesso(String numeroProcesso) {
 		this.numeroProcesso = numeroProcesso;
 	}
 
@@ -266,6 +268,106 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+	@Override
+	public List<Processo> findByModel(String... fieldsOrderBy) {
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" from Processo p where 1 = 1 ");
+		
+		if(!TSUtil.isEmpty(numeroProcesso)){
+			query.append("and lower(p.numeroProcesso) like ? ");
+		}
+		
+		if(!TSUtil.isEmpty(dataAbertura)){
+			query.append("and p.dataAbertura = ? ");
+		}
+		
+		if(!TSUtil.isEmpty(dataAjuizamento)){
+			query.append("and p.dataAjuizamento = ? ");
+		}
+		
+		if(!TSUtil.isEmpty(tipoProcesso) && !TSUtil.isEmpty(tipoProcesso.getId())){
+			query.append("and p.tipoProcesso.id = ? ");
+		}
+		
+		if(!TSUtil.isEmpty(tipoParte) && !TSUtil.isEmpty(tipoParte.getId())){
+			query.append("and p.tipoParte.id = ? ");
+		}
+		
+		if(!TSUtil.isEmpty(advogado) && !TSUtil.isEmpty(advogado.getId())){
+			query.append("and p.advogado.id = ? ");
+		}
+		
+		if(!TSUtil.isEmpty(objeto) && !TSUtil.isEmpty(objeto.getId())){
+			query.append("and p.objeto.id = ? ");
+		}
+		
+		if(!TSUtil.isEmpty(comarca) && !TSUtil.isEmpty(comarca.getId())){
+			query.append("and p.comarca.id = ? ");
+		}
+		
+		if(!TSUtil.isEmpty(vara) && !TSUtil.isEmpty(vara.getId())){
+			query.append("and p.vara.id = ? ");
+		}
+		
+		if(!TSUtil.isEmpty(situacaoProcesso) && !TSUtil.isEmpty(situacaoProcesso.getId())){
+			query.append("and p.situacaoProcesso.id = ? ");
+		}
+		
+		if(!TSUtil.isEmpty(dataArquivamento)){
+			query.append("and p.dataArquivamento = ? ");
+		}
+		
+		List<Object> params = new ArrayList<Object>();
+		
+		if(!TSUtil.isEmpty(numeroProcesso)){
+			params.add(CenajurUtil.tratarString(numeroProcesso));
+		}
+		
+		if(!TSUtil.isEmpty(dataAbertura)){
+			params.add(dataAbertura);
+		}
+		
+		if(!TSUtil.isEmpty(dataAjuizamento)){
+			params.add(dataAjuizamento);
+		}
+		
+		if(!TSUtil.isEmpty(tipoProcesso) && !TSUtil.isEmpty(tipoProcesso.getId())){
+			params.add(tipoProcesso.getId());
+		}
+		
+		if(!TSUtil.isEmpty(tipoParte) && !TSUtil.isEmpty(tipoParte.getId())){
+			params.add(tipoParte.getId());
+		}
+		
+		if(!TSUtil.isEmpty(advogado) && !TSUtil.isEmpty(advogado.getId())){
+			params.add(advogado.getId());
+		}
+		
+		if(!TSUtil.isEmpty(objeto) && !TSUtil.isEmpty(objeto.getId())){
+			params.add(objeto.getId());
+		}
+		
+		if(!TSUtil.isEmpty(comarca) && !TSUtil.isEmpty(comarca.getId())){
+			params.add(comarca.getId());
+		}
+		
+		if(!TSUtil.isEmpty(vara) && !TSUtil.isEmpty(vara.getId())){
+			params.add(vara.getId());
+		}
+		
+		if(!TSUtil.isEmpty(situacaoProcesso) && !TSUtil.isEmpty(situacaoProcesso.getId())){
+			params.add(situacaoProcesso.getId());
+		}
+		
+		if(!TSUtil.isEmpty(dataArquivamento)){
+			params.add(dataArquivamento);
+		}
+		
+		return super.find(query.toString(), params.toArray());
 	}
 	
 	public boolean isProcessoArquivado(){

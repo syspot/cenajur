@@ -76,7 +76,6 @@ public class Cidade extends TSActiveRecordAb<Cidade>{
 		return true;
 	}
 	
-
 	@Override
 	public List<Cidade> findByModel(String... fieldsOrderBy) {
 		
@@ -101,6 +100,19 @@ public class Cidade extends TSActiveRecordAb<Cidade>{
 		if(!TSUtil.isEmpty(estado) && !TSUtil.isEmpty(estado.getId())){
 			params.add(estado.getId());
 		}
+		
+		return super.find(query.toString(), params.toArray());
+	}
+	
+	public List<Cidade> findCombo() {
+
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" from Cidade c where c.estado.id = ? ");
+		
+		List<Object> params = new ArrayList<Object>();
+		
+		params.add(estado.getId());
 		
 		return super.find(query.toString(), params.toArray());
 	}

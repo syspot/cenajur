@@ -29,7 +29,7 @@
 		  	</p:selectOneMenu>
 		  	
 		  	<p:outputLabel for="descricao" value="Descrição" />
-			<p:inputTextarea id="descricao" value="#{mbeanModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" maxlength="500" styleClass="coluna90"/>
+			<p:inputTextarea id="descricao" value="#{mbeanModel.descricao}" required="true" autoResize="false" rows="10" requiredMessage="Descrição: Campo obrigatório" maxlength="500" styleClass="coluna90"/>
 			
 	  	</h:panelGrid>
 	  	
@@ -37,22 +37,25 @@
   	
   	<ui:define name="pesquisaCampos">
   	
-  		<h:panelGrid columns="1" columnClasses="coluna100" style="width:40%">
+  		<h:panelGrid columns="3" columnClasses="coluna33, coluna33, coluna33" style="width:47%">
   		
 			<p:outputLabel for="processoPesquisa" value="Processo" />
-			<p:inputText id="processoPesquisa" value="#{mbeanPesquisaModel.processo.numeroProcesso}" />
-	  		
 		  	<p:outputLabel for="dataAndamentoPesquisa" value="Data do Andamento" />
-	  		<p:calendar id="dataAndamentoPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataAndamento}"/>
-  		
 	  		<p:outputLabel for="tipoAndamentoProcessoPesquisa" value="Tipo do Andamento" />
-	  		<p:selectOneMenu id="tipoAndamentoProcessoPesquisa" value="#{mbeanPesquisaModel.tipoAndamentoProcesso.id}" style="width:92%">
+	  		
+			<p:inputText id="processoPesquisa" value="#{mbeanPesquisaModel.processo.numeroProcesso}" styleClass="coluna90" />
+	  		<p:calendar id="dataAndamentoPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataAndamento}" style="width:95%"/>
+	  		<p:selectOneMenu id="tipoAndamentoProcessoPesquisa" value="#{mbeanPesquisaModel.tipoAndamentoProcesso.id}" style="width:95%">
 		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 		  		<f:selectItems value="#{mbean.tiposAndamentosProcessos}" />
 		  	</p:selectOneMenu>
-		  	
-		  	<p:outputLabel for="descricaoPesquisa" value="Descrição" />
-			<p:inputTextarea id="descricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" maxlength="500" styleClass="coluna90"/>
+  		
+  		</h:panelGrid>
+  		
+  		<h:panelGrid columns="1" columnClasses="coluna100" style="width: 50%">
+  			
+  			<p:outputLabel for="descricaoPesquisa" value="Descrição" />
+			<p:inputTextarea id="descricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" autoResize="false" rows="10" maxlength="500" styleClass="coluna90"/>
   		
   		</h:panelGrid>
   		
@@ -68,8 +71,10 @@
   			<h:outputText value="#{linha.tipoAndamentoProcesso.descricao}" />
   		</p:column>
   	
-  		<p:column headerText="Data">
-  			<h:outputText value="#{linha.dataAndamento}" />
+  		<p:column headerText="Data" style="text-align: center">
+  			<h:outputText value="#{linha.dataAndamento}">
+  				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+  			</h:outputText>
   		</p:column>
   		
   	</ui:define>

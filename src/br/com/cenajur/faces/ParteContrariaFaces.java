@@ -1,5 +1,6 @@
 package br.com.cenajur.faces;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -39,6 +40,7 @@ public class ParteContrariaFaces extends CrudFaces<ParteContraria> {
 		setCrudPesquisaModel(new ParteContraria());
 		getCrudPesquisaModel().setTipoDocumento(new TipoDocumento());
 		this.setFieldOrdem("descricao");
+		setGrid(new ArrayList<ParteContraria>());
 		return "sucesso";
 	}
 

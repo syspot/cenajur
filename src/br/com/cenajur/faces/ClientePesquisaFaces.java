@@ -39,7 +39,7 @@ public class ClientePesquisaFaces extends PesquisaFaces<Cliente> {
 	}
 	
 	public String atualizarComboCidades(){
-		this.cidades = super.initCombo(getModel().getCidade().findByModel("descricao"), "id", "descricao");
+		this.cidades = super.initCombo(getModel().getCidade().findCombo(), "id", "descricao");
 		return "sucesso";
 	}
 

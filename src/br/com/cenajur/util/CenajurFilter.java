@@ -10,6 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import br.com.topsys.util.TSUtil;
 
@@ -28,23 +29,40 @@ public class CenajurFilter implements Filter {
 	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	public void doFilter(ServletRequest arg0, ServletResponse arg1, FilterChain chain) throws IOException, ServletException {
 
-	    HttpServletRequest r = (HttpServletRequest) request;
+		HttpServletRequest request = (HttpServletRequest)arg0;
 
-	    String uri = r.getRequestURI();
-	   
-	    if (uri != null) {
-	      uri = uri.substring(uri.lastIndexOf("/"), uri.length());
+	    HttpServletResponse response = (HttpServletResponse)arg1;
+
+	    String pagina = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
+
+	    String pasta = request.getRequestURI().substring(0, request.getRequestURI().lastIndexOf("/"));
+
+	    pasta = pasta.substring(pasta.lastIndexOf("/") + 1, pasta.length());
+
+	    int indiceFimUri = pagina.lastIndexOf("?") == -1 ? pagina.length() : pagina.lastIndexOf("?");
+
+	    pagina = pagina.substring(pagina.lastIndexOf("/") + 1, indiceFimUri);
+
+	    if((pasta.equals("pages")) && (!pagina.contains("login.xhtml"))) {
+	      
+	    	if (TSUtil.isEmpty(request.getSession().getAttribute("colaboradorConectado"))) {
+	    		response.sendRedirect(request.getContextPath() + "/pages/login.xhtml");
+	    	}
+	    	
+	    } else if ((pagina.contains("login.xhtml")) && (!TSUtil.isEmpty(request.getSession().getAttribute("colaboradorConectado")))) {
+	    	
+	    	request.getSession().removeAttribute("autenticacaoFaces");
+
+	    	request.getSession().removeAttribute("colaboradorConectado");
+	    	
 	    }
-	    if ((!TSUtil.isEmpty(r.getSession().getAttribute(Constantes.COLABORADOR_CONECTADO)) && (uri.equals("/dashboard.xhtml"))) || uri.equals("/login.xhtml")) {
-	      chain.doFilter(request, response);
-	    } else {
-	      r.getRequestDispatcher("/pages/login.xhtml").forward(request, response);
+
+	    if (!response.isCommitted()) {
+	    	chain.doFilter(request, response);
 	    }
-
-	  }
-
-
+	    
+	}
 	
 }

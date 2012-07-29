@@ -107,8 +107,6 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	@Column(name = "flag_status_pm")
 	private Boolean flagStatusPM;
 	
-	private String observacao;
-	
 	@Column(name = "data_cadastro")
 	private Date dataCadastro;
 	
@@ -375,14 +373,6 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		this.flagAtivo = flagAtivo;
 	}
 
-	public String getObservacao() {
-		return observacao;
-	}
-
-	public void setObservacao(String observacao) {
-		this.observacao = observacao;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -467,6 +457,10 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 			query.append("and c.cidade.id = ? ");
 		}
 		
+		if(!TSUtil.isEmpty(flagAtivo)){
+			query.append("and c.flagAtivo = ? ");
+		}
+		
 		List<Object> params = new ArrayList<Object>();
 		
 		if(!TSUtil.isEmpty(matricula)){
@@ -483,6 +477,10 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		
 		if(!TSUtil.isEmpty(cidade) && !TSUtil.isEmpty(cidade.getId())){
 			params.add(cidade.getId());
+		}
+
+		if(!TSUtil.isEmpty(flagAtivo)){
+			params.add(flagAtivo);
 		}
 		
 		return super.find(query.toString(), params.toArray());
