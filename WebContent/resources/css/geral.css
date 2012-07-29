@@ -748,6 +748,11 @@ img.right {
     width: 25%;
 }
 
+.coluna25_2 {
+    width: 25%;
+    vertical-align: top;
+}
+
 .coluna26 {
     width: 26%;
 }
@@ -905,6 +910,11 @@ img.right {
 
 .coluna75 {
     width: 75%;
+}
+
+.coluna75_2 {
+    width: 75%;
+    vertical-align: top;
 }
 
 .coluna78 {

@@ -51,7 +51,8 @@
 		  	<p:commandButton id="btnAlterarAudiencia" value="Cadastrar" icon="salvar" action="#{mbean.cadastrarAudiencia}" update="@form" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" rendered="#{mbean.flagAlterar}" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}"/>
 			 
 			<p:remoteCommand action="#{mbean.removerAudiencia}" name="removerAudiencia" update="opGridAudiencia" process="@this"/>
-			  	
+			<p:remoteCommand name="abrirDialogViewAudiencia" oncomplete="dlgVisualizarAudiencia.show();" update="opAudienciaView" process="@this"/>
+			 
 		  	<p:outputPanel id="opGridAudiencia">
 		  	
 			  	<p:dataTable id="gridAudiencia" emptyMessage="Nenhum audiência encontrada" style="width: 70%" paginator="true"
@@ -71,6 +72,13 @@
 		  				</h:outputText>
 			  		</p:column>
 			  		
+			  		<p:column headerText="Visualizar" styleClass="coluna5">
+			  			<p:commandLink type="button" oncomplete="abrirDialogViewAudiencia();" process="@this" global="false">
+							<h:graphicImage value="../resources/images/lupa.png" width="16" style="border: 0px" />
+							<f:setPropertyActionListener target="#{mbean.audienciaSelecionada}" value="#{linha}" />
+						</p:commandLink>
+			  		</p:column>
+			  		
 					<p:column headerText="Excluir" styleClass="coluna5">
 						<p:commandLink type="button" onclick="cdExcluirAudiencia.show();" process="@this">
 							<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
@@ -88,6 +96,46 @@
 			    <p:commandButton value="Não" onclick="cdExcluirAudiencia.hide()" />
 			    
 		  </p:confirmDialog>
+		  
+		  <p:dialog appendToBody="true" modal="true" header="Visualização da Audiência" width="500" widgetVar="dlgVisualizarAudiencia">
+	    		
+	    		<p:outputPanel id="opAudienciaView">
+	    		
+				    <h:panelGrid columns="1" columnClasses="coluna95">
+	  		
+						<p:outputLabel for="numeroProcessoAudienciaView" value="Processo" />
+						<p:inputText id="numeroProcessoAudienciaView" value="#{mbean.audienciaSelecionada.processo.numeroProcesso}" readonly="true" />
+				  		
+					  	<p:outputLabel for="dataAudienciaAudienciaView" value="Data da Audiência" />
+				  		<p:inputText id="dataAudienciaAudienciaView" value="#{mbean.audienciaSelecionada.dataAudiencia}" readonly="true">
+				  			<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+				  		</p:inputText>
+			  		
+			  		</h:panelGrid>
+			  		
+			  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:95%">
+			  		
+				  		<p:outputLabel for="situacaoAudienciaView" value="Situação" />
+					  	<p:outputLabel for="varaAudienciaView" value="Vara" />
+					  	
+				  		<p:inputText id="situacaoAudienciaView" value="#{mbean.audienciaSelecionada.situacaoAudiencia.descricao}" readonly="true" style="width:95%" />
+				  		<p:inputText id="varaAudienciaView" value="#{mbean.audienciaSelecionada.vara.descricao}" readonly="true" style="width:94%" />
+					  	
+				  	</h:panelGrid>
+				  	
+				  	<h:panelGrid columns="1" columnClasses="coluna100" style="width:95%">
+				  	
+					  	<p:outputLabel for="advogadoAudienciaView" value="Advogado" />
+				  		<p:inputText id="advogadoAudienciaView" value="#{mbean.audienciaSelecionada.advogado.nome}" readonly="true" style="width:97%" />
+					  	
+					  	<p:outputLabel for="descricaoAudienciaView" value="Descrição" />
+						<p:inputTextarea id="descricaoAudienciaView" value="#{mbean.audienciaSelecionada.descricao}" readonly="true" autoResize="false" rows="10" maxlength="500" styleClass="coluna97"/>
+						
+				  	</h:panelGrid>
+				  	
+			  	</p:outputPanel>
+			    
+		  	</p:dialog>
   			
   		</h:form>
   		

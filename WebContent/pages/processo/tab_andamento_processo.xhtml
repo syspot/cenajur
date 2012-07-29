@@ -31,6 +31,7 @@
 		  	<p:commandButton id="btnAlterarAndamento" value="Cadastrar" icon="salvar" action="#{mbean.cadastrarAndamentoProcesso}" update="@form" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" rendered="#{mbean.flagAlterar}" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}"/>
 			 
 			<p:remoteCommand action="#{mbean.removerAndamentoProcesso}" name="removerAndamentoProcesso" update="opGridAndamentoProcesso" process="@this"/>
+			<p:remoteCommand name="abrirDialogViewAndamento" oncomplete="dlgVisualizarAndamento.show();" update="pgDialogViewAndamento" process="@this"/>
 			  	
 		  	<p:outputPanel id="opGridAndamentoProcesso">
 		  	
@@ -45,14 +46,21 @@
 			  			<h:outputText value="#{linha.tipoAndamentoProcesso.descricao}" />
 			  		</p:column>
 			  	
-			  		<p:column headerText="Data">
+			  		<p:column headerText="Data" style="text-align: center">
 			  			<h:outputText value="#{linha.dataAndamento}" >
 			  				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
 			  			</h:outputText>
 			  		</p:column>
 			  		
+			  		<p:column headerText="Visualizar" styleClass="coluna5">
+			  			<p:commandLink type="button" oncomplete="abrirDialogViewAndamento();" process="@this" global="false">
+							<h:graphicImage value="../resources/images/lupa.png" width="16" style="border: 0px" />
+							<f:setPropertyActionListener target="#{mbean.andamentoProcessoSelecionado}" value="#{linha}" />
+						</p:commandLink>
+			  		</p:column>
+			  		
 					<p:column headerText="Excluir" styleClass="coluna5">
-						<p:commandLink type="button" onclick="cdExcluirAndamento.show();" process="@this">
+						<p:commandLink type="button" onclick="cdExcluirAndamento.show();" process="@this" global="false">
 							<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
 							<f:setPropertyActionListener target="#{mbean.andamentoProcessoSelecionado}" value="#{linha}" />
 						</p:commandLink>
@@ -67,7 +75,29 @@
 			    <p:commandButton value="Sim" onclick="removerAndamentoProcesso(); cdExcluirAndamento.hide();" update="opGridAndamentoProcesso" process="opGridAndamentoProcesso" />
 			    <p:commandButton value="Não" onclick="cdExcluirAndamento.hide()" />
 			    
-		  </p:confirmDialog>
+		  	</p:confirmDialog>
+  			
+  			<p:dialog appendToBody="true" modal="true" header="Visualização do Andamento" width="500" widgetVar="dlgVisualizarAndamento">
+	    
+			    <h:panelGrid id="pgDialogViewAndamento" columns="1" columnClasses="coluna100" style="width:95%">
+				
+					<p:outputLabel for="numeroProcessoAndamentoView" value="Processo" />
+					<p:inputText id="numeroProcessoAndamentoView" value="#{mbean.andamentoProcessoSelecionado.processo.numeroProcesso}" readonly="true" />
+			  		
+				  	<p:outputLabel for="dataAndamentoAndamentoView" value="Data do Andamento" />
+			  		<p:inputText id="dataAndamentoAndamentoView" value="#{mbean.andamentoProcessoSelecionado.dataAndamento}" readonly="true">
+			  			<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+			  		</p:inputText>
+			 		
+			  		<p:outputLabel for="tipoAndamentoProcessoAndamentoView" value="Tipo do Andamento" />
+			  		<p:inputText id="tipoAndamentoProcessoAndamentoView" value="#{mbean.andamentoProcessoSelecionado.tipoAndamentoProcesso.descricao}" readonly="true" style="width:97%" />
+				  	
+				  	<p:outputLabel for="descricaoAndamentoView" value="Descrição" />
+					<p:inputTextarea id="descricaoAndamentoView" value="#{mbean.andamentoProcessoSelecionado.descricao}" autoResize="false" rows="10" maxlength="500" readonly="true" styleClass="coluna97"/>
+					
+			  	</h:panelGrid>
+			    
+		  	</p:dialog>
   			
   		</h:form>
   		

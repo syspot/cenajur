@@ -1,5 +1,6 @@
 package br.com.cenajur.faces;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -57,6 +58,7 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 		getCrudPesquisaModel().setProcesso(new Processo());
 		getCrudPesquisaModel().setSituacaoAudiencia(new SituacaoAudiencia());
 		getCrudPesquisaModel().setVara(new Vara());
+		setGrid(new ArrayList<Audiencia>());
 		return "sucesso";
 	}
 	

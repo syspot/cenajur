@@ -22,10 +22,13 @@ public class Mensagem extends TSActiveRecordAb<Mensagem>{
 	private String remetente;
 	
 	private String mensagem;
+	
+	private int cont;
 
-	public Mensagem(String campo1, String campo2) {
-		this.destinatario = campo1;
+	public Mensagem(String campo1, String campo2, int cont) {
+		this.remetente = campo1;
 		this.mensagem = campo2;
+		this.cont = cont;
 	}
 	
 	public Long getId() {
@@ -60,4 +63,19 @@ public class Mensagem extends TSActiveRecordAb<Mensagem>{
 		this.remetente = remetente;
 	}
 
+	public int getCont() {
+		return cont;
+	}
+
+	public void setCont(int cont) {
+		this.cont = cont;
+	}
+
+	public String getCss(){
+		if(cont < 4){
+			return "font-text: italic;";
+		} else{
+			return "font-text: bold;";
+		}
+	}
 }

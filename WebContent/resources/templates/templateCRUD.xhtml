@@ -75,7 +75,7 @@
 							</p:column>
 							
 							<p:column headerText="Excluir" styleClass="coluna5">
-								<p:commandLink type="button" icon="delete16" id="clExcluir" onclick="cdExcluir.show()" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagExcluir}">
+								<p:commandLink type="button" icon="delete16" id="clExcluir" onclick="cdExcluir.show()" global="false" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagExcluir}">
 									<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
 									<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
 								</p:commandLink>

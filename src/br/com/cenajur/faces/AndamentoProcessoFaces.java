@@ -1,5 +1,6 @@
 package br.com.cenajur.faces;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -45,6 +46,7 @@ public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 		setCrudPesquisaModel(new AndamentoProcesso());
 		getCrudPesquisaModel().setProcesso(new Processo());
 		getCrudPesquisaModel().setTipoAndamentoProcesso(new TipoAndamentoProcesso());
+		setGrid(new ArrayList<AndamentoProcesso>());
 		return "sucesso";
 	}
 	

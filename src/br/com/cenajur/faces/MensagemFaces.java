@@ -37,7 +37,7 @@ public class MensagemFaces extends CrudFaces<Mensagem> {
 		
 		for (int i = 0; i < 10; i++) {
 			
-			mensagem = new Mensagem("destinatario " + i, "mensagem " + i);
+			mensagem = new Mensagem("Colaborador " + i, "Por favor, entre a documentação ao Advogado Drº. Boris... ", i);
 			this.mensagens.add(mensagem);
 			
 		}
