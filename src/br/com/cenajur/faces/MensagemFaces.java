@@ -1,5 +1,6 @@
 package br.com.cenajur.faces;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -9,106 +10,53 @@ import javax.faces.model.SelectItem;
 
 import br.com.cenajur.model.Audiencia;
 import br.com.cenajur.model.Colaborador;
+import br.com.cenajur.model.Mensagem;
 import br.com.cenajur.model.Processo;
 import br.com.cenajur.model.SituacaoAudiencia;
-import br.com.cenajur.model.SituacaoProcesso;
 import br.com.cenajur.model.Vara;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.topsys.util.TSUtil;
 
 @SessionScoped
 @ManagedBean(name = "mensagemFaces")
-public class MensagemFaces extends CrudFaces<Audiencia> {
+public class MensagemFaces extends CrudFaces<Mensagem> {
 
-	private List<SelectItem> varas;
-	private List<SelectItem> advogados;
-	private List<SelectItem> situacoesAudiencias;
+	private List<Mensagem> mensagens;
 	
-	private Processo processoSelecionado;
+	private Mensagem mensagemSelecionada;
 	
 	@PostConstruct
 	protected void init() {
 		this.clearFields();
-		this.initCombo();
-	}
-	
-	private void initCombo(){
-		this.varas = this.initCombo(new Vara().findAll("descricao"), "id", "descricao");
-		this.advogados = this.initCombo(new Colaborador().findAll("nome"), "id", "nome");
-		this.situacoesAudiencias = this.initCombo(new SituacaoProcesso().findAll("descricao"), "id", "descricao");
 	}
 	
 	@Override
-	public String limpar() {
-		setCrudModel(new Audiencia());
-		getCrudModel().setAdvogado(new Colaborador());
-		getCrudModel().setProcesso(new Processo());
-		getCrudModel().setSituacaoAudiencia(new SituacaoAudiencia());
-		getCrudModel().setVara(new Vara());
-		setFlagAlterar(Boolean.FALSE);
-		return "sucesso";
-	}
-	
-	@Override
-	public String limparPesquisa(){
-		this.setFieldOrdem("descricao");
-		setCrudPesquisaModel(new Audiencia());
-		getCrudPesquisaModel().setAdvogado(new Colaborador());
-		getCrudPesquisaModel().setProcesso(new Processo());
-		getCrudPesquisaModel().setSituacaoAudiencia(new SituacaoAudiencia());
-		getCrudPesquisaModel().setVara(new Vara());
-		return "sucesso";
-	}
-	
-	@Override
-	protected boolean validaCampos() {
+	protected void clearFields() {
+		this.mensagens = new ArrayList<Mensagem>();
+		Mensagem mensagem = null;
 		
-		boolean erro = false;
-		
-		if(TSUtil.isEmpty(getCrudModel().getProcesso().getId())){
-			erro = true;
-			CenajurUtil.addErrorMessage("Processo: Campo obrigatório");
+		for (int i = 0; i < 10; i++) {
+			
+			mensagem = new Mensagem("destinatario " + i, "mensagem " + i);
+			this.mensagens.add(mensagem);
+			
 		}
-		
-		return erro;
 	}
 	
-	public String addProcesso(){
-		getCrudModel().setProcesso(this.processoSelecionado);
-		CenajurUtil.addInfoMessage("Processo adicionado com sucesso");
-		return "sucesso";
+	public List<Mensagem> getMensagens() {
+		return mensagens;
 	}
 
-	public List<SelectItem> getVaras() {
-		return varas;
+	public void setMensagens(List<Mensagem> mensagens) {
+		this.mensagens = mensagens;
 	}
 
-	public void setVaras(List<SelectItem> varas) {
-		this.varas = varas;
+	public Mensagem getMensagemSelecionada() {
+		return mensagemSelecionada;
 	}
 
-	public List<SelectItem> getAdvogados() {
-		return advogados;
-	}
-
-	public void setAdvogados(List<SelectItem> advogados) {
-		this.advogados = advogados;
-	}
-
-	public List<SelectItem> getSituacoesAudiencias() {
-		return situacoesAudiencias;
-	}
-
-	public void setSituacoesAudiencias(List<SelectItem> situacoesAudiencias) {
-		this.situacoesAudiencias = situacoesAudiencias;
-	}
-
-	public Processo getProcessoSelecionado() {
-		return processoSelecionado;
-	}
-
-	public void setProcessoSelecionado(Processo processoSelecionado) {
-		this.processoSelecionado = processoSelecionado;
+	public void setMensagemSelecionada(Mensagem mensagemSelecionada) {
+		this.mensagemSelecionada = mensagemSelecionada;
 	}
 	
 }
