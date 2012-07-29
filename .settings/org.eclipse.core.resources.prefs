@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 eclipse.preferences.version=1
 encoding//WebContent/pages/index.xhtml=ISO-8859-1
 encoding//WebContent/pages/menu.xhtml=ISO-8859-1
@@ -10,3 +11,17 @@ encoding//src/br/com/cenajur/faces/CidadeFaces.java=ISO-8859-1
 encoding//src/br/com/cenajur/faces/ClienteFaces.java=ISO-8859-1
 encoding//src/br/com/cenajur/faces/MensagemFaces.java=ISO-8859-1
 encoding/<project>=UTF-8
+=======
+#Sat Jul 28 18:05:11 BRT 2012
+eclipse.preferences.version=1
+encoding//WebContent/pages/index.xhtml=ISO-8859-1
+encoding//WebContent/pages/menu.xhtml=ISO-8859-1
+encoding//WebContent/resources/templates/templateCRUD.xhtml=ISO-8859-1
+encoding//src/br/com/cenajur/faces/AndamentoProcessoFaces.java=ISO-8859-1
+encoding//src/br/com/cenajur/faces/AudienciaFaces.java=ISO-8859-1
+encoding//src/br/com/cenajur/faces/AutenticacaoFaces.java=ISO-8859-1
+encoding//src/br/com/cenajur/faces/BancoFaces.java=ISO-8859-1
+encoding//src/br/com/cenajur/faces/CidadeFaces.java=ISO-8859-1
+encoding//src/br/com/cenajur/faces/ClienteFaces.java=ISO-8859-1
+encoding/<project>=UTF-8
+>>>>>>> eda5052044c7a35887ab856cb06fa4067e40c2c6
