@@ -14,20 +14,22 @@
 
     <p:layout fullPage="true" >
 
-      <p:layoutUnit position="north" size="100">
-		
+      <p:layoutUnit position="north" size="110">
+		<img src="#{request.contextPath}/resources/images/logo.png" width="1280" height="100"/>
       </p:layoutUnit>
 
       <p:layoutUnit position="center" style="margin-top: 8%" >
         <h:form id="formLogin" prependId="false">
           <p:growl id="msgLogin" globalOnly="false" showDetail="true" showSummary="false" />
           <div align="center">
+          	<br/>
+          	<br/>
             <p:panel id="panelLogin" header="Controle de Acesso" style="width: 280px; text-align: left">
               <h:panelGrid styleClass="coluna100" columns="2" columnClasses="coluna30,coluna70">
                 <p:outputLabel for="usuario" value="Usuário:"/>
-                <p:inputText id="usuario" required="true" requiredMessage="Usuário: obrigatório" value="#{autenticacaoFaces.colaborador.login}" style="width: 97%;" />
+                <p:inputText id="usuario" required="true" requiredMessage="Usuário: Obrigatório" value="#{autenticacaoFaces.colaborador.login}" style="width: 97%;" />
                 <p:outputLabel for="senha" value="Senha:"/>
-                <p:password id="senha" required="true" requiredMessage="Senha: obrigatório" value="#{autenticacaoFaces.colaborador.senha}" maxlength="100" style="width: 97%;" />
+                <p:password id="senha" required="true" requiredMessage="Senha: Obrigatório" value="#{autenticacaoFaces.colaborador.senha}" maxlength="100" style="width: 97%;" />
               </h:panelGrid>
               <div align="right">
                 <p:commandButton ajax="false" title="Acessar" value="Acessar" id="btnAcessar" style="text-align: right; height: 40px; width: 110px;" icon="cadeado" action="#{autenticacaoFaces.entrar}" tabindex="4" />
