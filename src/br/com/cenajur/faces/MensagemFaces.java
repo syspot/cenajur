@@ -6,16 +6,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.model.SelectItem;
 
-import br.com.cenajur.model.Audiencia;
-import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.Mensagem;
-import br.com.cenajur.model.Processo;
-import br.com.cenajur.model.SituacaoAudiencia;
-import br.com.cenajur.model.Vara;
-import br.com.cenajur.util.CenajurUtil;
-import br.com.topsys.util.TSUtil;
 
 @SessionScoped
 @ManagedBean(name = "mensagemFaces")
@@ -37,7 +29,7 @@ public class MensagemFaces extends CrudFaces<Mensagem> {
 		
 		for (int i = 0; i < 10; i++) {
 			
-			mensagem = new Mensagem("Colaborador " + i, "Por favor, entre a documentação ao Advogado Drº. Boris... ", i);
+			mensagem = new Mensagem("Colaborador " + i, "Por favor, entregue a documentação ao Advogado Drº. Boris... ", i);
 			this.mensagens.add(mensagem);
 			
 		}

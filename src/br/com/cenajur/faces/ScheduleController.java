@@ -3,6 +3,8 @@ package br.com.cenajur.faces;
 import java.util.Date;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
@@ -16,6 +18,8 @@ import org.primefaces.model.LazyScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
+@SessionScoped
+@ManagedBean(name = "scheduleController")
 public class ScheduleController {
 
 	private ScheduleModel eventModel;  
@@ -60,45 +64,51 @@ public class ScheduleController {
           
         lazyEventModel = new LazyScheduleModel() {  
               
-            public void fetchEvents(Date start, Date end) {  
+            public String fetchEvents(Date start, Date end) {  
                 clear();  
                   
                 Date random = new Date();  
                 addEvent(new DefaultScheduleEvent("Reunião 1", random, random));  
                   
                 random = new Date();  
-                addEvent(new DefaultScheduleEvent("Café da manhã 1", random, random));  
+                addEvent(new DefaultScheduleEvent("Café da manhã 1", random, random));
+                return "sucesso";
             }     
         };  
     }  
       
-    public void addEvent(ActionEvent actionEvent) {  
+    public String addEvent(ActionEvent actionEvent) {  
         if(event.getId() == null)  
             eventModel.addEvent(event);  
         else  
             eventModel.updateEvent(event);  
           
         event = new DefaultScheduleEvent();  
+        return "sucesso";
     }  
       
-    public void onEventSelect(ScheduleEntrySelectEvent selectEvent) {  
+    public String onEventSelect(ScheduleEntrySelectEvent selectEvent) {  
         event = selectEvent.getScheduleEvent();  
+        return "sucesso";
     }  
       
-    public void onDateSelect(DateSelectEvent selectEvent) {  
-        event = new DefaultScheduleEvent(Math.random() + "", selectEvent.getDate(), selectEvent.getDate());  
+    public String onDateSelect(DateSelectEvent selectEvent) {  
+        event = new DefaultScheduleEvent("Novo Evento", selectEvent.getDate(), selectEvent.getDate());  
+        return "sucesso";
     }  
       
-    public void onEventMove(ScheduleEntryMoveEvent event) {  
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event moved", "Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());  
+    public String onEventMove(ScheduleEntryMoveEvent event) {  
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Evento movido ", "Dia:" + event.getDayDelta() + ", Minuto:" + event.getMinuteDelta());  
           
         addMessage(message);  
+        return "sucesso";
     }  
       
-    public void onEventResize(ScheduleEntryResizeEvent event) {  
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event resized", "Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());  
+    public String onEventResize(ScheduleEntryResizeEvent event) {  
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Evento modificado", "Dia:" + event.getDayDelta() + ", Minuto:" + event.getMinuteDelta());  
           
         addMessage(message);  
+        return "sucesso";
     }  
       
     private void addMessage(FacesMessage message) {  

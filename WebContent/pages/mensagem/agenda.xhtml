@@ -23,12 +23,12 @@
 	            <h:outputLabel for="title" value="Título:" />  
 	            <p:inputText id="title" value="#{scheduleController.event.title}" required="true"/>  
 	  
-	            <h:outputLabel for="from" value="Para:" />  
+	            <h:outputLabel for="from" value="De:" />  
 	            <p:inputMask id="from" value="#{scheduleController.event.startDate}" mask="99/99/9999">  
 	                <f:convertDateTime pattern="dd/MM/yyyy" />  
 	            </p:inputMask>  
 	  
-	            <h:outputLabel for="to" value="De:" />  
+	            <h:outputLabel for="to" value="Para:" />  
 	            <p:inputMask id="to" value="#{scheduleController.event.endDate}" mask="99/99/9999">  
 	                <f:convertDateTime pattern="dd/MM/yyyy" />  
 	            </p:inputMask>  
