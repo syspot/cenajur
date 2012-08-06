@@ -104,11 +104,11 @@ public class Lotacao extends TSActiveRecordAb<Lotacao>{
 		query.append(" from Lotacao l where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(descricao)){
-			query.append("and lower(l.descricao) like ? ");
+			query.append("and ").append(CenajurUtil.semAcento("l.descricao")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
 		}
 		
 		if(!TSUtil.isEmpty(bairro)){
-			query.append("and lower(l.bairro) like ? ");
+			query.append("and ").append(CenajurUtil.semAcento("l.bairro")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
 		}
 		
 		if(!TSUtil.isEmpty(cidade) && !TSUtil.isEmpty(cidade.getEstado()) && !TSUtil.isEmpty(cidade.getEstado().getId())){

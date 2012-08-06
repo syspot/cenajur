@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:param name="mbean" value="${processoFaces}" />
+
+	<h:form>
+		
+		<p:dialog id="dialogArquivarProcessoParteContraria" header="Alterar Status" modal="true" widgetVar="dlgArquivarProcessoParteContraria" width="330">
+	
+			<p:outputPanel autoUpdate="true">
+			
+				<h:panelGrid id="pgDataArquivamentoProcessoParteContraria" columns="2" columnClasses="coluna50, coluna50">
+					
+					<p:outputLabel for="situacaoProcessoParteContraria" value="Situação" />
+					<p:outputLabel for="dataArquivamentoProcessoParteContraria" value="Data Arquivamento" />
+					
+					<p:selectOneMenu id="situacaoProcessoParteContraria" value="#{mbean.processoParteContrariaSelecionada.situacaoProcessoParteContraria.id}" style="width:95%">
+						<f:selectItems value="#{mbean.situacoesProcessosPartesContrarias}" />
+						<p:ajax update="pgDataArquivamentoProcessoParteContraria" listener="#{mbean.limparDataArquivamentoProcessoParteContraria}" process="@this" global="false" />
+					</p:selectOneMenu>
+					<p:calendar id="dataArquivamentoProcessoParteContraria" required="true" requiredMessage="Data de Arquivamento: Campo obrigatório" pattern="dd/MM/yyyy" value="#{mbean.processoParteContrariaSelecionada.dataArquivamento}" disabled="#{!mbean.processoParteContrariaSelecionada.processoParteContrariaArquivado}" styleClass="coluna95" />
+					
+				</h:panelGrid>
+				
+			</p:outputPanel>
+			
+			<h:panelGrid columns="1" style="width:100%; text-align: left">
+				<p:commandButton value="Alterar" action="#{mbean.atualizarProcessoParteContraria}" oncomplete="handleRequest('dialogArquivarProcessoParteContraria', dlgArquivarProcessoParteContraria, args)" />
+			</h:panelGrid>
+			
+		</p:dialog>
+	
+	</h:form>
+
+</ui:component>

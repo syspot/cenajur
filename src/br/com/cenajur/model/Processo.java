@@ -11,8 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -29,7 +27,7 @@ import br.com.topsys.util.TSUtil;
 public class Processo extends TSActiveRecordAb<Processo>{
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
 	@Column(name = "data_ajuizamento")
@@ -38,20 +36,18 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	@Column(name = "numero_processo")
 	private String numeroProcesso;
 	
-	@ManyToMany
-	@JoinTable(name = "processos_clientes", joinColumns = { 
-	@JoinColumn(name = "processo_id") }, inverseJoinColumns = { @JoinColumn(name = "cliente_id") })
-	private List<Cliente> clientes;
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL)
+	private List<ProcessoCliente> processosClientes;
 	
 	@ManyToOne
 	private Objeto objeto;
 	
 	private Integer lote;
 	
-	@ManyToMany
-	@JoinTable(name = "processos_partes_contrarias", joinColumns = { 
-	@JoinColumn(name = "processo_id") }, inverseJoinColumns = { @JoinColumn(name = "parte_contraria_id") })
-	private List<ParteContraria> partesContrarias;
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL)
+	private List<ProcessoParteContraria> processosPartesContrarias;
 	
 	@ManyToOne
 	@JoinColumn(name = "tipo_processo_id")
@@ -92,6 +88,13 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	private Processo processo;
 	
 	private String observacao;
+	
+	@Column(name = "data_atualizacao")
+	private Date dataAtualizacao;
+	
+	@ManyToOne
+	@JoinColumn(name = "colaborador_atualizacao_id")
+	private Colaborador colaboradorAtualizacao;
 
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -105,14 +108,14 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		this.numeroProcesso = numeroProcesso;
 	}
 
-	public List<Cliente> getClientes() {
-		return clientes;
+	public List<ProcessoCliente> getProcessosClientes() {
+		return processosClientes;
 	}
 
-	public void setClientes(List<Cliente> clientes) {
-		this.clientes = clientes;
+	public void setProcessosClientes(List<ProcessoCliente> processosClientes) {
+		this.processosClientes = processosClientes;
 	}
-	
+
 	public Objeto getObjeto() {
 		return objeto;
 	}
@@ -129,12 +132,12 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		this.lote = lote;
 	}
 
-	public List<ParteContraria> getPartesContrarias() {
-		return partesContrarias;
+	public List<ProcessoParteContraria> getProcessosPartesContrarias() {
+		return processosPartesContrarias;
 	}
 
-	public void setPartesContrarias(List<ParteContraria> partesContrarias) {
-		this.partesContrarias = partesContrarias;
+	public void setProcessosPartesContrarias(List<ProcessoParteContraria> processosPartesContrarias) {
+		this.processosPartesContrarias = processosPartesContrarias;
 	}
 
 	public TipoProcesso getTipoProcesso() {
@@ -245,6 +248,22 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		this.dataAjuizamento = dataAjuizamento;
 	}
 
+	public Date getDataAtualizacao() {
+		return dataAtualizacao;
+	}
+
+	public void setDataAtualizacao(Date dataAtualizacao) {
+		this.dataAtualizacao = dataAtualizacao;
+	}
+
+	public Colaborador getColaboradorAtualizacao() {
+		return colaboradorAtualizacao;
+	}
+
+	public void setColaboradorAtualizacao(Colaborador colaboradorAtualizacao) {
+		this.colaboradorAtualizacao = colaboradorAtualizacao;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -278,7 +297,7 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		query.append(" from Processo p where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(numeroProcesso)){
-			query.append("and lower(p.numeroProcesso) like ? ");
+			query.append("and ").append(CenajurUtil.semAcento("p.numeroProcesso")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
 		}
 		
 		if(!TSUtil.isEmpty(dataAbertura)){

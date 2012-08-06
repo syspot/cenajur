@@ -9,6 +9,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
+import org.primefaces.event.CaptureEvent;
+
+import br.com.cenajur.model.AndamentoProcesso;
+import br.com.cenajur.model.Audiencia;
 import br.com.cenajur.model.Banco;
 import br.com.cenajur.model.Cidade;
 import br.com.cenajur.model.Cliente;
@@ -36,6 +40,9 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	private List<SelectItem> graduacoes;
 	
 	private Lotacao lotacaoSelecionada;
+	
+	private AndamentoProcesso andamentoProcessoSelecionado;
+	private Audiencia audienciaSelecionada;
 	
 	@PostConstruct
 	protected void init() {
@@ -96,26 +103,9 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		return erro;
 		
 	}
-
-	@Override
-	protected void preInsert() {
-		
-		getCrudModel().setColaboradorCadastro(ColaboradorUtil.obterColaboradorConectado());
-		getCrudModel().setDataCadastro(new Date());
-		
-		if(TSUtil.isEmpty(getCrudModel().getBanco()) || TSUtil.isEmpty(getCrudModel().getBanco().getId())){
-			getCrudModel().setBanco(null);
-		}
-		
-		if(getCrudModel().getFlagAtivo()){
-			getCrudModel().setDataCancelamento(null);
-			getCrudModel().setMotivoCancelamento(null);
-		}
-		
-	}
 	
 	@Override
-	protected void preUpdate(){
+	protected void prePersist() {
 		
 		getCrudModel().setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 		getCrudModel().setDataAtualizacao(new Date());
@@ -137,6 +127,9 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		}
 		if(TSUtil.isEmpty(getCrudModel().getMotivoCancelamento())){
 			getCrudModel().setMotivoCancelamento(new MotivoCancelamento());
+		}
+		if(getCrudModel().getDataAtualizacao().before(CenajurUtil.getTrimestreAnterior())){
+			CenajurUtil.addDangerMessage("O endereço e telefone estão desatualizados");
 		}
 		this.atualizarComboCidades();
 	}
@@ -162,6 +155,18 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		getCrudModel().setLotacao(this.lotacaoSelecionada);
 		return "sucesso";
 	}
+	
+	public void oncapture(CaptureEvent captureEvent) {  
+          
+        byte[] data = captureEvent.getData();  
+        
+		String arquivo =  "E:\\imagens\\teste.jpg";
+		
+		CenajurUtil.criaArquivo(data, arquivo);
+		
+		getCrudModel().setUrlImagem("/arquivos/teste.jpg");
+		
+    }
 	
 	public List<SelectItem> getEstados() {
 		return estados;
@@ -233,6 +238,22 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 
 	public void setLotacaoSelecionada(Lotacao lotacaoSelecionada) {
 		this.lotacaoSelecionada = lotacaoSelecionada;
+	}
+
+	public AndamentoProcesso getAndamentoProcessoSelecionado() {
+		return andamentoProcessoSelecionado;
+	}
+
+	public void setAndamentoProcessoSelecionado(AndamentoProcesso andamentoProcessoSelecionado) {
+		this.andamentoProcessoSelecionado = andamentoProcessoSelecionado;
+	}
+
+	public Audiencia getAudienciaSelecionada() {
+		return audienciaSelecionada;
+	}
+
+	public void setAudienciaSelecionada(Audiencia audienciaSelecionada) {
+		this.audienciaSelecionada = audienciaSelecionada;
 	}
 	
 }

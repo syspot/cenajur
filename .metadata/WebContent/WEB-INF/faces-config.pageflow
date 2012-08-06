@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf13415387260510" configfile="/Cenajur/WebContent/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="*" id="pf13421495587570" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf13421495587581 pf13421495587582 pf13421495587583" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" id="pf13421495587570" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf13421495587581 pf13421495587582 pf13421495587583 pf13442579121510" path="*"/>
   <nodes xsi:type="pageflow:PFPage" name="pages/dashboard.xhtml" id="pf13421495587584" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf13421495587581 pf13421495587582" path="/pages/dashboard.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="pages/login.xhtml" id="pf13421495587585" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf13421495587583" path="/pages/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/login.xhtml" id="pf13421495587585" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf13421495587583 pf13442579121510" path="/pages/login.xhtml"/>
   <links id="pf13421495587581" target="pf13421495587584" source="pf13421495587570" outcome="sucesso"/>
   <links id="pf13421495587582" target="pf13421495587584" source="pf13421495587570" outcome="entrar"/>
   <links id="pf13421495587583" target="pf13421495587585" source="pf13421495587570" outcome="sair"/>
+  <links id="pf13442579121510" target="pf13421495587585" source="pf13421495587570" outcome="login"/>
 </pageflow:Pageflow>

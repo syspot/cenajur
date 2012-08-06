@@ -1,11 +1,15 @@
 package br.com.cenajur.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import br.com.cenajur.util.CenajurUtil;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
@@ -60,4 +64,23 @@ public class TipoProcesso extends TSActiveRecordAb<TipoProcesso>{
 		return true;
 	}
 	
+	@Override
+	public List<TipoProcesso> findByModel(String... fieldsOrderBy) {
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" from TipoProcesso tp where 1 = 1 ");
+		
+		if(!TSUtil.isEmpty(descricao)){
+			query.append("and ").append(CenajurUtil.semAcento("tp.descricao")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
+		}
+		
+		List<Object> params = new ArrayList<Object>();
+		
+		if(!TSUtil.isEmpty(descricao)){
+			params.add(CenajurUtil.tratarString(descricao));
+		}
+		
+		return super.find(query.toString(), params.toArray());
+	}
 }

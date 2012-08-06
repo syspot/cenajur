@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:param name="mbeanCam" value="${clienteFaces}" />
+
+	<h:form>
+		
+		<p:dialog id="dialogCam" widgetVar="dlgCam" header="Capturar Imagem" width="350" height="300" modal="true">
+	  
+	  		<h:panelGrid id="pgCam">
+				
+				<p:photoCam widgetVar="pc" listener="#{mbeanCam.oncapture}" update="pgCam"/>  
+	  			
+	  			<h:panelGrid columns="1" style="width: 100%; text-align: center">
+	        		<p:commandButton type="button" value="Capturar" onclick="pc.capture(); dlgCam.hide();"/>
+		  		</h:panelGrid>
+		  		
+	  		</h:panelGrid>
+	  		
+		</p:dialog>
+	
+	</h:form>
+
+</ui:component>

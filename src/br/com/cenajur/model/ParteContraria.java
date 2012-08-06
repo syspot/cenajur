@@ -1,6 +1,7 @@
 package br.com.cenajur.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -32,6 +33,21 @@ public class ParteContraria extends TSActiveRecordAb<ParteContraria>{
 	
 	@Column(name = "numero_documento")
 	private String numeroDocumento;
+	
+	@Column(name = "data_atualizacao")
+	private Date dataAtualizacao;
+	
+	@ManyToOne
+	@JoinColumn(name = "colaborador_atualizacao_id")
+	private Colaborador colaboradorAtualizacao;
+	
+	@Column(name = "nome_advogado")
+	private String nomeAdvogado;
+	
+	@Column(name = "oab_advogado")
+	private String oabAdvogado;
+	
+	private String telefone;
 
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -63,6 +79,46 @@ public class ParteContraria extends TSActiveRecordAb<ParteContraria>{
 
 	public void setNumeroDocumento(String numeroDocumento) {
 		this.numeroDocumento = numeroDocumento;
+	}
+
+	public Date getDataAtualizacao() {
+		return dataAtualizacao;
+	}
+
+	public void setDataAtualizacao(Date dataAtualizacao) {
+		this.dataAtualizacao = dataAtualizacao;
+	}
+
+	public Colaborador getColaboradorAtualizacao() {
+		return colaboradorAtualizacao;
+	}
+
+	public void setColaboradorAtualizacao(Colaborador colaboradorAtualizacao) {
+		this.colaboradorAtualizacao = colaboradorAtualizacao;
+	}
+
+	public String getNomeAdvogado() {
+		return nomeAdvogado;
+	}
+
+	public void setNomeAdvogado(String nomeAdvogado) {
+		this.nomeAdvogado = nomeAdvogado;
+	}
+
+	public String getOabAdvogado() {
+		return oabAdvogado;
+	}
+
+	public void setOabAdvogado(String oabAdvogado) {
+		this.oabAdvogado = oabAdvogado;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 
 	@Override
@@ -98,7 +154,7 @@ public class ParteContraria extends TSActiveRecordAb<ParteContraria>{
 		query.append(" from ParteContraria pc where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(descricao)){
-			query.append("and lower(pc.descricao) like ? ");
+			query.append("and ").append(CenajurUtil.semAcento("pc.descricao")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
 		}
 		
 		if(!TSUtil.isEmpty(tipoDocumento) && !TSUtil.isEmpty(tipoDocumento.getId())){
@@ -107,6 +163,14 @@ public class ParteContraria extends TSActiveRecordAb<ParteContraria>{
 		
 		if(!TSUtil.isEmpty(numeroDocumento)){
 			query.append("and pc.numeroDocumento = ? ");
+		}
+		
+		if(!TSUtil.isEmpty(nomeAdvogado)){
+			query.append("and ").append(CenajurUtil.semAcento("pc.nomeAdvogado")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
+		}
+		
+		if(!TSUtil.isEmpty(oabAdvogado)){
+			query.append("and ").append(CenajurUtil.semAcento("pc.oabAdvogado")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
 		}
 		
 		List<Object> params = new ArrayList<Object>();
@@ -121,6 +185,14 @@ public class ParteContraria extends TSActiveRecordAb<ParteContraria>{
 		
 		if(!TSUtil.isEmpty(numeroDocumento)){
 			params.add(numeroDocumento);
+		}
+		
+		if(!TSUtil.isEmpty(nomeAdvogado)){
+			params.add(nomeAdvogado);
+		}
+		
+		if(!TSUtil.isEmpty(oabAdvogado)){
+			params.add(oabAdvogado);
 		}
 		
 		return super.find(query.toString(), params.toArray());

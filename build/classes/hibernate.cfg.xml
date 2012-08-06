@@ -36,8 +36,12 @@
  		<mapping class="br.com.cenajur.model.Permissao" />
  		<mapping class="br.com.cenajur.model.PermissaoGrupo" />
  		<mapping class="br.com.cenajur.model.Processo" />
+ 		<mapping class="br.com.cenajur.model.ProcessoCliente" />
+ 		<mapping class="br.com.cenajur.model.ProcessoParteContraria" />
  		<mapping class="br.com.cenajur.model.SituacaoAudiencia" />
  		<mapping class="br.com.cenajur.model.SituacaoProcesso" />
+ 		<mapping class="br.com.cenajur.model.SituacaoProcessoCliente" />
+ 		<mapping class="br.com.cenajur.model.SituacaoProcessoParteContraria" />
  		<mapping class="br.com.cenajur.model.TipoAcesso" />
  		<mapping class="br.com.cenajur.model.TipoAndamentoProcesso" />
  		<mapping class="br.com.cenajur.model.TipoColaborador" />

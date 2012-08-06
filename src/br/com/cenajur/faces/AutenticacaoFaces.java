@@ -31,6 +31,7 @@ public class AutenticacaoFaces extends TSMainFaces{
     private String tela;
     private String nomeTela;
     private String currentFaces;
+    private Long opcao;
 
     
     public AutenticacaoFaces() {
@@ -83,6 +84,8 @@ public class AutenticacaoFaces extends TSMainFaces{
         this.menusPrime = new ArrayList<Menu>();
         
         this.permissaoGrupoSelecionada = new PermissaoGrupo();
+        
+        this.opcao = 1L;
 
     }
 
@@ -146,6 +149,21 @@ public class AutenticacaoFaces extends TSMainFaces{
         CenajurUtil.addErrorMessage("Dados inválidos!");
 
         return null;
+    }
+    
+    public String recuperarSenha(){
+    	
+    	Colaborador colaborador = this.colaborador.autenticarPorLogin();
+    	
+    	if(TSUtil.isEmpty(colaborador)){
+    		CenajurUtil.addErrorMessage("Usuário não localizado");
+    	} else{
+    		//Enviar E-mail com nova Senha - ver com Roque as configurações.!
+    		CenajurUtil.addInfoMessage("Uma nova senha foi enviada para seu e-mail");
+    	}
+    	
+    	return "login";
+    	
     }
 
 	public Colaborador getColaborador() {
@@ -226,6 +244,14 @@ public class AutenticacaoFaces extends TSMainFaces{
 
 	public void setPermissaoGrupoSelecionada(PermissaoGrupo permissaoGrupoSelecionada) {
 		this.permissaoGrupoSelecionada = permissaoGrupoSelecionada;
+	}
+
+	public Long getOpcao() {
+		return opcao;
+	}
+
+	public void setOpcao(Long opcao) {
+		this.opcao = opcao;
 	}
 
 }

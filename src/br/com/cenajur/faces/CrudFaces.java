@@ -66,6 +66,9 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 		return false;
 	}
 	
+	protected void prePersist(){
+	}
+	
 	protected void preInsert(){
 	}
 	
@@ -85,6 +88,8 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 		if(validaCampos()){
 			return null;
 		}
+		
+		this.prePersist();
 		
 		this.preInsert();
 		
@@ -109,6 +114,8 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 		if(validaCampos()){
 			return null;
 		}
+		
+		this.prePersist();
 		
 		this.preUpdate();
 		

@@ -43,6 +43,13 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 	private Colaborador advogado;
 	
 	private String descricao;
+	
+	@Column(name = "data_atualizacao")
+	private Date dataAtualizacao;
+	
+	@ManyToOne
+	@JoinColumn(name = "colaborador_atualizacao_id")
+	private Colaborador colaboradorAtualizacao;
 
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -100,6 +107,22 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 		this.descricao = descricao;
 	}
 
+	public Date getDataAtualizacao() {
+		return dataAtualizacao;
+	}
+
+	public void setDataAtualizacao(Date dataAtualizacao) {
+		this.dataAtualizacao = dataAtualizacao;
+	}
+
+	public Colaborador getColaboradorAtualizacao() {
+		return colaboradorAtualizacao;
+	}
+
+	public void setColaboradorAtualizacao(Colaborador colaboradorAtualizacao) {
+		this.colaboradorAtualizacao = colaboradorAtualizacao;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -133,7 +156,7 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 		query.append(" from Audiencia a where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(processo) && !TSUtil.isEmpty(processo.getNumeroProcesso())){
-			query.append("and lower(a.processo.numeroProcesso) like ? ");
+			query.append("and ").append(CenajurUtil.semAcento("a.processo.numeroProcesso")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
 		}
 		
 		if(!TSUtil.isEmpty(dataAudiencia)){
@@ -153,7 +176,7 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 		}
 		
 		if(!TSUtil.isEmpty(descricao)){
-			query.append("and lower(a.descricao) like ? ");
+			query.append("and ").append(CenajurUtil.semAcento("a.descricao")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
 		}
 		
 		List<Object> params = new ArrayList<Object>();

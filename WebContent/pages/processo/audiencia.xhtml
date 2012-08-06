@@ -49,7 +49,7 @@
 		  	</p:selectOneMenu>
 		  	
 		  	<p:outputLabel for="descricao" value="Descrição" />
-			<p:inputTextarea id="descricao" value="#{mbeanModel.descricao}" maxlength="500" autoResize="false" rows="10" styleClass="coluna90"/>
+			<p:inputTextarea id="descricao" value="#{mbeanModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" maxlength="500" autoResize="false" rows="10" styleClass="coluna90"/>
 			
 	  	</h:panelGrid>
 	  	

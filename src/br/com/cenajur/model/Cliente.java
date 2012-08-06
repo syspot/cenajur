@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import br.com.cenajur.util.CenajurUtil;
@@ -107,19 +108,21 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	@Column(name = "flag_status_pm")
 	private Boolean flagStatusPM;
 	
-	@Column(name = "data_cadastro")
-	private Date dataCadastro;
-	
 	@Column(name = "data_atualizacao")
 	private Date dataAtualizacao;
 	
 	@ManyToOne
-	@JoinColumn(name = "colaborador_cadastro_id")
-	private Colaborador colaboradorCadastro;
-	
-	@ManyToOne
 	@JoinColumn(name = "colaborador_atualizacao_id")
 	private Colaborador colaboradorAtualizacao;
+	
+	@Column(name = "url_imagem")
+	private String urlImagem;
+	
+	@OneToMany
+	@JoinTable(name = "processos_clientes", joinColumns = {
+	@JoinColumn(name = "cliente_id") }, inverseJoinColumns = {
+	@JoinColumn(name = "processo_id") })
+	private List<Processo> processos;
 	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -377,14 +380,6 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		this.id = id;
 	}
 
-	public Date getDataCadastro() {
-		return dataCadastro;
-	}
-
-	public void setDataCadastro(Date dataCadastro) {
-		this.dataCadastro = dataCadastro;
-	}
-
 	public Date getDataAtualizacao() {
 		return dataAtualizacao;
 	}
@@ -393,20 +388,28 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		this.dataAtualizacao = dataAtualizacao;
 	}
 
-	public Colaborador getColaboradorCadastro() {
-		return colaboradorCadastro;
-	}
-
-	public void setColaboradorCadastro(Colaborador colaboradorCadastro) {
-		this.colaboradorCadastro = colaboradorCadastro;
-	}
-
 	public Colaborador getColaboradorAtualizacao() {
 		return colaboradorAtualizacao;
 	}
 
 	public void setColaboradorAtualizacao(Colaborador colaboradorAtualizacao) {
 		this.colaboradorAtualizacao = colaboradorAtualizacao;
+	}
+
+	public String getUrlImagem() {
+		return urlImagem;
+	}
+
+	public void setUrlImagem(String urlImagem) {
+		this.urlImagem = urlImagem;
+	}
+
+	public List<Processo> getProcessos() {
+		return processos;
+	}
+
+	public void setProcessos(List<Processo> processos) {
+		this.processos = processos;
 	}
 
 	@Override
@@ -442,11 +445,11 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		query.append(" from Cliente c where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(matricula)){
-			query.append("and lower(c.matricula) like ? ");
+			query.append("and ").append(CenajurUtil.semAcento("c.matricula")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
 		}
 		
 		if(!TSUtil.isEmpty(nome)){
-			query.append("and lower(c.nome) like ? ");
+			query.append("and ").append(CenajurUtil.semAcento("c.nome")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
 		}
 		
 		if(!TSUtil.isEmpty(cidade) && !TSUtil.isEmpty(cidade.getEstado()) && !TSUtil.isEmpty(cidade.getEstado().getId())){

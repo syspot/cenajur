@@ -25,14 +25,27 @@
           	<br/>
           	<br/>
             <p:panel id="panelLogin" header="Controle de Acesso" style="width: 280px; text-align: left">
-              <h:panelGrid styleClass="coluna100" columns="2" columnClasses="coluna30,coluna70">
+              <h:panelGrid styleClass="coluna100" columns="2" columnClasses="coluna30,coluna70" rendered="#{autenticacaoFaces.opcao == 1}">
                 <p:outputLabel for="usuario" value="Usuário:"/>
                 <p:inputText id="usuario" required="true" requiredMessage="Usuário: Obrigatório" value="#{autenticacaoFaces.colaborador.login}" style="width: 97%;" />
                 <p:outputLabel for="senha" value="Senha:"/>
                 <p:password id="senha" required="true" requiredMessage="Senha: Obrigatório" value="#{autenticacaoFaces.colaborador.senha}" maxlength="100" style="width: 97%;" />
               </h:panelGrid>
+              <h:panelGrid styleClass="coluna100" columns="2" columnClasses="coluna30,coluna70" rendered="#{autenticacaoFaces.opcao == 2}">
+                <p:outputLabel for="usuarioEsqueciSenha" value="Usuário:"/>
+                <p:inputText id="usuarioEsqueciSenha" required="true" requiredMessage="Usuário: Obrigatório" value="#{autenticacaoFaces.colaborador.login}" style="width: 97%;" />
+              </h:panelGrid>
+              <h:panelGrid styleClass="coluna100" columns="2" columnClasses="coluna30,coluna70">
+	              <p:outputLabel for="opcaoLogin" value="Ação:"/>
+	              <p:selectOneMenu id="opcaoLogin" value="#{autenticacaoFaces.opcao}" style="width:100%; margin-bottom:10px">
+	              	<f:selectItem itemLabel="Autenticar" itemValue="1" />
+	              	<f:selectItem itemLabel="Esqueci a senha" itemValue="2" />
+	              	<p:ajax event="change" update="panelLogin" />
+	              </p:selectOneMenu>
+              </h:panelGrid>
               <div align="right">
-                <p:commandButton ajax="false" title="Acessar" value="Acessar" id="btnAcessar" style="text-align: right; height: 40px; width: 110px;" icon="cadeado" action="#{autenticacaoFaces.entrar}" tabindex="4" />
+                <p:commandButton ajax="false" title="Acessar" value="Acessar" id="btnAcessar" style="text-align: right; height: 40px; width: 110px;" icon="cadeado" action="#{autenticacaoFaces.entrar}" tabindex="4" rendered="#{autenticacaoFaces.opcao == 1}"/>
+                <p:commandButton ajax="false" title="Recuperar Senha" value="Recuperar Senha" id="btnRecuperarSenha" style="text-align: right; height: 40px; width: 110px;" icon="cadeado" action="#{autenticacaoFaces.recuperarSenha}" tabindex="4" rendered="#{autenticacaoFaces.opcao == 2}"/>
               </div>
             </p:panel>
           </div>

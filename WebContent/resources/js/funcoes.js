@@ -25,3 +25,22 @@ PrimeFaces.locales['pt_BR'] = {
         day: 'Dia',
         allDayText : 'Todo Dia'
     };
+
+function handleRequest(idDialog, widgerVar, args){
+	if(args.validationFailed && !args.sucesso) {      	
+		jQuery(idDialog).effect("shake", { times:3 }, 100);
+	} else {  
+		widgerVar.hide();
+	}  
+
+}
+
+function handleRequestAction(idDialog, widgerVar, args){
+	if(args.validationFailed && !args.sucesso) {      	
+		jQuery(idDialog).effect("shake", { times:3 }, 100);
+	} else {  
+		addParteContraria();
+		widgerVar.hide();
+	}  
+	
+}

@@ -15,12 +15,15 @@
 
 		<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();" onerror="statusDialog.hide();" oncomplete="statusDialog.hide();" />
 		
-		<ui:include src="/resources/templates/dialogPermissao.xhtml" />
-		<ui:include src="/resources/templates/dialogLotacao.xhtml" />
-		<ui:include src="/resources/templates/dialogCliente.xhtml" />
-		<ui:include src="/resources/templates/dialogParteContraria.xhtml" />
-		<ui:include src="/resources/templates/dialogProcesso.xhtml" />
-		<ui:include src="/resources/templates/dialogProcesso2.xhtml" />
+		<ui:include src="/resources/templates/dialogs/dialogPermissao.xhtml" />
+		<ui:include src="/resources/templates/dialogs/dialogLotacao.xhtml" />
+		<ui:include src="/resources/templates/dialogs/dialogCliente.xhtml" />
+		<ui:include src="/resources/templates/dialogs/dialogParteContraria.xhtml" />
+		<ui:include src="/resources/templates/dialogs/dialogProcesso.xhtml" />
+		<ui:include src="/resources/templates/dialogs/dialogProcesso2.xhtml" />
+		<ui:include src="/resources/templates/dialogs/dialogProcessoCliente.xhtml" />
+		<ui:include src="/resources/templates/dialogs/dialogProcessoParteContraria.xhtml" />
+		<ui:include src="/resources/templates/dialogs/dialogCam.xhtml" />
 		
 		<p:dialog modal="true" widgetVar="statusDialog" header="Processando..." draggable="false" closable="false" resizable="false">
 			<p:graphicImage value="../resources/images/ajaxloadingbar.gif" />

@@ -1,5 +1,6 @@
 package br.com.cenajur.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,6 +13,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 
+import br.com.cenajur.util.CenajurUtil;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
@@ -95,5 +97,24 @@ public class Grupo extends TSActiveRecordAb<Grupo>  {
 		return true;
 	}
 
+	@Override
+	public List<Grupo> findByModel(String... fieldsOrderBy) {
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" from Grupo g where 1 = 1 ");
+		
+		if(!TSUtil.isEmpty(descricao)){
+			query.append("and ").append(CenajurUtil.semAcento("g.descricao")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
+		}
+		
+		List<Object> params = new ArrayList<Object>();
+		
+		if(!TSUtil.isEmpty(descricao)){
+			params.add(CenajurUtil.tratarString(descricao));
+		}
+		
+		return super.find(query.toString(), params.toArray());
+	}
 	
 }

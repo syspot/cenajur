@@ -84,7 +84,7 @@ public class Cidade extends TSActiveRecordAb<Cidade>{
 		query.append(" from Cidade c where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(descricao)){
-			query.append("and lower(c.descricao) like ? ");
+			query.append("and ").append(CenajurUtil.semAcento("c.descricao")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
 		}
 		
 		if(!TSUtil.isEmpty(estado) && !TSUtil.isEmpty(estado.getId())){

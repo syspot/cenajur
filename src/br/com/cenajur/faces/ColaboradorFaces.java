@@ -1,6 +1,7 @@
 package br.com.cenajur.faces;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -14,6 +15,7 @@ import br.com.cenajur.model.Estado;
 import br.com.cenajur.model.Grupo;
 import br.com.cenajur.model.TipoColaborador;
 import br.com.cenajur.util.CenajurUtil;
+import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
 import br.com.cenajur.util.Utilitarios;
 import br.com.topsys.util.TSUtil;
@@ -64,6 +66,12 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 		getCrudPesquisaModel().setFlagAtivo(Boolean.TRUE);
 		setGrid(new ArrayList<Colaborador>());
 		return SUCESSO;
+	}
+	
+	@Override
+	protected void prePersist() {
+		getCrudModel().setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
+		getCrudModel().setDataAtualizacao(new Date());
 	}
 	
 	@Override

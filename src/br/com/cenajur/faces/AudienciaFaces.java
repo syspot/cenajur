@@ -1,6 +1,7 @@
 package br.com.cenajur.faces;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -15,6 +16,7 @@ import br.com.cenajur.model.SituacaoAudiencia;
 import br.com.cenajur.model.SituacaoProcesso;
 import br.com.cenajur.model.Vara;
 import br.com.cenajur.util.CenajurUtil;
+import br.com.cenajur.util.ColaboradorUtil;
 import br.com.topsys.util.TSUtil;
 
 @SessionScoped
@@ -60,6 +62,12 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 		getCrudPesquisaModel().setVara(new Vara());
 		setGrid(new ArrayList<Audiencia>());
 		return "sucesso";
+	}
+	
+	@Override
+	protected void prePersist() {
+		getCrudModel().setDataAtualizacao(new Date());
+		getCrudModel().setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 	}
 	
 	@Override

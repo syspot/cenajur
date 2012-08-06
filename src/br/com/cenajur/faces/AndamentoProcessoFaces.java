@@ -1,6 +1,7 @@
 package br.com.cenajur.faces;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -12,6 +13,7 @@ import br.com.cenajur.model.AndamentoProcesso;
 import br.com.cenajur.model.Processo;
 import br.com.cenajur.model.TipoAndamentoProcesso;
 import br.com.cenajur.util.CenajurUtil;
+import br.com.cenajur.util.ColaboradorUtil;
 import br.com.topsys.util.TSUtil;
 
 @SessionScoped
@@ -61,6 +63,12 @@ public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 		}
 		
 		return erro;
+	}
+	
+	@Override
+	protected void prePersist() {
+		getCrudModel().setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
+		getCrudModel().setDataAtualizacao(new Date());
 	}
 	
 	public String addProcesso(){

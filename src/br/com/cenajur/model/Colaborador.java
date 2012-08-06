@@ -79,6 +79,13 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 	@Transient
 	private String senha2;
 	
+	@Column(name = "data_atualizacao")
+	private Date dataAtualizacao;
+	
+	@ManyToOne
+	@JoinColumn(name = "colaborador_atualizacao_id")
+	private Colaborador colaboradorAtualizacao;
+	
 	public Colaborador() {
 	}
 	
@@ -270,6 +277,22 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 		this.senha2 = senha2;
 	}
 
+	public Date getDataAtualizacao() {
+		return dataAtualizacao;
+	}
+
+	public void setDataAtualizacao(Date dataAtualizacao) {
+		this.dataAtualizacao = dataAtualizacao;
+	}
+
+	public Colaborador getColaboradorAtualizacao() {
+		return colaboradorAtualizacao;
+	}
+
+	public void setColaboradorAtualizacao(Colaborador colaboradorAtualizacao) {
+		this.colaboradorAtualizacao = colaboradorAtualizacao;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -307,11 +330,11 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 		query.append(" from Colaborador c where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(nome)){
-			query.append("and lower(c.nome) like ? ");
+			query.append("and ").append(CenajurUtil.semAcento("c.nome")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
 		}
 		
 		if(!TSUtil.isEmpty(email)){
-			query.append("and lower(c.email) like ? ");
+			query.append("and ").append(CenajurUtil.semAcento("c.email")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
 		}
 		
 		if(!TSUtil.isEmpty(grupo) && !TSUtil.isEmpty(grupo.getId())){

@@ -37,6 +37,13 @@ public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 	@ManyToOne
 	@JoinColumn(name = "tipo_andamento_processo_id")
 	private TipoAndamentoProcesso tipoAndamentoProcesso;
+
+	@Column(name = "data_atualizacao")
+	private Date dataAtualizacao;
+	
+	@ManyToOne
+	@JoinColumn(name = "colaborador_atualizacao_id")
+	private Colaborador colaboradorAtualizacao;
 	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -77,6 +84,22 @@ public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 	public void setTipoAndamentoProcesso(TipoAndamentoProcesso tipoAndamentoProcesso) {
 		this.tipoAndamentoProcesso = tipoAndamentoProcesso;
 	}
+	
+	public Date getDataAtualizacao() {
+		return dataAtualizacao;
+	}
+
+	public void setDataAtualizacao(Date dataAtualizacao) {
+		this.dataAtualizacao = dataAtualizacao;
+	}
+
+	public Colaborador getColaboradorAtualizacao() {
+		return colaboradorAtualizacao;
+	}
+
+	public void setColaboradorAtualizacao(Colaborador colaboradorAtualizacao) {
+		this.colaboradorAtualizacao = colaboradorAtualizacao;
+	}
 
 	@Override
 	public int hashCode() {
@@ -85,7 +108,7 @@ public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-	
+		
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -111,7 +134,7 @@ public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 		query.append(" from AndamentoProcesso a where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(processo) && !TSUtil.isEmpty(processo.getNumeroProcesso())){
-			query.append("and lower(a.processo.numeroProcesso) like ? ");
+			query.append("and ").append(CenajurUtil.semAcento("a.processo.numeroProcesso")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
 		}
 		
 		if(!TSUtil.isEmpty(dataAndamento)){
@@ -123,7 +146,7 @@ public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 		}
 		
 		if(!TSUtil.isEmpty(descricao)){
-			query.append("and lower(a.descricao) like ? ");
+			query.append("and ").append(CenajurUtil.semAcento("a.descricao")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
 		}
 		
 		List<Object> params = new ArrayList<Object>();

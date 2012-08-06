@@ -16,6 +16,8 @@ public class ParteContrariaPesquisaFaces extends PesquisaFaces<ParteContraria> {
 
 	private List<SelectItem> tiposDocumentos;
 	
+	private boolean cadastrando;
+	
 	@PostConstruct
 	protected void init() {
 		setFieldOrdem("descricao");
@@ -40,6 +42,14 @@ public class ParteContrariaPesquisaFaces extends PesquisaFaces<ParteContraria> {
 
 	public void setTiposDocumentos(List<SelectItem> tiposDocumentos) {
 		this.tiposDocumentos = tiposDocumentos;
+	}
+
+	public boolean isCadastrando() {
+		return cadastrando;
+	}
+
+	public void setCadastrando(boolean cadastrando) {
+		this.cadastrando = cadastrando;
 	}
 
 }

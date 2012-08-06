@@ -770,6 +770,11 @@ img.right {
     width: 30%;
 }
 
+.coluna30_2 {
+    width: 30%;
+    text-align: center;
+}
+
 .colunacenter10 {
     width: 10%;
     vertical-align: middle;
