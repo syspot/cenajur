@@ -22,7 +22,10 @@ public class Constantes {
 	public static final Long TIPO_CATEGORIA_GERAL = 5L;
 	
 	public static final String PASTA_UPLOAD_ARQUIVO = "E:\\arquivos\\";
+	public static final String PASTA_UPLOAD_IMAGEM = "E:\\imagens\\";
 	public static final String PASTA_DOWNLOAD_ARQUIVO = "http://localhost:8080/arquivos/";
+	public static final String PASTA_DOWNLOAD_IMAGEM = "http://localhost:8080/imagens/";
+	public static final String PASTA_DOWNLOAD_IMAGEM_TMP = "http://localhost:8080/imagens/tmp/";
 	
 	public static final String PASTA_ANDAMENTO_PROCESSO = "andamentos_processos\\";
 	public static final String PASTA_PROCESSO = "processos\\";

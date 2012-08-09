@@ -15,10 +15,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cascade;
 
 import br.com.cenajur.util.CenajurUtil;
+import br.com.cenajur.util.Constantes;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
@@ -133,6 +135,12 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<DocumentoCliente> documentos;
+	
+	@Transient
+	private byte[] bytes;
+	
+	@Transient
+	private String caminhoImagem;
 	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -436,6 +444,30 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 
 	public void setDocumentos(List<DocumentoCliente> documentos) {
 		this.documentos = documentos;
+	}
+
+	public byte[] getBytes() {
+		return bytes;
+	}
+
+	public void setBytes(byte[] bytes) {
+		this.bytes = bytes;
+	}
+	
+	public String getCaminhoImagem() {
+		return caminhoImagem;
+	}
+
+	public void setCaminhoImagem(String caminhoImagem) {
+		this.caminhoImagem = caminhoImagem;
+	}
+
+	public String getCaminhoUploadCompleto(){
+		return Constantes.PASTA_UPLOAD_IMAGEM + CenajurUtil.getAnoMes(getDataCadastro()) + getUrlImagem();
+	}
+	
+	public String getCaminhoViewCompleto(){
+		return TSUtil.isEmpty(getId()) ? Constantes.PASTA_DOWNLOAD_IMAGEM_TMP + getUrlImagem() : Constantes.PASTA_DOWNLOAD_IMAGEM + CenajurUtil.getAnoMes(getDataCadastro()) + getUrlImagem();
 	}
 
 	@Override

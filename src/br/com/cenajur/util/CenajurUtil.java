@@ -134,4 +134,8 @@ public class CenajurUtil {
 		}
 		return list;
 	}
+	
+	public static long gerarNumeroAleatorio() {
+		return (long) ((10000 * Math.random()) * (100 * Math.random()));
+	}
 }

@@ -178,6 +178,14 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 			posicao++;
 		}
 		
+		if(!TSUtil.isEmpty(getCrudModel().getBytes())){
+			
+			getCrudModel().setUrlImagem(getCrudModel().getId() + TSFile.obterExtensaoArquivo(getCrudModel().getUrlImagem()));
+			CenajurUtil.criaArquivo(getCrudModel().getBytes(), getCrudModel().getCaminhoUploadCompleto());
+			getCrudModel().update();
+			
+		}
+		
 	}
 	
 	public String mudarStatusCliente(){
@@ -206,11 +214,13 @@ public class ClienteFaces extends CrudFaces<Cliente> {
           
         byte[] data = captureEvent.getData();  
         
-		String arquivo =  "E:\\imagens\\teste.jpg";
+        String nomeFoto = CenajurUtil.gerarNumeroAleatorio() + "_foto_cam.jpg";
+		String arquivo = "E:\\imagens\\" + nomeFoto;
 		
 		CenajurUtil.criaArquivo(data, arquivo);
 		
-		getCrudModel().setUrlImagem("/imagens/teste.jpg");
+		getCrudModel().setUrlImagem("/imagens/" + nomeFoto);
+		getCrudModel().setBytes(data);
 		
     }
 	
