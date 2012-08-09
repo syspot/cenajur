@@ -161,6 +161,18 @@
 			</h:panelGrid>
 
 		</p:fieldset>
+		
+		<p:fieldset>
+	  	
+	  		<h:panelGrid columns="1" style="width:60%">
+
+				<p:commandButton type="button" value="Adicionar Documento" icon="ui-icon-plus" onclick="dlgDocumentoProcesso.show();" update="pgCategoriaDocumento" />
+			
+				<ui:include src="/pages/processo/include_grid_documentos.xhtml"/>
+		  	
+		  	</h:panelGrid>
+			
+	  	</p:fieldset>
 
 	</ui:define>
 

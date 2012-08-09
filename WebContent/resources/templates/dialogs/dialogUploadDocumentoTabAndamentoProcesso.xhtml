@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:param name="mbeanDocumento" value="${processoFaces.processoAndamentoUtil}" />
+	
+	<h:form enctype="multipart/form-data">
+  
+		<p:dialog id="dialogDocumentoTabAndamentoProcesso" widgetVar="dlgDocumentoTabAndamentoProcesso" header="Upload de documento" width="300" modal="true">
+		
+			<h:panelGrid id="pgCategoriaDocumentoTabAndamento" columns="1" columnClasses="coluna90" >
+		
+				<p:outputLabel for="categoriaDocumentoTabAndamento" value="Categoria" />
+				<p:selectOneMenu id="categoriaDocumentoTabAndamento" required="true" requiredMessage="Categoria do Documento: Campo obrigatório" value="#{mbeanDocumento.categoriaDocumento.id}" style="width: 100%">
+					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+					<f:selectItems value="#{mbeanDocumento.categoriasDocumentos}" />
+				</p:selectOneMenu>
+		  		
+		 		</h:panelGrid>
+		 		
+		 		<h:panelGrid id="pgDocumentoTabAndamento" columns="1" columnClasses="coluna90" style="width:100%">
+		 		
+				<p:outputLabel for="documentoTabAndamento" value="Documento" />
+				<p:fileUpload id="documentoTabAndamento" label="Selecionar Documento" fileUploadListener="#{mbeanDocumento.enviarDocumentoAndamentoProcesso}" auto="true" multiple="false" style="width:90%"/>
+		  		
+			</h:panelGrid>
+			
+			<h:panelGrid columns="1" style="width:100%; text-align:center">
+		  		
+		  		<p:commandButton value="Adicionar" action="#{mbeanDocumento.addDocumentoAndamentoProcesso}" oncomplete="handleRequestFaces('dialogDocumentoTabAndamentoProcesso', dlgDocumentoTabAndamentoProcesso, args)" />
+		  		
+	  		</h:panelGrid>
+	  		
+		</p:dialog>
+	
+	</h:form>
+
+</ui:component>

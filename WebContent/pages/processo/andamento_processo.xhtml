@@ -11,28 +11,40 @@
   	
   	<ui:define name="cadastro">
   	
-  		<h:panelGrid columns="1" columnClasses="coluna100" style="width:40%">
+  		<h:panelGrid columns="2" columnClasses="coluna50_2, coluna50_3" style="width:100%">
   		
-	  		<p:outputPanel autoUpdate="true">
-				<p:outputLabel for="processo" value="Processo" /><br/>
-				<p:inputText id="processo" value="#{mbeanModel.processo.numeroProcesso}" required="true" requiredMessage="Processo: Campo obrigatório" readonly="true" />
-				<p:commandButton type="button" value="Adicionar" onclick="dlgProcesso2.show();" />
-			</p:outputPanel>
+	  		<h:panelGrid columns="1" columnClasses="coluna100" style="width:100%">
 	  		
-		  	<p:outputLabel for="dataAndamento" value="Data do Andamento" />
-	  		<p:calendar id="dataAndamento" pattern="dd/MM/yyyy" required="true" requiredMessage="Data do Andamento: Campo obrigatório" value="#{mbeanModel.dataAndamento}"/>
-  		
-	  		<p:outputLabel for="tipoAndamentoProcesso" value="Tipo do Andamento" />
-	  		<p:selectOneMenu id="tipoAndamentoProcesso" required="true" requiredMessage="Tipo do Andamento: Campo obrigatório" value="#{mbeanModel.tipoAndamentoProcesso.id}" style="width:92%">
-		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-		  		<f:selectItems value="#{mbean.tiposAndamentosProcessos}" />
-		  	</p:selectOneMenu>
+		  		<p:outputPanel autoUpdate="true">
+					<p:outputLabel for="processo" value="Processo" /><br/>
+					<p:inputText id="processo" value="#{mbeanModel.processo.numeroProcesso}" required="true" requiredMessage="Processo: Campo obrigatório" readonly="true" />
+					<p:commandButton type="button" value="Adicionar" onclick="dlgProcesso2.show();" />
+				</p:outputPanel>
+		  		
+			  	<p:outputLabel for="dataAndamento" value="Data do Andamento" />
+		  		<p:calendar id="dataAndamento" pattern="dd/MM/yyyy" required="true" requiredMessage="Data do Andamento: Campo obrigatório" value="#{mbeanModel.dataAndamento}"/>
+	  		
+		  		<p:outputLabel for="tipoAndamentoProcesso" value="Tipo do Andamento" />
+		  		<p:selectOneMenu id="tipoAndamentoProcesso" required="true" requiredMessage="Tipo do Andamento: Campo obrigatório" value="#{mbeanModel.tipoAndamentoProcesso.id}" style="width:92%">
+			  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+			  		<f:selectItems value="#{mbean.tiposAndamentosProcessos}" />
+			  	</p:selectOneMenu>
+			  	
+			  	<p:outputLabel for="descricao" value="Descrição" />
+				<p:inputTextarea id="descricao" value="#{mbeanModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" autoResize="false" rows="10" maxlength="500" styleClass="coluna90"/>
+				
+		  	</h:panelGrid>
 		  	
-		  	<p:outputLabel for="descricao" value="Descrição" />
-			<p:inputTextarea id="descricao" value="#{mbeanModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" autoResize="false" rows="10" maxlength="500" styleClass="coluna90"/>
+		  	<h:panelGrid columns="1" style="width:100%">
+
+				<p:commandButton type="button" value="Adicionar Documento" icon="ui-icon-plus" onclick="dlgDocumentoAndamentoProcesso.show();" update="pgCategoriaDocumento" />
 			
-	  	</h:panelGrid>
+				<ui:include src="/pages/processo/include_grid_documentos.xhtml"/>
+		  	
+		  	</h:panelGrid>
 	  	
+  		</h:panelGrid>
+  		
   	</ui:define>
   	
   	<ui:define name="pesquisaCampos">

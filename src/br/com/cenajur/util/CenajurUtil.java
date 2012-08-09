@@ -1,14 +1,24 @@
 package br.com.cenajur.util;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.io.FileUtils;
+import org.primefaces.model.UploadedFile;
+
+import br.com.topsys.exception.TSSystemException;
+import br.com.topsys.util.TSDateUtil;
+import br.com.topsys.util.TSParseUtil;
 import br.com.topsys.util.TSUtil;
 
 public class CenajurUtil {
@@ -65,16 +75,63 @@ public class CenajurUtil {
 		return c.getTime();
 	}
 	
-	public static void criaArquivo(byte[] bytes, String arquivo) {
-		FileOutputStream fos;
+	public static void criaArquivo(UploadedFile file, String arquivo) {
+		
 		try {
-			fos = new FileOutputStream(arquivo);
-			fos.write(bytes);
-			fos.close();
-		} catch (FileNotFoundException ex) {
-			ex.printStackTrace();
-		} catch (IOException ex) {
-			ex.printStackTrace();
+			FileUtils.copyInputStreamToFile(file.getInputstream(), new File(arquivo));
+		} catch (Exception ex) {
+			throw new TSSystemException(ex);
 		}
+		
+	}
+	
+	public static void criaArquivo(byte[] bytes, String arquivo) {
+		
+		try {
+			FileUtils.copyInputStreamToFile(new ByteArrayInputStream(bytes), new File(arquivo));
+		} catch (Exception ex) {
+			throw new TSSystemException(ex);
+		}
+		
+	}
+	
+	public static String obterNomeArquivo(UploadedFile file) {
+		
+		if(TSUtil.isEmpty(file)){
+			return null;
+		}
+			
+		if(file.getFileName().contains("\\")){
+			
+			String[] fileName = file.getFileName().split("\\\\");
+			
+			return fileName[fileName.length-1];
+			
+		} else{
+			
+			return file.getFileName();
+			
+		}
+	}
+	
+	public static String getAnoMes(Date data) {
+		return TSUtil.isEmpty(data) ? null : TSParseUtil.dateToString(data, TSDateUtil.YYYY) + File.separator + TSParseUtil.dateToString(data, TSDateUtil.MM) + File.separator;
+	}
+
+	public static String getAnoMesWeb(Date data) {
+		return TSUtil.isEmpty(data) ? null : TSParseUtil.dateToString(data, TSDateUtil.YYYY) + "/" + TSParseUtil.dateToString(data, TSDateUtil.MM) + "/";
+	}
+	
+	public static final List<SelectItem> initCombo(Collection coll,String nomeValue,String nomeLabel) {
+		List<SelectItem> list=new ArrayList<SelectItem>();
+		for(Object o:coll){
+			try {
+				list.add(new SelectItem(BeanUtils.getProperty(o,nomeValue),BeanUtils.getProperty(o,nomeLabel)));
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new TSSystemException(e);
+			} 
+		}
+		return list;
 	}
 }

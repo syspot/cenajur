@@ -9,21 +9,30 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.CaptureEvent;
+import org.primefaces.event.FileUploadEvent;
 
 import br.com.cenajur.model.AndamentoProcesso;
 import br.com.cenajur.model.Audiencia;
 import br.com.cenajur.model.Banco;
+import br.com.cenajur.model.CategoriaDocumento;
 import br.com.cenajur.model.Cidade;
 import br.com.cenajur.model.Cliente;
+import br.com.cenajur.model.DocumentoCliente;
 import br.com.cenajur.model.Estado;
 import br.com.cenajur.model.EstadoCivil;
 import br.com.cenajur.model.Graduacao;
 import br.com.cenajur.model.Lotacao;
 import br.com.cenajur.model.MotivoCancelamento;
+import br.com.cenajur.model.TipoCategoria;
 import br.com.cenajur.model.TipoPagamento;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
+import br.com.cenajur.util.Constantes;
+import br.com.topsys.exception.TSApplicationException;
+import br.com.topsys.exception.TSSystemException;
+import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
 
 @SessionScoped
@@ -38,11 +47,16 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	private List<SelectItem> motivosCancelamentos;
 	private List<SelectItem> bancos;
 	private List<SelectItem> graduacoes;
+	private List<SelectItem> categoriasDocumentos;
 	
 	private Lotacao lotacaoSelecionada;
 	
 	private AndamentoProcesso andamentoProcessoSelecionado;
 	private Audiencia audienciaSelecionada;
+	
+	private CategoriaDocumento categoriaDocumento;
+	private DocumentoCliente documentoCliente;
+	private DocumentoCliente documentoSelecionado;
 	
 	@PostConstruct
 	protected void init() {
@@ -57,6 +71,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		this.motivosCancelamentos = super.initCombo(new MotivoCancelamento().findAll("descricao"), "id", "descricao");
 		this.bancos = super.initCombo(new Banco().findAll("descricao"), "id", "descricao");
 		this.graduacoes = super.initCombo(new Graduacao().findAll("descricao"), "id", "descricao");
+		this.categoriasDocumentos = this.initCombo(getCategoriaDocumento().findByModel("descricao"), "id", "descricao");
 	}
 	
 	@Override
@@ -70,6 +85,10 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		getCrudModel().setTipoPagamento(new TipoPagamento());
 		getCrudModel().setFlagAtivo(Boolean.TRUE);
 		getCrudModel().setFlagStatusPM(Boolean.TRUE);
+		setCategoriaDocumento(new CategoriaDocumento());
+		getCategoriaDocumento().setTipoCategoria(new TipoCategoria(Constantes.TIPO_CATEGORIA_CLIENTE));
+		getCrudModel().setDocumentos(new ArrayList<DocumentoCliente>());
+		setDocumentoCliente(new DocumentoCliente());
 		setFlagAlterar(Boolean.FALSE);
 		return SUCESSO;
 	}
@@ -121,6 +140,11 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	}
 	
 	@Override
+	protected void preInsert() {
+		getCrudModel().setDataCadastro(new Date());
+	}
+	
+	@Override
 	protected void posDetail() {
 		if(TSUtil.isEmpty(getCrudModel().getBanco())){
 			getCrudModel().setBanco(new Banco());
@@ -132,6 +156,28 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 			CenajurUtil.addDangerMessage("O endereço e telefone estão desatualizados");
 		}
 		this.atualizarComboCidades();
+	}
+	
+	@Override
+	protected void posPersist() throws TSSystemException, TSApplicationException{
+		
+		Cliente aux = getCrudModel().getById();
+		
+		int posicao = 0;
+		
+		for(DocumentoCliente doc : getCrudModel().getDocumentos()){
+			
+			if(!TSUtil.isEmpty(doc.getDocumento())){
+		
+				doc.setId(aux.getDocumentos().get(posicao).getId());
+				doc.setArquivo(doc.getId() + TSFile.obterExtensaoArquivo(doc.getArquivo()));
+				CenajurUtil.criaArquivo(doc.getDocumento(), doc.getCaminhoUploadCompleto());
+				
+				doc.update();
+			}
+			posicao++;
+		}
+		
 	}
 	
 	public String mudarStatusCliente(){
@@ -164,9 +210,39 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		
 		CenajurUtil.criaArquivo(data, arquivo);
 		
-		getCrudModel().setUrlImagem("/arquivos/teste.jpg");
+		getCrudModel().setUrlImagem("/imagens/teste.jpg");
 		
     }
+	
+	public void enviarDocumento(FileUploadEvent event) {
+		getDocumentoCliente().setDocumento(event.getFile());
+		getDocumentoCliente().setArquivo(CenajurUtil.obterNomeArquivo(event.getFile()));
+	}
+		
+	public String addDocumento(){
+		
+		RequestContext context = RequestContext.getCurrentInstance();
+		
+		if(TSUtil.isEmpty(getDocumentoCliente().getDocumento())){
+			CenajurUtil.addErrorMessage("Documento: Campo obrigatório");
+			context.addCallbackParam("sucesso", false);
+			return null;
+		}
+		
+		context.addCallbackParam("sucesso", true);
+		
+		getDocumentoCliente().setCliente(getCrudModel());
+		getDocumentoCliente().setCategoriaDocumento(getCategoriaDocumento().getById());
+		getCrudModel().getDocumentos().add(getDocumentoCliente());
+		getCategoriaDocumento().setId(null);
+		setDocumentoCliente(new DocumentoCliente());
+		return "sucesso";
+	}
+	
+	public String removerDocumento(){
+		getCrudModel().getDocumentos().remove(this.documentoSelecionado);
+		return "sucesso";
+	}
 	
 	public List<SelectItem> getEstados() {
 		return estados;
@@ -216,6 +292,14 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		this.motivosCancelamentos = motivosCancelamentos;
 	}
 
+	public List<SelectItem> getCategoriasDocumentos() {
+		return categoriasDocumentos;
+	}
+
+	public void setCategoriasDocumentos(List<SelectItem> categoriasDocumentos) {
+		this.categoriasDocumentos = categoriasDocumentos;
+	}
+
 	public List<SelectItem> getBancos() {
 		return bancos;
 	}
@@ -254,6 +338,30 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 
 	public void setAudienciaSelecionada(Audiencia audienciaSelecionada) {
 		this.audienciaSelecionada = audienciaSelecionada;
+	}
+
+	public CategoriaDocumento getCategoriaDocumento() {
+		return categoriaDocumento;
+	}
+
+	public void setCategoriaDocumento(CategoriaDocumento categoriaDocumento) {
+		this.categoriaDocumento = categoriaDocumento;
+	}
+
+	public DocumentoCliente getDocumentoCliente() {
+		return documentoCliente;
+	}
+
+	public void setDocumentoCliente(DocumentoCliente documentoCliente) {
+		this.documentoCliente = documentoCliente;
+	}
+
+	public DocumentoCliente getDocumentoSelecionado() {
+		return documentoSelecionado;
+	}
+
+	public void setDocumentoSelecionado(DocumentoCliente documentoSelecionado) {
+		this.documentoSelecionado = documentoSelecionado;
 	}
 	
 }

@@ -1,0 +1,41 @@
+<ui:composition 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+	<p:outputPanel id="opGridDocumentosAndamentoProcesso" autoUpdate="true">
+			  	
+	  	<p:dataTable emptyMessage="Nenhum documento encontrado" style="width: 90%" paginator="true"
+				paginatorAlwaysVisible="false" rows="10" value="#{mbean.processoAndamentoUtil.andamentoProcesso.documentos}" var="documento">
+	  	
+	  		<p:column headerText="Categoria">
+	  			<h:outputText value="#{documento.categoriaDocumento.descricao}" />
+	  		</p:column>
+	  	
+	  		<p:column headerText="Visualizar" styleClass="coluna5">
+	  		
+	  			<p:outputPanel rendered="#{documento.id != null}">
+		  			<a target="_blank" href="${documento.caminhoDownloadCompleto}">
+						<h:graphicImage value="../resources/images/lupa.png" width="16" style="border: 0px" />
+					</a>
+				</p:outputPanel>
+				
+	  			<p:outputPanel rendered="#{documento.id == null}">
+	  				<h:outputText value="-"/>
+				</p:outputPanel>
+				
+	  		</p:column>
+	  		
+			<p:column headerText="Excluir" styleClass="coluna5">
+				<p:commandLink process="@this" action="#{mbean.processoAndamentoUtil.removerDocumentoAndamentoProcesso}" global="false">
+					<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+					<f:setPropertyActionListener target="#{mbean.processoAndamentoUtil.documentoAndamentoProcessoSelecionado}" value="#{documento}" />
+				</p:commandLink>
+			</p:column>
+	  		
+	  	</p:dataTable>
+	  	
+	</p:outputPanel>
+  	
+</ui:composition>

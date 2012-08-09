@@ -78,6 +78,9 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 	protected void posDetail(){
 	}
 	
+	protected void posPersist() throws TSSystemException, TSApplicationException{
+	}
+	
 	@Override
 	protected String insert() throws TSApplicationException {
 		
@@ -94,6 +97,8 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 		this.preInsert();
 		
 		this.crudModel.save();
+		
+		this.posPersist();
 		
 		this.limpar();
 		
@@ -120,6 +125,8 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 		this.preUpdate();
 		
 		this.crudModel.update();
+		
+		this.posPersist();
 		
 		this.limpar();
 		

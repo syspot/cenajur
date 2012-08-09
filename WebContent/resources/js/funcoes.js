@@ -35,6 +35,15 @@ function handleRequest(idDialog, widgerVar, args){
 
 }
 
+function handleRequestFaces(idDialog, widgerVar, args){
+	if(args.validationFailed || !args.sucesso) {      	
+		jQuery(idDialog).effect("shake", { times:3 }, 100);
+	} else {  
+		widgerVar.hide();
+	}  
+	
+}
+
 function handleRequestAction(idDialog, widgerVar, args){
 	if(args.validationFailed && !args.sucesso) {      	
 		jQuery(idDialog).effect("shake", { times:3 }, 100);

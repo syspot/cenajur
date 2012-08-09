@@ -20,10 +20,16 @@
  		<mapping class="br.com.cenajur.model.Audiencia" />
  		<mapping class="br.com.cenajur.model.AndamentoProcesso" />
  		<mapping class="br.com.cenajur.model.Banco" />
+ 		<mapping class="br.com.cenajur.model.CategoriaDocumento" />
  		<mapping class="br.com.cenajur.model.Cidade" />
  		<mapping class="br.com.cenajur.model.Cliente" />
  		<mapping class="br.com.cenajur.model.Colaborador" />
  		<mapping class="br.com.cenajur.model.Comarca" />
+ 		<mapping class="br.com.cenajur.model.DocumentoAndamentoProcesso" />
+ 		<mapping class="br.com.cenajur.model.DocumentoAudiencia" />
+ 		<mapping class="br.com.cenajur.model.DocumentoCliente" />
+ 		<mapping class="br.com.cenajur.model.DocumentoGeral" />
+ 		<mapping class="br.com.cenajur.model.DocumentoProcesso" />
  		<mapping class="br.com.cenajur.model.Estado" />
  		<mapping class="br.com.cenajur.model.EstadoCivil" />
  		<mapping class="br.com.cenajur.model.Graduacao" />
@@ -44,6 +50,7 @@
  		<mapping class="br.com.cenajur.model.SituacaoProcessoParteContraria" />
  		<mapping class="br.com.cenajur.model.TipoAcesso" />
  		<mapping class="br.com.cenajur.model.TipoAndamentoProcesso" />
+ 		<mapping class="br.com.cenajur.model.TipoCategoria" />
  		<mapping class="br.com.cenajur.model.TipoColaborador" />
  		<mapping class="br.com.cenajur.model.TipoDocumento" />
  		<mapping class="br.com.cenajur.model.TipoPagamento" />

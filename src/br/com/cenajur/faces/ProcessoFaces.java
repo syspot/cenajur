@@ -9,21 +9,24 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
-import br.com.cenajur.model.AndamentoProcesso;
-import br.com.cenajur.model.Audiencia;
+import org.primefaces.context.RequestContext;
+import org.primefaces.event.FileUploadEvent;
+
+import br.com.cenajur.model.CategoriaDocumento;
 import br.com.cenajur.model.Cliente;
 import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.Comarca;
+import br.com.cenajur.model.DocumentoProcesso;
 import br.com.cenajur.model.Objeto;
 import br.com.cenajur.model.ParteContraria;
 import br.com.cenajur.model.Processo;
 import br.com.cenajur.model.ProcessoCliente;
 import br.com.cenajur.model.ProcessoParteContraria;
-import br.com.cenajur.model.SituacaoAudiencia;
 import br.com.cenajur.model.SituacaoProcesso;
 import br.com.cenajur.model.SituacaoProcessoCliente;
 import br.com.cenajur.model.SituacaoProcessoParteContraria;
 import br.com.cenajur.model.TipoAndamentoProcesso;
+import br.com.cenajur.model.TipoCategoria;
 import br.com.cenajur.model.TipoParte;
 import br.com.cenajur.model.TipoProcesso;
 import br.com.cenajur.model.Vara;
@@ -31,6 +34,9 @@ import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
 import br.com.topsys.exception.TSApplicationException;
+import br.com.topsys.exception.TSSystemException;
+import br.com.topsys.file.TSFile;
+import br.com.topsys.util.TSUtil;
 
 @SessionScoped
 @ManagedBean(name = "processoFaces")
@@ -47,6 +53,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	private List<SelectItem> advogados;
 	private List<SelectItem> tiposAndamentosProcessos;
 	private List<SelectItem> situacoesAudiencias;
+	private List<SelectItem> categoriasDocumentos;
 	
 	private Cliente clienteSelecionado;
 	private ParteContraria parteContrariaSelecionada;
@@ -54,14 +61,16 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	private ProcessoCliente processoClienteSelecionado;
 	private ProcessoParteContraria processoParteContrariaSelecionada;
 	
-	private AndamentoProcesso andamentoProcesso;
-	private Audiencia audiencia;
-	
-	private AndamentoProcesso andamentoProcessoSelecionado;
-	private Audiencia audienciaSelecionada;
-	
 	private Integer indexProcessoCliente;
 	private Integer indexProcessoParteContraria;
+	
+	private CategoriaDocumento categoriaDocumento;
+	
+	private DocumentoProcesso documentoProcesso;
+	private DocumentoProcesso documentoSelecionado;
+	
+	private ProcessoAndamentoUtil processoAndamentoUtil;
+	private ProcessoAudienciaUtil processoAudienciaUtil;
 	
 	@PostConstruct
 	protected void init() {
@@ -81,6 +90,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		this.advogados = this.initCombo(new Colaborador().findAll("nome"), "id", "nome");
 		this.tiposAndamentosProcessos = this.initCombo(new TipoAndamentoProcesso().findAll("descricao"), "id", "descricao");
 		this.situacoesAudiencias = this.initCombo(new SituacaoProcesso().findAll("descricao"), "id", "descricao");
+		this.categoriasDocumentos = this.initCombo(getCategoriaDocumento().findByModel("descricao"), "id", "descricao");
 	}
 	
 	@Override
@@ -99,8 +109,12 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		this.processoClienteSelecionado.setSituacaoProcessoCliente(new SituacaoProcessoCliente());
 		this.processoParteContrariaSelecionada = new ProcessoParteContraria();
 		this.processoParteContrariaSelecionada.setSituacaoProcessoParteContraria(new SituacaoProcessoParteContraria());
-		this.initAndamentoProcesso();
-		this.initAudiencia();
+		setCategoriaDocumento(new CategoriaDocumento());
+		getCategoriaDocumento().setTipoCategoria(new TipoCategoria(Constantes.TIPO_CATEGORIA_PROCESSO));
+		getCrudModel().setDocumentos(new ArrayList<DocumentoProcesso>());
+		setDocumentoProcesso(new DocumentoProcesso());
+		this.processoAndamentoUtil = new ProcessoAndamentoUtil(getCrudModel());
+		this.processoAudienciaUtil = new ProcessoAudienciaUtil(getCrudModel());
 		setFlagAlterar(Boolean.FALSE);
 		return "sucessso";
 	}
@@ -120,22 +134,38 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		return "sucesso";
 	}
 	
-	private void initAndamentoProcesso(){
-		this.andamentoProcesso = new AndamentoProcesso();
-		this.andamentoProcesso.setTipoAndamentoProcesso(new TipoAndamentoProcesso());
-	}
-	
-	private void initAudiencia(){
-		this.audiencia = new Audiencia();
-		this.audiencia.setAdvogado(new Colaborador());
-		this.audiencia.setSituacaoAudiencia(new SituacaoAudiencia());
-		this.audiencia.setVara(new Vara());
-	}
-
 	@Override
 	protected void prePersist() {
 		getCrudModel().setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 		getCrudModel().setDataAtualizacao(new Date());
+	}
+	
+	@Override
+	protected void preInsert() {
+		getCrudModel().setDataCadastro(new Date());
+	}
+	
+	@Override
+	protected void posPersist() throws TSSystemException, TSApplicationException{
+
+		Processo aux = getCrudModel().getById();
+		
+		int posicao = 0;
+		
+		for(DocumentoProcesso doc : getCrudModel().getDocumentos()){
+			
+			if(!TSUtil.isEmpty(doc.getDocumento())){
+				
+				doc.setId(aux.getDocumentos().get(posicao).getId());
+				doc.setArquivo(doc.getId() + TSFile.obterExtensaoArquivo(doc.getArquivo()));
+				CenajurUtil.criaArquivo(doc.getDocumento(), doc.getCaminhoUploadCompleto());
+				
+				doc.update();
+				
+			}
+			posicao++;
+		}
+		
 	}
 	
 	@Override
@@ -158,8 +188,40 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	
 	@Override
 	protected void posDetail() {
-		this.andamentoProcesso.setProcesso(getCrudModel());
-		this.audiencia.setProcesso(getCrudModel());
+		this.processoAndamentoUtil.setCrudModel(getCrudModel());
+		this.processoAudienciaUtil.setCrudModel(getCrudModel());
+		this.processoAndamentoUtil.getAndamentoProcesso().setProcesso(getCrudModel());
+		this.processoAudienciaUtil.getAudiencia().setProcesso(getCrudModel());
+	}
+	
+	public void enviarDocumento(FileUploadEvent event) {
+		getDocumentoProcesso().setDocumento(event.getFile());
+		getDocumentoProcesso().setArquivo(CenajurUtil.obterNomeArquivo(event.getFile()));
+	}
+	
+	public String addDocumento(){
+		
+		RequestContext context = RequestContext.getCurrentInstance();
+		
+		if(TSUtil.isEmpty(getDocumentoProcesso().getDocumento())){
+			CenajurUtil.addErrorMessage("Documento: Campo obrigatório");
+			context.addCallbackParam("sucesso", false);
+			return null;
+		}
+		
+		context.addCallbackParam("sucesso", true);
+		
+		getDocumentoProcesso().setProcesso(getCrudModel());
+		getDocumentoProcesso().setCategoriaDocumento(getCategoriaDocumento().getById());
+		getCrudModel().getDocumentos().add(getDocumentoProcesso());
+		getCategoriaDocumento().setId(null);
+		setDocumentoProcesso(new DocumentoProcesso());
+		return "sucesso";
+	}
+	
+	public String removerDocumento(){
+		getCrudModel().getDocumentos().remove(this.documentoSelecionado);
+		return "sucesso";
 	}
 	
 	public String removeCliente(){
@@ -209,38 +271,6 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 			
 		}
 		
-		return "sucesso";
-	}
-	
-	public String cadastrarAndamentoProcesso() throws TSApplicationException{
-		getCrudModel().getAndamentos().add(this.andamentoProcesso);
-		getCrudModel().update();
-		CenajurUtil.addInfoMessage("Andamento cadastrado com sucesso");
-		this.initAndamentoProcesso();
-		this.detail();
-		return "sucesso";
-	}
-	
-	public String cadastrarAudiencia() throws TSApplicationException{
-		getCrudModel().getAudiencias().add(this.audiencia);
-		getCrudModel().update();
-		CenajurUtil.addInfoMessage("Audiência cadastrada com sucesso");
-		this.initAudiencia();
-		this.detail();
-		return "sucesso";
-	}
-	
-	public String removerAndamentoProcesso() throws TSApplicationException{
-		getCrudModel().getAndamentos().remove(this.andamentoProcessoSelecionado);
-		getCrudModel().update();
-		CenajurUtil.addInfoMessage("Andamento removido com sucesso");
-		return "sucesso";
-	}
-	
-	public String removerAudiencia() throws TSApplicationException{
-		getCrudModel().getAudiencias().remove(this.audienciaSelecionada);
-		getCrudModel().update();
-		CenajurUtil.addInfoMessage("Audiência removida com sucesso");
 		return "sucesso";
 	}
 	
@@ -388,36 +418,12 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		this.situacoesAudiencias = situacoesAudiencias;
 	}
 
-	public AndamentoProcesso getAndamentoProcesso() {
-		return andamentoProcesso;
+	public List<SelectItem> getCategoriasDocumentos() {
+		return categoriasDocumentos;
 	}
 
-	public void setAndamentoProcesso(AndamentoProcesso andamentoProcesso) {
-		this.andamentoProcesso = andamentoProcesso;
-	}
-
-	public Audiencia getAudiencia() {
-		return audiencia;
-	}
-
-	public void setAudiencia(Audiencia audiencia) {
-		this.audiencia = audiencia;
-	}
-
-	public AndamentoProcesso getAndamentoProcessoSelecionado() {
-		return andamentoProcessoSelecionado;
-	}
-
-	public void setAndamentoProcessoSelecionado(AndamentoProcesso andamentoProcessoSelecionado) {
-		this.andamentoProcessoSelecionado = andamentoProcessoSelecionado;
-	}
-
-	public Audiencia getAudienciaSelecionada() {
-		return audienciaSelecionada;
-	}
-
-	public void setAudienciaSelecionada(Audiencia audienciaSelecionada) {
-		this.audienciaSelecionada = audienciaSelecionada;
+	public void setCategoriasDocumentos(List<SelectItem> categoriasDocumentos) {
+		this.categoriasDocumentos = categoriasDocumentos;
 	}
 
 	public Integer getIndexProcessoCliente() {
@@ -434,6 +440,46 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 
 	public void setIndexProcessoParteContraria(Integer indexProcessoParteContraria) {
 		this.indexProcessoParteContraria = indexProcessoParteContraria;
+	}
+
+	public CategoriaDocumento getCategoriaDocumento() {
+		return categoriaDocumento;
+	}
+
+	public void setCategoriaDocumento(CategoriaDocumento categoriaDocumento) {
+		this.categoriaDocumento = categoriaDocumento;
+	}
+
+	public DocumentoProcesso getDocumentoProcesso() {
+		return documentoProcesso;
+	}
+
+	public void setDocumentoProcesso(DocumentoProcesso documentoProcesso) {
+		this.documentoProcesso = documentoProcesso;
+	}
+
+	public DocumentoProcesso getDocumentoSelecionado() {
+		return documentoSelecionado;
+	}
+
+	public void setDocumentoSelecionado(DocumentoProcesso documentoSelecionado) {
+		this.documentoSelecionado = documentoSelecionado;
+	}
+
+	public ProcessoAndamentoUtil getProcessoAndamentoUtil() {
+		return processoAndamentoUtil;
+	}
+
+	public void setProcessoAndamentoUtil(ProcessoAndamentoUtil processoAndamentoUtil) {
+		this.processoAndamentoUtil = processoAndamentoUtil;
+	}
+
+	public ProcessoAudienciaUtil getProcessoAudienciaUtil() {
+		return processoAudienciaUtil;
+	}
+
+	public void setProcessoAudienciaUtil(ProcessoAudienciaUtil processoAudienciaUtil) {
+		this.processoAudienciaUtil = processoAudienciaUtil;
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +13,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 import br.com.cenajur.util.CenajurUtil;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
@@ -32,6 +36,9 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 	@Column(name = "data_audiencia")
 	private Date dataAudiencia;
 	
+	@Column(name = "data_cadastro")
+	private Date dataCadastro;
+	
 	@ManyToOne
 	@JoinColumn(name = "situacao_audiencia_id")
 	private SituacaoAudiencia situacaoAudiencia;
@@ -50,6 +57,10 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 	@ManyToOne
 	@JoinColumn(name = "colaborador_atualizacao_id")
 	private Colaborador colaboradorAtualizacao;
+	
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	@OneToMany(mappedBy = "audiencia", cascade = CascadeType.ALL)
+	private List<DocumentoAudiencia> documentos;
 
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -73,6 +84,14 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 
 	public void setDataAudiencia(Date dataAudiencia) {
 		this.dataAudiencia = dataAudiencia;
+	}
+
+	public Date getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
 	}
 
 	public SituacaoAudiencia getSituacaoAudiencia() {
@@ -121,6 +140,14 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 
 	public void setColaboradorAtualizacao(Colaborador colaboradorAtualizacao) {
 		this.colaboradorAtualizacao = colaboradorAtualizacao;
+	}
+
+	public List<DocumentoAudiencia> getDocumentos() {
+		return documentos;
+	}
+
+	public void setDocumentos(List<DocumentoAudiencia> documentos) {
+		this.documentos = documentos;
 	}
 
 	@Override

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:param name="mbeanDocumento" value="${processoFaces.processoAudienciaUtil}" />
+	
+	<h:form enctype="multipart/form-data">
+  
+		<p:dialog id="dialogDocumentoTabAudiencia" widgetVar="dlgDocumentoTabAudiencia" header="Upload de documento" width="300" modal="true">
+		
+			<h:panelGrid id="pgCategoriaDocumentoTabAudiencia" columns="1" columnClasses="coluna90" >
+		
+				<p:outputLabel for="categoriaDocumentoTabAudiencia" value="Categoria" />
+				<p:selectOneMenu id="categoriaDocumentoTabAudiencia" required="true" requiredMessage="Categoria do Documento: Campo obrigatório" value="#{mbeanDocumento.categoriaDocumento.id}" style="width: 100%">
+					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+					<f:selectItems value="#{mbeanDocumento.categoriasDocumentos}" />
+				</p:selectOneMenu>
+		  		
+		 		</h:panelGrid>
+		 		
+		 		<h:panelGrid id="pgDocumentoTabAudiencia" columns="1" columnClasses="coluna90" style="width:100%">
+		 		
+				<p:outputLabel for="documentoTabAudiencia" value="Documento" />
+				<p:fileUpload id="documentoTabAudiencia" label="Selecionar Documento" fileUploadListener="#{mbeanDocumento.enviarDocumentoAudiencia}" auto="true" multiple="false" style="width:90%"/>
+		  		
+			</h:panelGrid>
+			
+			<h:panelGrid columns="1" style="width:100%; text-align:center">
+		  		
+		  		<p:commandButton value="Adicionar" action="#{mbeanDocumento.addDocumentoAudiencia}" oncomplete="handleRequestFaces('dialogDocumentoTabAudiencia', dlgDocumentoTabAudiencia, args)" />
+		  		
+	  		</h:panelGrid>
+	  		
+		</p:dialog>
+	
+	</h:form>
+
+</ui:component>

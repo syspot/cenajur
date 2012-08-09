@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="/resources/templates/templateUploadCRUD.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+	<ui:param name="mbean" value="${documentoFaces}" />
+	<ui:param name="mbeanModel" value="${documentoFaces.crudModel}" />
+	<ui:param name="mbeanPesquisaModel" value="${documentoFaces.crudPesquisaModel}" />
+	
+	<ui:define name="cadastro">
+	
+		<h:panelGrid id="pgCategoriaDocumento" columns="1" columnClasses="coluna90" style="width:40%">
+		
+			<p:outputLabel for="categoriaDocumento" value="Categoria" />
+			<p:selectOneMenu id="categoriaDocumento" required="true" requiredMessage="Categoria do Documento: Campo obrigatório" value="#{mbeanModel.categoriaDocumento.id}" style="width: 91%">
+				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+				<f:selectItems value="#{mbean.categoriasDocumentos}" />
+			</p:selectOneMenu>
+			
+			<p:outputLabel for="descricao" value="Descrição" />
+			<p:inputTextarea id="descricao" value="#{mbeanModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" autoResize="false" rows="10" maxlength="500" styleClass="coluna90"/>
+  		
+ 		</h:panelGrid>
+ 		
+ 		<h:panelGrid id="pgDocumento" columns="1" columnClasses="coluna90" style="width:100%">
+ 		
+			<p:outputLabel for="documento" value="Documento" />
+			<p:fileUpload id="documento" label="Selecionar Documento" fileUploadListener="#{mbean.enviarDocumento}" auto="true" multiple="false" style="width:90%"/>
+	  		
+		</h:panelGrid>
+	
+	</ui:define>
+	
+	
+	<ui:define name="pesquisaCampos">
+	
+		<h:panelGrid columns="1" columnClasses="coluna90" style="width:40%">
+		
+			<p:outputLabel for="categoriaDocumentoPesquisa" value="Categoria" />
+			<p:selectOneMenu id="categoriaDocumentoPesquisa" value="#{mbeanPesquisaModel.categoriaDocumento.id}" style="width: 91%">
+				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+				<f:selectItems value="#{mbean.categoriasDocumentos}" />
+			</p:selectOneMenu>
+			
+			<p:outputLabel for="descricaoPesquisa" value="Descrição" />
+			<p:inputText id="descricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" maxlength="500" styleClass="coluna90"/>
+  		
+ 		</h:panelGrid>
+ 		
+	</ui:define>
+	
+	
+	<ui:define name="colunasTabela">
+	
+		<p:column headerText="Categoria">
+			<h:outputText value="#{linha.categoriaDocumento.descricao}" />
+		</p:column>
+	
+		<p:column headerText="Data Cadastro">
+			<h:outputText value="#{linha.dataCadastro}" >
+				<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="America/Sao_Paulo" />
+			</h:outputText>
+		</p:column>
+		
+		<p:column headerText="Visualizar" styleClass="coluna5">
+			<a target="_blank" href="${linha.caminhoDownloadCompleto}">
+				<h:graphicImage value="../resources/images/lupa.png" width="16" style="border: 0px" />
+			</a>
+		</p:column>
+	
+	</ui:define>
+	
+</ui:composition>

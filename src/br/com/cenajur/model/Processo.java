@@ -33,6 +33,9 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	@Column(name = "data_ajuizamento")
 	private Date dataAjuizamento;
 	
+	@Column(name = "data_cadastro")
+	private Date dataCadastro;
+	
 	@Column(name = "numero_processo")
 	private String numeroProcesso;
 	
@@ -95,6 +98,10 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	@ManyToOne
 	@JoinColumn(name = "colaborador_atualizacao_id")
 	private Colaborador colaboradorAtualizacao;
+	
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL)
+	private List<DocumentoProcesso> documentos;
 
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -196,6 +203,14 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		this.dataAbertura = dataAbertura;
 	}
 
+	public Date getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
+
 	public TipoParte getTipoParte() {
 		return tipoParte;
 	}
@@ -262,6 +277,14 @@ public class Processo extends TSActiveRecordAb<Processo>{
 
 	public void setColaboradorAtualizacao(Colaborador colaboradorAtualizacao) {
 		this.colaboradorAtualizacao = colaboradorAtualizacao;
+	}
+
+	public List<DocumentoProcesso> getDocumentos() {
+		return documentos;
+	}
+
+	public void setDocumentos(List<DocumentoProcesso> documentos) {
+		this.documentos = documentos;
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 import br.com.cenajur.util.CenajurUtil;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
@@ -26,6 +29,9 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private Long id;
+	
+	@Column(name = "data_cadastro")
+	private Date dataCadastro;
 	
 	private String matricula;
 	
@@ -124,8 +130,20 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	@JoinColumn(name = "processo_id") })
 	private List<Processo> processos;
 	
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	private List<DocumentoCliente> documentos;
+	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
+	}
+
+	public Date getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
 	}
 
 	public String getMatricula() {
@@ -410,6 +428,14 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 
 	public void setProcessos(List<Processo> processos) {
 		this.processos = processos;
+	}
+
+	public List<DocumentoCliente> getDocumentos() {
+		return documentos;
+	}
+
+	public void setDocumentos(List<DocumentoCliente> documentos) {
+		this.documentos = documentos;
 	}
 
 	@Override
