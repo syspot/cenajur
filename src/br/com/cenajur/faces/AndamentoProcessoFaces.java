@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.context.RequestContext;
@@ -26,7 +26,7 @@ import br.com.topsys.exception.TSSystemException;
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
 
-@SessionScoped
+@ViewScoped
 @ManagedBean(name = "andamentoProcessoFaces")
 public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 
@@ -59,17 +59,16 @@ public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 		getCrudModel().setDocumentos(new ArrayList<DocumentoAndamentoProcesso>());
 		setDocumentoAndamentoProcesso(new DocumentoAndamentoProcesso());
 		setFlagAlterar(Boolean.FALSE);
-		return "sucesso";
+		return null;
 	}
 	
 	@Override
 	public String limparPesquisa(){
-		this.setFieldOrdem("descricao");
 		setCrudPesquisaModel(new AndamentoProcesso());
 		getCrudPesquisaModel().setProcesso(new Processo());
 		getCrudPesquisaModel().setTipoAndamentoProcesso(new TipoAndamentoProcesso());
 		setGrid(new ArrayList<AndamentoProcesso>());
-		return "sucesso";
+		return null;
 	}
 	
 	@Override
@@ -80,6 +79,11 @@ public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 		if(TSUtil.isEmpty(getCrudModel().getProcesso().getId())){
 			erro = true;
 			CenajurUtil.addErrorMessage("Processo: Campo obrigatório");
+		}
+
+		if(getCrudModel().getDescricao().length() > 500){
+			erro = true;
+			CenajurUtil.addErrorMessage("Descrição: Campo muito longo, tamanho máximo de 500 caracteres");
 		}
 		
 		return erro;
@@ -123,12 +127,12 @@ public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 	public String addProcesso(){
 		getCrudModel().setProcesso(this.processoSelecionado);
 		CenajurUtil.addInfoMessage("Processo adicionado com sucesso");
-		return "sucesso";
+		return null;
 	}
 	
 	public void enviarDocumento(FileUploadEvent event) {
 		getDocumentoAndamentoProcesso().setDocumento(event.getFile());
-		getDocumentoAndamentoProcesso().setArquivo(CenajurUtil.obterNomeArquivo(event.getFile()));
+		getDocumentoAndamentoProcesso().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
 	}
 		
 	public String addDocumento(){
@@ -148,12 +152,12 @@ public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 		getCrudModel().getDocumentos().add(getDocumentoAndamentoProcesso());
 		getCategoriaDocumento().setId(null);
 		setDocumentoAndamentoProcesso(new DocumentoAndamentoProcesso());
-		return "sucesso";
+		return null;
 	}
 	
 	public String removerDocumento(){
 		getCrudModel().getDocumentos().remove(this.documentoSelecionado);
-		return "sucesso";
+		return null;
 	}
 
 	public List<SelectItem> getTiposAndamentosProcessos() {

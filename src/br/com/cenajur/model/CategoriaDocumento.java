@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.cenajur.util.CenajurUtil;
@@ -20,7 +21,8 @@ import br.com.topsys.util.TSUtil;
 public class CategoriaDocumento extends TSActiveRecordAb<CategoriaDocumento>{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "categorias_documentos_id")
+	@SequenceGenerator(name="categorias_documentos_id", sequenceName="categorias_documentos_id_seq")
 	private Long id;
 	
 	private String descricao;
@@ -103,6 +105,6 @@ public class CategoriaDocumento extends TSActiveRecordAb<CategoriaDocumento>{
 			params.add(tipoCategoria.getId());
 		}
 		
-		return super.find(query.toString(), params.toArray());
+		return super.find(query.toString(), "descricao", params.toArray());
 	}
 }

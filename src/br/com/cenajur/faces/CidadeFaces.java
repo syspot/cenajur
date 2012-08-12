@@ -5,13 +5,13 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 import br.com.cenajur.model.Cidade;
 import br.com.cenajur.model.Estado;
 
-@SessionScoped
+@ViewScoped
 @ManagedBean(name = "cidadeFaces")
 public class CidadeFaces extends CrudFaces<Cidade> {
 
@@ -32,16 +32,16 @@ public class CidadeFaces extends CrudFaces<Cidade> {
 		setCrudModel(new Cidade());
 		getCrudModel().setEstado(new Estado());
 		setFlagAlterar(Boolean.FALSE);
-		return SUCESSO;
+		return null;
 	}
 
 	@Override
 	public String limparPesquisa(){
-		this.setFieldOrdem("descricao");
+		
 		setCrudPesquisaModel(new Cidade());
 		getCrudPesquisaModel().setEstado(new Estado());
 		setGrid(new ArrayList<Cidade>());
-		return "sucesso";
+		return null;
 	}
 
 	public List<SelectItem> getEstados() {

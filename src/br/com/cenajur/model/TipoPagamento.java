@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
@@ -13,7 +14,8 @@ import br.com.topsys.database.hibernate.TSActiveRecordAb;
 public class TipoPagamento extends TSActiveRecordAb<TipoPagamento>{
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="tipos_pagamentos_id")
+	@SequenceGenerator(name="tipos_pagamentos_id", sequenceName="tipos_pagamentos_id_seq")
 	private Long id;
 	
 	private String descricao;

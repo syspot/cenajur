@@ -11,12 +11,14 @@
 		
 		<p:dialog id="dialogCam" widgetVar="dlgCam" header="Capturar Imagem" width="350" height="300" modal="true">
 	  
+	  		<p:ajax update="pgCam" />
+	  		
 	  		<h:panelGrid id="pgCam">
 				
-				<p:photoCam widgetVar="pc" listener="#{mbeanCam.oncapture}" update="pgCam"/>  
+				<p:photoCam widgetVar="pc" listener="#{mbeanCam.oncapture}" update="pgCam" />  
 	  			
 	  			<h:panelGrid columns="1" style="width: 100%; text-align: center">
-	        		<p:commandButton type="button" value="Capturar" onclick="pc.capture(); dlgCam.hide();"/>
+	        		<p:commandButton type="button" value="Capturar" onclick="pc.capture(); dlgCam.hide();" update="pgCam"/>
 		  		</h:panelGrid>
 		  		
 	  		</h:panelGrid>

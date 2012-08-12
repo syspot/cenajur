@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
@@ -27,7 +28,8 @@ import br.com.topsys.util.TSUtil;
 public class Processo extends TSActiveRecordAb<Processo>{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="processos_id")
+	@SequenceGenerator(name="processos_id", sequenceName="processos_id_seq")
 	private Long id;
 	
 	@Column(name = "data_ajuizamento")
@@ -58,10 +60,12 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	
 	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL)
+	@org.hibernate.annotations.OrderBy(clause = "dataAndamento desc")
 	private List<AndamentoProcesso> andamentos;
 	
 	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL)
+	@org.hibernate.annotations.OrderBy(clause = "dataAudiencia desc")
 	private List<Audiencia> audiencias;
 	
 	@ManyToOne
@@ -409,7 +413,7 @@ public class Processo extends TSActiveRecordAb<Processo>{
 			params.add(dataArquivamento);
 		}
 		
-		return super.find(query.toString(), params.toArray());
+		return super.find(query.toString(), "numeroProcesso", params.toArray());
 	}
 	
 	public boolean isProcessoArquivado(){

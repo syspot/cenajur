@@ -22,11 +22,14 @@
 		 		</h:panelGrid>
 		 		
 		 		<h:panelGrid id="pgDocumentoTabAndamento" columns="1" columnClasses="coluna90" style="width:100%">
-		 		
-				<p:outputLabel for="documentoTabAndamento" value="Documento" />
-				<p:fileUpload id="documentoTabAndamento" label="Selecionar Documento" fileUploadListener="#{mbeanDocumento.enviarDocumentoAndamentoProcesso}" auto="true" multiple="false" style="width:90%"/>
-		  		
-			</h:panelGrid>
+			 		
+					<p:outputLabel for="descricaoTabAndamento" value="Descrição" />
+					<p:inputText id="descricaoTabAndamento" required="true" requiredMessage="Descrição: Campo obrigatório" value="#{mbeanDocumento.documentoAndamentoProcesso.descricao}"/>
+			 		
+					<p:outputLabel for="documentoTabAndamento" value="Documento" />
+					<p:fileUpload id="documentoTabAndamento" label="Selecionar Documento" fileUploadListener="#{mbeanDocumento.enviarDocumentoAndamentoProcesso}" auto="true" multiple="false" style="width:90%"/>
+			  		
+				</h:panelGrid>
 			
 			<h:panelGrid columns="1" style="width:100%; text-align:center">
 		  		

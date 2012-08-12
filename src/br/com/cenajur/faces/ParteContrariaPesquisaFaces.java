@@ -4,13 +4,13 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 import br.com.cenajur.model.ParteContraria;
 import br.com.cenajur.model.TipoDocumento;
 
-@SessionScoped
+@ViewScoped
 @ManagedBean(name = "parteContrariaPesquisaFaces")
 public class ParteContrariaPesquisaFaces extends PesquisaFaces<ParteContraria> {
 
@@ -20,7 +20,6 @@ public class ParteContrariaPesquisaFaces extends PesquisaFaces<ParteContraria> {
 	
 	@PostConstruct
 	protected void init() {
-		setFieldOrdem("descricao");
 		this.initCombo();
 		this.limpar();
 	}
@@ -29,7 +28,7 @@ public class ParteContrariaPesquisaFaces extends PesquisaFaces<ParteContraria> {
 	public String limpar() {
 		setModel(new ParteContraria());
 		getModel().setTipoDocumento(new TipoDocumento());
-		return "sucesso";
+		return null;
 	}
 	
 	private void initCombo(){

@@ -1,13 +1,10 @@
 package br.com.cenajur.faces;
 
 import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import javax.faces.model.SelectItem;
-
-import org.apache.commons.beanutils.BeanUtils;
 
 import br.com.topsys.database.hibernate.TSActiveRecordIf;
 import br.com.topsys.exception.TSSystemException;
@@ -19,16 +16,6 @@ public abstract class PesquisaFaces <T extends TSActiveRecordIf<T>>{
 	
 	private List<T> grid;
 	
-	private String fieldOrdem;
-	
-	public String getFieldOrdem() {
-		return fieldOrdem;
-	}
-
-	public void setFieldOrdem(String fieldOrdem) {
-		this.fieldOrdem = fieldOrdem;
-	}
-
 	private Class<T> modelClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	
 	public String limpar(){
@@ -37,37 +24,21 @@ public abstract class PesquisaFaces <T extends TSActiveRecordIf<T>>{
 		} catch (Exception e) {
 			throw new TSSystemException(e);
 		}
-		return "sucesso";
+		return null;
 	}
 	
 	public String find() {
 		
-		this.grid = this.model.findByModel(getFieldOrdem());
+		this.grid = this.model.findByModel();
 		
 		TSFacesUtil.gerarResultadoLista(this.grid);
 		
-		return "sucesso";
+		return null;
 		
 	}
 	
 	protected final List<SelectItem> initCombo(Collection coll,String nomeValue,String nomeLabel) {
-		
-		List<SelectItem> list = new ArrayList<SelectItem>();
-		
-		for(Object o:coll){
-			
-			try {
-			
-				list.add(new SelectItem(BeanUtils.getProperty(o,nomeValue),BeanUtils.getProperty(o,nomeLabel)));
-			
-			} catch (Exception e) {
-				
-				e.printStackTrace();
-				
-				throw new TSSystemException(e);
-			} 
-		}
-		return list;
+		return TSFacesUtil.initCombo(coll, nomeValue, nomeLabel);
 	}
 
 	public T getModel() {

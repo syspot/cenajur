@@ -21,6 +21,7 @@ import br.com.cenajur.util.Constantes;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
+import br.com.topsys.web.util.TSFacesUtil;
 
 public class ProcessoAndamentoUtil {
 
@@ -51,17 +52,17 @@ public class ProcessoAndamentoUtil {
 	}
 	
 	private void initCombo(){
-		this.categoriasDocumentos = CenajurUtil.initCombo(getCategoriaDocumento().findByModel("descricao"), "id", "descricao");
+		this.categoriasDocumentos = TSFacesUtil.initCombo(getCategoriaDocumento().findByModel("descricao"), "id", "descricao");
 	}
 	
 	public String limpar(){
 		this.initAndamentoProcesso();
-		return "sucesso";
+		return null;
 	}
 	
 	public void enviarDocumentoAndamentoProcesso(FileUploadEvent event) {
 		getDocumentoAndamentoProcesso().setDocumento(event.getFile());
-		getDocumentoAndamentoProcesso().setArquivo(CenajurUtil.obterNomeArquivo(event.getFile()));
+		getDocumentoAndamentoProcesso().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
 	}
 		
 	public String addDocumentoAndamentoProcesso(){
@@ -81,16 +82,34 @@ public class ProcessoAndamentoUtil {
 		getAndamentoProcesso().getDocumentos().add(getDocumentoAndamentoProcesso());
 		getCategoriaDocumento().setId(null);
 		setDocumentoAndamentoProcesso(new DocumentoAndamentoProcesso());
-		return "sucesso";
+		return null;
 	}
 	
 	public String removerDocumentoAndamentoProcesso(){
 		this.andamentoProcesso.getDocumentos().remove(this.documentoAndamentoProcessoSelecionado);
-		return "sucesso";
+		return null;
+	}
+	
+	private boolean validaCampos(){
+		
+		boolean erro = false;
+		
+
+		if(this.andamentoProcesso.getDescricao().length() > 500){
+			erro = true;
+			CenajurUtil.addErrorMessage("Descrição: Campo muito longo, tamanho máximo de 500 caracteres");
+		}
+		
+		return erro;
 	}
 	
 	public String cadastrarAndamentoProcesso() throws TSApplicationException{
 		
+		if(validaCampos()){
+			return null;
+		}
+		
+		this.andamentoProcesso.setTipoAndamentoProcesso(this.andamentoProcesso.getTipoAndamentoProcesso().getById());
 		this.andamentoProcesso.setDataAtualizacao(new Date());
 		this.andamentoProcesso.setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 		this.andamentoProcesso.setDataCadastro(new Date());
@@ -110,17 +129,21 @@ public class ProcessoAndamentoUtil {
 		CenajurUtil.addInfoMessage("Andamento cadastrado com sucesso");
 		this.initAndamentoProcesso();
 		getCrudModel().setAndamentos(this.andamentoProcesso.findByModel("descricao"));
-		return "sucesso";
+		return null;
 	}
 	
 	public String removerAndamentoProcesso() throws TSApplicationException{
 		getCrudModel().getAndamentos().remove(this.andamentoProcessoSelecionado);
 		getCrudModel().update();
 		CenajurUtil.addInfoMessage("Andamento removido com sucesso");
-		return "sucesso";
+		return null;
 	}
 	
 	public String alterarAndamentoProcesso() throws TSApplicationException{
+		
+		if(validaCampos()){
+			return null;
+		}
 		
 		this.andamentoProcesso.setDataAtualizacao(new Date());
 		this.andamentoProcesso.setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
@@ -146,12 +169,12 @@ public class ProcessoAndamentoUtil {
 		this.initAndamentoProcesso();
 		getCrudModel().setAndamentos(this.andamentoProcesso.findByModel("descricao"));
 		CenajurUtil.addInfoMessage("Alteração realizada com sucesso");
-		return "sucesso";
+		return null;
 	}
 	
 	public String obterAndamentoProcesso(){
 		this.andamentoProcesso = this.andamentoProcesso.getById();
-		return "sucesso";
+		return null;
 	}
 	
 	public List<SelectItem> getCategoriasDocumentos() {

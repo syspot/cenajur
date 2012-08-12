@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
@@ -16,7 +17,8 @@ import br.com.topsys.util.TSUtil;
 public class PermissaoGrupo extends TSActiveRecordAb<PermissaoGrupo> {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="permissoes_grupos_id")
+	@SequenceGenerator(name="permissoes_grupos_id", sequenceName="permissoes_grupos_id_seq")
 	private Long id;
 
 	@ManyToOne

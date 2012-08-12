@@ -99,6 +99,10 @@
 					  			<h:outputText value="#{linha.advogado.nome}" />
 					  		</p:column>
 					  	
+					  		<p:column headerText="Situação">
+					  			<h:outputText value="#{linha.situacaoAudiencia.descricao}" styleClass="#{linha.situacaoAudiencia.css}"/>
+					  		</p:column>
+					  	
 					  		<p:column headerText="Data">
 					  			<h:outputText value="#{linha.dataAudiencia}" >
 					  				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />

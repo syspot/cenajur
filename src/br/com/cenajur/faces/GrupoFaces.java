@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import br.com.cenajur.model.Grupo;
 import br.com.cenajur.model.Permissao;
 import br.com.cenajur.model.PermissaoGrupo;
 import br.com.cenajur.util.CenajurUtil;
 
-@SessionScoped
+@ViewScoped
 @ManagedBean(name = "grupoFaces")
 public class GrupoFaces extends CrudFaces<Grupo> {
 
@@ -21,6 +21,7 @@ public class GrupoFaces extends CrudFaces<Grupo> {
 	@PostConstruct
 	protected void init() {
 		this.clearFields();
+		
 	}
 	
 	@Override
@@ -28,15 +29,9 @@ public class GrupoFaces extends CrudFaces<Grupo> {
 		setCrudModel(new Grupo());
 		getCrudModel().setPermissoesGrupos(new ArrayList<PermissaoGrupo>());
 		setFlagAlterar(Boolean.FALSE);
-		return SUCESSO;
+		return null;
 	}
 		
-	@Override
-	public String limparPesquisa(){
-		this.setFieldOrdem("descricao");
-		return super.limparPesquisa();
-	}
-	
 	public String addPermissao(){
 		
 		PermissaoGrupo permissaoGrupo = new PermissaoGrupo();
@@ -57,12 +52,12 @@ public class GrupoFaces extends CrudFaces<Grupo> {
 			CenajurUtil.addErrorMessage("Essa permissão já foi adicionada");
 		}
 		
-		return SUCESSO;
+		return null;
 	}
 	
 	public String removePermissao(){
 		getCrudModel().getPermissoesGrupos().remove(this.permissaoGrupoSelecionada);
-		return "sucesso";
+		return null;
 	}
 
 	public Permissao getPermissaoSelecionada() {

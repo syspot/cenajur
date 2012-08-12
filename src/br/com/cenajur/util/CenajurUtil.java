@@ -2,21 +2,17 @@ package br.com.cenajur.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.io.FileUtils;
 import org.primefaces.model.UploadedFile;
 
 import br.com.topsys.exception.TSSystemException;
+import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSDateUtil;
 import br.com.topsys.util.TSParseUtil;
 import br.com.topsys.util.TSUtil;
@@ -114,6 +110,10 @@ public class CenajurUtil {
 		}
 	}
 	
+	public static String obterNomeTemporarioArquivo(UploadedFile file) {
+		return Constantes.DOC_TEMP + TSFile.obterExtensaoArquivo(obterNomeArquivo(file));
+	}
+	
 	public static String getAnoMes(Date data) {
 		return TSUtil.isEmpty(data) ? null : TSParseUtil.dateToString(data, TSDateUtil.YYYY) + File.separator + TSParseUtil.dateToString(data, TSDateUtil.MM) + File.separator;
 	}
@@ -121,21 +121,13 @@ public class CenajurUtil {
 	public static String getAnoMesWeb(Date data) {
 		return TSUtil.isEmpty(data) ? null : TSParseUtil.dateToString(data, TSDateUtil.YYYY) + "/" + TSParseUtil.dateToString(data, TSDateUtil.MM) + "/";
 	}
-	
-	public static final List<SelectItem> initCombo(Collection coll,String nomeValue,String nomeLabel) {
-		List<SelectItem> list=new ArrayList<SelectItem>();
-		for(Object o:coll){
-			try {
-				list.add(new SelectItem(BeanUtils.getProperty(o,nomeValue),BeanUtils.getProperty(o,nomeLabel)));
-			} catch (Exception e) {
-				e.printStackTrace();
-				throw new TSSystemException(e);
-			} 
-		}
-		return list;
-	}
-	
+		
 	public static long gerarNumeroAleatorio() {
 		return (long) ((10000 * Math.random()) * (100 * Math.random()));
 	}
+	
+	public static String obterResumoGrid(String texto, int tamanho){
+		return texto.length() < tamanho ? texto : texto.substring(0, tamanho+1) + "...";
+	}
+	
 }

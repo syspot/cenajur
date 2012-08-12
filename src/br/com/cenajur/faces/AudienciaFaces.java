@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.context.RequestContext;
@@ -29,7 +29,7 @@ import br.com.topsys.exception.TSSystemException;
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
 
-@SessionScoped
+@ViewScoped
 @ManagedBean(name = "audienciaFaces")
 public class AudienciaFaces extends CrudFaces<Audiencia> {
 
@@ -69,19 +69,18 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 		getCrudModel().setDocumentos(new ArrayList<DocumentoAudiencia>());
 		setDocumentoAudiencia(new DocumentoAudiencia());
 		setFlagAlterar(Boolean.FALSE);
-		return "sucesso";
+		return null;
 	}
 	
 	@Override
 	public String limparPesquisa(){
-		this.setFieldOrdem("descricao");
 		setCrudPesquisaModel(new Audiencia());
 		getCrudPesquisaModel().setAdvogado(new Colaborador());
 		getCrudPesquisaModel().setProcesso(new Processo());
 		getCrudPesquisaModel().setSituacaoAudiencia(new SituacaoAudiencia());
 		getCrudPesquisaModel().setVara(new Vara());
 		setGrid(new ArrayList<Audiencia>());
-		return "sucesso";
+		return null;
 	}
 	
 	@Override
@@ -128,6 +127,11 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 			erro = true;
 			CenajurUtil.addErrorMessage("Processo: Campo obrigatório");
 		}
+
+		if(getCrudModel().getDescricao().length() > 500){
+			erro = true;
+			CenajurUtil.addErrorMessage("Descrição: Campo muito longo, tamanho máximo de 500 caracteres");
+		}
 		
 		return erro;
 	}
@@ -135,12 +139,12 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 	public String addProcesso(){
 		getCrudModel().setProcesso(this.processoSelecionado);
 		CenajurUtil.addInfoMessage("Processo adicionado com sucesso");
-		return "sucesso";
+		return null;
 	}
 	
 	public void enviarDocumento(FileUploadEvent event) {
 		getDocumentoAudiencia().setDocumento(event.getFile());
-		getDocumentoAudiencia().setArquivo(CenajurUtil.obterNomeArquivo(event.getFile()));
+		getDocumentoAudiencia().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
 	}
 		
 	public String addDocumento(){
@@ -160,12 +164,12 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 		getCrudModel().getDocumentos().add(getDocumentoAudiencia());
 		getCategoriaDocumento().setId(null);
 		setDocumentoAudiencia(new DocumentoAudiencia());
-		return "sucesso";
+		return null;
 	}
 	
 	public String removerDocumento(){
 		getCrudModel().getDocumentos().remove(this.documentoSelecionado);
-		return "sucesso";
+		return null;
 	}
 
 	public List<SelectItem> getVaras() {

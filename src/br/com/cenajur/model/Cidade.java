@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.cenajur.util.CenajurUtil;
@@ -19,7 +20,8 @@ import br.com.topsys.util.TSUtil;
 public class Cidade extends TSActiveRecordAb<Cidade>{
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="cidades_id")
+	@SequenceGenerator(name="cidades_id", sequenceName="cidades_id_seq")
 	private Long id;
 	
 	private String descricao;
@@ -101,7 +103,7 @@ public class Cidade extends TSActiveRecordAb<Cidade>{
 			params.add(estado.getId());
 		}
 		
-		return super.find(query.toString(), params.toArray());
+		return super.find(query.toString(), "descricao", params.toArray());
 	}
 	
 	public List<Cidade> findCombo() {
@@ -114,7 +116,7 @@ public class Cidade extends TSActiveRecordAb<Cidade>{
 		
 		params.add(estado.getId());
 		
-		return super.find(query.toString(), params.toArray());
+		return super.find(query.toString(), null, params.toArray());
 	}
 	
 }

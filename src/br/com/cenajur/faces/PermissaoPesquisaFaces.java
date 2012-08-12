@@ -4,13 +4,13 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 import br.com.cenajur.model.Menu;
 import br.com.cenajur.model.Permissao;
 
-@SessionScoped
+@ViewScoped
 @ManagedBean(name = "permissaoPesquisaFaces")
 public class PermissaoPesquisaFaces extends PesquisaFaces<Permissao> {
 
@@ -18,7 +18,6 @@ public class PermissaoPesquisaFaces extends PesquisaFaces<Permissao> {
 	
 	@PostConstruct
 	protected void init() {
-		setFieldOrdem("descricao");
 		this.initCombo();
 		this.limpar();
 	}
@@ -27,8 +26,7 @@ public class PermissaoPesquisaFaces extends PesquisaFaces<Permissao> {
 	public String limpar() {
 		setModel(new Permissao());
 		getModel().setMenu(new Menu());
-		//return this.find();
-		return "sucesso";
+		return null;
 	}
 	
 	private void initCombo(){

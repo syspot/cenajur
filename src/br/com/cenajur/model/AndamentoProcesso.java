@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
@@ -27,7 +28,8 @@ import br.com.topsys.util.TSUtil;
 public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="andamentos_processos_id")
+	@SequenceGenerator(name="andamentos_processos_id", sequenceName="andamentos_processos_id_seq")
 	private Long id;
 	
 	@ManyToOne
@@ -198,6 +200,6 @@ public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 			params.add(CenajurUtil.tratarString(descricao));
 		}
 		
-		return super.find(query.toString(), params.toArray());
+		return super.find(query.toString(), "dataAndamento", params.toArray());
 	}
 }

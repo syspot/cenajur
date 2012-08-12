@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -26,7 +27,8 @@ import br.com.topsys.util.TSUtil;
 public class DocumentoGeral extends TSActiveRecordAb<DocumentoGeral>{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="documentos_gerais_id")
+	@SequenceGenerator(name="documentos_gerais_id", sequenceName="documentos_gerais_id_seq")
 	private Long id;
 	
 	private String arquivo;
@@ -77,6 +79,10 @@ public class DocumentoGeral extends TSActiveRecordAb<DocumentoGeral>{
 	
 	public String getDescricao() {
 		return descricao;
+	}
+	
+	public String getDescricaoResumo() {
+		return CenajurUtil.obterResumoGrid(descricao, 70);
 	}
 
 	public void setDescricao(String descricao) {
@@ -149,7 +155,7 @@ public class DocumentoGeral extends TSActiveRecordAb<DocumentoGeral>{
 			params.add(CenajurUtil.tratarString(descricao));
 		}
 		
-		return super.find(query.toString(), params.toArray());
+		return super.find(query.toString(), "descricao", params.toArray());
 	}
 	
 }

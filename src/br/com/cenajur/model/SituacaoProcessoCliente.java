@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
@@ -14,10 +15,13 @@ import br.com.topsys.util.TSUtil;
 public class SituacaoProcessoCliente extends TSActiveRecordAb<SituacaoProcessoCliente>{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="situacoes_processos_clientes_id")
+	@SequenceGenerator(name="situacoes_processos_clientes_id", sequenceName="situacoes_processos_clientes_id_seq")
 	private Long id;
 	
 	private String descricao;
+	
+	private String css;
 
 	public SituacaoProcessoCliente() {
 	}
@@ -40,6 +44,14 @@ public class SituacaoProcessoCliente extends TSActiveRecordAb<SituacaoProcessoCl
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public String getCss() {
+		return css;
+	}
+
+	public void setCss(String css) {
+		this.css = css;
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.cenajur.util.CenajurUtil;
@@ -21,7 +22,8 @@ import br.com.topsys.util.TSUtil;
 public class Permissao extends TSActiveRecordAb<Permissao> {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="permissoes_id")
+	@SequenceGenerator(name="permissoes_id", sequenceName="permissoes_id_seq")
 	private Long id;
 	
 	private String descricao;
@@ -157,6 +159,6 @@ public class Permissao extends TSActiveRecordAb<Permissao> {
 			params.add(menu.getId());
 		}
 		
-		return super.find(query.toString(), params.toArray());
+		return super.find(query.toString(), "descricao", params.toArray());
 	}
 }

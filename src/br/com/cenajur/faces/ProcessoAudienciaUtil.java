@@ -23,6 +23,7 @@ import br.com.cenajur.util.Constantes;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
+import br.com.topsys.web.util.TSFacesUtil;
 
 public class ProcessoAudienciaUtil {
 
@@ -55,17 +56,17 @@ public class ProcessoAudienciaUtil {
 	}
 	
 	private void initCombo(){
-		this.categoriasDocumentos = CenajurUtil.initCombo(getCategoriaDocumento().findByModel("descricao"), "id", "descricao");
+		this.categoriasDocumentos = TSFacesUtil.initCombo(getCategoriaDocumento().findByModel("descricao"), "id", "descricao");
 	}
 
 	public String limpar(){
 		this.initAudiencia();
-		return "sucesso";
+		return null;
 	}
 
 	public void enviarDocumentoAudiencia(FileUploadEvent event) {
 		getDocumentoAudiencia().setDocumento(event.getFile());
-		getDocumentoAudiencia().setArquivo(CenajurUtil.obterNomeArquivo(event.getFile()));
+		getDocumentoAudiencia().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
 	}
 	
 	public String addDocumentoAudiencia(){
@@ -85,15 +86,34 @@ public class ProcessoAudienciaUtil {
 		getAudiencia().getDocumentos().add(getDocumentoAudiencia());
 		getCategoriaDocumento().setId(null);
 		setDocumentoAudiencia(new DocumentoAudiencia());
-		return "sucesso";
+		return null;
 	}
 	
 	public String removerDocumentoAudiencia(){
 		this.audiencia.getDocumentos().remove(this.documentoAudienciaSelecionado);
-		return "sucesso";
+		return null;
+	}
+	
+	private boolean validaCampos(){
+		
+		boolean erro = false;
+		
+
+		if(this.audiencia.getDescricao().length() > 500){
+			erro = true;
+			CenajurUtil.addErrorMessage("Descrição: Campo muito longo, tamanho máximo de 500 caracteres");
+		}
+		
+		return erro;
 	}
 	
 	public String cadastrarAudiencia() throws TSApplicationException{
+		
+		if(validaCampos()){
+			return null;
+		}
+		
+		this.audiencia.setAdvogado(this.audiencia.getAdvogado().getById());
 		this.audiencia.setDataAtualizacao(new Date());
 		this.audiencia.setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 		this.audiencia.setDataCadastro(new Date());
@@ -113,17 +133,22 @@ public class ProcessoAudienciaUtil {
 		CenajurUtil.addInfoMessage("Audiência cadastrada com sucesso");
 		this.initAudiencia();
 		getCrudModel().setAudiencias(this.audiencia.findByModel("descricao"));
-		return "sucesso";
+		return null;
 	}
 	
 	public String removerAudiencia() throws TSApplicationException{
 		getCrudModel().getAudiencias().remove(this.audienciaSelecionada);
 		getCrudModel().update();
 		CenajurUtil.addInfoMessage("Audiência removida com sucesso");
-		return "sucesso";
+		return null;
 	}
 	
 	public String alterarAudiencia() throws TSApplicationException{
+		
+		if(validaCampos()){
+			return null;
+		}
+		
 		this.audiencia.setDataAtualizacao(new Date());
 		this.audiencia.setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 		this.audiencia.update();
@@ -148,12 +173,12 @@ public class ProcessoAudienciaUtil {
 		this.initAudiencia();
 		getCrudModel().setAudiencias(this.audiencia.findByModel("descricao"));
 		CenajurUtil.addInfoMessage("Alteração realizada com sucesso");
-		return "sucesso";
+		return null;
 	}
 	
 	public String obterAudiencia(){
 		this.audiencia = this.audiencia.getById();
-		return "sucesso";
+		return null;
 	}
 	
 	public List<SelectItem> getCategoriasDocumentos() {

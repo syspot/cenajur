@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.cenajur.util.CenajurUtil;
@@ -22,7 +23,8 @@ import br.com.topsys.util.TSUtil;
 public class ParteContraria extends TSActiveRecordAb<ParteContraria>{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="partes_contrarias_id")
+	@SequenceGenerator(name="partes_contrarias_id", sequenceName="partes_contrarias_id_seq")
 	private Long id;
 	
 	private String descricao;
@@ -195,7 +197,7 @@ public class ParteContraria extends TSActiveRecordAb<ParteContraria>{
 			params.add(oabAdvogado);
 		}
 		
-		return super.find(query.toString(), params.toArray());
+		return super.find(query.toString(), "descricao", params.toArray());
 	}	
 	
 }

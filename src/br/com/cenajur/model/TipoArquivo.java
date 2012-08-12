@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.cenajur.util.CenajurUtil;
@@ -18,7 +19,8 @@ import br.com.topsys.util.TSUtil;
 public class TipoArquivo extends TSActiveRecordAb<TipoArquivo>{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="tipos_arquivos_id")
+	@SequenceGenerator(name="tipos_arquivos_id", sequenceName="tipos_arquivos_id_seq")
 	private Long id;
 	
 	private String descricao;
@@ -80,14 +82,8 @@ public class TipoArquivo extends TSActiveRecordAb<TipoArquivo>{
 		if(!TSUtil.isEmpty(descricao)){
 			params.add(CenajurUtil.tratarString(descricao));
 		}
-		
-	      
-		    query.append("order by ");
 	
-			query.append(fieldsOrderBy.toString());
-		
-		
-		return super.find(query.toString(), params.toArray());
+		return super.find(query.toString(), "descricao", params.toArray());
 	}
 	
 }

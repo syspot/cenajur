@@ -29,6 +29,7 @@
  		<mapping class="br.com.cenajur.model.DocumentoAudiencia" />
  		<mapping class="br.com.cenajur.model.DocumentoCliente" />
  		<mapping class="br.com.cenajur.model.DocumentoGeral" />
+ 		<mapping class="br.com.cenajur.model.DocumentoPesquisa" />
  		<mapping class="br.com.cenajur.model.DocumentoProcesso" />
  		<mapping class="br.com.cenajur.model.Estado" />
  		<mapping class="br.com.cenajur.model.EstadoCivil" />

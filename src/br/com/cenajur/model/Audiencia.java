@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
@@ -27,7 +28,8 @@ import br.com.topsys.util.TSUtil;
 public class Audiencia extends TSActiveRecordAb<Audiencia>{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="audiencias_id")
+	@SequenceGenerator(name="audiencias_id", sequenceName="audiencias_id_seq")
 	private Long id;
 	
 	@ManyToOne
@@ -236,6 +238,6 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 			params.add(CenajurUtil.tratarString(descricao));
 		}
 		
-		return super.find(query.toString(), params.toArray());
+		return super.find(query.toString(), "dataAudiencia", params.toArray());
 	}
 }

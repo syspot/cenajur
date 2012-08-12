@@ -5,14 +5,14 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 import br.com.cenajur.model.Cidade;
 import br.com.cenajur.model.Estado;
 import br.com.cenajur.model.Lotacao;
 
-@SessionScoped
+@ViewScoped
 @ManagedBean(name = "lotacaoFaces")
 public class LotacaoFaces extends CrudFaces<Lotacao> {
 
@@ -32,12 +32,12 @@ public class LotacaoFaces extends CrudFaces<Lotacao> {
 	
 	public String atualizarComboCidades(){
 		this.cidades = super.initCombo(getCrudModel().getCidade().findCombo(), "id", "descricao");
-		return "sucesso";
+		return null;
 	}
 	
 	public String atualizarComboCidadesPesquisa(){
 		this.cidadesPesquisa = super.initCombo(getCrudPesquisaModel().getCidade().findCombo(), "id", "descricao");
-		return "sucesso";
+		return null;
 	}
 	
 	@Override
@@ -46,17 +46,17 @@ public class LotacaoFaces extends CrudFaces<Lotacao> {
 		getCrudModel().setCidade(new Cidade());
 		getCrudModel().getCidade().setEstado(new Estado());
 		setFlagAlterar(Boolean.FALSE);
-		return SUCESSO;
+		return null;
 	}
 
 	@Override
 	public String limparPesquisa(){
-		this.setFieldOrdem("descricao");
+		
 		setCrudPesquisaModel(new Lotacao());
 		getCrudPesquisaModel().setCidade(new Cidade());
 		getCrudPesquisaModel().getCidade().setEstado(new Estado());
 		setGrid(new ArrayList<Lotacao>());
-		return "sucesso";
+		return null;
 	}
 	
 	@Override

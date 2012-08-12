@@ -31,7 +31,6 @@ import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
 import br.com.topsys.exception.TSApplicationException;
-import br.com.topsys.exception.TSSystemException;
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
 
@@ -90,18 +89,17 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		getCrudModel().setDocumentos(new ArrayList<DocumentoCliente>());
 		setDocumentoCliente(new DocumentoCliente());
 		setFlagAlterar(Boolean.FALSE);
-		return SUCESSO;
+		return null;
 	}
 
 	@Override
 	public String limparPesquisa(){
-		this.setFieldOrdem("nome");
 		setGrid(new ArrayList<Cliente>());
 		setCrudPesquisaModel(new Cliente());
 		getCrudPesquisaModel().setCidade(new Cidade());
 		getCrudPesquisaModel().getCidade().setEstado(new Estado());
 		getCrudPesquisaModel().setFlagAtivo(Boolean.TRUE);
-		return "sucesso";
+		return null;
 	}
 	
 	@Override
@@ -159,7 +157,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	}
 	
 	@Override
-	protected void posPersist() throws TSSystemException, TSApplicationException{
+	protected void posPersist() throws TSApplicationException{
 		
 		Cliente aux = getCrudModel().getById();
 		
@@ -178,10 +176,14 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 			posicao++;
 		}
 		
-		if(!TSUtil.isEmpty(getCrudModel().getBytes())){
+		if(!TSUtil.isEmpty(getCrudModel().getBytesImagem())){
 			
-			getCrudModel().setUrlImagem(getCrudModel().getId() + TSFile.obterExtensaoArquivo(getCrudModel().getUrlImagem()));
-			CenajurUtil.criaArquivo(getCrudModel().getBytes(), getCrudModel().getCaminhoUploadCompleto());
+			String nomeImagem = getCrudModel().getId() + TSFile.obterExtensaoArquivo(getCrudModel().getUrlImagem());
+			
+			getCrudModel().setUrlImagem(Constantes.PASTA_DOWNLOAD_IMAGEM + CenajurUtil.getAnoMesWeb(getCrudModel().getDataCadastro()) + nomeImagem);
+			
+			CenajurUtil.criaArquivo(getCrudModel().getBytesImagem(), Constantes.PASTA_UPLOAD_IMAGEM + CenajurUtil.getAnoMes(getCrudModel().getDataCadastro()) + nomeImagem);
+			
 			getCrudModel().update();
 			
 		}
@@ -192,41 +194,41 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		if(!getCrudModel().getFlagAtivo()){
 			getCrudModel().setMotivoCancelamento(new MotivoCancelamento());
 		}
-		return "sucesso";
+		return null;
 	}
 	
 	public String atualizarComboCidades(){
 		this.cidades = super.initCombo(getCrudModel().getCidade().findCombo(), "id", "descricao");
-		return "sucesso";
+		return null;
 	}
 
 	public String atualizarComboCidadesPesquisa(){
 		this.cidadesPesquisa = super.initCombo(getCrudPesquisaModel().getCidade().findCombo(), "id", "descricao");
-		return "sucesso";
+		return null;
 	}
 	
 	public String addLotacao(){
 		getCrudModel().setLotacao(this.lotacaoSelecionada);
-		return "sucesso";
+		return null;
 	}
 	
 	public void oncapture(CaptureEvent captureEvent) {  
           
         byte[] data = captureEvent.getData();  
         
-        String nomeFoto = CenajurUtil.gerarNumeroAleatorio() + "_foto_cam.jpg";
-		String arquivo = "E:\\imagens\\" + nomeFoto;
+        String nomeFoto = CenajurUtil.gerarNumeroAleatorio() + Constantes.FOTO_CAM_TEMP;
+		String arquivo = Constantes.PASTA_UPLOAD_IMAGEM_TEMP + nomeFoto;
 		
 		CenajurUtil.criaArquivo(data, arquivo);
 		
-		getCrudModel().setUrlImagem("/imagens/" + nomeFoto);
-		getCrudModel().setBytes(data);
+		getCrudModel().setUrlImagem(Constantes.PASTA_DOWNLOAD_IMAGEM_TMP + nomeFoto);
+		getCrudModel().setBytesImagem(data);
 		
     }
 	
 	public void enviarDocumento(FileUploadEvent event) {
 		getDocumentoCliente().setDocumento(event.getFile());
-		getDocumentoCliente().setArquivo(CenajurUtil.obterNomeArquivo(event.getFile()));
+		getDocumentoCliente().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
 	}
 		
 	public String addDocumento(){
@@ -246,12 +248,12 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		getCrudModel().getDocumentos().add(getDocumentoCliente());
 		getCategoriaDocumento().setId(null);
 		setDocumentoCliente(new DocumentoCliente());
-		return "sucesso";
+		return null;
 	}
 	
 	public String removerDocumento(){
 		getCrudModel().getDocumentos().remove(this.documentoSelecionado);
-		return "sucesso";
+		return null;
 	}
 	
 	public List<SelectItem> getEstados() {

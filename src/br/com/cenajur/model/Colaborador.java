@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -23,7 +24,8 @@ import br.com.topsys.util.TSUtil;
 public class Colaborador extends TSActiveRecordAb<Colaborador>{
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="colaboradores_id")
+	@SequenceGenerator(name="colaboradores_id", sequenceName="colaboradores_id_seq")
 	private Long id;
 	
 	private String nome;
@@ -371,7 +373,7 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 			params.add(flagAtivo);
 		}
 		
-		return super.find(query.toString(), params.toArray());
+		return super.find(query.toString(), "nome", params.toArray());
 	}
 	
 }

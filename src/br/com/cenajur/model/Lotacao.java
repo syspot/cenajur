@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.cenajur.util.CenajurUtil;
@@ -19,7 +20,8 @@ import br.com.topsys.util.TSUtil;
 public class Lotacao extends TSActiveRecordAb<Lotacao>{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "lotacoes_id")
+	@SequenceGenerator(name="lotacoes_id", sequenceName="lotacoes_id_seq")
 	private Long id;
 	
 	private String descricao;
@@ -137,7 +139,7 @@ public class Lotacao extends TSActiveRecordAb<Lotacao>{
 			params.add(cidade.getId());
 		}
 		
-		return super.find(query.toString(), params.toArray());
+		return super.find(query.toString(), "descricao", params.toArray());
 	}
 	
 }

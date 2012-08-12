@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.context.RequestContext;
@@ -34,11 +34,10 @@ import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
 import br.com.topsys.exception.TSApplicationException;
-import br.com.topsys.exception.TSSystemException;
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
 
-@SessionScoped
+@ViewScoped
 @ManagedBean(name = "processoFaces")
 public class ProcessoFaces extends CrudFaces<Processo> {
 
@@ -54,6 +53,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	private List<SelectItem> tiposAndamentosProcessos;
 	private List<SelectItem> situacoesAudiencias;
 	private List<SelectItem> categoriasDocumentos;
+	
 	
 	private Cliente clienteSelecionado;
 	private ParteContraria parteContrariaSelecionada;
@@ -116,12 +116,11 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		this.processoAndamentoUtil = new ProcessoAndamentoUtil(getCrudModel());
 		this.processoAudienciaUtil = new ProcessoAudienciaUtil(getCrudModel());
 		setFlagAlterar(Boolean.FALSE);
-		return "sucessso";
+		return null;
 	}
 	
 	@Override
 	public String limparPesquisa(){
-		this.setFieldOrdem("numeroProcesso");
 		setCrudPesquisaModel(new Processo());
 		getCrudPesquisaModel().setObjeto(new Objeto());
 		getCrudPesquisaModel().setTipoProcesso(new TipoProcesso());
@@ -131,7 +130,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		getCrudPesquisaModel().setSituacaoProcesso(new SituacaoProcesso());
 		getCrudPesquisaModel().setAdvogado(new Colaborador());
 		setGrid(new ArrayList<Processo>());
-		return "sucesso";
+		return null;
 	}
 	
 	@Override
@@ -146,7 +145,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	}
 	
 	@Override
-	protected void posPersist() throws TSSystemException, TSApplicationException{
+	protected void posPersist() throws TSApplicationException{
 
 		Processo aux = getCrudModel().getById();
 		
@@ -196,7 +195,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	
 	public void enviarDocumento(FileUploadEvent event) {
 		getDocumentoProcesso().setDocumento(event.getFile());
-		getDocumentoProcesso().setArquivo(CenajurUtil.obterNomeArquivo(event.getFile()));
+		getDocumentoProcesso().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
 	}
 	
 	public String addDocumento(){
@@ -216,22 +215,24 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		getCrudModel().getDocumentos().add(getDocumentoProcesso());
 		getCategoriaDocumento().setId(null);
 		setDocumentoProcesso(new DocumentoProcesso());
-		return "sucesso";
+		return null;
 	}
 	
 	public String removerDocumento(){
 		getCrudModel().getDocumentos().remove(this.documentoSelecionado);
-		return "sucesso";
+		return null;
 	}
 	
 	public String removeCliente(){
 		getCrudModel().getProcessosClientes().remove(this.processoClienteSelecionado);
-		return "sucesso";
+		CenajurUtil.addInfoMessage("Cliente removido com sucesso");
+		return null;
 	}
 	
 	public String removeParteContraria(){
 		getCrudModel().getProcessosPartesContrarias().remove(this.processoParteContrariaSelecionada);
-		return "sucesso";
+		CenajurUtil.addInfoMessage("Parte Contrária removida com sucesso");
+		return null;
 	}
 	
 	public String addCliente(){
@@ -251,7 +252,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 			
 		}
 		
-		return "sucesso";
+		return null;
 	}
 	
 	public String addParteContraria(){
@@ -271,31 +272,31 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 			
 		}
 		
-		return "sucesso";
+		return null;
 	}
 	
 	public String atualizarProcessoCliente() throws TSApplicationException{
 		getCrudModel().getProcessosClientes().get(indexProcessoCliente).setSituacaoProcessoCliente(this.processoClienteSelecionado.getSituacaoProcessoCliente());
 		getCrudModel().getProcessosClientes().get(indexProcessoCliente).setDataArquivamento(this.processoClienteSelecionado.getDataArquivamento());
 		CenajurUtil.addInfoMessage("Alteração realizada com sucesso");
-		return "sucesso";
+		return null;
 	}
 	
 	public String atualizarProcessoParteContraria() throws TSApplicationException{
 		getCrudModel().getProcessosPartesContrarias().get(indexProcessoParteContraria).setSituacaoProcessoParteContraria(this.processoParteContrariaSelecionada.getSituacaoProcessoParteContraria());
 		getCrudModel().getProcessosPartesContrarias().get(indexProcessoParteContraria).setDataArquivamento(this.processoParteContrariaSelecionada.getDataArquivamento());
 		CenajurUtil.addInfoMessage("Alteração realizada com sucesso");
-		return "sucesso";
+		return null;
 	}
 	
 	public String limparDataArquivamentoProcessoCliente(){
 		this.processoClienteSelecionado.setDataArquivamento(null);
-		return "sucesso";
+		return null;
 	}
 	
 	public String limparDataArquivamentoProcessoParteContraria(){
 		this.processoParteContrariaSelecionada.setDataArquivamento(null);
-		return "sucesso";
+		return null;
 	}
 	
 	public List<SelectItem> getObjetos() {

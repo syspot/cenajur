@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.cenajur.util.Constantes;
@@ -19,7 +20,8 @@ import br.com.topsys.database.hibernate.TSActiveRecordAb;
 public class ProcessoCliente extends TSActiveRecordAb<ProcessoCliente>{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="processos_clientes_id")
+	@SequenceGenerator(name="processos_clientes_id", sequenceName="processos_clientes_id_seq")
 	private Long id;
 	
 	@ManyToOne

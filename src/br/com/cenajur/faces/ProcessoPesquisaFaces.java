@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 import br.com.cenajur.model.Colaborador;
@@ -16,7 +16,7 @@ import br.com.cenajur.model.TipoParte;
 import br.com.cenajur.model.TipoProcesso;
 import br.com.cenajur.model.Vara;
 
-@SessionScoped
+@ViewScoped
 @ManagedBean(name = "processoPesquisaFaces")
 public class ProcessoPesquisaFaces extends PesquisaFaces<Processo> {
 
@@ -25,7 +25,6 @@ public class ProcessoPesquisaFaces extends PesquisaFaces<Processo> {
 	
 	@PostConstruct
 	protected void init() {
-		setFieldOrdem("numeroProcesso");
 		this.initCombo();
 		this.limpar();
 	}
@@ -45,7 +44,7 @@ public class ProcessoPesquisaFaces extends PesquisaFaces<Processo> {
 		getModel().setTipoParte(new TipoParte());
 		getModel().setSituacaoProcesso(new SituacaoProcesso());
 		getModel().setAdvogado(new Colaborador());
-		return "sucesso";
+		return null;
 	}
 
 	public List<SelectItem> getSituacoesProcessos() {

@@ -4,14 +4,14 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 import br.com.cenajur.model.Cidade;
 import br.com.cenajur.model.Cliente;
 import br.com.cenajur.model.Estado;
 
-@SessionScoped
+@ViewScoped
 @ManagedBean(name = "clientePesquisaFaces")
 public class ClientePesquisaFaces extends PesquisaFaces<Cliente> {
 
@@ -20,7 +20,6 @@ public class ClientePesquisaFaces extends PesquisaFaces<Cliente> {
 	
 	@PostConstruct
 	protected void init() {
-		setFieldOrdem("nome");
 		this.initCombo();
 		this.limpar();
 	}
@@ -35,12 +34,12 @@ public class ClientePesquisaFaces extends PesquisaFaces<Cliente> {
 		getModel().setCidade(new Cidade());
 		getModel().getCidade().setEstado(new Estado());
 		getModel().setFlagAtivo(Boolean.TRUE);
-		return "sucesso";
+		return null;
 	}
 	
 	public String atualizarComboCidades(){
 		this.cidades = super.initCombo(getModel().getCidade().findCombo(), "id", "descricao");
-		return "sucesso";
+		return null;
 	}
 
 	public List<SelectItem> getEstados() {

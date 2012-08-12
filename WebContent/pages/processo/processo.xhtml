@@ -49,7 +49,7 @@
 						
 						<p:column headerText="Alterar Situação" styleClass="coluna5">
 							<p:commandLink type="button" process="@this" oncomplete="dlgArquivarProcessoCliente.show();" >
-								<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+								<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
 								<f:setPropertyActionListener target="#{mbean.processoClienteSelecionado.situacaoProcessoCliente.id}" value="#{processoCliente.situacaoProcessoCliente.id}" />
 								<f:setPropertyActionListener target="#{mbean.processoClienteSelecionado.dataArquivamento}" value="#{processoCliente.dataArquivamento}" />
 								<f:setPropertyActionListener target="#{mbean.indexProcessoCliente}" value="#{index}" />
@@ -82,7 +82,7 @@
 						
 						<p:column headerText="Alterar Situação" styleClass="coluna5">
 							<p:commandLink type="button" process="@this" oncomplete="dlgArquivarProcessoParteContraria.show();" >
-								<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+								<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
 								<f:setPropertyActionListener target="#{mbean.processoParteContrariaSelecionada.situacaoProcessoParteContraria.id}" value="#{processoParteContraria.situacaoProcessoParteContraria.id}" />
 								<f:setPropertyActionListener target="#{mbean.processoParteContrariaSelecionada.dataArquivamento}" value="#{processoParteContraria.dataArquivamento}" />
 								<f:setPropertyActionListener target="#{mbean.indexProcessoParteContraria}" value="#{index}" />
@@ -277,7 +277,7 @@
 		</p:column>
 
 		<p:column headerText="Situação" styleClass="coluna10">
-			<h:outputText value="#{linha.situacaoProcesso.descricao}" />
+			<h:outputText value="#{linha.situacaoProcesso.descricao}" styleClass="#{linha.situacaoProcesso.css}" />
 		</p:column>
 
 	</ui:define>

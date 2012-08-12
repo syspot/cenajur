@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 import br.com.cenajur.model.Cidade;
@@ -20,7 +20,7 @@ import br.com.cenajur.util.Constantes;
 import br.com.cenajur.util.Utilitarios;
 import br.com.topsys.util.TSUtil;
 
-@SessionScoped
+@ViewScoped
 @ManagedBean(name = "colaboradorFaces")
 public class ColaboradorFaces extends CrudFaces<Colaborador> {
 
@@ -54,18 +54,17 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 		getCrudModel().setTipoColaborador(new TipoColaborador());
 		getCrudModel().setGrupo(new Grupo());
 		setFlagAlterar(Boolean.FALSE);
-		return SUCESSO;
+		return null;
 	}
 	
 	@Override
 	public String limparPesquisa(){
-		super.setFieldOrdem("nome");
 		setCrudPesquisaModel(new Colaborador());
 		getCrudPesquisaModel().setGrupo(new Grupo());
 		getCrudPesquisaModel().setTipoColaborador(new TipoColaborador());
 		getCrudPesquisaModel().setFlagAtivo(Boolean.TRUE);
 		setGrid(new ArrayList<Colaborador>());
-		return SUCESSO;
+		return null;
 	}
 	
 	@Override
@@ -115,7 +114,7 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 	
 	public String atualizarComboCidades(){
 		this.cidades = super.initCombo(getCrudModel().getCidade().findCombo(), "id", "descricao");
-		return "sucesso";
+		return null;
 	}
 	
 	public boolean isAdvogado(){

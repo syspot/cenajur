@@ -18,16 +18,6 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 	
 	private List<T> grid;
 	
-	private String fieldOrdem;
-	
-	public String getFieldOrdem() {
-		return fieldOrdem;
-	}
-
-	public void setFieldOrdem(String fieldOrdem) {
-		this.fieldOrdem = fieldOrdem;
-	}
-
 	private Integer tabIndex;
 	
 	private boolean flagAlterar;
@@ -48,7 +38,7 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 		} catch (Exception e) {
 			throw new TSSystemException(e);
 		}
-		return SUCESSO;
+		return null;
 	}
 	
 	public String limparPesquisa(){
@@ -59,7 +49,7 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 			throw new TSSystemException(e);
 		}
 		
-		return SUCESSO;
+		return null;
 	}
 	
 	protected boolean validaCampos(){
@@ -78,7 +68,7 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 	protected void posDetail(){
 	}
 	
-	protected void posPersist() throws TSSystemException, TSApplicationException{
+	protected void posPersist() throws TSApplicationException{
 	}
 	
 	@Override
@@ -104,7 +94,7 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 		
 		this.setDefaultMessage(Boolean.TRUE);
 		
-		return SUCESSO;
+		return null;
 		
 	}
 	
@@ -132,7 +122,7 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 		
 		this.setDefaultMessage(Boolean.TRUE);
 		
-		return SUCESSO;
+		return null;
 		
 	}
 	
@@ -147,7 +137,7 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 		
 		this.tabIndex = 1;
 		
-		return SUCESSO;
+		return null;
 		
 	}
 	
@@ -162,18 +152,18 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 		
 		this.posDetail();
 		
-		return SUCESSO;
+		return null;
 		
 	}
 	
 	@Override
 	protected String find() {
 		
-		this.grid = this.crudPesquisaModel.findByModel(getFieldOrdem());
+		this.grid = this.crudPesquisaModel.findByModel();
 		
 		TSFacesUtil.gerarResultadoLista(this.grid);
 		
-		return SUCESSO;
+		return null;
 		
 	}
 

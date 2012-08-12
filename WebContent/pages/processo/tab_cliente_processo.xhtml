@@ -15,9 +15,11 @@
 		
 			<c:forEach var="processo" items="#{clienteModel.processos}">
 			
+				<h:outputText value="Processo" styleClass="#{processo.situacaoProcesso.css}" />
+				
 				<p:accordionPanel multiple="false" activeIndex="zero">
-		
-					<p:tab title="Processo #{processo.numeroProcesso}">
+					
+					<p:tab title="#{processo.numeroProcesso}" titleStyleClass="#{processo.situacaoProcesso.css}">
 					
 						<p:tabView>
 						
@@ -164,7 +166,7 @@
 								  		<p:column headerText="Visualizar" styleClass="coluna5">
 								  			<p:commandLink type="button" oncomplete="abrirDialogViewAndamento();" process="@this" global="false">
 												<h:graphicImage value="../resources/images/lupa.png" width="16" style="border: 0px" />
-												<f:setPropertyActionListener target="#{mbean.andamentoProcessoSelecionado}" value="#{linha}" />
+												<f:setPropertyActionListener target="#{clienteFaces.andamentoProcessoSelecionado}" value="#{linha}" />
 											</p:commandLink>
 								  		</p:column>
 								  		

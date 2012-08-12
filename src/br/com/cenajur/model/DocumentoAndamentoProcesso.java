@@ -26,7 +26,7 @@ public class DocumentoAndamentoProcesso extends TSActiveRecordAb<DocumentoAndame
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="documentos_andamentos_processos_id")
-	@SequenceGenerator(allocationSize=10, name="documentos_andamentos_processos_id", sequenceName="documentos_andamentos_processos_id_seq")
+	@SequenceGenerator(name="documentos_andamentos_processos_id", sequenceName="documentos_andamentos_processos_id_seq")
 	private Long id;
 	
 	@ManyToOne
@@ -34,6 +34,8 @@ public class DocumentoAndamentoProcesso extends TSActiveRecordAb<DocumentoAndame
 	private AndamentoProcesso andamentoProcesso;
 	
 	private String arquivo;
+	
+	private String descricao;
 	
 	@ManyToOne
 	@JoinColumn(name = "categoria_documento_id")
@@ -64,6 +66,14 @@ public class DocumentoAndamentoProcesso extends TSActiveRecordAb<DocumentoAndame
 
 	public void setArquivo(String arquivo) {
 		this.arquivo = arquivo;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	public CategoriaDocumento getCategoriaDocumento() {
@@ -140,7 +150,7 @@ public class DocumentoAndamentoProcesso extends TSActiveRecordAb<DocumentoAndame
 			params.add(categoriaDocumento.getId());
 		}
 		
-		return super.find(query.toString(), params.toArray());
+		return super.find(query.toString(), null, params.toArray());
 	}
 	
 }

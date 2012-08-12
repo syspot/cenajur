@@ -22,11 +22,14 @@
 		 		</h:panelGrid>
 		 		
 		 		<h:panelGrid id="pgDocumentoTabAudiencia" columns="1" columnClasses="coluna90" style="width:100%">
-		 		
-				<p:outputLabel for="documentoTabAudiencia" value="Documento" />
-				<p:fileUpload id="documentoTabAudiencia" label="Selecionar Documento" fileUploadListener="#{mbeanDocumento.enviarDocumentoAudiencia}" auto="true" multiple="false" style="width:90%"/>
-		  		
-			</h:panelGrid>
+			 		
+			 		<p:outputLabel for="descricaoTabAudiencia" value="Descrição" />
+					<p:inputText id="descricaoTabAudiencia" required="true" requiredMessage="Descrição: Campo obrigatório" value="#{mbeanDocumento.documentoAudiencia.descricao}"/>
+					
+					<p:outputLabel for="documentoTabAudiencia" value="Documento" />
+					<p:fileUpload id="documentoTabAudiencia" label="Selecionar Documento" fileUploadListener="#{mbeanDocumento.enviarDocumentoAudiencia}" auto="true" multiple="false" style="width:90%"/>
+			  		
+				</h:panelGrid>
 			
 			<h:panelGrid columns="1" style="width:100%; text-align:center">
 		  		

@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
@@ -22,7 +23,8 @@ import br.com.topsys.util.TSUtil;
 public class Grupo extends TSActiveRecordAb<Grupo>  {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="grupos_id")
+	@SequenceGenerator(name="grupos_id", sequenceName="grupos_id_seq")
 	private Long id;
 	
 	private String descricao;
@@ -114,7 +116,7 @@ public class Grupo extends TSActiveRecordAb<Grupo>  {
 			params.add(CenajurUtil.tratarString(descricao));
 		}
 		
-		return super.find(query.toString(), params.toArray());
+		return super.find(query.toString(), "descricao", params.toArray());
 	}
 	
 }

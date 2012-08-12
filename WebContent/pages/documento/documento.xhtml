@@ -58,6 +58,10 @@
 			<h:outputText value="#{linha.categoriaDocumento.descricao}" />
 		</p:column>
 	
+		<p:column headerText="Descrição">
+			<h:outputText value="#{linha.descricaoResumo}" title="#{linha.descricao}" />
+		</p:column>
+	
 		<p:column headerText="Data Cadastro">
 			<h:outputText value="#{linha.dataCadastro}" >
 				<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="America/Sao_Paulo" />

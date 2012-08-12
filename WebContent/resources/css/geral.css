@@ -1067,3 +1067,15 @@ ui-icon.delete {
 	padding: 0.6em 1em;
 	margin-top:5px;
 }
+
+.situacaoAtiva{
+	background-color:#32CD32 !important;
+}
+
+.situacaoSuspensa{
+	background-color:#EEC900 !important;
+}
+
+.situacaoCancelada{
+	background-color:#FF4500 !important;
+}

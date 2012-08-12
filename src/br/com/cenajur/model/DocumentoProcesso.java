@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -24,13 +25,16 @@ import br.com.topsys.util.TSUtil;
 public class DocumentoProcesso extends TSActiveRecordAb<DocumentoProcesso>{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="documentos_processos_id")
+	@SequenceGenerator(name="documentos_processos_id", sequenceName="documentos_processos_id_seq")
 	private Long id;
 	
 	@ManyToOne
 	private Processo processo;
 	
 	private String arquivo;
+	
+	private String descricao;
 	
 	@ManyToOne
 	@JoinColumn(name = "categoria_documento_id")
@@ -61,6 +65,14 @@ public class DocumentoProcesso extends TSActiveRecordAb<DocumentoProcesso>{
 
 	public void setArquivo(String arquivo) {
 		this.arquivo = arquivo;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	public CategoriaDocumento getCategoriaDocumento() {
@@ -137,7 +149,7 @@ public class DocumentoProcesso extends TSActiveRecordAb<DocumentoProcesso>{
 			params.add(categoriaDocumento.getId());
 		}
 		
-		return super.find(query.toString(), params.toArray());
+		return super.find(query.toString(), null, params.toArray());
 	}
 	
 }

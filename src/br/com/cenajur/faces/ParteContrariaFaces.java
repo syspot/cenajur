@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 import br.com.cenajur.model.ParteContraria;
@@ -14,7 +14,7 @@ import br.com.cenajur.model.TipoDocumento;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.topsys.exception.TSApplicationException;
 
-@SessionScoped
+@ViewScoped
 @ManagedBean(name = "parteContrariaFaces")
 public class ParteContrariaFaces extends CrudFaces<ParteContraria> {
 
@@ -39,16 +39,16 @@ public class ParteContrariaFaces extends CrudFaces<ParteContraria> {
 		this.parteContraria = new ParteContraria();
 		this.parteContraria.setTipoDocumento(new TipoDocumento());
 		setFlagAlterar(Boolean.FALSE);
-		return "sucessso";
+		return null;
 	}
 	
 	@Override
 	public String limparPesquisa(){
 		setCrudPesquisaModel(new ParteContraria());
 		getCrudPesquisaModel().setTipoDocumento(new TipoDocumento());
-		this.setFieldOrdem("descricao");
+		
 		setGrid(new ArrayList<ParteContraria>());
-		return "sucesso";
+		return null;
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class ParteContrariaFaces extends CrudFaces<ParteContraria> {
 		this.parteContraria.setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 		this.parteContraria.setDataAtualizacao(new Date());
 		this.parteContraria.save();
-		return "sucesso";
+		return null;
 	}
 	
 	public List<SelectItem> getTiposDocumentos() {

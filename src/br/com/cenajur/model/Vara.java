@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.cenajur.util.CenajurUtil;
@@ -18,7 +19,8 @@ import br.com.topsys.util.TSUtil;
 public class Vara extends TSActiveRecordAb<Vara>{
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="varas_id")
+	@SequenceGenerator(name="varas_id", sequenceName="varas_id_seq")
 	private Long id;
 	
 	private String descricao;
@@ -81,6 +83,6 @@ public class Vara extends TSActiveRecordAb<Vara>{
 			params.add(CenajurUtil.tratarString(descricao));
 		}
 		
-		return super.find(query.toString(), params.toArray());
+		return super.find(query.toString(), "descricao", params.toArray());
 	}	
 }
