@@ -229,7 +229,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	public void enviarDocumento(FileUploadEvent event) {
 		getDocumentoCliente().setDocumento(event.getFile());
 		getDocumentoCliente().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
-		getDocumentoCliente().setDescricao(CenajurUtil.getDescricaoPDF(event.getFile()));
+		getDocumentoCliente().setDescricaoBusca(CenajurUtil.getDescricaoPDF(event.getFile()));
 	}
 		
 	public String addDocumento(){
@@ -238,6 +238,12 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		
 		if(TSUtil.isEmpty(getDocumentoCliente().getDocumento())){
 			CenajurUtil.addErrorMessage("Documento: Campo obrigatório");
+			context.addCallbackParam("sucesso", false);
+			return null;
+		}
+		
+		if(getDocumentoCliente().getDescricao().length() > 100){
+			CenajurUtil.addErrorMessage("Descrição: Campo muito longo, tamanho máximo de 100 caracteres");
 			context.addCallbackParam("sucesso", false);
 			return null;
 		}

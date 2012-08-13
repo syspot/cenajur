@@ -63,7 +63,7 @@ public class ProcessoAndamentoUtil {
 	public void enviarDocumentoAndamentoProcesso(FileUploadEvent event) {
 		getDocumentoAndamentoProcesso().setDocumento(event.getFile());
 		getDocumentoAndamentoProcesso().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
-		getDocumentoAndamentoProcesso().setDescricao(CenajurUtil.getDescricaoPDF(event.getFile()));
+		getDocumentoAndamentoProcesso().setDescricaoBusca(CenajurUtil.getDescricaoPDF(event.getFile()));
 	}
 		
 	public String addDocumentoAndamentoProcesso(){
@@ -72,6 +72,12 @@ public class ProcessoAndamentoUtil {
 		
 		if(TSUtil.isEmpty(getDocumentoAndamentoProcesso().getDocumento())){
 			CenajurUtil.addErrorMessage("Documento: Campo obrigatório");
+			context.addCallbackParam("sucesso", false);
+			return null;
+		}
+
+		if(getDocumentoAndamentoProcesso().getDescricao().length() > 100){
+			CenajurUtil.addErrorMessage("Descrição: Campo muito longo, tamanho máximo de 100 caracteres");
 			context.addCallbackParam("sucesso", false);
 			return null;
 		}

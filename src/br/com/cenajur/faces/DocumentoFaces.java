@@ -84,7 +84,7 @@ public class DocumentoFaces extends CrudFaces<DocumentoGeral> {
 			CenajurUtil.addErrorMessage("Documento: Campo obrigatório");
 		}
 		
-		if(getCrudModel().getDescricao().length() > 500){
+		if(getCrudModel().getDescricao().length() > 100){
 			erro = true;
 			CenajurUtil.addErrorMessage("Descrição: Campo muito longo, tamanho máximo de 500 caracteres");
 		}
@@ -95,7 +95,7 @@ public class DocumentoFaces extends CrudFaces<DocumentoGeral> {
 	public void enviarDocumento(FileUploadEvent event) {
 		getCrudModel().setDocumento(event.getFile());
 		getCrudModel().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
-		getCrudModel().setDescricao(CenajurUtil.getDescricaoPDF(event.getFile()));
+		getCrudModel().setDescricaoBusca(CenajurUtil.getDescricaoPDF(event.getFile()));
 	}
 
 	public List<SelectItem> getCategoriasDocumentos() {

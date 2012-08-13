@@ -41,6 +41,9 @@ public class DocumentoGeral extends TSActiveRecordAb<DocumentoGeral>{
 	
 	private String descricao;
 	
+	@Column(name = "descricao_busca")
+	private String descricaoBusca;
+	
 	@Column(name = "data_cadastro")
 	private Date dataCadastro;
 	
@@ -91,6 +94,14 @@ public class DocumentoGeral extends TSActiveRecordAb<DocumentoGeral>{
 		return descricao;
 	}
 	
+	public String getDescricaoBusca() {
+		return descricaoBusca;
+	}
+
+	public void setDescricaoBusca(String descricaoBusca) {
+		this.descricaoBusca = descricaoBusca;
+	}
+
 	public String getDescricaoResumo() {
 		return CenajurUtil.obterResumoGrid(descricao, 70);
 	}
@@ -142,30 +153,7 @@ public class DocumentoGeral extends TSActiveRecordAb<DocumentoGeral>{
 	
 	@Override
 	public List<DocumentoGeral> findByModel(String... fieldsOrderBy) {
-		
-		StringBuilder query = new StringBuilder();
-		
-		query.append(" from DocumentoGeral dg where 1 = 1 ");
-		
-		if(!TSUtil.isEmpty(categoriaDocumento) && !TSUtil.isEmpty(categoriaDocumento.getId())){
-			query.append("and dg.categoriaDocumento.id = ? ");
-		}
-		
-		if(!TSUtil.isEmpty(descricao)){
-			query.append("and ").append(CenajurUtil.semAcento("dg.descricao")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
-		}
-		
-		List<Object> params = new ArrayList<Object>();
-		
-		if(!TSUtil.isEmpty(categoriaDocumento) && !TSUtil.isEmpty(categoriaDocumento.getId())){
-			params.add(categoriaDocumento.getId());
-		}
-		
-		if(!TSUtil.isEmpty(descricao)){
-			params.add(CenajurUtil.tratarString(descricao));
-		}
-		
-		return super.find(query.toString(), "descricao", params.toArray());
+		return super.findBySQL("select d.* from documentos d where to_tsquery('PORTUGUESE', ?) @@ descricao_busca", getDescricaoBusca());
 	}
 	
 }

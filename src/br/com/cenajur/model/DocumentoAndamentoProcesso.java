@@ -3,6 +3,7 @@ package br.com.cenajur.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,6 +37,9 @@ public class DocumentoAndamentoProcesso extends TSActiveRecordAb<DocumentoAndame
 	private String arquivo;
 	
 	private String descricao;
+	
+	@Column(name = "descricao_busca")
+	private String descricaoBusca;
 	
 	@ManyToOne
 	@JoinColumn(name = "categoria_documento_id")
@@ -74,6 +78,14 @@ public class DocumentoAndamentoProcesso extends TSActiveRecordAb<DocumentoAndame
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public String getDescricaoBusca() {
+		return descricaoBusca;
+	}
+
+	public void setDescricaoBusca(String descricaoBusca) {
+		this.descricaoBusca = descricaoBusca;
 	}
 
 	public CategoriaDocumento getCategoriaDocumento() {
