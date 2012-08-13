@@ -1,5 +1,8 @@
 package br.com.cenajur.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +14,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
+import br.com.topsys.util.TSUtil;
 
 @Entity
 @Table(name = "documentos")
@@ -29,6 +33,12 @@ public class DocumentoPesquisa extends TSActiveRecordAb<DocumentoPesquisa>{
 	
 	@Column(name = "categoria_id")
 	private Long categoriaId;
+	
+	@Column(name = "categoria_descricao")
+	private String categoriaDescricao;
+	
+	@Column(name = "titulo")
+	private String titulo;
 	
 	@ManyToOne
 	@JoinColumn(name = "tipo_categoria_id")
@@ -66,6 +76,22 @@ public class DocumentoPesquisa extends TSActiveRecordAb<DocumentoPesquisa>{
 		this.categoriaId = categoriaId;
 	}
 
+	public String getCategoriaDescricao() {
+		return categoriaDescricao;
+	}
+
+	public void setCategoriaDescricao(String categoriaDescricao) {
+		this.categoriaDescricao = categoriaDescricao;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
 	public TipoCategoria getTipoCategoria() {
 		return tipoCategoria;
 	}
@@ -97,6 +123,28 @@ public class DocumentoPesquisa extends TSActiveRecordAb<DocumentoPesquisa>{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+	@Override
+	public List<DocumentoPesquisa> findByModel(String... fieldsOrderBy) {
+
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" from DocumentoPesquisa dp where 1 = 1 ");
+		
+		if(!TSUtil.isEmpty(descricaoBusca)){
+			query.append("and to_tsquery('PORTUGUESE', ?) @@ descricaoBusca ");
+		}
+		
+		List<Object> params = new ArrayList<Object>();
+		
+		if(!TSUtil.isEmpty(descricaoBusca)){
+			params.add(descricaoBusca);
+		}
+		
+		query.append(" order by tipoCategoria.id ");
+		
+		return super.find(query.toString(), null, params.toArray());
 	}
 	
 }

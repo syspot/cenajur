@@ -2,6 +2,8 @@ package br.com.cenajur.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -9,8 +11,11 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.util.PDFTextStripper;
 import org.primefaces.model.UploadedFile;
 
+import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.exception.TSSystemException;
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSDateUtil;
@@ -130,4 +135,34 @@ public class CenajurUtil {
 		return texto.length() < tamanho ? texto : texto.substring(0, tamanho+1) + "...";
 	}
 	
+	public static String getDescricaoPDF(UploadedFile event){
+		try {
+			return getText(event.getInputstream());
+		} catch (IOException e) {
+			new TSApplicationException(e);
+		}
+		return null;
+	}
+	
+	public static String getText(InputStream stream){
+		PDDocument document=null;
+		PDFTextStripper text=null;
+
+		try {
+			document=PDDocument.load(stream);
+	
+			text = new PDFTextStripper();
+	
+			return text.getText(document);
+
+		} catch (Exception e) {
+
+			throw new TSSystemException(e);
+
+		}finally{
+			try {
+				document.close();
+			} catch (IOException e) {}
+		}
+	}
 }

@@ -33,6 +33,8 @@ public class DocumentoGeral extends TSActiveRecordAb<DocumentoGeral>{
 	
 	private String arquivo;
 	
+	private String titulo;
+	
 	@ManyToOne
 	@JoinColumn(name = "categoria_documento_id")
 	private CategoriaDocumento categoriaDocumento;
@@ -59,6 +61,14 @@ public class DocumentoGeral extends TSActiveRecordAb<DocumentoGeral>{
 
 	public void setArquivo(String arquivo) {
 		this.arquivo = arquivo;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
 	public CategoriaDocumento getCategoriaDocumento() {

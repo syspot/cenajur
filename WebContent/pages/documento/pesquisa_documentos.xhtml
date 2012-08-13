@@ -33,8 +33,16 @@
 				<p:dataTable id="gridPesquisa" emptyMessage="Nenhum registro encontrado" style="width: 100%" paginator="true"
 								paginatorAlwaysVisible="false" rows="10" value="#{mbean.grid}" var="linha">
 											
-					<p:column headerText="Categoria do Documento">
+					<p:column headerText="Tipo">
 						<h:outputText value="#{linha.tipoCategoria.descricao}" />
+					</p:column>
+											
+					<p:column headerText="Título">
+						<h:outputText value="#{linha.titulo}" />
+					</p:column>
+											
+					<p:column headerText="Categoria do Documento">
+						<h:outputText value="#{linha.categoriaDescricao}" />
 					</p:column>
 				
 					<p:column headerText="Visualizar" styleClass="coluna5">

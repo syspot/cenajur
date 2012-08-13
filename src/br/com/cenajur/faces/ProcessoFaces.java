@@ -196,6 +196,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	public void enviarDocumento(FileUploadEvent event) {
 		getDocumentoProcesso().setDocumento(event.getFile());
 		getDocumentoProcesso().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
+		getDocumentoProcesso().setDescricao(CenajurUtil.getDescricaoPDF(event.getFile()));
 	}
 	
 	public String addDocumento(){

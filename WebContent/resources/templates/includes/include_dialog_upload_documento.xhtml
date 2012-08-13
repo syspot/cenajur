@@ -19,7 +19,7 @@
  		<h:panelGrid id="pgDocumento" columns="1" columnClasses="coluna90" style="width:100%">
  		
  			<p:outputLabel for="descricaoDocumento" value="Descrição" />
-			<p:inputText id="descricaoDocumento" required="true" requiredMessage="Descrição: Campo obrigatório" value="#{mbeanDocumentoModel.descricao}"/>
+			<p:inputTextarea id="descricaoDocumento" required="true" requiredMessage="Descrição: Campo obrigatório" value="#{mbeanDocumentoModel.descricao}" autoResize="false" rows="10" maxlength="500" style="width:88%"/>
 					
 			<p:outputLabel for="documento" value="Documento" />
 			<p:fileUpload id="documento" label="Selecionar Documento" fileUploadListener="#{mbeanDocumento.enviarDocumento}" auto="true" multiple="false" style="width:90%"/>

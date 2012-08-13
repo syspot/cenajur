@@ -63,6 +63,7 @@ public class ProcessoAndamentoUtil {
 	public void enviarDocumentoAndamentoProcesso(FileUploadEvent event) {
 		getDocumentoAndamentoProcesso().setDocumento(event.getFile());
 		getDocumentoAndamentoProcesso().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
+		getDocumentoAndamentoProcesso().setDescricao(CenajurUtil.getDescricaoPDF(event.getFile()));
 	}
 		
 	public String addDocumentoAndamentoProcesso(){

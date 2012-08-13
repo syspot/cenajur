@@ -13,6 +13,9 @@
 	
 		<h:panelGrid id="pgCategoriaDocumento" columns="1" columnClasses="coluna90" style="width:40%">
 		
+			<p:outputLabel for="titulo" value="Título" />
+			<p:inputText id="titulo" value="#{mbeanModel.titulo}" required="true" requiredMessage="Título: Campo obrigatório" maxlength="50" styleClass="coluna90"/>
+			
 			<p:outputLabel for="categoriaDocumento" value="Categoria" />
 			<p:selectOneMenu id="categoriaDocumento" required="true" requiredMessage="Categoria do Documento: Campo obrigatório" value="#{mbeanModel.categoriaDocumento.id}" style="width: 91%">
 				<f:selectItem itemLabel="Não Selecionado" itemValue="" />

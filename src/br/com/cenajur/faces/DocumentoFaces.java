@@ -95,6 +95,7 @@ public class DocumentoFaces extends CrudFaces<DocumentoGeral> {
 	public void enviarDocumento(FileUploadEvent event) {
 		getCrudModel().setDocumento(event.getFile());
 		getCrudModel().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
+		getCrudModel().setDescricao(CenajurUtil.getDescricaoPDF(event.getFile()));
 	}
 
 	public List<SelectItem> getCategoriasDocumentos() {

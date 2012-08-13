@@ -229,6 +229,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	public void enviarDocumento(FileUploadEvent event) {
 		getDocumentoCliente().setDocumento(event.getFile());
 		getDocumentoCliente().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
+		getDocumentoCliente().setDescricao(CenajurUtil.getDescricaoPDF(event.getFile()));
 	}
 		
 	public String addDocumento(){

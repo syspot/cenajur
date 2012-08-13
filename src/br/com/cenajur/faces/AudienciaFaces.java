@@ -145,6 +145,7 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 	public void enviarDocumento(FileUploadEvent event) {
 		getDocumentoAudiencia().setDocumento(event.getFile());
 		getDocumentoAudiencia().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
+		getDocumentoAudiencia().setDescricao(CenajurUtil.getDescricaoPDF(event.getFile()));
 	}
 		
 	public String addDocumento(){

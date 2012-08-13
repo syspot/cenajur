@@ -67,6 +67,7 @@ public class ProcessoAudienciaUtil {
 	public void enviarDocumentoAudiencia(FileUploadEvent event) {
 		getDocumentoAudiencia().setDocumento(event.getFile());
 		getDocumentoAudiencia().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
+		getDocumentoAudiencia().setDescricao(CenajurUtil.getDescricaoPDF(event.getFile()));
 	}
 	
 	public String addDocumentoAudiencia(){

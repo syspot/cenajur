@@ -9,13 +9,13 @@
 	
 	<ui:param name="clienteModel" value="${clienteFaces.crudModel}" />
 	
-	<p:tab id="tabProcessos" title="Processos" rendered="#{clienteModel.id != null}">
+	<p:tab id="tabProcessos" title="Processos" rendered="#{clienteModel.id != null and not empty clienteModel.processos}">
 	
 		<h:form>
 		
 			<c:forEach var="processo" items="#{clienteModel.processos}">
 			
-				<h:outputText value="Processo" styleClass="#{processo.situacaoProcesso.css}" />
+				<h:outputText value="#{processo.situacaoProcesso.descricao}" styleClass="#{processo.situacaoProcesso.css}" />
 				
 				<p:accordionPanel multiple="false" activeIndex="zero">
 					
