@@ -181,15 +181,24 @@
   	<ui:define name="colunasTabela">
   	
   		<p:column headerText="Nome">
-  			<h:outputText value="#{linha.nome}" />
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.nome}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
   		</p:column>
   	
   		<p:column headerText="Grupo">
-  			<h:outputText value="#{linha.grupo.descricao}" />
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.grupo.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
   		</p:column>
   	
   		<p:column headerText="Tipo">
-  			<h:outputText value="#{linha.tipoColaborador.descricao}" />
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.tipoColaborador.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
   		</p:column>
   	
   	</ui:define>

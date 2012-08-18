@@ -8,6 +8,7 @@
   	<ui:param name="mbean" value="${audienciaFaces}" />
   	<ui:param name="mbeanModel" value="${audienciaFaces.crudModel}" />
   	<ui:param name="mbeanPesquisaModel" value="${audienciaFaces.crudPesquisaModel}" />
+  	<ui:param name="informacoesCadastro" value="${true}" />
   	
   	<ui:define name="cadastro">
   	
@@ -115,18 +116,34 @@
   	
   	<ui:define name="colunasTabela">
   	
-  		<p:column headerText="Número do Processo" styleClass="coluna20">
-  			<h:outputText value="#{linha.processo.numeroProcesso}" />
+  		<p:column headerText="Descrição" styleClass="coluna30">
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.resumoDescricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
   		</p:column>
   	
-  		<p:column headerText="Advogado" styleClass="coluna50">
-  			<h:outputText value="#{linha.advogado.nome}" />
+  		<p:column headerText="Vara" styleClass="coluna20">
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.vara.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
+  		</p:column>
+  	
+  		<p:column headerText="Advogado" styleClass="coluna30">
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.advogado.nome}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
   		</p:column>
   	
   		<p:column headerText="Data" styleClass="coluna20" style="text-align: center">
-  			<h:outputText value="#{linha.dataAudiencia}" >
-  				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
-  			</h:outputText>
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.dataAudiencia}" >
+	  				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+	  			</h:outputText>
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
   		</p:column>
   		
   	</ui:define>

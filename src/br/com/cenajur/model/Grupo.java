@@ -12,8 +12,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-
 import br.com.cenajur.util.CenajurUtil;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
@@ -32,8 +30,7 @@ public class Grupo extends TSActiveRecordAb<Grupo>  {
 	@OneToMany(mappedBy = "grupo")
 	private List<Colaborador> colaboradores;
 	
-	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-	@OneToMany(mappedBy = "grupo", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "grupo", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<PermissaoGrupo> permissoesGrupos;
 	
 	public Long getId() {

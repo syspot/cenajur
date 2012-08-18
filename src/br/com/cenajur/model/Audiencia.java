@@ -17,8 +17,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-
 import br.com.cenajur.util.CenajurUtil;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
@@ -60,8 +58,7 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 	@JoinColumn(name = "colaborador_atualizacao_id")
 	private Colaborador colaboradorAtualizacao;
 	
-	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-	@OneToMany(mappedBy = "audiencia", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "audiencia", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<DocumentoAudiencia> documentos;
 
 	public Long getId() {
@@ -122,6 +119,10 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 
 	public String getDescricao() {
 		return descricao;
+	}
+	
+	public String getResumoDescricao() {
+		return CenajurUtil.obterResumoGrid(descricao, 35);
 	}
 
 	public void setDescricao(String descricao) {

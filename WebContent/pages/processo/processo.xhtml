@@ -4,6 +4,7 @@
 	<ui:param name="mbean" value="${processoFaces}" />
 	<ui:param name="mbeanModel" value="${processoFaces.crudModel}" />
 	<ui:param name="mbeanPesquisaModel" value="${processoFaces.crudPesquisaModel}" />
+	<ui:param name="informacoesCadastro" value="${true}" />
 
 	<ui:define name="cadastro">
 
@@ -286,21 +287,33 @@
 	<ui:define name="colunasTabela">
 
 		<p:column headerText="Número" styleClass="coluna25">
-			<h:outputText value="#{linha.numeroProcesso}" />
+			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+				<h:outputText value="#{linha.numeroProcesso}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
 		</p:column>
 
 		<p:column headerText="Advogado" styleClass="coluna50">
-			<h:outputText value="#{linha.advogado.nome}" />
+			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+				<h:outputText value="#{linha.advogado.nome}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
 		</p:column>
 
 		<p:column headerText="Data de Abertura" styleClass="coluna15">
-			<h:outputText value="#{linha.dataAbertura}">
-				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
-			</h:outputText>
+			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+				<h:outputText value="#{linha.dataAbertura}">
+					<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+				</h:outputText>
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
 		</p:column>
 
 		<p:column headerText="Situação" styleClass="coluna10">
-			<h:outputText value="#{linha.situacaoProcesso.descricao}" styleClass="#{linha.situacaoProcesso.css}" />
+			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+				<h:outputText value="#{linha.situacaoProcesso.descricao}" styleClass="#{linha.situacaoProcesso.css}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
 		</p:column>
 
 	</ui:define>

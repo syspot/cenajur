@@ -79,7 +79,10 @@
   	<ui:define name="colunasTabela">
   	
   		<p:column headerText="Descrição">
-  			<h:outputText value="#{linha.descricao}" />
+  		  	<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
   		</p:column>
   	
   	</ui:define>

@@ -58,17 +58,26 @@
 	<ui:define name="colunasTabela">
 	
 		<p:column headerText="Categoria">
-			<h:outputText value="#{linha.categoriaDocumento.descricao}" />
+		  	<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+				<h:outputText value="#{linha.categoriaDocumento.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
 		</p:column>
 	
 		<p:column headerText="Descrição">
-			<h:outputText value="#{linha.descricaoResumo}" title="#{linha.descricao}" />
+			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+				<h:outputText value="#{linha.descricaoResumo}" title="#{linha.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
 		</p:column>
 	
 		<p:column headerText="Data Cadastro">
-			<h:outputText value="#{linha.dataCadastro}" >
-				<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="America/Sao_Paulo" />
-			</h:outputText>
+			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+				<h:outputText value="#{linha.dataCadastro}" >
+					<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="America/Sao_Paulo" />
+				</h:outputText>
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
 		</p:column>
 		
 		<p:column headerText="Visualizar" styleClass="coluna5">

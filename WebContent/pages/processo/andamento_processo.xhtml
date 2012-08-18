@@ -8,6 +8,7 @@
   	<ui:param name="mbean" value="${andamentoProcessoFaces}" />
   	<ui:param name="mbeanModel" value="${andamentoProcessoFaces.crudModel}" />
   	<ui:param name="mbeanPesquisaModel" value="${andamentoProcessoFaces.crudPesquisaModel}" />
+  	<ui:param name="informacoesCadastro" value="${true}" />
   	
   	<ui:define name="cadastro">
   	
@@ -75,18 +76,27 @@
   	
   	<ui:define name="colunasTabela">
   	
-  		<p:column headerText="Número do Processo" styleClass="coluna15">
-  			<h:outputText value="#{linha.processo.numeroProcesso}" />
+  		<p:column headerText="Descrição" styleClass="coluna50">
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.resumoDescricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
   		</p:column>
   	
-  		<p:column headerText="Tipo do Andamento">
-  			<h:outputText value="#{linha.tipoAndamentoProcesso.descricao}" />
+  		<p:column headerText="Tipo do Andamento" styleClass="coluna30">
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.tipoAndamentoProcesso.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
   		</p:column>
   	
-  		<p:column headerText="Data" style="text-align: center">
-  			<h:outputText value="#{linha.dataAndamento}">
-  				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
-  			</h:outputText>
+  		<p:column headerText="Data" style="text-align: center" styleClass="coluna20">
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.dataAndamento}">
+	  				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+	  			</h:outputText>
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
   		</p:column>
   		
   	</ui:define>

@@ -18,8 +18,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.Cascade;
-
 import br.com.cenajur.util.CenajurUtil;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
@@ -133,8 +131,7 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	@JoinColumn(name = "processo_id") })
 	private List<Processo> processos;
 	
-	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<DocumentoCliente> documentos;
 	
 	@Transient

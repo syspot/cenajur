@@ -8,6 +8,7 @@
   	<ui:param name="mbean" value="${clienteFaces}" />
   	<ui:param name="mbeanModel" value="${clienteFaces.crudModel}" />
   	<ui:param name="mbeanPesquisaModel" value="${clienteFaces.crudPesquisaModel}" />
+  	<ui:param name="informacoesCadastro" value="${true}" />
   	
   	<ui:define name="cadastro">
   	
@@ -265,19 +266,31 @@
   	<ui:define name="colunasTabela">
   	
   		<p:column headerText="Matrícula">
-  			<h:outputText value="#{linha.matricula}" />
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.matricula}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
 		</p:column>
   	
   		<p:column headerText="Nome">
-  			<h:outputText value="#{linha.nome}" />
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.nome}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
   		</p:column>
   	
   		<p:column headerText="Cidade" >
-  			<h:outputText value="#{linha.cidade.descricao}" />
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.cidade.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
   		</p:column>
   	
   		<p:column headerText="Graduação">
-  			<h:outputText value="#{linha.graduacao.descricao}" />
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.graduacao.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
   		</p:column>
   		
   	</ui:define>

@@ -15,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.Constantes;
@@ -447,7 +446,7 @@ public class Processo extends TSActiveRecordAb<Processo>{
 			params.add(getLote());
 		}
 		
-		return super.find(query.toString(), null, params.toArray());
+		return super.find(query.toString(), "p.situacaoProcesso, p.tipoProcesso", params.toArray());
 	}
 	
 	public boolean isProcessoArquivado(){

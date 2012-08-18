@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
@@ -15,6 +16,26 @@
 					<h:panelGrid columns="1" style="width: 98%">
 					
 						<ui:include src="comandoCRUDLimpar.xhtml" />
+						
+						<p:fieldset legend="Informações de Cadastro" toggleable="true" collapsed="true" style="width: 100%" rendered="#{empty informacoesCadastro ? false : informacoesCadastro}">
+						
+							<h:panelGrid width="100%" columns="3" columnClasses="coluna10_3, coluna20_3, coluna25_3">
+							  
+							   <h:outputLabel value="Chave" />
+							   <h:outputLabel value="Data Atualização" />
+							   <h:outputLabel value="Usuario Atualização" />
+							   
+							   <h:outputText value="#{mbeanModel.id}" />
+							   <h:outputText value="#{mbeanModel.dataAtualizacao}" >
+									<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+								</h:outputText>
+							   <h:outputText value="#{mbeanModel.colaboradorAtualizacao.nome}" />
+							   
+							</h:panelGrid>
+						
+							<ui:insert name="informacoes" />
+						   
+						</p:fieldset>
 						
 						<p:fieldset style="width: 100%">
 							

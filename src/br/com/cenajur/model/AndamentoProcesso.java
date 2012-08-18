@@ -17,8 +17,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-
 import br.com.cenajur.util.CenajurUtil;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
@@ -47,8 +45,7 @@ public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 	@JoinColumn(name = "tipo_andamento_processo_id")
 	private TipoAndamentoProcesso tipoAndamentoProcesso;
 	
-	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-	@OneToMany(mappedBy = "andamentoProcesso", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "andamentoProcesso", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<DocumentoAndamentoProcesso> documentos;
 
 	@Column(name = "data_atualizacao")
@@ -76,6 +73,10 @@ public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 
 	public String getDescricao() {
 		return descricao;
+	}
+	
+	public String getResumoDescricao() {
+		return CenajurUtil.obterResumoGrid(descricao, 50);
 	}
 	
 	public void setDescricao(String descricao) {

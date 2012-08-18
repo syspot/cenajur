@@ -73,15 +73,24 @@
   	<ui:define name="colunasTabela">
   	
   		<p:column headerText="Descrição">
-  			<h:outputText value="#{linha.descricao}" />
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
   		</p:column>
   	
   		<p:column headerText="Tipo do Documento">
-  			<h:outputText value="#{linha.tipoDocumento.descricao}" />
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.tipoDocumento.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
   		</p:column>
   	
   		<p:column headerText="Número do Documento">
-  			<h:outputText value="#{linha.numeroDocumento}" />
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.numeroDocumento}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
   		</p:column>
   		
   	</ui:define>
