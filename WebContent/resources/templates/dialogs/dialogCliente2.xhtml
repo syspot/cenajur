@@ -6,13 +6,16 @@
               xmlns:f="http://java.sun.com/jsf/core">
 
 	<ui:param name="mbeanPesquisa" value="${clientePesquisaFaces}" />
-	<ui:param name="mbeanClienteAcao" value="${processoFaces}" />
-	<ui:param name="nomeDialog" value="dlgCliente" />
+	<ui:param name="mbeanClienteAcao" value="${clienteFaces}" />
+	<ui:param name="nomeDialog" value="dlgCliente2" />
+	<ui:param name="clienteExcessao" value="${clienteFaces.crudModel}" />
 
 	<h:form>
 		
-		<p:dialog id="dialogCliente" widgetVar="dlgCliente" header="Pesquisa de Clientes" width="600" height="400" modal="true">
+		<p:dialog id="dialogCliente2" widgetVar="dlgCliente2" header="Pesquisa de Clientes" width="600" height="400" modal="true">
 	  
+	  		<p:ajax listener="#{mbeanPesquisa.limpar}" update="@form" global="false" />
+	  		
 	  		<ui:include src="/resources/templates/includes/include_dialog_cliente.xhtml"/>
 	  
 		</p:dialog>

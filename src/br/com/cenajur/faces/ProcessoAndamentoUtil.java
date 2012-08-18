@@ -60,13 +60,13 @@ public class ProcessoAndamentoUtil {
 		return null;
 	}
 	
-	public void enviarDocumentoAndamentoProcesso(FileUploadEvent event) {
+	public void enviarDocumento(FileUploadEvent event) {
 		getDocumentoAndamentoProcesso().setDocumento(event.getFile());
 		getDocumentoAndamentoProcesso().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
 		getDocumentoAndamentoProcesso().setDescricaoBusca(CenajurUtil.getDescricaoPDF(event.getFile()));
 	}
 		
-	public String addDocumentoAndamentoProcesso(){
+	public String addDocumento(){
 		
 		RequestContext context = RequestContext.getCurrentInstance();
 		
@@ -156,21 +156,18 @@ public class ProcessoAndamentoUtil {
 		this.andamentoProcesso.setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 		this.andamentoProcesso.update();
 		
-		AndamentoProcesso aux = this.andamentoProcesso.getById();
-		
-		int posicao = 0;
-		
 		for(DocumentoAndamentoProcesso doc : this.andamentoProcesso.getDocumentos()){
 			
 			if(!TSUtil.isEmpty(doc.getDocumento())){
 				
-				doc.setId(aux.getDocumentos().get(posicao).getId());
+				DocumentoAndamentoProcesso documento = doc.getByModel();
+				
+				doc.setId(documento.getId());
 				doc.setArquivo(doc.getId() + TSFile.obterExtensaoArquivo(doc.getArquivo()));
 				CenajurUtil.criaArquivo(doc.getDocumento(), doc.getCaminhoUploadCompleto());
 				
 				doc.update();
 			}
-			posicao++;
 		}
 		
 		this.initAndamentoProcesso();

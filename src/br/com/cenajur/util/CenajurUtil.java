@@ -70,6 +70,11 @@ public class CenajurUtil {
 		return "translate(lower(trim(".concat(campo).concat(")), 'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ', 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')");
 	}
 	
+	public static String getParamSemAcento(String campo){
+		return " and translate(lower(trim(".concat(campo).concat(")), 'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ', 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')"
+				+ " like translate(lower(trim(?)), 'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ', 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC') ");
+	}
+	
 	public static Date getTrimestreAnterior(){
 		Calendar c = Calendar.getInstance();
 		c.set(Calendar.MONTH, c.get(Calendar.MONTH)-3);

@@ -6,34 +6,17 @@
               xmlns:f="http://java.sun.com/jsf/core">
 
 	<ui:param name="mbeanDocumento" value="${processoFaces.processoAndamentoUtil}" />
+	<ui:param name="mbeanDocumentoModel" value="${processoFaces.processoAndamentoUtil.documentoAndamentoProcesso}" />
 	
 	<h:form enctype="multipart/form-data">
   
 		<p:dialog id="dialogDocumentoTabAndamentoProcesso" widgetVar="dlgDocumentoTabAndamentoProcesso" header="Upload de documento" width="600" modal="true">
 		
-			<h:panelGrid id="pgCategoriaDocumentoTabAndamento" columns="1" columnClasses="coluna90" >
-		
-				<p:outputLabel for="categoriaDocumentoTabAndamento" value="Categoria" />
-				<p:selectOneMenu id="categoriaDocumentoTabAndamento" required="true" requiredMessage="Categoria do Documento: Campo obrigatório" value="#{mbeanDocumento.categoriaDocumento.id}" style="width: 100%">
-					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-					<f:selectItems value="#{mbeanDocumento.categoriasDocumentos}" />
-				</p:selectOneMenu>
-		  		
-		 		</h:panelGrid>
-		 		
-		 		<h:panelGrid id="pgDocumentoTabAndamento" columns="1" columnClasses="coluna90" style="width:100%">
-			 		
-					<p:outputLabel for="descricaoTabAndamento" value="Descrição" />
-					<p:inputTextarea id="descricaoTabAndamento" required="true" requiredMessage="Descrição: Campo obrigatório" value="#{mbeanDocumento.documentoAndamentoProcesso.descricao}" autoResize="false" rows="10" maxlength="500" style="width:88%"/>
-			 		
-					<p:outputLabel for="documentoTabAndamento" value="Documento" />
-					<p:fileUpload id="documentoTabAndamento" label="Selecionar Documento" fileUploadListener="#{mbeanDocumento.enviarDocumentoAndamentoProcesso}" auto="true" multiple="false" style="width:90%"/>
-			  		
-				</h:panelGrid>
+			<ui:include src="/resources/templates/includes/include_dialog_upload_documento.xhtml" />
 			
 			<h:panelGrid columns="1" style="width:100%; text-align:center">
 		  		
-		  		<p:commandButton value="Adicionar" action="#{mbeanDocumento.addDocumentoAndamentoProcesso}" oncomplete="handleRequestFaces('dialogDocumentoTabAndamentoProcesso', dlgDocumentoTabAndamentoProcesso, args)" />
+		  		<p:commandButton value="Adicionar" action="#{mbeanDocumento.addDocumento}" oncomplete="handleRequestFaces('dialogDocumentoTabAndamentoProcesso', dlgDocumentoTabAndamentoProcesso, args)" />
 		  		
 	  		</h:panelGrid>
 	  		

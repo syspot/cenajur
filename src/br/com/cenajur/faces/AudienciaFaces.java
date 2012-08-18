@@ -97,15 +97,13 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 	@Override
 	protected void posPersist() throws TSSystemException, TSApplicationException{
 		
-		Audiencia aux = getCrudModel().getById();
-		
-		int posicao = 0;
-		
 		for(DocumentoAudiencia doc : getCrudModel().getDocumentos()){
 			
 			if(!TSUtil.isEmpty(doc.getDocumento())){
-		
-				doc.setId(aux.getDocumentos().get(posicao).getId());
+
+				DocumentoAudiencia documento = doc.getByModel();
+				
+				doc.setId(documento.getId());
 				doc.setArquivo(doc.getId() + TSFile.obterExtensaoArquivo(doc.getArquivo()));
 				CenajurUtil.criaArquivo(doc.getDocumento(), doc.getCaminhoUploadCompleto());
 				
@@ -113,7 +111,6 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 				
 			}
 			
-			posicao++;
 		}
 		
 	}

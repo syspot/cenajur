@@ -71,6 +71,7 @@
   				
   					<img src="${mbeanModel.urlImagem}" width="120" height="150"/><br/>
   					<p:commandButton type="button" value="Abrir Câmera" onclick="dlgCam.show();" update="pgCam"/>
+  					<p:commandButton type="button" value="Visualizar" onclick="dlgViewFotoCliente.show();" update="pgViewFotoCliente" rendered="#{mbeanModel.urlImagem != null}"/>
   
   				</p:outputPanel>
   				
@@ -128,16 +129,19 @@
 			  	<p:outputLabel for="cadastroPM" value="Cadastro PM" />
 	  			<p:outputLabel for="lotacao" value="Lotação" />
 	  			
-			  	<p:inputText id="cadastroPM" required="true" requiredMessage="Cadastro PM: Campo obrigatório" value="#{mbeanModel.cadastroPM}" maxlength="15" styleClass="coluna90"/>
+			  	<p:inputText id="cadastroPM" value="#{mbeanModel.cadastroPM}" maxlength="15" styleClass="coluna90"/>
 	  			<p:outputPanel autoUpdate="true">
-	  				<p:inputText id="lotacao" required="true" requiredMessage="Lotação: Campo obrigatório" value="#{mbeanModel.lotacao.descricao}" readonly="true" styleClass="coluna70" />
-	  				<p:commandButton type="button" icon="ui-icon-plus" value="Adicionar" onclick="dlgLotacao.show();" />
+	  				<p:inputText id="lotacao" value="#{mbeanModel.lotacao.descricao}" readonly="true" styleClass="coluna70" />
+	  				<p:commandButton type="button" icon="ui-icon-plus" value="Adicionar" onclick="dlgLotacao.show();" rendered="#{mbeanModel.lotacao.id == null}"/>
+	  				<p:commandButton value="Remover" process="@this" rendered="#{mbeanModel.lotacao.id != null}">
+	  					<f:setPropertyActionListener target="#{mbeanModel.lotacao}" value="#{null}" />
+	  				</p:commandButton>
   				</p:outputPanel>
 	  		
 		  		<p:outputLabel for="graduacao" value="Graduação" />
 			  	<p:outputLabel for="flagStatusPM" value="PM Ativo" />	
 			  	
-		  		<p:selectOneMenu id="graduacao" required="true" requiredMessage="Graduação: Campo obrigatório" value="#{mbeanModel.graduacao.id}" style="width:90%">
+		  		<p:selectOneMenu id="graduacao" value="#{mbeanModel.graduacao.id}" style="width:90%">
 			  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 			  		<f:selectItems value="#{mbean.graduacoes}" />
 			  	</p:selectOneMenu>
@@ -148,13 +152,26 @@
 	  	</p:fieldset>
 	  	
 	  	<p:fieldset legend="Informações Cenajur">
-	  	
-	  		<h:panelGrid columns="2" columnClasses="coluna30, coluna32" style="width:50%">
+	  		
+	  		<h:panelGrid columns="1" style="width:60%">
+	  		
+			  	<p:outputLabel for="titular" value="Titular" />
+		  		<p:outputPanel autoUpdate="true" style="width:90%">
+	  				<p:inputText id="titular" value="#{mbeanModel.titular.nome}" readonly="true" styleClass="coluna70" />
+	  				<p:commandButton type="button" icon="ui-icon-plus" value="Adicionar" onclick="dlgCliente2.show();" rendered="#{mbeanModel.titular.id == null}"/>
+	  				<p:commandButton value="Remover" process="@this" rendered="#{mbeanModel.titular.id != null}">
+	  					<f:setPropertyActionListener target="#{mbeanModel.titular}" value="#{null}" />
+	  				</p:commandButton>
+  				</p:outputPanel>
+  				
+	  		</h:panelGrid>
+	  		
+	  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:50%">
 	  		
 		  		<p:outputLabel for="tipoPagamento" value="Tipo de Pagamento" />
 			  	<p:outputLabel for="flagAtivo" value="Ativo" />		  	
 		  		
-			  	<p:selectOneMenu id="tipoPagamento" required="true" requiredMessage="Tipo de Pagamento: Campo obrigatório" value="#{mbeanModel.tipoPagamento.id}" style="width:95%">
+			  	<p:selectOneMenu id="tipoPagamento" required="true" requiredMessage="Tipo de Pagamento: Campo obrigatório" value="#{mbeanModel.tipoPagamento.id}" style="width:90%">
 			  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 			  		<f:selectItems value="#{mbean.tiposPagamentos}" />
 			  	</p:selectOneMenu>

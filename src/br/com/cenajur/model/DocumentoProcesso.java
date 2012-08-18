@@ -46,6 +46,9 @@ public class DocumentoProcesso extends TSActiveRecordAb<DocumentoProcesso>{
 	
 	@Transient
 	private UploadedFile documento;
+	
+	@Column(name = "flag_permissao_cliente")
+	private Boolean flagPermissaoCliente;
 
 	public Long getId() {
 		return id;
@@ -103,6 +106,14 @@ public class DocumentoProcesso extends TSActiveRecordAb<DocumentoProcesso>{
 		this.documento = documento;
 	}
 
+	public Boolean getFlagPermissaoCliente() {
+		return flagPermissaoCliente;
+	}
+
+	public void setFlagPermissaoCliente(Boolean flagPermissaoCliente) {
+		this.flagPermissaoCliente = flagPermissaoCliente;
+	}
+
 	public String getCaminhoUploadCompleto(){
 		return Constantes.PASTA_UPLOAD_ARQUIVO + CenajurUtil.getAnoMes(processo.getDataCadastro()) + Constantes.PASTA_PROCESSO + arquivo;
 	}
@@ -128,14 +139,39 @@ public class DocumentoProcesso extends TSActiveRecordAb<DocumentoProcesso>{
 		if (getClass() != obj.getClass())
 			return false;
 		DocumentoProcesso other = (DocumentoProcesso) obj;
+		if (arquivo == null) {
+			if (other.arquivo != null)
+				return false;
+		} else if (!arquivo.equals(other.arquivo))
+			return false;
+		if (categoriaDocumento == null) {
+			if (other.categoriaDocumento != null)
+				return false;
+		} else if (!categoriaDocumento.equals(other.categoriaDocumento))
+			return false;
+		if (descricao == null) {
+			if (other.descricao != null)
+				return false;
+		} else if (!descricao.equals(other.descricao))
+			return false;
+		if (documento == null) {
+			if (other.documento != null)
+				return false;
+		} else if (!documento.equals(other.documento))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (processo == null) {
+			if (other.processo != null)
+				return false;
+		} else if (!processo.equals(other.processo))
+			return false;
 		return true;
 	}
-	
+
 	@Override
 	public List<DocumentoProcesso> findByModel(String... fieldsOrderBy) {
 		
@@ -162,6 +198,34 @@ public class DocumentoProcesso extends TSActiveRecordAb<DocumentoProcesso>{
 		}
 		
 		return super.find(query.toString(), null, params.toArray());
+	}
+	
+	@Override
+	public DocumentoProcesso getByModel(String... fieldsOrderBy) {
+
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" from DocumentoProcesso dp where 1 = 1 ");
+		
+		query.append("and dp.processo.id = ? ");
+		
+		query.append("and dp.categoriaDocumento.id = ? ");
+
+		query.append("and dp.arquivo = ? ");
+	
+		query.append("and dp.descricao = ? ");
+	
+		List<Object> params = new ArrayList<Object>();
+		
+		params.add(processo.getId());
+		
+		params.add(categoriaDocumento.getId());
+		
+		params.add(arquivo);
+		
+		params.add(descricao);
+		
+		return super.get(query.toString(), params.toArray());
 	}
 	
 }

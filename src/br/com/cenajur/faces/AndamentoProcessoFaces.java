@@ -103,23 +103,20 @@ public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 	@Override
 	protected void posPersist() throws TSSystemException, TSApplicationException{
 		
-		AndamentoProcesso aux = getCrudModel().getById();
-		
-		int posicao = 0;
-		
 		for(DocumentoAndamentoProcesso doc : getCrudModel().getDocumentos()){
 			
 			if(!TSUtil.isEmpty(doc.getDocumento())){
-				//TODO alterar esse pog depois da apresentação
-				doc.setId(aux.getDocumentos().get(posicao).getId());
-				doc.setArquivo(aux.getDocumentos().get(posicao).getId() + TSFile.obterExtensaoArquivo(doc.getArquivo()));
+				
+				DocumentoAndamentoProcesso documento = doc.getByModel();
+				
+				doc.setId(documento.getId());
+				doc.setArquivo(doc.getId() + TSFile.obterExtensaoArquivo(doc.getArquivo()));
 				CenajurUtil.criaArquivo(doc.getDocumento(), doc.getCaminhoUploadCompleto());
 				
 				doc.update();
 				
 			}
 			
-			posicao++;
 		}
 		
 	}

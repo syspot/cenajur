@@ -56,6 +56,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	private CategoriaDocumento categoriaDocumento;
 	private DocumentoCliente documentoCliente;
 	private DocumentoCliente documentoSelecionado;
+	private Cliente clienteSelecionado;
 	
 	@PostConstruct
 	protected void init() {
@@ -107,11 +108,6 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		
 		boolean erro = false;
 		
-		if(TSUtil.isEmpty(getCrudModel().getLotacao()) || TSUtil.isEmpty(getCrudModel().getLotacao().getId())){
-			erro = true;
-			CenajurUtil.addErrorMessage("Lotação: Campo obrigatório");
-		}
-		
 		if(!TSUtil.isValidCPF(TSUtil.removerNaoDigitos(getCrudModel().getCpf()))){
 			erro = true;
 			CenajurUtil.addErrorMessage("CPF inválido");
@@ -131,6 +127,10 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 			getCrudModel().setBanco(null);
 		}
 		
+		if(TSUtil.isEmpty(getCrudModel().getGraduacao()) || TSUtil.isEmpty(getCrudModel().getGraduacao().getId())){
+			getCrudModel().setGraduacao(null);
+		}
+		
 		if(getCrudModel().getFlagAtivo()){
 			getCrudModel().setDataCancelamento(null);
 			getCrudModel().setMotivoCancelamento(null);
@@ -146,6 +146,9 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	protected void posDetail() {
 		if(TSUtil.isEmpty(getCrudModel().getBanco())){
 			getCrudModel().setBanco(new Banco());
+		}
+		if(TSUtil.isEmpty(getCrudModel().getGraduacao())){
+			getCrudModel().setGraduacao(new Graduacao());
 		}
 		if(TSUtil.isEmpty(getCrudModel().getMotivoCancelamento())){
 			getCrudModel().setMotivoCancelamento(new MotivoCancelamento());
@@ -209,6 +212,11 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	
 	public String addLotacao(){
 		getCrudModel().setLotacao(this.lotacaoSelecionada);
+		return null;
+	}
+	
+	public String addCliente(){
+		getCrudModel().setTitular(this.clienteSelecionado);
 		return null;
 	}
 	
@@ -381,6 +389,14 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 
 	public void setDocumentoSelecionado(DocumentoCliente documentoSelecionado) {
 		this.documentoSelecionado = documentoSelecionado;
+	}
+
+	public Cliente getClienteSelecionado() {
+		return clienteSelecionado;
+	}
+
+	public void setClienteSelecionado(Cliente clienteSelecionado) {
+		this.clienteSelecionado = clienteSelecionado;
 	}
 	
 }

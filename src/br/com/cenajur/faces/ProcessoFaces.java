@@ -21,6 +21,7 @@ import br.com.cenajur.model.Objeto;
 import br.com.cenajur.model.ParteContraria;
 import br.com.cenajur.model.Processo;
 import br.com.cenajur.model.ProcessoCliente;
+import br.com.cenajur.model.ProcessoNumero;
 import br.com.cenajur.model.ProcessoParteContraria;
 import br.com.cenajur.model.SituacaoProcesso;
 import br.com.cenajur.model.SituacaoProcessoCliente;
@@ -29,6 +30,7 @@ import br.com.cenajur.model.TipoAndamentoProcesso;
 import br.com.cenajur.model.TipoCategoria;
 import br.com.cenajur.model.TipoParte;
 import br.com.cenajur.model.TipoProcesso;
+import br.com.cenajur.model.Turno;
 import br.com.cenajur.model.Vara;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
@@ -53,6 +55,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	private List<SelectItem> tiposAndamentosProcessos;
 	private List<SelectItem> situacoesAudiencias;
 	private List<SelectItem> categoriasDocumentos;
+	private List<SelectItem> turnos;
 	
 	
 	private Cliente clienteSelecionado;
@@ -71,6 +74,8 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	
 	private ProcessoAndamentoUtil processoAndamentoUtil;
 	private ProcessoAudienciaUtil processoAudienciaUtil;
+	
+	private ProcessoNumero processoNumeroSelecionado;
 	
 	@PostConstruct
 	protected void init() {
@@ -91,6 +96,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		this.tiposAndamentosProcessos = this.initCombo(new TipoAndamentoProcesso().findAll("descricao"), "id", "descricao");
 		this.situacoesAudiencias = this.initCombo(new SituacaoProcesso().findAll("descricao"), "id", "descricao");
 		this.categoriasDocumentos = this.initCombo(getCategoriaDocumento().findByModel("descricao"), "id", "descricao");
+		this.turnos = this.initCombo(new Turno().findAll(), "id", "descricao");
 	}
 	
 	@Override
@@ -103,8 +109,10 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		getCrudModel().setTipoParte(new TipoParte());
 		getCrudModel().setSituacaoProcesso(new SituacaoProcesso());
 		getCrudModel().setAdvogado(new Colaborador());
+		getCrudModel().setTurno(new Turno());
 		getCrudModel().setProcessosClientes(new ArrayList<ProcessoCliente>());
 		getCrudModel().setProcessosPartesContrarias(new ArrayList<ProcessoParteContraria>());
+		getCrudModel().setProcessosNumeros(new ArrayList<ProcessoNumero>());
 		this.processoClienteSelecionado = new ProcessoCliente();
 		this.processoClienteSelecionado.setSituacaoProcessoCliente(new SituacaoProcessoCliente());
 		this.processoParteContrariaSelecionada = new ProcessoParteContraria();
@@ -129,6 +137,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		getCrudPesquisaModel().setTipoParte(new TipoParte());
 		getCrudPesquisaModel().setSituacaoProcesso(new SituacaoProcesso());
 		getCrudPesquisaModel().setAdvogado(new Colaborador());
+		getCrudPesquisaModel().setTurno(new Turno());
 		setGrid(new ArrayList<Processo>());
 		return null;
 	}
@@ -137,6 +146,11 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	protected void prePersist() {
 		getCrudModel().setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 		getCrudModel().setDataAtualizacao(new Date());
+
+		if(TSUtil.isEmpty(getCrudModel().getTurno()) || TSUtil.isEmpty(getCrudModel().getTurno().getId())){
+			getCrudModel().setTurno(null);
+		}
+		
 	}
 	
 	@Override
@@ -147,22 +161,20 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	@Override
 	protected void posPersist() throws TSApplicationException{
 
-		Processo aux = getCrudModel().getById();
-		
-		int posicao = 0;
-		
 		for(DocumentoProcesso doc : getCrudModel().getDocumentos()){
 			
 			if(!TSUtil.isEmpty(doc.getDocumento())){
 				
-				doc.setId(aux.getDocumentos().get(posicao).getId());
+				DocumentoProcesso documento = doc.getByModel();
+				
+				doc.setId(documento.getId());
 				doc.setArquivo(doc.getId() + TSFile.obterExtensaoArquivo(doc.getArquivo()));
 				CenajurUtil.criaArquivo(doc.getDocumento(), doc.getCaminhoUploadCompleto());
 				
 				doc.update();
 				
 			}
-			posicao++;
+			
 		}
 		
 	}
@@ -191,6 +203,10 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		this.processoAudienciaUtil.setCrudModel(getCrudModel());
 		this.processoAndamentoUtil.getAndamentoProcesso().setProcesso(getCrudModel());
 		this.processoAudienciaUtil.getAudiencia().setProcesso(getCrudModel());
+		
+		if(TSUtil.isEmpty(getCrudModel().getTurno()) || TSUtil.isEmpty(getCrudModel().getTurno().getId())){
+			getCrudModel().setTurno(new Turno());
+		}
 	}
 	
 	public void enviarDocumento(FileUploadEvent event) {
@@ -273,6 +289,18 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 			
 		}
 		
+		return null;
+	}
+	
+	public String addNumeroProcesso(){
+		ProcessoNumero processoNumero = new ProcessoNumero();
+		processoNumero.setProcesso(getCrudModel());
+		getCrudModel().getProcessosNumeros().add(processoNumero);
+		return null;
+	}
+	
+	public String removerNumeroProcesso(){
+		getCrudModel().getProcessosNumeros().remove(this.processoNumeroSelecionado);
 		return null;
 	}
 	
@@ -428,6 +456,14 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		this.categoriasDocumentos = categoriasDocumentos;
 	}
 
+	public List<SelectItem> getTurnos() {
+		return turnos;
+	}
+
+	public void setTurnos(List<SelectItem> turnos) {
+		this.turnos = turnos;
+	}
+
 	public Integer getIndexProcessoCliente() {
 		return indexProcessoCliente;
 	}
@@ -482,6 +518,14 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 
 	public void setProcessoAudienciaUtil(ProcessoAudienciaUtil processoAudienciaUtil) {
 		this.processoAudienciaUtil = processoAudienciaUtil;
+	}
+
+	public ProcessoNumero getProcessoNumeroSelecionado() {
+		return processoNumeroSelecionado;
+	}
+
+	public void setProcessoNumeroSelecionado(ProcessoNumero processoNumeroSelecionado) {
+		this.processoNumeroSelecionado = processoNumeroSelecionado;
 	}
 
 }

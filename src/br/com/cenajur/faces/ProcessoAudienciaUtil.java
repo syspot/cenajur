@@ -64,13 +64,13 @@ public class ProcessoAudienciaUtil {
 		return null;
 	}
 
-	public void enviarDocumentoAudiencia(FileUploadEvent event) {
+	public void enviarDocumento(FileUploadEvent event) {
 		getDocumentoAudiencia().setDocumento(event.getFile());
 		getDocumentoAudiencia().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
 		getDocumentoAudiencia().setDescricaoBusca(CenajurUtil.getDescricaoPDF(event.getFile()));
 	}
 	
-	public String addDocumentoAudiencia(){
+	public String addDocumento(){
 		
 		RequestContext context = RequestContext.getCurrentInstance();
 		
@@ -160,21 +160,19 @@ public class ProcessoAudienciaUtil {
 		this.audiencia.setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 		this.audiencia.update();
 		
-		Audiencia aux = this.audiencia.getById();
-		
-		int posicao = 0;
-
 		for(DocumentoAudiencia doc : this.audiencia.getDocumentos()){
 			
 			if(!TSUtil.isEmpty(doc.getDocumento())){
 				
-				doc.setId(aux.getDocumentos().get(posicao).getId());
+				DocumentoAudiencia documento = doc.getByModel();
+				
+				doc.setId(documento.getId());
 				doc.setArquivo(doc.getId() + TSFile.obterExtensaoArquivo(doc.getArquivo()));
 				CenajurUtil.criaArquivo(doc.getDocumento(), doc.getCaminhoUploadCompleto());
 				
 				doc.update();
 			}
-			posicao++;
+			
 		}
 		
 		this.initAudiencia();

@@ -6,24 +6,36 @@
 	xmlns:f="http://java.sun.com/jsf/core">
   	
 	  
-	<h:panelGrid id="pgCategoriaDocumento" columns="1" columnClasses="coluna90" >
+	<h:panelGrid id="pgCategoriaDocumento" columns="2" columnClasses="coluna60, coluna40" style="width:50%">
 		
-		<p:outputLabel for="categoriaDocumento" value="Categoria" />
-		<p:selectOneMenu id="categoriaDocumento" required="true" requiredMessage="Categoria do Documento: Campo obrigatório" value="#{mbeanDocumento.categoriaDocumento.id}" style="width: 100%">
-			<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-			<f:selectItems value="#{mbeanDocumento.categoriasDocumentos}" />
-		</p:selectOneMenu>
-  		
- 		</h:panelGrid>
- 		
- 		<h:panelGrid id="pgDocumento" columns="1" columnClasses="coluna90" style="width:100%">
- 		
- 			<p:outputLabel for="descricaoDocumento" value="Descrição" />
-			<p:inputTextarea id="descricaoDocumento" required="true" requiredMessage="Descrição: Campo obrigatório" value="#{mbeanDocumentoModel.descricao}" autoResize="false" rows="10" maxlength="500" style="width:88%"/>
-					
-			<p:outputLabel for="documento" value="Documento" />
-			<p:fileUpload id="documento" label="Selecionar Documento" fileUploadListener="#{mbeanDocumento.enviarDocumento}" auto="true" multiple="false" style="width:90%"/>
-	  		
+		<p:outputPanel style="width:100%">
+		
+			<p:outputLabel for="categoriaDocumento" value="Categoria" /><br/>
+			<p:selectOneMenu id="categoriaDocumento" required="true" requiredMessage="Categoria do Documento: Campo obrigatório" value="#{mbeanDocumento.categoriaDocumento.id}" >
+				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+				<f:selectItems value="#{mbeanDocumento.categoriasDocumentos}" />
+			</p:selectOneMenu>
+		
+		</p:outputPanel>
+		
+		<h:panelGrid columns="1" style="width:100%">
+		
+			<p:outputLabel for="permissaoAssociado" value="Liberado" style="width:100%"/>
+			<p:selectBooleanCheckbox id="permissaoAssociado" value="#{mbeanDocumentoModel.flagPermissaoCliente}" />
+		
 		</h:panelGrid>
+		
+  		
+	</h:panelGrid>
+	
+	<h:panelGrid id="pgDocumento" columns="1" columnClasses="coluna90" style="width:100%">
+	
+		<p:outputLabel for="descricaoDocumento" value="Descrição" />
+		<p:inputTextarea id="descricaoDocumento" required="true" requiredMessage="Descrição: Campo obrigatório" value="#{mbeanDocumentoModel.descricao}" autoResize="false" rows="10" maxlength="500" style="width:88%"/>
+				
+		<p:outputLabel for="documento" value="Documento" />
+		<p:fileUpload id="documento" label="Selecionar Documento" fileUploadListener="#{mbeanDocumento.enviarDocumento}" auto="true" multiple="false" style="width:90%"/>
+	 		
+	</h:panelGrid>
 	  		
 </ui:composition>

@@ -15,8 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Cascade;
+import javax.persistence.Transient;
 
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.Constantes;
@@ -41,8 +40,10 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	@Column(name = "numero_processo")
 	private String numeroProcesso;
 	
-	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<ProcessoNumero> processosNumeros;
+	
+	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ProcessoCliente> processosClientes;
 	
 	@ManyToOne
@@ -50,21 +51,18 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	
 	private Integer lote;
 	
-	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ProcessoParteContraria> processosPartesContrarias;
 	
 	@ManyToOne
 	@JoinColumn(name = "tipo_processo_id")
 	private TipoProcesso tipoProcesso;
 	
-	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL, orphanRemoval = true)
 	@org.hibernate.annotations.OrderBy(clause = "dataAndamento desc")
 	private List<AndamentoProcesso> andamentos;
 	
-	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL, orphanRemoval = true)
 	@org.hibernate.annotations.OrderBy(clause = "dataAudiencia desc")
 	private List<Audiencia> audiencias;
 	
@@ -103,20 +101,22 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	@JoinColumn(name = "colaborador_atualizacao_id")
 	private Colaborador colaboradorAtualizacao;
 	
-	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<DocumentoProcesso> documentos;
-
+	
+	@ManyToOne
+	private Turno turno;
+	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
 	}
 
-	public String getNumeroProcesso() {
-		return numeroProcesso;
+	public List<ProcessoNumero> getProcessosNumeros() {
+		return processosNumeros;
 	}
 
-	public void setNumeroProcesso(String numeroProcesso) {
-		this.numeroProcesso = numeroProcesso;
+	public void setProcessosNumeros(List<ProcessoNumero> processosNumeros) {
+		this.processosNumeros = processosNumeros;
 	}
 
 	public List<ProcessoCliente> getProcessosClientes() {
@@ -291,6 +291,22 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		this.documentos = documentos;
 	}
 
+	public Turno getTurno() {
+		return turno;
+	}
+
+	public void setTurno(Turno turno) {
+		this.turno = turno;
+	}
+
+	public String getNumeroProcesso() {
+		return numeroProcesso;
+	}
+
+	public void setNumeroProcesso(String numeroProcesso) {
+		this.numeroProcesso = numeroProcesso;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -321,10 +337,11 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		
 		StringBuilder query = new StringBuilder();
 		
-		query.append(" from Processo p where 1 = 1 ");
+		query.append(" select distinct p from Processo p left outer join p.processosNumeros pn where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(numeroProcesso)){
-			query.append("and ").append(CenajurUtil.semAcento("p.numeroProcesso")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
+			query.append("(").append(CenajurUtil.getParamSemAcento("pn.numero"));
+			query.append(" or ").append(CenajurUtil.semAcento("p.numeroProcesso")).append(" like ").append(CenajurUtil.semAcento(" ? ")).append(") ");
 		}
 		
 		if(!TSUtil.isEmpty(dataAbertura)){
@@ -363,13 +380,22 @@ public class Processo extends TSActiveRecordAb<Processo>{
 			query.append("and p.situacaoProcesso.id = ? ");
 		}
 		
+		if(!TSUtil.isEmpty(turno) && !TSUtil.isEmpty(turno.getId())){
+			query.append("and p.turno.id = ? ");
+		}
+		
 		if(!TSUtil.isEmpty(dataArquivamento)){
 			query.append("and p.dataArquivamento = ? ");
+		}
+		
+		if(!TSUtil.isEmpty(getLote())){
+			query.append("and p.lote = ? ");
 		}
 		
 		List<Object> params = new ArrayList<Object>();
 		
 		if(!TSUtil.isEmpty(numeroProcesso)){
+			params.add(CenajurUtil.tratarString(numeroProcesso));
 			params.add(CenajurUtil.tratarString(numeroProcesso));
 		}
 		
@@ -409,11 +435,19 @@ public class Processo extends TSActiveRecordAb<Processo>{
 			params.add(situacaoProcesso.getId());
 		}
 		
+		if(!TSUtil.isEmpty(turno) && !TSUtil.isEmpty(turno.getId())){
+			params.add(turno.getId());
+		}
+		
 		if(!TSUtil.isEmpty(dataArquivamento)){
 			params.add(dataArquivamento);
 		}
 		
-		return super.find(query.toString(), "numeroProcesso", params.toArray());
+		if(!TSUtil.isEmpty(getLote())){
+			params.add(getLote());
+		}
+		
+		return super.find(query.toString(), null, params.toArray());
 	}
 	
 	public boolean isProcessoArquivado(){

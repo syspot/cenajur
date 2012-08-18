@@ -47,6 +47,9 @@ public class DocumentoCliente extends TSActiveRecordAb<DocumentoCliente>{
 	@Transient
 	private UploadedFile documento;
 	
+	@Column(name = "flag_permissao_cliente")
+	private Boolean flagPermissaoCliente;
+	
 	public Long getId() {
 		return id;
 	}
@@ -103,6 +106,14 @@ public class DocumentoCliente extends TSActiveRecordAb<DocumentoCliente>{
 		this.documento = documento;
 	}
 
+	public Boolean getFlagPermissaoCliente() {
+		return flagPermissaoCliente;
+	}
+
+	public void setFlagPermissaoCliente(Boolean flagPermissaoCliente) {
+		this.flagPermissaoCliente = flagPermissaoCliente;
+	}
+
 	public String getCaminhoUploadCompleto(){
 		return Constantes.PASTA_UPLOAD_ARQUIVO + CenajurUtil.getAnoMes(cliente.getDataCadastro()) + Constantes.PASTA_CLIENTE + arquivo;
 	}
@@ -128,6 +139,31 @@ public class DocumentoCliente extends TSActiveRecordAb<DocumentoCliente>{
 		if (getClass() != obj.getClass())
 			return false;
 		DocumentoCliente other = (DocumentoCliente) obj;
+		if (arquivo == null) {
+			if (other.arquivo != null)
+				return false;
+		} else if (!arquivo.equals(other.arquivo))
+			return false;
+		if (categoriaDocumento == null) {
+			if (other.categoriaDocumento != null)
+				return false;
+		} else if (!categoriaDocumento.equals(other.categoriaDocumento))
+			return false;
+		if (cliente == null) {
+			if (other.cliente != null)
+				return false;
+		} else if (!cliente.equals(other.cliente))
+			return false;
+		if (descricao == null) {
+			if (other.descricao != null)
+				return false;
+		} else if (!descricao.equals(other.descricao))
+			return false;
+		if (documento == null) {
+			if (other.documento != null)
+				return false;
+		} else if (!documento.equals(other.documento))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -135,7 +171,7 @@ public class DocumentoCliente extends TSActiveRecordAb<DocumentoCliente>{
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public List<DocumentoCliente> findByModel(String... fieldsOrderBy) {
 		
@@ -162,6 +198,34 @@ public class DocumentoCliente extends TSActiveRecordAb<DocumentoCliente>{
 		}
 		
 		return super.find(query.toString(), null, params.toArray());
+	}
+	
+	@Override
+	public DocumentoCliente getByModel(String... fieldsOrderBy) {
+
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" from DocumentoCliente dc where 1 = 1 ");
+		
+		query.append("and dc.cliente.id = ? ");
+		
+		query.append("and dc.categoriaDocumento.id = ? ");
+
+		query.append("and dc.arquivo = ? ");
+	
+		query.append("and dc.descricao = ? ");
+	
+		List<Object> params = new ArrayList<Object>();
+		
+		params.add(cliente.getId());
+		
+		params.add(categoriaDocumento.getId());
+		
+		params.add(arquivo);
+		
+		params.add(descricao);
+		
+		return super.get(query.toString(), params.toArray());
 	}
 	
 }

@@ -488,32 +488,34 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		return true;
 	}
 	
-	@Override
-	public List<Cliente> findByModel(String... fieldsOrderBy) {
+	private String obterCondicionalQuery(){
 		
 		StringBuilder query = new StringBuilder();
 		
-		query.append(" from Cliente c where 1 = 1 ");
-		
 		if(!TSUtil.isEmpty(matricula)){
-			query.append("and ").append(CenajurUtil.semAcento("c.matricula")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
+			query.append(" and ").append(CenajurUtil.semAcento("c.matricula")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
 		}
 		
 		if(!TSUtil.isEmpty(nome)){
-			query.append("and ").append(CenajurUtil.semAcento("c.nome")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
+			query.append(" and ").append(CenajurUtil.semAcento("c.nome")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
 		}
 		
 		if(!TSUtil.isEmpty(cidade) && !TSUtil.isEmpty(cidade.getEstado()) && !TSUtil.isEmpty(cidade.getEstado().getId())){
-			query.append("and c.cidade.estado.id = ? ");
+			query.append(" and c.cidade.estado.id = ? ");
 		}
 		
 		if(!TSUtil.isEmpty(cidade) && !TSUtil.isEmpty(cidade.getId())){
-			query.append("and c.cidade.id = ? ");
+			query.append(" and c.cidade.id = ? ");
 		}
 		
 		if(!TSUtil.isEmpty(flagAtivo)){
-			query.append("and c.flagAtivo = ? ");
+			query.append(" and c.flagAtivo = ? ");
 		}
+		
+		return query.toString();
+	}
+	
+	private List<Object> obterCondicionalParans(){
 		
 		List<Object> params = new ArrayList<Object>();
 		
@@ -537,7 +539,36 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 			params.add(flagAtivo);
 		}
 		
-		return super.find(query.toString(), "nome", params.toArray());
+		return params;
+		
+	}
+	
+	@Override
+	public List<Cliente> findByModel(String... fieldsOrderBy) {
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" from Cliente c where 1 = 1 ");
+		
+		query.append(this.obterCondicionalQuery());
+		
+		return super.find(query.toString(), "nome", this.obterCondicionalParans().toArray());
+	}
+	
+	public List<Cliente> pesquisarExceto(Cliente cliente){
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" from Cliente c where 1 = 1 ");
+		
+		if(!TSUtil.isEmpty(cliente) && !TSUtil.isEmpty(cliente.getId())){
+			query.append(" and c.id != " + cliente.getId());
+		}
+		
+		query.append(this.obterCondicionalQuery());
+		
+		return super.find(query.toString(), "nome", this.obterCondicionalParans().toArray());
+		
 	}
 	
 }

@@ -20,6 +20,17 @@
 				<p:inputText id="lote" value="#{mbeanModel.lote}" maxlength="30" styleClass="coluna95" />
 
 			</h:panelGrid>
+			
+			<h:panelGrid columns="1" style="width: 70%">
+			
+				<h:outputText value="Outros números do Processo" />
+				<p:outputPanel autoUpdate="true">
+					<p:inputText value="#{mbeanModel.processosNumeros}" readonly="true" styleClass="coluna80" rendered="#{not empty mbeanModel.processosNumeros}"/>
+					<p:inputText readonly="true" styleClass="coluna80" rendered="#{empty mbeanModel.processosNumeros}"/>
+					<p:commandButton type="button" value="Editar" onclick="dlgNumeroProcesso.show()"/>
+				</p:outputPanel>
+				
+			</h:panelGrid>
 
 		</p:fieldset>
 
@@ -143,13 +154,18 @@
 
 		<p:fieldset>
 
-			<h:panelGrid columns="3" columnClasses="coluna23, coluna45, coluna35" style="width:70%">
+			<h:panelGrid columns="4" columnClasses="coluna23, coluna20, coluna45, coluna35" style="width:70%">
 
 				<p:outputLabel for="dataAjuizamento" value="Data de Ajuizamento" />
+				<p:outputLabel for="turno" value="Turno" />
 				<p:outputLabel for="situacaoProcesso" value="Situação" />
 				<p:outputLabel for="dataArquivamento" value="Data de Arquivamento" />
 
 				<p:calendar id="dataAjuizamento" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Ajuizamento: Campo obrigatório" value="#{mbeanModel.dataAjuizamento}" style="width:90%" />
+				<p:selectOneMenu id="turno" value="#{mbeanModel.turno.id}" style="width:95%">
+					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+					<f:selectItems value="#{mbean.turnos}" />
+				</p:selectOneMenu>
 				<p:selectOneMenu id="situacaoProcesso" required="true" requiredMessage="Situação: Campo obrigatório" value="#{mbeanModel.situacaoProcesso.id}" style="width:95%">
 					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 					<f:selectItems value="#{mbean.situacoesProcessos}" />
@@ -180,15 +196,17 @@
 
 		<p:fieldset>
 
-			<h:panelGrid columns="3" columnClasses="coluna30, coluna20, coluna30" style="width:50%">
+			<h:panelGrid columns="4" columnClasses="coluna30, coluna20, coluna30, coluna20" style="width:50%">
 
 				<p:outputLabel for="numeroProcessoPesquisa" value="Número do Processo" />
 				<p:outputLabel for="dataAberturaPesquisa" value="Data de Abertura" />
 				<p:outputLabel for="dataAjuizamentoPesquisa" value="Data de Ajuizamento" />
+				<p:outputLabel for="lotePesquisa" value="Lote" />
 
 				<p:inputText id="numeroProcessoPesquisa" value="#{mbeanPesquisaModel.numeroProcesso}" maxlength="30" styleClass="coluna85" />
 				<p:calendar id="dataAberturaPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataAbertura}" />
 				<p:calendar id="dataAjuizamentoPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataAjuizamento}" styleClass="coluna90" />
+				<p:inputText id="lotePesquisa" value="#{mbeanPesquisaModel.lote}" maxlength="30" styleClass="coluna85" />
 
 			</h:panelGrid>
 
@@ -242,11 +260,16 @@
 
 		<p:fieldset>
 
-			<h:panelGrid id="pgDataArquivamentoPesquisa" columns="2" columnClasses="coluna40, coluna60" style="width:58%">
+			<h:panelGrid id="pgDataArquivamentoPesquisa" columns="3" columnClasses="coluna40, coluna60" style="width:58%">
 
+				<p:outputLabel for="turnoPesquisa" value="Turno" />
 				<p:outputLabel for="situacaoProcessoPesquisa" value="Situação" />
 				<p:outputLabel for="dataArquivamentoPesquisa" value="Data de Arquivamento" />
 
+				<p:selectOneMenu id="turnoPesquisa" value="#{mbeanPesquisaModel.turno.id}" style="width:95%">
+					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+					<f:selectItems value="#{mbean.turnos}" />
+				</p:selectOneMenu>
 				<p:selectOneMenu id="situacaoProcessoPesquisa" value="#{mbeanPesquisaModel.situacaoProcesso.id}" style="width:95%">
 					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 					<f:selectItems value="#{mbean.situacoesProcessos}" />

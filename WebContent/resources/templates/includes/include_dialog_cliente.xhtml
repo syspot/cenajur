@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+  	
+	  
+	<h:panelGrid columns="2" columnClasses="coluna30, coluna70" style="width:95%">
+  		
+  		<p:outputLabel for="matriculaPesquisa" value="Matrícula" />
+  		<p:outputLabel for="nomePesquisa" value="Nome" />
+	  	
+	  	<p:inputText id="matriculaPesquisa"  value="#{mbeanPesquisa.model.matricula}" maxlength="30" styleClass="coluna90"/>
+	  	<p:inputText id="nomePesquisa"  value="#{mbeanPesquisa.model.nome}" maxlength="100" styleClass="coluna95"/>
+  	
+  	</h:panelGrid>
+  	
+  	<h:panelGrid id="pgCidadePesquisa" columns="3" columnClasses="coluna26, coluna54, coluna20" style="width:95%">
+  	
+	  	<p:outputLabel for="estadoPesquisa" value="Estado"/>
+	  	<p:outputLabel for="cidadePesquisa" value="Cidade"/>
+	  	<p:outputLabel for="flagAtivoPesquisa" value="Ativo" />
+  	
+ 			<p:selectOneMenu id="estadoPesquisa" value="#{mbeanPesquisa.model.cidade.estado.id}" style="width:95%">
+ 				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+ 				<f:selectItems value="#{mbeanPesquisa.estados}" />
+ 				<p:ajax update="pgCidadePesquisa" listener="#{mbeanPesquisa.atualizarComboCidades}" global="false"/>
+ 			</p:selectOneMenu>
+ 			<p:selectOneMenu id="cidadePesquisa" value="#{mbeanPesquisa.model.cidade.id}" disabled="#{mbeanPesquisa.model.cidade.estado.id == null}" style="width:95%">
+ 				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+ 				<f:selectItems value="#{mbeanPesquisa.cidades}" />
+ 			</p:selectOneMenu>
+	  	<p:selectBooleanCheckbox id="flagAtivoPesquisa" value="#{mbeanPesquisa.model.flagAtivo}" />
+  	
+  	</h:panelGrid>
+	
+	<br/>
+	  	
+	<p:commandButton value="Pesquisar" icon="pesquisar" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="width: 140px; margin-left: 5px;">
+		<f:setPropertyActionListener target="#{mbeanPesquisa.clienteExcessao}" value="#{clienteExcessao}" />
+	</p:commandButton>
+	
+	<br/>
+	<br/>
+	
+	<p:dataTable id="gridPesquisa" emptyMessage="Nenhuma lotação encontrada" paginator="true"
+						paginatorAlwaysVisible="false" rows="5" value="#{mbeanPesquisa.grid}" var="cliente">
+	
+		<p:column headerText="Matrícula">
+			<h:outputText value="#{cliente.matricula}" />
+		</p:column>
+	
+		<p:column headerText="Descrição">
+			<h:outputText value="#{cliente.nome}" />
+		</p:column>
+		
+		<p:column headerText="Adicionar" styleClass="coluna10" style="text-align:center;">
+			<p:commandLink action="#{mbeanClienteAcao.addCliente}" onclick="#{nomeDialog}.hide()">
+				<h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
+				<f:setPropertyActionListener target="#{mbeanClienteAcao.clienteSelecionado}" value="#{cliente}" />
+			</p:commandLink>
+		</p:column>
+	
+	</p:dataTable>
+	  		
+</ui:composition>
