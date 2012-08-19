@@ -39,10 +39,11 @@
 
 			<p:fieldset legend="Parte">
 
-				<p:outputPanel autoUpdate="true">
+				<p:outputPanel id="opAssociados" autoUpdate="true">
 
-					<p:commandButton type="button" value="Adicionar Cliente" icon="ui-icon-plus" onclick="dlgCliente.show();" />
-					<p:dataTable value="#{mbeanModel.processosClientes}" var="processoCliente" emptyMessage="Nenhum cliente selecionado" rowIndexVar="index" style="width:100%">
+					<p:commandButton type="button" value="Adicionar Associado" icon="ui-icon-plus" onclick="dlgCliente.show();" />
+					
+					<p:dataTable value="#{mbeanModel.processosClientes}" var="processoCliente" emptyMessage="Nenhum associado selecionado" rowIndexVar="index" style="width:100%">
 
 						<p:column headerText="Nome" styleClass="coluna70">
 							<h:outputText value="#{processoCliente.cliente.nome}" />
@@ -60,11 +61,10 @@
 						</p:column>
 						
 						<p:column headerText="Alterar Situação" styleClass="coluna5">
-							<p:commandLink type="button" process="@this" oncomplete="dlgArquivarProcessoCliente.show();" >
+							<h:outputText value="#{processoCliente.situacaoProcessoCliente}" />
+							<p:commandLink oncomplete="dlgArquivarProcessoCliente.show();" process="@this">
 								<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
-								<f:setPropertyActionListener target="#{mbean.processoClienteSelecionado.situacaoProcessoCliente.id}" value="#{processoCliente.situacaoProcessoCliente.id}" />
-								<f:setPropertyActionListener target="#{mbean.processoClienteSelecionado.dataArquivamento}" value="#{processoCliente.dataArquivamento}" />
-								<f:setPropertyActionListener target="#{mbean.indexProcessoCliente}" value="#{index}" />
+								<f:setPropertyActionListener target="#{mbean.processoClienteSelecionado}" value="#{processoCliente}" />
 							</p:commandLink>
 						</p:column>
 
@@ -295,7 +295,7 @@
 
 		<p:column headerText="Advogado" styleClass="coluna50">
 			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
-				<h:outputText value="#{linha.advogado.nome}" />
+				<h:outputText value="#{linha.advogado.apelido}" />
 				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
 			</p:commandLink>
 		</p:column>

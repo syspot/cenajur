@@ -44,11 +44,21 @@ function handleRequestFaces(idDialog, widgerVar, args){
 	
 }
 
-function handleRequestAction(idDialog, widgerVar, args){
+function handleRequestActionParteContraria(idDialog, widgerVar, args){
 	if(args.validationFailed && !args.sucesso) {      	
 		jQuery(idDialog).effect("shake", { times:3 }, 100);
 	} else {  
 		addParteContraria();
+		widgerVar.hide();
+	}  
+	
+}
+
+function handleRequestActionCliente(idDialog, widgerVar, args){
+	if(args.validationFailed && !args.sucesso) {      	
+		jQuery(idDialog).effect("shake", { times:3 }, 100);
+	} else {  
+		addCliente();
 		widgerVar.hide();
 	}  
 	

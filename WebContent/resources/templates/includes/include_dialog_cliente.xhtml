@@ -37,8 +37,18 @@
 	
 	<br/>
 	  	
-	<p:commandButton value="Pesquisar" icon="pesquisar" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="width: 140px; margin-left: 5px;">
+	<p:commandButton rendered="#{addDependente != null}" value="Pesquisar" icon="pesquisar" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="width: 155px; margin-left: 5px;">
 		<f:setPropertyActionListener target="#{mbeanPesquisa.clienteExcessao}" value="#{clienteExcessao}" />
+		<f:setPropertyActionListener target="#{mbeanPesquisa.pesquisaComDependentes}" value="#{true}" />
+	</p:commandButton>
+	  	
+	<p:commandButton rendered="#{addDependente == null}" value="Pesquisar" icon="pesquisar" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="width: 155px; margin-left: 5px;">
+		<f:setPropertyActionListener target="#{mbeanPesquisa.clienteExcessao}" value="#{clienteExcessao}" />
+		<f:setPropertyActionListener target="#{mbeanPesquisa.pesquisaComDependentes}" value="#{false}" />
+	</p:commandButton>
+	
+	<p:commandButton rendered="#{addDependente != null}" value="Adicionar Dependente" icon="ui-icon-plus" update="opDialogCliente, titleDialog" style="width: 180px; margin-left: 5px;">
+		<f:setPropertyActionListener target="#{mbeanPesquisa.cadastrando}" value="#{true}" />
 	</p:commandButton>
 	
 	<br/>
@@ -47,12 +57,16 @@
 	<p:dataTable id="gridPesquisa" emptyMessage="Nenhuma lotação encontrada" paginator="true"
 						paginatorAlwaysVisible="false" rows="5" value="#{mbeanPesquisa.grid}" var="cliente">
 	
-		<p:column headerText="Matrícula">
-			<h:outputText value="#{cliente.matricula}" />
+		<p:column headerText="CPF">
+			<h:outputText value="#{cliente.cpf}" />
 		</p:column>
 	
-		<p:column headerText="Descrição">
+		<p:column headerText="Nome">
 			<h:outputText value="#{cliente.nome}" />
+		</p:column>
+	
+		<p:column headerText="Tipo">
+			<h:outputText value="#{cliente.tipo}" />
 		</p:column>
 		
 		<p:column headerText="Adicionar" styleClass="coluna10" style="text-align:center;">

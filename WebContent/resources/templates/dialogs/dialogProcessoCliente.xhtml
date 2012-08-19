@@ -13,6 +13,8 @@
 	
 			<p:outputPanel autoUpdate="true">
 			
+				<h:outputText value="#{mbean.processoClienteSelecionado.situacaoProcessoCliente}" />
+				
 				<h:panelGrid id="pgDataArquivamentoProcessoCliente" columns="2" columnClasses="coluna50, coluna50">
 					
 					<p:outputLabel for="situacaoProcessoCliente" value="Situação" />
@@ -29,7 +31,7 @@
 			</p:outputPanel>
 			
 			<h:panelGrid columns="1" style="width:100%; text-align: left">
-				<p:commandButton value="Alterar" action="#{mbean.atualizarProcessoCliente}" oncomplete="handleRequest('dialogArquivarProcessoCliente', dlgArquivarProcessoCliente, args)" />
+				<p:commandButton value="Alterar" action="#{mbean.atualizarProcessoCliente}" oncomplete="handleRequest('dialogArquivarProcessoCliente', dlgArquivarProcessoCliente, args)" update="pgDataArquivamentoProcessoCliente" />
 			</h:panelGrid>
 			
 		</p:dialog>

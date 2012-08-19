@@ -52,8 +52,8 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 	
 	private void initCombo(){
 		this.varas = this.initCombo(new Vara().findAll("descricao"), "id", "descricao");
-		this.advogados = this.initCombo(new Colaborador().findAll("nome"), "id", "nome");
-		this.situacoesAudiencias = this.initCombo(new SituacaoProcesso().findAll("descricao"), "id", "descricao");
+		this.advogados = this.initCombo(new Colaborador().findAllAdvogados(), "id", "apelido");
+		this.situacoesAudiencias = this.initCombo(new SituacaoAudiencia().findAll("descricao"), "id", "descricao");
 		this.categoriasDocumentos = this.initCombo(getCategoriaDocumento().findByModel("descricao"), "id", "descricao");
 	}
 	
@@ -112,6 +112,8 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 			}
 			
 		}
+		
+		//TODO - Enviar E-mail para o associado informando a mudança na Audiencia - Verificar com Roque as Configurações de envio de E-mail
 		
 	}
 	

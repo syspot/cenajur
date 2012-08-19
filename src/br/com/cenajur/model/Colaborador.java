@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import br.com.cenajur.util.CenajurUtil;
+import br.com.cenajur.util.Constantes;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
@@ -29,6 +30,8 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 	private Long id;
 	
 	private String nome;
+	
+	private String apelido;
 	
 	private String email;
 	
@@ -109,6 +112,14 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getApelido() {
+		return apelido;
+	}
+
+	public void setApelido(String apelido) {
+		this.apelido = apelido;
 	}
 
 	public String getEmail() {
@@ -332,11 +343,15 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 		query.append(" from Colaborador c where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(nome)){
-			query.append("and ").append(CenajurUtil.semAcento("c.nome")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
+			query.append(CenajurUtil.getParamSemAcento("c.nome"));
+		}
+		
+		if(!TSUtil.isEmpty(apelido)){
+			query.append(CenajurUtil.getParamSemAcento("c.apelido"));
 		}
 		
 		if(!TSUtil.isEmpty(email)){
-			query.append("and ").append(CenajurUtil.semAcento("c.email")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
+			query.append(CenajurUtil.getParamSemAcento("c.email"));
 		}
 		
 		if(!TSUtil.isEmpty(grupo) && !TSUtil.isEmpty(grupo.getId())){
@@ -357,6 +372,10 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 			params.add(CenajurUtil.tratarString(nome));
 		}
 		
+		if(!TSUtil.isEmpty(apelido)){
+			params.add(CenajurUtil.tratarString(apelido));
+		}
+		
 		if(!TSUtil.isEmpty(email)){
 			params.add(CenajurUtil.tratarString(email));
 		}
@@ -374,6 +393,10 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 		}
 		
 		return super.find(query.toString(), "nome", params.toArray());
+	}
+	
+	public List<Colaborador> findAllAdvogados(){
+		return super.find(" from Colaborador c where c.tipoColaborador.id = ? ", "apelido", Constantes.TIPO_COLABORADOR_ADVOGADO);
 	}
 	
 }

@@ -12,6 +12,18 @@
   	
   	<ui:define name="cadastro">
   	
+  		<h:panelGrid columns="4"  rendered="#{mbeanModel.id != null}">
+				
+			<h:outputText value="Nome:" style="font-weight: bold; font-size: 1.6em; text-align: left" />
+			<h:outputText value="#{mbeanModel.nome}" style="font-weight: bold; font-size: 1.6em; color: red; text-align: left" />
+					
+			<h:outputText value="Data de Adesão:" style="font-weight: bold; font-size: 1.6em; text-align: left; margin-left: 20px" />
+			<h:outputText value="#{mbeanModel.dataAdesao}" style="font-weight: bold; font-size: 1.6em; color: red; text-align: left" >
+				<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="America/Sao_Paulo" />
+			</h:outputText>
+					
+		</h:panelGrid>
+  	
   		<p:fieldset legend="Informações Gerais">
   			
   			<h:panelGrid columns="2" columnClasses="coluna80, coluna20_1" style="width:100%">

@@ -88,8 +88,7 @@ public class ProcessoCliente extends TSActiveRecordAb<ProcessoCliente>{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((cliente == null) ? 0 : cliente.hashCode());
-		result = prime * result + ((processo == null) ? 0 : processo.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -107,14 +106,29 @@ public class ProcessoCliente extends TSActiveRecordAb<ProcessoCliente>{
 				return false;
 		} else if (!cliente.equals(other.cliente))
 			return false;
+		if (dataArquivamento == null) {
+			if (other.dataArquivamento != null)
+				return false;
+		} else if (!dataArquivamento.equals(other.dataArquivamento))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
 		if (processo == null) {
 			if (other.processo != null)
 				return false;
 		} else if (!processo.equals(other.processo))
 			return false;
+		if (situacaoProcessoCliente == null) {
+			if (other.situacaoProcessoCliente != null)
+				return false;
+		} else if (!situacaoProcessoCliente.equals(other.situacaoProcessoCliente))
+			return false;
 		return true;
 	}
-	
+
 	public boolean isProcessoClienteArquivado(){
 		return Constantes.SITUACAO_PROCESSO_CLIENTE_ARQUIVADO.equals(this.situacaoProcessoCliente.getId());
 	}

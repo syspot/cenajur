@@ -134,6 +134,9 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<DocumentoCliente> documentos;
 	
+	@Column(name = "flag_associado")
+	private Boolean flagAssociado;
+	
 	@Transient
 	private byte[] bytesImagem;
 	
@@ -444,6 +447,14 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		this.documentos = documentos;
 	}
 
+	public Boolean getFlagAssociado() {
+		return flagAssociado;
+	}
+
+	public void setFlagAssociado(Boolean flagAssociado) {
+		this.flagAssociado = flagAssociado;
+	}
+
 	public byte[] getBytesImagem() {
 		return bytesImagem;
 	}
@@ -458,6 +469,10 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 
 	public void setCaminhoImagem(String caminhoImagem) {
 		this.caminhoImagem = caminhoImagem;
+	}
+	
+	public String getTipo(){
+		return getFlagAssociado() ? "Associado" : "Dependente";
 	}
 
 	@Override
@@ -549,6 +564,8 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		
 		query.append(this.obterCondicionalQuery());
 		
+		query.append(" and c.flagAssociado = true ");
+		
 		return super.find(query.toString(), "nome", this.obterCondicionalParans().toArray());
 	}
 	
@@ -561,6 +578,20 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		if(!TSUtil.isEmpty(cliente) && !TSUtil.isEmpty(cliente.getId())){
 			query.append(" and c.id != " + cliente.getId());
 		}
+		
+		query.append(this.obterCondicionalQuery());
+		
+		query.append(" and c.flagAssociado = true ");
+		
+		return super.find(query.toString(), "nome", this.obterCondicionalParans().toArray());
+		
+	}
+	
+	public List<Cliente> pesquisarComDependentes(){
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" from Cliente c where 1 = 1 ");
 		
 		query.append(this.obterCondicionalQuery());
 		

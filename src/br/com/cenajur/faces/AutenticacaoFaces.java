@@ -158,7 +158,7 @@ public class AutenticacaoFaces extends TSMainFaces{
     	if(TSUtil.isEmpty(colaborador)){
     		CenajurUtil.addErrorMessage("Usuário não localizado");
     	} else{
-    		//Enviar E-mail com nova Senha - ver com Roque as configurações.!
+    		//TODO - Verificar com Roque as Configurações de envio de E-mail
     		CenajurUtil.addInfoMessage("Uma nova senha foi enviada para seu e-mail");
     	}
     	

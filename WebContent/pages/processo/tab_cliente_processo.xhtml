@@ -49,7 +49,7 @@
 						
 										<p:outputPanel autoUpdate="true">
 						
-											<p:dataTable value="#{processo.processosClientes}" var="processoCliente" emptyMessage="Nenhum cliente selecionado" rowIndexVar="index" style="width:100%">
+											<p:dataTable value="#{processo.processosClientes}" var="processoCliente" emptyMessage="Nenhum associado selecionado" rowIndexVar="index" style="width:100%">
 						
 												<p:column headerText="Nome" styleClass="coluna70">
 													<h:outputText value="#{processoCliente.cliente.nome}" />
@@ -95,7 +95,7 @@
 										<p:outputLabel for="advogado" value="Advogado" />
 										
 										<p:inputText id="parte" value="#{processo.tipoParte.descricao}" styleClass="coluna80" readonly="true"/>
-										<p:inputText id="advogado" value="#{processo.advogado.nome}" styleClass="coluna80" readonly="true"/>
+										<p:inputText id="advogado" value="#{processo.advogado.apelido}" styleClass="coluna80" readonly="true"/>
 						
 										<p:outputLabel for="tipoProcesso" value="Tipo de Processo" />
 										<p:outputLabel for="objeto" value="Objeto" />
@@ -212,7 +212,7 @@
 								  		</p:column>
 								  	
 								  		<p:column headerText="Advogado">
-								  			<h:outputText value="#{linha.advogado.nome}" />
+								  			<h:outputText value="#{linha.advogado.apelido}" />
 								  		</p:column>
 								  	
 								  		<p:column headerText="Data">
@@ -261,7 +261,7 @@
 									  	<h:panelGrid columns="1" columnClasses="coluna100" style="width:95%">
 									  	
 										  	<p:outputLabel for="advogadoAudienciaView" value="Advogado" />
-									  		<p:inputText id="advogadoAudienciaView" value="#{clienteFaces.audienciaSelecionada.advogado.nome}" readonly="true" style="width:97%" />
+									  		<p:inputText id="advogadoAudienciaView" value="#{clienteFaces.audienciaSelecionada.advogado.apelido}" readonly="true" style="width:97%" />
 										  	
 										  	<p:outputLabel for="descricaoAudienciaView" value="Descrição" />
 											<p:inputTextarea id="descricaoAudienciaView" value="#{clienteFaces.audienciaSelecionada.descricao}" readonly="true" autoResize="false" rows="10" maxlength="500" styleClass="coluna97"/>

@@ -103,7 +103,7 @@
 				  	
 				  	</h:panelGrid>
 				  	
-		  			<p:commandButton value="Salvar" action="#{mbeanPersist.inserirPorDialogPesquisa}" update="opParteContraria, titleDialog" oncomplete="handleRequestAction('dialogParteContraria', dlgParteContraria, args)" style="margin-top: 30px">
+		  			<p:commandButton value="Salvar" action="#{mbeanPersist.inserirPorDialogPesquisa}" update="opParteContraria, titleDialog" oncomplete="handleRequestActionParteContraria('dialogParteContraria', dlgParteContraria, args)" style="margin-top: 30px">
 		  				<f:setPropertyActionListener target="#{mbeanPesquisa.cadastrando}" value="#{false}" />
 		  			</p:commandButton>
 		  			<p:commandButton value="Voltar" process="@this" update="opParteContraria, titleDialog" style="margin-top: 30px">

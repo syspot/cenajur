@@ -92,7 +92,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		this.situacoesProcessos = this.initCombo(new SituacaoProcesso().findAll("descricao"), "id", "descricao");
 		this.situacoesProcessosClientes = this.initCombo(new SituacaoProcessoCliente().findAll("descricao"), "id", "descricao");
 		this.situacoesProcessosPartesContrarias = this.initCombo(new SituacaoProcessoParteContraria().findAll("descricao"), "id", "descricao");
-		this.advogados = this.initCombo(new Colaborador().findAll("nome"), "id", "nome");
+		this.advogados = this.initCombo(new Colaborador().findAllAdvogados(), "id", "apelido");
 		this.tiposAndamentosProcessos = this.initCombo(new TipoAndamentoProcesso().findAll("descricao"), "id", "descricao");
 		this.situacoesAudiencias = this.initCombo(new SituacaoProcesso().findAll("descricao"), "id", "descricao");
 		this.categoriasDocumentos = this.initCombo(getCategoriaDocumento().findByModel("descricao"), "id", "descricao");
@@ -113,10 +113,6 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		getCrudModel().setProcessosClientes(new ArrayList<ProcessoCliente>());
 		getCrudModel().setProcessosPartesContrarias(new ArrayList<ProcessoParteContraria>());
 		getCrudModel().setProcessosNumeros(new ArrayList<ProcessoNumero>());
-		this.processoClienteSelecionado = new ProcessoCliente();
-		this.processoClienteSelecionado.setSituacaoProcessoCliente(new SituacaoProcessoCliente());
-		this.processoParteContrariaSelecionada = new ProcessoParteContraria();
-		this.processoParteContrariaSelecionada.setSituacaoProcessoParteContraria(new SituacaoProcessoParteContraria());
 		setCategoriaDocumento(new CategoriaDocumento());
 		getCategoriaDocumento().setTipoCategoria(new TipoCategoria(Constantes.TIPO_CATEGORIA_PROCESSO));
 		getCrudModel().setDocumentos(new ArrayList<DocumentoProcesso>());
@@ -305,15 +301,11 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	}
 	
 	public String atualizarProcessoCliente() throws TSApplicationException{
-		getCrudModel().getProcessosClientes().get(indexProcessoCliente).setSituacaoProcessoCliente(this.processoClienteSelecionado.getSituacaoProcessoCliente());
-		getCrudModel().getProcessosClientes().get(indexProcessoCliente).setDataArquivamento(this.processoClienteSelecionado.getDataArquivamento());
 		CenajurUtil.addInfoMessage("Alteração realizada com sucesso");
 		return null;
 	}
 	
 	public String atualizarProcessoParteContraria() throws TSApplicationException{
-		getCrudModel().getProcessosPartesContrarias().get(indexProcessoParteContraria).setSituacaoProcessoParteContraria(this.processoParteContrariaSelecionada.getSituacaoProcessoParteContraria());
-		getCrudModel().getProcessosPartesContrarias().get(indexProcessoParteContraria).setDataArquivamento(this.processoParteContrariaSelecionada.getDataArquivamento());
 		CenajurUtil.addInfoMessage("Alteração realizada com sucesso");
 		return null;
 	}

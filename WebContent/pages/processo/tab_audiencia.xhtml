@@ -24,13 +24,16 @@
 									<p:outputLabel for="numeroProcessoAudiencia" value="Processo" />
 									<p:inputText id="numeroProcessoAudiencia" value="#{mbean.processoAudienciaUtil.audiencia.processo.numeroProcesso}" readonly="true" />
 							  		
-								  	<p:outputLabel for="dataAudienciaAudiencia" value="Data da Audiência" />
-							  		<p:calendar id="dataAudienciaAudiencia" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data da Audiência: Campo obrigatório" value="#{mbean.processoAudienciaUtil.audiencia.dataAudiencia}"/>
-						  		
 						  		</h:panelGrid>
 						  		
 						  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:95%">
 						  		
+								  	<p:outputLabel for="dataAudienciaAudiencia" value="Data da Audiência" />
+						  			<p:outputLabel for="flagClienteCienteAudiencia" value="Associado ciente" />
+						  		
+							  		<p:calendar id="dataAudienciaAudiencia" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data da Audiência: Campo obrigatório" value="#{mbean.processoAudienciaUtil.audiencia.dataAudiencia}"/>
+							  		<p:selectBooleanCheckbox id="flagClienteCienteAudiencia" value="#{mbean.processoAudienciaUtil.audiencia.flagClienteCiente}" />
+							  		
 							  		<p:outputLabel for="situacaoAudiencia" value="Situação" />
 								  	<p:outputLabel for="varaAudiencia" value="Vara" />
 								  	
@@ -57,7 +60,7 @@
 									<p:inputTextarea id="descricaoAudiencia" value="#{mbean.processoAudienciaUtil.audiencia.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" autoResize="false" rows="10" maxlength="500" styleClass="coluna90"/>
 									
 							  	</h:panelGrid>
-							
+							  	
 							</p:outputPanel>
 							
 							<h:panelGrid columns="1" style="width:100%">
@@ -107,7 +110,7 @@
 					  	
 					  		<p:column headerText="Advogado">
 					  			<p:commandLink process="@this" action="#{mbean.processoAudienciaUtil.obterAudiencia}" update="@form">
-						  			<h:outputText value="#{linha.advogado.nome}" />
+						  			<h:outputText value="#{linha.advogado.apelido}" />
 									<f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.audiencia}" value="#{linha}" />
 								</p:commandLink>
 					  		</p:column>

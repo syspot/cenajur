@@ -31,7 +31,7 @@ public class ProcessoPesquisaFaces extends PesquisaFaces<Processo> {
 	
 	private void initCombo(){
 		this.situacoesProcessos = this.initCombo(new SituacaoProcesso().findAll("descricao"), "id", "descricao");
-		this.advogados = this.initCombo(new Colaborador().findAll("nome"), "id", "nome");
+		this.advogados = this.initCombo(new Colaborador().findAllAdvogados(), "id", "apelido");
 	}
 	
 	@Override

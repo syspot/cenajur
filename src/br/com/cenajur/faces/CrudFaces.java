@@ -92,6 +92,8 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 		
 		this.setDefaultMessage(Boolean.TRUE);
 		
+		this.setFlagAlterar(Boolean.TRUE);
+		
 		return null;
 		
 	}

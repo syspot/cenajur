@@ -60,6 +60,9 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 	
 	@OneToMany(mappedBy = "audiencia", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<DocumentoAudiencia> documentos;
+	
+	@Column(name = "flag_cliente_ciente")
+	private Boolean flagClienteCiente;
 
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -151,6 +154,14 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 
 	public void setDocumentos(List<DocumentoAudiencia> documentos) {
 		this.documentos = documentos;
+	}
+
+	public Boolean getFlagClienteCiente() {
+		return flagClienteCiente;
+	}
+
+	public void setFlagClienteCiente(Boolean flagClienteCiente) {
+		this.flagClienteCiente = flagClienteCiente;
 	}
 
 	@Override

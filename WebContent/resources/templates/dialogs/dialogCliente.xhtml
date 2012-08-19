@@ -8,13 +8,64 @@
 	<ui:param name="mbeanPesquisa" value="${clientePesquisaFaces}" />
 	<ui:param name="mbeanClienteAcao" value="${processoFaces}" />
 	<ui:param name="nomeDialog" value="dlgCliente" />
+	<ui:param name="addDependente" value="${true}" />
 
 	<h:form>
 		
-		<p:dialog id="dialogCliente" widgetVar="dlgCliente" header="Pesquisa de Clientes" width="600" height="400" modal="true">
+		<p:dialog id="dialogCliente" widgetVar="dlgCliente" width="600" height="400" modal="true">
 	  
-	  		<ui:include src="/resources/templates/includes/include_dialog_cliente.xhtml"/>
-	  
+	  		<p:ajax listener="#{mbeanPesquisa.initDependente}" update="dialogCliente, opDialogCliente, titleDialog">
+	  			<f:setPropertyActionListener target="#{mbeanPesquisa.cadastrando}" value="#{false}" />
+	  		</p:ajax>
+	  		
+	  		<f:facet name="header">
+  				<h:outputText id="titleDialog" value="#{mbeanPesquisa.cadastrando ? 'Cadastro de Dependente' : 'Pesquisa de Associados'}" />
+  			</f:facet>
+  			
+  			<p:outputPanel id="opDialogCliente">
+  			
+	  			<p:outputPanel rendered="#{!mbeanPesquisa.cadastrando}">
+	  			
+		  			<ui:include src="/resources/templates/includes/include_dialog_cliente.xhtml"/>
+		  			
+	  			</p:outputPanel>
+	  			
+	  			<p:outputPanel rendered="#{mbeanPesquisa.cadastrando}">
+	  			
+		  			<h:panelGrid id="pgDependente" columns="1" style="width: 80%">
+		  			
+		  				<p:outputLabel for="nomeDependente" value="Nome" />
+		  				<p:inputText id="nomeDependente" value="#{mbeanPesquisa.dependente.nome}" maxlength="100" required="true" requiredMessage="Nome: Campo obrigatório" styleClass="coluna90" />
+		  				
+		  			</h:panelGrid>
+		  			
+		  			<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width: 80%">
+		  				
+		  				<p:outputLabel for="cpfDependente" value="CPF" />
+		  				<p:outputLabel for="rgDependente" value="RG" />
+		  				
+		  				<p:inputMask id="cpfDependente" value="#{mbeanPesquisa.dependente.cpf}" mask="999.999.999-99" maxlength="15" required="true" requiredMessage="CPF: Campo obrigatório" styleClass="coluna95"/>
+		  				<p:inputText id="rgDependente" value="#{mbeanPesquisa.dependente.rg}" maxlength="20" required="true" requiredMessage="RG: Campo obrigatório" styleClass="coluna95"/>
+		  				
+		  			</h:panelGrid>
+			  			
+	  				<p:commandButton value="Salvar" action="#{mbeanPesquisa.addDependente}" oncomplete="handleRequestActionCliente('dialogCliente', dlgCliente, args)" update="pgDependente" >
+	  					<f:setPropertyActionListener target="#{mbeanPesquisa.cadastrando}" value="#{false}" />
+	  				</p:commandButton>
+		  			<p:commandButton value="Voltar" process="@this" update="opDialogCliente, titleDialog">
+		  				<f:setPropertyActionListener target="#{mbeanPesquisa.cadastrando}" value="#{false}" />
+		  			</p:commandButton>
+		  				
+		  			
+	  			</p:outputPanel>
+	  			
+	  			<p:remoteCommand name="addCliente" action="#{processoFaces.addCliente}" process="@this">
+		  			<f:setPropertyActionListener target="#{processoFaces.clienteSelecionado}" value="#{mbeanPesquisa.dependente}" />
+		  			<f:setPropertyActionListener target="#{mbeanPesquisa.cadastrando}" value="#{false}" />
+		  		</p:remoteCommand>
+	  		
+	  		</p:outputPanel>
+	  		
 		</p:dialog>
 	
 	</h:form>

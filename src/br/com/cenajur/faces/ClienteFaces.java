@@ -85,6 +85,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		getCrudModel().setTipoPagamento(new TipoPagamento());
 		getCrudModel().setFlagAtivo(Boolean.TRUE);
 		getCrudModel().setFlagStatusPM(Boolean.TRUE);
+		getCrudModel().setFlagAssociado(Boolean.TRUE);
 		setCategoriaDocumento(new CategoriaDocumento());
 		getCategoriaDocumento().setTipoCategoria(new TipoCategoria(Constantes.TIPO_CATEGORIA_CLIENTE));
 		getCrudModel().setDocumentos(new ArrayList<DocumentoCliente>());
@@ -100,6 +101,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		getCrudPesquisaModel().setCidade(new Cidade());
 		getCrudPesquisaModel().getCidade().setEstado(new Estado());
 		getCrudPesquisaModel().setFlagAtivo(Boolean.TRUE);
+		getCrudPesquisaModel().setFlagAssociado(Boolean.TRUE);
 		return null;
 	}
 	

@@ -23,14 +23,17 @@
 						<p:inputText id="processo" value="#{mbeanModel.processo.numeroProcesso}" required="true" requiredMessage="Processo: Campo obrigatório" readonly="true" />
 						<p:commandButton type="button" value="Adicionar" icon="ui-icon-plus" onclick="dlgProcesso.show();" />
 					</p:outputPanel>
-			  		
-				  	<p:outputLabel for="dataAudiencia" value="Data da Audiência" />
-			  		<p:calendar id="dataAudiencia" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data da Audiência: Campo obrigatório" value="#{mbeanModel.dataAudiencia}"/>
 		  		
 		  		</h:panelGrid>
 		  		
 		  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:95%">
 		  		
+				  	<p:outputLabel for="dataAudiencia" value="Data da Audiência" />
+		  			<p:outputLabel for="flagClienteCiente" value="Associado Ciente" />
+		  			
+			  		<p:calendar id="dataAudiencia" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data da Audiência: Campo obrigatório" value="#{mbeanModel.dataAudiencia}"/>
+			  		<p:selectBooleanCheckbox id="flagClienteCiente" value="#{mbeanModel.flagClienteCiente}" />
+				  	
 			  		<p:outputLabel for="situacaoAudiencia" value="Situação" />
 				  	<p:outputLabel for="vara" value="Vara" />
 				  	
@@ -132,7 +135,7 @@
   	
   		<p:column headerText="Advogado" styleClass="coluna30">
   			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
-	  			<h:outputText value="#{linha.advogado.nome}" />
+	  			<h:outputText value="#{linha.advogado.apelido}" />
 				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
 			</p:commandLink>
   		</p:column>
