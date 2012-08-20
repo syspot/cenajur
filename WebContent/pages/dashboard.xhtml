@@ -15,24 +15,26 @@
 
 		<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();" onerror="statusDialog.hide();" oncomplete="statusDialog.hide();" />
 		
-		<ui:include src="/resources/templates/dialogs/dialogPermissao.xhtml" />
-		<ui:include src="/resources/templates/dialogs/dialogLotacao.xhtml" />
+		<ui:include src="/resources/templates/dialogs/dialogCam.xhtml" />
 		<ui:include src="/resources/templates/dialogs/dialogCliente.xhtml" />
 		<ui:include src="/resources/templates/dialogs/dialogCliente2.xhtml" />
+		<ui:include src="/resources/templates/dialogs/dialogColaborador.xhtml" />
+		<ui:include src="/resources/templates/dialogs/dialogLotacao.xhtml" />
+		<ui:include src="/resources/templates/dialogs/dialogMensagem.xhtml" />
+		<ui:include src="/resources/templates/dialogs/dialogNumeroProcesso.xhtml" />
 		<ui:include src="/resources/templates/dialogs/dialogParteContraria.xhtml" />
+		<ui:include src="/resources/templates/dialogs/dialogPermissao.xhtml" />
 		<ui:include src="/resources/templates/dialogs/dialogProcesso.xhtml" />
 		<ui:include src="/resources/templates/dialogs/dialogProcesso2.xhtml" />
 		<ui:include src="/resources/templates/dialogs/dialogProcessoCliente.xhtml" />
 		<ui:include src="/resources/templates/dialogs/dialogProcessoParteContraria.xhtml" />
-		<ui:include src="/resources/templates/dialogs/dialogCam.xhtml" />
-		<ui:include src="/resources/templates/dialogs/dialogNumeroProcesso.xhtml" />
-		<ui:include src="/resources/templates/dialogs/dialogViewFotoCliente.xhtml" />
 		<ui:include src="/resources/templates/dialogs/dialogUploadDocumentoAndamentoProcesso.xhtml" />
 		<ui:include src="/resources/templates/dialogs/dialogUploadDocumentoAudiencia.xhtml" />
 		<ui:include src="/resources/templates/dialogs/dialogUploadDocumentoCliente.xhtml" />
 		<ui:include src="/resources/templates/dialogs/dialogUploadDocumentoProcesso.xhtml" />
 		<ui:include src="/resources/templates/dialogs/dialogUploadDocumentoTabAndamentoProcesso.xhtml" />
 		<ui:include src="/resources/templates/dialogs/dialogUploadDocumentoTabAudiencia.xhtml" />
+		<ui:include src="/resources/templates/dialogs/dialogViewFotoCliente.xhtml" />
 		
 		<p:dialog modal="true" widgetVar="statusDialog" header="Processando..." draggable="false" closable="false" resizable="false">
 			<p:graphicImage value="../resources/images/ajaxloadingbar.gif" />

@@ -1,12 +1,20 @@
 package br.com.cenajur.model;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import br.com.cenajur.util.CenajurUtil;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
@@ -19,19 +27,15 @@ public class Mensagem extends TSActiveRecordAb<Mensagem>{
 	@SequenceGenerator(name="mensagens_id", sequenceName="mensagens_id_seq")
 	private Long id;
 	
-	private String destinatario;
+	@ManyToOne
+	private Colaborador remetente;
 	
-	private String remetente;
+	private String texto;
 	
-	private String mensagem;
+	private Date data;
 	
-	private int cont;
-
-	public Mensagem(String campo1, String campo2, int cont) {
-		this.remetente = campo1;
-		this.mensagem = campo2;
-		this.cont = cont;
-	}
+	@OneToMany(mappedBy = "mensagem", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<MensagemDestinatario> mensagensDestinatarios;
 	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -41,43 +45,84 @@ public class Mensagem extends TSActiveRecordAb<Mensagem>{
 		this.id = TSUtil.tratarLong(id);
 	}
 
-	public String getDestinatario() {
-		return destinatario;
-	}
-
-	public void setDestinatario(String destinatario) {
-		this.destinatario = destinatario;
-	}
-
-	public String getMensagem() {
-		return mensagem;
-	}
-
-	public void setMensagem(String mensagem) {
-		this.mensagem = mensagem;
-	}
-
-	public String getRemetente() {
+	public Colaborador getRemetente() {
 		return remetente;
 	}
 
-	public void setRemetente(String remetente) {
+	public void setRemetente(Colaborador remetente) {
 		this.remetente = remetente;
 	}
 
-	public int getCont() {
-		return cont;
+	public String getTexto() {
+		return texto;
+	}
+	
+	public String getTextoResumo() {
+		return CenajurUtil.obterResumoGrid(texto, 20);
 	}
 
-	public void setCont(int cont) {
-		this.cont = cont;
+	public void setTexto(String texto) {
+		this.texto = texto;
 	}
 
-	public String getCss(){
-		if(cont < 4){
-			return "font-text: italic;";
-		} else{
-			return "font-text: bold;";
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
+	}
+
+	public List<MensagemDestinatario> getMensagensDestinatarios() {
+		return mensagensDestinatarios;
+	}
+
+	public void setMensagensDestinatarios(List<MensagemDestinatario> mensagensDestinatarios) {
+		this.mensagensDestinatarios = mensagensDestinatarios;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Mensagem other = (Mensagem) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+	
+	public List<Mensagem> pesquisarPorColaborador(Colaborador destinatario) {
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" select m from Mensagem m inner join m.mensagensDestinatarios md where 1 = 1 ");
+		
+		if(!TSUtil.isEmpty(destinatario) && !TSUtil.isEmpty(destinatario.getId())){
+			query.append(" and md.destinatario.id = ? ");
 		}
+		
+		List<Object> param = new ArrayList<Object>();
+		
+		if(!TSUtil.isEmpty(destinatario) && !TSUtil.isEmpty(destinatario.getId())){
+			param.add(destinatario.getId());
+		}
+		
+		return super.find(query.toString(), null, param.toArray());
 	}
+
 }

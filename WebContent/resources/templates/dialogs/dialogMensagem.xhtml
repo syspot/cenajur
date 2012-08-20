@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:param name="mbeanMensagem" value="${mensagemFaces}" />
+
+	<h:form>
+		
+		<p:dialog id="dialogMensagem" widgetVar="dlgMensagem" header="Enviar Mensagem" width="550" height="300" modal="true">
+	  
+	  		<h:panelGrid style="width:100%">
+				
+				<h:outputText value="Destinatarios" />
+				<p:outputPanel autoUpdate="true" style="width:100%">
+					<p:inputText value="#{mbeanMensagem.mensagem.mensagensDestinatarios}" readonly="true" styleClass="coluna85" rendered="#{not empty mbeanMensagem.mensagem.mensagensDestinatarios}"/>
+					<p:inputText readonly="true" styleClass="coluna85" rendered="#{empty mbeanMensagem.mensagem.mensagensDestinatarios}"/>
+					<p:commandButton type="button" value="Add" icon="ui-icon-plus" onclick="dlgColaborador.show();" />
+				</p:outputPanel>
+				
+				<p:outputLabel for="texto" value="Texto" />
+				<p:inputTextarea id="texto" value="#{mbeanMensagem.mensagem.texto}" rows="10" style="width:85%"/>
+				
+				<p:commandButton value="Enviar" action="#{mbeanMensagem.enviarMensagem}" oncomplete="handleRequest('dialogMensagem', dlgMensagem, args)"/>
+		  		
+	  		</h:panelGrid>
+	  		
+		</p:dialog>
+	
+	</h:form>
+
+</ui:component>

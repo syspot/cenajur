@@ -13,15 +13,16 @@
 			
 		</p:tab>
 		
-		
 		<p:tab id="tabMensagem" title="Mensagem" >
 		
 		  	<h:form id="formMensagem">
+		  	
+		  		<p:commandButton type="button" value="Nova Mensagem" onclick="dlgMensagem.show();"/>
 		  
 		  		<p:remoteCommand name="abrirModelMensagem" oncomplete="mensagemDialog.show();" update="pgMensagem" process="@this" />
 		  		
 			    <p:dataGrid var="mensagem" value="#{mensagemFaces.mensagens}" columns="3"  
-			        rows="12" paginator="true"  
+			        rows="12" paginator="true"  paginatorAlwaysVisible="false"
 			        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
 			        rowsPerPageTemplate="9,12,15">  
 			          
@@ -30,15 +31,15 @@
 			                <h:panelGrid columns="2" columnClasses="coluna25_2, coluna75_2" style="width:100%; vertical-align: top">
 			                    
 			                    <h:outputText value="Data:" />  
-			                    <h:outputText value="Domingo, 27 de Julho de 2012 14:30" />
+			                    <h:outputText value="#{mensagem.data}" />
 			                      
 			                    <h:outputText value="Remetente:" />  
-			                    <h:outputText value="#{mensagem.remetente}" />
+			                    <h:outputText value="#{mensagem.remetente.nome}" />
 			                      
 			                    <h:outputText value="Mensagem:" />
 			                    <h:panelGrid columns="2">
-			                    	<h:outputText value="#{mensagem.mensagem}" style="text-align: lef;"/>
-			                    	<p:commandLink type="button" oncomplete="abrirModelMensagem();" process="@this" global="false" value="Leia Mais" style="text-align: lef; color: #228B22" rendered="#{mensagem.mensagem.length() > 20}">
+			                    	<h:outputText value="#{mensagem.textoResumo}" style="text-align: lef;"/>
+			                    	<p:commandLink type="button" oncomplete="abrirModelMensagem();" process="@this" global="false" value="Leia Mais" style="text-align: lef; color: #228B22" rendered="#{mensagem.texto.length() > 20}">
 			                    		<f:setPropertyActionListener target="#{mensagemFaces.mensagemSelecionada}" value="#{mensagem}"/>
 			                    	</p:commandLink>
 			                    </h:panelGrid>
@@ -54,18 +55,20 @@
 		            <h:panelGrid id="pgMensagem" columns="2" columnClasses="coluna25_2, coluna75_2" style="width:100%; vertical-align: top">
 		                    
 		                <h:outputText value="Data:" />  
-		                <h:outputText value="Domingo, 27 de Julho de 2012 14:30" />
+		                <h:outputText value="#{mensagemFaces.mensagemSelecionada.data}" />
 		                  
 		                <h:outputText value="Remetente:" />
-		                <h:outputText value="#{mensagemFaces.mensagemSelecionada.remetente}" />
+		                <h:outputText value="#{mensagemFaces.mensagemSelecionada.remetente.nome}" />
 		                  
 		                <h:outputText value="Mensagem:" />
-		                <h:outputText value="#{mensagemFaces.mensagemSelecionada.mensagem}" style="text-align: lef;"/>
+		                <h:outputText value="#{mensagemFaces.mensagemSelecionada.texto}" style="text-align: lef;"/>
 		                  
 		            </h:panelGrid> 
 		            
 		            <h:panelGrid columns="1" style="text-align: center">
-		            	<p:commandButton type="button" value="Responder" />
+		            	<p:commandButton value="Responder" onclick="mensagemDialog.show();" >
+		            		
+		            	</p:commandButton>
 		            </h:panelGrid>
 			              
 			    </p:dialog>  

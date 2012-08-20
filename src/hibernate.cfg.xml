@@ -36,6 +36,8 @@
  		<mapping class="br.com.cenajur.model.Graduacao" />
  		<mapping class="br.com.cenajur.model.Grupo" />
  		<mapping class="br.com.cenajur.model.Lotacao" />
+ 		<mapping class="br.com.cenajur.model.Mensagem" />
+ 		<mapping class="br.com.cenajur.model.MensagemDestinatario" />
  		<mapping class="br.com.cenajur.model.Menu" />
  		<mapping class="br.com.cenajur.model.MotivoCancelamento" />
  		<mapping class="br.com.cenajur.model.Objeto" />

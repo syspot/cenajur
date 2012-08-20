@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:param name="mbeanPesquisa" value="${colaboradorPesquisaFaces}" />
+	<ui:param name="mbeanColaboradorAcao" value="${mensagemFaces}" />
+
+	<h:form>
+		
+		<p:dialog id="dialogColaborador" header="Pesquisa de Colaborador" widgetVar="dlgColaborador" width="550" height="350" modal="true">
+	  
+	  		<h:panelGrid columns="2" styleClass="coluna60, coluna40" style="width:70%">
+	  		
+		  		<p:outputLabel for="nomePesquisa" value="Nome" />
+		  		<p:outputLabel for="tipoColaboradorPesquisa" value="Tipo" />
+		  	
+		  		<p:inputText id="nomePesquisa" value="#{mbeanPesquisa.model.nome}" maxlength="100" styleClass="coluna92" />
+		  		<p:selectOneMenu id="tipoColaboradorPesquisa" value="#{mbeanPesquisa.model.tipoColaborador.id}" style="width:90%">
+	  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+	  				<f:selectItems value="#{mbeanPesquisa.tiposColaborador}"/>
+	  			</p:selectOneMenu>
+		  		
+	  		</h:panelGrid>
+	  		
+			<p:commandButton value="Pesquisar" icon="pesquisar" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="width: 140px; margin-left: 5px; margin-top: 10px; margin-bottom: 30px"/>
+			
+  			<p:dataTable id="gridPesquisa" emptyMessage="Nenhum colaborador encontrado" paginator="true"
+								paginatorAlwaysVisible="false" rows="5" value="#{mbeanPesquisa.grid}" var="colaborador">
+			
+				<p:column headerText="Nome">
+					<h:outputText value="#{colaborador.nome}" />
+				</p:column>
+				
+				<p:column headerText="Tipo">
+		  			<h:outputText value="#{colaborador.tipoColaborador.descricao}" />
+		  		</p:column>
+			
+				<p:column headerText="Adicionar" styleClass="coluna10" style="text-align:center;">
+					<p:commandLink action="#{mensagemFaces.addDestinatario}" onclick="dlgColaborador.hide()">
+						<h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
+						<f:setPropertyActionListener target="#{mbeanColaboradorAcao.destinatarioSelecionado}" value="#{colaborador}" />
+					</p:commandLink>
+				</p:column>
+			
+			</p:dataTable>
+			  			
+		</p:dialog>
+	
+	</h:form>
+
+</ui:component>
