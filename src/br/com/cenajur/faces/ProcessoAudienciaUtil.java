@@ -14,6 +14,7 @@ import br.com.cenajur.model.CategoriaDocumento;
 import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.DocumentoAudiencia;
 import br.com.cenajur.model.Processo;
+import br.com.cenajur.model.ProcessoNumero;
 import br.com.cenajur.model.SituacaoAudiencia;
 import br.com.cenajur.model.TipoCategoria;
 import br.com.cenajur.model.Vara;
@@ -52,7 +53,6 @@ public class ProcessoAudienciaUtil {
 		this.audiencia.setSituacaoAudiencia(new SituacaoAudiencia());
 		this.audiencia.setVara(new Vara());
 		this.audiencia.setDocumentos(new ArrayList<DocumentoAudiencia>());
-		this.audiencia.setProcesso(getCrudModel());
 	}
 	
 	private void initCombo(){
@@ -121,6 +121,7 @@ public class ProcessoAudienciaUtil {
 		}
 		
 		this.audiencia.setAdvogado(this.audiencia.getAdvogado().getById());
+		this.audiencia.setVara(this.audiencia.getVara().getById());
 		this.audiencia.setDataAtualizacao(new Date());
 		this.audiencia.setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 		this.audiencia.setDataCadastro(new Date());
@@ -139,6 +140,7 @@ public class ProcessoAudienciaUtil {
 		
 		CenajurUtil.addInfoMessage("Audiência cadastrada com sucesso");
 		this.initAudiencia();
+		this.audiencia.setProcessoNumero(new ProcessoNumero().obterNumeroProcessoPrincipal(getCrudModel()));
 		getCrudModel().setAudiencias(this.audiencia.findByModel("descricao"));
 		return null;
 	}
@@ -176,6 +178,7 @@ public class ProcessoAudienciaUtil {
 		}
 		
 		this.initAudiencia();
+		this.audiencia.setProcessoNumero(new ProcessoNumero().obterNumeroProcessoPrincipal(getCrudModel()));
 		getCrudModel().setAudiencias(this.audiencia.findByModel("descricao"));
 		CenajurUtil.addInfoMessage("Alteração realizada com sucesso");
 		return null;

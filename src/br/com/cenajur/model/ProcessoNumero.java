@@ -3,11 +3,14 @@ package br.com.cenajur.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -28,6 +31,17 @@ public class ProcessoNumero extends TSActiveRecordAb<ProcessoNumero>{
 	private Processo processo;
 	
 	private String numero;
+	
+	@Column(name = "flag_principal")
+	private Boolean flagPrincipal;
+	
+	@OneToMany(mappedBy = "processoNumero", cascade = CascadeType.ALL, orphanRemoval = true)
+	@org.hibernate.annotations.OrderBy(clause = "dataAndamento desc")
+	private List<AndamentoProcesso> andamentos;
+	
+	@OneToMany(mappedBy = "processoNumero", cascade = CascadeType.ALL, orphanRemoval = true)
+	@org.hibernate.annotations.OrderBy(clause = "dataAudiencia desc")
+	private List<Audiencia> audiencias;
 
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -53,13 +67,35 @@ public class ProcessoNumero extends TSActiveRecordAb<ProcessoNumero>{
 		this.numero = numero;
 	}
 
+	public Boolean getFlagPrincipal() {
+		return flagPrincipal;
+	}
+
+	public void setFlagPrincipal(Boolean flagPrincipal) {
+		this.flagPrincipal = flagPrincipal;
+	}
+
+	public List<AndamentoProcesso> getAndamentos() {
+		return andamentos;
+	}
+
+	public void setAndamentos(List<AndamentoProcesso> andamentos) {
+		this.andamentos = andamentos;
+	}
+
+	public List<Audiencia> getAudiencias() {
+		return audiencias;
+	}
+
+	public void setAudiencias(List<Audiencia> audiencias) {
+		this.audiencias = audiencias;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((numero == null) ? 0 : numero.hashCode());
-		result = prime * result + ((processo == null) ? 0 : processo.hashCode());
 		return result;
 	}
 
@@ -72,6 +108,11 @@ public class ProcessoNumero extends TSActiveRecordAb<ProcessoNumero>{
 		if (getClass() != obj.getClass())
 			return false;
 		ProcessoNumero other = (ProcessoNumero) obj;
+		if (flagPrincipal == null) {
+			if (other.flagPrincipal != null)
+				return false;
+		} else if (!flagPrincipal.equals(other.flagPrincipal))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -94,6 +135,8 @@ public class ProcessoNumero extends TSActiveRecordAb<ProcessoNumero>{
 	public String toString() {
 		return numero;
 	}
+	
+	
 	
 	@Override
 	public List<ProcessoNumero> findByModel(String... fieldsOrderBy) {
@@ -121,5 +164,18 @@ public class ProcessoNumero extends TSActiveRecordAb<ProcessoNumero>{
 		}
 		
 		return super.find(query.toString(), null, params.toArray());
-	}	
+	}
+	
+	public ProcessoNumero obterNumeroProcessoPrincipal(Processo processo){
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" from ProcessoNumero pn where pn.processo.id = ? and pn.flagPrincipal = true");
+		
+		List<Object> param = new ArrayList<Object>();
+		
+		param.add(processo.getId());
+		
+		return  super.get(query.toString(), param.toArray());
+	}
 }

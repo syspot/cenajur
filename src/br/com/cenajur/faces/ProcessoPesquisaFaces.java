@@ -11,6 +11,7 @@ import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.Comarca;
 import br.com.cenajur.model.Objeto;
 import br.com.cenajur.model.Processo;
+import br.com.cenajur.model.ProcessoNumero;
 import br.com.cenajur.model.SituacaoProcesso;
 import br.com.cenajur.model.TipoParte;
 import br.com.cenajur.model.TipoProcesso;
@@ -22,6 +23,8 @@ public class ProcessoPesquisaFaces extends PesquisaFaces<Processo> {
 
 	private List<SelectItem> situacoesProcessos;
 	private List<SelectItem> advogados;
+	
+	private Processo processoSelecionado;
 	
 	@PostConstruct
 	protected void init() {
@@ -44,7 +47,18 @@ public class ProcessoPesquisaFaces extends PesquisaFaces<Processo> {
 		getModel().setTipoParte(new TipoParte());
 		getModel().setSituacaoProcesso(new SituacaoProcesso());
 		getModel().setAdvogado(new Colaborador());
+		getModel().setProcessoNumeroPrincipal(new ProcessoNumero());
+		this.processoSelecionado = new Processo();
 		return null;
+	}
+	
+	@Override
+	protected void posFind() {
+		
+		for(Processo processo: getGrid()){
+			processo.setProcessoNumeroPrincipal(new ProcessoNumero().obterNumeroProcessoPrincipal(processo));
+		}
+		
 	}
 
 	public List<SelectItem> getSituacoesProcessos() {
@@ -61,6 +75,14 @@ public class ProcessoPesquisaFaces extends PesquisaFaces<Processo> {
 
 	public void setAdvogados(List<SelectItem> advogados) {
 		this.advogados = advogados;
+	}
+
+	public Processo getProcessoSelecionado() {
+		return processoSelecionado;
+	}
+
+	public void setProcessoSelecionado(Processo processoSelecionado) {
+		this.processoSelecionado = processoSelecionado;
 	}
 	
 }

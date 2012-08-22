@@ -17,12 +17,14 @@
 		
 		  	<h:form id="formMensagem">
 		  	
-		  		<p:commandButton type="button" value="Nova Mensagem" onclick="dlgMensagem.show();"/>
+				<p:poll interval="5" listener="#{mensagemFaces.pesquisarMensagens}" update="dgMensagem" process="@this" global="false" />
+		  	
+		  		<p:commandButton type="button" value="Nova Mensagem" onclick="dlgMensagem.show();" style="margin-bottom: 10px; margin-top:10px"/>
 		  
-		  		<p:remoteCommand name="abrirModelMensagem" oncomplete="mensagemDialog.show();" update="pgMensagem" process="@this" />
+		  		<p:remoteCommand name="abrirModelMensagem" oncomplete="dlgViewMensagem.show();" update="pgMensagem" process="@this" global="false" />
 		  		
-			    <p:dataGrid var="mensagem" value="#{mensagemFaces.mensagens}" columns="3"  
-			        rows="12" paginator="true"  paginatorAlwaysVisible="false"
+			    <p:dataGrid id="dgMensagem" var="mensagemDestinatario" value="#{mensagemFaces.mensagensDestinatarios}" columns="3"  
+			        rows="12" paginator="true"  paginatorAlwaysVisible="false" emptyMessage="Nenhuma mensagem encontrada"
 			        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
 			        rowsPerPageTemplate="9,12,15">  
 			          
@@ -30,48 +32,52 @@
 			            <p:panel>  
 			                <h:panelGrid columns="2" columnClasses="coluna25_2, coluna75_2" style="width:100%; vertical-align: top">
 			                    
-			                    <h:outputText value="Data:" />  
-			                    <h:outputText value="#{mensagem.data}" />
+			                    <h:outputText value="Data:" styleClass="#{mensagemDestinatario.css}"/>
+			                    <h:outputText value="#{mensagemDestinatario.mensagem.data}" styleClass="#{mensagemDestinatario.css}">
+			                    	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+		                    	</h:outputText>  
 			                      
-			                    <h:outputText value="Remetente:" />  
-			                    <h:outputText value="#{mensagem.remetente.nome}" />
+			                    <h:outputText value="Remetente:" styleClass="#{mensagemDestinatario.css}"/>
+			                    <h:outputText value="#{mensagemDestinatario.mensagem.remetente.nome}" styleClass="#{mensagemDestinatario.css}"/>
 			                      
-			                    <h:outputText value="Mensagem:" />
+			                    <h:outputText value="Mensagem:" styleClass="#{mensagemDestinatario.css}"/>
 			                    <h:panelGrid columns="2">
-			                    	<h:outputText value="#{mensagem.textoResumo}" style="text-align: lef;"/>
-			                    	<p:commandLink type="button" oncomplete="abrirModelMensagem();" process="@this" global="false" value="Leia Mais" style="text-align: lef; color: #228B22" rendered="#{mensagem.texto.length() > 20}">
-			                    		<f:setPropertyActionListener target="#{mensagemFaces.mensagemSelecionada}" value="#{mensagem}"/>
+			                    	<h:outputText value="#{mensagemDestinatario.mensagem.textoResumo}" style="text-align: lef;" styleClass="#{mensagemDestinatario.css}"/>
+			                    	<p:commandLink action="#{mensagemFaces.lerMensagem}" oncomplete="abrirModelMensagem();" process="@this" global="false" value="Detalhe" style="text-align: lef; color: #0000FF">
+			                    		<f:setPropertyActionListener target="#{mensagemFaces.mensagemDestinatarioSelecionada}" value="#{mensagemDestinatario}"/>
 			                    	</p:commandLink>
 			                    </h:panelGrid>
-			                      
-			                </h:panelGrid>  
+			                    
+			                </h:panelGrid>
 			            </p:panel>  
 			        </p:column>  
 			  
 			    </p:dataGrid>  
 			      
-			    <p:dialog header="Detalhe da mensagem" widgetVar="mensagemDialog" modal="true" width="400" appendToBody="true">  
+			    <p:dialog id="dialogViewMensagem" header="Detalhe da mensagem" widgetVar="dlgViewMensagem" modal="true" width="550" appendToBody="true">  
 			        
-		            <h:panelGrid id="pgMensagem" columns="2" columnClasses="coluna25_2, coluna75_2" style="width:100%; vertical-align: top">
+		            <h:panelGrid id="pgMensagem" columns="2" columnClasses="coluna15_2, coluna85_2" style="width:100%; vertical-align: top">
 		                    
 		                <h:outputText value="Data:" />  
-		                <h:outputText value="#{mensagemFaces.mensagemSelecionada.data}" />
+		                <h:inputText value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem.data}" readonly="true">
+		                	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+		                </h:inputText>
 		                  
 		                <h:outputText value="Remetente:" />
-		                <h:outputText value="#{mensagemFaces.mensagemSelecionada.remetente.nome}" />
+		                <h:inputText value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem.remetente.nome}" readonly="true" style="width: 70%"/>
 		                  
 		                <h:outputText value="Mensagem:" />
-		                <h:outputText value="#{mensagemFaces.mensagemSelecionada.texto}" style="text-align: lef;"/>
+		                <h:inputTextarea value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem.texto}" rows="10" cols="65" style="text-align: lef; wudth: 100%" readonly="true"/>
 		                  
 		            </h:panelGrid> 
 		            
-		            <h:panelGrid columns="1" style="text-align: center">
-		            	<p:commandButton value="Responder" onclick="mensagemDialog.show();" >
-		            		
+		            <div style="text-align: right">
+		            	<p:commandButton value="Responder" oncomplete="dlgMensagem.show(); dlgViewMensagem.hide();" action="#{mensagemFaces.addDestinatario}" process="@this" style="margin-right: 25px; margin-bottom: 20px">
+		            		<f:setPropertyActionListener target="#{mensagemFaces.destinatarioSelecionado}" value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem.remetente}" />
 		            	</p:commandButton>
-		            </h:panelGrid>
+		            </div>
 			              
-			    </p:dialog>  
+			    </p:dialog>
 			  
 			</h:form>
 			

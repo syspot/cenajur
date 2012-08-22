@@ -19,7 +19,7 @@
 				
 				<p:accordionPanel multiple="false" activeIndex="zero">
 					
-					<p:tab title="Número: #{processo.numeroProcesso}  -  Vara: #{processo.vara.descricao}  -  Objeto: #{processo.objeto.descricao}  -  Lote: #{processo.lote}" titleStyleClass="#{processo.situacaoProcesso.css}">
+					<p:tab title="Número: #{processo.processoNumeroPrincipal.numero}  -  Vara: #{processo.vara.descricao}  -  Objeto: #{processo.objeto.descricao}  -  Lote: #{processo.lote}" titleStyleClass="#{processo.situacaoProcesso.css}">
 					
 						<p:tabView>
 						
@@ -33,7 +33,7 @@
 										<p:outputLabel for="dataAbertura" value="Data de Abertura" />
 										<p:outputLabel for="lote" value="Lote" />
 						
-										<p:inputText id="numeroProcesso" value="#{processo.numeroProcesso}" maxlength="30" styleClass="coluna90" readonly="true" />
+										<p:inputText id="numeroProcesso" value="#{processo.processoNumeroPrincipal.numero}" maxlength="30" styleClass="coluna90" readonly="true" />
 										<p:inputText id="dataAbertura" value="#{processo.dataAbertura}" styleClass="coluna90" readonly="true" >
 											<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="America/Sao_Paulo" />
 										</p:inputText>
@@ -150,7 +150,7 @@
 											paginatorAlwaysVisible="false" rows="10" value="#{processo.andamentos}" var="linha">
 								  	
 								  		<p:column headerText="Número do Processo" styleClass="coluna15">
-								  			<h:outputText value="#{linha.processo.numeroProcesso}" />
+								  			<h:outputText value="#{linha.processo.processoNumeroPrincipal.numero}" />
 								  		</p:column>
 								  	
 								  		<p:column headerText="Tipo do Andamento">
@@ -179,7 +179,7 @@
 								    <h:panelGrid id="pgDialogViewAndamento" columns="1" columnClasses="coluna100" style="width:95%">
 									
 										<p:outputLabel for="numeroProcessoAndamentoView" value="Processo" />
-										<p:inputText id="numeroProcessoAndamentoView" value="#{clienteFaces.andamentoProcessoSelecionado.processo.numeroProcesso}" readonly="true" />
+										<p:inputText id="numeroProcessoAndamentoView" value="#{clienteFaces.andamentoProcessoSelecionado.processo.processoNumeroPrincipal.numero}" readonly="true" />
 								  		
 									  	<p:outputLabel for="dataAndamentoAndamentoView" value="Data do Andamento" />
 								  		<p:inputText id="dataAndamentoAndamentoView" value="#{clienteFaces.andamentoProcessoSelecionado.dataAndamento}" readonly="true">
@@ -208,7 +208,7 @@
 											paginatorAlwaysVisible="false" rows="10" value="#{processo.audiencias}" var="linha">
 								  	
 								  		<p:column headerText="Número do Processo" styleClass="coluna15">
-								  			<h:outputText value="#{linha.processo.numeroProcesso}" />
+								  			<h:outputText value="#{linha.processo.processoNumeroPrincipal.numero}" />
 								  		</p:column>
 								  	
 								  		<p:column headerText="Advogado">
@@ -239,7 +239,7 @@
 									    <h:panelGrid columns="1" columnClasses="coluna95">
 						  		
 											<p:outputLabel for="numeroProcessoAudienciaView" value="Processo" />
-											<p:inputText id="numeroProcessoAudienciaView" value="#{clienteFaces.audienciaSelecionada.processo.numeroProcesso}" readonly="true" />
+											<p:inputText id="numeroProcessoAudienciaView" value="#{clienteFaces.audienciaSelecionada.processo.processoNumeroPrincipal.numero}" readonly="true" />
 									  		
 										  	<p:outputLabel for="dataAudienciaAudienciaView" value="Data da Audiência" />
 									  		<p:inputText id="dataAudienciaAudienciaView" value="#{clienteFaces.audienciaSelecionada.dataAudiencia}" readonly="true">

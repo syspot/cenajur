@@ -58,7 +58,7 @@ public class Mensagem extends TSActiveRecordAb<Mensagem>{
 	}
 	
 	public String getTextoResumo() {
-		return CenajurUtil.obterResumoGrid(texto, 20);
+		return CenajurUtil.obterResumoGrid(texto, 23);
 	}
 
 	public void setTexto(String texto) {
@@ -106,23 +106,4 @@ public class Mensagem extends TSActiveRecordAb<Mensagem>{
 		return true;
 	}
 	
-	public List<Mensagem> pesquisarPorColaborador(Colaborador destinatario) {
-		
-		StringBuilder query = new StringBuilder();
-		
-		query.append(" select m from Mensagem m inner join m.mensagensDestinatarios md where 1 = 1 ");
-		
-		if(!TSUtil.isEmpty(destinatario) && !TSUtil.isEmpty(destinatario.getId())){
-			query.append(" and md.destinatario.id = ? ");
-		}
-		
-		List<Object> param = new ArrayList<Object>();
-		
-		if(!TSUtil.isEmpty(destinatario) && !TSUtil.isEmpty(destinatario.getId())){
-			param.add(destinatario.getId());
-		}
-		
-		return super.find(query.toString(), null, param.toArray());
-	}
-
 }

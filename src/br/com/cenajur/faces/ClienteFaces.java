@@ -25,6 +25,8 @@ import br.com.cenajur.model.EstadoCivil;
 import br.com.cenajur.model.Graduacao;
 import br.com.cenajur.model.Lotacao;
 import br.com.cenajur.model.MotivoCancelamento;
+import br.com.cenajur.model.Processo;
+import br.com.cenajur.model.ProcessoNumero;
 import br.com.cenajur.model.TipoCategoria;
 import br.com.cenajur.model.TipoPagamento;
 import br.com.cenajur.util.CenajurUtil;
@@ -159,6 +161,11 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 			CenajurUtil.addDangerMessage("O endereço e telefone estão desatualizados");
 		}
 		this.atualizarComboCidades();
+		
+		for(Processo processo : getCrudModel().getProcessos()){
+			processo.setProcessoNumeroPrincipal(new ProcessoNumero().obterNumeroProcessoPrincipal(processo));
+		}
+		
 	}
 	
 	@Override

@@ -12,6 +12,8 @@ import javax.faces.model.SelectItem;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 
+import br.com.cenajur.model.AndamentoProcesso;
+import br.com.cenajur.model.Audiencia;
 import br.com.cenajur.model.CategoriaDocumento;
 import br.com.cenajur.model.Cliente;
 import br.com.cenajur.model.Colaborador;
@@ -113,6 +115,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		getCrudModel().setProcessosClientes(new ArrayList<ProcessoCliente>());
 		getCrudModel().setProcessosPartesContrarias(new ArrayList<ProcessoParteContraria>());
 		getCrudModel().setProcessosNumeros(new ArrayList<ProcessoNumero>());
+		getCrudModel().setProcessoNumeroPrincipal(new ProcessoNumero());
 		setCategoriaDocumento(new CategoriaDocumento());
 		getCategoriaDocumento().setTipoCategoria(new TipoCategoria(Constantes.TIPO_CATEGORIA_PROCESSO));
 		getCrudModel().setDocumentos(new ArrayList<DocumentoProcesso>());
@@ -134,6 +137,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		getCrudPesquisaModel().setSituacaoProcesso(new SituacaoProcesso());
 		getCrudPesquisaModel().setAdvogado(new Colaborador());
 		getCrudPesquisaModel().setTurno(new Turno());
+		getCrudPesquisaModel().setProcessoNumeroPrincipal(new ProcessoNumero());
 		setGrid(new ArrayList<Processo>());
 		return null;
 	}
@@ -146,6 +150,12 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		if(TSUtil.isEmpty(getCrudModel().getTurno()) || TSUtil.isEmpty(getCrudModel().getTurno().getId())){
 			getCrudModel().setTurno(null);
 		}
+		
+		ProcessoNumero processoNumero = getCrudModel().getProcessoNumeroPrincipal();
+		processoNumero.setFlagPrincipal(Boolean.TRUE);
+		processoNumero.setProcesso(getCrudModel());
+		
+		getCrudModel().getProcessosNumeros().add(processoNumero);
 		
 	}
 	
@@ -195,14 +205,21 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	
 	@Override
 	protected void posDetail() {
+		
 		this.processoAndamentoUtil.setCrudModel(getCrudModel());
 		this.processoAudienciaUtil.setCrudModel(getCrudModel());
-		this.processoAndamentoUtil.getAndamentoProcesso().setProcesso(getCrudModel());
-		this.processoAudienciaUtil.getAudiencia().setProcesso(getCrudModel());
+		this.processoAndamentoUtil.getAndamentoProcesso().setProcessoNumero(new ProcessoNumero().obterNumeroProcessoPrincipal(getCrudModel()));
+		this.processoAudienciaUtil.getAudiencia().setProcessoNumero(new ProcessoNumero().obterNumeroProcessoPrincipal(getCrudModel()));
 		
 		if(TSUtil.isEmpty(getCrudModel().getTurno()) || TSUtil.isEmpty(getCrudModel().getTurno().getId())){
 			getCrudModel().setTurno(new Turno());
 		}
+		
+		getCrudModel().setProcessoNumeroPrincipal(new ProcessoNumero().obterNumeroProcessoPrincipal(getCrudModel()));
+		
+		getCrudModel().setAudiencias(new Audiencia().findByProcesso(getCrudModel()));
+		getCrudModel().setAndamentos(new AndamentoProcesso().findByProcesso(getCrudModel()));
+		
 	}
 	
 	public void enviarDocumento(FileUploadEvent event) {
@@ -290,6 +307,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	
 	public String addNumeroProcesso(){
 		ProcessoNumero processoNumero = new ProcessoNumero();
+		processoNumero.setFlagPrincipal(Boolean.FALSE);
 		processoNumero.setProcesso(getCrudModel());
 		getCrudModel().getProcessosNumeros().add(processoNumero);
 		return null;
@@ -300,12 +318,12 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		return null;
 	}
 	
-	public String atualizarProcessoCliente() throws TSApplicationException{
+	public String atualizarProcessoCliente(){
 		CenajurUtil.addInfoMessage("Alteração realizada com sucesso");
 		return null;
 	}
 	
-	public String atualizarProcessoParteContraria() throws TSApplicationException{
+	public String atualizarProcessoParteContraria(){
 		CenajurUtil.addInfoMessage("Alteração realizada com sucesso");
 		return null;
 	}

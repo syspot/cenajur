@@ -16,9 +16,8 @@ import br.com.cenajur.model.Audiencia;
 import br.com.cenajur.model.CategoriaDocumento;
 import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.DocumentoAudiencia;
-import br.com.cenajur.model.Processo;
+import br.com.cenajur.model.ProcessoNumero;
 import br.com.cenajur.model.SituacaoAudiencia;
-import br.com.cenajur.model.SituacaoProcesso;
 import br.com.cenajur.model.TipoCategoria;
 import br.com.cenajur.model.Vara;
 import br.com.cenajur.util.CenajurUtil;
@@ -38,7 +37,7 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 	private List<SelectItem> situacoesAudiencias;
 	private List<SelectItem> categoriasDocumentos;
 	
-	private Processo processoSelecionado;
+	private ProcessoNumero processoNumeroSelecionado;
 	
 	private CategoriaDocumento categoriaDocumento;
 	private DocumentoAudiencia documentoAudiencia;
@@ -61,7 +60,6 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 	public String limpar() {
 		setCrudModel(new Audiencia());
 		getCrudModel().setAdvogado(new Colaborador());
-		getCrudModel().setProcesso(new Processo());
 		getCrudModel().setSituacaoAudiencia(new SituacaoAudiencia());
 		getCrudModel().setVara(new Vara());
 		setCategoriaDocumento(new CategoriaDocumento());
@@ -76,7 +74,7 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 	public String limparPesquisa(){
 		setCrudPesquisaModel(new Audiencia());
 		getCrudPesquisaModel().setAdvogado(new Colaborador());
-		getCrudPesquisaModel().setProcesso(new Processo());
+		getCrudPesquisaModel().setProcessoNumero(new ProcessoNumero());
 		getCrudPesquisaModel().setSituacaoAudiencia(new SituacaoAudiencia());
 		getCrudPesquisaModel().setVara(new Vara());
 		setGrid(new ArrayList<Audiencia>());
@@ -122,7 +120,7 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 		
 		boolean erro = false;
 		
-		if(TSUtil.isEmpty(getCrudModel().getProcesso().getId())){
+		if(TSUtil.isEmpty(getCrudModel().getProcessoNumero()) || TSUtil.isEmpty(getCrudModel().getProcessoNumero().getId())){
 			erro = true;
 			CenajurUtil.addErrorMessage("Processo: Campo obrigatório");
 		}
@@ -135,8 +133,8 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 		return erro;
 	}
 	
-	public String addProcesso(){
-		getCrudModel().setProcesso(this.processoSelecionado);
+	public String addProcessoNumero(){
+		getCrudModel().setProcessoNumero(this.processoNumeroSelecionado);
 		CenajurUtil.addInfoMessage("Processo adicionado com sucesso");
 		return null;
 	}
@@ -210,12 +208,12 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 		this.categoriasDocumentos = categoriasDocumentos;
 	}
 
-	public Processo getProcessoSelecionado() {
-		return processoSelecionado;
+	public ProcessoNumero getProcessoNumeroSelecionado() {
+		return processoNumeroSelecionado;
 	}
 
-	public void setProcessoSelecionado(Processo processoSelecionado) {
-		this.processoSelecionado = processoSelecionado;
+	public void setProcessoNumeroSelecionado(ProcessoNumero processoNumeroSelecionado) {
+		this.processoNumeroSelecionado = processoNumeroSelecionado;
 	}
 
 	public CategoriaDocumento getCategoriaDocumento() {

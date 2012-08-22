@@ -20,7 +20,7 @@
 							<h:panelGrid columns="1" columnClasses="coluna100" style="width:100%">
 								
 								<p:outputLabel for="numeroProcessoAndamento" value="Processo" />
-								<p:inputText id="numeroProcessoAndamento" value="#{mbean.processoAndamentoUtil.andamentoProcesso.processo.numeroProcesso}" readonly="true" />
+								<p:inputText id="numeroProcessoAndamento" value="#{mbean.processoAndamentoUtil.andamentoProcesso.processoNumero.numero}" readonly="true" />
 						  		
 							  	<p:outputLabel for="dataAndamentoAndamento" value="Data do Andamento" />
 						  		<p:calendar id="dataAndamentoAndamento" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data do Andamento: Campo obrigatório" value="#{mbean.processoAndamentoUtil.andamentoProcesso.dataAndamento}"/>

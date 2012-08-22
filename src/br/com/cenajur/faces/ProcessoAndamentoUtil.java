@@ -13,6 +13,7 @@ import br.com.cenajur.model.AndamentoProcesso;
 import br.com.cenajur.model.CategoriaDocumento;
 import br.com.cenajur.model.DocumentoAndamentoProcesso;
 import br.com.cenajur.model.Processo;
+import br.com.cenajur.model.ProcessoNumero;
 import br.com.cenajur.model.TipoAndamentoProcesso;
 import br.com.cenajur.model.TipoCategoria;
 import br.com.cenajur.util.CenajurUtil;
@@ -48,7 +49,6 @@ public class ProcessoAndamentoUtil {
 		this.andamentoProcesso = new AndamentoProcesso();
 		this.andamentoProcesso.setTipoAndamentoProcesso(new TipoAndamentoProcesso());
 		this.andamentoProcesso.setDocumentos(new ArrayList<DocumentoAndamentoProcesso>());
-		this.andamentoProcesso.setProcesso(getCrudModel());
 	}
 	
 	private void initCombo(){
@@ -135,6 +135,7 @@ public class ProcessoAndamentoUtil {
 		
 		CenajurUtil.addInfoMessage("Andamento cadastrado com sucesso");
 		this.initAndamentoProcesso();
+		this.andamentoProcesso.setProcessoNumero(new ProcessoNumero().obterNumeroProcessoPrincipal(getCrudModel()));
 		getCrudModel().setAndamentos(this.andamentoProcesso.findByModel("descricao"));
 		return null;
 	}
@@ -171,6 +172,7 @@ public class ProcessoAndamentoUtil {
 		}
 		
 		this.initAndamentoProcesso();
+		this.andamentoProcesso.setProcessoNumero(new ProcessoNumero().obterNumeroProcessoPrincipal(getCrudModel()));
 		getCrudModel().setAndamentos(this.andamentoProcesso.findByModel("descricao"));
 		CenajurUtil.addInfoMessage("Alteração realizada com sucesso");
 		return null;

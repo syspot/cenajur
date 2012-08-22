@@ -31,7 +31,8 @@ public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 	private Long id;
 	
 	@ManyToOne
-	private Processo processo;
+	@JoinColumn(name = "processo_numero_id")
+	private ProcessoNumero processoNumero;
 	
 	private String descricao;
 	
@@ -63,12 +64,12 @@ public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 		this.id = id;
 	}
 	
-	public Processo getProcesso() {
-		return processo;
+	public ProcessoNumero getProcessoNumero() {
+		return processoNumero;
 	}
 
-	public void setProcesso(Processo processo) {
-		this.processo = processo;
+	public void setProcessoNumero(ProcessoNumero processoNumero) {
+		this.processoNumero = processoNumero;
 	}
 
 	public String getDescricao() {
@@ -156,15 +157,19 @@ public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 		return true;
 	}
 	
+	public List<AndamentoProcesso> findByProcesso(Processo processo){
+		return super.find("from AndamentoProcesso a where a.processoNumero.processo.id = ?",null,processo.getId());
+	}
+	
 	@Override
 	public List<AndamentoProcesso> findByModel(String... fieldsOrderBy) {
 		
 		StringBuilder query = new StringBuilder();
 		
-		query.append(" from AndamentoProcesso a where 1 = 1 ");
+		query.append(" select distinct a from AndamentoProcesso a inner join a.processoNumero pn where 1 = 1 ");
 		
-		if(!TSUtil.isEmpty(processo) && !TSUtil.isEmpty(processo.getNumeroProcesso())){
-			query.append("and ").append(CenajurUtil.semAcento("a.processo.numeroProcesso")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
+		if(!TSUtil.isEmpty(processoNumero) && !TSUtil.isEmpty(processoNumero.getNumero())){
+			query.append(CenajurUtil.getParamSemAcento("pn.numero"));
 		}
 		
 		if(!TSUtil.isEmpty(dataAndamento)){
@@ -181,8 +186,8 @@ public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 		
 		List<Object> params = new ArrayList<Object>();
 		
-		if(!TSUtil.isEmpty(processo) && !TSUtil.isEmpty(processo.getNumeroProcesso())){
-			params.add(CenajurUtil.tratarString(processo.getNumeroProcesso()));
+		if(!TSUtil.isEmpty(processoNumero) && !TSUtil.isEmpty(processoNumero.getNumero())){
+			params.add(CenajurUtil.tratarString(processoNumero.getNumero()));
 		}
 		
 		if(!TSUtil.isEmpty(dataAndamento)){
@@ -201,6 +206,6 @@ public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 			params.add(CenajurUtil.tratarString(descricao));
 		}
 		
-		return super.find(query.toString(), "dataAndamento", params.toArray());
+		return super.find(query.toString(), "a.dataAndamento", params.toArray());
 	}
 }

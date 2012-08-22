@@ -50,7 +50,7 @@
 				</p:column>
 				
 				<p:column headerText="Adicionar" styleClass="coluna10" style="text-align:center;">
-					<p:commandLink action="#{clienteFaces.addLotacao}" onclick="dlgLotacao.hide()">
+					<p:commandLink action="#{clienteFaces.addLotacao}" process="@this" oncomplete="dlgLotacao.hide()" global="false">
 						<h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
 						<f:setPropertyActionListener target="#{clienteFaces.lotacaoSelecionada}" value="#{lotacao}" />
 					</p:commandLink>

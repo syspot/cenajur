@@ -9,7 +9,7 @@
 	<h:panelGrid columns="1" columnClasses="coluna30" style="width:88%">
   		
 	  	<p:outputLabel for="numeroProcessoPesquisa" value="Número do Processo" />
-	  	<p:inputText id="numeroProcessoPesquisa" value="#{mbeanPesquisa.model.numeroProcesso}" maxlength="30" styleClass="coluna40"/>
+	  	<p:inputText id="numeroProcessoPesquisa" value="#{mbeanPesquisa.model.processoNumeroPrincipal.numero}" maxlength="30" styleClass="coluna40"/>
   		  	
   	</h:panelGrid>
   	
@@ -39,7 +39,7 @@
 	<p:dataTable id="gridPesquisa" emptyMessage="Nenhum processo encontrado" value="#{mbeanPesquisa.grid}" var="processo">
 	
 		<p:column headerText="Número">
-  			<h:outputText value="#{processo.numeroProcesso}" />
+  			<h:outputText value="#{processo.processoNumeroPrincipal.numero}" />
   		</p:column>
   	
   		<p:column headerText="Advogado">

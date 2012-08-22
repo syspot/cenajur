@@ -31,7 +31,8 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 	private Long id;
 	
 	@ManyToOne
-	private Processo processo;
+	@JoinColumn(name = "processo_numero_id")
+	private ProcessoNumero processoNumero;
 	
 	@Column(name = "data_audiencia")
 	private Date dataAudiencia;
@@ -72,12 +73,12 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 		this.id = id;
 	}
 
-	public Processo getProcesso() {
-		return processo;
+	public ProcessoNumero getProcessoNumero() {
+		return processoNumero;
 	}
 
-	public void setProcesso(Processo processo) {
-		this.processo = processo;
+	public void setProcessoNumero(ProcessoNumero processoNumero) {
+		this.processoNumero = processoNumero;
 	}
 
 	public Date getDataAudiencia() {
@@ -189,15 +190,19 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 		return true;
 	}
 	
+	public List<Audiencia> findByProcesso(Processo processo){
+		return super.find("from Audiencia a where a.processoNumero.processo.id = ?",null,processo.getId());
+	}
+	
 	@Override
 	public List<Audiencia> findByModel(String... fieldsOrderBy) {
 		
 		StringBuilder query = new StringBuilder();
 		
-		query.append(" from Audiencia a where 1 = 1 ");
+		query.append(" select distinct a from Audiencia a inner join a.processoNumero pn where 1 = 1 ");
 		
-		if(!TSUtil.isEmpty(processo) && !TSUtil.isEmpty(processo.getNumeroProcesso())){
-			query.append("and ").append(CenajurUtil.semAcento("a.processo.numeroProcesso")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
+		if(!TSUtil.isEmpty(processoNumero) && !TSUtil.isEmpty(processoNumero.getNumero())){
+			query.append(CenajurUtil.getParamSemAcento("pn.numero"));
 		}
 		
 		if(!TSUtil.isEmpty(dataAudiencia)){
@@ -222,8 +227,8 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 		
 		List<Object> params = new ArrayList<Object>();
 		
-		if(!TSUtil.isEmpty(processo) && !TSUtil.isEmpty(processo.getNumeroProcesso())){
-			params.add(CenajurUtil.tratarString(processo.getNumeroProcesso()));
+		if(!TSUtil.isEmpty(processoNumero) && !TSUtil.isEmpty(processoNumero.getNumero())){
+			params.add(CenajurUtil.tratarString(processoNumero.getNumero()));
 		}
 		
 		if(!TSUtil.isEmpty(dataAudiencia)){
@@ -250,6 +255,6 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 			params.add(CenajurUtil.tratarString(descricao));
 		}
 		
-		return super.find(query.toString(), "dataAudiencia", params.toArray());
+		return super.find(query.toString(), "a.dataAudiencia", params.toArray());
 	}
 }

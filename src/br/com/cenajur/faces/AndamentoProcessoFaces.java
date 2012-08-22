@@ -15,7 +15,7 @@ import org.primefaces.event.FileUploadEvent;
 import br.com.cenajur.model.AndamentoProcesso;
 import br.com.cenajur.model.CategoriaDocumento;
 import br.com.cenajur.model.DocumentoAndamentoProcesso;
-import br.com.cenajur.model.Processo;
+import br.com.cenajur.model.ProcessoNumero;
 import br.com.cenajur.model.TipoAndamentoProcesso;
 import br.com.cenajur.model.TipoCategoria;
 import br.com.cenajur.util.CenajurUtil;
@@ -33,7 +33,7 @@ public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 	private List<SelectItem> tiposAndamentosProcessos;
 	private List<SelectItem> categoriasDocumentos;
 	
-	private Processo processoSelecionado;
+	private ProcessoNumero processoNumeroSelecionado;
 	
 	private CategoriaDocumento categoriaDocumento;
 	private DocumentoAndamentoProcesso documentoAndamentoProcesso;
@@ -65,7 +65,7 @@ public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 	@Override
 	public String limparPesquisa(){
 		setCrudPesquisaModel(new AndamentoProcesso());
-		getCrudPesquisaModel().setProcesso(new Processo());
+		getCrudPesquisaModel().setProcessoNumero(new ProcessoNumero());
 		getCrudPesquisaModel().setTipoAndamentoProcesso(new TipoAndamentoProcesso());
 		setGrid(new ArrayList<AndamentoProcesso>());
 		return null;
@@ -76,7 +76,7 @@ public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 		
 		boolean erro = false;
 		
-		if(TSUtil.isEmpty(getCrudModel().getProcesso().getId())){
+		if(TSUtil.isEmpty(getCrudModel().getProcessoNumero()) || TSUtil.isEmpty(getCrudModel().getProcessoNumero().getId())){
 			erro = true;
 			CenajurUtil.addErrorMessage("Processo: Campo obrigatório");
 		}
@@ -121,8 +121,8 @@ public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 		
 	}
 	
-	public String addProcesso(){
-		getCrudModel().setProcesso(this.processoSelecionado);
+	public String addProcessoNumero(){
+		getCrudModel().setProcessoNumero(this.processoNumeroSelecionado);
 		CenajurUtil.addInfoMessage("Processo adicionado com sucesso");
 		return null;
 	}
@@ -174,12 +174,12 @@ public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 		this.categoriasDocumentos = categoriasDocumentos;
 	}
 
-	public Processo getProcessoSelecionado() {
-		return processoSelecionado;
+	public ProcessoNumero getProcessoNumeroSelecionado() {
+		return processoNumeroSelecionado;
 	}
 
-	public void setProcessoSelecionado(Processo processoSelecionado) {
-		this.processoSelecionado = processoSelecionado;
+	public void setProcessoNumeroSelecionado(ProcessoNumero processoNumeroSelecionado) {
+		this.processoNumeroSelecionado = processoNumeroSelecionado;
 	}
 
 	public CategoriaDocumento getCategoriaDocumento() {

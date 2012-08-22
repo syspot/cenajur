@@ -19,6 +19,11 @@ import br.com.topsys.database.hibernate.TSActiveRecordAb;
 @Table(name = "processos_clientes")
 public class ProcessoCliente extends TSActiveRecordAb<ProcessoCliente>{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1986348420028543167L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="processos_clientes_id")
 	@SequenceGenerator(name="processos_clientes_id", sequenceName="processos_clientes_id_seq")
@@ -84,11 +89,17 @@ public class ProcessoCliente extends TSActiveRecordAb<ProcessoCliente>{
 		this.dataArquivamento = dataArquivamento;
 	}
 
+	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((cliente == null) ? 0 : cliente.hashCode());
+		result = prime * result + ((dataArquivamento == null) ? 0 : dataArquivamento.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((processo == null) ? 0 : processo.hashCode());
+		result = prime * result + ((situacaoProcessoCliente == null) ? 0 : situacaoProcessoCliente.hashCode());
 		return result;
 	}
 

@@ -15,6 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Where;
 
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.Constantes;
@@ -36,10 +39,11 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	@Column(name = "data_cadastro")
 	private Date dataCadastro;
 	
-	@Column(name = "numero_processo")
-	private String numeroProcesso;
+	@Transient
+	private ProcessoNumero processoNumeroPrincipal;
 	
 	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL, orphanRemoval = true)
+	@Where(clause = "not flag_principal")
 	private List<ProcessoNumero> processosNumeros;
 	
 	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -56,14 +60,6 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	@ManyToOne
 	@JoinColumn(name = "tipo_processo_id")
 	private TipoProcesso tipoProcesso;
-	
-	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL, orphanRemoval = true)
-	@org.hibernate.annotations.OrderBy(clause = "dataAndamento desc")
-	private List<AndamentoProcesso> andamentos;
-	
-	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL, orphanRemoval = true)
-	@org.hibernate.annotations.OrderBy(clause = "dataAudiencia desc")
-	private List<Audiencia> audiencias;
 	
 	@ManyToOne
 	private Vara vara;
@@ -105,6 +101,12 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	
 	@ManyToOne
 	private Turno turno;
+	
+	@Transient
+	private List<AndamentoProcesso> andamentos;
+	
+	@Transient
+	private List<Audiencia> audiencias;
 	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -156,22 +158,6 @@ public class Processo extends TSActiveRecordAb<Processo>{
 
 	public void setTipoProcesso(TipoProcesso tipoProcesso) {
 		this.tipoProcesso = tipoProcesso;
-	}
-
-	public List<AndamentoProcesso> getAndamentos() {
-		return andamentos;
-	}
-
-	public void setAndamentos(List<AndamentoProcesso> andamentos) {
-		this.andamentos = andamentos;
-	}
-
-	public List<Audiencia> getAudiencias() {
-		return audiencias;
-	}
-
-	public void setAudiencias(List<Audiencia> audiencias) {
-		this.audiencias = audiencias;
 	}
 
 	public Vara getVara() {
@@ -298,12 +284,28 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		this.turno = turno;
 	}
 
-	public String getNumeroProcesso() {
-		return numeroProcesso;
+	public ProcessoNumero getProcessoNumeroPrincipal() {
+		return processoNumeroPrincipal;
 	}
 
-	public void setNumeroProcesso(String numeroProcesso) {
-		this.numeroProcesso = numeroProcesso;
+	public void setProcessoNumeroPrincipal(ProcessoNumero processoNumeroPrincipal) {
+		this.processoNumeroPrincipal = processoNumeroPrincipal;
+	}
+
+	public List<AndamentoProcesso> getAndamentos() {
+		return andamentos;
+	}
+
+	public void setAndamentos(List<AndamentoProcesso> andamentos) {
+		this.andamentos = andamentos;
+	}
+
+	public List<Audiencia> getAudiencias() {
+		return audiencias;
+	}
+
+	public void setAudiencias(List<Audiencia> audiencias) {
+		this.audiencias = audiencias;
 	}
 
 	@Override
@@ -338,64 +340,62 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		
 		query.append(" select distinct p from Processo p left outer join p.processosNumeros pn where 1 = 1 ");
 		
-		if(!TSUtil.isEmpty(numeroProcesso)){
-			query.append("(").append(CenajurUtil.getParamSemAcento("pn.numero"));
-			query.append(" or ").append(CenajurUtil.semAcento("p.numeroProcesso")).append(" like ").append(CenajurUtil.semAcento(" ? ")).append(") ");
+		if(!TSUtil.isEmpty(processoNumeroPrincipal) && !TSUtil.isEmpty(processoNumeroPrincipal.getNumero())){
+			query.append(CenajurUtil.getParamSemAcento("pn.numero"));
 		}
 		
 		if(!TSUtil.isEmpty(dataAbertura)){
-			query.append("and p.dataAbertura = ? ");
+			query.append(" and p.dataAbertura = ? ");
 		}
 		
 		if(!TSUtil.isEmpty(dataAjuizamento)){
-			query.append("and p.dataAjuizamento = ? ");
+			query.append(" and p.dataAjuizamento = ? ");
 		}
 		
 		if(!TSUtil.isEmpty(tipoProcesso) && !TSUtil.isEmpty(tipoProcesso.getId())){
-			query.append("and p.tipoProcesso.id = ? ");
+			query.append(" and p.tipoProcesso.id = ? ");
 		}
 		
 		if(!TSUtil.isEmpty(tipoParte) && !TSUtil.isEmpty(tipoParte.getId())){
-			query.append("and p.tipoParte.id = ? ");
+			query.append(" and p.tipoParte.id = ? ");
 		}
 		
 		if(!TSUtil.isEmpty(advogado) && !TSUtil.isEmpty(advogado.getId())){
-			query.append("and p.advogado.id = ? ");
+			query.append(" and p.advogado.id = ? ");
 		}
 		
 		if(!TSUtil.isEmpty(objeto) && !TSUtil.isEmpty(objeto.getId())){
-			query.append("and p.objeto.id = ? ");
+			query.append(" and p.objeto.id = ? ");
 		}
 		
 		if(!TSUtil.isEmpty(comarca) && !TSUtil.isEmpty(comarca.getId())){
-			query.append("and p.comarca.id = ? ");
+			query.append(" and p.comarca.id = ? ");
 		}
 		
 		if(!TSUtil.isEmpty(vara) && !TSUtil.isEmpty(vara.getId())){
-			query.append("and p.vara.id = ? ");
+			query.append(" and p.vara.id = ? ");
 		}
 		
 		if(!TSUtil.isEmpty(situacaoProcesso) && !TSUtil.isEmpty(situacaoProcesso.getId())){
-			query.append("and p.situacaoProcesso.id = ? ");
+			query.append(" and p.situacaoProcesso.id = ? ");
 		}
 		
 		if(!TSUtil.isEmpty(turno) && !TSUtil.isEmpty(turno.getId())){
-			query.append("and p.turno.id = ? ");
+			query.append(" and p.turno.id = ? ");
 		}
 		
 		if(!TSUtil.isEmpty(dataArquivamento)){
-			query.append("and p.dataArquivamento = ? ");
+			query.append(" and p.dataArquivamento = ? ");
 		}
 		
 		if(!TSUtil.isEmpty(getLote())){
-			query.append("and p.lote = ? ");
+			query.append(" and p.lote = ? ");
 		}
 		
 		List<Object> params = new ArrayList<Object>();
 		
-		if(!TSUtil.isEmpty(numeroProcesso)){
-			params.add(CenajurUtil.tratarString(numeroProcesso));
-			params.add(CenajurUtil.tratarString(numeroProcesso));
+		if(!TSUtil.isEmpty(processoNumeroPrincipal) && !TSUtil.isEmpty(processoNumeroPrincipal.getNumero())){
+			params.add(CenajurUtil.tratarString(processoNumeroPrincipal.getNumero()));
 		}
 		
 		if(!TSUtil.isEmpty(dataAbertura)){

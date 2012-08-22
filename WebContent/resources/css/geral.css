@@ -718,6 +718,11 @@ img.right {
     width: 15%;
 }
 
+.coluna15_2 {
+    width: 15%;
+    vertical-align: top;
+}
+
 .coluna20 {
     width: 20%;
 }
@@ -944,6 +949,11 @@ img.right {
     width: 85%;
 }
 
+.coluna85_2 {
+    width: 85%;
+    vertical-align: top;
+}
+
 .coluna88 {
     width: 88%;
 }
@@ -1078,4 +1088,8 @@ ui-icon.delete {
 
 .situacaoCancelada{
 	background-color:#FF4500 !important;
+}
+
+.mensagemNaoLida{
+	font-weight: bold;
 }

@@ -1,5 +1,8 @@
 package br.com.cenajur.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -60,6 +63,10 @@ public class MensagemDestinatario extends TSActiveRecordAb<MensagemDestinatario>
 	public void setFlagLida(Boolean flagLida) {
 		this.flagLida = flagLida;
 	}
+	
+	public String getCss(){
+		return flagLida ? "" : "mensagemNaoLida";
+	}
 
 	@Override
 	public int hashCode() {
@@ -89,6 +96,33 @@ public class MensagemDestinatario extends TSActiveRecordAb<MensagemDestinatario>
 	@Override
 	public String toString() {
 		return this.destinatario.getNome();
+	}
+	
+	public List<MensagemDestinatario> pesquisarPorColaborador(Colaborador destinatario) {
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" from MensagemDestinatario md where md.destinatario.id = ? ");
+		
+		List<Object> param = new ArrayList<Object>();
+		
+		param.add(destinatario.getId());
+		
+		return super.find(query.toString(), "md.mensagem.data desc", param.toArray());
+	}
+	
+	public MensagemDestinatario obterPorMensagemColaborador(Mensagem mensagem, Colaborador destinatario) {
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" from MensagemDestinatario md where md.mensagem.id = ? and md.destinatario.id = ?");
+		
+		List<Object> param = new ArrayList<Object>();
+		
+		param.add(mensagem.getId());
+		param.add(destinatario.getId());
+		
+		return super.get(query.toString(), param.toArray());
 	}
 	
 }

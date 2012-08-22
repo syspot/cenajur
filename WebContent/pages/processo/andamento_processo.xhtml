@@ -18,7 +18,7 @@
 	  		
 		  		<p:outputPanel autoUpdate="true">
 					<p:outputLabel for="processo" value="Processo" /><br/>
-					<p:inputText id="processo" value="#{mbeanModel.processo.numeroProcesso}" required="true" requiredMessage="Processo: Campo obrigatório" readonly="true" />
+					<p:inputText id="processo" value="#{mbeanModel.processoNumero.numero}" required="true" requiredMessage="Processo: Campo obrigatório" readonly="true" />
 					<p:commandButton type="button" value="Adicionar" onclick="dlgProcesso2.show();" />
 				</p:outputPanel>
 		  		
@@ -56,7 +56,7 @@
 		  	<p:outputLabel for="dataAndamentoPesquisa" value="Data do Andamento" />
 	  		<p:outputLabel for="tipoAndamentoProcessoPesquisa" value="Tipo do Andamento" />
 	  		
-			<p:inputText id="processoPesquisa" value="#{mbeanPesquisaModel.processo.numeroProcesso}" styleClass="coluna90" />
+			<p:inputText id="processoPesquisa" value="#{mbeanPesquisaModel.processoNumero.numero}" styleClass="coluna90" />
 	  		<p:calendar id="dataAndamentoPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataAndamento}" style="width:95%"/>
 	  		<p:selectOneMenu id="tipoAndamentoProcessoPesquisa" value="#{mbeanPesquisaModel.tipoAndamentoProcesso.id}" style="width:95%">
 		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />

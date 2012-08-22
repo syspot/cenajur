@@ -8,10 +8,10 @@
 	<ui:param name="mbeanMensagem" value="${mensagemFaces}" />
 
 	<h:form>
-		
+	
 		<p:dialog id="dialogMensagem" widgetVar="dlgMensagem" header="Enviar Mensagem" width="550" height="300" modal="true">
 	  
-	  		<h:panelGrid style="width:100%">
+	  		<h:panelGrid id="pgDialogMensagem" style="width:100%">
 				
 				<h:outputText value="Destinatarios" />
 				<p:outputPanel autoUpdate="true" style="width:100%">
@@ -21,9 +21,9 @@
 				</p:outputPanel>
 				
 				<p:outputLabel for="texto" value="Texto" />
-				<p:inputTextarea id="texto" value="#{mbeanMensagem.mensagem.texto}" rows="10" style="width:85%"/>
+				<p:inputTextarea id="texto" value="#{mbeanMensagem.mensagem.texto}" required="true" requiredMessage="Texto: Campo obrigatório" autoResize="false" rows="10" style="width:85%"/>
 				
-				<p:commandButton value="Enviar" action="#{mbeanMensagem.enviarMensagem}" oncomplete="handleRequest('dialogMensagem', dlgMensagem, args)"/>
+				<p:commandButton value="Enviar" action="#{mbeanMensagem.enviarMensagem}" oncomplete="handleRequestFaces('dialogMensagem', dlgMensagem, args)" update="pgDialogMensagem"/>
 		  		
 	  		</h:panelGrid>
 	  		
