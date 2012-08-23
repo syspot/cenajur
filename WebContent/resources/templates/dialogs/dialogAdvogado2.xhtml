@@ -6,15 +6,15 @@
               xmlns:f="http://java.sun.com/jsf/core">
 
 	<ui:param name="mbeanPesquisa" value="${colaboradorPesquisaFaces}" />
-	<ui:param name="mbeanColaboradorAcao" value="${mensagemFaces}" />
-	<ui:param name="nomeDialog" value="dlgColaborador" />
-	<ui:param name="metodoAdicao" value="addDestinatario" />
-	<ui:param name="colaboradorSelecionado" value="destinatarioSelecionado" />
-	
+	<ui:param name="mbeanColaboradorAcao" value="${processoFaces.processoAudienciaUtil}" />
+	<ui:param name="nomeDialog" value="dlgAdvogado2" />
+	<ui:param name="buscaAdvogado" value="#{true}" />
+	<ui:param name="metodoAdicao" value="addAdvogado" />
+	<ui:param name="colaboradorSelecionado" value="advogadoSelecionado" />
 
 	<h:form>
 		
-		<p:dialog id="dialogColaborador" header="Pesquisa de Colaborador" widgetVar="dlgColaborador" width="550" height="350" modal="true">
+		<p:dialog id="dialogAdvogado2" header="Pesquisa de Advogados" widgetVar="dlgAdvogado2" width="550" height="350" modal="true">
 	  
 	  		<ui:include src="/resources/templates/includes/include_dialog_colaborador.xhtml" />
 			  			

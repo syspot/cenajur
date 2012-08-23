@@ -54,7 +54,7 @@
 	<br/>
 	<br/>
 	
-	<p:dataTable id="gridPesquisa" emptyMessage="Nenhuma lotação encontrada" paginator="true"
+	<p:dataTable id="gridPesquisa" emptyMessage="Nenhum associado encontrado" paginator="true"
 						paginatorAlwaysVisible="false" rows="5" value="#{mbeanPesquisa.grid}" var="cliente">
 	
 		<p:column headerText="CPF">
@@ -70,7 +70,7 @@
 		</p:column>
 		
 		<p:column headerText="Adicionar" styleClass="coluna10" style="text-align:center;">
-			<p:commandLink action="#{mbeanClienteAcao.addCliente}" process="@this" oncomplete="#{nomeDialog}.hide()" global="false">
+			<p:commandLink action="#{mbeanClienteAcao.addCliente}" process="@this" onclick="#{nomeDialog}.hide()" global="false">
 				<h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
 				<f:setPropertyActionListener target="#{mbeanClienteAcao.clienteSelecionado}" value="#{cliente}" />
 			</p:commandLink>

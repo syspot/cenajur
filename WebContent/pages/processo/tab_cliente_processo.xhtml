@@ -19,7 +19,7 @@
 				
 				<p:accordionPanel multiple="false" activeIndex="zero">
 					
-					<p:tab title="Número: #{processo.processoNumeroPrincipal.numero}  -  Vara: #{processo.vara.descricao}  -  Objeto: #{processo.objeto.descricao}  -  Lote: #{processo.lote}" titleStyleClass="#{processo.situacaoProcesso.css}">
+					<p:tab title="Número: #{processo.processoNumeroPrincipal.numero}  -  Vara: #{processo.vara.descricao}  -  Objeto: #{processo.objeto.descricao}  -  Lote: #{processo.lote}" titleStyleClass="#{processo.situacaoProcesso.css}" titleStyle="word-spacing: 10px">
 					
 						<p:tabView>
 						
@@ -39,6 +39,16 @@
 										</p:inputText>
 										<p:inputText id="lote" value="#{processo.lote}" maxlength="30" styleClass="coluna95" readonly="true"/>
 						
+									</h:panelGrid>
+									
+									<h:panelGrid columns="1" style="width: 70%">
+			
+										<h:outputText value="Outros números do Processo" />
+										<p:outputPanel autoUpdate="true">
+											<p:inputText value="#{processo.processosNumeros}" readonly="true" styleClass="coluna80" rendered="#{not empty processo.processosNumeros}"/>
+											<p:inputText readonly="true" styleClass="coluna80" rendered="#{empty processo.processosNumeros}"/>
+										</p:outputPanel>
+										
 									</h:panelGrid>
 						
 								</p:fieldset>
@@ -150,7 +160,7 @@
 											paginatorAlwaysVisible="false" rows="10" value="#{processo.andamentos}" var="linha">
 								  	
 								  		<p:column headerText="Número do Processo" styleClass="coluna15">
-								  			<h:outputText value="#{linha.processo.processoNumeroPrincipal.numero}" />
+								  			<h:outputText value="#{linha.processoNumero.numero}" />
 								  		</p:column>
 								  	
 								  		<p:column headerText="Tipo do Andamento">
@@ -208,11 +218,11 @@
 											paginatorAlwaysVisible="false" rows="10" value="#{processo.audiencias}" var="linha">
 								  	
 								  		<p:column headerText="Número do Processo" styleClass="coluna15">
-								  			<h:outputText value="#{linha.processo.processoNumeroPrincipal.numero}" />
+								  			<h:outputText value="#{linha.processoNumero.numero}" />
 								  		</p:column>
 								  	
 								  		<p:column headerText="Advogado">
-								  			<h:outputText value="#{linha.advogado.apelido}" />
+								  			<h:outputText value="#{linha.audienciasAdvogados}" />
 								  		</p:column>
 								  	
 								  		<p:column headerText="Data">

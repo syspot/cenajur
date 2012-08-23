@@ -50,11 +50,12 @@
 			  	
 			  	<h:panelGrid columns="1" columnClasses="coluna100" style="width:100%">
 			  	
-				  	<p:outputLabel for="advogado" value="Advogado" />
-			  		<p:selectOneMenu id="advogado" required="true" requiredMessage="Advogado: Campo obrigatório" value="#{mbeanModel.advogado.id}" style="width:92%">
-				  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-				  		<f:selectItems value="#{mbean.advogados}" />
-				  	</p:selectOneMenu>
+			  		<p:outputPanel autoUpdate="true">
+						<h:outputLabel value="Advogado" /><br/>
+						<p:inputText required="true" requiredMessage="Advogado: Campo obrigatório" readonly="true" rendered="#{empty mbeanModel.audienciasAdvogados}" styleClass="coluna72"/>
+						<p:inputText value="#{mbeanModel.audienciasAdvogados}" required="true" requiredMessage="Advogado: Campo obrigatório" readonly="true" rendered="#{not empty mbeanModel.audienciasAdvogados}" styleClass="coluna72"/>
+						<p:commandButton type="button" value="Adicionar" icon="ui-icon-plus" onclick="dlgAdvogado.show();" />
+					</p:outputPanel>
 				  	
 				  	<p:outputLabel for="descricao" value="Descrição" />
 					<p:inputTextarea id="descricao" value="#{mbeanModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" maxlength="500" autoResize="false" rows="10" styleClass="coluna90"/>

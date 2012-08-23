@@ -17,11 +17,11 @@
 		
 		  	<h:form id="formMensagem">
 		  	
-				<p:poll interval="5" listener="#{mensagemFaces.pesquisarMensagens}" update="dgMensagem" process="@this" global="false" />
+				<p:poll interval="60" listener="#{mensagemFaces.pesquisarMensagens}" update="dgMensagem" process="@this" global="false" />
 		  	
 		  		<p:commandButton type="button" value="Nova Mensagem" onclick="dlgMensagem.show();" style="margin-bottom: 10px; margin-top:10px"/>
 		  
-		  		<p:remoteCommand name="abrirModelMensagem" oncomplete="dlgViewMensagem.show();" update="pgMensagem" process="@this" global="false" />
+		  		<p:remoteCommand name="abrirModelMensagem" oncomplete="dlgViewMensagem.show();" update="pgMensagem, dgMensagem" process="@this" global="false" />
 		  		
 			    <p:dataGrid id="dgMensagem" var="mensagemDestinatario" value="#{mensagemFaces.mensagensDestinatarios}" columns="3"  
 			        rows="12" paginator="true"  paginatorAlwaysVisible="false" emptyMessage="Nenhuma mensagem encontrada"

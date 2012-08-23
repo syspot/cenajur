@@ -13,6 +13,7 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 
 import br.com.cenajur.model.Audiencia;
+import br.com.cenajur.model.AudienciaAdvogado;
 import br.com.cenajur.model.CategoriaDocumento;
 import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.DocumentoAudiencia;
@@ -42,6 +43,7 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 	private CategoriaDocumento categoriaDocumento;
 	private DocumentoAudiencia documentoAudiencia;
 	private DocumentoAudiencia documentoSelecionado;
+	private Colaborador advogadoSelecionado;
 	
 	@PostConstruct
 	protected void init() {
@@ -62,6 +64,7 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 		getCrudModel().setAdvogado(new Colaborador());
 		getCrudModel().setSituacaoAudiencia(new SituacaoAudiencia());
 		getCrudModel().setVara(new Vara());
+		getCrudModel().setAudienciasAdvogados(new ArrayList<AudienciaAdvogado>());
 		setCategoriaDocumento(new CategoriaDocumento());
 		getCategoriaDocumento().setTipoCategoria(new TipoCategoria(Constantes.TIPO_CATEGORIA_AUDIENCA));
 		getCrudModel().setDocumentos(new ArrayList<DocumentoAudiencia>());
@@ -124,6 +127,11 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 			erro = true;
 			CenajurUtil.addErrorMessage("Processo: Campo obrigatório");
 		}
+		
+		if(TSUtil.isEmpty(getCrudModel().getAudienciasAdvogados())){
+			erro = true;
+			CenajurUtil.addErrorMessage("Advogado: Campo obrigatório");
+		}
 
 		if(getCrudModel().getDescricao().length() > 500){
 			erro = true;
@@ -137,6 +145,24 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 		getCrudModel().setProcessoNumero(this.processoNumeroSelecionado);
 		CenajurUtil.addInfoMessage("Processo adicionado com sucesso");
 		return null;
+	}
+	
+	public String addAdvogado(){
+		
+		AudienciaAdvogado audienciaAdvogado = new AudienciaAdvogado();
+		audienciaAdvogado.setAudiencia(getCrudModel());
+		audienciaAdvogado.setAdvogado(this.advogadoSelecionado);
+		
+		if(!getCrudModel().getAudienciasAdvogados().contains(audienciaAdvogado)){
+			getCrudModel().getAudienciasAdvogados().add(audienciaAdvogado);
+			CenajurUtil.addInfoMessage("Advogado adicionado com sucesso");
+		} else{
+			CenajurUtil.addErrorMessage("Esse Advogado já foi adicionado");
+		}
+		
+		
+		return null;
+		
 	}
 	
 	public void enviarDocumento(FileUploadEvent event) {
@@ -184,14 +210,6 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 		this.varas = varas;
 	}
 
-	public List<SelectItem> getAdvogados() {
-		return advogados;
-	}
-
-	public void setAdvogados(List<SelectItem> advogados) {
-		this.advogados = advogados;
-	}
-
 	public List<SelectItem> getSituacoesAudiencias() {
 		return situacoesAudiencias;
 	}
@@ -202,6 +220,14 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 
 	public List<SelectItem> getCategoriasDocumentos() {
 		return categoriasDocumentos;
+	}
+
+	public List<SelectItem> getAdvogados() {
+		return advogados;
+	}
+
+	public void setAdvogados(List<SelectItem> advogados) {
+		this.advogados = advogados;
 	}
 
 	public void setCategoriasDocumentos(List<SelectItem> categoriasDocumentos) {
@@ -238,6 +264,14 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 
 	public void setDocumentoSelecionado(DocumentoAudiencia documentoSelecionado) {
 		this.documentoSelecionado = documentoSelecionado;
+	}
+
+	public Colaborador getAdvogadoSelecionado() {
+		return advogadoSelecionado;
+	}
+
+	public void setAdvogadoSelecionado(Colaborador advogadoSelecionado) {
+		this.advogadoSelecionado = advogadoSelecionado;
 	}
 	
 }

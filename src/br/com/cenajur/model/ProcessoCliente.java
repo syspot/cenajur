@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import br.com.cenajur.util.Constantes;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
@@ -38,6 +39,9 @@ public class ProcessoCliente extends TSActiveRecordAb<ProcessoCliente>{
 	@ManyToOne
 	@JoinColumn(name = "situacao_processo_cliente_id")
 	private SituacaoProcessoCliente situacaoProcessoCliente;
+	
+	@Transient
+	private SituacaoProcessoCliente situacaoProcessoClienteTemp;
 	
 	@Column(name = "data_arquivamento")
 	private Date dataArquivamento;
@@ -89,17 +93,23 @@ public class ProcessoCliente extends TSActiveRecordAb<ProcessoCliente>{
 		this.dataArquivamento = dataArquivamento;
 	}
 
-	
+	public SituacaoProcessoCliente getSituacaoProcessoClienteTemp() {
+		return situacaoProcessoClienteTemp;
+	}
+
+	public void setSituacaoProcessoClienteTemp(SituacaoProcessoCliente situacaoProcessoClienteTemp) {
+		this.situacaoProcessoClienteTemp = situacaoProcessoClienteTemp;
+	}
+
+	public boolean isProcessoClienteArquivado(){
+		return Constantes.SITUACAO_PROCESSO_CLIENTE_ARQUIVADO.equals(this.situacaoProcessoClienteTemp.getId());
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((cliente == null) ? 0 : cliente.hashCode());
-		result = prime * result + ((dataArquivamento == null) ? 0 : dataArquivamento.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((processo == null) ? 0 : processo.hashCode());
-		result = prime * result + ((situacaoProcessoCliente == null) ? 0 : situacaoProcessoCliente.hashCode());
 		return result;
 	}
 
@@ -117,31 +127,12 @@ public class ProcessoCliente extends TSActiveRecordAb<ProcessoCliente>{
 				return false;
 		} else if (!cliente.equals(other.cliente))
 			return false;
-		if (dataArquivamento == null) {
-			if (other.dataArquivamento != null)
-				return false;
-		} else if (!dataArquivamento.equals(other.dataArquivamento))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
 		if (processo == null) {
 			if (other.processo != null)
 				return false;
 		} else if (!processo.equals(other.processo))
 			return false;
-		if (situacaoProcessoCliente == null) {
-			if (other.situacaoProcessoCliente != null)
-				return false;
-		} else if (!situacaoProcessoCliente.equals(other.situacaoProcessoCliente))
-			return false;
 		return true;
 	}
-
-	public boolean isProcessoClienteArquivado(){
-		return Constantes.SITUACAO_PROCESSO_CLIENTE_ARQUIVADO.equals(this.situacaoProcessoCliente.getId());
-	}
-
+	
 }

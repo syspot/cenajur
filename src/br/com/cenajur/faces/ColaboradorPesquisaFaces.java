@@ -10,12 +10,15 @@ import javax.faces.model.SelectItem;
 import br.com.cenajur.model.Cidade;
 import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.TipoColaborador;
+import br.com.cenajur.util.Constantes;
 
 @ViewScoped
 @ManagedBean(name = "colaboradorPesquisaFaces")
 public class ColaboradorPesquisaFaces extends PesquisaFaces<Colaborador> {
 
 	private List<SelectItem> tiposColaborador;
+	
+	private Boolean flagBuscaAdvogado;
 	
 	@PostConstruct
 	protected void init() {
@@ -31,6 +34,13 @@ public class ColaboradorPesquisaFaces extends PesquisaFaces<Colaborador> {
 		return null;
 	}
 	
+	@Override
+	protected void preFind() {
+		if(getFlagBuscaAdvogado()){
+			this.getModel().setTipoColaborador(new TipoColaborador(Constantes.TIPO_COLABORADOR_ADVOGADO));
+		}
+	}
+	
 	private void initCombo(){
 		this.tiposColaborador = super.initCombo(new TipoColaborador().findAll(), "id", "descricao");
 	}
@@ -41,6 +51,14 @@ public class ColaboradorPesquisaFaces extends PesquisaFaces<Colaborador> {
 
 	public void setTiposColaborador(List<SelectItem> tiposColaborador) {
 		this.tiposColaborador = tiposColaborador;
+	}
+
+	public Boolean getFlagBuscaAdvogado() {
+		return flagBuscaAdvogado;
+	}
+
+	public void setFlagBuscaAdvogado(Boolean flagBuscaAdvogado) {
+		this.flagBuscaAdvogado = flagBuscaAdvogado;
 	}
 
 }

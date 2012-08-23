@@ -13,14 +13,12 @@
 	
 			<p:outputPanel autoUpdate="true">
 			
-				<h:outputText value="#{mbean.processoClienteSelecionado.situacaoProcessoCliente}" />
-				
 				<h:panelGrid id="pgDataArquivamentoProcessoCliente" columns="2" columnClasses="coluna50, coluna50">
 					
 					<p:outputLabel for="situacaoProcessoCliente" value="Situação" />
 					<p:outputLabel for="dataArquivamentoProcessoCliente" value="Data Arquivamento" />
 					
-					<p:selectOneMenu id="situacaoProcessoCliente" value="#{mbean.processoClienteSelecionado.situacaoProcessoCliente.id}" style="width:95%">
+					<p:selectOneMenu id="situacaoProcessoCliente" value="#{mbean.processoClienteSelecionado.situacaoProcessoClienteTemp.id}" style="width:95%">
 						<f:selectItems value="#{mbean.situacoesProcessosClientes}" />
 						<p:ajax update="pgDataArquivamentoProcessoCliente" listener="#{mbean.limparDataArquivamentoProcessoCliente}" process="@this" global="false" />
 					</p:selectOneMenu>

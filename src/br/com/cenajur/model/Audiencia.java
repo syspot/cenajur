@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import br.com.cenajur.util.CenajurUtil;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
@@ -47,8 +48,8 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 	@ManyToOne
 	private Vara vara;
 	
-	@ManyToOne
-	private Colaborador advogado;
+	@OneToMany(mappedBy = "audiencia", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<AudienciaAdvogado> audienciasAdvogados;
 	
 	private String descricao;
 	
@@ -64,6 +65,9 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 	
 	@Column(name = "flag_cliente_ciente")
 	private Boolean flagClienteCiente;
+	
+	@Transient
+	private Colaborador advogado;
 
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -113,12 +117,12 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 		this.vara = vara;
 	}
 
-	public Colaborador getAdvogado() {
-		return advogado;
+	public List<AudienciaAdvogado> getAudienciasAdvogados() {
+		return audienciasAdvogados;
 	}
 
-	public void setAdvogado(Colaborador advogado) {
-		this.advogado = advogado;
+	public void setAudienciasAdvogados(List<AudienciaAdvogado> audienciasAdvogados) {
+		this.audienciasAdvogados = audienciasAdvogados;
 	}
 
 	public String getDescricao() {
@@ -165,6 +169,14 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 		this.flagClienteCiente = flagClienteCiente;
 	}
 
+	public Colaborador getAdvogado() {
+		return advogado;
+	}
+
+	public void setAdvogado(Colaborador advogado) {
+		this.advogado = advogado;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -199,10 +211,10 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 		
 		StringBuilder query = new StringBuilder();
 		
-		query.append(" select distinct a from Audiencia a inner join a.processoNumero pn where 1 = 1 ");
+		query.append(" select distinct a from Audiencia a inner join a.audienciasAdvogados aa where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(processoNumero) && !TSUtil.isEmpty(processoNumero.getNumero())){
-			query.append(CenajurUtil.getParamSemAcento("pn.numero"));
+			query.append(CenajurUtil.getParamSemAcento("a.processoNumero.numero"));
 		}
 		
 		if(!TSUtil.isEmpty(dataAudiencia)){
@@ -214,7 +226,7 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 		}
 		
 		if(!TSUtil.isEmpty(advogado) && !TSUtil.isEmpty(advogado.getId())){
-			query.append("and a.advogado.id = ? ");
+			query.append("and aa.advogado.id = ? ");
 		}
 		
 		if(!TSUtil.isEmpty(vara) && !TSUtil.isEmpty(vara.getId())){

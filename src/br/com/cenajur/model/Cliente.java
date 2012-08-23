@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -129,6 +130,7 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	@JoinTable(name = "processos_clientes", joinColumns = {
 	@JoinColumn(name = "cliente_id") }, inverseJoinColumns = {
 	@JoinColumn(name = "processo_id") })
+	@OrderBy(value = "situacaoProcesso asc, tipoProcesso")
 	private List<Processo> processos;
 	
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)

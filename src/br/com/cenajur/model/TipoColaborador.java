@@ -21,6 +21,13 @@ public class TipoColaborador extends TSActiveRecordAb<TipoColaborador>{
 	
 	private String descricao;
 
+	public TipoColaborador() {
+	}
+	
+	public TipoColaborador(Long id) {
+		this.id = id;
+	}
+	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
 	}

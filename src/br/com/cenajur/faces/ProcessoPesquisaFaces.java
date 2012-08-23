@@ -57,8 +57,14 @@ public class ProcessoPesquisaFaces extends PesquisaFaces<Processo> {
 		
 		for(Processo processo: getGrid()){
 			processo.setProcessoNumeroPrincipal(new ProcessoNumero().obterNumeroProcessoPrincipal(processo));
+			processo.getProcessosNumeros();
 		}
 		
+	}
+	
+	public String obterNumeroProcesso(){
+		this.processoSelecionado.getProcessosNumeros();
+		return null;
 	}
 
 	public List<SelectItem> getSituacoesProcessos() {

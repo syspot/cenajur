@@ -144,6 +144,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	
 	@Override
 	protected void prePersist() {
+		
 		getCrudModel().setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 		getCrudModel().setDataAtualizacao(new Date());
 
@@ -156,6 +157,14 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		processoNumero.setProcesso(getCrudModel());
 		
 		getCrudModel().getProcessosNumeros().add(processoNumero);
+		
+		for(ProcessoCliente processoCliente : getCrudModel().getProcessosClientes()){
+			processoCliente.setSituacaoProcessoCliente(processoCliente.getSituacaoProcessoClienteTemp());
+		}
+		
+		for(ProcessoParteContraria processoParteContraria : getCrudModel().getProcessosPartesContrarias()){
+			processoParteContraria.setSituacaoProcessoParteContraria(processoParteContraria.getSituacaoProcessoParteContrariaTemp());
+		}
 		
 	}
 	
@@ -220,6 +229,14 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		getCrudModel().setAudiencias(new Audiencia().findByProcesso(getCrudModel()));
 		getCrudModel().setAndamentos(new AndamentoProcesso().findByProcesso(getCrudModel()));
 		
+		for(ProcessoCliente processoCliente : getCrudModel().getProcessosClientes()){
+			processoCliente.setSituacaoProcessoClienteTemp(new SituacaoProcessoCliente(processoCliente.getSituacaoProcessoCliente().getId()));
+		}
+		
+		for(ProcessoParteContraria processoParteContraria : getCrudModel().getProcessosPartesContrarias()){
+			processoParteContraria.setSituacaoProcessoParteContrariaTemp(new SituacaoProcessoParteContraria(processoParteContraria.getSituacaoProcessoParteContraria().getId()));
+		}
+		
 	}
 	
 	public void enviarDocumento(FileUploadEvent event) {
@@ -255,7 +272,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	
 	public String removeCliente(){
 		getCrudModel().getProcessosClientes().remove(this.processoClienteSelecionado);
-		CenajurUtil.addInfoMessage("Cliente removido com sucesso");
+		CenajurUtil.addInfoMessage("Associado removido com sucesso");
 		return null;
 	}
 	
@@ -269,16 +286,16 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		
 		ProcessoCliente processoClienteSelecionado = new ProcessoCliente(this.clienteSelecionado);
 		processoClienteSelecionado.setProcesso(getCrudModel());
-		processoClienteSelecionado.setSituacaoProcessoCliente(new SituacaoProcessoCliente(Constantes.SITUACAO_PROCESSO_CLIENTE_ATIVO));
+		processoClienteSelecionado.setSituacaoProcessoClienteTemp(new SituacaoProcessoCliente(Constantes.SITUACAO_PROCESSO_CLIENTE_ATIVO));
 		
 		if(!this.getCrudModel().getProcessosClientes().contains(processoClienteSelecionado)){
 			
 			this.getCrudModel().getProcessosClientes().add(processoClienteSelecionado);
-			CenajurUtil.addInfoMessage("Cliente adicionado com sucesso");
+			CenajurUtil.addInfoMessage("Associado adicionado com sucesso");
 			
 		} else{
 			
-			CenajurUtil.addErrorMessage("Esse cliente já foi adicionado");
+			CenajurUtil.addErrorMessage("Esse associado já foi adicionado");
 			
 		}
 		
@@ -289,7 +306,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		
 		ProcessoParteContraria processoClienteSelecionado = new ProcessoParteContraria(this.parteContrariaSelecionada);
 		processoClienteSelecionado.setProcesso(getCrudModel());
-		processoClienteSelecionado.setSituacaoProcessoParteContraria(new SituacaoProcessoParteContraria(Constantes.SITUACAO_PROCESSO_PARTE_CONTRARIA_ATIVO));
+		processoClienteSelecionado.setSituacaoProcessoParteContrariaTemp(new SituacaoProcessoParteContraria(Constantes.SITUACAO_PROCESSO_PARTE_CONTRARIA_ATIVO));
 		
 		if(!this.getCrudModel().getProcessosPartesContrarias().contains(processoClienteSelecionado)){
 			

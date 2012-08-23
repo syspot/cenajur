@@ -27,10 +27,15 @@ public abstract class PesquisaFaces <T extends TSActiveRecordIf<T>>{
 		return null;
 	}
 	
+	protected void preFind(){
+	}
+	
 	protected void posFind(){
 	}
 	
 	public String find() {
+		
+		this.preFind();
 		
 		this.grid = this.model.findByModel();
 		

@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import br.com.cenajur.util.Constantes;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
@@ -34,6 +35,9 @@ public class ProcessoParteContraria extends TSActiveRecordAb<ProcessoParteContra
 	@ManyToOne
 	@JoinColumn(name = "situacao_processo_parte_contraria_id")
 	private SituacaoProcessoParteContraria situacaoProcessoParteContraria;
+	
+	@Transient
+	private SituacaoProcessoParteContraria situacaoProcessoParteContrariaTemp;
 	
 	@Column(name = "data_arquivamento")
 	private Date dataArquivamento;
@@ -83,6 +87,14 @@ public class ProcessoParteContraria extends TSActiveRecordAb<ProcessoParteContra
 
 	public void setDataArquivamento(Date dataArquivamento) {
 		this.dataArquivamento = dataArquivamento;
+	}
+
+	public SituacaoProcessoParteContraria getSituacaoProcessoParteContrariaTemp() {
+		return situacaoProcessoParteContrariaTemp;
+	}
+
+	public void setSituacaoProcessoParteContrariaTemp(SituacaoProcessoParteContraria situacaoProcessoParteContrariaTemp) {
+		this.situacaoProcessoParteContrariaTemp = situacaoProcessoParteContrariaTemp;
 	}
 
 	@Override

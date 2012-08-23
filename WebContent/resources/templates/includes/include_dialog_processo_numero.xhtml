@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+  	
+	  
+	<p:outputPanel autoUpdate="true">
+	  		
+  		<p:dataTable emptyMessage="Nenhum número do processo encontrado" value="#{mbeanPesquisa.processoSelecionado.processosNumeros}" var="processoNumero">
+		
+			<p:column headerText="Número" styleClass="coluna90">
+	  			<h:outputText value="#{processoNumero.numero}"/>
+	  		</p:column>
+	  	
+	  		<p:column headerText="Adicionar" style="text-align:center;" styleClass="coluna10">
+				<p:commandLink action="#{mbeanProcessoAcao.addProcessoNumero}" oncomplete="#{nomeDialog}.hide(); #{nomeDialogProcessoNumero}.hide();">
+					<h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
+					<f:setPropertyActionListener target="#{mbeanProcessoAcao.processoNumeroSelecionado}" value="#{processoNumero}" />
+				</p:commandLink>
+			</p:column>
+		
+		</p:dataTable>
+ 		
+	</p:outputPanel>
+	  		
+</ui:composition>

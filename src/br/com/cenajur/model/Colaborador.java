@@ -396,7 +396,7 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 	}
 	
 	public List<Colaborador> findAllAdvogados(){
-		return super.find(" from Colaborador c where c.tipoColaborador.id = ? ", "apelido", Constantes.TIPO_COLABORADOR_ADVOGADO);
+		return super.find(" from Colaborador c where c.tipoColaborador.id = ? and c.flagAtivo = true ", "apelido", Constantes.TIPO_COLABORADOR_ADVOGADO);
 	}
 	
 }

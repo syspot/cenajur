@@ -164,6 +164,8 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		
 		for(Processo processo : getCrudModel().getProcessos()){
 			processo.setProcessoNumeroPrincipal(new ProcessoNumero().obterNumeroProcessoPrincipal(processo));
+			processo.setAudiencias(new Audiencia().findByProcesso(processo));
+			processo.setAndamentos(new AndamentoProcesso().findByProcesso(processo));
 		}
 		
 	}

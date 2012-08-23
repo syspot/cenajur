@@ -10,6 +10,7 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 
 import br.com.cenajur.model.Audiencia;
+import br.com.cenajur.model.AudienciaAdvogado;
 import br.com.cenajur.model.CategoriaDocumento;
 import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.DocumentoAudiencia;
@@ -37,6 +38,7 @@ public class ProcessoAudienciaUtil {
 	
 	private DocumentoAudiencia documentoAudiencia;
 	private DocumentoAudiencia documentoAudienciaSelecionado;
+	private Colaborador advogadoSelecionado;
 
 	public ProcessoAudienciaUtil(Processo processo) {
 		setCrudModel(processo);
@@ -53,6 +55,7 @@ public class ProcessoAudienciaUtil {
 		this.audiencia.setSituacaoAudiencia(new SituacaoAudiencia());
 		this.audiencia.setVara(new Vara());
 		this.audiencia.setDocumentos(new ArrayList<DocumentoAudiencia>());
+		this.audiencia.setAudienciasAdvogados(new ArrayList<AudienciaAdvogado>());
 	}
 	
 	private void initCombo(){
@@ -105,6 +108,10 @@ public class ProcessoAudienciaUtil {
 		
 		boolean erro = false;
 		
+		if(TSUtil.isEmpty(this.audiencia.getAudienciasAdvogados())){
+			erro = true;
+			CenajurUtil.addErrorMessage("Advogado: Campo obrigatório");
+		}
 
 		if(this.audiencia.getDescricao().length() > 500){
 			erro = true;
@@ -120,7 +127,6 @@ public class ProcessoAudienciaUtil {
 			return null;
 		}
 		
-		this.audiencia.setAdvogado(this.audiencia.getAdvogado().getById());
 		this.audiencia.setVara(this.audiencia.getVara().getById());
 		this.audiencia.setDataAtualizacao(new Date());
 		this.audiencia.setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
@@ -184,6 +190,23 @@ public class ProcessoAudienciaUtil {
 		return null;
 	}
 	
+	public String addAdvogado(){
+		
+		AudienciaAdvogado audienciaAdvogado = new AudienciaAdvogado();
+		audienciaAdvogado.setAudiencia(this.audiencia);
+		audienciaAdvogado.setAdvogado(this.advogadoSelecionado);
+		
+		if(!this.audiencia.getAudienciasAdvogados().contains(audienciaAdvogado)){
+			this.audiencia.getAudienciasAdvogados().add(audienciaAdvogado);
+			CenajurUtil.addInfoMessage("Advogado adicionado com sucesso");
+		} else{
+			CenajurUtil.addErrorMessage("Esse Advogado já foi adicionado");
+		}
+		
+		return null;
+		
+	}
+	
 	public String obterAudiencia(){
 		this.audiencia = this.audiencia.getById();
 		return null;
@@ -243,6 +266,14 @@ public class ProcessoAudienciaUtil {
 
 	public void setDocumentoAudienciaSelecionado(DocumentoAudiencia documentoAudienciaSelecionado) {
 		this.documentoAudienciaSelecionado = documentoAudienciaSelecionado;
+	}
+
+	public Colaborador getAdvogadoSelecionado() {
+		return advogadoSelecionado;
+	}
+
+	public void setAdvogadoSelecionado(Colaborador advogadoSelecionado) {
+		this.advogadoSelecionado = advogadoSelecionado;
 	}
 
 }

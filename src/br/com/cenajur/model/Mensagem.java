@@ -1,6 +1,5 @@
 package br.com.cenajur.model;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

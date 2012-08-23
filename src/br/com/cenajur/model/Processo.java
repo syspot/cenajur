@@ -307,6 +307,16 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	public void setAudiencias(List<Audiencia> audiencias) {
 		this.audiencias = audiencias;
 	}
+	
+	public String getTitleTabClienteProcesso(){
+		StringBuilder title = new StringBuilder();
+		title.append("Número: ").append(getProcessoNumeroPrincipal().getNumero());
+		title.append("	Tipo: ").append(getTipoProcesso().getDescricao());
+		title.append("	Vara: ").append(getVara().getDescricao());
+		title.append("	Objeto: ").append(getObjeto().getDescricao());
+		title.append("	Lote: ").append(getLote());
+		return title.toString();
+	}
 
 	@Override
 	public int hashCode() {

@@ -137,7 +137,7 @@ public class CenajurUtil {
 	}
 	
 	public static String obterResumoGrid(String texto, int tamanho){
-		return texto.length() < tamanho ? texto : texto.substring(0, tamanho+1) + "...";
+		return texto.length() < tamanho ? texto : texto.substring(0, tamanho) + "...";
 	}
 	
 	public static String getDescricaoPDF(UploadedFile event){
