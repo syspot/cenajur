@@ -114,7 +114,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		getCrudModel().setTurno(new Turno());
 		getCrudModel().setProcessosClientes(new ArrayList<ProcessoCliente>());
 		getCrudModel().setProcessosPartesContrarias(new ArrayList<ProcessoParteContraria>());
-		getCrudModel().setProcessosNumeros(new ArrayList<ProcessoNumero>());
+		getCrudModel().setProcessosNumerosTemp(new ArrayList<ProcessoNumero>());
 		getCrudModel().setProcessoNumeroPrincipal(new ProcessoNumero());
 		setCategoriaDocumento(new CategoriaDocumento());
 		getCategoriaDocumento().setTipoCategoria(new TipoCategoria(Constantes.TIPO_CATEGORIA_PROCESSO));
@@ -156,6 +156,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		processoNumero.setFlagPrincipal(Boolean.TRUE);
 		processoNumero.setProcesso(getCrudModel());
 		
+		getCrudModel().setProcessosNumeros(getCrudModel().getProcessosNumerosTemp());
 		getCrudModel().getProcessosNumeros().add(processoNumero);
 		
 		for(ProcessoCliente processoCliente : getCrudModel().getProcessosClientes()){
@@ -176,6 +177,8 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	@Override
 	protected void posPersist() throws TSApplicationException{
 
+		getCrudModel().setProcessosNumerosTemp(new ProcessoNumero().pesquisarOutrosNumerosProcessos(getCrudModel()));
+		
 		for(DocumentoProcesso doc : getCrudModel().getDocumentos()){
 			
 			if(!TSUtil.isEmpty(doc.getDocumento())){
@@ -225,6 +228,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		}
 		
 		getCrudModel().setProcessoNumeroPrincipal(new ProcessoNumero().obterNumeroProcessoPrincipal(getCrudModel()));
+		getCrudModel().setProcessosNumerosTemp(new ProcessoNumero().pesquisarOutrosNumerosProcessos(getCrudModel()));
 		
 		getCrudModel().setAudiencias(new Audiencia().findByProcesso(getCrudModel()));
 		getCrudModel().setAndamentos(new AndamentoProcesso().findByProcesso(getCrudModel()));
@@ -326,7 +330,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		ProcessoNumero processoNumero = new ProcessoNumero();
 		processoNumero.setFlagPrincipal(Boolean.FALSE);
 		processoNumero.setProcesso(getCrudModel());
-		getCrudModel().getProcessosNumeros().add(processoNumero);
+		getCrudModel().getProcessosNumerosTemp().add(processoNumero);
 		return null;
 	}
 	

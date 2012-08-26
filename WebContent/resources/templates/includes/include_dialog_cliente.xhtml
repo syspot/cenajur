@@ -70,7 +70,7 @@
 		</p:column>
 		
 		<p:column headerText="Adicionar" styleClass="coluna10" style="text-align:center;">
-			<p:commandLink action="#{mbeanClienteAcao.addCliente}" process="@this" onclick="#{nomeDialog}.hide()" global="false">
+			<p:commandLink action="#{mbeanClienteAcao.addCliente}" onclick="#{nomeDialog}.hide()">
 				<h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
 				<f:setPropertyActionListener target="#{mbeanClienteAcao.clienteSelecionado}" value="#{cliente}" />
 			</p:commandLink>

@@ -14,6 +14,11 @@ import br.com.topsys.util.TSUtil;
 @Table(name = "tipos_colaboradores")
 public class TipoColaborador extends TSActiveRecordAb<TipoColaborador>{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3499475845333405961L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="tipos_colaboradores_id")
 	@SequenceGenerator(name="tipos_colaboradores_id", sequenceName="tipos_colaboradores_id_seq")

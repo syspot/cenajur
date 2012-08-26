@@ -31,6 +31,9 @@ public class MensagemDestinatario extends TSActiveRecordAb<MensagemDestinatario>
 	
 	@Column(name = "flag_lida")
 	private Boolean flagLida;
+	
+	@Column(name = "flag_ativo")
+	private Boolean flagAtivo;
 
 	public Long getId() {
 		return id;
@@ -63,11 +66,19 @@ public class MensagemDestinatario extends TSActiveRecordAb<MensagemDestinatario>
 	public void setFlagLida(Boolean flagLida) {
 		this.flagLida = flagLida;
 	}
+
+	public Boolean getFlagAtivo() {
+		return flagAtivo;
+	}
+
+	public void setFlagAtivo(Boolean flagAtivo) {
+		this.flagAtivo = flagAtivo;
+	}
 	
 	public String getCss(){
 		return flagLida ? "" : "mensagemNaoLida";
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -85,14 +96,24 @@ public class MensagemDestinatario extends TSActiveRecordAb<MensagemDestinatario>
 		if (getClass() != obj.getClass())
 			return false;
 		MensagemDestinatario other = (MensagemDestinatario) obj;
+		if (destinatario == null) {
+			if (other.destinatario != null)
+				return false;
+		} else if (!destinatario.equals(other.destinatario))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (mensagem == null) {
+			if (other.mensagem != null)
+				return false;
+		} else if (!mensagem.equals(other.mensagem))
+			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return this.destinatario.getNome();
@@ -102,7 +123,7 @@ public class MensagemDestinatario extends TSActiveRecordAb<MensagemDestinatario>
 		
 		StringBuilder query = new StringBuilder();
 		
-		query.append(" from MensagemDestinatario md where md.destinatario.id = ? ");
+		query.append(" from MensagemDestinatario md where md.destinatario.id = ? and md.flagAtivo = true");
 		
 		List<Object> param = new ArrayList<Object>();
 		
@@ -125,4 +146,7 @@ public class MensagemDestinatario extends TSActiveRecordAb<MensagemDestinatario>
 		return super.get(query.toString(), param.toArray());
 	}
 	
+	public int obterQtdNaoLidas(Colaborador destinatario){
+		return ((Long)getSession().createQuery("select count(*) from MensagemDestinatario md where md.flagLida = false and md.destinatario.id = " + destinatario.getId()).uniqueResult()).intValue();
+	}
 }

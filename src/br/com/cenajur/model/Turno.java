@@ -15,6 +15,11 @@ import br.com.topsys.util.TSUtil;
 @Table(name = "turnos")
 public class Turno extends TSActiveRecordAb<Turno>{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 446112123155289791L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "turnos_id")
 	@SequenceGenerator(name="turnos_id", sequenceName="turnos_id_seq")

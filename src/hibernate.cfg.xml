@@ -17,6 +17,8 @@
 
 		<property name="hibernate.show_sql">true</property>
 
+ 		<mapping class="br.com.cenajur.model.Agenda" />
+ 		<mapping class="br.com.cenajur.model.AgendaColaborador" />
  		<mapping class="br.com.cenajur.model.AndamentoProcesso" />
  		<mapping class="br.com.cenajur.model.Audiencia" />
  		<mapping class="br.com.cenajur.model.AudienciaAdvogado" />
@@ -54,6 +56,7 @@
  		<mapping class="br.com.cenajur.model.SituacaoProcessoCliente" />
  		<mapping class="br.com.cenajur.model.SituacaoProcessoParteContraria" />
  		<mapping class="br.com.cenajur.model.TipoAcesso" />
+ 		<mapping class="br.com.cenajur.model.TipoAgenda" />
  		<mapping class="br.com.cenajur.model.TipoAndamentoProcesso" />
  		<mapping class="br.com.cenajur.model.TipoCategoria" />
  		<mapping class="br.com.cenajur.model.TipoColaborador" />

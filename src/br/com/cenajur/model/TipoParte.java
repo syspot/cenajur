@@ -14,6 +14,11 @@ import br.com.topsys.util.TSUtil;
 @Table(name = "tipos_partes")
 public class TipoParte extends TSActiveRecordAb<TipoParte>{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9022977556341451215L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="tipos_partes_id")
 	@SequenceGenerator(name="tipos_partes_id", sequenceName="tipos_partes_id_seq")

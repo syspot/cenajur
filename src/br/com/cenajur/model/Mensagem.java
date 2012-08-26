@@ -1,9 +1,11 @@
 package br.com.cenajur.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,6 +34,9 @@ public class Mensagem extends TSActiveRecordAb<Mensagem>{
 	private String texto;
 	
 	private Date data;
+	
+	@Column(name = "flag_ativo")
+	private Boolean flagAtivo;
 	
 	@OneToMany(mappedBy = "mensagem", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<MensagemDestinatario> mensagensDestinatarios;
@@ -72,6 +77,14 @@ public class Mensagem extends TSActiveRecordAb<Mensagem>{
 		this.data = data;
 	}
 
+	public Boolean getFlagAtivo() {
+		return flagAtivo;
+	}
+
+	public void setFlagAtivo(Boolean flagAtivo) {
+		this.flagAtivo = flagAtivo;
+	}
+
 	public List<MensagemDestinatario> getMensagensDestinatarios() {
 		return mensagensDestinatarios;
 	}
@@ -105,4 +118,17 @@ public class Mensagem extends TSActiveRecordAb<Mensagem>{
 		return true;
 	}
 	
+	public List<Mensagem> pesquisarPorColaborador(Colaborador remetente) {
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" select m from Mensagem m inner join fetch m.mensagensDestinatarios md where m.remetente.id = ? and m.flagAtivo = true");
+		
+		List<Object> param = new ArrayList<Object>();
+		
+		param.add(remetente.getId());
+		
+		return super.find(query.toString(), "m.data", param.toArray());
+	}
+		
 }

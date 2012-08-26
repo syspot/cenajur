@@ -1,29 +1,42 @@
 package br.com.cenajur.model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 
 @Entity
-@Table(name = "tipos_pagamentos")
-public class TipoPagamento extends TSActiveRecordAb<TipoPagamento>{
+@Table(name = "agendas")
+public class Agenda extends TSActiveRecordAb<Agenda>{
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 6345241074551188640L;
+	private static final long serialVersionUID = 4541430641342646947L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="tipos_pagamentos_id")
-	@SequenceGenerator(name="tipos_pagamentos_id", sequenceName="tipos_pagamentos_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="agendas_id")
+	@SequenceGenerator(name="agendas_id", sequenceName="agendas_id_seq")
 	private Long id;
 	
+	@ManyToOne
+	@JoinColumn(name = "tipo_agenda_id")
+	private TipoAgenda tipoAgenda;
+	
+	private Date data;
+	
 	private String descricao;
+	
+	@ManyToOne
+	private Processo processo;
 
 	public Long getId() {
 		return id;
@@ -33,12 +46,36 @@ public class TipoPagamento extends TSActiveRecordAb<TipoPagamento>{
 		this.id = id;
 	}
 
+	public TipoAgenda getTipoAgenda() {
+		return tipoAgenda;
+	}
+
+	public void setTipoAgenda(TipoAgenda tipoAgenda) {
+		this.tipoAgenda = tipoAgenda;
+	}
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
+	}
+
 	public String getDescricao() {
 		return descricao;
 	}
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public Processo getProcesso() {
+		return processo;
+	}
+
+	public void setProcesso(Processo processo) {
+		this.processo = processo;
 	}
 
 	@Override
@@ -57,7 +94,7 @@ public class TipoPagamento extends TSActiveRecordAb<TipoPagamento>{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TipoPagamento other = (TipoPagamento) obj;
+		Agenda other = (Agenda) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

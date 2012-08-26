@@ -26,11 +26,18 @@ public class MensagemFaces{
 	
 	private MensagemDestinatario mensagemDestinatarioSelecionada;
 	
-	private List<MensagemDestinatario> mensagensDestinatarios;
+	private List<MensagemDestinatario> mensagensDestinatariosRecebidas;
+	private List<Mensagem> mensagensEnviadas;
 	
 	private Colaborador destinatarioSelecionado;
 	
 	private Colaborador colaboradorConectado;
+	
+	private int qtdMensagensNaoLidas;
+	
+	private boolean flagEnviar;
+	
+	private Integer tabIndex;
 	
 	@PostConstruct
 	protected void init() {
@@ -38,14 +45,23 @@ public class MensagemFaces{
 		this.clearFields();
 	}
 	
-	protected void clearFields() {
+	public String limpar(){
 		this.mensagem = new Mensagem();
 		this.mensagem.setMensagensDestinatarios(new ArrayList<MensagemDestinatario>());
-		this.pesquisarMensagens();
+		return null;
 	}
 	
-	public void pesquisarMensagens(){
-		this.mensagensDestinatarios = new MensagemDestinatario().pesquisarPorColaborador(colaboradorConectado);
+	protected void clearFields() {
+		this.limpar();
+		this.pesquisarMensagens();
+		this.qtdMensagensNaoLidas = new MensagemDestinatario().obterQtdNaoLidas(colaboradorConectado);
+	}
+	
+	public String pesquisarMensagens(){
+		this.mensagensDestinatariosRecebidas = new MensagemDestinatario().pesquisarPorColaborador(colaboradorConectado);
+		this.mensagensEnviadas = new Mensagem().pesquisarPorColaborador(this.colaboradorConectado);
+		setTabIndex(1);
+		return null;
 	}
 	
 	public String enviarMensagem() throws TSApplicationException{
@@ -62,8 +78,10 @@ public class MensagemFaces{
 		
 		this.mensagem.setRemetente(ColaboradorUtil.obterColaboradorConectado());
 		this.mensagem.setData(new Date());
+		this.mensagem.setFlagAtivo(Boolean.TRUE);
 		this.mensagem.save();
 		this.clearFields();
+		
 		return null;
 	}
 	
@@ -79,8 +97,36 @@ public class MensagemFaces{
 		mensagemDestinatario.setMensagem(this.mensagem);
 		mensagemDestinatario.setFlagLida(Boolean.FALSE);
 		mensagemDestinatario.setDestinatario(this.destinatarioSelecionado);
-		this.mensagem.getMensagensDestinatarios().add(mensagemDestinatario);
+		mensagemDestinatario.setFlagAtivo(Boolean.TRUE);
+		if(this.mensagem.getMensagensDestinatarios().contains(mensagemDestinatario)){
+			CenajurUtil.addErrorMessage("Esse destinatário já foi adicionado");
+		} else{
+			this.mensagem.getMensagensDestinatarios().add(mensagemDestinatario);
+			CenajurUtil.addInfoMessage("Destinatário adicionado com sucesso");
+		}
 		return null;
+	}
+	
+	public String excluirMensagemDestinatario() throws TSApplicationException{
+		this.mensagemDestinatarioSelecionada.setFlagAtivo(Boolean.FALSE);
+		this.mensagemDestinatarioSelecionada.update();
+		this.clearFields();
+		return null;
+	}
+	
+	public String excluirMensagem() throws TSApplicationException{
+		this.mensagem.setFlagAtivo(Boolean.FALSE);
+		this.mensagem.update();
+		this.clearFields();
+		return null;
+	}
+	
+	public String getTitleAbaMensagem(){
+		return this.qtdMensagensNaoLidas > 1 ? this.qtdMensagensNaoLidas + " mensagens não lidas" : this.qtdMensagensNaoLidas + " mensagem não lida";
+	}
+	
+	public String getCssTitleAbaMensagem(){
+		return this.qtdMensagensNaoLidas > 0 ? "mensagemNaoLida" : "";
 	}
 
 	public Mensagem getMensagem() {
@@ -99,12 +145,20 @@ public class MensagemFaces{
 		this.mensagemDestinatarioSelecionada = mensagemDestinatarioSelecionada;
 	}
 
-	public List<MensagemDestinatario> getMensagensDestinatarios() {
-		return mensagensDestinatarios;
+	public List<MensagemDestinatario> getMensagensDestinatariosRecebidas() {
+		return mensagensDestinatariosRecebidas;
 	}
 
-	public void setMensagensDestinatarios(List<MensagemDestinatario> mensagensDestinatarios) {
-		this.mensagensDestinatarios = mensagensDestinatarios;
+	public void setMensagensDestinatariosRecebidas(List<MensagemDestinatario> mensagensDestinatariosRecebidas) {
+		this.mensagensDestinatariosRecebidas = mensagensDestinatariosRecebidas;
+	}
+
+	public List<Mensagem> getMensagensEnviadas() {
+		return mensagensEnviadas;
+	}
+
+	public void setMensagensEnviadas(List<Mensagem> mensagensEnviadas) {
+		this.mensagensEnviadas = mensagensEnviadas;
 	}
 
 	public Colaborador getDestinatarioSelecionado() {
@@ -113,6 +167,30 @@ public class MensagemFaces{
 
 	public void setDestinatarioSelecionado(Colaborador destinatarioSelecionado) {
 		this.destinatarioSelecionado = destinatarioSelecionado;
+	}
+
+	public int getQtdMensagensNaoLidas() {
+		return qtdMensagensNaoLidas;
+	}
+
+	public void setQtdMensagensNaoLidas(int qtdMensagensNaoLidas) {
+		this.qtdMensagensNaoLidas = qtdMensagensNaoLidas;
+	}
+
+	public boolean isFlagEnviar() {
+		return flagEnviar;
+	}
+
+	public void setFlagEnviar(boolean flagEnviar) {
+		this.flagEnviar = flagEnviar;
+	}
+
+	public Integer getTabIndex() {
+		return tabIndex;
+	}
+
+	public void setTabIndex(Integer tabIndex) {
+		this.tabIndex = tabIndex;
 	}
 	
 }

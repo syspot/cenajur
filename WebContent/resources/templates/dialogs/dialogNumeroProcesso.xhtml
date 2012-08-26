@@ -15,7 +15,7 @@
 			
 			<p:outputPanel id="opNumeroProcesso" autoUpdate="true" style="width: 100%">
 			
-				<p:dataTable value="#{mbean.crudModel.processosNumeros}" var="processoNumero" emptyMessage="Nenhum número adicionado">
+				<p:dataTable value="#{mbean.crudModel.processosNumerosTemp}" var="processoNumero" emptyMessage="Nenhum número adicionado">
 			
 					<p:column headerText="Número">
 						<p:inputText id="numeroProcesso" required="true" requiredMessage="Número: Campo obrigatório" value="#{processoNumero.numero}" maxlength="30" styleClass="coluna90" />
@@ -32,7 +32,7 @@
 				
 			</p:outputPanel>
 			
-			<p:commandButton value="Salvar" process="@this, opNumeroProcesso" oncomplete="handleRequest('dialogNumeroProcesso', dlgNumeroProcesso, args)" style="margin-top: 10px"/>
+			<p:commandButton value="Salvar" oncomplete="handleRequest('dialogNumeroProcesso', dlgNumeroProcesso, args)" style="margin-top: 10px"/>
 			
 		</p:dialog>
 	

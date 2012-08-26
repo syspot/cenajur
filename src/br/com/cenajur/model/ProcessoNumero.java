@@ -178,4 +178,17 @@ public class ProcessoNumero extends TSActiveRecordAb<ProcessoNumero>{
 		
 		return  super.get(query.toString(), param.toArray());
 	}
+	
+	public List<ProcessoNumero> pesquisarOutrosNumerosProcessos(Processo processo){
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" from ProcessoNumero pn where pn.processo.id = ? and pn.flagPrincipal = false");
+		
+		List<Object> param = new ArrayList<Object>();
+		
+		param.add(processo.getId());
+		
+		return  super.find(query.toString(), "pn.numero", param.toArray());
+	}
 }

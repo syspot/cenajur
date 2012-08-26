@@ -18,6 +18,10 @@ import br.com.topsys.database.hibernate.TSActiveRecordAb;
 @Entity
 public class Usuario extends TSActiveRecordAb<Usuario>  {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3427649152993914370L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
@@ -31,11 +35,9 @@ public class Usuario extends TSActiveRecordAb<Usuario>  {
 	@JoinColumn(name = "grupo_id")
 	private Grupo grupoModel;
 	
-	
 	public Usuario(){
 		
 	}
-	
 	
 	public Usuario findByLogin(String login){
 		return this.get( "from Usuario u where u.login = ?",login);

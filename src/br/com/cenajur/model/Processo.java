@@ -43,7 +43,7 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	private ProcessoNumero processoNumeroPrincipal;
 	
 	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Where(clause = "not flag_principal")
+	@org.hibernate.annotations.OrderBy(clause = "flag_principal asc, numero")
 	private List<ProcessoNumero> processosNumeros;
 	
 	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -107,6 +107,9 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	
 	@Transient
 	private List<Audiencia> audiencias;
+	
+	@Transient
+	private List<ProcessoNumero> processosNumerosTemp;
 	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -308,14 +311,12 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		this.audiencias = audiencias;
 	}
 	
-	public String getTitleTabClienteProcesso(){
-		StringBuilder title = new StringBuilder();
-		title.append("Número: ").append(getProcessoNumeroPrincipal().getNumero());
-		title.append("	Tipo: ").append(getTipoProcesso().getDescricao());
-		title.append("	Vara: ").append(getVara().getDescricao());
-		title.append("	Objeto: ").append(getObjeto().getDescricao());
-		title.append("	Lote: ").append(getLote());
-		return title.toString();
+	public List<ProcessoNumero> getProcessosNumerosTemp() {
+		return processosNumerosTemp;
+	}
+
+	public void setProcessosNumerosTemp(List<ProcessoNumero> processosNumerosTemp) {
+		this.processosNumerosTemp = processosNumerosTemp;
 	}
 
 	@Override

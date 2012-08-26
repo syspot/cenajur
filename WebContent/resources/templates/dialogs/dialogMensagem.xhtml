@@ -11,21 +11,22 @@
 	
 		<p:dialog id="dialogMensagem" widgetVar="dlgMensagem" header="Enviar Mensagem" width="550" height="300" modal="true">
 	  
-	  		<h:panelGrid id="pgDialogMensagem" style="width:100%">
+	  		<p:ajax event="close" listener="#{mbeanMensagem.limpar}" update="pgDialogMensagem"/>
+	  		
+	  		<p:outputPanel id="pgDialogMensagem" autoUpdate="true" style="width:100%">
 				
-				<h:outputText value="Destinatarios" />
-				<p:outputPanel autoUpdate="true" style="width:100%">
-					<p:inputText value="#{mbeanMensagem.mensagem.mensagensDestinatarios}" readonly="true" styleClass="coluna85" rendered="#{not empty mbeanMensagem.mensagem.mensagensDestinatarios}"/>
-					<p:inputText readonly="true" styleClass="coluna85" rendered="#{empty mbeanMensagem.mensagem.mensagensDestinatarios}"/>
-					<p:commandButton type="button" value="Add" icon="ui-icon-plus" onclick="dlgColaborador.show();" />
-				</p:outputPanel>
+				<h:outputText value="Destinatarios" /><br/>
+				<p:inputText value="#{mbeanMensagem.mensagem.mensagensDestinatarios}" readonly="true" styleClass="coluna85" rendered="#{not empty mbeanMensagem.mensagem.mensagensDestinatarios}"/>
+				<p:inputText readonly="true" styleClass="coluna85" rendered="#{empty mbeanMensagem.mensagem.mensagensDestinatarios}"/>
+				<p:commandButton type="button" value="Add" icon="ui-icon-plus" onclick="dlgColaborador.show();" rendered="#{mensagemFaces.flagEnviar}"/><br/>
 				
-				<p:outputLabel for="texto" value="Texto" />
-				<p:inputTextarea id="texto" value="#{mbeanMensagem.mensagem.texto}" required="true" requiredMessage="Texto: Campo obrigatório" autoResize="false" rows="10" style="width:85%"/>
+				<p:outputLabel for="texto" value="Texto" /><br/>
+				<p:inputTextarea id="texto" value="#{mbeanMensagem.mensagem.texto}" required="true" requiredMessage="Texto: Campo obrigatório" autoResize="false" rows="10" style="width:85%"/><br/>
 				
-				<p:commandButton value="Enviar" action="#{mbeanMensagem.enviarMensagem}" oncomplete="handleRequestFaces('dialogMensagem', dlgMensagem, args)" update="pgDialogMensagem"/>
+				<p:commandButton value="Enviar" action="#{mbeanMensagem.enviarMensagem}" oncomplete="handleRequestFaces('dialogMensagem', dlgMensagem, args); atualizarMensagensRecebidas();" update="pgDialogMensagem" rendered="#{mensagemFaces.flagEnviar}"/>
+				<p:commandButton value="Excluir" action="#{mensagemFaces.excluirMensagem}" oncomplete="atualizarMensagensEnviadas(); dlgMensagem.hide();" process="@this, pgDialogMensagem" global="false" style="margin-right: 25px; margin-bottom: 20px" rendered="#{!mensagemFaces.flagEnviar}"/>
 		  		
-	  		</h:panelGrid>
+	  		</p:outputPanel>
 	  		
 		</p:dialog>
 	

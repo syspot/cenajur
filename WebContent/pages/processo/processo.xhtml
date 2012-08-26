@@ -26,8 +26,8 @@
 			
 				<h:outputText value="Outros números do Processo" />
 				<p:outputPanel autoUpdate="true">
-					<p:inputText value="#{mbeanModel.processosNumeros}" readonly="true" styleClass="coluna80" rendered="#{not empty mbeanModel.processosNumeros}"/>
-					<p:inputText readonly="true" styleClass="coluna80" rendered="#{empty mbeanModel.processosNumeros}"/>
+					<p:inputText value="#{mbeanModel.processosNumerosTemp}" readonly="true" styleClass="coluna80" rendered="#{not empty mbeanModel.processosNumerosTemp}"/>
+					<p:inputText readonly="true" styleClass="coluna80" rendered="#{empty mbeanModel.processosNumerosTemp}"/>
 					<p:commandButton type="button" value="Editar" onclick="dlgNumeroProcesso.show()"/>
 				</p:outputPanel>
 				

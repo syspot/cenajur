@@ -5,7 +5,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core">
 	
-  	<p:tabView id="tabview" dynamic="false">
+  	<p:tabView id="tabview" dynamic="false" activeIndex="#{mensagemFaces.tabIndex}">
 
 		<p:tab id="tabAgenda" title="Agenda" >
 		
@@ -13,71 +13,128 @@
 			
 		</p:tab>
 		
-		<p:tab id="tabMensagem" title="Mensagem" >
+		<p:tab id="tabMensagem" title="#{mensagemFaces.qtdMensagensNaoLidas > 0 ? mensagemFaces.titleAbaMensagem : 'Mensagens'}" >
 		
 		  	<h:form id="formMensagem">
 		  	
-				<p:poll interval="60" listener="#{mensagemFaces.pesquisarMensagens}" update="dgMensagem" process="@this" global="false" />
-		  	
-		  		<p:commandButton type="button" value="Nova Mensagem" onclick="dlgMensagem.show();" style="margin-bottom: 10px; margin-top:10px"/>
-		  
-		  		<p:remoteCommand name="abrirModelMensagem" oncomplete="dlgViewMensagem.show();" update="pgMensagem, dgMensagem" process="@this" global="false" />
+		  		<p:commandButton value="Nova Mensagem" oncomplete="dlgMensagem.show();" style="margin-bottom: 10px; margin-top:10px">
+		  			<f:setPropertyActionListener target="#{mensagemFaces.flagEnviar}" value="#{true}" />
+		  		</p:commandButton>
 		  		
-			    <p:dataGrid id="dgMensagem" var="mensagemDestinatario" value="#{mensagemFaces.mensagensDestinatarios}" columns="3"  
-			        rows="12" paginator="true"  paginatorAlwaysVisible="false" emptyMessage="Nenhuma mensagem encontrada"
-			        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-			        rowsPerPageTemplate="9,12,15">  
-			          
-			        <p:column>  
-			            <p:panel>  
-			                <h:panelGrid columns="2" columnClasses="coluna25_2, coluna75_2" style="width:100%; vertical-align: top">
-			                    
-			                    <h:outputText value="Data:" styleClass="#{mensagemDestinatario.css}"/>
-			                    <h:outputText value="#{mensagemDestinatario.mensagem.data}" styleClass="#{mensagemDestinatario.css}">
-			                    	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
-		                    	</h:outputText>  
-			                      
-			                    <h:outputText value="Remetente:" styleClass="#{mensagemDestinatario.css}"/>
-			                    <h:outputText value="#{mensagemDestinatario.mensagem.remetente.nome}" styleClass="#{mensagemDestinatario.css}"/>
-			                      
-			                    <h:outputText value="Mensagem:" styleClass="#{mensagemDestinatario.css}"/>
-			                    <h:panelGrid columns="2">
-			                    	<h:outputText value="#{mensagemDestinatario.mensagem.textoResumo}" style="text-align: lef;" styleClass="#{mensagemDestinatario.css}"/>
-			                    	<p:commandLink action="#{mensagemFaces.lerMensagem}" oncomplete="abrirModelMensagem();" process="@this" global="false" value="Detalhe" style="text-align: lef; color: #0000FF">
-			                    		<f:setPropertyActionListener target="#{mensagemFaces.mensagemDestinatarioSelecionada}" value="#{mensagemDestinatario}"/>
-			                    	</p:commandLink>
-			                    </h:panelGrid>
-			                    
-			                </h:panelGrid>
-			            </p:panel>  
-			        </p:column>  
-			  
-			    </p:dataGrid>  
-			      
-			    <p:dialog id="dialogViewMensagem" header="Detalhe da mensagem" widgetVar="dlgViewMensagem" modal="true" width="550" appendToBody="true">  
+		  		<p:commandButton value="Atualizar" ajax="false" action="#{mensagemFaces.pesquisarMensagens}" style="margin-bottom: 10px; margin-top:10px" />
+		  		
+		  		<p:tabView id="tabviewMensagens">
+		  		
+		  			<p:tab id="tabMensagemRecebida" title="Recebidas">
+						
+						<p:poll interval="60" listener="#{mensagemFaces.pesquisarMensagens}" update="dgMensagem" process="@this" global="false" />
+		  			
+		  				<p:remoteCommand name="abrirModelMensagem" oncomplete="dlgViewMensagem.show();" update="pgMensagem, dgMensagem" process="@this" global="false" />
+		  				
+		  				<p:remoteCommand name="atualizarMensagensRecebidas" process="@this" global="false" update="dgMensagem"/>
+		  		
+					    <p:dataGrid id="dgMensagem" var="mensagemDestinatario" value="#{mensagemFaces.mensagensDestinatariosRecebidas}" columns="3"  
+					        rows="12" paginator="true"  paginatorAlwaysVisible="false" emptyMessage="Nenhuma mensagem encontrada"
+					        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+					        rowsPerPageTemplate="9,12,15">
+					          
+					        <p:column>  
+					            <p:panel>  
+					                <h:panelGrid columns="2" columnClasses="coluna25_2, coluna75_2" style="width:100%; vertical-align: top">
+					                    
+					                    <h:outputText value="Data:" styleClass="#{mensagemDestinatario.css}"/>
+					                    <h:outputText value="#{mensagemDestinatario.mensagem.data}" styleClass="#{mensagemDestinatario.css}">
+					                    	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+				                    	</h:outputText>  
+					                      
+					                    <h:outputText value="Remetente:" styleClass="#{mensagemDestinatario.css}"/>
+					                    <h:outputText value="#{mensagemDestinatario.mensagem.remetente.nome}" styleClass="#{mensagemDestinatario.css}"/>
+					                      
+					                    <h:outputText value="Mensagem:" styleClass="#{mensagemDestinatario.css}"/>
+					                    <h:panelGrid columns="2">
+					                    	<h:outputText value="#{mensagemDestinatario.mensagem.textoResumo}" style="text-align: lef;" styleClass="#{mensagemDestinatario.css}"/>
+					                    	<p:commandLink action="#{mensagemFaces.lerMensagem}" oncomplete="abrirModelMensagem();" process="@this" global="false" value="Detalhe" style="text-align: lef; color: #0000FF">
+					                    		<f:setPropertyActionListener target="#{mensagemFaces.mensagemDestinatarioSelecionada}" value="#{mensagemDestinatario}"/>
+					                    	</p:commandLink>
+					                    </h:panelGrid>
+					                    
+					                </h:panelGrid>
+					            </p:panel>  
+					        </p:column>  
+					  
+					    </p:dataGrid>
+					    
+					    <p:dialog id="dialogViewMensagem" header="Detalhe da mensagem" widgetVar="dlgViewMensagem" modal="true" width="550" appendToBody="true">  
 			        
-		            <h:panelGrid id="pgMensagem" columns="2" columnClasses="coluna15_2, coluna85_2" style="width:100%; vertical-align: top">
-		                    
-		                <h:outputText value="Data:" />  
-		                <h:inputText value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem.data}" readonly="true">
-		                	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
-		                </h:inputText>
-		                  
-		                <h:outputText value="Remetente:" />
-		                <h:inputText value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem.remetente.nome}" readonly="true" style="width: 70%"/>
-		                  
-		                <h:outputText value="Mensagem:" />
-		                <h:inputTextarea value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem.texto}" rows="10" cols="65" style="text-align: lef; wudth: 100%" readonly="true"/>
-		                  
-		            </h:panelGrid> 
-		            
-		            <div style="text-align: right">
-		            	<p:commandButton value="Responder" oncomplete="dlgMensagem.show(); dlgViewMensagem.hide();" action="#{mensagemFaces.addDestinatario}" process="@this" style="margin-right: 25px; margin-bottom: 20px">
-		            		<f:setPropertyActionListener target="#{mensagemFaces.destinatarioSelecionado}" value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem.remetente}" />
-		            	</p:commandButton>
-		            </div>
-			              
-			    </p:dialog>
+				            <h:panelGrid id="pgMensagem" columns="2" columnClasses="coluna15_2, coluna85_2" style="width:100%; vertical-align: top">
+				                    
+				                <h:outputText value="Data:" />  
+				                <h:inputText value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem.data}" readonly="true">
+				                	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+				                </h:inputText>
+				                  
+				                <h:outputText value="Remetente:" />
+				                <h:inputText value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem.remetente.nome}" readonly="true" style="width: 70%"/>
+				                  
+				                <h:outputText value="Mensagem:" />
+				                <h:inputTextarea value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem.texto}" rows="10" cols="65" style="text-align: lef; wudth: 100%" readonly="true"/>
+				                  
+				            </h:panelGrid> 
+				            
+				            <div style="text-align: right">
+				            	<p:commandButton value="Responder" oncomplete="dlgMensagem.show(); dlgViewMensagem.hide();" action="#{mensagemFaces.addDestinatario}" process="@this" style="margin-right: 5px; margin-bottom: 20px">
+				            		<f:setPropertyActionListener target="#{mensagemFaces.destinatarioSelecionado}" value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem.remetente}" />
+				            		<f:setPropertyActionListener target="#{mensagemFaces.flagEnviar}" value="#{true}" />
+				            	</p:commandButton>
+				            	<p:commandButton value="Excluir" action="#{mensagemFaces.excluirMensagemDestinatario}" update="dgMensagem" oncomplete="dlgViewMensagem.hide();" process="@this, pgMensagem" style="margin-right: 25px; margin-bottom: 20px" />
+				            </div>
+					              
+					    </p:dialog>
+		  			
+		  			</p:tab>
+		  			
+		  			<p:tab id="tabMensagemEnviada" title="Enviadas">
+						
+		  				<p:remoteCommand name="abrirModelMensagemEnviada" oncomplete="dlgMensagem.show();" process="@this" global="false" >
+		  					<f:setPropertyActionListener target="#{mensagemFaces.flagEnviar}" value="#{false}" />
+		  				</p:remoteCommand>
+		  		
+		  				<p:remoteCommand name="atualizarMensagensEnviadas" process="@this" global="false" update="dgMensagemEnviada"/>
+		  				
+					    <p:dataGrid id="dgMensagemEnviada" var="mensagem" value="#{mensagemFaces.mensagensEnviadas}" columns="3"  
+					        rows="12" paginator="true"  paginatorAlwaysVisible="false" emptyMessage="Nenhuma mensagem encontrada"
+					        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+					        rowsPerPageTemplate="9,12,15">  
+					          
+					        <p:column>  
+					            <p:panel>  
+					                <h:panelGrid columns="2" columnClasses="coluna25_2, coluna75_2" style="width:100%; vertical-align: top">
+					                    
+					                    <h:outputText value="Data:" />
+					                    <h:outputText value="#{mensagem.data}" >
+					                    	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+				                    	</h:outputText>  
+					                      
+					                    <h:outputText value="Destinatários:" />
+					                    <h:outputText value="#{mensagem.mensagensDestinatarios}" />
+					                      
+					                    <h:outputText value="Mensagem:" />
+					                    <h:panelGrid columns="2">
+					                    	<h:outputText value="#{mensagem.textoResumo}" style="text-align: lef;" />
+					                    	<p:commandLink oncomplete="abrirModelMensagemEnviada();" process="@this" global="false" value="Detalhe" style="text-align: lef; color: #0000FF">
+					                    		<f:setPropertyActionListener target="#{mensagemFaces.mensagem}" value="#{mensagem}" />
+					                    	</p:commandLink>
+					                    </h:panelGrid>
+					                    
+					                </h:panelGrid>
+					            </p:panel>  
+					        </p:column>  
+					  
+					    </p:dataGrid>
+					    
+		  			</p:tab>
+		  		
+		  		</p:tabView>
 			  
 			</h:form>
 			

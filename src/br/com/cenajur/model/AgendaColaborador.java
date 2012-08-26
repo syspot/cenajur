@@ -1,29 +1,40 @@
 package br.com.cenajur.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 
 @Entity
-@Table(name = "tipos_pagamentos")
-public class TipoPagamento extends TSActiveRecordAb<TipoPagamento>{
+@Table(name = "agendas_colaboradores")
+public class AgendaColaborador extends TSActiveRecordAb<AgendaColaborador>{
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 6345241074551188640L;
+	private static final long serialVersionUID = 4541430641342646947L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="tipos_pagamentos_id")
-	@SequenceGenerator(name="tipos_pagamentos_id", sequenceName="tipos_pagamentos_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="agendas_colaboradores_id")
+	@SequenceGenerator(name="agendas_colaboradores_id", sequenceName="agendas_colaboradores_id_seq")
 	private Long id;
 	
+	@ManyToOne
+	private Agenda agenda;
+	
+	@ManyToOne
+	private Colaborador colaborador;
+	
 	private String descricao;
+	
+	@Column(name = "flag_concluido")
+	private Boolean flagConcluido;
 
 	public Long getId() {
 		return id;
@@ -33,12 +44,36 @@ public class TipoPagamento extends TSActiveRecordAb<TipoPagamento>{
 		this.id = id;
 	}
 
+	public Agenda getAgenda() {
+		return agenda;
+	}
+
+	public void setAgenda(Agenda agenda) {
+		this.agenda = agenda;
+	}
+
+	public Colaborador getColaborador() {
+		return colaborador;
+	}
+
+	public void setColaborador(Colaborador colaborador) {
+		this.colaborador = colaborador;
+	}
+
 	public String getDescricao() {
 		return descricao;
 	}
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public Boolean getFlagConcluido() {
+		return flagConcluido;
+	}
+
+	public void setFlagConcluido(Boolean flagConcluido) {
+		this.flagConcluido = flagConcluido;
 	}
 
 	@Override
@@ -57,7 +92,7 @@ public class TipoPagamento extends TSActiveRecordAb<TipoPagamento>{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TipoPagamento other = (TipoPagamento) obj;
+		AgendaColaborador other = (AgendaColaborador) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
