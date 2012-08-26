@@ -51,11 +51,11 @@
   		</p:column>
   		
   		<p:column headerText="Adicionar" style="text-align:center;">
-			<p:commandLink action="#{mbeanPesquisa.obterNumeroProcesso}" oncomplete="#{nomeDialogProcessoNumero}.show();" rendered="#{not empty processo.processosNumeros}">
+			<p:commandLink action="#{mbeanPesquisa.obterNumeroProcesso}" oncomplete="#{nomeDialogProcessoNumero}.show();" rendered="#{not empty processo.processosNumeros and empty selecionarProcesso}">
 				<h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
 				<f:setPropertyActionListener target="#{mbeanPesquisa.processoSelecionado}" value="#{processo}" />
 			</p:commandLink>
-			<p:commandLink action="#{mbeanProcessoAcao.addProcessoNumero}" oncomplete="#{nomeDialog}.hide();" rendered="#{empty processo.processosNumeros}">
+			<p:commandLink action="#{mbeanProcessoAcao.addProcessoNumero}" oncomplete="#{nomeDialog}.hide();" rendered="#{empty processo.processosNumeros and empty selecionarProcesso}">
 				<h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
 				<f:setPropertyActionListener target="#{mbeanProcessoAcao.processoNumeroSelecionado}" value="#{processo.processoNumeroPrincipal}" />
 			</p:commandLink>

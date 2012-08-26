@@ -4,8 +4,10 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -78,6 +80,17 @@ public class CenajurUtil {
 	public static Date getTrimestreAnterior(){
 		Calendar c = Calendar.getInstance();
 		c.set(Calendar.MONTH, c.get(Calendar.MONTH)-3);
+		return c.getTime();
+	}
+	
+	public static Date getDiaAtual(){
+		Calendar c = Calendar.getInstance();
+		return c.getTime();
+	}
+	
+	public static Date getDiaAmanha(){
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.DAY_OF_MONTH, 1);
 		return c.getTime();
 	}
 	
@@ -169,5 +182,20 @@ public class CenajurUtil {
 				document.close();
 			} catch (IOException e) {}
 		}
+	}
+	
+	public static String getParamData(String field){
+		StringBuilder query = new StringBuilder();
+		return query.append("and day(").append(field).append(") = ? and month(").append(field).append(") = ? and year(").append(field).append(") = ?").toString();
+	}
+	
+	public static List<Object> obterParamsDataAtual(Date data){
+		List<Object> params = new ArrayList<Object>();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(data);
+		params.add(calendar.get(Calendar.DAY_OF_MONTH));
+		params.add(calendar.get(Calendar.MONTH) + 1);
+		params.add(calendar.get(Calendar.YEAR));
+		return params;
 	}
 }

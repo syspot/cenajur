@@ -1,7 +1,6 @@
 package br.com.cenajur.model;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +24,11 @@ import br.com.topsys.util.TSUtil;
 @Entity
 @Table(name = "audiencias")
 public class Audiencia extends TSActiveRecordAb<Audiencia>{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5140592857414734323L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="audiencias_id")
@@ -68,6 +72,9 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 	
 	@Transient
 	private Colaborador advogado;
+	
+	@ManyToOne
+	private Agenda agenda;
 
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -177,6 +184,14 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 		this.advogado = advogado;
 	}
 
+	public Agenda getAgenda() {
+		return agenda;
+	}
+
+	public void setAgenda(Agenda agenda) {
+		this.agenda = agenda;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -218,7 +233,7 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 		}
 		
 		if(!TSUtil.isEmpty(dataAudiencia)){
-			query.append("and day(a.dataAudiencia) = ? and month(a.dataAudiencia) = ? and year(a.dataAudiencia) = ? ");
+			query.append(CenajurUtil.getParamData("a.dataAudiencia"));
 		}
 		
 		if(!TSUtil.isEmpty(situacaoAudiencia) && !TSUtil.isEmpty(situacaoAudiencia.getId())){
@@ -244,11 +259,7 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 		}
 		
 		if(!TSUtil.isEmpty(dataAudiencia)){
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(dataAudiencia);
-			params.add(calendar.get(Calendar.DAY_OF_MONTH));
-			params.add(calendar.get(Calendar.MONTH) + 1);
-			params.add(calendar.get(Calendar.YEAR));
+			params.addAll(CenajurUtil.obterParamsDataAtual(dataAudiencia));
 		}
 		
 		if(!TSUtil.isEmpty(situacaoAudiencia) && !TSUtil.isEmpty(situacaoAudiencia.getId())){
@@ -268,5 +279,9 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 		}
 		
 		return super.find(query.toString(), "a.dataAudiencia", params.toArray());
+	}
+	
+	public Audiencia obterPorAgenda(Agenda agenda){
+		return super.get(" from Audiencia a where a.agenda.id = ? ", agenda.getId());
 	}
 }

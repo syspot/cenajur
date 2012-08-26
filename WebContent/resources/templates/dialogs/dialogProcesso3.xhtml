@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:param name="mbeanPesquisa" value="${processoPesquisaFaces}" />
+	<ui:param name="mbeanProcessoAcao" value="${agendaFaces}" />
+	<ui:param name="nomeDialog" value="dlgProcesso3" />
+	<ui:param name="nomeDialogProcessoNumero" value="dlgSelecionarProcessoNumero3" />
+
+	<h:form>
+		
+		<p:dialog id="dialogProcesso3" widgetVar="dlgProcesso3" header="Pesquisa de Processos" width="600" height="400" modal="true">
+	  
+	  		<ui:include src="/resources/templates/includes/include_dialog_processo.xhtml" />
+	  
+		</p:dialog>
+		
+		<p:dialog id="dialogSelecionarProcessoNumero3" widgetVar="dlgSelecionarProcessoNumero3" header="Números do Processos" width="400" modal="true">
+	  		
+	  		<ui:include src="/resources/templates/includes/include_dialog_processo_numero.xhtml" />
+	  		
+		</p:dialog>
+	
+	</h:form>
+
+</ui:component>

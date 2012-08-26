@@ -10,6 +10,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
+import br.com.topsys.util.TSUtil;
 
 @Entity
 @Table(name = "agendas_colaboradores")
@@ -33,15 +34,18 @@ public class AgendaColaborador extends TSActiveRecordAb<AgendaColaborador>{
 	
 	private String descricao;
 	
+	@Column(name = "texto_resposta")
+	private String textoResposta;
+	
 	@Column(name = "flag_concluido")
 	private Boolean flagConcluido;
 
 	public Long getId() {
-		return id;
+		return TSUtil.tratarLong(id);
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		this.id = TSUtil.tratarLong(id);
 	}
 
 	public Agenda getAgenda() {
@@ -68,19 +72,35 @@ public class AgendaColaborador extends TSActiveRecordAb<AgendaColaborador>{
 		this.descricao = descricao;
 	}
 
+	public String getTextoResposta() {
+		return textoResposta;
+	}
+
+	public void setTextoResposta(String textoResposta) {
+		this.textoResposta = textoResposta;
+	}
+
 	public Boolean getFlagConcluido() {
-		return flagConcluido;
+		return TSUtil.isEmpty(flagConcluido) ? false : flagConcluido;
 	}
 
 	public void setFlagConcluido(Boolean flagConcluido) {
 		this.flagConcluido = flagConcluido;
+	}
+	
+	public String getStatus(){
+		return getFlagConcluido() ? "Concluído" : "Aguardando";
+	}
+	
+	public String getCss(){
+		return getFlagConcluido() ? "situacaoAtiva" : "situacaoSuspensa";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((agenda == null) ? 0 : agenda.hashCode());
 		return result;
 	}
 
@@ -93,12 +113,21 @@ public class AgendaColaborador extends TSActiveRecordAb<AgendaColaborador>{
 		if (getClass() != obj.getClass())
 			return false;
 		AgendaColaborador other = (AgendaColaborador) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (agenda == null) {
+			if (other.agenda != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!agenda.equals(other.agenda))
+			return false;
+		if (colaborador == null) {
+			if (other.colaborador != null)
+				return false;
+		} else if (!colaborador.equals(other.colaborador))
 			return false;
 		return true;
+	}
+
+	public AgendaColaborador obterPorAgendaColaborador(Agenda agenda, Colaborador colaborador){
+		return super.get(" from AgendaColaborador ac where ac.agenda.id = ? and ac.colaborador.id = ? ", agenda.getId(), colaborador.getId());
 	}
 
 }

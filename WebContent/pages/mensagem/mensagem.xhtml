@@ -5,14 +5,8 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core">
 	
-  	<p:tabView id="tabview" dynamic="false" activeIndex="#{mensagemFaces.tabIndex}">
+  	<p:tabView id="tabview" dynamic="false">
 
-		<p:tab id="tabAgenda" title="Agenda" >
-		
-			<ui:include src="/pages/mensagem/agenda.xhtml" />
-			
-		</p:tab>
-		
 		<p:tab id="tabMensagem" title="#{mensagemFaces.qtdMensagensNaoLidas > 0 ? mensagemFaces.titleAbaMensagem : 'Mensagens'}" >
 		
 		  	<h:form id="formMensagem">

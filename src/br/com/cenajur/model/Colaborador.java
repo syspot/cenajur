@@ -24,6 +24,11 @@ import br.com.topsys.util.TSUtil;
 @Table(name = "colaboradores")
 public class Colaborador extends TSActiveRecordAb<Colaborador>{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1762162497629022408L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="colaboradores_id")
 	@SequenceGenerator(name="colaboradores_id", sequenceName="colaboradores_id_seq")
@@ -90,6 +95,9 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 	@ManyToOne
 	@JoinColumn(name = "colaborador_atualizacao_id")
 	private Colaborador colaboradorAtualizacao;
+	
+	@Column(name = "flag_permissao_agenda")
+	private Boolean flagPermissaoAgenda;
 	
 	public Colaborador() {
 	}
@@ -304,6 +312,14 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 
 	public void setColaboradorAtualizacao(Colaborador colaboradorAtualizacao) {
 		this.colaboradorAtualizacao = colaboradorAtualizacao;
+	}
+
+	public Boolean getFlagPermissaoAgenda() {
+		return flagPermissaoAgenda;
+	}
+
+	public void setFlagPermissaoAgenda(Boolean flagPermissaoAgenda) {
+		this.flagPermissaoAgenda = flagPermissaoAgenda;
 	}
 
 	@Override

@@ -723,6 +723,10 @@ img.right {
     vertical-align: top;
 }
 
+.coluna16 {
+    width: 16%;
+}
+
 .coluna20 {
     width: 20%;
 }
@@ -860,6 +864,10 @@ img.right {
     width: 50%;
 }
 
+.coluna52 {
+    width: 50%;
+}
+
 .coluna50_2 {
     width: 50%;
     vertical-align: top;
@@ -872,6 +880,9 @@ img.right {
 
 .coluna54 {
     width: 54%;
+}
+.coluna57 {
+    width: 57%;
 }
 
 .coluna60 {
@@ -1088,6 +1099,18 @@ ui-icon.delete {
 
 .situacaoCancelada{
 	background-color:#FF4500 !important;
+}
+
+.tipoTarefa{
+	background-color:#DEB887 !important;
+}
+
+.tipoCompromisso{
+	background-color:#BFEFFF !important;
+}
+
+.tipoAudiencia{
+	background-color:#EEDD82 !important;
 }
 
 .mensagemNaoLida{

@@ -63,3 +63,13 @@ function handleRequestActionCliente(idDialog, widgerVar, args){
 	}  
 	
 }
+
+function handleRequestActionAgenda(idDialog, widgerVar, args){
+	if(args.criarAudiencia) {
+		addAudiencia();
+		widgerVar.hide();
+	} else {  
+		widgerVar.hide();
+	}  
+	
+}

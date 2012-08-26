@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+	<p:tabView id="tabview" dynamic="false">
+
+		<p:tab id="tabAgenda" title="Agenda" >
+		
+			<h:form>
+  
+			    <p:schedule value="#{agendaFaces.eventModel}" widgetVar="myschedule">
+			  
+			        <p:ajax event="dateSelect" listener="#{agendaFaces.onDateSelect}" oncomplete="atualizarDialogAgenda(); dlgAgenda.show()" />  
+			        <p:ajax event="eventSelect" listener="#{agendaFaces.onEventSelect}" oncomplete="atualizarDialogAgenda(); dlgAgenda.show()" />  
+			        <p:ajax event="eventMove" listener="#{agendaFaces.onEventMove}" />  
+			        <p:ajax event="eventResize" listener="#{agendaFaces.onEventResize}" />  
+			  
+			    </p:schedule>  
+			  
+			</h:form>
+			
+		</p:tab>
+		
+	</p:tabView>
+  	
+</ui:composition>

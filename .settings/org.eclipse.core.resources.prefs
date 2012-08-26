@@ -3,6 +3,7 @@ encoding//WebContent/pages/index.xhtml=ISO-8859-1
 encoding//WebContent/pages/menu.xhtml=ISO-8859-1
 encoding//WebContent/pages/processo/processo.xhtml=ISO-8859-1
 encoding//WebContent/resources/templates/templateCRUD.xhtml=ISO-8859-1
+encoding//src/br/com/cenajur/faces/AgendaFaces.java=ISO-8859-1
 encoding//src/br/com/cenajur/faces/AndamentoProcessoFaces.java=ISO-8859-1
 encoding//src/br/com/cenajur/faces/AudienciaFaces.java=ISO-8859-1
 encoding//src/br/com/cenajur/faces/AutenticacaoFaces.java=ISO-8859-1

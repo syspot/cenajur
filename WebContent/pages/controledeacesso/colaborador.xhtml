@@ -113,12 +113,13 @@
   			
   			</h:panelGrid>
   			
-  			<h:panelGrid columns="4" columnClasses="coluna30, coluna30, coluna30, coluna10" style="width:54%">
+  			<h:panelGrid columns="5" columnClasses="coluna30, coluna30, coluna30, coluna10, coluna 10" style="width:55%">
   			
 	  			<p:outputLabel for="dataAdmissao" value="Data de Admissão" />
 	  			<p:outputLabel for="tipoColaborador" value="Tipo" />
 	  			<p:outputLabel for="oab" value="OAB" />
 	  			<p:outputLabel for="situacao" value="Ativo" />
+	  			<p:outputLabel for="flagPermissaoAgenda" value="Agenda" />
 	  			
 	  			<p:calendar id="dataAdmissao" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Admissão: Campo obrigatório" value="#{mbeanModel.dataAdmissao}" style="width:95%"/>
 	  			<p:selectOneMenu id="tipoColaborador" required="true" requiredMessage="Tipo de Colaborador: Campo obrigatório" value="#{mbeanModel.tipoColaborador.id}" style="width:93%">
@@ -132,6 +133,7 @@
 	  			<p:selectBooleanCheckbox id="situacao" value="#{mbeanModel.flagAtivo}">
 	  				<p:ajax update="pgDataDesligamento" process="@this" global="false"/>
 	  			</p:selectBooleanCheckbox>
+	  			<p:selectBooleanCheckbox id="flagPermissaoAgenda" value="#{mbeanModel.flagPermissaoAgenda}" />
 	  			
 			</h:panelGrid>
 			

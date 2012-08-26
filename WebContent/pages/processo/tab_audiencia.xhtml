@@ -20,7 +20,7 @@
 							<p:outputPanel style="width:100%">
 							
 								<h:panelGrid columns="1" columnClasses="coluna100" style="width:100%">
-  		
+					
 									<p:outputLabel for="numeroProcessoAudiencia" value="Processo" />
 									<p:inputText id="numeroProcessoAudiencia" value="#{mbean.processoAudienciaUtil.audiencia.processoNumero.numero}" readonly="true" />
 							  		
@@ -65,7 +65,7 @@
 							</p:outputPanel>
 							
 							<h:panelGrid columns="1" style="width:100%">
-				
+					
 								<p:commandButton type="button" value="Adicionar Documento" icon="ui-icon-plus" onclick="dlgDocumentoTabAudiencia.show();" update="pgCategoriaDocumentoTabAudiencia" />
 							
 								<ui:include src="/pages/processo/include_grid_tab_audiencia_documentos.xhtml" />

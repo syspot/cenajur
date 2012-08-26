@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:f="http://java.sun.com/jsf/core">
+
+	
+	<h:form>
+		
+		<p:remoteCommand name="atualizarDialogAgenda" process="@this" update="opDialogAgenda" global="false"/>
+		<p:remoteCommand name="atualizarAgendasColaboradores" process="@this" update="dtAgendasColaboradores" global="false"/>
+		
+		<p:dialog id="dialogAgenda" header="Cadastro de Agenda" widgetVar="dlgAgenda" width="700" height="430" modal="true">
+	  
+	  		<p:ajax event="close" listener="#{agendaFaces.limpar}" update="opDialogAgenda"/>
+	  		
+	  		<p:outputPanel id="opDialogAgenda" style="width:100%">
+	  		
+	  			<p:outputPanel rendered="#{agendaFaces.usuarioMaster and agendaFaces.colaboradorSolicitante}">
+	  			
+			  		<ui:include src="/pages/agenda/include_dialog_agenda_solicitante.xhtml" />
+			  	
+		  		</p:outputPanel>
+		  		
+				<p:outputPanel rendered="#{(!agendaFaces.usuarioMaster || !agendaFaces.colaboradorSolicitante) and agendaFaces.agenda.id != null}">
+				
+					<ui:include src="/pages/agenda/include_dialog_agenda_resposta.xhtml" />
+				
+				</p:outputPanel>
+		  		
+				<p:outputPanel rendered="#{(!agendaFaces.usuarioMaster || !agendaFaces.colaboradorSolicitante) and agendaFaces.agenda.id == null}">
+				
+					<h:outputText value="Você não possui permissão para criar uma Agenda" style="margin-top: 20px"/><br/>
+					<p:commandButton type="button" value="Fechar" onclick="dlgAgenda.hide();" style="margin-top: 20px" />
+				
+				</p:outputPanel>
+
+			</p:outputPanel>
+			
+		</p:dialog>
+		
+		<p:remoteCommand name="addAudiencia" oncomplete="dlgAudiencia.show()" update="opDialogAudiencia"/>
+		
+		<p:dialog id="dialogAudiencia" header="Cadastro de Audiência" widgetVar="dlgAudiencia" width="700" modal="true">
+		
+			<ui:param name="mbean" value="#{agendaFaces}" />
+			
+			<p:outputPanel id="opDialogAudiencia" rendered="#{agendaFaces.processoAudienciaUtil != null}">
+			
+				<h:panelGrid columns="2" columnClasses="coluna50_2, coluna50_3">
+						
+					<p:outputPanel style="width:100%">
+					
+						<h:panelGrid columns="1" columnClasses="coluna100" style="width:100%">
+			
+							<p:outputLabel for="numeroProcessoAudiencia" value="Processo" />
+							<p:inputText id="numeroProcessoAudiencia" value="#{agendaFaces.processoAudienciaUtil.audiencia.processoNumero.numero}" readonly="true" />
+					  		
+				  		</h:panelGrid>
+				  		
+				  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:95%">
+				  		
+						  	<p:outputLabel for="dataAudienciaAudiencia" value="Data da Audiência" />
+				  			<p:outputLabel for="flagClienteCienteAudiencia" value="Associado ciente" />
+				  		
+					  		<p:calendar id="dataAudienciaAudiencia" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data da Audiência: Campo obrigatório" value="#{agendaFaces.processoAudienciaUtil.audiencia.dataAudiencia}"/>
+					  		<p:selectBooleanCheckbox id="flagClienteCienteAudiencia" value="#{agendaFaces.processoAudienciaUtil.audiencia.flagClienteCiente}" />
+					  		
+					  		<p:outputLabel for="situacaoAudiencia" value="Situação" />
+						  	<p:outputLabel for="varaAudiencia" value="Vara" />
+						  	
+					  		<p:selectOneMenu id="situacaoAudiencia" required="true" requiredMessage="Situação: Campo obrigatório" value="#{agendaFaces.processoAudienciaUtil.audiencia.situacaoAudiencia.id}" style="width:95%">
+						  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+						  		<f:selectItems value="#{agendaFaces.situacoesAudiencias}" />
+						  	</p:selectOneMenu>
+					  		<p:selectOneMenu id="varaAudiencia" required="true" requiredMessage="Vara: Campo obrigatório" value="#{agendaFaces.processoAudienciaUtil.audiencia.vara.id}" style="width:94%">
+						  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+						  		<f:selectItems value="#{agendaFaces.varas}" />
+						  	</p:selectOneMenu>
+						  	
+					  	</h:panelGrid>
+					  	
+					  	<h:panelGrid columns="1" columnClasses="coluna100" style="width:100%">
+					  	
+						  	<p:outputPanel autoUpdate="true">
+								<h:outputLabel value="Advogado" /><br/>
+								<p:inputText required="true" requiredMessage="Advogado: Campo obrigatório" readonly="true" rendered="#{empty agendaFaces.processoAudienciaUtil.audiencia.audienciasAdvogados}" styleClass="coluna72"/>
+								<p:inputText value="#{agendaFaces.processoAudienciaUtil.audiencia.audienciasAdvogados}" required="true" requiredMessage="Advogado: Campo obrigatório" readonly="true" rendered="#{not empty agendaFaces.processoAudienciaUtil.audiencia.audienciasAdvogados}" styleClass="coluna72"/>
+								<p:commandButton type="button" value="Adicionar" icon="ui-icon-plus" onclick="dlgAdvogado2.show();" />
+							</p:outputPanel>
+						  	
+						  	<p:outputLabel for="descricaoAudiencia" value="Descrição" />
+							<p:inputTextarea id="descricaoAudiencia" value="#{agendaFaces.processoAudienciaUtil.audiencia.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" autoResize="false" rows="10" maxlength="500" styleClass="coluna90"/>
+							
+					  	</h:panelGrid>
+					  	
+					</p:outputPanel>
+					
+					<h:panelGrid columns="1" style="width:100%">
+			
+						<p:commandButton type="button" value="Adicionar Documento" icon="ui-icon-plus" onclick="dlgDocumentoTabAudiencia.show();" update="pgCategoriaDocumentoTabAudiencia" />
+					
+						<ui:include src="/pages/processo/include_grid_tab_audiencia_documentos.xhtml" />
+				  	
+				  	</h:panelGrid>
+				
+				</h:panelGrid>
+				
+			</p:outputPanel>
+			
+		</p:dialog>
+	
+	</h:form>
+
+</ui:component>

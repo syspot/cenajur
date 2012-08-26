@@ -25,6 +25,8 @@ public class TipoAgenda extends TSActiveRecordAb<TipoAgenda>{
 	private Long id;
 	
 	private String descricao;
+	
+	private String css;
 
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -40,6 +42,14 @@ public class TipoAgenda extends TSActiveRecordAb<TipoAgenda>{
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public String getCss() {
+		return css;
+	}
+
+	public void setCss(String css) {
+		this.css = css;
 	}
 
 	@Override
