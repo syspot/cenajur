@@ -282,6 +282,6 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 	}
 	
 	public Audiencia obterPorAgenda(Agenda agenda){
-		return super.get(" from Audiencia a where a.agenda.id = ? ", agenda.getId());
+		return super.get(" select a from Audiencia a left outer join fetch a.documentos d where a.agenda.id = ? ", agenda.getId());
 	}
 }

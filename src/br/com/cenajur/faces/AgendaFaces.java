@@ -21,6 +21,7 @@ import org.primefaces.model.ScheduleModel;
 import br.com.cenajur.model.Agenda;
 import br.com.cenajur.model.AgendaColaborador;
 import br.com.cenajur.model.Audiencia;
+import br.com.cenajur.model.AudienciaAdvogado;
 import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.ProcessoNumero;
 import br.com.cenajur.model.SituacaoProcesso;
@@ -128,6 +129,12 @@ public class AgendaFaces {
 			return null;
 		}
 		
+		if(this.agenda.isTipoAudiencia() && TSUtil.isEmpty(this.agenda.getProcessoNumero())){
+			context.addCallbackParam("sucesso", false);
+			CenajurUtil.addErrorMessage("Processo: Campo obrigatório");
+			return null;
+		}
+		
 		this.agenda.setColaboradorSolicitante(this.colaboradorConectado);
 		
 		context.addCallbackParam("sucesso", true);
@@ -179,14 +186,28 @@ public class AgendaFaces {
 			
 			Audiencia audiencia = new Audiencia().obterPorAgenda(this.agendaColaboradorSelecionado.getAgenda());
 			
-			if(TSUtil.isEmpty(audiencia)){
+			this.processoAudienciaUtil = new ProcessoAudienciaUtil(this.agendaColaboradorSelecionado.getAgenda().getProcessoNumero().getProcesso());
+			this.processoAudienciaUtil.getAudiencia().setProcessoNumero(this.agendaColaboradorSelecionado.getAgenda().getProcessoNumero());
 			
-				this.processoAudienciaUtil = new ProcessoAudienciaUtil(this.agendaColaboradorSelecionado.getAgenda().getProcessoNumero().getProcesso());
+			if(TSUtil.isEmpty(audiencia)){
+				
+				AudienciaAdvogado audienciaAdvogado;
+				
+				for(AgendaColaborador agendaColaborador : this.agendaColaboradorSelecionado.getAgenda().getAgendasColaboradores()){
+					
+					audienciaAdvogado = new AudienciaAdvogado();
+					audienciaAdvogado.setAdvogado(agendaColaborador.getColaborador());
+					audienciaAdvogado.setAudiencia(this.processoAudienciaUtil.getAudiencia());
+					
+					this.processoAudienciaUtil.getAudiencia().getAudienciasAdvogados().add(audienciaAdvogado);
+					
+				}
+				
 				this.processoAudienciaUtil.getAudiencia().setAgenda(this.agendaColaboradorSelecionado.getAgenda());
+				this.processoAudienciaUtil.getAudiencia().setDataAudiencia(this.agendaColaboradorSelecionado.getAgenda().getDataInicial());
 				
 			} else{
 				
-				audiencia.setAgenda(this.agendaColaboradorSelecionado.getAgenda());
 				this.processoAudienciaUtil.setAudiencia(audiencia);
 				
 			}
@@ -197,9 +218,28 @@ public class AgendaFaces {
 			
 		}
 		
-		this.agendaColaboradorSelecionado.update();
-		CenajurUtil.addInfoMessage("Operação realizada com sucesso");
+		return null;
+	}
+	
+	public String salvarAudiencia() throws TSApplicationException{
 		
+		if(TSUtil.isEmpty(this.processoAudienciaUtil.getAudiencia().getId())){
+			
+			this.processoAudienciaUtil.cadastrarAudiencia();
+			
+		} else{
+			
+			this.processoAudienciaUtil.alterarAudiencia();
+			
+		}
+		
+		this.agendaColaboradorSelecionado.update();
+		
+		return null;
+	}
+	
+	public String limparAgendasColaboradores(){
+		this.agenda.getAgendasColaboradores().clear();
 		return null;
 	}
 	

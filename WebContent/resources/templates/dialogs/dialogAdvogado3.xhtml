@@ -7,14 +7,14 @@
 
 	<ui:param name="mbeanPesquisa" value="${colaboradorPesquisaFaces}" />
 	<ui:param name="mbeanColaboradorAcao" value="${agendaFaces}" />
-	<ui:param name="nomeDialog" value="dlgColaborador2" />
+	<ui:param name="nomeDialog" value="dlgAdvogado3" />
+	<ui:param name="buscaAdvogado" value="#{true}" />
 	<ui:param name="metodoAdicao" value="addAgendaColaborador" />
 	<ui:param name="colaboradorSelecionado" value="colaboradorSelecionado" />
-	
 
 	<h:form>
 		
-		<p:dialog id="dialogColaborador2" header="Pesquisa de Colaborador" widgetVar="dlgColaborador2" width="550" height="350" modal="true">
+		<p:dialog id="dialogAdvogado3" header="Pesquisa de Advogados" widgetVar="dlgAdvogado3" width="550" height="350" modal="true">
 	  
 	  		<ui:include src="/resources/templates/includes/include_dialog_colaborador.xhtml" />
 			  			

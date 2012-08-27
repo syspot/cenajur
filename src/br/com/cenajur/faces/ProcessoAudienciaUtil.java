@@ -40,6 +40,10 @@ public class ProcessoAudienciaUtil {
 	private DocumentoAudiencia documentoAudienciaSelecionado;
 	private Colaborador advogadoSelecionado;
 
+	public ProcessoAudienciaUtil() {
+
+	}
+	
 	public ProcessoAudienciaUtil(Processo processo) {
 		setCrudModel(processo);
 		setCategoriaDocumento(new CategoriaDocumento());

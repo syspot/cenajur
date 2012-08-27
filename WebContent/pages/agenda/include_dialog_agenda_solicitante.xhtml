@@ -16,6 +16,7 @@
 		<p:selectOneMenu id="tipoAgenda" value="#{agendaFaces.agenda.tipoAgenda.id}" required="true" requiredMessage="Tipo de Agenda: Campo obrigatório">
 			<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 			<f:selectItems value="#{agendaFaces.tiposAgendas}" />
+			<p:ajax event="change" update="pgColaboradorAgenda, dtAgendasColaboradores" listener="#{agendaFaces.limparAgendasColaboradores}"/>
 		</p:selectOneMenu>
 		<p:calendar id="dataInicioAgenda" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data: Campo obrigatório" value="#{agendaFaces.agenda.dataInicial}" />
 		<p:calendar id="dataFimAgenda" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data: Campo obrigatório" value="#{agendaFaces.agenda.dataFinal}" />
@@ -33,37 +34,44 @@
 	
 	</h:panelGrid>
 
-	<h:panelGrid columns="2" columnClasses="coluna50_3, coluna50_3">
-		<p:commandButton type="button" value="Add Colaborador" onclick="dlgColaborador2.show();" style="margin-top: 10px; margin-right: 10px"/>
+	<h:panelGrid id="pgColaboradorAgenda" columns="2" columnClasses="coluna50_3, coluna50_3">
+		<p:commandButton type="button" value="Add Colaborador" onclick="dlgColaborador2.show();" style="margin-top: 10px; margin-right: 10px" rendered="#{!agendaFaces.agenda.tipoAudiencia}"/>
+		<p:commandButton type="button" value="Add Colaborador" onclick="dlgAdvogado3.show();" style="margin-top: 10px; margin-right: 10px" rendered="#{agendaFaces.agenda.tipoAudiencia}"/>
 		<h:panelGrid columns="1">
 			<p:outputLabel for="flagGeralAgenda" value="Geral" />
 			<p:selectBooleanCheckbox id="flagGeralAgenda" value="#{agendaFaces.agenda.flagGeral}" />
 		</h:panelGrid>
 	</h:panelGrid>
 	
-	<p:dataTable id="dtAgendasColaboradores" value="#{agendaFaces.agenda.agendasColaboradores}" var="agendaColaborador"
-				emptyMessage="Nenhum colaborador adicionado" style="width:98%">
-		
-		<p:column headerText="Nome" styleClass="coluna20">
-			<h:outputText value="#{agendaColaborador.colaborador.apelido}" />
-		</p:column>
-		
-		<p:column headerText="Mensagem individual" styleClass="coluna75">
-			<p:inputText value="#{agendaColaborador.descricao}" maxlength="200" styleClass="coluna97"/>
-		</p:column>
-		
-		<p:column headerText="Status" styleClass="coluna5">
-			<h:outputText value="#{agendaColaborador.status}" title="#{agendaColaborador.textoResposta}" styleClass="#{agendaColaborador.css}" />
-		</p:column>
-		
-		<p:column headerText="Excluir" styleClass="coluna5">
-			<p:commandLink action="#{agendaFaces.removerAgendaColaborador}" oncomplete="atualizarAgendasColaboradores();" process="@this" icon="delete16" global="false">
-			<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
-				<f:setPropertyActionListener target="#{agendaFaces.agendaColaboradorSelecionado}" value="#{agendaColaborador}" />
-			</p:commandLink>
-		</p:column>
+	<p:outputPanel autoUpdate="true">
 	
-	</p:dataTable>
+		<p:dataTable id="dtAgendasColaboradores" value="#{agendaFaces.agenda.agendasColaboradores}" var="agendaColaborador"
+					emptyMessage="Nenhum colaborador adicionado" style="width:98%">
+			
+			<p:column headerText="Nome" styleClass="coluna20">
+				<h:outputText value="#{agendaColaborador.colaborador.apelido}" />
+			</p:column>
+			
+			<p:column headerText="Mensagem individual" styleClass="coluna75">
+				<p:inputText value="#{agendaColaborador.descricao}" maxlength="200" styleClass="coluna97">
+					<p:ajax event="blur" global="false"/>
+				</p:inputText>
+			</p:column>
+			
+			<p:column headerText="Status" styleClass="coluna5">
+				<h:outputText value="#{agendaColaborador.status}" title="#{agendaColaborador.textoResposta}" styleClass="#{agendaColaborador.css}" />
+			</p:column>
+			
+			<p:column headerText="Excluir" styleClass="coluna5">
+				<p:commandLink action="#{agendaFaces.removerAgendaColaborador}" oncomplete="atualizarAgendasColaboradores();" process="@this" icon="delete16" global="false">
+				<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+					<f:setPropertyActionListener target="#{agendaFaces.agendaColaboradorSelecionado}" value="#{agendaColaborador}" />
+				</p:commandLink>
+			</p:column>
+		
+		</p:dataTable>
+		
+	</p:outputPanel>
 		
 	<p:commandButton value="Salvar" action="#{agendaFaces.salvar}" oncomplete="handleRequestFaces('dialogAgenda', dlgAgenda, args)" update="opDialogAgenda" style="margin-top: 10px" />
 	
