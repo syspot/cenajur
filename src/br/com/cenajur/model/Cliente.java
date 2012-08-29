@@ -27,6 +27,11 @@ import br.com.topsys.util.TSUtil;
 @Table(name = "clientes")
 public class Cliente extends TSActiveRecordAb<Cliente>{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8123932933312312633L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="clientes_id")
 	@SequenceGenerator(name="clientes_id", sequenceName="clientes_id_seq")
@@ -138,6 +143,12 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	
 	@Column(name = "flag_associado")
 	private Boolean flagAssociado;
+	
+	@ManyToOne
+	private Plano plano;
+	
+	@Column(name = "data_processamento")
+	private Date dataProcessamento;
 	
 	@Transient
 	private byte[] bytesImagem;
@@ -473,6 +484,22 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		this.caminhoImagem = caminhoImagem;
 	}
 	
+	public Plano getPlano() {
+		return plano;
+	}
+
+	public void setPlano(Plano plano) {
+		this.plano = plano;
+	}
+
+	public Date getDataProcessamento() {
+		return dataProcessamento;
+	}
+
+	public void setDataProcessamento(Date dataProcessamento) {
+		this.dataProcessamento = dataProcessamento;
+	}
+
 	public String getTipo(){
 		return getFlagAssociado() ? "Associado" : "Dependente";
 	}
@@ -599,6 +626,10 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		
 		return super.find(query.toString(), "nome", this.obterCondicionalParans().toArray());
 		
+	}
+	
+	public List<Cliente> pesquisarClientesGeracaoFatura(){
+		return super.findBySQL(" select c from Cliente where c.dataProcessamento < CURRENT_DATE ");
 	}
 	
 }

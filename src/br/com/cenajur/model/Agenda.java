@@ -168,8 +168,7 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 		
 		query.append(" select distinct a from Agenda a left outer join fetch a.agendasColaboradores ac where 1 = 1 ");
 		
-		query.append(" and ( (day(a.dataInicial) = ? and month(a.dataInicial) = ? and year(a.dataInicial) = ?) ");
-		query.append(" or (day(a.dataFinal) = ? and month(a.dataFinal) = ? and year(a.dataFinal) = ? ) )");
+		query.append(" and a.dataInicial between ? and ? ");
 		
 		if(!colaborador.getFlagPermissaoAgenda()){
 			
@@ -179,8 +178,8 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 		
 		List<Object> params = new ArrayList<Object>();
 		
-		params.addAll(CenajurUtil.obterParamsDataAtual(dataInicial));
-		params.addAll(CenajurUtil.obterParamsDataAtual(dataFinal));
+		params.add(dataInicial);
+		params.add(dataFinal);
 		
 		if(!colaborador.getFlagPermissaoAgenda()){
 			

@@ -3,7 +3,7 @@
   <display-name>Cenajur</display-name>
   <context-param>
     <param-name>primefaces.THEME</param-name>
-    <param-value>afterwork</param-value>
+    <param-value>casablanca</param-value>
   </context-param>
   <welcome-file-list>
     <welcome-file>/pages/login.xhtml</welcome-file>

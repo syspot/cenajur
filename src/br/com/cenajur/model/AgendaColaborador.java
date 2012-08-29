@@ -1,5 +1,7 @@
 package br.com.cenajur.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -128,6 +130,10 @@ public class AgendaColaborador extends TSActiveRecordAb<AgendaColaborador>{
 
 	public AgendaColaborador obterPorAgendaColaborador(Agenda agenda, Colaborador colaborador){
 		return super.get(" from AgendaColaborador ac where ac.agenda.id = ? and ac.colaborador.id = ? ", agenda.getId(), colaborador.getId());
+	}
+	
+	public List<AgendaColaborador> perquisarPorAgenda(Agenda agenda){
+		return super.find(" from AgendaColaborador ac where ac.agenda.id = ? ", null, agenda.getId());
 	}
 
 }

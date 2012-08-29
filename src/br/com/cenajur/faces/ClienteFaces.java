@@ -25,6 +25,7 @@ import br.com.cenajur.model.EstadoCivil;
 import br.com.cenajur.model.Graduacao;
 import br.com.cenajur.model.Lotacao;
 import br.com.cenajur.model.MotivoCancelamento;
+import br.com.cenajur.model.Plano;
 import br.com.cenajur.model.Processo;
 import br.com.cenajur.model.ProcessoNumero;
 import br.com.cenajur.model.TipoCategoria;
@@ -47,6 +48,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	private List<SelectItem> tiposPagamentos;
 	private List<SelectItem> motivosCancelamentos;
 	private List<SelectItem> bancos;
+	private List<SelectItem> planos;
 	private List<SelectItem> graduacoes;
 	private List<SelectItem> categoriasDocumentos;
 	
@@ -72,6 +74,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		this.tiposPagamentos = super.initCombo(new TipoPagamento().findAll("descricao"), "id", "descricao");
 		this.motivosCancelamentos = super.initCombo(new MotivoCancelamento().findAll("descricao"), "id", "descricao");
 		this.bancos = super.initCombo(new Banco().findAll("descricao"), "id", "descricao");
+		this.planos = super.initCombo(new Plano(Boolean.TRUE).findByModel("descricao"), "id", "descricao");
 		this.graduacoes = super.initCombo(new Graduacao().findAll("descricao"), "id", "descricao");
 		this.categoriasDocumentos = this.initCombo(getCategoriaDocumento().findByModel("descricao"), "id", "descricao");
 	}
@@ -85,6 +88,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		getCrudModel().setBanco(new Banco());
 		getCrudModel().setGraduacao(new Graduacao());
 		getCrudModel().setTipoPagamento(new TipoPagamento());
+		getCrudModel().setPlano(new Plano());
 		getCrudModel().setFlagAtivo(Boolean.TRUE);
 		getCrudModel().setFlagStatusPM(Boolean.TRUE);
 		getCrudModel().setFlagAssociado(Boolean.TRUE);
@@ -344,6 +348,14 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 
 	public void setBancos(List<SelectItem> bancos) {
 		this.bancos = bancos;
+	}
+
+	public List<SelectItem> getPlanos() {
+		return planos;
+	}
+
+	public void setPlanos(List<SelectItem> planos) {
+		this.planos = planos;
 	}
 
 	public List<SelectItem> getGraduacoes() {

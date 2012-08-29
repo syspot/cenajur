@@ -36,6 +36,7 @@
  		<mapping class="br.com.cenajur.model.DocumentoProcesso" />
  		<mapping class="br.com.cenajur.model.Estado" />
  		<mapping class="br.com.cenajur.model.EstadoCivil" />
+ 		<mapping class="br.com.cenajur.model.Faturamento" />
  		<mapping class="br.com.cenajur.model.Graduacao" />
  		<mapping class="br.com.cenajur.model.Grupo" />
  		<mapping class="br.com.cenajur.model.Lotacao" />
@@ -47,6 +48,7 @@
  		<mapping class="br.com.cenajur.model.ParteContraria" />
  		<mapping class="br.com.cenajur.model.Permissao" />
  		<mapping class="br.com.cenajur.model.PermissaoGrupo" />
+ 		<mapping class="br.com.cenajur.model.Plano" />
  		<mapping class="br.com.cenajur.model.Processo" />
  		<mapping class="br.com.cenajur.model.ProcessoCliente" />
  		<mapping class="br.com.cenajur.model.ProcessoNumero" />

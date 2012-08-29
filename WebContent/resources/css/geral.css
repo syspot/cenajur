@@ -1116,3 +1116,11 @@ ui-icon.delete {
 .mensagemNaoLida{
 	font-weight: bold;
 }
+
+.cancelado{
+	background-color:red !important;
+}
+
+.pago{
+	background-color:#32CD32 !important;
+}

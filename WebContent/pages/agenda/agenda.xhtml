@@ -11,7 +11,7 @@
 		
 			<h:form>
   
-			    <p:schedule value="#{agendaFaces.eventModel}" widgetVar="myschedule">
+			    <p:schedule value="#{agendaFaces.eventModel}" widgetVar="myschedule" timeFormat="HH:mm">
 			  
 			        <p:ajax event="dateSelect" listener="#{agendaFaces.onDateSelect}" oncomplete="atualizarDialogAgenda(); dlgAgenda.show()" />  
 			        <p:ajax event="eventSelect" listener="#{agendaFaces.onEventSelect}" oncomplete="atualizarDialogAgenda(); dlgAgenda.show()" />  

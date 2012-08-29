@@ -75,7 +75,7 @@ public class AgendaFaces {
 	
 	public void iniciarSchedule(){
 		
-		List<Agenda> agendas = new Agenda().pesquisarPorDataColaborador(CenajurUtil.getDiaAtual(), CenajurUtil.getDiaAmanha(), this.colaboradorConectado);
+		List<Agenda> agendas = new Agenda().pesquisarPorDataColaborador(CenajurUtil.getMesAtual(), CenajurUtil.getMesProximo(), this.colaboradorConectado);
 		
 		for(Agenda agenda : agendas){
 		
@@ -109,13 +109,25 @@ public class AgendaFaces {
         return null;
     }
     
-    public String onEventMove(ScheduleEntryMoveEvent event) {  
-        CenajurUtil.addInfoMessage("Evento movido - Dia:" + event.getDayDelta() + ", Minuto:" + event.getMinuteDelta());  
+    public String onEventMove(ScheduleEntryMoveEvent event) {
+    	
+    	this.agenda = (Agenda) event.getScheduleEvent().getData();
+    	
+    	if(!this.isUsuarioMaster()){
+			this.agendaColaboradorSelecionado = new AgendaColaborador().obterPorAgendaColaborador(this.agenda, this.colaboradorConectado);
+		}
+    	
         return null;
-    }  
+    }
       
-    public String onEventResize(ScheduleEntryResizeEvent event) {  
-    	CenajurUtil.addInfoMessage("Evento modificado - Dia:" + event.getDayDelta() + ", Minuto:" + event.getMinuteDelta());  
+    public String onEventResize(ScheduleEntryResizeEvent event) {
+
+    	this.agenda = (Agenda) event.getScheduleEvent().getData();
+    	
+    	if(!this.isUsuarioMaster()){
+			this.agendaColaboradorSelecionado = new AgendaColaborador().obterPorAgendaColaborador(this.agenda, this.colaboradorConectado);
+		}
+    	
         return null;
     }
 	
@@ -129,10 +141,22 @@ public class AgendaFaces {
 			return null;
 		}
 		
-		if(this.agenda.isTipoAudiencia() && TSUtil.isEmpty(this.agenda.getProcessoNumero())){
-			context.addCallbackParam("sucesso", false);
-			CenajurUtil.addErrorMessage("Processo: Campo obrigatório");
-			return null;
+		if(this.agenda.isTipoAudiencia()){
+			
+			if(TSUtil.isEmpty(this.agenda.getProcessoNumero())){
+				context.addCallbackParam("sucesso", false);
+				CenajurUtil.addErrorMessage("Processo: Campo obrigatório");
+				return null;
+			}
+			
+			if(TSUtil.isEmpty(this.agenda.getAgendasColaboradores())){
+				context.addCallbackParam("sucesso", false);
+				CenajurUtil.addErrorMessage("Colaborador: Campo obrigatório para Audiência");
+				return null;	
+			}
+			
+			this.agenda.setFlagGeral(Boolean.FALSE);
+			
 		}
 		
 		this.agenda.setColaboradorSolicitante(this.colaboradorConectado);
@@ -192,6 +216,8 @@ public class AgendaFaces {
 			if(TSUtil.isEmpty(audiencia)){
 				
 				AudienciaAdvogado audienciaAdvogado;
+				this.agendaColaboradorSelecionado.getAgenda().setAgendasColaboradores(
+						this.agendaColaboradorSelecionado.perquisarPorAgenda(this.agendaColaboradorSelecionado.getAgenda()));
 				
 				for(AgendaColaborador agendaColaborador : this.agendaColaboradorSelecionado.getAgenda().getAgendasColaboradores()){
 					
@@ -215,6 +241,8 @@ public class AgendaFaces {
 		} else{
 			
 			context.addCallbackParam("criarAudiencia", false);
+			this.agendaColaboradorSelecionado.update();
+			CenajurUtil.addInfoMessage("operação realizada com sucesso");
 			
 		}
 		
@@ -232,7 +260,7 @@ public class AgendaFaces {
 			this.processoAudienciaUtil.alterarAudiencia();
 			
 		}
-		
+				
 		this.agendaColaboradorSelecionado.update();
 		
 		return null;

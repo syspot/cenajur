@@ -17,6 +17,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.util.PDFTextStripper;
 import org.primefaces.model.UploadedFile;
 
+import br.com.cenajur.model.Plano;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.exception.TSSystemException;
 import br.com.topsys.file.TSFile;
@@ -85,6 +86,19 @@ public class CenajurUtil {
 	
 	public static Date getDiaAtual(){
 		Calendar c = Calendar.getInstance();
+		return c.getTime();
+	}
+	
+	public static Date getMesAtual(){
+		Calendar c = Calendar.getInstance();
+		c.set(Calendar.DAY_OF_MONTH, 1);
+		return c.getTime();
+	}
+	
+	public static Date getMesProximo(){
+		Calendar c = Calendar.getInstance();
+		c.set(Calendar.DAY_OF_MONTH, 1);
+		c.add(Calendar.MONTH, 1);
 		return c.getTime();
 	}
 	
@@ -198,4 +212,32 @@ public class CenajurUtil {
 		params.add(calendar.get(Calendar.YEAR));
 		return params;
 	}
+
+	public static Double tratarDouble(Double valor) {
+
+		if (!TSUtil.isEmpty(valor) && valor.equals(0.0)) {
+			valor = null;
+		}
+		
+		return valor;
+	}
+	
+	public static Integer obterAnoAtual(){
+		Calendar c = Calendar.getInstance();
+		return c.get(Calendar.YEAR);
+	}
+	
+	
+	public static Integer obterMesAtual(){
+		Calendar c = Calendar.getInstance();
+		return c.get(Calendar.MONTH + 1);
+	}
+	
+	public static Date alterarDataProcessamento(Plano plano, Date data){
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.DAY_OF_YEAR, plano.getDiasDuracao());
+		
+		return c.getTime();
+	}
+	
 }
