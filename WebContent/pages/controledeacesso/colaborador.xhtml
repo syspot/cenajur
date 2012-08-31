@@ -23,7 +23,7 @@
 		  		<p:inputText id="email" required="true" requiredMessage="E-mail: Campo obrigatório" validatorMessage="E-mail inválido" value="#{mbeanModel.email}" maxlength="50" styleClass="coluna95">
 		  			<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" for="email"/>
 		  		</p:inputText>
-		  		<p:inputText id="apelido" value="#{mbeanModel.apelido}" maxlength="30" styleClass="coluna95"/>
+		  		<p:inputText id="apelido" required="true" requiredMessage="Apelido: Campo obrigatório" value="#{mbeanModel.apelido}" maxlength="30" styleClass="coluna95"/>
 		  	
 	  		</h:panelGrid>
 	  		

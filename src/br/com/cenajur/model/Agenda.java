@@ -15,8 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
-import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.Constantes;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
@@ -60,6 +60,13 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 	@ManyToOne
 	@JoinColumn(name = "colaborador_solicitante_id")
 	private Colaborador colaboradorSolicitante;
+	
+	@ManyToOne
+	@JoinColumn(name = "colaborador_atualizacao_id")
+	private Colaborador colaboradorAtualizacao;
+	
+	@Transient
+	private Colaborador colaboradorBusca;
 
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -133,6 +140,22 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 		this.colaboradorSolicitante = colaboradorSolicitante;
 	}
 	
+	public Colaborador getColaboradorAtualizacao() {
+		return colaboradorAtualizacao;
+	}
+
+	public void setColaboradorAtualizacao(Colaborador colaboradorAtualizacao) {
+		this.colaboradorAtualizacao = colaboradorAtualizacao;
+	}
+
+	public Colaborador getColaboradorBusca() {
+		return colaboradorBusca;
+	}
+
+	public void setColaboradorBusca(Colaborador colaboradorBusca) {
+		this.colaboradorBusca = colaboradorBusca;
+	}
+
 	public boolean isTipoAudiencia(){
 		return Constantes.TIPO_AGENDA_AUDIENCIA.equals(getTipoAgenda().getId());
 	}
@@ -162,7 +185,7 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 		return true;
 	}
 
-	public List<Agenda> pesquisarPorDataColaborador(Date dataInicial, Date dataFinal, Colaborador colaborador) {
+	public List<Agenda> pesquisarAgendas(Date dataInicial, Date dataFinal) {
 		
 		StringBuilder query = new StringBuilder();
 		
@@ -170,7 +193,7 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 		
 		query.append(" and a.dataInicial between ? and ? ");
 		
-		if(!colaborador.getFlagPermissaoAgenda()){
+		if(!TSUtil.isEmpty(colaboradorBusca) && !TSUtil.isEmpty(colaboradorBusca.getId())){
 			
 			query.append(" and (ac.colaborador.id = ? or a.flagGeral = true ) ");
 			
@@ -181,9 +204,9 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 		params.add(dataInicial);
 		params.add(dataFinal);
 		
-		if(!colaborador.getFlagPermissaoAgenda()){
+		if(!TSUtil.isEmpty(colaboradorBusca) && !TSUtil.isEmpty(colaboradorBusca.getId())){
 			
-			params.add(colaborador.getId());
+			params.add(colaboradorBusca.getId());
 			
 		}
 		

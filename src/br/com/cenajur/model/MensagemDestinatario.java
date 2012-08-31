@@ -13,10 +13,16 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
+import br.com.topsys.util.TSUtil;
 
 @Entity
 @Table(name = "mensagens_destinatarios")
 public class MensagemDestinatario extends TSActiveRecordAb<MensagemDestinatario>{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8613379124373416638L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="mensagens_destinatarios_id")
@@ -125,11 +131,19 @@ public class MensagemDestinatario extends TSActiveRecordAb<MensagemDestinatario>
 		
 		query.append(" from MensagemDestinatario md where md.destinatario.id = ? and md.flagAtivo = true");
 		
-		List<Object> param = new ArrayList<Object>();
+		if(!TSUtil.isEmpty(flagLida)){
+			query.append(" and md.flagLida = ? ");
+		}
 		
-		param.add(destinatario.getId());
+		List<Object> params = new ArrayList<Object>();
 		
-		return super.find(query.toString(), "md.mensagem.data desc", param.toArray());
+		params.add(destinatario.getId());
+		
+		if(!TSUtil.isEmpty(flagLida)){
+			params.add(flagLida);
+		}
+		
+		return super.find(query.toString(), "md.mensagem.data desc", params.toArray());
 	}
 	
 	public MensagemDestinatario obterPorMensagemColaborador(Mensagem mensagem, Colaborador destinatario) {

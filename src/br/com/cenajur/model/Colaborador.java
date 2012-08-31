@@ -105,6 +105,10 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 	public Colaborador(TipoColaborador tipoColaborador) {
 		this.tipoColaborador = tipoColaborador;
 	}
+	
+	public Colaborador(Boolean flagAtivo) {
+		this.flagAtivo = flagAtivo;
+	}
 
 	public Long getId() {
 		return TSUtil.tratarLong(id);

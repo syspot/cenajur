@@ -5,18 +5,40 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core">
 	
-	<p:tabView id="tabview" dynamic="false">
-
 		<p:tab id="tabAgenda" title="Agenda" >
 		
 			<h:form>
-  
-			    <p:schedule value="#{agendaFaces.eventModel}" widgetVar="myschedule" timeFormat="HH:mm">
+				
+				<p:fieldset style="margin-bottom: 20px;">
+				
+					<h:panelGrid columns="3" columnClasses="coluna20, coluna30, coluna50" style="width:30%">
+					
+						<p:outputLabel for="buscaIndividual" value="Individual" />
+						<p:outputLabel for="colaboradorBusca" value="Colaborador" />
+						<br/>
+						
+						<p:selectBooleanCheckbox id="buscaIndividual" value="#{agendaFaces.buscaIndividual}">
+							<p:ajax event="change" listener="#{agendaFaces.mudarStatusBusca}" update="opComboColaborador" />
+						</p:selectBooleanCheckbox>
+						<p:outputPanel id="opComboColaborador">
+							<p:selectOneMenu id="colaboradorBusca" value="#{agendaFaces.agendaBusca.colaboradorBusca.id}" disabled="#{agendaFaces.buscaIndividual}">
+								<f:selectItem itemLabel="Todos" itemValue="" />
+								<f:selectItems value="#{agendaFaces.colaboradores}" />
+							</p:selectOneMenu>
+						</p:outputPanel>
+						
+						<p:commandButton value="Atualizar" icon="ui-icon-refresh" action="#{agendaFaces.atualizarSchedule}" oncomplete="myschedule.update()" style="width: 100px;" />
+					
+					</h:panelGrid>
+					
+				</p:fieldset>
+				
+			    <p:schedule value="#{agendaFaces.lazyEventModel}" widgetVar="myschedule" allDaySlot="false" draggable="false" resizable="false" view="agendaWeek" axisFormat="HH:00">
 			  
-			        <p:ajax event="dateSelect" listener="#{agendaFaces.onDateSelect}" oncomplete="atualizarDialogAgenda(); dlgAgenda.show()" />  
-			        <p:ajax event="eventSelect" listener="#{agendaFaces.onEventSelect}" oncomplete="atualizarDialogAgenda(); dlgAgenda.show()" />  
-			        <p:ajax event="eventMove" listener="#{agendaFaces.onEventMove}" />  
-			        <p:ajax event="eventResize" listener="#{agendaFaces.onEventResize}" />  
+			        <p:ajax event="dateSelect" listener="#{agendaFaces.onDateSelect}" oncomplete="atualizarDialogAgenda();" global="false"/>  
+			        <p:ajax event="eventSelect" listener="#{agendaFaces.onEventSelect}" oncomplete="atualizarDialogAgenda();" global="false"/>  
+			        <p:ajax event="eventMove" listener="#{agendaFaces.onEventMove}" oncomplete="atualizarDialogAgenda();" global="false" />  
+			        <p:ajax event="eventResize" listener="#{agendaFaces.onEventResize}" oncomplete="atualizarDialogAgenda();" global="false" />  
 			  
 			    </p:schedule>  
 			  
@@ -24,6 +46,4 @@
 			
 		</p:tab>
 		
-	</p:tabView>
-  	
 </ui:composition>

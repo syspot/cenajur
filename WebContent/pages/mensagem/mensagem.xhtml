@@ -11,22 +11,41 @@
 		
 		  	<h:form id="formMensagem">
 		  	
-		  		<p:commandButton value="Nova Mensagem" oncomplete="dlgMensagem.show();" style="margin-bottom: 10px; margin-top:10px">
-		  			<f:setPropertyActionListener target="#{mensagemFaces.flagEnviar}" value="#{true}" />
-		  		</p:commandButton>
+		  		<p:fieldset>
 		  		
-		  		<p:commandButton value="Atualizar" ajax="false" action="#{mensagemFaces.pesquisarMensagens}" style="margin-bottom: 10px; margin-top:10px" />
+			  		<p:commandButton value="Nova Mensagem" icon="novo" oncomplete="dlgMensagem.show();" style="width: 150px; margin-bottom: 10px; margin-top:10px">
+			  			<f:setPropertyActionListener target="#{mensagemFaces.flagEnviar}" value="#{true}" />
+			  		</p:commandButton>
+			  		
+			  		<p:commandButton value="Atualizar" icon="ui-icon-refresh" ajax="false" action="#{mensagemFaces.pesquisarMensagens}" style="width: 100px; margin-bottom: 10px; margin-top:10px; margin-left: 10px" />
 		  		
-		  		<p:tabView id="tabviewMensagens">
+		  		</p:fieldset>
+		  		
+		  		<p:tabView id="tabviewMensagens" style="margin-top: 10px">
 		  		
 		  			<p:tab id="tabMensagemRecebida" title="Recebidas">
 						
-						<p:poll interval="60" listener="#{mensagemFaces.pesquisarMensagens}" update="dgMensagem" process="@this" global="false" />
+						<p:poll interval="120" listener="#{mensagemFaces.pesquisarMensagens}" update="dgMensagem" process="@this" global="false" />
 		  			
 		  				<p:remoteCommand name="abrirModelMensagem" oncomplete="dlgViewMensagem.show();" update="pgMensagem, dgMensagem" process="@this" global="false" />
-		  				
 		  				<p:remoteCommand name="atualizarMensagensRecebidas" process="@this" global="false" update="dgMensagem"/>
-		  		
+		  				
+		  				<p:fieldset>
+		  				
+			  				<h:panelGrid style="width:20%">
+			  				
+				  				<p:outputLabel for="flagLida" value="Não Lidas" />
+				  				<p:selectOneMenu id="flagLida" value="#{mensagemFaces.statusBuscaLida}" style="width:95%">
+							  		<f:selectItem itemLabel="Todas" itemValue="#{0}" />
+							  		<f:selectItem itemLabel="Lidas" itemValue="#{1}" />
+							  		<f:selectItem itemLabel="Não Lidas" itemValue="#{2}" />
+							  		<p:ajax event="change" listener="#{mensagemFaces.pesquisarMensagens}" oncomplete="atualizarMensagensRecebidas()" global="false" />
+							  	</p:selectOneMenu>
+			  				
+			  				</h:panelGrid>
+	  					
+	  					</p:fieldset>
+	  					
 					    <p:dataGrid id="dgMensagem" var="mensagemDestinatario" value="#{mensagemFaces.mensagensDestinatariosRecebidas}" columns="3"  
 					        rows="12" paginator="true"  paginatorAlwaysVisible="false" emptyMessage="Nenhuma mensagem encontrada"
 					        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
@@ -133,6 +152,8 @@
 			</h:form>
 			
 		</p:tab>
+		
+		<ui:include src="/pages/agenda/agenda.xhtml" />
 		
 	</p:tabView>
   	

@@ -39,8 +39,14 @@ public class MensagemFaces{
 	
 	private Integer tabIndex;
 	
+	private Mensagem mensagemBusca;
+	private MensagemDestinatario mensagemDestinatarioBusca;
+	private int statusBuscaLida;
+	
 	@PostConstruct
 	protected void init() {
+		this.mensagemBusca = new Mensagem();
+		this.mensagemDestinatarioBusca = new MensagemDestinatario();
 		this.colaboradorConectado = ColaboradorUtil.obterColaboradorConectado();
 		this.clearFields();
 	}
@@ -57,9 +63,20 @@ public class MensagemFaces{
 		this.qtdMensagensNaoLidas = new MensagemDestinatario().obterQtdNaoLidas(colaboradorConectado);
 	}
 	
+	private void tratarStatusLida(){
+		
+		switch(statusBuscaLida){
+			case 1: this.mensagemDestinatarioBusca.setFlagLida(Boolean.TRUE); break;
+			case 2: this.mensagemDestinatarioBusca.setFlagLida(Boolean.FALSE); break;
+			default: this.mensagemDestinatarioBusca.setFlagLida(null); break;
+		}
+		
+	}
+	
 	public String pesquisarMensagens(){
-		this.mensagensDestinatariosRecebidas = new MensagemDestinatario().pesquisarPorColaborador(colaboradorConectado);
-		this.mensagensEnviadas = new Mensagem().pesquisarPorColaborador(this.colaboradorConectado);
+		tratarStatusLida();
+		this.mensagensDestinatariosRecebidas = this.mensagemDestinatarioBusca.pesquisarPorColaborador(colaboradorConectado);
+		this.mensagensEnviadas = this.mensagemBusca.pesquisarPorColaborador(this.colaboradorConectado);
 		setTabIndex(1);
 		return null;
 	}
@@ -191,6 +208,22 @@ public class MensagemFaces{
 
 	public void setTabIndex(Integer tabIndex) {
 		this.tabIndex = tabIndex;
+	}
+
+	public MensagemDestinatario getMensagemDestinatarioBusca() {
+		return mensagemDestinatarioBusca;
+	}
+
+	public void setMensagemDestinatarioBusca(MensagemDestinatario mensagemDestinatarioBusca) {
+		this.mensagemDestinatarioBusca = mensagemDestinatarioBusca;
+	}
+
+	public int getStatusBuscaLida() {
+		return statusBuscaLida;
+	}
+
+	public void setStatusBuscaLida(int statusBuscaLida) {
+		this.statusBuscaLida = statusBuscaLida;
 	}
 	
 }

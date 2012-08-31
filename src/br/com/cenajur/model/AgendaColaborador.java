@@ -41,6 +41,13 @@ public class AgendaColaborador extends TSActiveRecordAb<AgendaColaborador>{
 	
 	@Column(name = "flag_concluido")
 	private Boolean flagConcluido;
+	
+	public AgendaColaborador() {
+	}
+	
+	public AgendaColaborador(Colaborador colaborador) {
+		this.colaborador = colaborador;
+	}
 
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -96,6 +103,11 @@ public class AgendaColaborador extends TSActiveRecordAb<AgendaColaborador>{
 	
 	public String getCss(){
 		return getFlagConcluido() ? "situacaoAtiva" : "situacaoSuspensa";
+	}
+	
+	@Override
+	public String toString() {
+		return this.colaborador.getApelido();
 	}
 
 	@Override

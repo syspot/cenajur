@@ -25,6 +25,7 @@ import br.com.cenajur.model.Processo;
 import br.com.cenajur.model.ProcessoCliente;
 import br.com.cenajur.model.ProcessoNumero;
 import br.com.cenajur.model.ProcessoParteContraria;
+import br.com.cenajur.model.SituacaoAudiencia;
 import br.com.cenajur.model.SituacaoProcesso;
 import br.com.cenajur.model.SituacaoProcessoCliente;
 import br.com.cenajur.model.SituacaoProcessoParteContraria;
@@ -96,7 +97,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		this.situacoesProcessosPartesContrarias = this.initCombo(new SituacaoProcessoParteContraria().findAll("descricao"), "id", "descricao");
 		this.advogados = this.initCombo(new Colaborador().findAllAdvogados(), "id", "apelido");
 		this.tiposAndamentosProcessos = this.initCombo(new TipoAndamentoProcesso().findAll("descricao"), "id", "descricao");
-		this.situacoesAudiencias = this.initCombo(new SituacaoProcesso().findAll("descricao"), "id", "descricao");
+		this.situacoesAudiencias = this.initCombo(new SituacaoAudiencia().findAll("descricao"), "id", "descricao");
 		this.categoriasDocumentos = this.initCombo(getCategoriaDocumento().findByModel("descricao"), "id", "descricao");
 		this.turnos = this.initCombo(new Turno().findAll(), "id", "descricao");
 	}

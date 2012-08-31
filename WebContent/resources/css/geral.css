@@ -412,19 +412,25 @@ img.right {
     font-weight: bold;
 }
 
-.laranja {
+.laranja, .laranja .fc-event-skin{
     background-color: darkorange !important;
     background-image: none !important;
     color: #000000 !important;
 }
 
-.vermelho {
+.vermelho, .vermelho .fc-event-skin{
     background-color: palegoldenrod  !important;
     background-image: none !important;
     color: #000000 !important;
 }
 
-.verde {
+.cinza, .cinza .fc-event-skin{
+    background-color:  #696969 !important;
+    background-image: none !important;
+    color: #FFFFFF !important;
+}
+
+.verde, .verde .fc-event-skin{
     background-color: powderblue  !important;
     background-image: none !important;
     color: #000000 !important;
@@ -1064,6 +1070,13 @@ ui-icon.delete {
     background-position: 0 0;
 }
 
+.ui-icon-refresh {
+	height:24px !important;
+    width:24px !important;
+    background-image: url("../images/refresh_16x16.gif") !important;
+    background-position: 0 0;
+}
+
 .editar {  
     background-image: url("../images/checkmark.png") !important;  
 }
@@ -1101,16 +1114,19 @@ ui-icon.delete {
 	background-color:#FF4500 !important;
 }
 
-.tipoTarefa{
+.tipoTarefa, .tipoTarefa .fc-event-skin{
 	background-color:#DEB887 !important;
+	color: #000000 !important;
 }
 
-.tipoCompromisso{
+.tipoCompromisso, .tipoCompromisso .fc-event-skin{
 	background-color:#BFEFFF !important;
+	color: #000000 !important;
 }
 
-.tipoAudiencia{
+.tipoAudiencia, .tipoAudiencia .fc-event-skin{
 	background-color:#EEDD82 !important;
+	color: #000000 !important;
 }
 
 .mensagemNaoLida{

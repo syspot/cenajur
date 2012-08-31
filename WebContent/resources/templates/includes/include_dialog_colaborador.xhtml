@@ -35,7 +35,7 @@
   		</p:column>
 	
 		<p:column headerText="Adicionar" styleClass="coluna10" style="text-align:center;">
-			<p:commandLink action="#{mbeanColaboradorAcao[metodoAdicao]}" process="@form" global="false" onclick="#{nomeDialog}.hide()">
+			<p:commandLink action="#{mbeanColaboradorAcao[metodoAdicao]}" process="@form" global="false" onclick="#{nomeDialog}.hide()" oncomplete="#{atualizar}">
 				<h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
 				<f:setPropertyActionListener target="#{mbeanColaboradorAcao[colaboradorSelecionado]}" value="#{colaborador}" />
 			</p:commandLink>

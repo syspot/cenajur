@@ -27,18 +27,22 @@ public class GerarFaturamentoJob {
 			
 			for(Cliente cliente : clientes){
 				
-				faturamento = new Faturamento();
-				
-				faturamento.setCliente(cliente);
-				faturamento.setAno(CenajurUtil.obterAnoAtual());
-				faturamento.setMes(CenajurUtil.obterMesAtual());
-				faturamento.setDataProcessamento(cliente.getDataProcessamento());
-				faturamento.setFlagCancelado(Boolean.FALSE);
-				faturamento.setFlagPago(Boolean.FALSE);
-				faturamento.setPlano(cliente.getPlano());
-				faturamento.setValor(cliente.getPlano().getValor());
-				
-				faturamento.save();
+				if(cliente.getFlagAtivo()){
+					
+					faturamento = new Faturamento();
+					
+					faturamento.setCliente(cliente);
+					faturamento.setAno(CenajurUtil.obterAnoAtual());
+					faturamento.setMes(CenajurUtil.obterMesAtual());
+					faturamento.setDataProcessamento(cliente.getDataProcessamento());
+					faturamento.setFlagCancelado(Boolean.FALSE);
+					faturamento.setFlagPago(Boolean.FALSE);
+					faturamento.setPlano(cliente.getPlano());
+					faturamento.setValor(cliente.getPlano().getValor());
+					
+					faturamento.save();
+					
+				}
 				
 				cliente.setDataProcessamento(CenajurUtil.alterarDataProcessamento(cliente.getPlano(), cliente.getDataProcessamento()));
 				cliente.update();

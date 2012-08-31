@@ -73,3 +73,13 @@ function handleRequestActionAgenda(idDialog, widgerVar, args){
 	}  
 	
 }
+
+function handleRequestFacesAtualizaAgenda(idDialog, widgerVar, args){
+	if(args.validationFailed || !args.sucesso) {      	
+		jQuery(idDialog).effect("shake", { times:3 }, 100);
+	} else {  
+		widgerVar.hide();
+		myschedule.update();
+	}  
+	
+}

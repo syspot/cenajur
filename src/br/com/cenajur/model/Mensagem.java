@@ -128,7 +128,7 @@ public class Mensagem extends TSActiveRecordAb<Mensagem>{
 		
 		param.add(remetente.getId());
 		
-		return super.find(query.toString(), "m.data", param.toArray());
+		return super.find(query.toString(), "m.data desc", param.toArray());
 	}
 		
 }

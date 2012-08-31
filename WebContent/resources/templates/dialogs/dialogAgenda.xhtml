@@ -9,39 +9,39 @@
 	<h:form>
 		
 		<ui:param name="mbean" value="${agendaFaces}" />
-		<p:remoteCommand name="atualizarDialogAgenda" process="@this" update="opDialogAgenda" global="false"/>
-		<p:remoteCommand name="atualizarAgendasColaboradores" process="@this" update="dtAgendasColaboradores" global="false"/>
 		
-		<p:dialog id="dialogAgenda" header="Cadastro de Agenda" widgetVar="dlgAgenda" width="700" height="430" modal="true">
+		<p:remoteCommand name="atualizarDialogAgenda" process="@this" update="opDialogAgenda, opAgendasColaboradores" oncomplete="dlgAgenda.show();" global="false"/>
+		<p:remoteCommand name="atualizarAgendasColaboradores" process="@this" update="opAgendasColaboradores"/>
+		
+		<p:dialog id="dialogAgenda" header="Cadastro de Agenda" widgetVar="dlgAgenda" width="720" height="430" modal="true">
 	  
 	  		<p:ajax event="close" listener="#{agendaFaces.limpar}" update="opDialogAgenda"/>
 	  		
 	  		<p:outputPanel id="opDialogAgenda" style="width:100%">
 	  		
-	  			<p:outputPanel rendered="#{agendaFaces.usuarioMaster and agendaFaces.colaboradorSolicitante}">
+	  			<p:outputPanel id="opDialogAgendaSolicitante" rendered="#{agendaFaces.usuarioMaster and agendaFaces.agendaColaboradorSelecionado.id == null}">
 	  			
 			  		<ui:include src="/pages/agenda/include_dialog_agenda_solicitante.xhtml" />
 			  	
 		  		</p:outputPanel>
 		  		
-				<p:outputPanel rendered="#{(!agendaFaces.usuarioMaster || !agendaFaces.colaboradorSolicitante) and agendaFaces.agenda.id != null}">
+				<p:outputPanel rendered="#{(agendaFaces.usuarioMaster and agendaFaces.agendaColaboradorSelecionado.id != null) 
+									|| (agendaFaces.agenda.id != null and !agendaFaces.usuarioMaster)}">
 				
 					<ui:include src="/pages/agenda/include_dialog_agenda_resposta.xhtml" />
 				
 				</p:outputPanel>
 		  		
-				<p:outputPanel rendered="#{(!agendaFaces.usuarioMaster || !agendaFaces.colaboradorSolicitante) and agendaFaces.agenda.id == null}">
-				
-					<h:outputText value="Você não possui permissão para criar uma Agenda" style="margin-top: 20px"/><br/>
-					<p:commandButton type="button" value="Fechar" onclick="dlgAgenda.hide();" style="margin-top: 20px" />
-				
+				<p:outputPanel rendered="#{agendaFaces.agenda.id == null and !agendaFaces.usuarioMaster}">
+					<h:outputText value="Você não possui permissão para editar a Agenda" style="margin-top: 20px"/><br/>
+					<p:commandButton type="button" value="Fechar" onclick="atualizarAgenda();" style="margin-top: 20px" />
 				</p:outputPanel>
-
+					
 			</p:outputPanel>
 			
 		</p:dialog>
 		
-		<p:remoteCommand name="addAudiencia" oncomplete="dlgAudiencia.show()" update="opDialogAudiencia"/>
+		<p:remoteCommand name="addAudiencia" process="@this" oncomplete="dlgAudiencia.show()" update="opDialogAudiencia" global="false"/>
 		
 		<p:dialog id="dialogAudiencia" header="Cadastro de Audiência" widgetVar="dlgAudiencia" width="700" modal="true">
 		

@@ -9,6 +9,7 @@ import javax.faces.model.SelectItem;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 
+import br.com.cenajur.model.AgendaColaborador;
 import br.com.cenajur.model.Audiencia;
 import br.com.cenajur.model.AudienciaAdvogado;
 import br.com.cenajur.model.CategoriaDocumento;
@@ -39,6 +40,8 @@ public class ProcessoAudienciaUtil {
 	private DocumentoAudiencia documentoAudiencia;
 	private DocumentoAudiencia documentoAudienciaSelecionado;
 	private Colaborador advogadoSelecionado;
+	
+	private AgendaColaborador agendaColaboradorAux;
 
 	public ProcessoAudienciaUtil() {
 
@@ -278,6 +281,14 @@ public class ProcessoAudienciaUtil {
 
 	public void setAdvogadoSelecionado(Colaborador advogadoSelecionado) {
 		this.advogadoSelecionado = advogadoSelecionado;
+	}
+
+	public AgendaColaborador getAgendaColaboradorAux() {
+		return agendaColaboradorAux;
+	}
+
+	public void setAgendaColaboradorAux(AgendaColaborador agendaColaboradorAux) {
+		this.agendaColaboradorAux = agendaColaboradorAux;
 	}
 
 }

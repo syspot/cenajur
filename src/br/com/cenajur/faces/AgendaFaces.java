@@ -1,6 +1,7 @@
 package br.com.cenajur.faces;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -15,6 +16,7 @@ import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.ScheduleEntrySelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
+import org.primefaces.model.LazyScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
@@ -24,7 +26,7 @@ import br.com.cenajur.model.Audiencia;
 import br.com.cenajur.model.AudienciaAdvogado;
 import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.ProcessoNumero;
-import br.com.cenajur.model.SituacaoProcesso;
+import br.com.cenajur.model.SituacaoAudiencia;
 import br.com.cenajur.model.TipoAgenda;
 import br.com.cenajur.model.Vara;
 import br.com.cenajur.util.CenajurUtil;
@@ -37,14 +39,17 @@ import br.com.topsys.web.util.TSFacesUtil;
 @ManagedBean(name = "agendaFaces")
 public class AgendaFaces {
 	
+	private ScheduleModel lazyEventModel;
 	private ScheduleModel eventModel;
 	private ScheduleEvent event;
 
 	private List<SelectItem> tiposAgendas;
 	private List<SelectItem> varas;
 	private List<SelectItem> situacoesAudiencias;
+	private List<SelectItem> colaboradores;
 	
 	private Agenda agenda;
+	private Agenda agendaBusca;
 	
 	private ProcessoAudienciaUtil processoAudienciaUtil;
 	
@@ -54,15 +59,19 @@ public class AgendaFaces {
 	
 	private Colaborador colaboradorConectado;
 	
+	private boolean buscaIndividual;
+	
 	
 	@PostConstruct
 	protected void init() {
 		this.colaboradorConectado = ColaboradorUtil.obterColaboradorConectado();
 		this.eventModel = new DefaultScheduleModel();
 		this.event = new DefaultScheduleEvent();
+		this.agendaBusca = new Agenda();
+		this.agendaBusca.setColaboradorBusca(new Colaborador());
 		this.initCombo();
 		this.limpar();
-		this.iniciarSchedule();
+		this.atualizarSchedule();
 	}
 	
 	public String limpar(){
@@ -73,30 +82,63 @@ public class AgendaFaces {
 		return null;
 	}
 	
-	public void iniciarSchedule(){
+	@SuppressWarnings("serial")
+	public String atualizarSchedule(){
 		
-		List<Agenda> agendas = new Agenda().pesquisarPorDataColaborador(CenajurUtil.getMesAtual(), CenajurUtil.getMesProximo(), this.colaboradorConectado);
-		
-		for(Agenda agenda : agendas){
-		
-			eventModel.addEvent(new DefaultScheduleEvent(agenda.getTipoAgenda().getDescricao(), agenda.getDataInicial(), agenda.getDataFinal(), agenda));
-			
-		}
-		
+		this.lazyEventModel = new LazyScheduleModel() {  
+            
+            public void loadEvents(Date start, Date end) {
+                
+            	clear();
+            	
+            	List<Agenda> agendas = agendaBusca.pesquisarAgendas(start, end);
+            	
+            	AgendaColaborador agendaColaboradorAux = new AgendaColaborador();
+        		
+        		for(Agenda agenda : agendas){
+        			
+        			DefaultScheduleEvent dse = new DefaultScheduleEvent(agenda.getTipoAgenda().getDescricao() + ": " + CenajurUtil.obterDescricaoAgenda(agenda), agenda.getDataInicial(), agenda.getDataFinal(), agenda);
+        			
+        			agendaColaboradorAux.setAgenda(agenda);
+        			agendaColaboradorAux.setColaborador(colaboradorConectado);
+        			
+        			dse.setStyleClass(CenajurUtil.obterCssAgenda(agenda, agendaColaboradorAux));
+        				
+        			addEvent(dse);
+        			
+        		}
+                  
+            }     
+        };
+        
+        return null;
+        
 	}
 	
 	private void initCombo(){
 		this.tiposAgendas = TSFacesUtil.initCombo(new TipoAgenda().findAll("descricao"), "id", "descricao");
-		this.situacoesAudiencias = TSFacesUtil.initCombo(new SituacaoProcesso().findAll("descricao"), "id", "descricao");
+		this.situacoesAudiencias = TSFacesUtil.initCombo(new SituacaoAudiencia().findAll("descricao"), "id", "descricao");
 		this.varas = TSFacesUtil.initCombo(new Vara().findAll("descricao"), "id", "descricao");
+		this.colaboradores = TSFacesUtil.initCombo(new Colaborador(true).findByModel("apelido"), "id", "apelido");
 	}
 	
 	public String onEventSelect(ScheduleEntrySelectEvent selectEvent) {
 		
 		this.agenda = (Agenda) selectEvent.getScheduleEvent().getData();
 		
-		if(!this.isUsuarioMaster()){
+		if(this.isUsuarioMaster()){
+			
+			if(!this.isColaboradorSolicitante()){
+				
+				this.agendaColaboradorSelecionado = new AgendaColaborador().obterPorAgendaColaborador(this.agenda, this.colaboradorConectado);
+				
+			}
+			
+		} else{
+			
+			this.agenda = (Agenda) selectEvent.getScheduleEvent().getData();
 			this.agendaColaboradorSelecionado = new AgendaColaborador().obterPorAgendaColaborador(this.agenda, this.colaboradorConectado);
+			
 		}
 		
         return null;
@@ -111,10 +153,18 @@ public class AgendaFaces {
     
     public String onEventMove(ScheduleEntryMoveEvent event) {
     	
-    	this.agenda = (Agenda) event.getScheduleEvent().getData();
+    	RequestContext context = RequestContext.getCurrentInstance();
     	
-    	if(!this.isUsuarioMaster()){
-			this.agendaColaboradorSelecionado = new AgendaColaborador().obterPorAgendaColaborador(this.agenda, this.colaboradorConectado);
+    	if(this.isUsuarioMaster()){
+    		
+    		this.agenda = (Agenda) event.getScheduleEvent().getData();
+    		context.addCallbackParam("sucesso", true);
+			
+		} else{
+			
+			context.addCallbackParam("sucesso", false);
+			//CenajurUtil.addErrorMessage("Você não tem permissão para alterar uma agenda");
+			
 		}
     	
         return null;
@@ -122,23 +172,33 @@ public class AgendaFaces {
       
     public String onEventResize(ScheduleEntryResizeEvent event) {
 
-    	this.agenda = (Agenda) event.getScheduleEvent().getData();
+    	RequestContext context = RequestContext.getCurrentInstance();
     	
-    	if(!this.isUsuarioMaster()){
-			this.agendaColaboradorSelecionado = new AgendaColaborador().obterPorAgendaColaborador(this.agenda, this.colaboradorConectado);
+    	if(this.isUsuarioMaster()){
+    		
+    		context.addCallbackParam("sucesso", true);
+    		this.agenda = (Agenda) event.getScheduleEvent().getData();
+			
+		} else{
+			
+			context.addCallbackParam("sucesso", false);
+			//CenajurUtil.addErrorMessage("Você não tem permissão para alterar uma agenda");
+			
 		}
     	
         return null;
     }
-	
-	public String salvar() throws TSApplicationException{
+    
+    private boolean validaAgenda(){
+    	
+    	boolean erro = false;
+    	
+    	RequestContext context = RequestContext.getCurrentInstance();
 		
-		RequestContext context = RequestContext.getCurrentInstance();
-		
-		if(!this.agenda.getFlagGeral() && TSUtil.isEmpty(this.agenda.getAgendasColaboradores())){
+		if(!this.agenda.isTipoAudiencia() && !this.agenda.getFlagGeral() && TSUtil.isEmpty(this.agenda.getAgendasColaboradores())){
 			context.addCallbackParam("sucesso", false);
 			CenajurUtil.addErrorMessage("Colaborador: Campo obrigatório");
-			return null;
+			erro = true;
 		}
 		
 		if(this.agenda.isTipoAudiencia()){
@@ -146,27 +206,49 @@ public class AgendaFaces {
 			if(TSUtil.isEmpty(this.agenda.getProcessoNumero())){
 				context.addCallbackParam("sucesso", false);
 				CenajurUtil.addErrorMessage("Processo: Campo obrigatório");
-				return null;
+				erro = true;
 			}
 			
 			if(TSUtil.isEmpty(this.agenda.getAgendasColaboradores())){
 				context.addCallbackParam("sucesso", false);
 				CenajurUtil.addErrorMessage("Colaborador: Campo obrigatório para Audiência");
-				return null;	
+				erro = true;	
 			}
 			
 			this.agenda.setFlagGeral(Boolean.FALSE);
 			
 		}
 		
-		this.agenda.setColaboradorSolicitante(this.colaboradorConectado);
+		if(this.agenda.getDataInicial().after(this.agenda.getDataFinal())){
+			context.addCallbackParam("sucesso", false);
+			CenajurUtil.addErrorMessage("Data final não pode ser menor que data inicial");
+			erro = true;
+		}
 		
-		context.addCallbackParam("sucesso", true);
+		if(!erro){
+			context.addCallbackParam("sucesso", true);
+		}
+		
+		return erro;
+		
+    }
+	
+	public String salvarAgenda() throws TSApplicationException{
+		
+		if(validaAgenda()){
+			return null;
+		}
 		
 		if(TSUtil.isEmpty(this.agenda.getId())){
+			
+			this.agenda.setColaboradorSolicitante(this.colaboradorConectado);
 			this.agenda.save();
+			
 		} else {
+			
+			this.agenda.setColaboradorAtualizacao(this.colaboradorConectado);
 			this.agenda.update();
+			
 		}
 		
 		CenajurUtil.addInfoMessage("Operação realizada com sucesso");
@@ -212,6 +294,7 @@ public class AgendaFaces {
 			
 			this.processoAudienciaUtil = new ProcessoAudienciaUtil(this.agendaColaboradorSelecionado.getAgenda().getProcessoNumero().getProcesso());
 			this.processoAudienciaUtil.getAudiencia().setProcessoNumero(this.agendaColaboradorSelecionado.getAgenda().getProcessoNumero());
+			this.processoAudienciaUtil.setAgendaColaboradorAux(this.agendaColaboradorSelecionado);
 			
 			if(TSUtil.isEmpty(audiencia)){
 				
@@ -261,7 +344,18 @@ public class AgendaFaces {
 			
 		}
 				
-		this.agendaColaboradorSelecionado.update();
+		this.processoAudienciaUtil.getAgendaColaboradorAux().update();
+		
+		return null;
+	}
+
+	public String mudarStatusBusca(){
+		
+		if(this.buscaIndividual){
+			this.agendaBusca.getColaboradorBusca().setId(this.colaboradorConectado.getId());
+		} else{
+			this.agendaBusca.getColaboradorBusca().setId(null);
+		}
 		
 		return null;
 	}
@@ -273,6 +367,7 @@ public class AgendaFaces {
 	
 	public String removerAgendaColaborador(){
 		this.agenda.getAgendasColaboradores().remove(this.agendaColaboradorSelecionado);
+		this.agendaColaboradorSelecionado = new AgendaColaborador();
 		return null;
 	}
 	
@@ -281,7 +376,7 @@ public class AgendaFaces {
 	}
 	
 	public boolean isColaboradorSolicitante(){
-		return TSUtil.isEmpty(this.agenda.getId()) ? true : this.colaboradorConectado.equals(this.agenda.getColaboradorSolicitante());
+		return TSUtil.isEmpty(this.agenda.getId()) ? false : this.colaboradorConectado.equals(this.agenda.getColaboradorSolicitante());
 	}
 
 	public List<SelectItem> getTiposAgendas() {
@@ -308,6 +403,22 @@ public class AgendaFaces {
 		this.situacoesAudiencias = situacoesAudiencias;
 	}
 
+	public List<SelectItem> getColaboradores() {
+		return colaboradores;
+	}
+
+	public void setColaboradores(List<SelectItem> colaboradores) {
+		this.colaboradores = colaboradores;
+	}
+
+	public ScheduleModel getLazyEventModel() {
+		return lazyEventModel;
+	}
+
+	public void setLazyEventModel(ScheduleModel lazyEventModel) {
+		this.lazyEventModel = lazyEventModel;
+	}
+
 	public ScheduleModel getEventModel() {
 		return eventModel;
 	}
@@ -330,6 +441,14 @@ public class AgendaFaces {
 
 	public void setAgenda(Agenda agenda) {
 		this.agenda = agenda;
+	}
+
+	public Agenda getAgendaBusca() {
+		return agendaBusca;
+	}
+
+	public void setAgendaBusca(Agenda agendaBusca) {
+		this.agendaBusca = agendaBusca;
 	}
 
 	public Colaborador getColaboradorSelecionado() {
@@ -362,6 +481,14 @@ public class AgendaFaces {
 
 	public void setAgendaColaboradorSelecionado(AgendaColaborador agendaColaboradorSelecionado) {
 		this.agendaColaboradorSelecionado = agendaColaboradorSelecionado;
+	}
+
+	public boolean isBuscaIndividual() {
+		return buscaIndividual;
+	}
+
+	public void setBuscaIndividual(boolean buscaIndividual) {
+		this.buscaIndividual = buscaIndividual;
 	}
 	
 }
