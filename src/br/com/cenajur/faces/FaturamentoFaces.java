@@ -134,6 +134,11 @@ public class FaturamentoFaces extends CrudFaces<Faturamento> {
 		return null;
 	}
 	
+	public String gerarFaturamento() throws TSApplicationException{
+		new Cliente().gerarFaturamento();
+		return null;
+	}
+	
 	public String removerCliente(){
 		getCrudPesquisaModel().setCliente(null);
 		return null;

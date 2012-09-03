@@ -14,5 +14,6 @@ encoding//src/br/com/cenajur/faces/ClienteFaces.java=ISO-8859-1
 encoding//src/br/com/cenajur/faces/DocumentoFaces.java=ISO-8859-1
 encoding//src/br/com/cenajur/faces/DocumentoPesquisaFaces.java=ISO-8859-1
 encoding//src/br/com/cenajur/faces/MensagemFaces.java=ISO-8859-1
+encoding//src/br/com/cenajur/faces/RegrasBloqueioFaces.java=ISO-8859-1
 encoding//src/br/com/cenajur/jobs/GerarFaturamentoJob.java=ISO-8859-1
 encoding/<project>=UTF-8

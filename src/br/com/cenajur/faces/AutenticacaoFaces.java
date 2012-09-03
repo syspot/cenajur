@@ -7,12 +7,17 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import br.com.cenajur.model.AgendaColaborador;
 import br.com.cenajur.model.Colaborador;
+import br.com.cenajur.model.MensagemDestinatario;
 import br.com.cenajur.model.Menu;
 import br.com.cenajur.model.Permissao;
 import br.com.cenajur.model.PermissaoGrupo;
+import br.com.cenajur.model.RegrasBloqueio;
+import br.com.cenajur.model.TipoAgenda;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
+import br.com.cenajur.util.Constantes;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.faces.TSMainFaces;
 import br.com.topsys.web.util.TSFacesUtil;
@@ -32,6 +37,7 @@ public class AutenticacaoFaces extends TSMainFaces{
     private String nomeTela;
     private String currentFaces;
     private Long opcao;
+    private boolean flagBloqueado;
 
     
     public AutenticacaoFaces() {
@@ -48,6 +54,11 @@ public class AutenticacaoFaces extends TSMainFaces{
     }
 
     public String redirecionar() {
+    	
+    	if(isFlagBloqueado()){
+    		this.permissaoSelecionada = new Permissao(Constantes.PERMISSAO_MENSAGENS).getById();
+    		CenajurUtil.addErrorMessage("SISTEMA BLOQUEADO! Você possui mensagens não lidas ou Agenda não finalizada");
+    	}
     	
         this.removeObjectInSession(this.currentFaces);
         setTela(this.permissaoSelecionada.getUrl());
@@ -143,12 +154,58 @@ public class AutenticacaoFaces extends TSMainFaces{
         		
         	}
         	
+        	this.verificarBloqueioPorMensagem();
+        	this.verificarBloqueioPorTarefa();
+        	this.verificarBloqueioPorAudiencia();
+        	
         	return "entrar";
         }
         
         CenajurUtil.addErrorMessage("Dados inválidos!");
 
         return null;
+    }
+    
+    private void verificarBloqueioPorMensagem(){
+    	
+    	RegrasBloqueio rb = new RegrasBloqueio(Constantes.REGRA_BLOQUEIO_MENSAGEM).getById();
+    	
+    	List<MensagemDestinatario> mensagensNaoLidas = new MensagemDestinatario().perquisarMensagensNaoLidas(ColaboradorUtil.obterColaboradorConectado(), rb.getDiasBloqueio());
+    	
+		if(!TSUtil.isEmpty(mensagensNaoLidas)){
+			
+			this.flagBloqueado = true;
+			
+		}
+    		
+    }
+    
+    private void verificarBloqueioPorTarefa(){
+    	
+    	RegrasBloqueio rb = new RegrasBloqueio(Constantes.REGRA_BLOQUEIO_TAREFA).getById();
+    	
+    	List<AgendaColaborador> agendaTarefa = new AgendaColaborador().perquisarNaoFechadas(colaborador, rb.getDiasBloqueio(), new TipoAgenda(Constantes.TIPO_AGENDA_TAREFA));
+    	
+    	if(!TSUtil.isEmpty(agendaTarefa)){
+			
+			this.flagBloqueado = true;
+			
+		}
+
+    }
+    
+    private void verificarBloqueioPorAudiencia(){
+    	
+    	RegrasBloqueio rb = new RegrasBloqueio(Constantes.REGRA_BLOQUEIO_AUDIENCIA).getById();
+    	
+    	List<AgendaColaborador> agendaTarefa = new AgendaColaborador().perquisarNaoFechadas(colaborador, rb.getDiasBloqueio(), new TipoAgenda(Constantes.TIPO_AGENDA_AUDIENCIA));
+    	
+    	if(!TSUtil.isEmpty(agendaTarefa)){
+    		
+    		this.flagBloqueado = true;
+    		
+    	}
+    	
     }
     
     public String recuperarSenha(){
@@ -252,6 +309,14 @@ public class AutenticacaoFaces extends TSMainFaces{
 
 	public void setOpcao(Long opcao) {
 		this.opcao = opcao;
+	}
+
+	public boolean isFlagBloqueado() {
+		return flagBloqueado;
+	}
+
+	public void setFlagBloqueado(boolean flagBloqueado) {
+		this.flagBloqueado = flagBloqueado;
 	}
 
 }

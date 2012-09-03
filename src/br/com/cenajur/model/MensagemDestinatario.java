@@ -40,6 +40,13 @@ public class MensagemDestinatario extends TSActiveRecordAb<MensagemDestinatario>
 	
 	@Column(name = "flag_ativo")
 	private Boolean flagAtivo;
+	
+	public MensagemDestinatario() {
+	}
+	
+	public MensagemDestinatario(Boolean flagLida) {
+		this.flagLida = flagLida;
+	}
 
 	public Long getId() {
 		return id;
@@ -160,7 +167,11 @@ public class MensagemDestinatario extends TSActiveRecordAb<MensagemDestinatario>
 		return super.get(query.toString(), param.toArray());
 	}
 	
-	public int obterQtdNaoLidas(Colaborador destinatario){
-		return ((Long)getSession().createQuery("select count(*) from MensagemDestinatario md where md.flagLida = false and md.destinatario.id = " + destinatario.getId()).uniqueResult()).intValue();
+	public Integer obterQtdNaoLidas(Colaborador destinatario){
+		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, " select count(*) as qtd from mensagens_destinatarios md where md.flag_lida = false and md.destinatario_id = ? ", destinatario.getId())).getQtd();
+	}
+	
+	public List<MensagemDestinatario> perquisarMensagensNaoLidas(Colaborador colaborador, int dias){
+		return super.find(" from MensagemDestinatario md where md.flagLida = false and md.destinatario.id = ? and md.mensagem.data < CURRENT_DATE - ? ", null, colaborador.getId(), dias);
 	}
 }

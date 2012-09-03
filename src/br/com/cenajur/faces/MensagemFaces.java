@@ -60,7 +60,7 @@ public class MensagemFaces{
 	protected void clearFields() {
 		this.limpar();
 		this.pesquisarMensagens();
-		this.qtdMensagensNaoLidas = new MensagemDestinatario().obterQtdNaoLidas(colaboradorConectado);
+		this.qtdMensagensNaoLidas = new MensagemDestinatario().obterQtdNaoLidas(colaboradorConectado).intValue();
 	}
 	
 	private void tratarStatusLida(){

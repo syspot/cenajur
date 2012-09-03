@@ -16,6 +16,7 @@ public abstract class PesquisaFaces <T extends TSActiveRecordIf<T>>{
 	
 	private List<T> grid;
 	
+	@SuppressWarnings("unchecked")
 	private Class<T> modelClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	
 	public String limpar(){
@@ -47,6 +48,7 @@ public abstract class PesquisaFaces <T extends TSActiveRecordIf<T>>{
 		
 	}
 	
+	@SuppressWarnings("rawtypes")
 	protected final List<SelectItem> initCombo(Collection coll,String nomeValue,String nomeLabel) {
 		return TSFacesUtil.initCombo(coll, nomeValue, nomeLabel);
 	}

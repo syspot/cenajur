@@ -233,7 +233,7 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 		}
 		
 		if(!TSUtil.isEmpty(dataAudiencia)){
-			query.append(CenajurUtil.getParamData("a.dataAudiencia"));
+			query.append("and date(a.dataAudiencia) = date(?) ");
 		}
 		
 		if(!TSUtil.isEmpty(situacaoAudiencia) && !TSUtil.isEmpty(situacaoAudiencia.getId())){
@@ -259,7 +259,7 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 		}
 		
 		if(!TSUtil.isEmpty(dataAudiencia)){
-			params.addAll(CenajurUtil.obterParamsDataAtual(dataAudiencia));
+			params.add(dataAudiencia);
 		}
 		
 		if(!TSUtil.isEmpty(situacaoAudiencia) && !TSUtil.isEmpty(situacaoAudiencia.getId())){

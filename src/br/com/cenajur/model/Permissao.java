@@ -21,6 +21,11 @@ import br.com.topsys.util.TSUtil;
 @Table(name = "permissoes")
 public class Permissao extends TSActiveRecordAb<Permissao> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 814393364038640001L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="permissoes_id")
 	@SequenceGenerator(name="permissoes_id", sequenceName="permissoes_id_seq")
@@ -43,7 +48,13 @@ public class Permissao extends TSActiveRecordAb<Permissao> {
 	
 	@OneToMany(mappedBy="permissao")
 	private List<PermissaoGrupo> permissoesGrupos;
+
+	public Permissao() {
+	}
 	
+	public Permissao(Long id) {
+		this.id = id;
+	}
 
 	public Long getId() {
 		return TSUtil.tratarLong(id);

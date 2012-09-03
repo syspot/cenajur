@@ -1,5 +1,7 @@
+
 package br.com.cenajur.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,27 +13,28 @@ import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
 @Entity
-@Table(name = "tipos_agendas")
-public class TipoAgenda extends TSActiveRecordAb<TipoAgenda>{
+@Table(name = "regras_bloqueios")
+public class RegrasBloqueio extends TSActiveRecordAb<RegrasBloqueio>{
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 3599105288867670691L;
+	private static final long serialVersionUID = 5316982979712072845L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="tipos_agendas_id")
-	@SequenceGenerator(name="tipos_agendas_id", sequenceName="tipos_agendas_id_seq")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "regras_bloqueios_id")
+	@SequenceGenerator(name="regras_bloqueios_id", sequenceName="regras_bloqueios_id_seq")
 	private Long id;
 	
 	private String descricao;
+
+	@Column(name = "dias_bloqueio")
+	private Integer diasBloqueio;
 	
-	private String css;
-	
-	public TipoAgenda() {
+	public RegrasBloqueio() {
 	}
 	
-	public TipoAgenda(Long id) {
+	public RegrasBloqueio(Long id) {
 		this.id = id;
 	}
 
@@ -40,7 +43,7 @@ public class TipoAgenda extends TSActiveRecordAb<TipoAgenda>{
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		this.id = TSUtil.tratarLong(id);
 	}
 
 	public String getDescricao() {
@@ -51,12 +54,12 @@ public class TipoAgenda extends TSActiveRecordAb<TipoAgenda>{
 		this.descricao = descricao;
 	}
 
-	public String getCss() {
-		return css;
+	public Integer getDiasBloqueio() {
+		return TSUtil.tratarInteger(diasBloqueio);
 	}
 
-	public void setCss(String css) {
-		this.css = css;
+	public void setDiasBloqueio(Integer diasBloqueio) {
+		this.diasBloqueio = diasBloqueio;
 	}
 
 	@Override
@@ -75,7 +78,7 @@ public class TipoAgenda extends TSActiveRecordAb<TipoAgenda>{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TipoAgenda other = (TipoAgenda) obj;
+		RegrasBloqueio other = (RegrasBloqueio) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -83,6 +86,5 @@ public class TipoAgenda extends TSActiveRecordAb<TipoAgenda>{
 			return false;
 		return true;
 	}
-	
 	
 }

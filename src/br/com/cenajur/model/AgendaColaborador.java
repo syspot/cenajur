@@ -147,5 +147,9 @@ public class AgendaColaborador extends TSActiveRecordAb<AgendaColaborador>{
 	public List<AgendaColaborador> perquisarPorAgenda(Agenda agenda){
 		return super.find(" from AgendaColaborador ac where ac.agenda.id = ? ", null, agenda.getId());
 	}
-
+	
+	public List<AgendaColaborador> perquisarNaoFechadas(Colaborador colaborador, int dias, TipoAgenda tipoAgenda){
+		return super.find(" from AgendaColaborador ac where ac.colaborador.id = ? and ac.flagConcluido = false and ac.agenda.tipoAgenda.id = ? and ac.agenda.dataFinal < CURRENT_DATE - ? ", null, colaborador.getId(), tipoAgenda.getId(), dias);
+	}
+	
 }

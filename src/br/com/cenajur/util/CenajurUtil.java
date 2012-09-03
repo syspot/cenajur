@@ -110,6 +110,12 @@ public class CenajurUtil {
 		return c.getTime();
 	}
 	
+	public static Date getDataMenosDias(int qtdDias){
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.DAY_OF_MONTH, qtdDias);
+		return c.getTime();
+	}
+	
 	public static void criaArquivo(UploadedFile file, String arquivo) {
 		
 		try {
@@ -205,7 +211,7 @@ public class CenajurUtil {
 		return query.append("and day(").append(field).append(") = ? and month(").append(field).append(") = ? and year(").append(field).append(") = ?").toString();
 	}
 	
-	public static List<Object> obterParamsDataAtual(Date data){
+	public static List<Object> obterParamsDataAtual2(Date data){
 		List<Object> params = new ArrayList<Object>();
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(data);

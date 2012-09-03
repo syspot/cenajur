@@ -22,6 +22,7 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 	
 	private boolean flagAlterar;
 	
+	@SuppressWarnings("unchecked")
 	private Class<T> modelClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	
 	@Override

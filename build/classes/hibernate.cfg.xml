@@ -53,6 +53,7 @@
  		<mapping class="br.com.cenajur.model.ProcessoCliente" />
  		<mapping class="br.com.cenajur.model.ProcessoNumero" />
  		<mapping class="br.com.cenajur.model.ProcessoParteContraria" />
+ 		<mapping class="br.com.cenajur.model.RegrasBloqueio" />
  		<mapping class="br.com.cenajur.model.SituacaoAudiencia" />
  		<mapping class="br.com.cenajur.model.SituacaoProcesso" />
  		<mapping class="br.com.cenajur.model.SituacaoProcessoCliente" />
