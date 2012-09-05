@@ -58,7 +58,7 @@
 				  		<f:selectItem itemLabel="2014" itemValue="#{2014}" />
 				  	</p:selectOneMenu>
 	  				
-					<p:inputText id="valor" value="#{mbeanModel.valor}" required="true" requiredMessage="Valor: Campo obrigatório" maxlength="5" styleClass="coluna80"/>
+					<p:inputText id="valor" value="#{mbeanModel.valor}" onkeypress="return(MascaraMoeda(this,'','.',event))" required="true" requiredMessage="Valor: Campo obrigatório" maxlength="5" styleClass="coluna80"/>
 					
 					<p:selectBooleanCheckbox id="flagPago" value="#{mbeanModel.flagPago}" />
 				  	

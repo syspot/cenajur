@@ -248,4 +248,8 @@ public class Faturamento extends TSActiveRecordAb<Faturamento>{
 		return super.get(" from Faturamento f where f.flagCancelado = false and f.cliente.id = ? and f.mes = ? and f.ano = ?", getCliente().getId(), getMes(), getAno());
 	}
 	
+	public void gerarFaturamento(){
+		super.findBySQL(" select fc_gerar_faturamento()");
+	}
+	
 }

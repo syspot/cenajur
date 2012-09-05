@@ -628,8 +628,4 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		
 	}
 	
-	public void gerarFaturamento(){
-		super.find(" from Cliente c where c.dataProcessamento < CURRENT_DATE ", null);
-	}
-	
 }

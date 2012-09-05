@@ -17,10 +17,10 @@
 				<ui:param name="mbeanPesquisaModel" value="#{faturamentoFaces.crudPesquisaModel}" />
 				
 				<div align="right" style="width: 97.5%">
-					<p:commandButton value="Adicionar Manual" onclick="dlgFaturamento.show();" icon="novo" style="width: 150px; margin-left: 5px;">
+					<p:commandButton value="Adicionar Manual" oncomplete="dlgFaturamento.show();" icon="novo" style="width: 150px; margin-left: 5px;">
 			  			<f:setPropertyActionListener target="#{mbean.inserindo}" value="#{true}" />
 			  		</p:commandButton>
-					<p:commandButton value="Gerar Faturamento Mensal" action="#{mbean.gerarFaturamento}" style="width: 150px; margin-left: 5px;" />
+					<p:commandButton value="Gerar Faturamento Mensal" action="#{mbean.gerarFaturamento}" style="width: 180px; margin-left: 5px;" />
 				</div>
 		  	
 		  		<h:panelGrid style="width:50%">

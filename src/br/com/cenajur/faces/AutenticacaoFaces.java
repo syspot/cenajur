@@ -56,8 +56,18 @@ public class AutenticacaoFaces extends TSMainFaces{
     public String redirecionar() {
     	
     	if(isFlagBloqueado()){
-    		this.permissaoSelecionada = new Permissao(Constantes.PERMISSAO_MENSAGENS).getById();
-    		CenajurUtil.addErrorMessage("SISTEMA BLOQUEADO! Você possui mensagens não lidas ou Agenda não finalizada");
+    		
+    		this.flagBloqueado = false;
+    		
+    		this.verificarBloqueioPorMensagem();
+        	this.verificarBloqueioPorTarefa();
+        	this.verificarBloqueioPorAudiencia();
+        	
+        	if(isFlagBloqueado()){
+	    		this.permissaoSelecionada = new Permissao(Constantes.PERMISSAO_MENSAGENS).getById();
+	    		CenajurUtil.addErrorMessage("SISTEMA BLOQUEADO! Você possui mensagens não lidas ou Agenda não finalizada");
+        	}
+        	
     	}
     	
         this.removeObjectInSession(this.currentFaces);
