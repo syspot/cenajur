@@ -249,7 +249,11 @@ public class Faturamento extends TSActiveRecordAb<Faturamento>{
 	}
 	
 	public void gerarFaturamento(){
-		getSession().createSQLQuery("select cast(fc_gerar_faturamento() as text)").executeUpdate();
+		try{
+			getSession().createSQLQuery("select fc_gerar_faturamento()").executeUpdate();
+		}catch(Exception e){
+			// a function é executada, mas sobe exceção no retorno que deve ser abafada.
+		}
 	}
 	
 }
