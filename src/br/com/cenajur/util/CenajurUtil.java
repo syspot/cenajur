@@ -308,4 +308,42 @@ public class CenajurUtil {
 		
 	}
 	
+	public static boolean isDocumentoPdf(UploadedFile file){
+		return TSFile.obterExtensaoArquivo(obterNomeArquivo(file)).equalsIgnoreCase(".pdf");
+	}
+	
+	public static String getTsVectorBusca(String texto){
+		
+		StringBuilder textoFormatado = new StringBuilder();
+		StringBuilder textoFormatado2 = new StringBuilder();
+		
+		while(texto.contains("  ")){
+			texto = texto.replace("  ", " ");
+		}
+		
+		texto = texto.replace(";", ",");
+		
+		for(String str : texto.split(",")){
+			
+			textoFormatado.append("(" + str.trim() + ")|");
+			
+		}
+		
+		for(String str : textoFormatado.toString().split(" ")){
+			
+			textoFormatado2.append(str.trim() + "&");
+			
+		}
+		
+		String retorno = textoFormatado2.toString();
+		
+		while(retorno.endsWith("&") || retorno.endsWith("|")){
+			
+			retorno = retorno.substring(0, retorno.length()-1);
+			
+		}
+		
+		return retorno;
+	}
+	
 }

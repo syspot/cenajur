@@ -247,7 +247,11 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	public void enviarDocumento(FileUploadEvent event) {
 		getDocumentoProcesso().setDocumento(event.getFile());
 		getDocumentoProcesso().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
-		getDocumentoProcesso().setDescricaoBusca(CenajurUtil.getDescricaoPDF(event.getFile()));
+		
+		if(CenajurUtil.isDocumentoPdf(event.getFile())){
+			getDocumentoProcesso().setDescricaoBusca(CenajurUtil.getDescricaoPDF(event.getFile()));
+		}
+		
 	}
 	
 	public String addDocumento(){
@@ -335,8 +339,28 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		return null;
 	}
 	
-	public String removerNumeroProcesso(){
-		getCrudModel().getProcessosNumeros().remove(this.processoNumeroSelecionado);
+	public String removerNumeroProcesso() {
+
+		if(TSUtil.isEmpty(this.processoNumeroSelecionado.getId())){
+			
+			getCrudModel().getProcessosNumerosTemp().remove(this.processoNumeroSelecionado);
+			
+		} else{
+			
+			try {
+				
+				this.processoNumeroSelecionado.delete();
+				getCrudModel().getProcessosNumerosTemp().remove(this.processoNumeroSelecionado);
+				CenajurUtil.addInfoMessage("Remoção realizada com sucesso");
+				
+			} catch (TSApplicationException e) {
+				
+				this.addErrorMessageKey(e.getMessage());
+				
+			}
+			
+		}
+		
 		return null;
 	}
 	

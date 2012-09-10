@@ -3,7 +3,6 @@ package br.com.cenajur.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,6 +21,11 @@ import br.com.topsys.util.TSUtil;
 @Table(name = "processos_numeros")
 public class ProcessoNumero extends TSActiveRecordAb<ProcessoNumero>{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4095062268004085543L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="processos_numeros_id")
 	@SequenceGenerator(name="processos_numeros_id", sequenceName="processos_numeros_id_seq")
@@ -35,11 +39,11 @@ public class ProcessoNumero extends TSActiveRecordAb<ProcessoNumero>{
 	@Column(name = "flag_principal")
 	private Boolean flagPrincipal;
 	
-	@OneToMany(mappedBy = "processoNumero", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "processoNumero")
 	@org.hibernate.annotations.OrderBy(clause = "dataAndamento desc")
 	private List<AndamentoProcesso> andamentos;
 	
-	@OneToMany(mappedBy = "processoNumero", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "processoNumero")
 	@org.hibernate.annotations.OrderBy(clause = "dataAudiencia desc")
 	private List<Audiencia> audiencias;
 
@@ -61,6 +65,10 @@ public class ProcessoNumero extends TSActiveRecordAb<ProcessoNumero>{
 
 	public String getNumero() {
 		return numero;
+	}
+	
+	public String getNumeroFormatado() {
+		return TSUtil.isEmpty(numero) ? "" : numero;
 	}
 
 	public void setNumero(String numero) {
@@ -133,10 +141,8 @@ public class ProcessoNumero extends TSActiveRecordAb<ProcessoNumero>{
 
 	@Override
 	public String toString() {
-		return numero;
+		return getNumeroFormatado();
 	}
-	
-	
 	
 	@Override
 	public List<ProcessoNumero> findByModel(String... fieldsOrderBy) {

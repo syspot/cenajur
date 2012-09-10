@@ -189,7 +189,7 @@
 								    <h:panelGrid id="pgDialogViewAndamento" columns="1" columnClasses="coluna100" style="width:95%">
 									
 										<p:outputLabel for="numeroProcessoAndamentoView" value="Processo" />
-										<p:inputText id="numeroProcessoAndamentoView" value="#{clienteFaces.andamentoProcessoSelecionado.processo.processoNumeroPrincipal.numero}" readonly="true" />
+										<p:inputText id="numeroProcessoAndamentoView" value="#{clienteFaces.andamentoProcessoSelecionado.processoNumero.numero}" readonly="true" />
 								  		
 									  	<p:outputLabel for="dataAndamentoAndamentoView" value="Data do Andamento" />
 								  		<p:inputText id="dataAndamentoAndamentoView" value="#{clienteFaces.andamentoProcessoSelecionado.dataAndamento}" readonly="true">
@@ -249,7 +249,7 @@
 									    <h:panelGrid columns="1" columnClasses="coluna95">
 						  		
 											<p:outputLabel for="numeroProcessoAudienciaView" value="Processo" />
-											<p:inputText id="numeroProcessoAudienciaView" value="#{clienteFaces.audienciaSelecionada.processo.processoNumeroPrincipal.numero}" readonly="true" />
+											<p:inputText id="numeroProcessoAudienciaView" value="#{clienteFaces.audienciaSelecionada.processoNumero.numero}" readonly="true" />
 									  		
 										  	<p:outputLabel for="dataAudienciaAudienciaView" value="Data da Audiência" />
 									  		<p:inputText id="dataAudienciaAudienciaView" value="#{clienteFaces.audienciaSelecionada.dataAudiencia}" readonly="true">
@@ -271,7 +271,7 @@
 									  	<h:panelGrid columns="1" columnClasses="coluna100" style="width:95%">
 									  	
 										  	<p:outputLabel for="advogadoAudienciaView" value="Advogado" />
-									  		<p:inputText id="advogadoAudienciaView" value="#{clienteFaces.audienciaSelecionada.advogado.apelido}" readonly="true" style="width:97%" />
+									  		<p:inputText id="advogadoAudienciaView" value="#{clienteFaces.audienciaSelecionada.audienciasAdvogados}" readonly="true" style="width:97%" />
 										  	
 										  	<p:outputLabel for="descricaoAudienciaView" value="Descrição" />
 											<p:inputTextarea id="descricaoAudienciaView" value="#{clienteFaces.audienciaSelecionada.descricao}" readonly="true" autoResize="false" rows="10" maxlength="500" styleClass="coluna97"/>

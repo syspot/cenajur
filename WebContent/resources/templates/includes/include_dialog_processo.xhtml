@@ -45,17 +45,17 @@
   		<p:column headerText="Advogado">
   			<h:outputText value="#{processo.advogado.apelido}" />
   		</p:column>
-  	
+  		
   		<p:column headerText="Situação">
   			<h:outputText value="#{processo.situacaoProcesso.descricao}" />
   		</p:column>
   		
   		<p:column headerText="Adicionar" style="text-align:center;">
-			<p:commandLink action="#{mbeanPesquisa.obterNumeroProcesso}" oncomplete="#{nomeDialogProcessoNumero}.show();" rendered="#{not empty processo.processosNumeros and empty selecionarProcesso}">
+			<p:commandLink action="#{mbeanPesquisa.obterNumeroProcesso}" oncomplete="#{nomeDialogProcessoNumero}.show();" rendered="#{!processo.processoUnico}">
 				<h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
 				<f:setPropertyActionListener target="#{mbeanPesquisa.processoSelecionado}" value="#{processo}" />
 			</p:commandLink>
-			<p:commandLink action="#{mbeanProcessoAcao.addProcessoNumero}" oncomplete="#{nomeDialog}.hide();" rendered="#{empty processo.processosNumeros and empty selecionarProcesso}">
+			<p:commandLink action="#{mbeanProcessoAcao.addProcessoNumero}" oncomplete="#{nomeDialog}.hide();" rendered="#{processo.processoUnico}">
 				<h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
 				<f:setPropertyActionListener target="#{mbeanProcessoAcao.processoNumeroSelecionado}" value="#{processo.processoNumeroPrincipal}" />
 			</p:commandLink>

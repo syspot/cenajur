@@ -13,12 +13,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import br.com.cenajur.util.CenajurUtil;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
 @Entity
 @Table(name = "documentos")
 public class DocumentoPesquisa extends TSActiveRecordAb<DocumentoPesquisa>{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6849280530069013442L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="documentos_id")
@@ -130,21 +136,21 @@ public class DocumentoPesquisa extends TSActiveRecordAb<DocumentoPesquisa>{
 
 		StringBuilder query = new StringBuilder();
 		
-		query.append(" from DocumentoPesquisa dp where 1 = 1 ");
+		query.append(" select d.* from documentos d where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(descricaoBusca)){
-			query.append("and to_tsquery('PORTUGUESE', ?) @@ descricaoBusca ");
+			query.append("and d.descricao_busca @@ to_tsquery(?) ");
 		}
 		
 		List<Object> params = new ArrayList<Object>();
 		
 		if(!TSUtil.isEmpty(descricaoBusca)){
-			params.add(descricaoBusca);
+			params.add(CenajurUtil.getTsVectorBusca(descricaoBusca));
 		}
 		
-		query.append(" order by tipoCategoria.id ");
+		query.append(" order by d.tipo_categoria_id ");
 		
-		return super.find(query.toString(), null, params.toArray());
+		return super.findBySQL(query.toString(), params.toArray());
 	}
 	
 }

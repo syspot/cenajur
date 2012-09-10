@@ -17,8 +17,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.Where;
-
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.Constantes;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
@@ -27,6 +25,11 @@ import br.com.topsys.util.TSUtil;
 @Entity
 @Table(name = "processos")
 public class Processo extends TSActiveRecordAb<Processo>{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4629137037446817513L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="processos_id")
@@ -318,6 +321,10 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	public void setProcessosNumerosTemp(List<ProcessoNumero> processosNumerosTemp) {
 		this.processosNumerosTemp = processosNumerosTemp;
 	}
+	
+	public boolean isProcessoUnico(){
+		return (TSUtil.isEmpty(getProcessosNumeros()) || getProcessosNumeros().size() < 2);
+	}
 
 	@Override
 	public int hashCode() {
@@ -349,18 +356,18 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		
 		StringBuilder query = new StringBuilder();
 		
-		query.append(" select distinct p from Processo p left outer join p.processosNumeros pn where 1 = 1 ");
+		query.append(" select distinct p from Processo p left outer join fetch p.processosNumeros pn where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(processoNumeroPrincipal) && !TSUtil.isEmpty(processoNumeroPrincipal.getNumero())){
 			query.append(CenajurUtil.getParamSemAcento("pn.numero"));
 		}
 		
 		if(!TSUtil.isEmpty(dataAbertura)){
-			query.append(" and p.dataAbertura = ? ");
+			query.append(" and date(p.dataAbertura) = date(?) ");
 		}
 		
 		if(!TSUtil.isEmpty(dataAjuizamento)){
-			query.append(" and p.dataAjuizamento = ? ");
+			query.append(" and date(p.dataAjuizamento) = date(?) ");
 		}
 		
 		if(!TSUtil.isEmpty(tipoProcesso) && !TSUtil.isEmpty(tipoProcesso.getId())){
@@ -396,7 +403,7 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		}
 		
 		if(!TSUtil.isEmpty(dataArquivamento)){
-			query.append(" and p.dataArquivamento = ? ");
+			query.append(" and date(p.dataArquivamento) = date(?) ");
 		}
 		
 		if(!TSUtil.isEmpty(getLote())){

@@ -140,7 +140,6 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 		
 	}
 	
-	@Override
 	protected String detail() {
 
 		this.crudModel = this.crudModel.getById();

@@ -249,7 +249,12 @@ public class Faturamento extends TSActiveRecordAb<Faturamento>{
 	}
 	
 	public void gerarFaturamento(){
-		super.findBySQL(" select fc_gerar_faturamento()");
+		
+		//Query query = getSession().createQuery("insert into Faturamento (cliente.id, plano.id, dataProcessamento, valor, flagPago, flagCancelado, mes, ano)  (select c.id, c.plano.id, c.dataProcessamento, p.valor, false, false, 9, 2012 from Cliente c inner join Plano p where c.flagAtivo )");
+		
+		//int result = query.executeUpdate();
+				
+		//super.findBySQL(" select fc_gerar_faturamento()");
 	}
 	
 }

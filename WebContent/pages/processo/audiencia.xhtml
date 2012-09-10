@@ -136,7 +136,7 @@
   	
   		<p:column headerText="Advogado" styleClass="coluna30">
   			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
-	  			<h:outputText value="#{linha.advogado.apelido}" />
+	  			<h:outputText value="#{linha.audienciasAdvogados}" />
 				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
 			</p:commandLink>
   		</p:column>

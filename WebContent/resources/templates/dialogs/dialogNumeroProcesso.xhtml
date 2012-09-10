@@ -22,7 +22,7 @@
 					</p:column>
 					
 					<p:column headerText="Excluir" styleClass="coluna5">
-						<p:commandLink icon="delete16" global="false" action="#{mbean.removerNumeroProcesso}" process="@form">
+						<p:commandLink icon="delete16" global="false" action="#{mbean.removerNumeroProcesso}" process="@this">
 							<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
 							<f:setPropertyActionListener target="#{mbean.processoNumeroSelecionado}" value="#{processoNumero}" />
 						</p:commandLink>

@@ -130,7 +130,11 @@ public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 	public void enviarDocumento(FileUploadEvent event) {
 		getDocumentoAndamentoProcesso().setDocumento(event.getFile());
 		getDocumentoAndamentoProcesso().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
-		getDocumentoAndamentoProcesso().setDescricaoBusca(CenajurUtil.getDescricaoPDF(event.getFile()));
+		
+		if(CenajurUtil.isDocumentoPdf(event.getFile())){
+			getDocumentoAndamentoProcesso().setDescricaoBusca(CenajurUtil.getDescricaoPDF(event.getFile()));
+		}
+		
 	}
 		
 	public String addDocumento(){

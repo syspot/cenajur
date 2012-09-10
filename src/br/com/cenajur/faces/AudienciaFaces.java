@@ -25,7 +25,6 @@ import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
 import br.com.topsys.exception.TSApplicationException;
-import br.com.topsys.exception.TSSystemException;
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
 
@@ -96,7 +95,7 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 	}
 	
 	@Override
-	protected void posPersist() throws TSSystemException, TSApplicationException{
+	protected void posPersist() throws TSApplicationException{
 		
 		for(DocumentoAudiencia doc : getCrudModel().getDocumentos()){
 			
@@ -168,7 +167,10 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 	public void enviarDocumento(FileUploadEvent event) {
 		getDocumentoAudiencia().setDocumento(event.getFile());
 		getDocumentoAudiencia().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
-		getDocumentoAudiencia().setDescricaoBusca(CenajurUtil.getDescricaoPDF(event.getFile()));
+		
+		if(CenajurUtil.isDocumentoPdf(event.getFile())){
+			getDocumentoAudiencia().setDescricaoBusca(CenajurUtil.getDescricaoPDF(event.getFile()));
+		}
 	}
 		
 	public String addDocumento(){
