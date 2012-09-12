@@ -29,15 +29,19 @@ public class Constantes {
 	public static final Long REGRA_BLOQUEIO_TAREFA = 2L;
 	public static final Long REGRA_BLOQUEIO_AUDIENCIA = 3L;
 	
-	public static final String PASTA_UPLOAD_ARQUIVO = "E:\\arquivos\\";
-	//public static final String PASTA_UPLOAD_ARQUIVO = "/arquivos/";
-	public static final String PASTA_UPLOAD_IMAGEM = "E:\\imagens\\";
-	//public static final String PASTA_UPLOAD_IMAGEM = "/imagens/";
-	public static final String PASTA_UPLOAD_IMAGEM_TEMP = "E:\\imagens\\tmp/";
-	//public static final String PASTA_UPLOAD_IMAGEM_TEMP = "/imagens/tmp/";
-	public static final String PASTA_DOWNLOAD_ARQUIVO = "http://localhost:8080/arquivos/";
-	public static final String PASTA_DOWNLOAD_IMAGEM = "http://localhost:8080/imagens/";
-	public static final String PASTA_DOWNLOAD_IMAGEM_TMP = "http://localhost:8080/imagens/tmp/";
+	//public static final String PASTA_UPLOAD_ARQUIVO = "E:\\arquivos\\";
+	public static final String PASTA_UPLOAD_ARQUIVO = "/arquivos/";
+	//public static final String PASTA_UPLOAD_IMAGEM = "E:\\imagens\\";
+	public static final String PASTA_UPLOAD_IMAGEM = "/imagens/";
+	//public static final String PASTA_UPLOAD_IMAGEM_TEMP = "E:\\imagens\\tmp/";
+	public static final String PASTA_UPLOAD_IMAGEM_TEMP = "/imagens/tmp/";
+	
+	//public static final String PASTA_DOWNLOAD_ARQUIVO = "http://localhost:8080/arquivos/";
+	public static final String PASTA_DOWNLOAD_ARQUIVO = "http://177.70.17.250:8080/arquivos/";
+	//public static final String PASTA_DOWNLOAD_IMAGEM = "http://localhost:8080/imagens/";
+	public static final String PASTA_DOWNLOAD_IMAGEM = "http://177.70.17.250:8080/imagens/";
+	//public static final String PASTA_DOWNLOAD_IMAGEM_TMP = "http://localhost:8080/imagens/tmp/";
+	public static final String PASTA_DOWNLOAD_IMAGEM_TMP = "http://177.70.17.250:8080/imagens/tmp/";
 	
 	public static final String PASTA_ANDAMENTO_PROCESSO = "andamentos_processos\\";
 	public static final String PASTA_PROCESSO = "processos\\";

@@ -38,7 +38,7 @@ public class TipoColaborador extends TSActiveRecordAb<TipoColaborador>{
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		this.id = TSUtil.tratarLong(id);
 	}
 
 	public String getDescricao() {
