@@ -182,13 +182,13 @@
 	  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:50%">
 	  		
 	  			<p:outputLabel for="plano" value="Plano" />
-			  	<p:outputLabel for="dataProcessamento" value="Data de Processamento" />
+			  	<p:outputLabel for="diaVencimento" value="Dia de Vencimento" />
 			  	
 		  		<p:selectOneMenu id="plano" value="#{mbeanModel.plano.id}" required="true" requiredMessage="Plano: Campo obrigatório" style="width:90%">
 			  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 			  		<f:selectItems value="#{mbean.planos}" />
 			  	</p:selectOneMenu>
-		  		<p:calendar id="dataProcessamento" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Processamento: Campo obrigatório" value="#{mbeanModel.dataProcessamento}" styleClass="coluna90" />
+		  		<p:inputText mask="99" maxlength="2" id="diaVencimento" required="true" requiredMessage="Dia de Vencimento: Campo obrigatório" value="#{mbeanModel.diaVencimento}" onkeypress="mascara(this,integer);" styleClass="coluna90" />
 			  	
 	  		</h:panelGrid>
 	  		

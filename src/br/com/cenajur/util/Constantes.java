@@ -23,6 +23,7 @@ public class Constantes {
 	
 	public static final Long TIPO_AGENDA_TAREFA = 1L;
 	public static final Long TIPO_AGENDA_AUDIENCIA = 3L;
+	public static final Long TIPO_AGENDA_VISITA_DO_CLIENTE = 4L;
 	
 	public static final Long REGRA_BLOQUEIO_MENSAGEM = 1L;
 	public static final Long REGRA_BLOQUEIO_TAREFA = 2L;

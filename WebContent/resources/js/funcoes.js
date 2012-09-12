@@ -124,3 +124,17 @@ function MascaraMoeda(objTextBox, SeparadorMilesimo, SeparadorDecimal, e){
     }
     return false;
 }
+
+function mascara(o,f){
+    v_obj=o;
+    v_fun=f;
+    setTimeout("execMascara()",1);
+}
+
+function execMascara(){
+    v_obj.value=v_fun(v_obj.value);
+}
+
+function integer(v){
+    return v.replace(/\D/g,"");
+}

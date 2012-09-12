@@ -33,8 +33,8 @@ public class Plano extends TSActiveRecordAb<Plano>{
 	@Column(name = "flag_ativo")
 	private Boolean flagAtivo;
 	
-	@Column(name = "dias_duracao")
-	private Integer diasDuracao;
+	@Column(name = "meses_duracao")
+	private Integer mesesDuracao;
 
 	public Plano() {
 	}
@@ -75,13 +75,12 @@ public class Plano extends TSActiveRecordAb<Plano>{
 		this.flagAtivo = flagAtivo;
 	}
 
-	public Integer getDiasDuracao() {
-		return TSUtil.tratarInteger(diasDuracao);
+	public Integer getMesesDuracao() {
+		return mesesDuracao;
 	}
 
-	public void setDiasDuracao(Integer diasDuracao) {
-		this.diasDuracao = TSUtil.tratarInteger(diasDuracao);
+	public void setMesesDuracao(Integer mesesDuracao) {
+		this.mesesDuracao = mesesDuracao;
 	}
-	
 	
 }

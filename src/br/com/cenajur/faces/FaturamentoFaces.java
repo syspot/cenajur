@@ -101,9 +101,10 @@ public class FaturamentoFaces extends CrudFaces<Faturamento> {
 	@Override
 	protected void preInsert() {
 		
-		getCrudModel().setDataProcessamento(getCrudModel().getCliente().getDataProcessamento());
+		getCrudModel().setDataProcessamento(new Date());
 		getCrudModel().setPlano(getCrudModel().getCliente().getPlano());
 		getCrudModel().setFlagCancelado(Boolean.FALSE);
+		getCrudModel().setColaboradorGeracao(this.colaboradorConectado);
 		
 		if(getCrudModel().getFlagPago()){
 			getCrudModel().setDataBaixa(new Date());
@@ -135,7 +136,13 @@ public class FaturamentoFaces extends CrudFaces<Faturamento> {
 	}
 	
 	public String gerarFaturamento() throws TSApplicationException{
-		new Faturamento().gerarFaturamento();
+		
+		Faturamento faturamento = new Faturamento();
+		
+		faturamento.setColaboradorGeracao(this.colaboradorConectado);
+		
+		faturamento.gerarFaturamento();
+		
 		return null;
 	}
 	

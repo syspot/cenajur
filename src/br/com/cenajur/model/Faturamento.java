@@ -62,6 +62,10 @@ public class Faturamento extends TSActiveRecordAb<Faturamento>{
 	
 	private Integer ano;
 	
+	@ManyToOne
+	@JoinColumn(name = "colaborador_geracao_id")
+	private Colaborador colaboradorGeracao;
+	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
 	}
@@ -158,6 +162,14 @@ public class Faturamento extends TSActiveRecordAb<Faturamento>{
 		this.ano = ano;
 	}
 
+	public Colaborador getColaboradorGeracao() {
+		return colaboradorGeracao;
+	}
+
+	public void setColaboradorGeracao(Colaborador colaboradorGeracao) {
+		this.colaboradorGeracao = colaboradorGeracao;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -250,7 +262,7 @@ public class Faturamento extends TSActiveRecordAb<Faturamento>{
 	
 	public void gerarFaturamento(){
 		try{
-			getSession().createSQLQuery("select fc_gerar_faturamento()").executeUpdate();
+			getSession().createSQLQuery("select fc_gerar_faturamento(" + colaboradorGeracao.getId() + ")").executeUpdate();
 		}catch(Exception e){
 			// a function é executada, mas sobe exceção no retorno que deve ser abafada.
 		}
