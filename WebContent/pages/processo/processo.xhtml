@@ -291,8 +291,15 @@
 				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
 			</p:commandLink>
 		</p:column>
+		
+		<p:column headerText="Clientes" styleClass="coluna30">
+			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+				<h:outputText value="#{linha.processosClientes}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
+		</p:column>
 
-		<p:column headerText="Advogado" styleClass="coluna50">
+		<p:column headerText="Advogado" styleClass="coluna30">
 			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
 				<h:outputText value="#{linha.advogado.apelido}" />
 				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />

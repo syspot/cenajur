@@ -271,7 +271,7 @@
 	  	
 		  	<p:outputLabel for="estadoPesquisa" value="Estado"/>
 		  	<p:outputLabel for="cidadePesquisa" value="Cidade"/>
-		  	<p:outputLabel for="flagAtivoPesquisa" value="Ativo" />
+		  	<p:outputLabel for="statusAssociado" value="Situação" />
 	  	
   			<p:selectOneMenu id="estadoPesquisa" value="#{mbeanPesquisaModel.cidade.estado.id}" style="width:95%">
   				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
@@ -282,7 +282,11 @@
   				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
   				<f:selectItems value="#{mbean.cidadesPesquisa}" />
   			</p:selectOneMenu>
-		  	<p:selectBooleanCheckbox id="flagAtivoPesquisa" value="#{mbeanPesquisaModel.flagAtivo}" />
+  			<p:selectOneMenu id="statusAssociado" value="#{mbean.statusCliente}">
+  				<f:selectItem itemLabel="Todos" itemValue="#{0}" />
+  				<f:selectItem itemLabel="Ativo" itemValue="#{1}" />
+  				<f:selectItem itemLabel="Cancelado" itemValue="#{2}" />
+  			</p:selectOneMenu>
 	  	
 	  	</h:panelGrid>
 	  	

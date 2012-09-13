@@ -104,6 +104,11 @@ public class ProcessoCliente extends TSActiveRecordAb<ProcessoCliente>{
 	public boolean isProcessoClienteArquivado(){
 		return Constantes.SITUACAO_PROCESSO_CLIENTE_ARQUIVADO.equals(this.situacaoProcessoClienteTemp.getId());
 	}
+	
+	@Override
+	public String toString() {
+		return cliente.getNome();
+	}
 
 	@Override
 	public int hashCode() {

@@ -503,6 +503,11 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	public String getTipo(){
 		return getFlagAssociado() ? "Associado" : "Dependente";
 	}
+	
+	@Override
+	public String toString() {
+		return this.nome;
+	}
 
 	@Override
 	public int hashCode() {

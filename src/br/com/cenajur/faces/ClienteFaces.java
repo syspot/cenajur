@@ -61,6 +61,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	private DocumentoCliente documentoCliente;
 	private DocumentoCliente documentoSelecionado;
 	private Cliente clienteSelecionado;
+	private int statusCliente;
 	
 	@PostConstruct
 	protected void init() {
@@ -302,6 +303,21 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		return null;
 	}
 	
+	@Override
+	protected void preFind() {
+		this.tratarSituacao();
+	}
+	
+	private void tratarSituacao(){
+		
+		switch(statusCliente){
+			case 1: getCrudPesquisaModel().setFlagAtivo(Boolean.TRUE); break;
+			case 2: getCrudPesquisaModel().setFlagAtivo(Boolean.FALSE); break;
+			default: getCrudPesquisaModel().setFlagAtivo(null); break;
+		}
+		
+	}
+	
 	public List<SelectItem> getEstados() {
 		return estados;
 	}
@@ -436,6 +452,14 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 
 	public void setClienteSelecionado(Cliente clienteSelecionado) {
 		this.clienteSelecionado = clienteSelecionado;
+	}
+
+	public int getStatusCliente() {
+		return statusCliente;
+	}
+
+	public void setStatusCliente(int statusCliente) {
+		this.statusCliente = statusCliente;
 	}
 	
 }

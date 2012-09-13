@@ -34,7 +34,7 @@
 		  		
 				<p:outputPanel rendered="#{agendaFaces.agenda.id == null and !agendaFaces.usuarioMaster}">
 					<h:outputText value="Você não possui permissão para editar a Agenda" style="margin-top: 20px"/><br/>
-					<p:commandButton type="button" value="Fechar" onclick="atualizarAgenda();" style="margin-top: 20px" />
+					<p:commandButton type="button" value="Fechar" onclick="myschedule.update();" oncomplete="dlgAgenda.hide();" style="margin-top: 20px" />
 				</p:outputPanel>
 					
 			</p:outputPanel>

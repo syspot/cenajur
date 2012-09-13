@@ -359,7 +359,7 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		query.append(" select distinct p from Processo p left outer join fetch p.processosNumeros pn where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(processoNumeroPrincipal) && !TSUtil.isEmpty(processoNumeroPrincipal.getNumero())){
-			query.append(CenajurUtil.getParamSemAcento("pn.numero"));
+			query.append(CenajurUtil.formataNumeroProcessoBusca("pn.numero"));
 		}
 		
 		if(!TSUtil.isEmpty(dataAbertura)){

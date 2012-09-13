@@ -18,6 +18,8 @@ import br.com.cenajur.model.TipoAgenda;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
+import br.com.cenajur.util.Utilitarios;
+import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.faces.TSMainFaces;
 import br.com.topsys.web.util.TSFacesUtil;
@@ -227,6 +229,22 @@ public class AutenticacaoFaces extends TSMainFaces{
     	} else{
     		//TODO - Verificar com Roque as Configurações de envio de E-mail
     		CenajurUtil.addInfoMessage("Uma nova senha foi enviada para seu e-mail");
+    	}
+    	
+    	return "login";
+    	
+    }
+    
+    public String alterarSenha() throws TSApplicationException{
+    	
+    	Colaborador colaborador = ColaboradorUtil.autenticar(this.colaborador);
+    	
+    	if(TSUtil.isEmpty(colaborador)){
+    		CenajurUtil.addErrorMessage("Usuário ou Senha inválidos");
+    	} else{
+    		colaborador.setSenha(Utilitarios.gerarHash(this.colaborador.getSenha2()));
+    		colaborador.update();
+    		CenajurUtil.addInfoMessage("Senha alterada com sucesso");
     	}
     	
     	return "login";

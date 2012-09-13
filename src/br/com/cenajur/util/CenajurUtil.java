@@ -70,6 +70,11 @@ public class CenajurUtil {
 		return "%" + str.toLowerCase() + "%"; 
 	}
 	
+	public static String formataNumeroProcessoBusca(String campo){
+		return " and translate(lower(trim(".concat(campo).concat(")), '.-_*/\\<>|=+;:', '%%%%%%%%%%%%%')"
+				+ " like translate(lower(trim(?)), '.-_*/\\<>|=+;:', '%%%%%%%%%%%%%') ");
+	}
+	
 	public static String semAcento(String campo){
 		return "translate(lower(trim(".concat(campo).concat(")), 'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ', 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')");
 	}

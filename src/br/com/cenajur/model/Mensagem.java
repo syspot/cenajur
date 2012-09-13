@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import br.com.cenajur.util.CenajurUtil;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
@@ -22,6 +23,11 @@ import br.com.topsys.util.TSUtil;
 @Entity
 @Table(name = "mensagens")
 public class Mensagem extends TSActiveRecordAb<Mensagem>{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2885062774835360183L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="mensagens_id")
@@ -40,6 +46,12 @@ public class Mensagem extends TSActiveRecordAb<Mensagem>{
 	
 	@OneToMany(mappedBy = "mensagem", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<MensagemDestinatario> mensagensDestinatarios;
+	
+	@ManyToOne
+	private Mensagem mensagem;
+	
+	@Transient
+	private boolean flagSelecionado;
 	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -93,6 +105,22 @@ public class Mensagem extends TSActiveRecordAb<Mensagem>{
 		this.mensagensDestinatarios = mensagensDestinatarios;
 	}
 
+	public Mensagem getMensagem() {
+		return mensagem;
+	}
+
+	public void setMensagem(Mensagem mensagem) {
+		this.mensagem = mensagem;
+	}
+
+	public boolean isFlagSelecionado() {
+		return flagSelecionado;
+	}
+
+	public void setFlagSelecionado(boolean flagSelecionado) {
+		this.flagSelecionado = flagSelecionado;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -122,7 +150,7 @@ public class Mensagem extends TSActiveRecordAb<Mensagem>{
 		
 		StringBuilder query = new StringBuilder();
 		
-		query.append(" select m from Mensagem m inner join fetch m.mensagensDestinatarios md where m.remetente.id = ? and m.flagAtivo = true");
+		query.append(" select distinct m from Mensagem m inner join fetch m.mensagensDestinatarios md where m.remetente.id = ? and m.flagAtivo = true");
 		
 		List<Object> param = new ArrayList<Object>();
 		
