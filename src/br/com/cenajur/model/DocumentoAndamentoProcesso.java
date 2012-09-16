@@ -25,6 +25,11 @@ import br.com.topsys.util.TSUtil;
 @Table(name = "documentos_andamentos_processos")
 public class DocumentoAndamentoProcesso extends TSActiveRecordAb<DocumentoAndamentoProcesso>{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2823369704674122534L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="documentos_andamentos_processos_id")
 	@SequenceGenerator(name="documentos_andamentos_processos_id", sequenceName="documentos_andamentos_processos_id_seq")

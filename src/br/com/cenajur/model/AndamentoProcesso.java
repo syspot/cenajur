@@ -17,6 +17,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import br.com.cenajur.util.CenajurUtil;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
@@ -24,6 +27,11 @@ import br.com.topsys.util.TSUtil;
 @Entity
 @Table(name = "andamentos_processos")
 public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -653350560849142124L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="andamentos_processos_id")
@@ -47,6 +55,7 @@ public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 	private TipoAndamentoProcesso tipoAndamentoProcesso;
 	
 	@OneToMany(mappedBy = "andamentoProcesso", cascade = CascadeType.ALL, orphanRemoval = true)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<DocumentoAndamentoProcesso> documentos;
 
 	@Column(name = "data_atualizacao")

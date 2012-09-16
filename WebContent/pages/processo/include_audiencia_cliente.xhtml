@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+	
+	<ui:param name="mbeanProcesso" value="${processoFaces}" />
+	<ui:param name="cadastroViaCliente" value="${true}" />
+	<ui:param name="mbeanProcessoAudiencia" value="${clienteFaces.processoAux.processoAudienciaUtil}" />
+  		
+  	<p:tab title="Audiência">
+	
+		<p:remoteCommand name="abrirDialogViewAudiencia" oncomplete="dlgVisualizarAudiencia.show();" update="opAudienciaView" process="@this"/>
+		 
+	  	<p:outputPanel id="opGridAudiencia">
+	  	
+		  	<p:dataTable id="gridAudiencia" emptyMessage="Nenhum audiência encontrada" style="width: 100%" paginator="true"
+					paginatorAlwaysVisible="false" rows="10" value="#{processo.audiencias}" var="linha">
+		  	
+		  		<p:column headerText="Descrição" styleClass="coluna30">
+		  			<p:commandLink type="button" oncomplete="abrirDialogViewAudiencia();" process="@this" global="false">
+			  			<h:outputText value="#{linha.resumoDescricao}" />
+			  			<f:setPropertyActionListener target="#{mbeanProcessoAudiencia.audiencia}" value="#{linha}" />
+			  			<f:setPropertyActionListener target="#{mbeanProcessoAudiencia.crudModel}" value="#{processo}" />
+						<f:setPropertyActionListener target="#{mbeanProcessoAudiencia.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
+						<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
+		  			</p:commandLink>
+		  		</p:column>
+		  	
+		  		<p:column headerText="Vara" styleClass="coluna20">
+		  			<p:commandLink type="button" oncomplete="abrirDialogViewAudiencia();" process="@this" global="false">
+			  			<h:outputText value="#{linha.vara.descricao}" />
+			  			<f:setPropertyActionListener target="#{mbeanProcessoAudiencia.audiencia}" value="#{linha}" />
+			  			<f:setPropertyActionListener target="#{mbeanProcessoAudiencia.crudModel}" value="#{processo}" />
+						<f:setPropertyActionListener target="#{mbeanProcessoAudiencia.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
+						<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
+		  			</p:commandLink>
+		  		</p:column>
+		  		
+		  		<p:column headerText="Advogado" styleClass="coluna30">
+		  			<p:commandLink type="button" oncomplete="abrirDialogViewAudiencia();" process="@this" global="false">
+			  			<h:outputText value="#{linha.audienciasAdvogados}" />
+			  			<f:setPropertyActionListener target="#{mbeanProcessoAudiencia.audiencia}" value="#{linha}" />
+			  			<f:setPropertyActionListener target="#{mbeanProcessoAudiencia.crudModel}" value="#{processo}" />
+						<f:setPropertyActionListener target="#{mbeanProcessoAudiencia.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
+						<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
+		  			</p:commandLink>
+		  		</p:column>
+		  	
+		  		<p:column headerText="Data" styleClass="coluna20">
+	  				<p:commandLink type="button" oncomplete="abrirDialogViewAudiencia();" process="@this" global="false">
+		  				<h:outputText value="#{linha.dataAudiencia}" >
+			  				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+		  				</h:outputText>
+		  				<f:setPropertyActionListener target="#{mbeanProcessoAudiencia.audiencia}" value="#{linha}" />
+			  			<f:setPropertyActionListener target="#{mbeanProcessoAudiencia.crudModel}" value="#{processo}" />
+						<f:setPropertyActionListener target="#{mbeanProcessoAudiencia.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
+						<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
+	  				</p:commandLink>
+		  		</p:column>
+		  		
+		  		<p:column headerText="Visualizar" styleClass="coluna5">
+		  			<p:commandLink type="button" oncomplete="abrirDialogViewAudiencia();" process="@this" global="false">
+						<h:graphicImage value="../resources/images/lupa.png" width="16" style="border: 0px" />
+						<f:setPropertyActionListener target="#{mbeanProcessoAudiencia.audiencia}" value="#{linha}" />
+			  			<f:setPropertyActionListener target="#{mbeanProcessoAudiencia.crudModel}" value="#{processo}" />
+						<f:setPropertyActionListener target="#{mbeanProcessoAudiencia.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
+						<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
+					</p:commandLink>
+		  		</p:column>
+		  		
+		  	</p:dataTable>
+		  	
+ 			</p:outputPanel>
+ 			
+	  <p:dialog id="dialogVisualizarAudiencia" appendToBody="true" modal="true" header="Visualização da Audiência" widgetVar="dlgVisualizarAudiencia" styleClass="dialog80">
+    		
+    		<p:outputPanel id="opAudienciaView">
+    			<ui:include src="/pages/processo/include_cadastro_audiencia.xhtml" />
+		    </p:outputPanel>
+		    
+	  	</p:dialog>
+ 			
+	</p:tab>
+			  		
+</ui:composition>

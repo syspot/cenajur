@@ -30,6 +30,9 @@ import br.com.topsys.web.util.TSFacesUtil;
 
 public class ProcessoAudienciaUtil {
 
+	private ProcessoNumero processoNumeroPrincipal;
+	private ProcessoNumero processoNumeroBackup;
+	
 	private Processo crudModel;
 	private CategoriaDocumento categoriaDocumento;
 	private List<SelectItem> categoriasDocumentos;
@@ -42,18 +45,18 @@ public class ProcessoAudienciaUtil {
 	private Colaborador advogadoSelecionado;
 	
 	private AgendaColaborador agendaColaboradorAux;
-
-	public ProcessoAudienciaUtil() {
-
-	}
 	
-	public ProcessoAudienciaUtil(Processo processo) {
-		setCrudModel(processo);
+	public ProcessoAudienciaUtil() {
 		setCategoriaDocumento(new CategoriaDocumento());
 		getCategoriaDocumento().setTipoCategoria(new TipoCategoria(Constantes.TIPO_CATEGORIA_AUDIENCA));
 		setDocumentoAudiencia(new DocumentoAudiencia());
 		this.initAudiencia();
 		this.initCombo();
+	}
+	
+	public ProcessoAudienciaUtil(Processo processo) {
+		this();
+		setCrudModel(processo);
 	}
 	
 	private void initAudiencia(){
@@ -63,6 +66,7 @@ public class ProcessoAudienciaUtil {
 		this.audiencia.setVara(new Vara());
 		this.audiencia.setDocumentos(new ArrayList<DocumentoAudiencia>());
 		this.audiencia.setAudienciasAdvogados(new ArrayList<AudienciaAdvogado>());
+		this.processoNumeroPrincipal = this.processoNumeroBackup;
 	}
 	
 	private void initCombo(){
@@ -138,6 +142,7 @@ public class ProcessoAudienciaUtil {
 			return null;
 		}
 		
+		this.audiencia.setProcessoNumero(processoNumeroPrincipal);
 		this.audiencia.setVara(this.audiencia.getVara().getById());
 		this.audiencia.setDataAtualizacao(new Date());
 		this.audiencia.setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
@@ -157,7 +162,6 @@ public class ProcessoAudienciaUtil {
 		
 		CenajurUtil.addInfoMessage("Audiência cadastrada com sucesso");
 		this.initAudiencia();
-		this.audiencia.setProcessoNumero(new ProcessoNumero().obterNumeroProcessoPrincipal(getCrudModel()));
 		getCrudModel().setAudiencias(this.audiencia.findByModel("descricao"));
 		return null;
 	}
@@ -195,7 +199,6 @@ public class ProcessoAudienciaUtil {
 		}
 		
 		this.initAudiencia();
-		this.audiencia.setProcessoNumero(new ProcessoNumero().obterNumeroProcessoPrincipal(getCrudModel()));
 		getCrudModel().setAudiencias(this.audiencia.findByModel("descricao"));
 		CenajurUtil.addInfoMessage("Alteração realizada com sucesso");
 		return null;
@@ -293,6 +296,22 @@ public class ProcessoAudienciaUtil {
 
 	public void setAgendaColaboradorAux(AgendaColaborador agendaColaboradorAux) {
 		this.agendaColaboradorAux = agendaColaboradorAux;
+	}
+
+	public ProcessoNumero getProcessoNumeroPrincipal() {
+		return processoNumeroPrincipal;
+	}
+
+	public void setProcessoNumeroPrincipal(ProcessoNumero processoNumeroPrincipal) {
+		this.processoNumeroPrincipal = processoNumeroPrincipal;
+	}
+
+	public ProcessoNumero getProcessoNumeroBackup() {
+		return processoNumeroBackup;
+	}
+
+	public void setProcessoNumeroBackup(ProcessoNumero processoNumeroBackup) {
+		this.processoNumeroBackup = processoNumeroBackup;
 	}
 
 }

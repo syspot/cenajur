@@ -27,9 +27,14 @@ import br.com.cenajur.model.Lotacao;
 import br.com.cenajur.model.MotivoCancelamento;
 import br.com.cenajur.model.Plano;
 import br.com.cenajur.model.Processo;
+import br.com.cenajur.model.ProcessoCliente;
 import br.com.cenajur.model.ProcessoNumero;
+import br.com.cenajur.model.ProcessoParteContraria;
+import br.com.cenajur.model.SituacaoProcessoCliente;
+import br.com.cenajur.model.SituacaoProcessoParteContraria;
 import br.com.cenajur.model.TipoCategoria;
 import br.com.cenajur.model.TipoPagamento;
+import br.com.cenajur.model.Turno;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
@@ -62,6 +67,8 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	private DocumentoCliente documentoSelecionado;
 	private Cliente clienteSelecionado;
 	private int statusCliente;
+	
+	private ProcessoAux processoAux;
 	
 	@PostConstruct
 	protected void init() {
@@ -98,6 +105,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		getCrudModel().setDocumentos(new ArrayList<DocumentoCliente>());
 		setDocumentoCliente(new DocumentoCliente());
 		setFlagAlterar(Boolean.FALSE);
+		this.processoAux = new ProcessoAux();
 		return null;
 	}
 
@@ -177,12 +185,34 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		this.atualizarComboCidades();
 		
 		for(Processo processo : getCrudModel().getProcessos()){
+			
 			processo.setProcessoNumeroPrincipal(new ProcessoNumero().obterNumeroProcessoPrincipal(processo));
 			processo.setAudiencias(new Audiencia().findByProcesso(processo));
 			processo.setAndamentos(new AndamentoProcesso().findByProcesso(processo));
+			
+			if(TSUtil.isEmpty(processo.getTurno()) || TSUtil.isEmpty(processo.getTurno().getId())){
+				processo.setTurno(new Turno());
+			}
+			
+			processo.setProcessoNumeroPrincipal(new ProcessoNumero().obterNumeroProcessoPrincipal(processo));
+			processo.setProcessosNumerosTemp(new ProcessoNumero().pesquisarOutrosNumerosProcessos(processo));
+			
+			processo.setAudiencias(new Audiencia().findByProcesso(processo));
+			processo.setAndamentos(new AndamentoProcesso().findByProcesso(processo));
+			
+			for(ProcessoParteContraria processoParteContraria : processo.getProcessosPartesContrarias()){
+				processoParteContraria.setSituacaoProcessoParteContrariaTemp(new SituacaoProcessoParteContraria(processoParteContraria.getSituacaoProcessoParteContraria().getId()));
+			}
+
+			for(ProcessoCliente processoCliente : processo.getProcessosClientes()){
+				processoCliente.setSituacaoProcessoClienteTemp(new SituacaoProcessoCliente(processoCliente.getSituacaoProcessoCliente().getId()));
+			}
+			
 		}
 		
 		this.iniciaObjetosCombo();
+		
+		this.processoAux.setProcessos(getCrudModel().getProcessos());
 		
 	}
 	
@@ -460,6 +490,14 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 
 	public void setStatusCliente(int statusCliente) {
 		this.statusCliente = statusCliente;
+	}
+
+	public ProcessoAux getProcessoAux() {
+		return processoAux;
+	}
+
+	public void setProcessoAux(ProcessoAux processoAux) {
+		this.processoAux = processoAux;
 	}
 	
 }

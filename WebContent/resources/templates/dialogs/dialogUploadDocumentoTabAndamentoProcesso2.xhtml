@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:param name="mbeanDocumento" value="${clienteFaces.processoAux.processoAndamentoUtil}" />
+	<ui:param name="mbeanDocumentoAcao" value="${clienteFaces.processoAux.processoAndamentoUtil}" />
+	<ui:param name="mbeanDocumentoModel" value="${clienteFaces.processoAux.processoAndamentoUtil.documentoAndamentoProcesso}" />
+	
+	<h:form enctype="multipart/form-data">
+  
+		<p:dialog id="dialogDocumentoTabAndamentoProcesso2" widgetVar="dlgDocumentoTabAndamentoProcesso2" header="Upload de documento" width="600" modal="true">
+		
+			<ui:include src="/resources/templates/includes/include_dialog_upload_documento.xhtml" />
+			
+			<h:panelGrid columns="1" style="width:100%; text-align:center">
+		  		
+		  		<p:commandButton value="Adicionar" action="#{mbeanDocumento.addDocumento}" oncomplete="handleRequestFaces('dialogDocumentoTabAndamentoProcesso2', dlgDocumentoTabAndamentoProcesso2, args)" />
+		  		
+	  		</h:panelGrid>
+	  		
+		</p:dialog>
+	
+	</h:form>
+
+</ui:component>

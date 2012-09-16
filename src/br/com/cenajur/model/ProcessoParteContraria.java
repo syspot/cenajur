@@ -20,6 +20,11 @@ import br.com.topsys.database.hibernate.TSActiveRecordAb;
 @Table(name = "processos_partes_contrarias")
 public class ProcessoParteContraria extends TSActiveRecordAb<ProcessoParteContraria>{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3310580116691932208L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="processos_partes_contrarias_id")
 	@SequenceGenerator(name="processos_partes_contrarias_id", sequenceName="processos_partes_contrarias_id_seq")
@@ -130,7 +135,7 @@ public class ProcessoParteContraria extends TSActiveRecordAb<ProcessoParteContra
 	
 
 	public boolean isProcessoParteContrariaArquivado(){
-		return Constantes.SITUACAO_PROCESSO_PARTE_CONTRARIA_ARQUIVADO.equals(this.situacaoProcessoParteContraria.getId());
+		return Constantes.SITUACAO_PROCESSO_PARTE_CONTRARIA_ARQUIVADO.equals(this.situacaoProcessoParteContrariaTemp.getId());
 	}
 
 }

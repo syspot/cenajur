@@ -25,6 +25,9 @@ import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.util.TSFacesUtil;
 
 public class ProcessoAndamentoUtil {
+	
+	private ProcessoNumero processoNumeroPrincipal;
+	private ProcessoNumero processoNumeroBackup;
 
 	private Processo crudModel;
 	private CategoriaDocumento categoriaDocumento;
@@ -36,8 +39,7 @@ public class ProcessoAndamentoUtil {
 	private DocumentoAndamentoProcesso documentoAndamentoProcesso;
 	private DocumentoAndamentoProcesso documentoAndamentoProcessoSelecionado;
 	
-	public ProcessoAndamentoUtil(Processo processo) {
-		setCrudModel(processo);
+	public ProcessoAndamentoUtil() {
 		setCategoriaDocumento(new CategoriaDocumento());
 		getCategoriaDocumento().setTipoCategoria(new TipoCategoria(Constantes.TIPO_CATEGORIA_ANDAMENTO_PROCESSO));
 		setDocumentoAndamentoProcesso(new DocumentoAndamentoProcesso());
@@ -45,10 +47,16 @@ public class ProcessoAndamentoUtil {
 		this.initCombo();
 	}
 	
+	public ProcessoAndamentoUtil(Processo processo) {
+		this();
+		setCrudModel(processo);
+	}
+	
 	private void initAndamentoProcesso(){
 		this.andamentoProcesso = new AndamentoProcesso();
 		this.andamentoProcesso.setTipoAndamentoProcesso(new TipoAndamentoProcesso());
 		this.andamentoProcesso.setDocumentos(new ArrayList<DocumentoAndamentoProcesso>());
+		this.processoNumeroPrincipal = this.processoNumeroBackup;
 	}
 	
 	private void initCombo(){
@@ -120,6 +128,7 @@ public class ProcessoAndamentoUtil {
 			return null;
 		}
 		
+		this.andamentoProcesso.setProcessoNumero(processoNumeroPrincipal);
 		this.andamentoProcesso.setTipoAndamentoProcesso(this.andamentoProcesso.getTipoAndamentoProcesso().getById());
 		this.andamentoProcesso.setDataAtualizacao(new Date());
 		this.andamentoProcesso.setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
@@ -139,7 +148,6 @@ public class ProcessoAndamentoUtil {
 		
 		CenajurUtil.addInfoMessage("Andamento cadastrado com sucesso");
 		this.initAndamentoProcesso();
-		this.andamentoProcesso.setProcessoNumero(new ProcessoNumero().obterNumeroProcessoPrincipal(getCrudModel()));
 		getCrudModel().setAndamentos(this.andamentoProcesso.findByModel("descricao"));
 		return null;
 	}
@@ -176,7 +184,6 @@ public class ProcessoAndamentoUtil {
 		}
 		
 		this.initAndamentoProcesso();
-		this.andamentoProcesso.setProcessoNumero(new ProcessoNumero().obterNumeroProcessoPrincipal(getCrudModel()));
 		getCrudModel().setAndamentos(this.andamentoProcesso.findByModel("descricao"));
 		CenajurUtil.addInfoMessage("Alteração realizada com sucesso");
 		return null;
@@ -241,6 +248,22 @@ public class ProcessoAndamentoUtil {
 
 	public void setDocumentoAndamentoProcessoSelecionado(DocumentoAndamentoProcesso documentoAndamentoProcessoSelecionado) {
 		this.documentoAndamentoProcessoSelecionado = documentoAndamentoProcessoSelecionado;
+	}
+
+	public ProcessoNumero getProcessoNumeroPrincipal() {
+		return processoNumeroPrincipal;
+	}
+
+	public void setProcessoNumeroPrincipal(ProcessoNumero processoNumeroPrincipal) {
+		this.processoNumeroPrincipal = processoNumeroPrincipal;
+	}
+
+	public ProcessoNumero getProcessoNumeroBackup() {
+		return processoNumeroBackup;
+	}
+
+	public void setProcessoNumeroBackup(ProcessoNumero processoNumeroBackup) {
+		this.processoNumeroBackup = processoNumeroBackup;
 	}
 
 }

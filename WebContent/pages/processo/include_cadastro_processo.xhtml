@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+  	<p:fieldset>
+
+		<h:panelGrid columns="3" columnClasses="coluna30, coluna20, coluna30" style="width:50%">
+
+			<p:outputLabel for="numeroProcesso" value="Número do Processo" />
+			<p:outputLabel for="dataAbertura" value="Data de Abertura" />
+			<p:outputLabel for="lote" value="Lote" />
+
+			<p:inputText id="numeroProcesso" required="true" requiredMessage="Número do Processo: Campo obrigatório" value="#{mbeanProcessoModel.processoNumeroPrincipal.numero}" maxlength="30" styleClass="coluna90" />
+			<p:calendar id="dataAbertura" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Abertura: Campo obrigatório" value="#{mbeanProcessoModel.dataAbertura}" />
+			<p:inputText id="lote" value="#{mbeanProcessoModel.lote}" maxlength="30" styleClass="coluna95" />
+
+		</h:panelGrid>
+		
+		<h:panelGrid columns="1" style="width: 70%">
+		
+			<h:outputText value="Outros números do Processo" />
+			<p:outputPanel autoUpdate="true">
+				<p:inputText value="#{mbeanProcessoModel.processosNumerosTemp}" readonly="true" styleClass="coluna80" rendered="#{not empty mbeanProcessoModel.processosNumerosTemp}"/>
+				<p:inputText readonly="true" styleClass="coluna80" rendered="#{empty mbeanProcessoModel.processosNumerosTemp}"/>
+				<p:commandButton type="button" value="Editar" onclick="dlgNumeroProcesso.show()" rendered="#{empty cadastroViaCliente ? true : false}" />
+				<p:commandButton value="Editar" action="#{clienteFaces.processoAux.iniciarNumerosProcessos}" oncomplete="dlgNumeroProcesso2.show()" global="false" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}">
+					<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
+				</p:commandButton>
+			</p:outputPanel>
+			
+		</h:panelGrid>
+
+	</p:fieldset>
+
+	<h:panelGrid columns="2" columnClasses="coluna50_2, coluna50_2" style="width:100%">
+
+		<p:fieldset legend="Parte">
+
+			<p:outputPanel id="opAssociados" autoUpdate="true">
+
+				<p:commandButton type="button" value="Adicionar Associado" icon="ui-icon-plus" onclick="dlgCliente.show();" rendered="#{empty cadastroViaCliente ? true : false}" />
+				<p:commandButton value="Adicionar Associado" icon="ui-icon-plus" oncomplete="dlgCliente4.show();" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}">
+					<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
+				</p:commandButton>
+				
+				<p:dataTable value="#{mbeanProcessoModel.processosClientes}" var="processoCliente" emptyMessage="Nenhum associado selecionado" rowIndexVar="index" style="width:100%">
+
+					<p:column headerText="Nome" styleClass="coluna70">
+						<h:outputText value="#{processoCliente.cliente.nome}" />
+					</p:column>
+
+					<p:column headerText="CPF" styleClass="coluna25">
+						<h:outputText value="#{processoCliente.cliente.cpf}" />
+					</p:column>
+					
+					<p:column headerText="Alterar Situação" styleClass="coluna5">
+						
+						<p:commandLink oncomplete="dlgArquivarProcessoCliente.show();" process="@this" rendered="#{empty cadastroViaCliente ? true : false}">
+							<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
+							<f:setPropertyActionListener target="#{mbeanProcesso.processoClienteSelecionado}" value="#{processoCliente}" />
+						</p:commandLink>
+						
+						<p:commandLink oncomplete="dlgArquivarProcessoCliente2.show();" process="@this" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}">
+							<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
+							<f:setPropertyActionListener target="#{clienteFaces.processoAux.processoClienteSelecionado}" value="#{processoCliente}" />
+							<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
+						</p:commandLink>
+						
+					</p:column>
+
+					<p:column headerText="Remover" styleClass="coluna5">
+
+						<p:commandLink action="#{mbeanProcesso.removeCliente}" process="@this" rendered="#{empty cadastroViaCliente ? true : false}">
+							<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+							<f:setPropertyActionListener target="#{mbeanProcesso.processoClienteSelecionado}" value="#{processoCliente}" />
+						</p:commandLink>
+						
+						<p:commandLink action="#{clienteFaces.processoAux.removeCliente}" process="@this" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}">
+							<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+							<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
+							<f:setPropertyActionListener target="#{clienteFaces.processoAux.processoClienteSelecionado}" value="#{processoCliente}" />
+						</p:commandLink>
+						
+					</p:column>
+
+				</p:dataTable>
+
+			</p:outputPanel>
+
+		</p:fieldset>
+
+		<p:fieldset legend="Parte Contrária">
+
+			<p:outputPanel autoUpdate="true">
+
+				<p:commandButton type="button" value="Adicionar Parte Contrária" icon="ui-icon-plus" onclick="dlgParteContraria.show();" rendered="#{empty cadastroViaCliente ? true : false}"/>
+				<p:commandButton value="Adicionar Parte Contrária" icon="ui-icon-plus" onclick="dlgParteContraria2.show();" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}">
+					<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
+				</p:commandButton>
+				<p:dataTable value="#{mbeanProcessoModel.processosPartesContrarias}" var="processoParteContraria" emptyMessage="Nenhuma parte contrária selecionada" rowIndexVar="index" style="width:100%">
+
+					<p:column headerText="Nome" styleClass="coluna95">
+						<h:outputText value="#{processoParteContraria.parteContraria.descricao}" />
+					</p:column>
+					
+					<p:column headerText="Alterar Situação" styleClass="coluna5">
+						
+						<p:commandLink process="@this" oncomplete="dlgArquivarProcessoParteContraria.show();" rendered="#{empty cadastroViaCliente ? true : false}">
+							<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
+							<f:setPropertyActionListener target="#{mbeanProcesso.processoParteContrariaSelecionada}" value="#{processoParteContraria}" />
+						</p:commandLink>
+						
+						<p:commandLink process="@this" oncomplete="dlgArquivarProcessoParteContraria2.show();" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}">
+							<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
+							<f:setPropertyActionListener target="#{clienteFaces.processoAux.processoParteContrariaSelecionada}" value="#{processoParteContraria}" />
+							<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
+						</p:commandLink>
+						
+					</p:column>
+
+					<p:column headerText="Remover" style="text-align: center" styleClass="coluna5">
+					
+						<p:commandLink action="#{mbeanProcesso.removeParteContraria}" process="@this" rendered="#{empty cadastroViaCliente ? true : false}">
+							<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+							<f:setPropertyActionListener target="#{mbeanProcesso.processoParteContrariaSelecionada}" value="#{processoParteContraria}" />
+						</p:commandLink>
+						
+						<p:commandLink action="#{clienteFaces.processoAux.removeParteContraria}" process="@this" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}">
+							<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+							<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
+							<f:setPropertyActionListener target="#{clienteFaces.processoAux.processoParteContrariaSelecionada}" value="#{processoParteContraria}" />
+						</p:commandLink>
+						
+					</p:column>
+
+				</p:dataTable>
+
+			</p:outputPanel>
+
+		</p:fieldset>
+
+	</h:panelGrid>
+
+	<p:fieldset>
+
+		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:70%">
+
+			<p:outputLabel for="parte" value="Tipo de Parte" />
+			<p:outputLabel for="advogado" value="Advogado" />
+
+			<p:selectOneMenu id="parte" required="true" requiredMessage="Tipo de Parte: Campo obrigatório" value="#{mbeanProcessoModel.tipoParte.id}" style="width:95%">
+				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+				<f:selectItems value="#{mbeanProcesso.tiposPartes}" />
+			</p:selectOneMenu>
+			<p:selectOneMenu id="advogado" required="true" requiredMessage="Advogado: Campo obrigatório" value="#{mbeanProcessoModel.advogado.id}" style="width:95%">
+				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+				<f:selectItems value="#{mbeanProcesso.advogados}" />
+			</p:selectOneMenu>
+
+			<p:outputLabel for="tipoProcesso" value="Tipo de Processo" />
+			<p:outputLabel for="objeto" value="Objeto" />
+
+			<p:selectOneMenu id="tipoProcesso" required="true" requiredMessage="Tipo de Processo: Campo obrigatório" value="#{mbeanProcessoModel.tipoProcesso.id}" style="width:95%">
+				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+				<f:selectItems value="#{mbeanProcesso.tiposProcessos}" />
+			</p:selectOneMenu>
+			<p:selectOneMenu id="objeto" required="true" requiredMessage="Objeto: Campo obrigatório" value="#{mbeanProcessoModel.objeto.id}" style="width:95%">
+				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+				<f:selectItems value="#{mbeanProcesso.objetos}" />
+			</p:selectOneMenu>
+
+			<p:outputLabel for="vara" value="Vara" />
+			<p:outputLabel for="comarca" value="Comarca" />
+
+			<p:selectOneMenu id="vara" required="true" requiredMessage="Vara: Campo obrigatório" value="#{mbeanProcessoModel.vara.id}" style="width:95%">
+				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+				<f:selectItems value="#{mbeanProcesso.varas}" />
+			</p:selectOneMenu>
+			<p:selectOneMenu id="comarca" required="true" requiredMessage="Comarca: Campo obrigatório" value="#{mbeanProcessoModel.comarca.id}" style="width:95%">
+				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+				<f:selectItems value="#{mbeanProcesso.comarcas}" />
+			</p:selectOneMenu>
+
+		</h:panelGrid>
+
+	</p:fieldset>
+
+	<p:fieldset>
+
+		<h:panelGrid columns="4" columnClasses="coluna23, coluna20, coluna45, coluna35" style="width:70%">
+
+			<p:outputLabel for="dataAjuizamento" value="Data de Ajuizamento" />
+			<p:outputLabel for="turno" value="Turno" />
+			<p:outputLabel for="situacaoProcesso" value="Situação" />
+			<p:outputLabel for="dataArquivamento" value="Data de Arquivamento" />
+
+			<p:calendar id="dataAjuizamento" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Ajuizamento: Campo obrigatório" value="#{mbeanProcessoModel.dataAjuizamento}" style="width:90%" />
+			<p:selectOneMenu id="turno" value="#{mbeanProcessoModel.turno.id}" style="width:95%">
+				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+				<f:selectItems value="#{mbeanProcesso.turnos}" />
+			</p:selectOneMenu>
+			<p:selectOneMenu id="situacaoProcesso" required="true" requiredMessage="Situação: Campo obrigatório" value="#{mbeanProcessoModel.situacaoProcesso.id}" style="width:95%">
+				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+				<f:selectItems value="#{mbeanProcesso.situacoesProcessos}" />
+				<p:ajax update="opDataArquivamento" process="@this" global="false" />
+			</p:selectOneMenu>
+			<p:outputPanel id="opDataArquivamento">
+				<p:calendar id="dataArquivamento" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Arquivamento: Campo obrigatório" value="#{mbeanProcessoModel.dataArquivamento}" disabled="#{!mbeanProcessoModel.processoArquivado}" style="width:90%" />
+			</p:outputPanel>
+		</h:panelGrid>
+
+	</p:fieldset>
+	
+	<p:fieldset>
+  	
+  		<h:panelGrid columns="1" style="width:60%">
+
+			<p:commandButton type="button" value="Adicionar Documento" icon="ui-icon-plus" onclick="dlgDocumentoProcesso.show();" rendered="#{empty cadastroViaCliente ? true : false}"/>
+			<p:commandButton value="Adicionar Documento" icon="ui-icon-plus" oncomplete="dlgDocumentoProcesso2.show();" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}">
+				<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
+			</p:commandButton>
+			
+			<ui:include src="/pages/processo/include_grid_documentos_processos.xhtml"/>
+	  	
+	  	</h:panelGrid>
+		
+  	</p:fieldset>
+  	
+</ui:composition>

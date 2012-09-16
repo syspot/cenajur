@@ -221,8 +221,13 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		
 		this.processoAndamentoUtil.setCrudModel(getCrudModel());
 		this.processoAudienciaUtil.setCrudModel(getCrudModel());
-		this.processoAndamentoUtil.getAndamentoProcesso().setProcessoNumero(new ProcessoNumero().obterNumeroProcessoPrincipal(getCrudModel()));
-		this.processoAudienciaUtil.getAudiencia().setProcessoNumero(new ProcessoNumero().obterNumeroProcessoPrincipal(getCrudModel()));
+		
+		ProcessoNumero processoNumero = new ProcessoNumero().obterNumeroProcessoPrincipal(getCrudModel());
+		
+		this.processoAndamentoUtil.setProcessoNumeroPrincipal(processoNumero);
+		this.processoAndamentoUtil.setProcessoNumeroBackup(processoNumero);
+		this.processoAudienciaUtil.setProcessoNumeroPrincipal(processoNumero);
+		this.processoAudienciaUtil.setProcessoNumeroBackup(processoNumero);
 		
 		if(TSUtil.isEmpty(getCrudModel().getTurno()) || TSUtil.isEmpty(getCrudModel().getTurno().getId())){
 			getCrudModel().setTurno(new Turno());
@@ -361,16 +366,6 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 			
 		}
 		
-		return null;
-	}
-	
-	public String atualizarProcessoCliente(){
-		CenajurUtil.addInfoMessage("Alteração realizada com sucesso");
-		return null;
-	}
-	
-	public String atualizarProcessoParteContraria(){
-		CenajurUtil.addInfoMessage("Alteração realizada com sucesso");
 		return null;
 	}
 	

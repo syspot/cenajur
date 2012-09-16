@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+  	<p:outputPanel layout="block" style="width: 97.5%;">
+				
+		<h:panelGrid columns="1" style="width: 98%">
+			
+			<p:fieldset style="width: 100%" toggleable="true">
+				
+				<h:panelGrid id="pgAlteracaoAudiencia" columns="2" columnClasses="coluna50_2, coluna50_2">
+				
+					<p:outputPanel style="width:100%">
+					
+						<h:panelGrid columns="1" columnClasses="coluna100" style="width:100%">
+			
+							<p:outputLabel for="numeroProcessoAudiencia" value="Processo" />
+							<p:inputText id="numeroProcessoAudiencia" value="#{mbeanProcessoAudiencia.processoNumeroPrincipal.numero}" readonly="true" />
+					  		
+				  		</h:panelGrid>
+				  		
+				  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:95%">
+				  		
+						  	<p:outputLabel for="dataAudienciaAudiencia" value="Data da Audiência" />
+				  			<p:outputLabel for="flagClienteCienteAudiencia" value="Associado ciente" />
+				  		
+					  		<p:calendar id="dataAudienciaAudiencia" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data da Audiência: Campo obrigatório" value="#{mbeanProcessoAudiencia.audiencia.dataAudiencia}"/>
+					  		<p:selectBooleanCheckbox id="flagClienteCienteAudiencia" value="#{mbeanProcessoAudiencia.audiencia.flagClienteCiente}" />
+					  		
+					  		<p:outputLabel for="situacaoAudiencia" value="Situação" />
+						  	<p:outputLabel for="varaAudiencia" value="Vara" />
+						  	
+					  		<p:selectOneMenu id="situacaoAudiencia" required="true" requiredMessage="Situação: Campo obrigatório" value="#{mbeanProcessoAudiencia.audiencia.situacaoAudiencia.id}" style="width:95%">
+						  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+						  		<f:selectItems value="#{mbeanProcesso.situacoesAudiencias}" />
+						  	</p:selectOneMenu>
+					  		<p:selectOneMenu id="varaAudiencia" required="true" requiredMessage="Vara: Campo obrigatório" value="#{mbeanProcessoAudiencia.audiencia.vara.id}" style="width:94%">
+						  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+						  		<f:selectItems value="#{mbeanProcesso.varas}" />
+						  	</p:selectOneMenu>
+						  	
+					  	</h:panelGrid>
+					  	
+					  	<h:panelGrid columns="1" columnClasses="coluna100" style="width:100%">
+					  	
+						  	<p:outputPanel autoUpdate="true">
+								<h:outputLabel value="Advogado" /><br/>
+								<p:inputText required="true" requiredMessage="Advogado: Campo obrigatório" readonly="true" rendered="#{empty mbeanProcessoAudiencia.audiencia.audienciasAdvogados}" styleClass="coluna72"/>
+								<p:inputText value="#{mbeanProcessoAudiencia.audiencia.audienciasAdvogados}" required="true" requiredMessage="Advogado: Campo obrigatório" readonly="true" rendered="#{not empty mbeanProcessoAudiencia.audiencia.audienciasAdvogados}" styleClass="coluna72"/>
+								<p:commandButton type="button" value="Adicionar" icon="ui-icon-plus" onclick="dlgAdvogado2.show();" rendered="#{empty cadastroViaCliente ? true : false}" />
+								<p:commandButton type="button" value="Adicionar" icon="ui-icon-plus" onclick="dlgAdvogado5.show();" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}" />
+							</p:outputPanel>
+						  	
+						  	<p:outputLabel for="descricaoAudiencia" value="Descrição" />
+							<p:inputTextarea id="descricaoAudiencia" value="#{mbeanProcessoAudiencia.audiencia.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" autoResize="false" rows="10" maxlength="500" styleClass="coluna90"/>
+							
+					  	</h:panelGrid>
+					  	
+					</p:outputPanel>
+					
+					<h:panelGrid columns="1" style="width:100%">
+			
+						<p:commandButton type="button" value="Adicionar Documento" icon="ui-icon-plus" onclick="dlgDocumentoTabAudiencia.show();" update="pgCategoriaDocumentoTabAudiencia" rendered="#{empty cadastroViaCliente ? true : false}"/>
+						<p:commandButton type="button" value="Adicionar Documento" icon="ui-icon-plus" onclick="dlgDocumentoTabAudiencia2.show();" update="pgCategoriaDocumentoTabAudiencia" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}"/>
+					
+						<ui:include src="/pages/processo/include_grid_tab_audiencia_documentos.xhtml" />
+				  	
+				  	</h:panelGrid>
+				
+				</h:panelGrid>
+				
+			  	<p:commandButton id="btnCadastrarAudiencia" value="Cadastrar" icon="salvar" action="#{mbeanProcessoAudiencia.cadastrarAudiencia}" update="@form" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" rendered="#{mbeanProcessoAudiencia.audiencia.id == null and empty cadastroViaCliente ? true : false}" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}"/>
+			  	<p:commandButton id="btnAlterarAudiencia" value="Alterar" icon="salvar" action="#{mbeanProcessoAudiencia.alterarAudiencia}" update="@form" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" rendered="#{mbeanProcessoAudiencia.audiencia.id != null and empty cadastroViaCliente ? true : false}" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}"/>
+			  	<p:commandButton id="btnCancelarAudiencia" value="Novo Cadastro" icon="novo" action="#{mbeanProcessoAudiencia.limpar}" process="@this" update="@form" style="width: 140px; margin-left: 5px;" rendered="#{empty cadastroViaCliente ? true : false}"/>
+			  	
+			  	<p:commandButton value="Alterar" icon="salvar" process="@this, pgAlteracaoAudiencia" action="#{mbeanProcessoAudiencia.alterarAudiencia}" oncomplete="handleRequest('dialogVisualizarAudiencia', dlgVisualizarAudiencia, args)" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" rendered="#{mbeanProcessoAudiencia.audiencia.id != null and not empty cadastroViaCliente ? cadastroViaCliente : false}" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}"/>
+			  	
+			</p:fieldset>
+			
+		</h:panelGrid>
+		
+	</p:outputPanel>
+  	
+</ui:composition>

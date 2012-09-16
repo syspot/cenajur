@@ -4,10 +4,10 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core">
 	
-	<p:outputPanel id="opGridDocumentosAudiencia" autoUpdate="true">
+	<p:outputPanel id="opGridDocumentos" autoUpdate="true">
 			  	
-	  	<p:dataTable emptyMessage="Nenhum documento encontrado" style="width: 90%" paginator="true"
-				paginatorAlwaysVisible="false" rows="10" value="#{mbeanProcessoAudiencia.audiencia.documentos}" var="documento">
+	  	<p:dataTable id="gridDocumentos" emptyMessage="Nenhum documento encontrado" style="width: 90%" paginator="true"
+				paginatorAlwaysVisible="false" rows="10" value="#{mbeanProcessoModel.documentos}" var="documento">
 	  	
 	  		<p:column headerText="Categoria">
 	  			<h:outputText value="#{documento.categoriaDocumento.descricao}" />
@@ -28,10 +28,17 @@
 	  		</p:column>
 	  		
 			<p:column headerText="Excluir" styleClass="coluna5">
-				<p:commandLink process="@this" action="#{mbeanProcessoAudiencia.removerDocumentoAudiencia}" global="false">
+				
+				<p:commandLink process="@this" action="#{mbeanProcesso.removerDocumento}" global="false" rendered="#{empty cadastroViaCliente ? true : false}">
 					<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
-					<f:setPropertyActionListener target="#{mbeanProcessoAudiencia.documentoAudienciaSelecionado}" value="#{documento}" />
+					<f:setPropertyActionListener target="#{mbeanProcesso.documentoSelecionado}" value="#{documento}" />
 				</p:commandLink>
+				
+				<p:commandLink process="@this" action="#{clienteFaces.processoAux.removerDocumento}" global="false" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}">
+					<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+					<f:setPropertyActionListener target="#{clienteFaces.processoAux.documentoSelecionado}" value="#{documento}" />
+				</p:commandLink>
+				
 			</p:column>
 	  		
 	  	</p:dataTable>
