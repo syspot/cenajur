@@ -24,10 +24,12 @@ import br.com.cenajur.model.Agenda;
 import br.com.cenajur.model.AgendaColaborador;
 import br.com.cenajur.model.Audiencia;
 import br.com.cenajur.model.AudienciaAdvogado;
+import br.com.cenajur.model.Cliente;
 import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.ProcessoNumero;
 import br.com.cenajur.model.SituacaoAudiencia;
 import br.com.cenajur.model.TipoAgenda;
+import br.com.cenajur.model.TipoVisita;
 import br.com.cenajur.model.Vara;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
@@ -47,12 +49,14 @@ public class AgendaFaces {
 	private List<SelectItem> varas;
 	private List<SelectItem> situacoesAudiencias;
 	private List<SelectItem> colaboradores;
+	private List<SelectItem> tiposVisitas;
 	
 	private Agenda agenda;
 	private Agenda agendaBusca;
 	
 	private ProcessoAudienciaUtil processoAudienciaUtil;
 	
+	private Cliente clienteSelecionado;
 	private Colaborador colaboradorSelecionado;
 	private ProcessoNumero processoNumeroSelecionado;
 	private AgendaColaborador agendaColaboradorSelecionado;
@@ -78,6 +82,7 @@ public class AgendaFaces {
 		this.agenda = new Agenda();
 		this.agenda.setTipoAgenda(new TipoAgenda());
 		this.agenda.setAgendasColaboradores(new ArrayList<AgendaColaborador>());
+		this.agenda.setTipoVisita(new TipoVisita());
 		this.agendaColaboradorSelecionado = new AgendaColaborador();
 		return null;
 	}
@@ -120,6 +125,7 @@ public class AgendaFaces {
 		this.situacoesAudiencias = TSFacesUtil.initCombo(new SituacaoAudiencia().findAll("descricao"), "id", "descricao");
 		this.varas = TSFacesUtil.initCombo(new Vara().findAll("descricao"), "id", "descricao");
 		this.colaboradores = TSFacesUtil.initCombo(new Colaborador(true).findByModel("apelido"), "id", "apelido");
+		this.tiposVisitas = TSFacesUtil.initCombo(new TipoVisita().findAll("descricao"), "id", "descricao");
 	}
 	
 	public String onEventSelect(ScheduleEntrySelectEvent selectEvent) {
@@ -147,7 +153,7 @@ public class AgendaFaces {
     public String onDateSelect(DateSelectEvent selectEvent) {  
         this.limpar();
         agenda.setDataInicial(selectEvent.getDate());
-        agenda.setDataFinal(selectEvent.getDate());
+        agenda.setDataFinal(CenajurUtil.getDataMaisMeiaHora(selectEvent.getDate()));
         return null;
     }
     
@@ -219,6 +225,24 @@ public class AgendaFaces {
 			
 		}
 		
+		if(this.agenda.isTipoVisitaDoCliente()){
+			
+			if(TSUtil.isEmpty(this.agenda.getCliente())){
+				context.addCallbackParam("sucesso", false);
+				CenajurUtil.addErrorMessage("Cliente: Campo obrigatório");
+				erro = true;
+			}
+			
+			if(TSUtil.isEmpty(this.agenda.getAgendasColaboradores())){
+				context.addCallbackParam("sucesso", false);
+				CenajurUtil.addErrorMessage("Colaborador: Campo obrigatório para Visita do Cliente");
+				erro = true;	
+			}
+			
+			this.agenda.setFlagGeral(Boolean.FALSE);
+			
+		}
+		
 		if(this.agenda.getDataInicial().after(this.agenda.getDataFinal())){
 			context.addCallbackParam("sucesso", false);
 			CenajurUtil.addErrorMessage("Data final não pode ser menor que data inicial");
@@ -261,6 +285,12 @@ public class AgendaFaces {
 		return null;
 	}
 	
+	public String addCliente(){
+		this.agenda.setCliente(this.clienteSelecionado);
+		CenajurUtil.addInfoMessage("Cliente adicionado com sucesso");
+		return null;
+	}
+	
 	public String addAgendaColaborador(){
 		
 		AgendaColaborador agendaColaborador = new AgendaColaborador();
@@ -294,6 +324,7 @@ public class AgendaFaces {
 			
 			this.processoAudienciaUtil = new ProcessoAudienciaUtil(this.agendaColaboradorSelecionado.getAgenda().getProcessoNumero().getProcesso());
 			this.processoAudienciaUtil.getAudiencia().setProcessoNumero(this.agendaColaboradorSelecionado.getAgenda().getProcessoNumero());
+			this.processoAudienciaUtil.setProcessoNumeroPrincipal(this.agendaColaboradorSelecionado.getAgenda().getProcessoNumero());
 			this.processoAudienciaUtil.setAgendaColaboradorAux(this.agendaColaboradorSelecionado);
 			
 			if(TSUtil.isEmpty(audiencia)){
@@ -357,6 +388,17 @@ public class AgendaFaces {
 			this.agendaBusca.getColaboradorBusca().setId(null);
 		}
 		
+		return null;
+	}
+	
+	public String alterarTipoAgenda(){
+		if(this.agenda.isTipoVisitaDoCliente()){
+			this.agenda.setTipoVisita(new TipoVisita());
+		} else{
+			this.agenda.setTipoVisita(null);
+			this.agenda.setTelefoneCliente(null);
+			this.agenda.setCliente(null);
+		}
 		return null;
 	}
 	
@@ -489,6 +531,22 @@ public class AgendaFaces {
 
 	public void setBuscaIndividual(boolean buscaIndividual) {
 		this.buscaIndividual = buscaIndividual;
+	}
+
+	public Cliente getClienteSelecionado() {
+		return clienteSelecionado;
+	}
+
+	public void setClienteSelecionado(Cliente clienteSelecionado) {
+		this.clienteSelecionado = clienteSelecionado;
+	}
+
+	public List<SelectItem> getTiposVisitas() {
+		return tiposVisitas;
+	}
+
+	public void setTiposVisitas(List<SelectItem> tiposVisitas) {
+		this.tiposVisitas = tiposVisitas;
 	}
 	
 }

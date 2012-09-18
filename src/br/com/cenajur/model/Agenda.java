@@ -17,6 +17,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.Constantes;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
@@ -50,6 +51,16 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 	@ManyToOne
 	@JoinColumn(name = "processo_numero_id")
 	private ProcessoNumero processoNumero;
+	
+	@ManyToOne
+	private Cliente cliente;
+	
+	@ManyToOne
+	@JoinColumn(name = "tipo_visita_id")
+	private TipoVisita tipoVisita;
+	
+	@Column(name = "telefone_cliente")
+	private String telefoneCliente;
 	
 	@OneToMany(mappedBy = "agenda", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<AgendaColaborador> agendasColaboradores;
@@ -116,6 +127,30 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 		this.processoNumero = processoNumero;
 	}
 
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public TipoVisita getTipoVisita() {
+		return tipoVisita;
+	}
+
+	public void setTipoVisita(TipoVisita tipoVisita) {
+		this.tipoVisita = tipoVisita;
+	}
+
+	public String getTelefoneCliente() {
+		return telefoneCliente;
+	}
+
+	public void setTelefoneCliente(String telefoneCliente) {
+		this.telefoneCliente = telefoneCliente;
+	}
+
 	public List<AgendaColaborador> getAgendasColaboradores() {
 		return agendasColaboradores;
 	}
@@ -158,6 +193,14 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 
 	public boolean isTipoAudiencia(){
 		return Constantes.TIPO_AGENDA_AUDIENCIA.equals(getTipoAgenda().getId());
+	}
+	
+	public boolean isTipoVisitaDoCliente(){
+		return Constantes.TIPO_AGENDA_VISITA_DO_CLIENTE.equals(getTipoAgenda().getId());
+	}
+	
+	public Date getDataFinalMinima() {
+		return TSUtil.isEmpty(dataInicial) ? dataInicial : CenajurUtil.getDataMaisMeiaHora(dataInicial);
 	}
 
 	@Override

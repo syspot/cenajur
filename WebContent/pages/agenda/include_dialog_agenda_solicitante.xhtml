@@ -16,19 +16,36 @@
 		<p:selectOneMenu id="tipoAgenda" value="#{agendaFaces.agenda.tipoAgenda.id}" required="true" requiredMessage="Tipo de Agenda: Campo obrigatório">
 			<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 			<f:selectItems value="#{agendaFaces.tiposAgendas}" />
-			<p:ajax event="change" update="pgColaboradorAgenda, dtAgendasColaboradores" listener="#{agendaFaces.limparAgendasColaboradores}"/>
+			<p:ajax event="change" update="pgColaboradorAgenda, pgClienteAgenda, dtAgendasColaboradores" listener="#{agendaFaces.limparAgendasColaboradores}"/>
 		</p:selectOneMenu>
 		<p:calendar id="dataInicioAgenda" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data: Campo obrigatório" value="#{agendaFaces.agenda.dataInicial}" >
 			<p:ajax event="blur" update="opDataFinal" />
 		</p:calendar>
 		<p:outputPanel id="opDataFinal">
-			<p:calendar id="dataFimAgenda" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data: Campo obrigatório" value="#{agendaFaces.agenda.dataFinal}" mindate="#{agendaFaces.agenda.dataInicial}" disabled="#{agendaFaces.agenda.dataInicial == null}" />
+			<p:calendar id="dataFimAgenda" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data: Campo obrigatório" value="#{agendaFaces.agenda.dataFinal}" mindate="#{agendaFaces.agenda.dataFinalMinima}" disabled="#{agendaFaces.agenda.dataInicial == null}" />
 		</p:outputPanel>
 		<p:outputPanel autoUpdate="true" style="width:100%">
 			<p:inputText id="processoAgenda" value="#{agendaFaces.agenda.processoNumero.numero}" readonly="true" style="width:65%"/>
 			<p:commandButton type="button" icon="ui-icon-plus" value="Add" onclick="dlgProcesso3.show();" />
 		</p:outputPanel>
 		
+	</h:panelGrid>
+	
+	<h:panelGrid id="pgClienteAgenda" columns="3" columnClasses="coluna50, coluna15, coluna35" style="width:100%">
+		
+		<p:outputLabel for="clienteAgenda" value="Cliente" rendered="#{agendaFaces.agenda.tipoVisitaDoCliente}"/>
+		<p:outputLabel for="tipoVisitaCliente" value="Tipo de Visita" rendered="#{agendaFaces.agenda.tipoVisitaDoCliente}"/>
+		<p:outputLabel for="telefoneClienteAgenda" value="Telefone" rendered="#{agendaFaces.agenda.tipoVisitaDoCliente}"/>
+		
+		<p:outputPanel autoUpdate="true" style="width:100%" rendered="#{agendaFaces.agenda.tipoVisitaDoCliente}">
+			<p:inputText id="clienteAgenda" value="#{agendaFaces.agenda.cliente.nome}" readonly="true" style="width:75%"/>
+			<p:commandButton type="button" icon="ui-icon-plus" value="Add" onclick="dlgCliente5.show();" />
+		</p:outputPanel>
+		<p:selectOneMenu id="tipoVisitaCliente" value="#{agendaFaces.agenda.tipoVisita.id}" rendered="#{agendaFaces.agenda.tipoVisitaDoCliente}">
+			<f:selectItems value="#{agendaFaces.tiposVisitas}" />
+		</p:selectOneMenu>
+		<p:inputMask id="telefoneClienteAgenda" mask="(99) 9999-9999" value="#{agendaFaces.agenda.telefoneCliente}" maxlength="14" styleClass="coluna90" rendered="#{agendaFaces.agenda.tipoVisitaDoCliente}"/>
+	
 	</h:panelGrid>
 	
 	<h:panelGrid style="width: 100%">

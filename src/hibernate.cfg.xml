@@ -67,6 +67,7 @@
  		<mapping class="br.com.cenajur.model.TipoPagamento" />
  		<mapping class="br.com.cenajur.model.TipoParte" />
  		<mapping class="br.com.cenajur.model.TipoProcesso" />
+ 		<mapping class="br.com.cenajur.model.TipoVisita" />
  		<mapping class="br.com.cenajur.model.Turno" />
  		<mapping class="br.com.cenajur.model.Usuario" />
  		<mapping class="br.com.cenajur.model.Vara" />

@@ -114,6 +114,13 @@ public class CenajurUtil {
 		return c.getTime();
 	}
 	
+	public static Date getDataMaisMeiaHora(Date data){
+		Calendar c = Calendar.getInstance();
+		c.setTime(data);
+		c.add(Calendar.MINUTE, 30);
+		return c.getTime();
+	}
+	
 	public static Date getDataMenosDias(int qtdDias){
 		Calendar c = Calendar.getInstance();
 		c.add(Calendar.DAY_OF_MONTH, qtdDias);
