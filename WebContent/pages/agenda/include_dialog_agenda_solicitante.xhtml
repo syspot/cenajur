@@ -16,7 +16,7 @@
 		<p:selectOneMenu id="tipoAgenda" value="#{agendaFaces.agenda.tipoAgenda.id}" required="true" requiredMessage="Tipo de Agenda: Campo obrigatório">
 			<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 			<f:selectItems value="#{agendaFaces.tiposAgendas}" />
-			<p:ajax event="change" update="pgColaboradorAgenda, pgClienteAgenda, dtAgendasColaboradores" listener="#{agendaFaces.limparAgendasColaboradores}"/>
+			<p:ajax event="change" update="pgColaboradorAgenda, pgClienteAgenda, dtAgendasColaboradores" listener="#{agendaFaces.alterarTipoAgenda}"/>
 		</p:selectOneMenu>
 		<p:calendar id="dataInicioAgenda" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data: Campo obrigatório" value="#{agendaFaces.agenda.dataInicial}" >
 			<p:ajax event="blur" update="opDataFinal" />
@@ -74,9 +74,13 @@
 			</p:column>
 			
 			<p:column headerText="Mensagem individual" styleClass="coluna75">
-				<p:inputText value="#{agendaColaborador.descricao}" maxlength="200" styleClass="coluna97">
+				<p:inputText value="#{agendaColaborador.descricao}" maxlength="200" styleClass="coluna90">
 					<p:ajax event="blur" global="false"/>
 				</p:inputText>
+				<p:commandLink process="@this" global="false" oncomplete="dlgRespostaPropria.show()" rendered="#{agendaColaborador.colaborador.id == colaboradorConectado.id and agendaColaborador.id != null}">
+					<h:graphicImage value="../resources/images/show.png" style="border: 0px; margin-left: 10px" />
+					<f:setPropertyActionListener target="#{agendaFaces.agendaColaboradorSelecionado}" value="#{agendaColaborador}" />
+				</p:commandLink>
 			</p:column>
 			
 			<p:column headerText="Status" styleClass="coluna5">

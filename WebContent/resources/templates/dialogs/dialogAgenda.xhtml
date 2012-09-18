@@ -13,7 +13,7 @@
 		<p:remoteCommand name="atualizarDialogAgenda" process="@this" update="opDialogAgenda, opAgendasColaboradores" oncomplete="dlgAgenda.show();" global="false"/>
 		<p:remoteCommand name="atualizarAgendasColaboradores" process="@this" update="opAgendasColaboradores"/>
 		
-		<p:dialog id="dialogAgenda" header="Cadastro de Agenda" widgetVar="dlgAgenda" width="720" height="430" modal="true">
+		<p:dialog id="dialogAgenda" header="Cadastro de Agenda" widgetVar="dlgAgenda" width="720" height="450" modal="true">
 	  
 	  		<p:ajax event="close" listener="#{agendaFaces.limpar}" update="opDialogAgenda"/>
 	  		
@@ -48,6 +48,16 @@
 			<p:outputPanel id="opDialogAudiencia">
 			
 				<ui:include src="/pages/agenda/include_dialog_agenda_audiencia.xhtml" />
+					
+			</p:outputPanel>
+			
+		</p:dialog>
+		
+		<p:dialog id="dialogRespostaPropria" header="Fechar Agenda" widgetVar="dlgRespostaPropria" width="700" modal="true">
+		
+			<p:outputPanel autoUpdate="true" id="opDialogRespostaPropria">
+			
+				<ui:include src="/pages/agenda/include_dialog_agenda_resposta_propria.xhtml" />
 					
 			</p:outputPanel>
 			

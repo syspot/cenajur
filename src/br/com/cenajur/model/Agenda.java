@@ -227,6 +227,50 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 			return false;
 		return true;
 	}
+	
+	@Override
+	public List<Agenda> findByModel(String... fieldsOrderBy) {
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" from Agenda a where 1 = 1 ");
+		
+		if(!TSUtil.isEmpty(descricao)){
+			query.append(CenajurUtil.getParamSemAcento("a.descricao"));
+		}
+		
+		if(!TSUtil.isEmpty(tipoAgenda) && !TSUtil.isEmpty(tipoAgenda.getId())){
+			query.append("and a.tipoAgenda.id = ? ");
+		}
+		
+		if(!TSUtil.isEmpty(dataInicial)){
+			query.append("and date(a.dataInicial) = date(?) ");
+		}
+		
+		if(!TSUtil.isEmpty(dataFinal)){
+			query.append("and date(a.dataFinal) = date(?) ");
+		}
+		
+		List<Object> params = new ArrayList<Object>();
+		
+		if(!TSUtil.isEmpty(descricao)){
+			params.add(CenajurUtil.tratarString(descricao));
+		}
+		
+		if(!TSUtil.isEmpty(tipoAgenda) && !TSUtil.isEmpty(tipoAgenda.getId())){
+			params.add(tipoAgenda.getId());
+		}
+		
+		if(!TSUtil.isEmpty(dataInicial)){
+			params.add(dataInicial);
+		}
+		
+		if(!TSUtil.isEmpty(dataFinal)){
+			params.add(dataFinal);
+		}
+		
+		return super.find(query.toString(), "dataInicial", params.toArray());
+	}
 
 	public List<Agenda> pesquisarAgendas(Date dataInicial, Date dataFinal) {
 		

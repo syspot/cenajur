@@ -23,7 +23,7 @@
 			<p:selectOneMenu id="tipoAgenda" value="#{mbeanModel.tipoAgenda.id}" required="true" requiredMessage="Tipo de Agenda: Campo obrigatório" style="width:60%">
 				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 				<f:selectItems value="#{mbean.tiposAgendas}" />
-				<p:ajax event="change" update="pgColaboradorAgenda, pgClienteAgenda, dtAgendasColaboradores" listener="#{mbean.limparAgendasColaboradores}"/>
+				<p:ajax event="change" update="pgColaboradorAgenda, pgClienteAgenda, dtAgendasColaboradores" listener="#{mbean.alterarTipoAgenda}"/>
 			</p:selectOneMenu>
 			
   		</h:panelGrid>
@@ -107,12 +107,64 @@
   	
   	<ui:define name="pesquisaCampos">
   	
+  		<h:panelGrid>
   		
+  			<p:outputLabel for="descricaoPesquisa" value="Descrição" />
+  			<p:inputText id="descricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" maxlength="100" />
+  			
+  			<p:outputLabel for="tipoAgendaPesquisa" value="Tipo de Agenda" />
+			<p:selectOneMenu id="tipoAgendaPesquisa" value="#{mbeanPesquisaModel.tipoAgenda.id}" style="width:60%">
+				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+				<f:selectItems value="#{mbean.tiposAgendas}" />
+			</p:selectOneMenu>
+  		
+  		</h:panelGrid>
+  	
+  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width: 30%">
+
+			<p:outputLabel for="dataInicioAgendaPesquisa" value="Data Início" />
+			<p:outputLabel for="dataFimAgendaPesquisa" value="Data Fim" />
+			
+			<p:calendar id="dataInicioAgendaPesquisa" pattern="dd/MM/yyyy HH:mm" value="#{mbeanPesquisaModel.dataInicial}" />
+			<p:calendar id="dataFimAgendaPesquisa" pattern="dd/MM/yyyy HH:mm" value="#{mbeanPesquisaModel.dataFinal}" />
+			
+		</h:panelGrid>
 	  	
   	</ui:define>
   	
   	<ui:define name="colunasTabela">
   	
+  		<p:column headerText="Tipo de Agenda">
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.tipoAgenda.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
+  		</p:column>
+  	
+  		<p:column headerText="Data Inicial">
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.dataInicial}">
+					<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+	  			</h:outputText>
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}"/>
+			</p:commandLink>
+  		</p:column>
+  	
+  		<p:column headerText="Data Final">
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.dataFinal}">
+					<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+	  			</h:outputText>
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
+  		</p:column>
+  	
+  		<p:column headerText="Descrição">
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
+  		</p:column>
   		
   	</ui:define>
   	

@@ -392,6 +392,9 @@ public class AgendaFaces {
 	}
 	
 	public String alterarTipoAgenda(){
+		
+		this.agenda.getAgendasColaboradores().clear();
+		
 		if(this.agenda.isTipoVisitaDoCliente()){
 			this.agenda.setTipoVisita(new TipoVisita());
 		} else{
@@ -399,11 +402,6 @@ public class AgendaFaces {
 			this.agenda.setTelefoneCliente(null);
 			this.agenda.setCliente(null);
 		}
-		return null;
-	}
-	
-	public String limparAgendasColaboradores(){
-		this.agenda.getAgendasColaboradores().clear();
 		return null;
 	}
 	

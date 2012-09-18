@@ -47,9 +47,9 @@ public class AgendaCrudFaces extends CrudFaces<Agenda>{
 	
 	@PostConstruct
 	protected void init() {
+		this.clearFields();
 		this.colaboradorConectado = ColaboradorUtil.obterColaboradorConectado();
 		this.initCombo();
-		this.limpar();
 	}
 	
 	@Override
@@ -58,6 +58,7 @@ public class AgendaCrudFaces extends CrudFaces<Agenda>{
 		this.getCrudModel().setTipoAgenda(new TipoAgenda());
 		this.getCrudModel().setAgendasColaboradores(new ArrayList<AgendaColaborador>());
 		this.getCrudModel().setTipoVisita(new TipoVisita());
+		this.setGrid(new ArrayList<Agenda>());
 		this.agendaColaboradorSelecionado = new AgendaColaborador();
 		return null;
 	}
@@ -83,8 +84,8 @@ public class AgendaCrudFaces extends CrudFaces<Agenda>{
     	
     	RequestContext context = RequestContext.getCurrentInstance();
 		
-		if(!this.getCrudModel().isTipoAudiencia() && !this.getCrudModel().getFlagGeral() 
-				&& TSUtil.isEmpty(this.getCrudModel().getAgendasColaboradores())){
+		if(!this.getCrudModel().isTipoAudiencia() && !this.getCrudModel().isTipoVisitaDoCliente() 
+				&& !this.getCrudModel().getFlagGeral()	&& TSUtil.isEmpty(this.getCrudModel().getAgendasColaboradores())){
 			context.addCallbackParam("sucesso", false);
 			CenajurUtil.addErrorMessage("Colaborador: Campo obrigatório");
 			erro = true;
@@ -294,6 +295,14 @@ public class AgendaCrudFaces extends CrudFaces<Agenda>{
 
 	public void setTiposVisitas(List<SelectItem> tiposVisitas) {
 		this.tiposVisitas = tiposVisitas;
+	}
+
+	public Colaborador getColaboradorConectado() {
+		return colaboradorConectado;
+	}
+
+	public void setColaboradorConectado(Colaborador colaboradorConectado) {
+		this.colaboradorConectado = colaboradorConectado;
 	}
 	
 }
