@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatProcessoPorTipo" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f37734dc-0305-41c0-ba1d-0a06a2e568bb">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="DATA_INICIAL" class="java.util.Date"/>
+	<parameter name="DATA_FINAL" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[SELECT C.NOME,
+       (SELECT COUNT(P.*) FROM PROCESSOS P WHERE P.DATA_CADASTRO BETWEEN COALESCE($P{DATA_INICIAL}, P.DATA_CADASTRO) AND COALESCE($P{DATA_FINAL}, P.DATA_CADASTRO) AND P.ADVOGADO_ID = C.ID AND P.SITUACAO_PROCESSO_ID = 1) AS QTD_ATIVO,
+       (SELECT COUNT(P.*) FROM PROCESSOS P WHERE P.DATA_CADASTRO BETWEEN COALESCE($P{DATA_INICIAL}, P.DATA_CADASTRO) AND COALESCE($P{DATA_FINAL}, P.DATA_CADASTRO) AND P.ADVOGADO_ID = C.ID AND P.SITUACAO_PROCESSO_ID = 2) AS QTD_SUSPENSO,
+       (SELECT COUNT(P.*) FROM PROCESSOS P WHERE P.DATA_CADASTRO BETWEEN COALESCE($P{DATA_INICIAL}, P.DATA_CADASTRO) AND COALESCE($P{DATA_FINAL}, P.DATA_CADASTRO) AND P.ADVOGADO_ID = C.ID AND P.SITUACAO_PROCESSO_ID = 3) AS QTD_ARQUIVADO
+ FROM COLABORADORES C]]>
+	</queryString>
+	<field name="nome" class="java.lang.String"/>
+	<field name="qtd_ativo" class="java.lang.Long"/>
+	<field name="qtd_suspenso" class="java.lang.Long"/>
+	<field name="qtd_arquivado" class="java.lang.Long"/>
+	<title>
+		<band height="43">
+			<staticText>
+				<reportElement uuid="d1410cc2-2979-4aa9-b931-400b4539012b" x="74" y="3" width="360" height="36"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Processo por Advogados]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="27">
+			<staticText>
+				<reportElement uuid="0cd9753f-fc56-4c52-81f7-4b22e8e7e552" x="82" y="3" width="111" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Advogado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4bab2c10-e762-4235-b987-f55952e20a83" x="267" y="3" width="37" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ativos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f553eb9a-8844-485d-9a2b-9b34f8e97b45" x="331" y="3" width="71" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Suspensos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c7fd3f75-faa8-4fa3-b861-31a8367a7364" x="413" y="3" width="70" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Arquivados]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23">
+			<textField>
+				<reportElement uuid="3dd6608d-d26e-4962-9796-c16dbeea33ac" x="35" y="2" width="221" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4d43a38b-097d-4c63-b0c8-358a0d181074" x="256" y="2" width="65" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{qtd_ativo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fd7bc2d1-1b6b-4cfa-b098-1b4e25dbc915" x="331" y="2" width="71" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{qtd_suspenso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9ecfb29a-9b9e-4c23-aa73-098c1556cee9" x="413" y="2" width="70" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{qtd_arquivado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

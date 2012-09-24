@@ -102,6 +102,10 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 	public Colaborador() {
 	}
 	
+	public Colaborador(Long id) {
+		this.id = id;
+	}
+	
 	public Colaborador(TipoColaborador tipoColaborador) {
 		this.tipoColaborador = tipoColaborador;
 	}

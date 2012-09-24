@@ -11,16 +11,23 @@ import org.primefaces.event.FileUploadEvent;
 
 import br.com.cenajur.model.AndamentoProcesso;
 import br.com.cenajur.model.CategoriaDocumento;
+import br.com.cenajur.model.ConfiguracoesEmail;
+import br.com.cenajur.model.ConfiguracoesReplaceEmail;
 import br.com.cenajur.model.DocumentoAndamentoProcesso;
 import br.com.cenajur.model.Processo;
+import br.com.cenajur.model.ProcessoCliente;
 import br.com.cenajur.model.ProcessoNumero;
+import br.com.cenajur.model.RegrasEmail;
 import br.com.cenajur.model.TipoAndamentoProcesso;
 import br.com.cenajur.model.TipoCategoria;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
+import br.com.cenajur.util.EmailUtil;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.file.TSFile;
+import br.com.topsys.util.TSDateUtil;
+import br.com.topsys.util.TSParseUtil;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.util.TSFacesUtil;
 
@@ -122,6 +129,49 @@ public class ProcessoAndamentoUtil {
 		return erro;
 	}
 	
+	private void posPersist(){
+		
+		RegrasEmail regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_ANDAMENTO_PROCESSO).getById();
+		
+		EmailUtil emailUtil = new EmailUtil();
+		
+		Processo processo = getCrudModel().getById();
+		
+		ConfiguracoesReplaceEmail configuracaoReplace;
+		
+		for(ConfiguracoesEmail configuracoesEmail : regrasEmail.getConfiguracoesEmails()){
+			
+			if(configuracoesEmail.getFlagImediato()){
+				
+				for(ProcessoCliente processoCliente : processo.getProcessosClientes()){
+					
+					if(!TSUtil.isEmpty(processoCliente.getCliente().getEmail())){
+						
+						String texto = configuracoesEmail.getCorpoEmail();
+						
+						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_PROCESSO).getById();
+						
+						texto = texto.replace(configuracaoReplace.getCodigo(), new ProcessoNumero().obterNumeroProcessoPrincipal(processo).getNumero());
+						
+						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ASSOCIADO).getById();
+						
+						texto = texto.replace(configuracaoReplace.getCodigo(), processoCliente.getCliente().getNome());
+						
+						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DATA_ATUAL).getById();
+						
+						texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(new Date(), TSDateUtil.DD_MM_YYYY_HH_MM));
+						
+						emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
+						
+					}
+					
+				}
+				
+			}
+			
+		}
+	}
+	
 	public String cadastrarAndamentoProcesso() throws TSApplicationException{
 		
 		if(validaCampos()){
@@ -149,6 +199,9 @@ public class ProcessoAndamentoUtil {
 		CenajurUtil.addInfoMessage("Andamento cadastrado com sucesso");
 		this.initAndamentoProcesso();
 		getCrudModel().setAndamentos(this.andamentoProcesso.findByModel("descricao"));
+		
+		this.posPersist();
+		
 		return null;
 	}
 	
@@ -186,6 +239,9 @@ public class ProcessoAndamentoUtil {
 		this.initAndamentoProcesso();
 		getCrudModel().setAndamentos(this.andamentoProcesso.findByModel("descricao"));
 		CenajurUtil.addInfoMessage("Alteração realizada com sucesso");
+		
+		this.posPersist();
+		
 		return null;
 	}
 	

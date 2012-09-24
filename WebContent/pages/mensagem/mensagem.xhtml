@@ -100,8 +100,8 @@
 				            <h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:100%; margin-top:10px; margin-botton:20px">
 				            
 				            	<p:outputPanel style="text-align: left">
-					            	<p:commandButton value="Histórico" action="#{mensagemFaces.pesquisarHistorico}" update="spHistoricoMensagem" oncomplete="dlgHistoricoMensagem.show();" process="@this, pgMensagem" >
-					            		<f:setPropertyActionListener target="#{mensagemFaces.mensagem}" value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem}" />
+					            	<p:commandButton value="Histórico" action="#{mensagemFaces.pesquisarHistorico}" oncomplete="dlgHistoricoMensagem.show();" process="@this, pgMensagem" >
+					            		<f:setPropertyActionListener target="#{mensagemFaces.mensagemView}" value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem}" />
 					            	</p:commandButton>
 					            </p:outputPanel>
 					            
@@ -117,39 +117,6 @@
 				            
 					    </p:dialog>
 					    
-					    <p:dialog id="dialogHistoricoMensagem" header="Histórico da mensagem" widgetVar="dlgHistoricoMensagem" modal="true" width="550" appendToBody="true">  
-			        
-		        			<p:scrollPanel id="spHistoricoMensagem" style="width:530px;height:400px" scrollMode="native">  
-							    
-			                    <ui:repeat var="mensagem" value="#{mensagemFaces.mensagensHistorico}">
-				                    
-								    <h:panelGrid columns="2" columnClasses="coluna15_2, coluna85_2" style="width:95%; vertical-align: top">
-						              
-						                <h:outputText value="Data:" />  
-						                <h:inputText value="#{mensagem.data}" readonly="true">
-						                	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
-						                </h:inputText>
-						                  
-						                <h:outputText value="Remetente:" />
-						                <h:inputText value="#{mensagem.remetente.nome}" readonly="true" style="width: 70%"/>
-						                  
-						                <h:outputText value="Mensagem:" />
-						                <h:inputTextarea value="#{mensagem.texto}" rows="10" cols="65" style="text-align: lef; wudth: 100%" readonly="true"/>
-						                
-						            </h:panelGrid>
-					                  
-					                <hr style="width:100%; margin-top:10px;"/>
-					                  
-			                    </ui:repeat>
-					            
-							</p:scrollPanel>  
-				            
-				            <div style="text-align: right; margin-right: 25px; margin-bottom: 20px">
-				            	<p:commandButton type="button" value="Fechar" onclick="dlgHistoricoMensagem.hide();" />
-				            </div>
-					              
-					    </p:dialog>
-		  			
 		  			</p:tab>
 		  			
 		  			<p:tab id="tabMensagemEnviada" title="Enviadas">
@@ -201,6 +168,8 @@
 		  			</p:tab>
 		  		
 		  		</p:tabView>
+		  		
+		  		<ui:include src="/resources/templates/dialogs/dialogHistoricoMensagem.xhtml" />
 			  
 			</h:form>
 			

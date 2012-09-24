@@ -26,14 +26,21 @@ import br.com.cenajur.model.Audiencia;
 import br.com.cenajur.model.AudienciaAdvogado;
 import br.com.cenajur.model.Cliente;
 import br.com.cenajur.model.Colaborador;
+import br.com.cenajur.model.ConfiguracoesEmail;
+import br.com.cenajur.model.ConfiguracoesReplaceEmail;
 import br.com.cenajur.model.ProcessoNumero;
+import br.com.cenajur.model.RegrasEmail;
 import br.com.cenajur.model.SituacaoAudiencia;
 import br.com.cenajur.model.TipoAgenda;
 import br.com.cenajur.model.TipoVisita;
 import br.com.cenajur.model.Vara;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
+import br.com.cenajur.util.Constantes;
+import br.com.cenajur.util.EmailUtil;
 import br.com.topsys.exception.TSApplicationException;
+import br.com.topsys.util.TSDateUtil;
+import br.com.topsys.util.TSParseUtil;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.util.TSFacesUtil;
 
@@ -272,6 +279,44 @@ public class AgendaFaces {
 			
 			this.agenda.setColaboradorAtualizacao(this.colaboradorConectado);
 			this.agenda.update();
+			
+		}
+		
+		if(this.agenda.isTipoVisitaDoCliente()){
+			
+			RegrasEmail regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_VISITA_COM_CLIENTE).getById();
+			
+			EmailUtil emailUtil = new EmailUtil();
+			
+			ConfiguracoesReplaceEmail configuracaoReplace;
+			
+			for(ConfiguracoesEmail configuracoesEmail : regrasEmail.getConfiguracoesEmails()){
+				
+				if(configuracoesEmail.getFlagImediato()){
+				
+					if(!TSUtil.isEmpty(this.agenda.getCliente().getEmail())){
+						
+						String texto = configuracoesEmail.getCorpoEmail();
+						
+						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ASSOCIADO).getById();
+						
+						texto = texto.replace(configuracaoReplace.getCodigo(), this.agenda.getCliente().getNome());
+						
+						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DATA_ATUAL).getById();
+						
+						texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(new Date(), TSDateUtil.DD_MM_YYYY_HH_MM));
+						
+						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DATA_VISITA).getById();
+						
+						texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(this.agenda.getDataInicial(), TSDateUtil.DD_MM_YYYY_HH_MM));
+						
+						emailUtil.enviarEmailTratado(this.agenda.getCliente().getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
+						
+					}
+						
+				}
+				
+			}
 			
 		}
 		

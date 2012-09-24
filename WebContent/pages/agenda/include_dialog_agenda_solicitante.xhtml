@@ -98,6 +98,6 @@
 		
 	</p:outputPanel>
 		
-	<p:commandButton value="Salvar" action="#{agendaFaces.salvarAgenda}" oncomplete="handleRequestFacesAtualizaAgenda('dialogAgenda', dlgAgenda, args);" update="opDialogAgenda" style="margin-top: 10px" />
+	<p:commandButton value="Salvar" action="#{agendaFaces.salvarAgenda}" process="@this, opDialogAgendaSolicitante" oncomplete="handleRequestFacesAtualizaAgenda('dialogAgenda', dlgAgenda, args);" update="opDialogAgenda" style="margin-top: 10px" />
 	
 </ui:composition>

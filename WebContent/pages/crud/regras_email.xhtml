@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+  	<ui:param name="mbean" value="${regrasEmailFaces}" />
+  	<ui:param name="mbeanModel" value="${regrasEmailFaces.crudModel}" />
+  	<ui:param name="mbeanPesquisaModel" value="${regrasEmailFaces.crudPesquisaModel}" />
+  	
+  	
+  	<p:tabView id="tabview" dynamic="false">
+
+		<p:tab id="tabCadastro" title="Regras de Bloqueio" >
+			
+			<h:form id="formCadastro" prependId="false">
+        		
+				<h:panelGrid columns="1" styleClass="coluna100">
+				
+					<p:fieldset style="width: 97.5%">
+				
+						<p:dataTable id="gridPesquisa" emptyMessage="Nenhum registro encontrado" style="width: 50%" paginator="true"
+								paginatorAlwaysVisible="false" rows="10" value="#{mbean.grid}" var="linha">
+							
+							<p:column headerText="Descrição" styleClass="coluna85">
+					  			<h:outputText value="#{linha.descricao}" />
+					  		</p:column>
+					  	
+					  		<p:column headerText="Qtd. Dias" styleClass="coluna10">
+					  			<p:inputText value="#{linha.diasEnvio}" size="5" maxlength="2" />
+					  		</p:column>
+							
+							<p:column headerText="Alterar" styleClass="coluna5">
+								<p:commandLink action="#{mbean.updateEvent}" ajax="false">
+									<h:graphicImage value="../resources/images/salvar.png" style="border: 0px" />	                     
+									<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+								</p:commandLink>
+							</p:column>
+							
+						</p:dataTable>
+							
+					</p:fieldset>
+					
+				</h:panelGrid>
+					
+			</h:form>
+			
+        </p:tab>
+        
+	</p:tabView>
+  	
+</ui:composition>

@@ -246,10 +246,24 @@ public class CenajurUtil {
 		return c.get(Calendar.YEAR);
 	}
 	
-	
 	public static Integer obterMesAtual(){
 		Calendar c = Calendar.getInstance();
 		return c.get(Calendar.MONTH + 1);
+	}
+	
+	public static Integer converterStringInteiro(String string){
+		
+		try{
+			
+			Integer inteiro = Integer.valueOf(string);
+			
+			return inteiro;
+			
+		} catch(NumberFormatException e){
+			
+			return null;
+		}
+		
 	}
 	
 	public static String obterDescricaoAgenda(Agenda agenda){

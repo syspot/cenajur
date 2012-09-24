@@ -18,9 +18,16 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.FlushMode;
+import org.hibernate.Query;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+import org.hibernate.transform.Transformers;
+
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.Constantes;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
+import br.com.topsys.exception.TSSystemException;
 import br.com.topsys.util.TSUtil;
 
 @Entity
@@ -114,6 +121,12 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	
 	@Transient
 	private List<ProcessoNumero> processosNumerosTemp;
+	
+	@Transient
+	private Long situacaoProcessoId;
+	
+	@Transient
+	private String ano;
 	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -322,7 +335,23 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	public void setProcessosNumerosTemp(List<ProcessoNumero> processosNumerosTemp) {
 		this.processosNumerosTemp = processosNumerosTemp;
 	}
-	
+
+	public Long getSituacaoProcessoId() {
+		return situacaoProcessoId;
+	}
+
+	public void setSituacaoProcessoId(Long situacaoProcessoId) {
+		this.situacaoProcessoId = situacaoProcessoId;
+	}
+
+	public String getAno() {
+		return ano;
+	}
+
+	public void setAno(String ano) {
+		this.ano = ano;
+	}
+
 	public boolean isProcessoUnico(){
 		return (TSUtil.isEmpty(getProcessosNumeros()) || getProcessosNumeros().size() < 2);
 	}
@@ -365,6 +394,8 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		
 		if(!TSUtil.isEmpty(dataAbertura)){
 			query.append(" and date(p.dataAbertura) = date(?) ");
+		} else if(!TSUtil.isEmpty(this.ano) && !TSUtil.isEmpty(CenajurUtil.converterStringInteiro(this.ano))){
+			query.append(" and year(p.dataAbertura) = ? ");
 		}
 		
 		if(!TSUtil.isEmpty(dataAjuizamento)){
@@ -397,6 +428,8 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		
 		if(!TSUtil.isEmpty(situacaoProcesso) && !TSUtil.isEmpty(situacaoProcesso.getId())){
 			query.append(" and p.situacaoProcesso.id = ? ");
+		} else if(!TSUtil.isEmpty(getSituacaoProcessoId())){
+			query.append(" and p.situacaoProcesso.id = ? ");
 		}
 		
 		if(!TSUtil.isEmpty(turno) && !TSUtil.isEmpty(turno.getId())){
@@ -419,6 +452,8 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		
 		if(!TSUtil.isEmpty(dataAbertura)){
 			params.add(dataAbertura);
+		} else if(!TSUtil.isEmpty(this.ano) && !TSUtil.isEmpty(CenajurUtil.converterStringInteiro(this.ano))){
+			params.add(CenajurUtil.converterStringInteiro(this.ano));
 		}
 		
 		if(!TSUtil.isEmpty(dataAjuizamento)){
@@ -451,6 +486,8 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		
 		if(!TSUtil.isEmpty(situacaoProcesso) && !TSUtil.isEmpty(situacaoProcesso.getId())){
 			params.add(situacaoProcesso.getId());
+		} else if(!TSUtil.isEmpty(getSituacaoProcessoId())){
+			params.add(getSituacaoProcessoId());
 		}
 		
 		if(!TSUtil.isEmpty(turno) && !TSUtil.isEmpty(turno.getId())){
@@ -471,4 +508,99 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	public boolean isProcessoArquivado(){
 		return Constantes.SITUACAO_PROCESSO_ARQUIVADO.equals(situacaoProcesso.getId());
 	}
+	
+	@SuppressWarnings({ "rawtypes", "deprecation" })
+	public List findBySQL(Class classe, String[] atributos, String sql, Object... param) {
+
+		this.openTransaction();
+
+		Query queryObject=null;
+		Session session = null;
+
+		List coll = null;
+
+		try {
+		
+			session = getSession();
+			session.setFlushMode(FlushMode.NEVER);
+			SQLQuery sqlQuery = session.createSQLQuery(sql);
+
+		if (atributos != null){
+			
+			for (String attr : atributos){
+				sqlQuery = sqlQuery.addScalar(attr);
+			}
+		}
+
+		queryObject = sqlQuery.setResultTransformer(Transformers.aliasToBean(classe));
+
+		if (param != null) {
+			
+			int i = 0;
+		
+			for (Object o : param) {
+				
+				queryObject.setParameter(i, o);
+				i++;
+			}
+		}
+
+		coll = queryObject.list();
+
+		} catch (Exception e) {
+
+			throw new TSSystemException(e);
+		}
+
+		return coll;
+	}
+	
+	public Integer obterTotalAtivo(){
+		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where p.situacao_processo_id = 1")).getQtd();
+	}
+
+	public Integer obterTotalSuspenso(){
+		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where p.situacao_processo_id = 2")).getQtd();
+	}
+
+	public Integer obterTotalArquivado(){
+		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where p.situacao_processo_id = 3")).getQtd();
+	}
+	
+	public Integer obterTotalAtivoPorAno(String ano){
+		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where to_char(p.data_abertura, 'YYYY') = coalesce(?, to_char(p.data_abertura, 'YYYY'))  and p.situacao_processo_id = 1", ano)).getQtd();
+	}
+	
+	public Integer obterTotalAtivoPorAnoObjeto(String ano, Objeto objeto){
+		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where to_char(p.data_abertura, 'YYYY') = coalesce(?, to_char(p.data_abertura, 'YYYY'))  and p.objeto_id = ? and p.situacao_processo_id = 1", ano, objeto.getId())).getQtd();
+	}
+	
+	public Integer obterTotalAtivoPorAnoAdvogado(String ano, Colaborador advogado){
+		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where to_char(p.data_abertura, 'YYYY') = coalesce(?, to_char(p.data_abertura, 'YYYY'))  and p.advogado_id = ? and p.situacao_processo_id = 1", ano, advogado.getId())).getQtd();
+	}
+	
+	public Integer obterTotalAtivoPorObjeto(Objeto objeto){
+		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where p.objeto_id = ? and p.situacao_processo_id = 1", objeto.getId())).getQtd();
+	}
+	
+	public Integer obterTotalAtivoPorAdvogado(Colaborador advogado){
+		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where p.advogado_id = ? and p.situacao_processo_id = 1", advogado.getId())).getQtd();
+	}
+	
+	public Integer obterTotalSuspensoPorObjeto(Objeto objeto){
+		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where p.objeto_id = ? and p.situacao_processo_id = 2", objeto.getId())).getQtd();
+	}
+	
+	public Integer obterTotalSuspensoPorAdvogado(Colaborador advogado){
+		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where p.advogado_id = ? and p.situacao_processo_id = 2", advogado.getId())).getQtd();
+	}
+	
+	public Integer obterTotalArquivadoPorObjeto(Objeto objeto){
+		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where p.objeto_id = ? and p.situacao_processo_id = 3", objeto.getId())).getQtd();
+	}
+	
+	public Integer obterTotalArquivadoPorAdvogado(Colaborador advogado){
+		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where p.advogado_id = ? and p.situacao_processo_id = 3", advogado.getId())).getQtd();
+	}
+
 }

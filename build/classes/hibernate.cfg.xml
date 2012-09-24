@@ -28,6 +28,8 @@
  		<mapping class="br.com.cenajur.model.Cliente" />
  		<mapping class="br.com.cenajur.model.Colaborador" />
  		<mapping class="br.com.cenajur.model.Comarca" />
+ 		<mapping class="br.com.cenajur.model.ConfiguracoesEmail" />
+ 		<mapping class="br.com.cenajur.model.ConfiguracoesReplaceEmail" />
  		<mapping class="br.com.cenajur.model.DocumentoAndamentoProcesso" />
  		<mapping class="br.com.cenajur.model.DocumentoAudiencia" />
  		<mapping class="br.com.cenajur.model.DocumentoCliente" />
@@ -54,6 +56,7 @@
  		<mapping class="br.com.cenajur.model.ProcessoNumero" />
  		<mapping class="br.com.cenajur.model.ProcessoParteContraria" />
  		<mapping class="br.com.cenajur.model.RegrasBloqueio" />
+ 		<mapping class="br.com.cenajur.model.RegrasEmail" />
  		<mapping class="br.com.cenajur.model.SituacaoAudiencia" />
  		<mapping class="br.com.cenajur.model.SituacaoProcesso" />
  		<mapping class="br.com.cenajur.model.SituacaoProcessoCliente" />

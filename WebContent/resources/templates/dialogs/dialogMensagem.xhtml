@@ -23,6 +23,12 @@
 				<p:outputLabel for="texto" value="Texto" /><br/>
 				<p:inputTextarea id="texto" value="#{mbeanMensagem.mensagem.texto}" required="true" requiredMessage="Texto: Campo obrigatório" autoResize="false" rows="10" style="width:85%"/><br/>
 				
+				<p:outputPanel style="text-align: left">
+	            	<p:commandButton value="Histórico" action="#{mensagemFaces.pesquisarHistorico}" oncomplete="dlgHistoricoMensagem.show();" process="@this" >
+	            		<f:setPropertyActionListener target="#{mensagemFaces.mensagemView}" value="#{mbeanMensagem.mensagem}" />
+	            	</p:commandButton>
+	            </p:outputPanel>
+					            
 				<p:commandButton value="Enviar" action="#{mbeanMensagem.enviarMensagem}" oncomplete="handleRequestFaces('dialogMensagem', dlgMensagem, args); atualizarMensagensRecebidas();" update="pgDialogMensagem" rendered="#{mensagemFaces.flagEnviar}"/>
 				<p:commandButton value="Excluir" action="#{mensagemFaces.excluirMensagem}" oncomplete="atualizarMensagensEnviadas(); dlgMensagem.hide();" process="@this, pgDialogMensagem" global="false" style="margin-right: 25px; margin-bottom: 20px" rendered="#{!mensagemFaces.flagEnviar}"/>
 		  		

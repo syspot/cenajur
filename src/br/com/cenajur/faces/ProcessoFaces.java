@@ -41,6 +41,7 @@ import br.com.cenajur.util.Constantes;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
+import br.com.topsys.web.util.TSFacesUtil;
 
 @ViewScoped
 @ManagedBean(name = "processoFaces")
@@ -84,6 +85,39 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	protected void init() {
 		this.clearFields();
 		this.initCombos();
+		
+		AutenticacaoFaces autenticacaoFaces = (AutenticacaoFaces) TSFacesUtil.getManagedBean("autenticacaoFaces");
+		
+		if(!TSUtil.isEmpty(autenticacaoFaces)){
+			
+			boolean entrei = false;
+			
+			if(!TSUtil.isEmpty(autenticacaoFaces.getSituacaoProcesso())){
+				entrei = true;
+				this.getCrudPesquisaModel().setSituacaoProcessoId(autenticacaoFaces.getSituacaoProcesso());
+			}
+			
+			if(!TSUtil.isEmpty(autenticacaoFaces.getAno())){
+				entrei = true;
+				this.getCrudPesquisaModel().setAno(autenticacaoFaces.getAno());
+			}
+			
+			if(!TSUtil.isEmpty(autenticacaoFaces.getColaboradorSelecionado())){
+				entrei = true;
+				this.getCrudPesquisaModel().setAdvogado(autenticacaoFaces.getColaboradorSelecionado());
+			}
+			
+			if(!TSUtil.isEmpty(autenticacaoFaces.getObjetoSelecionado())){
+				entrei = true;
+				this.getCrudPesquisaModel().setObjeto(autenticacaoFaces.getObjetoSelecionado());
+			}
+			
+			if(entrei){
+				this.setTabIndex(1);
+				this.findEvent();
+			}
+		}
+		
 	}
 	
 	private void initCombos(){

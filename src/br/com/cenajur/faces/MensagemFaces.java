@@ -44,6 +44,7 @@ public class MensagemFaces{
 	private int statusBuscaLida;
 	
 	private List<Mensagem> mensagensHistorico;
+	private Mensagem mensagemView;
 	
 	@PostConstruct
 	protected void init() {
@@ -160,9 +161,11 @@ public class MensagemFaces{
 	
 	public String pesquisarHistorico(){
 		
-		while(!TSUtil.isEmpty(this.mensagem.getMensagem()) && !TSUtil.isEmpty(this.mensagem.getMensagem().getId())){
-			addMensagemRecursiva(this.mensagem.getMensagem());
-			this.mensagem = this.mensagem.getMensagem();
+		this.mensagensHistorico.clear();
+		
+		while(!TSUtil.isEmpty(this.mensagemView.getMensagem()) && !TSUtil.isEmpty(this.mensagemView.getMensagem().getId())){
+			addMensagemRecursiva(this.mensagemView.getMensagem());
+			this.mensagemView = this.mensagemView.getMensagem();
 		}
 		
 		return null;
@@ -310,6 +313,14 @@ public class MensagemFaces{
 
 	public void setMensagensHistorico(List<Mensagem> mensagensHistorico) {
 		this.mensagensHistorico = mensagensHistorico;
+	}
+
+	public Mensagem getMensagemView() {
+		return mensagemView;
+	}
+
+	public void setMensagemView(Mensagem mensagemView) {
+		this.mensagemView = mensagemView;
 	}
 	
 }

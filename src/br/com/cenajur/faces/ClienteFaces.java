@@ -1,6 +1,7 @@
 package br.com.cenajur.faces;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import br.com.cenajur.model.Cliente;
 import br.com.cenajur.model.DocumentoCliente;
 import br.com.cenajur.model.Estado;
 import br.com.cenajur.model.EstadoCivil;
+import br.com.cenajur.model.Faturamento;
 import br.com.cenajur.model.Graduacao;
 import br.com.cenajur.model.Lotacao;
 import br.com.cenajur.model.MotivoCancelamento;
@@ -182,6 +184,25 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		if(getCrudModel().getDataAtualizacao().before(CenajurUtil.getTrimestreAnterior())){
 			CenajurUtil.addDangerMessage("O endereço e telefone estão desatualizados");
 		}
+		
+		Calendar c = Calendar.getInstance();
+		
+		Faturamento faturamento = new Faturamento();
+		
+		faturamento.setCliente(getCrudModel());
+		faturamento.setAno(c.get(Calendar.YEAR));
+		faturamento.setMes(c.get(Calendar.MONTH + 1));
+		
+		List<Faturamento> faturasAbertas = faturamento.pesquisarFaturasAbertas();
+		
+		getCrudModel().setFaturasAbertas("");
+		
+		for(Faturamento fatura : faturasAbertas){
+			
+			getCrudModel().setFaturasAbertas(getCrudModel().getFaturasAbertas() + " " + fatura.getMes() + "/" + fatura.getAno() + " ");
+			
+		}
+		
 		this.atualizarComboCidades();
 		
 		for(Processo processo : getCrudModel().getProcessos()){

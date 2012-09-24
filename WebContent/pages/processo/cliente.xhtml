@@ -23,6 +23,13 @@
 			</h:outputText>
 					
 		</h:panelGrid>
+		
+  		<h:panelGrid columns="2"  rendered="#{mbeanModel.id != null and not empty mbeanModel.faturasAbertas}">
+				
+			<h:outputText value="Cliente Inadimplente nos meses:" style="font-weight: bold; font-size: 1.6em; text-align: left" />
+			<h:outputText value="#{mbeanModel.faturasAbertas}" style="font-weight: bold; font-size: 1.6em; color: red; text-align: left; word-spacing: 10px" />
+					
+		</h:panelGrid>
   	
   		<p:fieldset legend="Informações Gerais">
   			
