@@ -299,5 +299,9 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 		
 		return super.find(query.toString(), "a.dataInicial", params.toArray());
 	}
+	
+	public List<Agenda> pesquisarVisitasProximas(int qtdDias){
+		return super.find("select a from Agenda a where a.dataInicial between ? and ? ", null, new Date(), CenajurUtil.getDataMaisDias(qtdDias));
+	}
 
 }

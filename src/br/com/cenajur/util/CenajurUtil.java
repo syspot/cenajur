@@ -127,6 +127,12 @@ public class CenajurUtil {
 		return c.getTime();
 	}
 	
+	public static Date getDataMaisDias(int qtdDias){
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.DAY_OF_MONTH, qtdDias);
+		return c.getTime();
+	}
+	
 	public static void criaArquivo(UploadedFile file, String arquivo) {
 		
 		try {

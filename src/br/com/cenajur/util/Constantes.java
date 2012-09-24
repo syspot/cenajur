@@ -29,33 +29,33 @@ public class Constantes {
 	public static final Long REGRA_BLOQUEIO_TAREFA = 2L;
 	public static final Long REGRA_BLOQUEIO_AUDIENCIA = 3L;
 	
-	public static final String PASTA_UPLOAD_ARQUIVO = "E:\\arquivos\\";
-	//public static final String PASTA_UPLOAD_ARQUIVO = "/arquivos/";
-	public static final String PASTA_UPLOAD_IMAGEM = "E:\\imagens\\";
-	//public static final String PASTA_UPLOAD_IMAGEM = "/imagens/";
-	public static final String PASTA_UPLOAD_IMAGEM_TEMP = "E:\\imagens\\tmp/";
-	//public static final String PASTA_UPLOAD_IMAGEM_TEMP = "/imagens/tmp/";
+	//public static final String PASTA_UPLOAD_ARQUIVO = "E:\\arquivos\\";
+	public static final String PASTA_UPLOAD_ARQUIVO = "/arquivos/";
+	//public static final String PASTA_UPLOAD_IMAGEM = "E:\\imagens\\";
+	public static final String PASTA_UPLOAD_IMAGEM = "/imagens/";
+	//public static final String PASTA_UPLOAD_IMAGEM_TEMP = "E:\\imagens\\tmp/";
+	public static final String PASTA_UPLOAD_IMAGEM_TEMP = "/imagens/tmp/";
 	
-	public static final String PASTA_DOWNLOAD_ARQUIVO = "http://localhost:8080/arquivos/";
-	//public static final String PASTA_DOWNLOAD_ARQUIVO = "http://177.70.17.250:8080/arquivos/";
-	public static final String PASTA_DOWNLOAD_IMAGEM = "http://localhost:8080/imagens/";
-	//public static final String PASTA_DOWNLOAD_IMAGEM = "http://177.70.17.250:8080/imagens/";
-	public static final String PASTA_DOWNLOAD_IMAGEM_TMP = "http://localhost:8080/imagens/tmp/";
-	//public static final String PASTA_DOWNLOAD_IMAGEM_TMP = "http://177.70.17.250:8080/imagens/tmp/";
+	//public static final String PASTA_DOWNLOAD_ARQUIVO = "http://localhost:8080/arquivos/";
+	public static final String PASTA_DOWNLOAD_ARQUIVO = "http://177.70.17.250:8080/arquivos/";
+	//public static final String PASTA_DOWNLOAD_IMAGEM = "http://localhost:8080/imagens/";
+	public static final String PASTA_DOWNLOAD_IMAGEM = "http://177.70.17.250:8080/imagens/";
+	//public static final String PASTA_DOWNLOAD_IMAGEM_TMP = "http://localhost:8080/imagens/tmp/";
+	public static final String PASTA_DOWNLOAD_IMAGEM_TMP = "http://177.70.17.250:8080/imagens/tmp/";
 	
-	public static final String PASTA_ANDAMENTO_PROCESSO = "andamentos_processos\\";
-	//public static final String PASTA_ANDAMENTO_PROCESSO = "andamentos_processos/";
-	public static final String PASTA_PROCESSO = "processos\\";
-	//public static final String PASTA_PROCESSO = "processos/";
-	public static final String PASTA_AUDIENCIA = "audiencias\\";
-	//public static final String PASTA_AUDIENCIA = "audiencias/";
+	//public static final String PASTA_ANDAMENTO_PROCESSO = "andamentos_processos\\";
+	public static final String PASTA_ANDAMENTO_PROCESSO = "andamentos_processos/";
+	//public static final String PASTA_PROCESSO = "processos\\";
+	public static final String PASTA_PROCESSO = "processos/";
+	//public static final String PASTA_AUDIENCIA = "audiencias\\";
+	public static final String PASTA_AUDIENCIA = "audiencias/";
 	public static final String PASTA_GERAL = "geral/";
 	//public static final String PASTA_GERAL = "geral/";
 	public static final String PASTA_CLIENTE = "clientes\\";
 	//public static final String PASTA_CLIENTE = "clientes/";
 	
-	public static final String PASTA_RELATORIOS = "E:\\sub_relatorios\\";
-	//public static final String PASTA_RELATORIOS = "/sub_relatorios/";
+	//public static final String PASTA_RELATORIOS = "E:\\sub_relatorios\\";
+	public static final String PASTA_RELATORIOS = "/sub_relatorios/";
 	
 	public static final String DOC_TEMP = "doc_temp";
 	public static final String FOTO_CAM_TEMP = "_foto_cam.jpg";

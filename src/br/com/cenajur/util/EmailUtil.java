@@ -21,8 +21,8 @@ public class EmailUtil {
     
     private static final String USER_FROM = "fagner.mff@gmail.com";
     
-    private static final String USER = "fagner.mff@gmail.com";
-    private static final String PASSWORD = "nayara125689";
+    private static final String USER = "cenajur@gmail.com";
+    private static final String PASSWORD = "123456";
     
     public void enviarEmailTratado(String to, String subject, String message, String mimeType){
     	
