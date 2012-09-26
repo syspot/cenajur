@@ -86,12 +86,14 @@ public class ProcessoAudienciaUtil {
 	}
 
 	public void enviarDocumento(FileUploadEvent event) {
-		getDocumentoAudiencia().setDocumento(event.getFile());
-		getDocumentoAudiencia().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
+		
+		getDocumentoAudiencia().setArquivo(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
 		
 		if(CenajurUtil.isDocumentoPdf(event.getFile())){
 			getDocumentoAudiencia().setDescricaoBusca(CenajurUtil.getDescricaoPDF(event.getFile()));
 		}
+		
+		CenajurUtil.criaArquivo(event.getFile(), getDocumentoAudiencia().getCaminhoUploadCompleto());
 		
 	}
 	
@@ -99,7 +101,7 @@ public class ProcessoAudienciaUtil {
 		
 		RequestContext context = RequestContext.getCurrentInstance();
 		
-		if(TSUtil.isEmpty(getDocumentoAudiencia().getDocumento())){
+		if(TSUtil.isEmpty(getDocumentoAudiencia().getArquivo())){
 			CenajurUtil.addErrorMessage("Documento: Campo obrigatório");
 			context.addCallbackParam("sucesso", false);
 			return null;
@@ -198,17 +200,6 @@ public class ProcessoAudienciaUtil {
 		this.audiencia.setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 		this.audiencia.setDataCadastro(new Date());
 		this.audiencia.save();
-
-		for(DocumentoAudiencia doc : this.audiencia.getDocumentos()){
-			
-			if(!TSUtil.isEmpty(doc.getDocumento())){
-				
-				doc.setArquivo(doc.getId() + TSFile.obterExtensaoArquivo(doc.getArquivo()));
-				CenajurUtil.criaArquivo(doc.getDocumento(), doc.getCaminhoUploadCompleto());
-				
-				doc.update();
-			}
-		}
 		
 		CenajurUtil.addInfoMessage("Audiência cadastrada com sucesso");
 		this.initAudiencia();
@@ -235,21 +226,6 @@ public class ProcessoAudienciaUtil {
 		this.audiencia.setDataAtualizacao(new Date());
 		this.audiencia.setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 		this.audiencia.update();
-		
-		for(DocumentoAudiencia doc : this.audiencia.getDocumentos()){
-			
-			if(!TSUtil.isEmpty(doc.getDocumento())){
-				
-				DocumentoAudiencia documento = doc.getByModel();
-				
-				doc.setId(documento.getId());
-				doc.setArquivo(doc.getId() + TSFile.obterExtensaoArquivo(doc.getArquivo()));
-				CenajurUtil.criaArquivo(doc.getDocumento(), doc.getCaminhoUploadCompleto());
-				
-				doc.update();
-			}
-			
-		}
 		
 		this.initAudiencia();
 		getCrudModel().setAudiencias(this.audiencia.findByModel("descricao"));

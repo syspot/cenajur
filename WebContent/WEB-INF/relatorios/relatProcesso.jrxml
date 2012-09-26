@@ -21,7 +21,7 @@
 						<subreportParameterExpression><![CDATA[$P{DATA_FINAL}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "relatProcessoPorTipo.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/relatProcessoPorTipo.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport>
 					<reportElement uuid="bea1cc1e-f4f2-410f-b069-6b26670e923d" positionType="Float" x="24" y="68" width="500" height="50"/>
@@ -32,7 +32,7 @@
 						<subreportParameterExpression><![CDATA[$P{DATA_FINAL}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "relatProcessoPorAdvogado.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/relatProcessoPorAdvogado.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport>
 					<reportElement uuid="003257ec-60a0-4308-882b-faec656e1375" positionType="Float" x="24" y="128" width="500" height="51"/>
@@ -43,7 +43,7 @@
 						<subreportParameterExpression><![CDATA[$P{DATA_FINAL}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "relatProcessoPorVara.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/relatProcessoPorVara.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport>
 					<reportElement uuid="277c5845-eb1a-48e7-96d1-cd17ef6e8471" positionType="Float" x="24" y="189" width="500" height="47"/>
@@ -54,7 +54,7 @@
 						<subreportParameterExpression><![CDATA[$P{DATA_FINAL}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "relatProcessoPorObjeto.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/relatProcessoPorObjeto.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</groupHeader>

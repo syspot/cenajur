@@ -6,8 +6,8 @@ import java.util.Map;
 
 import br.com.cenajur.relat.JasperUtil;
 import br.com.cenajur.util.CenajurUtil;
-import br.com.cenajur.util.Constantes;
 import br.com.topsys.util.TSUtil;
+import br.com.topsys.web.util.TSFacesUtil;
 
 public abstract class RelatorioModeloFaces{
 
@@ -43,7 +43,7 @@ public abstract class RelatorioModeloFaces{
 
             Map<String, Object> parametros = new HashMap<String, Object>();
 
-            parametros.put("SUBREPORT_DIR", Constantes.PASTA_RELATORIOS);
+            parametros.put("SUBREPORT_DIR", TSFacesUtil.getServletContext().getRealPath("WEB-INF/relatorios/"));
             parametros.put("DATA_INICIAL", dataInicial);
             parametros.put("DATA_FINAL", dataFinal);
 

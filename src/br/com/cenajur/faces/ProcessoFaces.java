@@ -211,24 +211,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	
 	@Override
 	protected void posPersist() throws TSApplicationException{
-
 		getCrudModel().setProcessosNumerosTemp(new ProcessoNumero().pesquisarOutrosNumerosProcessos(getCrudModel()));
-		
-		for(DocumentoProcesso doc : getCrudModel().getDocumentos()){
-			
-			if(!TSUtil.isEmpty(doc.getDocumento())){
-				
-				DocumentoProcesso documento = doc.getByModel();
-				
-				doc.setId(documento.getId());
-				doc.setArquivo(doc.getId() + TSFile.obterExtensaoArquivo(doc.getArquivo()));
-				CenajurUtil.criaArquivo(doc.getDocumento(), doc.getCaminhoUploadCompleto());
-				
-				doc.update();
-				
-			}
-			
-		}
 		
 	}
 	
@@ -284,12 +267,14 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	}
 	
 	public void enviarDocumento(FileUploadEvent event) {
-		getDocumentoProcesso().setDocumento(event.getFile());
-		getDocumentoProcesso().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
+		
+		getDocumentoProcesso().setArquivo(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
 		
 		if(CenajurUtil.isDocumentoPdf(event.getFile())){
 			getDocumentoProcesso().setDescricaoBusca(CenajurUtil.getDescricaoPDF(event.getFile()));
 		}
+		
+		CenajurUtil.criaArquivo(event.getFile(), getDocumentoProcesso().getCaminhoUploadCompleto());
 		
 	}
 	
@@ -297,7 +282,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		
 		RequestContext context = RequestContext.getCurrentInstance();
 		
-		if(TSUtil.isEmpty(getDocumentoProcesso().getDocumento())){
+		if(TSUtil.isEmpty(getDocumentoProcesso().getArquivo())){
 			CenajurUtil.addErrorMessage("Documento: Campo obrigatório");
 			context.addCallbackParam("sucesso", false);
 			return null;

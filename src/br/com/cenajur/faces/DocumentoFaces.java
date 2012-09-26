@@ -16,7 +16,6 @@ import br.com.cenajur.model.DocumentoGeral;
 import br.com.cenajur.model.TipoCategoria;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.Constantes;
-import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
 
@@ -61,25 +60,11 @@ public class DocumentoFaces extends CrudFaces<DocumentoGeral> {
 	}
 	
 	@Override
-	protected void posPersist() throws TSApplicationException{
-	
-		if(!TSUtil.isEmpty(getCrudModel().getDocumento())){
-			
-			getCrudModel().setArquivo(getCrudModel().getId() + TSFile.obterExtensaoArquivo(getCrudModel().getArquivo()));
-			CenajurUtil.criaArquivo(getCrudModel().getDocumento(), getCrudModel().getCaminhoUploadCompleto());
-			
-			getCrudModel().update();
-			
-		}
-			
-	}
-	
-	@Override
 	protected boolean validaCampos() {
 		
 		boolean erro = false;
 		
-		if(TSUtil.isEmpty(getCrudModel().getId()) && TSUtil.isEmpty(getCrudModel().getDocumento())){
+		if(TSUtil.isEmpty(getCrudModel().getId()) && TSUtil.isEmpty(getCrudModel().getArquivo())){
 			erro = true;
 			CenajurUtil.addErrorMessage("Documento: Campo obrigatório");
 		}
@@ -93,9 +78,15 @@ public class DocumentoFaces extends CrudFaces<DocumentoGeral> {
 	}
 	
 	public void enviarDocumento(FileUploadEvent event) {
-		getCrudModel().setDocumento(event.getFile());
-		getCrudModel().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
-		getCrudModel().setDescricaoBusca(CenajurUtil.getDescricaoPDF(event.getFile()));
+		
+		getCrudModel().setArquivo(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
+		
+		if(CenajurUtil.isDocumentoPdf(event.getFile())){
+			getCrudModel().setDescricaoBusca(CenajurUtil.getDescricaoPDF(event.getFile()));
+		}
+		
+		CenajurUtil.criaArquivo(event.getFile(), getCrudModel().getCaminhoUploadCompleto());
+		
 	}
 
 	public List<SelectItem> getCategoriasDocumentos() {

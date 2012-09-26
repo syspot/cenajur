@@ -105,22 +105,6 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 	@Override
 	protected void posPersist() throws TSApplicationException{
 		
-		for(DocumentoAudiencia doc : getCrudModel().getDocumentos()){
-			
-			if(!TSUtil.isEmpty(doc.getDocumento())){
-
-				DocumentoAudiencia documento = doc.getByModel();
-				
-				doc.setId(documento.getId());
-				doc.setArquivo(doc.getId() + TSFile.obterExtensaoArquivo(doc.getArquivo()));
-				CenajurUtil.criaArquivo(doc.getDocumento(), doc.getCaminhoUploadCompleto());
-				
-				doc.update();
-				
-			}
-			
-		}
-		
 		RegrasEmail regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_AUDIENCIA).getById();
 		
 		EmailUtil emailUtil = new EmailUtil();
@@ -211,19 +195,21 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 	}
 	
 	public void enviarDocumento(FileUploadEvent event) {
-		getDocumentoAudiencia().setDocumento(event.getFile());
-		getDocumentoAudiencia().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
+
+		getDocumentoAudiencia().setArquivo(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
 		
 		if(CenajurUtil.isDocumentoPdf(event.getFile())){
 			getDocumentoAudiencia().setDescricaoBusca(CenajurUtil.getDescricaoPDF(event.getFile()));
 		}
+		
+		CenajurUtil.criaArquivo(event.getFile(), getDocumentoAudiencia().getCaminhoUploadCompleto());
 	}
 		
 	public String addDocumento(){
 		
 		RequestContext context = RequestContext.getCurrentInstance();
 		
-		if(TSUtil.isEmpty(getDocumentoAudiencia().getDocumento())){
+		if(TSUtil.isEmpty(getDocumentoAudiencia().getArquivo())){
 			CenajurUtil.addErrorMessage("Documento: Campo obrigatório");
 			context.addCallbackParam("sucesso", false);
 			return null;

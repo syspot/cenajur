@@ -18,6 +18,11 @@ import br.com.topsys.util.TSUtil;
 @Table(name = "motivos_cancelamentos")
 public class MotivoCancelamento extends TSActiveRecordAb<MotivoCancelamento>{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5688189706221316751L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "motivos_cancelamentos_id")
 	@SequenceGenerator(name="motivos_cancelamentos_id", sequenceName="motivos_cancelamentos_id_seq")

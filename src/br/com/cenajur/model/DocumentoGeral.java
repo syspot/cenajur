@@ -1,6 +1,5 @@
 package br.com.cenajur.model;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,18 +12,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import org.primefaces.model.UploadedFile;
 
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.Constantes;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
-import br.com.topsys.util.TSUtil;
 
 @Entity
 @Table(name = "documentos_gerais")
-public class DocumentoGeral extends TSActiveRecordAb<DocumentoGeral>{
+public class DocumentoGeral extends TSActiveRecordAb<DocumentoGeral> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8923505402953823315L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="documentos_gerais_id")
@@ -47,9 +47,6 @@ public class DocumentoGeral extends TSActiveRecordAb<DocumentoGeral>{
 	@Column(name = "data_cadastro")
 	private Date dataCadastro;
 	
-	@Transient
-	private UploadedFile documento;
-
 	public Long getId() {
 		return id;
 	}
@@ -82,14 +79,6 @@ public class DocumentoGeral extends TSActiveRecordAb<DocumentoGeral>{
 		this.categoriaDocumento = categoriaDocumento;
 	}
 
-	public UploadedFile getDocumento() {
-		return documento;
-	}
-
-	public void setDocumento(UploadedFile documento) {
-		this.documento = documento;
-	}
-	
 	public String getDescricao() {
 		return descricao;
 	}
@@ -119,11 +108,11 @@ public class DocumentoGeral extends TSActiveRecordAb<DocumentoGeral>{
 	}
 
 	public String getCaminhoUploadCompleto(){
-		return Constantes.PASTA_UPLOAD_ARQUIVO + CenajurUtil.getAnoMes(getDataCadastro()) + Constantes.PASTA_GERAL + arquivo;
+		return Constantes.PASTA_UPLOAD_ARQUIVO + Constantes.PASTA_GERAL + arquivo;
 	}
 	
 	public String getCaminhoDownloadCompleto(){
-		return Constantes.PASTA_DOWNLOAD_ARQUIVO + CenajurUtil.getAnoMesWeb(getDataCadastro()) + Constantes.PASTA_GERAL + arquivo;
+		return Constantes.PASTA_DOWNLOAD_ARQUIVO + Constantes.PASTA_GERAL + arquivo;
 	}
 
 	@Override

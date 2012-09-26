@@ -30,7 +30,7 @@ public class RelatorioProcessosColetivosFaces{
 
        this.objetos = new Objeto().findAll();
        
-       List<Model> models = new Processo().findBySQL(Model.class, new String[]{"ano"}, "SELECT DISTINCT TO_CHAR(data_cadastro, 'YYYY') AS ANO FROM PROCESSOS ORDER BY ANO DESC", null);
+       List<Model> models = new Processo().pesquisarAnosProcesso();
        
        this.anos = new ArrayList<String>();
        

@@ -111,22 +111,6 @@ public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 	@Override
 	protected void posPersist() throws TSSystemException, TSApplicationException{
 		
-		for(DocumentoAndamentoProcesso doc : getCrudModel().getDocumentos()){
-			
-			if(!TSUtil.isEmpty(doc.getDocumento())){
-				
-				DocumentoAndamentoProcesso documento = doc.getByModel();
-				
-				doc.setId(documento.getId());
-				doc.setArquivo(doc.getId() + TSFile.obterExtensaoArquivo(doc.getArquivo()));
-				CenajurUtil.criaArquivo(doc.getDocumento(), doc.getCaminhoUploadCompleto());
-				
-				doc.update();
-				
-			}
-			
-		}
-		
 		RegrasEmail regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_ANDAMENTO_PROCESSO).getById();
 		
 		EmailUtil emailUtil = new EmailUtil();
@@ -176,12 +160,14 @@ public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 	}
 	
 	public void enviarDocumento(FileUploadEvent event) {
-		getDocumentoAndamentoProcesso().setDocumento(event.getFile());
-		getDocumentoAndamentoProcesso().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
+		
+		getDocumentoAndamentoProcesso().setArquivo(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
 		
 		if(CenajurUtil.isDocumentoPdf(event.getFile())){
 			getDocumentoAndamentoProcesso().setDescricaoBusca(CenajurUtil.getDescricaoPDF(event.getFile()));
 		}
+		
+		CenajurUtil.criaArquivo(event.getFile(), getDocumentoAndamentoProcesso().getCaminhoUploadCompleto());
 		
 	}
 		
@@ -189,7 +175,7 @@ public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 		
 		RequestContext context = RequestContext.getCurrentInstance();
 		
-		if(TSUtil.isEmpty(getDocumentoAndamentoProcesso().getDocumento())){
+		if(TSUtil.isEmpty(getDocumentoAndamentoProcesso().getArquivo())){
 			CenajurUtil.addErrorMessage("Documento: Campo obrigatório");
 			context.addCallbackParam("sucesso", false);
 			return null;

@@ -20,6 +20,11 @@ import br.com.topsys.util.TSUtil;
 @Table(name = "grupos")
 public class Grupo extends TSActiveRecordAb<Grupo>  {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 825014696209847193L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="grupos_id")
 	@SequenceGenerator(name="grupos_id", sequenceName="grupos_id_seq")

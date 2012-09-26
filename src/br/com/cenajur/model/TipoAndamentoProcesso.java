@@ -14,6 +14,11 @@ import br.com.topsys.util.TSUtil;
 @Table(name = "tipos_andamentos_processos")
 public class TipoAndamentoProcesso extends TSActiveRecordAb<TipoAndamentoProcesso>{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3470809691955798310L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="tipos_andamentos_processos_id")
 	@SequenceGenerator(name="tipos_andamentos_processos_id", sequenceName="tipos_andamentos_processos_id_seq")

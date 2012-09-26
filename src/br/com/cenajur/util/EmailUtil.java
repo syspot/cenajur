@@ -51,7 +51,7 @@ public class EmailUtil {
         props.put("mail.smtp.socketFactory.fallback", "false");  
           
         SimpleAuth auth = null;  
-        auth = new SimpleAuth ("fagner.mff@gmail.com","nayara125689");  
+        auth = new SimpleAuth (USER, PASSWORD);  
           
         //Session - objeto que ira realizar a conexão com o servidor  
         /*Como há necessidade de autenticação é criada uma autenticacao que 

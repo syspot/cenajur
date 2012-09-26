@@ -24,7 +24,7 @@ public class JasperUtil {
 
         Connection con = ConnectionFactory.getConnection();
 
-        InputStream is = this.getClass().getResourceAsStream(jasper);
+        InputStream is = TSFacesUtil.getServletContext().getResourceAsStream("/WEB-INF/relatorios/"+jasper);
 
         if (!TSUtil.isEmpty(is)) {
 

@@ -18,6 +18,11 @@ import br.com.topsys.util.TSUtil;
 @Table(name = "graduacoes")
 public class Graduacao extends TSActiveRecordAb<Graduacao>{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5898906552691113628L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="graduacoes_id")
 	@SequenceGenerator(name="graduacoes_id", sequenceName="graduacoes_id_seq")

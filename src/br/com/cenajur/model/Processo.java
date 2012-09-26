@@ -602,5 +602,10 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	public Integer obterTotalArquivadoPorAdvogado(Colaborador advogado){
 		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where p.advogado_id = ? and p.situacao_processo_id = 3", advogado.getId())).getQtd();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Model> pesquisarAnosProcesso(){
+		return new Processo().findBySQL(Model.class, new String[]{"ano"}, "SELECT DISTINCT TO_CHAR(data_cadastro, 'YYYY') AS ANO FROM PROCESSOS ORDER BY ANO DESC", null);
+	}
 
 }

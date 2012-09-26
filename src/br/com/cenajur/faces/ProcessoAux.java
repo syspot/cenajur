@@ -105,25 +105,7 @@ public class ProcessoAux extends TSMainFaces{
 	}
 	
 	private void posUpdate() throws TSApplicationException{
-		
 		this.processos.get(indexProcesso).setProcessosNumerosTemp(new ProcessoNumero().pesquisarOutrosNumerosProcessos(this.processos.get(indexProcesso)));
-		
-		for(DocumentoProcesso doc : this.processos.get(indexProcesso).getDocumentos()){
-			
-			if(!TSUtil.isEmpty(doc.getDocumento())){
-				
-				DocumentoProcesso documento = doc.getByModel();
-				
-				doc.setId(documento.getId());
-				doc.setArquivo(doc.getId() + TSFile.obterExtensaoArquivo(doc.getArquivo()));
-				CenajurUtil.criaArquivo(doc.getDocumento(), doc.getCaminhoUploadCompleto());
-				
-				this.processos.get(indexProcesso).update();
-				
-			}
-			
-		}
-		
 	}
 	
 	public String updateProcesso() throws TSApplicationException {
@@ -233,7 +215,7 @@ public class ProcessoAux extends TSMainFaces{
 		
 		RequestContext context = RequestContext.getCurrentInstance();
 		
-		if(TSUtil.isEmpty(getDocumentoProcesso().getDocumento())){
+		if(TSUtil.isEmpty(getDocumentoProcesso().getArquivo())){
 			CenajurUtil.addErrorMessage("Documento: Campo obrigatório");
 			context.addCallbackParam("sucesso", false);
 			return null;
@@ -251,12 +233,13 @@ public class ProcessoAux extends TSMainFaces{
 	
 	public void enviarDocumento(FileUploadEvent event) {
 		
-		getDocumentoProcesso().setDocumento(event.getFile());
-		getDocumentoProcesso().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
+		getDocumentoProcesso().setArquivo(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
 		
 		if(CenajurUtil.isDocumentoPdf(event.getFile())){
 			getDocumentoProcesso().setDescricaoBusca(CenajurUtil.getDescricaoPDF(event.getFile()));
 		}
+		
+		CenajurUtil.criaArquivo(event.getFile(), getDocumentoProcesso().getCaminhoUploadCompleto());
 		
 	}
 	

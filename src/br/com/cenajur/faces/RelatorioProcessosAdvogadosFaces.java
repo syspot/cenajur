@@ -23,12 +23,11 @@ public class RelatorioProcessosAdvogadosFaces{
 		this.gerarRelatorio();
 	}
 	
-	@SuppressWarnings("unchecked")
 	public String gerarRelatorio() {
 
        this.advogados = new Colaborador().findAllAdvogados();
        
-       List<Model> models = new Processo().findBySQL(Model.class, new String[]{"ano"}, "SELECT DISTINCT TO_CHAR(data_cadastro, 'YYYY') AS ANO FROM PROCESSOS ORDER BY ANO DESC", null);
+       List<Model> models = new Processo().pesquisarAnosProcesso();
        
        this.anos = new ArrayList<String>();
        

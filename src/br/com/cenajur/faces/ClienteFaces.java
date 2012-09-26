@@ -240,23 +240,6 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	@Override
 	protected void posPersist() throws TSApplicationException{
 		
-		Cliente aux = getCrudModel().getById();
-		
-		int posicao = 0;
-		
-		for(DocumentoCliente doc : getCrudModel().getDocumentos()){
-			
-			if(!TSUtil.isEmpty(doc.getDocumento())){
-		
-				doc.setId(aux.getDocumentos().get(posicao).getId());
-				doc.setArquivo(doc.getId() + TSFile.obterExtensaoArquivo(doc.getArquivo()));
-				CenajurUtil.criaArquivo(doc.getDocumento(), doc.getCaminhoUploadCompleto());
-				
-				doc.update();
-			}
-			posicao++;
-		}
-		
 		if(!TSUtil.isEmpty(getCrudModel().getBytesImagem())){
 			
 			String nomeImagem = getCrudModel().getId() + TSFile.obterExtensaoArquivo(getCrudModel().getUrlImagem());
@@ -315,19 +298,22 @@ public class ClienteFaces extends CrudFaces<Cliente> {
     }
 	
 	public void enviarDocumento(FileUploadEvent event) {
-		getDocumentoCliente().setDocumento(event.getFile());
-		getDocumentoCliente().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
+		
+		getDocumentoCliente().setArquivo(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
 		
 		if(CenajurUtil.isDocumentoPdf(event.getFile())){
 			getDocumentoCliente().setDescricaoBusca(CenajurUtil.getDescricaoPDF(event.getFile()));
 		}
+		
+		CenajurUtil.criaArquivo(event.getFile(), getDocumentoCliente().getCaminhoUploadCompleto());
+		
 	}
 		
 	public String addDocumento(){
 		
 		RequestContext context = RequestContext.getCurrentInstance();
 		
-		if(TSUtil.isEmpty(getDocumentoCliente().getDocumento())){
+		if(TSUtil.isEmpty(getDocumentoCliente().getArquivo())){
 			CenajurUtil.addErrorMessage("Documento: Campo obrigatório");
 			context.addCallbackParam("sucesso", false);
 			return null;
