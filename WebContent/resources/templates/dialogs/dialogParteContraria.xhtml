@@ -11,7 +11,7 @@
 	<ui:param name="mbeanAcao" value="${processoFaces}" />
 	<ui:param name="nomeDialog" value="dlgParteContraria" />
 
-	<h:form>
+	<h:form rendered="#{autenticacaoFaces.mostrarDialogParteContraria}">
 		
 		<p:dialog id="dialogParteContraria" widgetVar="dlgParteContraria" width="600" height="400" modal="true">
 	  

@@ -7,7 +7,7 @@
 
 	<ui:param name="mbeanPesquisa" value="${permissaoPesquisaFaces}" />
 
-	<h:form>
+	<h:form rendered="#{autenticacaoFaces.mostrarDialogPermissao}">
 		
 		<p:dialog id="dialogPermissao" widgetVar="dlgPermissao" header="Pesquisa de Permissões" width="600" height="400" modal="true">
 	  

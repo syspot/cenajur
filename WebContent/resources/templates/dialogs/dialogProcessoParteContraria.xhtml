@@ -7,7 +7,7 @@
 
 	<ui:param name="mbean" value="${processoFaces}" />
 
-	<h:form>
+	<h:form rendered="#{autenticacaoFaces.mostrarDialogProcessoParteContraria}">
 		
 		<p:dialog id="dialogArquivarProcessoParteContraria" header="Alterar Status" modal="true" widgetVar="dlgArquivarProcessoParteContraria" width="330">
 	

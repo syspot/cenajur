@@ -41,8 +41,8 @@
 
 			<p:outputPanel id="opAssociados" autoUpdate="true">
 
-				<p:commandButton type="button" value="Adicionar Associado" icon="ui-icon-plus" onclick="dlgCliente.show();" rendered="#{empty cadastroViaCliente ? true : false}" />
-				<p:commandButton value="Adicionar Associado" icon="ui-icon-plus" oncomplete="dlgCliente4.show();" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}">
+				<p:commandButton type="button" value="Adicionar Associado" icon="ui-icon-plus" onclick="dlgCliente.show();" rendered="#{empty cadastroViaCliente ? true : false}" style="margin-bottom:5px" />
+				<p:commandButton value="Adicionar Associado" icon="ui-icon-plus" oncomplete="dlgCliente4.show();" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}" style="margin-bottom:5px">
 					<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
 				</p:commandButton>
 				
@@ -96,8 +96,8 @@
 
 			<p:outputPanel autoUpdate="true">
 
-				<p:commandButton type="button" value="Adicionar Parte Contrária" icon="ui-icon-plus" onclick="dlgParteContraria.show();" rendered="#{empty cadastroViaCliente ? true : false}"/>
-				<p:commandButton value="Adicionar Parte Contrária" icon="ui-icon-plus" onclick="dlgParteContraria2.show();" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}">
+				<p:commandButton type="button" value="Adicionar Parte Contrária" icon="ui-icon-plus" onclick="dlgParteContraria.show();" rendered="#{empty cadastroViaCliente ? true : false}" style="margin-bottom:5px"/>
+				<p:commandButton value="Adicionar Parte Contrária" icon="ui-icon-plus" onclick="dlgParteContraria2.show();" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}" style="margin-bottom:5px">
 					<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
 				</p:commandButton>
 				<p:dataTable value="#{mbeanProcessoModel.processosPartesContrarias}" var="processoParteContraria" emptyMessage="Nenhuma parte contrária selecionada" rowIndexVar="index" style="width:100%">

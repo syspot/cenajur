@@ -7,7 +7,7 @@
 
 	<ui:param name="mbeanMensagem" value="${mensagemFaces}" />
 
-	<h:form>
+	<h:form rendered="#{autenticacaoFaces.mostrarDialogMensagem}">
 	
 		<p:dialog id="dialogMensagem" widgetVar="dlgMensagem" header="Enviar Mensagem" width="550" height="300" modal="true">
 	  
@@ -18,19 +18,19 @@
 				<h:outputText value="Destinatarios" /><br/>
 				<p:inputText value="#{mbeanMensagem.mensagem.mensagensDestinatarios}" readonly="true" styleClass="coluna85" rendered="#{not empty mbeanMensagem.mensagem.mensagensDestinatarios}"/>
 				<p:inputText readonly="true" styleClass="coluna85" rendered="#{empty mbeanMensagem.mensagem.mensagensDestinatarios}"/>
-				<p:commandButton type="button" value="Add" icon="ui-icon-plus" onclick="dlgColaborador.show();" rendered="#{mensagemFaces.flagEnviar}"/><br/>
+				<p:commandButton type="button" value="Add" icon="ui-icon-plus" onclick="dlgColaborador.show();" rendered="#{mensagemFaces.flagEnviar}" style="margin-left:5px"/><br/>
 				
 				<p:outputLabel for="texto" value="Texto" /><br/>
-				<p:inputTextarea id="texto" value="#{mbeanMensagem.mensagem.texto}" required="true" requiredMessage="Texto: Campo obrigatório" autoResize="false" rows="10" style="width:85%"/><br/>
+				<p:inputTextarea id="texto" value="#{mbeanMensagem.mensagem.texto}" required="true" requiredMessage="Texto: Campo obrigatório" autoResize="false" rows="10" style="width:85%; margin-bottom:10px"/><br/>
 				
-				<p:outputPanel style="text-align: left">
-	            	<p:commandButton value="Histórico" action="#{mensagemFaces.pesquisarHistorico}" oncomplete="dlgHistoricoMensagem.show();" process="@this" >
+				<p:outputPanel style="text-align: left;">
+	            	<p:commandButton value="Histórico" icon="ui-icon-search" action="#{mensagemFaces.pesquisarHistorico}" oncomplete="dlgHistoricoMensagem.show();" process="@this" >
 	            		<f:setPropertyActionListener target="#{mensagemFaces.mensagemView}" value="#{mbeanMensagem.mensagem}" />
 	            	</p:commandButton>
 	            </p:outputPanel>
 					            
-				<p:commandButton value="Enviar" action="#{mbeanMensagem.enviarMensagem}" oncomplete="handleRequestFaces('dialogMensagem', dlgMensagem, args); atualizarMensagensRecebidas();" update="pgDialogMensagem" rendered="#{mensagemFaces.flagEnviar}"/>
-				<p:commandButton value="Excluir" action="#{mensagemFaces.excluirMensagem}" oncomplete="atualizarMensagensEnviadas(); dlgMensagem.hide();" process="@this, pgDialogMensagem" global="false" style="margin-right: 25px; margin-bottom: 20px" rendered="#{!mensagemFaces.flagEnviar}"/>
+				<p:commandButton value="Enviar" icon="ui-icon-arrowreturnthick-1-e" action="#{mbeanMensagem.enviarMensagem}" oncomplete="handleRequestFaces('dialogMensagem', dlgMensagem, args); atualizarMensagensRecebidas();" update="pgDialogMensagem" rendered="#{mensagemFaces.flagEnviar}"/>
+				<p:commandButton value="Excluir" icon="ui-icon-minus" action="#{mensagemFaces.excluirMensagem}" oncomplete="atualizarMensagensEnviadas(); dlgMensagem.hide();" process="@this, pgDialogMensagem" global="false" style="margin-right: 25px; margin-bottom: 20px" rendered="#{!mensagemFaces.flagEnviar}"/>
 		  		
 	  		</p:outputPanel>
 	  		

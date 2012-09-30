@@ -24,7 +24,7 @@
 		                <h:inputText value="#{mensagem.remetente.nome}" readonly="true" style="width: 70%"/>
 		                  
 		                <h:outputText value="Mensagem:" />
-		                <h:inputTextarea value="#{mensagem.texto}" rows="10" cols="65" style="text-align: lef; wudth: 100%" readonly="true"/>
+		                <h:inputTextarea value="#{mensagem.texto}" rows="10" cols="55" style="text-align: lef; wudth: 100%" readonly="true"/>
 		                
 		            </h:panelGrid>
 	                  
@@ -36,8 +36,8 @@
 			
 		</p:outputPanel>
            
-        <div style="text-align: right; margin-right: 25px; margin-bottom: 20px">
-        	<p:commandButton type="button" value="Fechar" onclick="dlgHistoricoMensagem.hide();" />
+        <div style="text-align: right; margin-right: 25px; margin-bottom: 20px; margin-top: 20px">
+        	<p:commandButton type="button" value="Fechar" icon="ui-icon-close" onclick="dlgHistoricoMensagem.hide();" />
         </div>
               
     </p:dialog>

@@ -10,7 +10,7 @@
 	<ui:param name="nomeDialog" value="dlgCliente2" />
 	<ui:param name="clienteExcessao" value="${clienteFaces.crudModel}" />	
 
-	<h:form>
+	<h:form rendered="#{autenticacaoFaces.mostrarDialogCliente2}">
 		
 		<p:dialog id="dialogCliente2" widgetVar="dlgCliente2" header="Pesquisa de Associados" width="600" height="400" modal="true">
 	  

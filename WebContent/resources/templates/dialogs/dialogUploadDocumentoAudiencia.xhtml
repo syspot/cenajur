@@ -9,7 +9,7 @@
 	<ui:param name="mbeanDocumentoAcao" value="${audienciaFaces}" />
 	<ui:param name="mbeanDocumentoModel" value="${audienciaFaces.documentoAudiencia}" />
 	
-	<h:form enctype="multipart/form-data">
+	<h:form enctype="multipart/form-data" rendered="#{autenticacaoFaces.mostrarDialogDocumentoAudiencia}">
   
 		<p:dialog id="dialogDocumentoAudiencia" widgetVar="dlgDocumentoAudiencia" header="Upload de documento" width="600" modal="true">
 		

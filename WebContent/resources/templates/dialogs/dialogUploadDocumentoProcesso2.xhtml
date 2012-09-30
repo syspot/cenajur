@@ -10,7 +10,7 @@
 	<ui:param name="mbeanDocumentoModel" value="${clienteFaces.processoAux.documentoProcesso}" />
 	<ui:param name="nomeDialog" value="dlgDocumentoProcesso2" />
 	
-	<h:form enctype="multipart/form-data">
+	<h:form enctype="multipart/form-data" rendered="#{autenticacaoFaces.mostrarDialogDocumentoProcesso2}">
   
 		<p:dialog id="dialogDocumentoProcesso2" widgetVar="dlgDocumentoProcesso2" header="Upload de documento" width="600" modal="true">
 		

@@ -58,11 +58,6 @@ public class Constantes {
 	public static final String DOC_TEMP = "doc_temp";
 	public static final String FOTO_CAM_TEMP = "_foto_cam.jpg";
 	
-	public static final Long PERMISSAO_MENSAGENS = 18L;
-	public static final Long PERMISSAO_COLABORADOR = 8L;
-	public static final Long PERMISSAO_OBJETO = 2L;
-	public static final Long PERMISSAO_PROCESSO = 13L;
-	
 	public static final Long REGRA_EMAIL_AUDIENCIA = 1L;
 	public static final Long REGRA_EMAIL_VISITA_COM_CLIENTE = 2L;
 	public static final Long REGRA_EMAIL_ANDAMENTO_PROCESSO = 3L;
@@ -71,5 +66,16 @@ public class Constantes {
 	public static final Long CONFIGURACOES_REPLACE_EMAIL_PROCESSO = 2L;
 	public static final Long CONFIGURACOES_REPLACE_EMAIL_DATA_ATUAL = 4L;
 	public static final Long CONFIGURACOES_REPLACE_EMAIL_DATA_VISITA = 5L;
+	
+	public static final Long PERMISSAO_MENSAGENS = 18L;
+	public static final Long PERMISSAO_COLABORADOR = 8L;
+	public static final Long PERMISSAO_OBJETO = 2L;
+	public static final Long PERMISSAO_PROCESSO = 13L;
+	public static final Long PERMISSAO_CLIENTE = 12L;
+	public static final Long PERMISSAO_AUDIENCIA = 16L;
+	public static final Long PERMISSAO_ANDAMENTO = 17L;
+	public static final Long PERMISSAO_FATURAMENTO = 24L;
+	public static final Long PERMISSAO_AGENDA = 26L;
+	public static final Long PERMISSAO_GRUPO = 9L;
 	
 }

@@ -7,7 +7,7 @@
 
 	<ui:param name="mbean" value="${clienteFaces.processoAux}" />
 
-	<h:form>
+	<h:form rendered="#{autenticacaoFaces.mostrarDialogNumeroProcesso2}">
 		
 		<p:dialog id="dialogNumeroProcesso2" widgetVar="dlgNumeroProcesso2"  header="Adicionar Número do Processo" width="350" modal="true" closable="false">
 			

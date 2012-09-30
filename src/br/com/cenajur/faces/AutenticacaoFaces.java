@@ -53,12 +53,15 @@ public class AutenticacaoFaces extends TSMainFaces{
         clearFields();
 
         setTabAtiva(new Integer(0));
-
-        setNomeTela("Área de Trabalho > Controle de Mensagem > Mensagem");
         
-        setTela("/pages/mensagem/mensagem.xhtml");
-        
-        currentFaces = "";
+    }
+    
+    private void obterPaginaInicial(){
+    	
+    	this.permissaoSelecionada = new Permissao(Constantes.PERMISSAO_MENSAGENS).getById();
+    	
+    	redirecionar();
+    	
     }
     
     private void limparObjetos(){
@@ -80,7 +83,6 @@ public class AutenticacaoFaces extends TSMainFaces{
         	
         	if(isFlagBloqueado()){
 	    		this.permissaoSelecionada = new Permissao(Constantes.PERMISSAO_MENSAGENS).getById();
-	    		CenajurUtil.addErrorMessage("SISTEMA BLOQUEADO! Você possui mensagens não lidas ou Agenda não finalizada");
         	}
         	
     	}
@@ -307,7 +309,10 @@ public class AutenticacaoFaces extends TSMainFaces{
         	this.verificarBloqueioPorTarefa();
         	this.verificarBloqueioPorAudiencia();
         	
+        	obterPaginaInicial();
+        	
         	return "entrar";
+        	
         }
         
         CenajurUtil.addErrorMessage("Dados inválidos!");
@@ -324,6 +329,7 @@ public class AutenticacaoFaces extends TSMainFaces{
 		if(!TSUtil.isEmpty(mensagensNaoLidas)){
 			
 			this.flagBloqueado = true;
+			this.addErrorMessage("SISTEMA BLOQUEADO! Você possui mensagens não lidas");
 			
 		}
     		
@@ -338,6 +344,7 @@ public class AutenticacaoFaces extends TSMainFaces{
     	if(!TSUtil.isEmpty(agendaTarefa)){
 			
 			this.flagBloqueado = true;
+			this.addErrorMessage("SISTEMA BLOQUEADO! Você possui uma ou mais Tarefas não finalizadas");
 			
 		}
 
@@ -352,6 +359,7 @@ public class AutenticacaoFaces extends TSMainFaces{
     	if(!TSUtil.isEmpty(agendaTarefa)){
     		
     		this.flagBloqueado = true;
+    		this.addErrorMessage("SISTEMA BLOQUEADO! Você possui uma ou mais Audiências não finalizadas");
     		
     	}
     	
@@ -532,6 +540,178 @@ public class AutenticacaoFaces extends TSMainFaces{
 
 	public void setAno(String ano) {
 		this.ano = ano;
+	}
+	
+	public boolean isMostrarDialogAdvogado(){
+		return Constantes.PERMISSAO_AUDIENCIA.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogAdvogado2(){
+		return Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId()) || Constantes.PERMISSAO_PROCESSO.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogAdvogado3(){
+		return Constantes.PERMISSAO_MENSAGENS.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogAdvogado4(){
+		return Constantes.PERMISSAO_MENSAGENS.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogAdvogado5(){
+		return Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogAdvogado6(){
+		return Constantes.PERMISSAO_MENSAGENS.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogAgenda(){
+		return Constantes.PERMISSAO_MENSAGENS.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogCam(){
+		return Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogCliente(){
+		return Constantes.PERMISSAO_PROCESSO.equals(this.permissaoSelecionada.getId()) || Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogCliente2(){
+		return Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogCliente3(){
+		return Constantes.PERMISSAO_FATURAMENTO.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogCliente4(){
+		return Constantes.PERMISSAO_PROCESSO.equals(this.permissaoSelecionada.getId()) || Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogCliente5(){
+		return Constantes.PERMISSAO_MENSAGENS.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogCliente6(){
+		return Constantes.PERMISSAO_AGENDA.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogColaborador(){
+		return Constantes.PERMISSAO_MENSAGENS.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogColaborador2(){
+		return Constantes.PERMISSAO_MENSAGENS.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogColaborador3(){
+		return Constantes.PERMISSAO_AGENDA.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogFaturamento(){
+		return Constantes.PERMISSAO_FATURAMENTO.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogLotacao(){
+		return Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogMensagem(){
+		return Constantes.PERMISSAO_MENSAGENS.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogNumeroProcesso(){
+		return Constantes.PERMISSAO_PROCESSO.equals(this.permissaoSelecionada.getId()) || Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogNumeroProcesso2(){
+		return Constantes.PERMISSAO_PROCESSO.equals(this.permissaoSelecionada.getId()) || Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogParteContraria(){
+		return Constantes.PERMISSAO_PROCESSO.equals(this.permissaoSelecionada.getId()) || Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogParteContraria2(){
+		return Constantes.PERMISSAO_PROCESSO.equals(this.permissaoSelecionada.getId()) || Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogPermissao(){
+		return Constantes.PERMISSAO_GRUPO.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogProcesso(){
+		return Constantes.PERMISSAO_AUDIENCIA.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogProcesso2(){
+		return Constantes.PERMISSAO_ANDAMENTO.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogProcesso3(){
+		return Constantes.PERMISSAO_MENSAGENS.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogProcesso4(){
+		return Constantes.PERMISSAO_AGENDA.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogProcessoCliente(){
+		return Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId()) || Constantes.PERMISSAO_PROCESSO.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogProcessoCliente2(){
+		return Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId()) || Constantes.PERMISSAO_PROCESSO.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogProcessoParteContraria(){
+		return Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId()) || Constantes.PERMISSAO_PROCESSO.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogProcessoParteContraria2(){
+		return Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId()) || Constantes.PERMISSAO_PROCESSO.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogDocumentoAndamentoProcesso(){
+		return Constantes.PERMISSAO_ANDAMENTO.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogDocumentoAudiencia(){
+		return Constantes.PERMISSAO_AUDIENCIA.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogDocumentoCliente(){
+		return Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogDocumentoProcesso(){
+		return Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId())  || Constantes.PERMISSAO_PROCESSO.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogDocumentoProcesso2(){
+		return Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId())  || Constantes.PERMISSAO_PROCESSO.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogDocumentoTabAndamentoProcesso(){
+		return Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId())  || Constantes.PERMISSAO_PROCESSO.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogDocumentoTabAndamentoProcesso2(){
+		return Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId())  || Constantes.PERMISSAO_PROCESSO.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogDocumentoTabAudiencia(){
+		return Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId())  || Constantes.PERMISSAO_PROCESSO.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogDocumentoTabAudiencia2(){
+		return Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId())  || Constantes.PERMISSAO_PROCESSO.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogViewFotoCliente(){
+		return Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId());
 	}
 
 }

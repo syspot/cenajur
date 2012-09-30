@@ -8,7 +8,7 @@
 	<ui:param name="mbean" value="${processoFaces}" />
 	<ui:param name="mbeanAcao" value="${clienteFaces.processoAux}" />
 
-	<h:form>
+	<h:form rendered="#{autenticacaoFaces.mostrarDialogProcessoCliente2}">
 		
 		<p:dialog id="dialogArquivarProcessoCliente2" header="Alterar Status" modal="true" widgetVar="dlgArquivarProcessoCliente2" width="330">
 	

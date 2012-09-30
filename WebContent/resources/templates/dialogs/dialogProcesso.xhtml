@@ -10,7 +10,7 @@
 	<ui:param name="nomeDialog" value="dlgProcesso" />
 	<ui:param name="nomeDialogProcessoNumero" value="dlgSelecionarProcessoNumero" />
 
-	<h:form>
+	<h:form rendered="#{autenticacaoFaces.mostrarDialogProcesso}">
 		
 		<p:dialog id="dialogProcesso" widgetVar="dlgProcesso" header="Pesquisa de Processos" width="600" height="400" modal="true">
 	  

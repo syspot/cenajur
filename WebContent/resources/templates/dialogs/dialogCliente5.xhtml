@@ -8,9 +8,8 @@
 	<ui:param name="mbeanPesquisa" value="${clientePesquisaFaces}" />
 	<ui:param name="mbeanClienteAcao" value="${agendaFaces}" />
 	<ui:param name="nomeDialog" value="dlgCliente5" />
-	<ui:param name="addDependente" value="${false}" />
 
-	<h:form>
+	<h:form rendered="#{autenticacaoFaces.mostrarDialogCliente5}">
 		
 		<p:dialog id="dialogCliente5" widgetVar="dlgCliente5" width="600" height="400" modal="true">
 	  

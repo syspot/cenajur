@@ -38,8 +38,8 @@
 		<p:outputLabel for="telefoneClienteAgenda" value="Telefone" rendered="#{agendaFaces.agenda.tipoVisitaDoCliente}"/>
 		
 		<p:outputPanel autoUpdate="true" style="width:100%" rendered="#{agendaFaces.agenda.tipoVisitaDoCliente}">
-			<p:inputText id="clienteAgenda" value="#{agendaFaces.agenda.cliente.nome}" readonly="true" style="width:75%"/>
-			<p:commandButton type="button" icon="ui-icon-plus" value="Add" onclick="dlgCliente5.show();" />
+			<p:inputText id="clienteAgenda" value="#{agendaFaces.agenda.cliente.nome}" readonly="true" style="width:75%;"/>
+			<p:commandButton type="button" icon="ui-icon-plus" value="Add" onclick="dlgCliente5.show();" style="margin-left: 10px" />
 		</p:outputPanel>
 		<p:selectOneMenu id="tipoVisitaCliente" value="#{agendaFaces.agenda.tipoVisita.id}" rendered="#{agendaFaces.agenda.tipoVisitaDoCliente}">
 			<f:selectItems value="#{agendaFaces.tiposVisitas}" />
@@ -51,13 +51,13 @@
 	<h:panelGrid style="width: 100%">
 
 		<p:outputLabel for="descricaoAgenda" value="Descrição" />
-		<p:inputTextarea id="descricaoAgenda" value="#{agendaFaces.agenda.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" cols="107" rows="10"/>
+		<p:inputTextarea id="descricaoAgenda" value="#{agendaFaces.agenda.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" cols="95" rows="10"/>
 	
 	</h:panelGrid>
 
 	<h:panelGrid id="pgColaboradorAgenda" columns="2" columnClasses="coluna50_3, coluna50_3">
-		<p:commandButton type="button" value="Add Colaborador" onclick="dlgColaborador2.show();" style="margin-top: 10px; margin-right: 10px" rendered="#{!agendaFaces.agenda.tipoAudiencia}"/>
-		<p:commandButton type="button" value="Add Colaborador" onclick="dlgAdvogado3.show();" style="margin-top: 10px; margin-right: 10px" rendered="#{agendaFaces.agenda.tipoAudiencia}"/>
+		<p:commandButton type="button" value="Add Colaborador" icon="ui-icon-plus" onclick="dlgColaborador2.show();" style="margin-top: 10px; margin-right: 10px; width:150px" rendered="#{!agendaFaces.agenda.tipoAudiencia}"/>
+		<p:commandButton type="button" value="Add Colaborador" icon="ui-icon-plus" onclick="dlgAdvogado3.show();" style="margin-top: 10px; margin-right: 10px; width:150px" rendered="#{agendaFaces.agenda.tipoAudiencia}"/>
 		<h:panelGrid columns="1">
 			<p:outputLabel for="flagGeralAgenda" value="Geral" />
 			<p:selectBooleanCheckbox id="flagGeralAgenda" value="#{agendaFaces.agenda.flagGeral}" />
