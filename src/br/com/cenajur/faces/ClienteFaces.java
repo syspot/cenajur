@@ -137,6 +137,17 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 			CenajurUtil.addErrorMessage("Dia de vencimento inválido");
 		}
 		
+		if(TSUtil.isEmpty(getCrudModel().getId())){
+			
+			Cliente cliente = getCrudModel().obterPorCPF();
+			
+			if(!TSUtil.isEmpty(cliente)){
+				erro = true;
+				CenajurUtil.addErrorMessage("Já existe um associado cadastrado para esse CPF");
+			}
+			
+		}
+		
 		return erro;
 		
 	}

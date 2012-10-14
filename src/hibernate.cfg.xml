@@ -15,8 +15,8 @@
 		<property name="hibernate.connection.username">postgres</property>
 		<property name="hibernate.connection.password">15rt01</property>
 
-		<property name="hibernate.show_sql">false</property>
-		<property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.temp.use_jdbc_metadata_defaults">true</property>
 
  		<mapping class="br.com.cenajur.model.Agenda" />
  		<mapping class="br.com.cenajur.model.AgendaColaborador" />

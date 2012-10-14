@@ -644,4 +644,8 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		
 	}
 	
+	public Cliente obterPorCPF(){
+		return super.get(" from Cliente where cpf = ?", cpf);
+	}
+	
 }
