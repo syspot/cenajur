@@ -121,8 +121,25 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 			CenajurUtil.addErrorMessage("CPF inválido");
 		}
 		
+		if(getCrudModel().getDiaVencimento() > 31 || getCrudModel().getDiaVencimento() < 1){
+			erro = true;
+			CenajurUtil.addErrorMessage("Dia de vencimento inválido");
+		}
+		
 		return erro;
 		
+	}
+	
+	private void iniciaObjetosCombo(){
+		if(TSUtil.isEmpty(getCrudModel().getBanco())){
+			getCrudModel().setBanco(new Banco());
+		}
+		if(TSUtil.isEmpty(getCrudModel().getGraduacao())){
+			getCrudModel().setGraduacao(new Graduacao());
+		}
+		if(TSUtil.isEmpty(getCrudModel().getMotivoCancelamento())){
+			getCrudModel().setMotivoCancelamento(new MotivoCancelamento());
+		}
 	}
 	
 	@Override
@@ -152,15 +169,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	
 	@Override
 	protected void posDetail() {
-		if(TSUtil.isEmpty(getCrudModel().getBanco())){
-			getCrudModel().setBanco(new Banco());
-		}
-		if(TSUtil.isEmpty(getCrudModel().getGraduacao())){
-			getCrudModel().setGraduacao(new Graduacao());
-		}
-		if(TSUtil.isEmpty(getCrudModel().getMotivoCancelamento())){
-			getCrudModel().setMotivoCancelamento(new MotivoCancelamento());
-		}
+		
 		if(getCrudModel().getDataAtualizacao().before(CenajurUtil.getTrimestreAnterior())){
 			CenajurUtil.addDangerMessage("O endereço e telefone estão desatualizados");
 		}
@@ -171,6 +180,8 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 			processo.setAudiencias(new Audiencia().findByProcesso(processo));
 			processo.setAndamentos(new AndamentoProcesso().findByProcesso(processo));
 		}
+		
+		this.iniciaObjetosCombo();
 		
 	}
 	
@@ -205,6 +216,8 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 			getCrudModel().update();
 			
 		}
+		
+		this.iniciaObjetosCombo();
 		
 	}
 	

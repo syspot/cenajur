@@ -147,8 +147,8 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	@ManyToOne
 	private Plano plano;
 	
-	@Column(name = "data_processamento")
-	private Date dataProcessamento;
+	@Column(name = "dia_vencimento")
+	private Integer diaVencimento;
 	
 	@Transient
 	private byte[] bytesImagem;
@@ -492,12 +492,12 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		this.plano = plano;
 	}
 
-	public Date getDataProcessamento() {
-		return dataProcessamento;
+	public Integer getDiaVencimento() {
+		return diaVencimento;
 	}
 
-	public void setDataProcessamento(Date dataProcessamento) {
-		this.dataProcessamento = dataProcessamento;
+	public void setDiaVencimento(Integer diaVencimento) {
+		this.diaVencimento = diaVencimento;
 	}
 
 	public String getTipo(){

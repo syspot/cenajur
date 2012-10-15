@@ -1129,6 +1129,11 @@ ui-icon.delete {
 	color: #000000 !important;
 }
 
+.tipoVisitaDoCliente, .tipoVisitaDoCliente .fc-event-skin{
+	background-color:olive; !important;
+	color: #000000 !important;
+}
+
 .mensagemNaoLida{
 	font-weight: bold;
 }

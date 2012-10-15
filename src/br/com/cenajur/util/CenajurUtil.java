@@ -19,7 +19,6 @@ import org.primefaces.model.UploadedFile;
 
 import br.com.cenajur.model.Agenda;
 import br.com.cenajur.model.AgendaColaborador;
-import br.com.cenajur.model.Plano;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.exception.TSSystemException;
 import br.com.topsys.file.TSFile;
@@ -239,13 +238,6 @@ public class CenajurUtil {
 	public static Integer obterMesAtual(){
 		Calendar c = Calendar.getInstance();
 		return c.get(Calendar.MONTH + 1);
-	}
-	
-	public static Date alterarDataProcessamento(Plano plano, Date data){
-		Calendar c = Calendar.getInstance();
-		c.add(Calendar.DAY_OF_YEAR, plano.getDiasDuracao());
-		
-		return c.getTime();
 	}
 	
 	public static String obterDescricaoAgenda(Agenda agenda){
