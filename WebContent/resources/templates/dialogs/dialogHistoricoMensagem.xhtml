@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:f="http://java.sun.com/jsf/core">
+
+	<p:dialog id="dialogHistoricoMensagem" header="Histórico da mensagem" widgetVar="dlgHistoricoMensagem" modal="true" width="550" appendToBody="true">  
+		
+		<p:outputPanel autoUpdate="true">
+		
+			<p:scrollPanel id="spHistoricoMensagem" style="width:530px;height:400px" scrollMode="native">  
+			    
+				<ui:repeat var="mensagem" value="#{mensagemFaces.mensagensHistorico}" >
+	                   
+				    <h:panelGrid columns="2" columnClasses="coluna15_2, coluna85_2" style="width:95%; vertical-align: top">
+		              
+		                <h:outputText value="Data:" />  
+		                <h:inputText value="#{mensagem.data}" readonly="true">
+		                	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+		                </h:inputText>
+		                  
+		                <h:outputText value="Remetente:" />
+		                <h:inputText value="#{mensagem.remetente.nome}" readonly="true" style="width: 70%"/>
+		                  
+		                <h:outputText value="Mensagem:" />
+		                <h:inputTextarea value="#{mensagem.texto}" rows="10" cols="55" style="text-align: lef; wudth: 100%" readonly="true"/>
+		                
+		            </h:panelGrid>
+	                  
+	                <hr style="width:100%; margin-top:10px;"/>
+	                  
+				</ui:repeat>
+	            
+			</p:scrollPanel>
+			
+		</p:outputPanel>
+           
+        <div style="text-align: right; margin-right: 25px; margin-bottom: 20px; margin-top: 20px">
+        	<p:commandButton type="button" value="Fechar" icon="ui-icon-close" onclick="dlgHistoricoMensagem.hide();" />
+        </div>
+              
+    </p:dialog>
+
+</ui:component>

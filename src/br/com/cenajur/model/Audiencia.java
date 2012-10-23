@@ -17,6 +17,9 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import br.com.cenajur.util.CenajurUtil;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
@@ -65,6 +68,7 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 	private Colaborador colaboradorAtualizacao;
 	
 	@OneToMany(mappedBy = "audiencia", cascade = CascadeType.ALL, orphanRemoval = true)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<DocumentoAudiencia> documentos;
 	
 	@Column(name = "flag_cliente_ciente")
@@ -283,5 +287,9 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 	
 	public Audiencia obterPorAgenda(Agenda agenda){
 		return super.get(" select a from Audiencia a left outer join fetch a.documentos d where a.agenda.id = ? ", agenda.getId());
+	}
+	
+	public List<Audiencia> pesquisarAudienciasProximas(int qtdDias){
+		return super.find("select a from Audiencia a where a.dataAudiencia between ? and ? ", null, new Date(), CenajurUtil.getDataMaisDias(qtdDias));
 	}
 }

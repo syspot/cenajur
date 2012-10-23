@@ -14,6 +14,11 @@ import br.com.topsys.util.TSUtil;
 @Table(name = "situacoes_processos")
 public class SituacaoProcesso extends TSActiveRecordAb<SituacaoProcesso>{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7642641577016100026L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="situacoes_processos_id")
 	@SequenceGenerator(name="situacoes_processos_id", sequenceName="situacoes_processos_id_seq")

@@ -19,6 +19,7 @@ import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
 import br.com.cenajur.util.Utilitarios;
 import br.com.topsys.util.TSUtil;
+import br.com.topsys.web.util.TSFacesUtil;
 
 @ViewScoped
 @ManagedBean(name = "colaboradorFaces")
@@ -31,8 +32,17 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 	
 	@PostConstruct
 	protected void init() {
+		
 		this.clearFields();
 		this.initCombos();
+		
+		AutenticacaoFaces autenticacaoFaces = (AutenticacaoFaces) TSFacesUtil.getManagedBean("autenticacaoFaces");
+		
+		if(!TSUtil.isEmpty(autenticacaoFaces) && !TSUtil.isEmpty(autenticacaoFaces.getColaboradorSelecionado())){
+			this.setCrudModel(autenticacaoFaces.getColaboradorSelecionado());
+			this.detailEvent();
+		}
+		
 	}
 	
 	private void initCombos() {

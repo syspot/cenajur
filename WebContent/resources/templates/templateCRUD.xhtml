@@ -55,6 +55,8 @@
 	          
 			</h:form>
 			
+			<ui:insert name="fimCadastro" />
+			
         </p:tab>
         
         <ui:insert name="tabsmeio" />
@@ -82,6 +84,11 @@
 					</h:panelGrid>
 					
 					<p:fieldset style="width: 97.5%">
+					
+						<h:commandLink rendered="#{not empty mbean.grid}" style="margin-bottom:10px">  
+				            <p:graphicImage value="../resources/images/pdf.png" />  
+				            <p:dataExporter type="pdf" target="gridPesquisa" fileName="relat" pageOnly="true" encoding="ISO-8859-1" />  
+				        </h:commandLink>
 					
 						<p:dataTable id="gridPesquisa" emptyMessage="Nenhum registro encontrado" style="width: 100%" paginator="true"
 								paginatorAlwaysVisible="false" rows="10" value="#{mbean.grid}" var="linha">
@@ -117,5 +124,5 @@
 		<ui:insert name="tabsfim" />
   
 	</p:tabView>
-
+	
 </ui:composition>

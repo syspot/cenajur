@@ -54,6 +54,16 @@ function handleRequestActionParteContraria(idDialog, widgerVar, args){
 	
 }
 
+function handleRequestActionParteContraria(idDialog, widgerVar, args){
+	if(args.validationFailed && !args.sucesso) {      	
+		jQuery(idDialog).effect("shake", { times:3 }, 100);
+	} else {  
+		addParteContraria2();
+		widgerVar.hide();
+	}  
+	
+}
+
 function handleRequestActionCliente(idDialog, widgerVar, args){
 	if(args.validationFailed && !args.sucesso) {      	
 		jQuery(idDialog).effect("shake", { times:3 }, 100);

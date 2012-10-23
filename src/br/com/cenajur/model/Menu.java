@@ -18,6 +18,11 @@ import br.com.topsys.util.TSUtil;
 @Table(name = "menus")
 public final class Menu extends TSActiveRecordAb<Menu> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7457297598157001838L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="menus_id")
 	@SequenceGenerator(name="menus_id", sequenceName="menus_id_seq")

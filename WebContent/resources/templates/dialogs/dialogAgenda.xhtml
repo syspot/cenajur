@@ -6,14 +6,14 @@
               xmlns:f="http://java.sun.com/jsf/core">
 
 	
-	<h:form>
+	<h:form rendered="#{autenticacaoFaces.mostrarDialogAgenda}">
 		
 		<ui:param name="mbean" value="${agendaFaces}" />
 		
 		<p:remoteCommand name="atualizarDialogAgenda" process="@this" update="opDialogAgenda, opAgendasColaboradores" oncomplete="dlgAgenda.show();" global="false"/>
 		<p:remoteCommand name="atualizarAgendasColaboradores" process="@this" update="opAgendasColaboradores"/>
 		
-		<p:dialog id="dialogAgenda" header="Cadastro de Agenda" widgetVar="dlgAgenda" width="720" height="430" modal="true">
+		<p:dialog id="dialogAgenda" header="Cadastro de Agenda" widgetVar="dlgAgenda" width="720" height="450" modal="true">
 	  
 	  		<p:ajax event="close" listener="#{agendaFaces.limpar}" update="opDialogAgenda"/>
 	  		
@@ -34,7 +34,7 @@
 		  		
 				<p:outputPanel rendered="#{agendaFaces.agenda.id == null and !agendaFaces.usuarioMaster}">
 					<h:outputText value="Você não possui permissão para editar a Agenda" style="margin-top: 20px"/><br/>
-					<p:commandButton type="button" value="Fechar" onclick="atualizarAgenda();" style="margin-top: 20px" />
+					<p:commandButton type="button" value="Fechar" onclick="myschedule.update();" oncomplete="dlgAgenda.hide();" style="margin-top: 20px" />
 				</p:outputPanel>
 					
 			</p:outputPanel>
@@ -48,6 +48,16 @@
 			<p:outputPanel id="opDialogAudiencia">
 			
 				<ui:include src="/pages/agenda/include_dialog_agenda_audiencia.xhtml" />
+					
+			</p:outputPanel>
+			
+		</p:dialog>
+		
+		<p:dialog id="dialogRespostaPropria" header="Fechar Agenda" widgetVar="dlgRespostaPropria" width="700" modal="true">
+		
+			<p:outputPanel autoUpdate="true" id="opDialogRespostaPropria">
+			
+				<ui:include src="/pages/agenda/include_dialog_agenda_resposta_propria.xhtml" />
 					
 			</p:outputPanel>
 			

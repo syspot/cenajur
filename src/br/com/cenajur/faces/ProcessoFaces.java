@@ -41,6 +41,7 @@ import br.com.cenajur.util.Constantes;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
+import br.com.topsys.web.util.TSFacesUtil;
 
 @ViewScoped
 @ManagedBean(name = "processoFaces")
@@ -84,6 +85,39 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	protected void init() {
 		this.clearFields();
 		this.initCombos();
+		
+		AutenticacaoFaces autenticacaoFaces = (AutenticacaoFaces) TSFacesUtil.getManagedBean("autenticacaoFaces");
+		
+		if(!TSUtil.isEmpty(autenticacaoFaces)){
+			
+			boolean entrei = false;
+			
+			if(!TSUtil.isEmpty(autenticacaoFaces.getSituacaoProcesso())){
+				entrei = true;
+				this.getCrudPesquisaModel().setSituacaoProcessoId(autenticacaoFaces.getSituacaoProcesso());
+			}
+			
+			if(!TSUtil.isEmpty(autenticacaoFaces.getAno())){
+				entrei = true;
+				this.getCrudPesquisaModel().setAno(autenticacaoFaces.getAno());
+			}
+			
+			if(!TSUtil.isEmpty(autenticacaoFaces.getColaboradorSelecionado())){
+				entrei = true;
+				this.getCrudPesquisaModel().setAdvogado(autenticacaoFaces.getColaboradorSelecionado());
+			}
+			
+			if(!TSUtil.isEmpty(autenticacaoFaces.getObjetoSelecionado())){
+				entrei = true;
+				this.getCrudPesquisaModel().setObjeto(autenticacaoFaces.getObjetoSelecionado());
+			}
+			
+			if(entrei){
+				this.setTabIndex(1);
+				this.findEvent();
+			}
+		}
+		
 	}
 	
 	private void initCombos(){
@@ -177,24 +211,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	
 	@Override
 	protected void posPersist() throws TSApplicationException{
-
 		getCrudModel().setProcessosNumerosTemp(new ProcessoNumero().pesquisarOutrosNumerosProcessos(getCrudModel()));
-		
-		for(DocumentoProcesso doc : getCrudModel().getDocumentos()){
-			
-			if(!TSUtil.isEmpty(doc.getDocumento())){
-				
-				DocumentoProcesso documento = doc.getByModel();
-				
-				doc.setId(documento.getId());
-				doc.setArquivo(doc.getId() + TSFile.obterExtensaoArquivo(doc.getArquivo()));
-				CenajurUtil.criaArquivo(doc.getDocumento(), doc.getCaminhoUploadCompleto());
-				
-				doc.update();
-				
-			}
-			
-		}
 		
 	}
 	
@@ -221,8 +238,13 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		
 		this.processoAndamentoUtil.setCrudModel(getCrudModel());
 		this.processoAudienciaUtil.setCrudModel(getCrudModel());
-		this.processoAndamentoUtil.getAndamentoProcesso().setProcessoNumero(new ProcessoNumero().obterNumeroProcessoPrincipal(getCrudModel()));
-		this.processoAudienciaUtil.getAudiencia().setProcessoNumero(new ProcessoNumero().obterNumeroProcessoPrincipal(getCrudModel()));
+		
+		ProcessoNumero processoNumero = new ProcessoNumero().obterNumeroProcessoPrincipal(getCrudModel());
+		
+		this.processoAndamentoUtil.setProcessoNumeroPrincipal(processoNumero);
+		this.processoAndamentoUtil.setProcessoNumeroBackup(processoNumero);
+		this.processoAudienciaUtil.setProcessoNumeroPrincipal(processoNumero);
+		this.processoAudienciaUtil.setProcessoNumeroBackup(processoNumero);
 		
 		if(TSUtil.isEmpty(getCrudModel().getTurno()) || TSUtil.isEmpty(getCrudModel().getTurno().getId())){
 			getCrudModel().setTurno(new Turno());
@@ -245,12 +267,14 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	}
 	
 	public void enviarDocumento(FileUploadEvent event) {
-		getDocumentoProcesso().setDocumento(event.getFile());
-		getDocumentoProcesso().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
+		
+		getDocumentoProcesso().setArquivo(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
 		
 		if(CenajurUtil.isDocumentoPdf(event.getFile())){
 			getDocumentoProcesso().setDescricaoBusca(CenajurUtil.getDescricaoPDF(event.getFile()));
 		}
+		
+		CenajurUtil.criaArquivo(event.getFile(), getDocumentoProcesso().getCaminhoUploadCompleto());
 		
 	}
 	
@@ -258,7 +282,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		
 		RequestContext context = RequestContext.getCurrentInstance();
 		
-		if(TSUtil.isEmpty(getDocumentoProcesso().getDocumento())){
+		if(TSUtil.isEmpty(getDocumentoProcesso().getArquivo())){
 			CenajurUtil.addErrorMessage("Documento: Campo obrigatório");
 			context.addCallbackParam("sucesso", false);
 			return null;
@@ -361,16 +385,6 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 			
 		}
 		
-		return null;
-	}
-	
-	public String atualizarProcessoCliente(){
-		CenajurUtil.addInfoMessage("Alteração realizada com sucesso");
-		return null;
-	}
-	
-	public String atualizarProcessoParteContraria(){
-		CenajurUtil.addInfoMessage("Alteração realizada com sucesso");
 		return null;
 	}
 	

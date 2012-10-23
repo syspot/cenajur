@@ -14,6 +14,11 @@ import br.com.topsys.util.TSUtil;
 @Table(name = "estados_civis")
 public class EstadoCivil extends TSActiveRecordAb<EstadoCivil>{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7971203351877467069L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="estados_civis_id")
 	@SequenceGenerator(name="estados_civis_id", sequenceName="estados_civis_id_seq")

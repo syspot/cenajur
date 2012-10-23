@@ -9,80 +9,7 @@
 	
 		<h:form>
 		
-			<p:outputPanel layout="block" style="width: 97.5%;">
-				
-				<h:panelGrid columns="1" style="width: 98%">
-					
-					<p:fieldset style="width: 100%" toggleable="true">
-						
-						<h:panelGrid columns="2" columnClasses="coluna50_2, coluna50_3">
-						
-							<p:outputPanel style="width:100%">
-							
-								<h:panelGrid columns="1" columnClasses="coluna100" style="width:100%">
-					
-									<p:outputLabel for="numeroProcessoAudiencia" value="Processo" />
-									<p:inputText id="numeroProcessoAudiencia" value="#{mbean.processoAudienciaUtil.audiencia.processoNumero.numero}" readonly="true" />
-							  		
-						  		</h:panelGrid>
-						  		
-						  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:95%">
-						  		
-								  	<p:outputLabel for="dataAudienciaAudiencia" value="Data da Audiência" />
-						  			<p:outputLabel for="flagClienteCienteAudiencia" value="Associado ciente" />
-						  		
-							  		<p:calendar id="dataAudienciaAudiencia" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data da Audiência: Campo obrigatório" value="#{mbean.processoAudienciaUtil.audiencia.dataAudiencia}"/>
-							  		<p:selectBooleanCheckbox id="flagClienteCienteAudiencia" value="#{mbean.processoAudienciaUtil.audiencia.flagClienteCiente}" />
-							  		
-							  		<p:outputLabel for="situacaoAudiencia" value="Situação" />
-								  	<p:outputLabel for="varaAudiencia" value="Vara" />
-								  	
-							  		<p:selectOneMenu id="situacaoAudiencia" required="true" requiredMessage="Situação: Campo obrigatório" value="#{mbean.processoAudienciaUtil.audiencia.situacaoAudiencia.id}" style="width:95%">
-								  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-								  		<f:selectItems value="#{mbean.situacoesAudiencias}" />
-								  	</p:selectOneMenu>
-							  		<p:selectOneMenu id="varaAudiencia" required="true" requiredMessage="Vara: Campo obrigatório" value="#{mbean.processoAudienciaUtil.audiencia.vara.id}" style="width:94%">
-								  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-								  		<f:selectItems value="#{mbean.varas}" />
-								  	</p:selectOneMenu>
-								  	
-							  	</h:panelGrid>
-							  	
-							  	<h:panelGrid columns="1" columnClasses="coluna100" style="width:100%">
-							  	
-								  	<p:outputPanel autoUpdate="true">
-										<h:outputLabel value="Advogado" /><br/>
-										<p:inputText required="true" requiredMessage="Advogado: Campo obrigatório" readonly="true" rendered="#{empty mbean.processoAudienciaUtil.audiencia.audienciasAdvogados}" styleClass="coluna72"/>
-										<p:inputText value="#{mbean.processoAudienciaUtil.audiencia.audienciasAdvogados}" required="true" requiredMessage="Advogado: Campo obrigatório" readonly="true" rendered="#{not empty mbean.processoAudienciaUtil.audiencia.audienciasAdvogados}" styleClass="coluna72"/>
-										<p:commandButton type="button" value="Adicionar" icon="ui-icon-plus" onclick="dlgAdvogado2.show();" />
-									</p:outputPanel>
-								  	
-								  	<p:outputLabel for="descricaoAudiencia" value="Descrição" />
-									<p:inputTextarea id="descricaoAudiencia" value="#{mbean.processoAudienciaUtil.audiencia.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" autoResize="false" rows="10" maxlength="500" styleClass="coluna90"/>
-									
-							  	</h:panelGrid>
-							  	
-							</p:outputPanel>
-							
-							<h:panelGrid columns="1" style="width:100%">
-					
-								<p:commandButton type="button" value="Adicionar Documento" icon="ui-icon-plus" onclick="dlgDocumentoTabAudiencia.show();" update="pgCategoriaDocumentoTabAudiencia" />
-							
-								<ui:include src="/pages/processo/include_grid_tab_audiencia_documentos.xhtml" />
-						  	
-						  	</h:panelGrid>
-						
-						</h:panelGrid>
-						
-					  	<p:commandButton id="btnCadastrarAudiencia" value="Cadastrar" icon="salvar" action="#{mbean.processoAudienciaUtil.cadastrarAudiencia}" update="@form" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" rendered="#{mbean.processoAudienciaUtil.audiencia.id == null}" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}"/>
-					  	<p:commandButton id="btnAlterarAudiencia" value="Alterar" icon="salvar" action="#{mbean.processoAudienciaUtil.alterarAudiencia}" update="@form" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" rendered="#{mbean.processoAudienciaUtil.audiencia.id != null}" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}"/>
-					  	<p:commandButton id="btnCancelarAudiencia" value="Novo Cadastro" icon="novo" action="#{mbean.processoAudienciaUtil.limpar}" process="@this" update="@form" style="width: 140px; margin-left: 5px;" />
-					  	
-					</p:fieldset>
-					
-				</h:panelGrid>
-				
-			</p:outputPanel>
+			<ui:include src="/pages/processo/include_cadastro_audiencia.xhtml" />
 			 
 			<p:remoteCommand action="#{mbean.processoAudienciaUtil.removerAudiencia}" name="removerAudiencia" update="opGridAudiencia" process="@this"/>
 			 
@@ -106,6 +33,7 @@
 					  			<p:commandLink process="@this" action="#{mbean.processoAudienciaUtil.obterAudiencia}" update="@form">
 						  			<h:outputText value="#{linha.vara.descricao}" />
 									<f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.audiencia}" value="#{linha}" />
+									<f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
 								</p:commandLink>
 					  		</p:column>
 					  	
@@ -113,6 +41,7 @@
 					  			<p:commandLink process="@this" action="#{mbean.processoAudienciaUtil.obterAudiencia}" update="@form">
 						  			<h:outputText value="#{linha.audienciasAdvogados}" />
 									<f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.audiencia}" value="#{linha}" />
+									<f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
 								</p:commandLink>
 					  		</p:column>
 					  	
@@ -122,6 +51,7 @@
 						  				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
 					  				</h:outputText>
 									<f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.audiencia}" value="#{linha}" />
+									<f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
 								</p:commandLink>
 					  		</p:column>
 					  		
@@ -129,6 +59,7 @@
 					  			<p:commandLink process="@this" action="#{mbean.processoAudienciaUtil.obterAudiencia}" update="@form">
 									<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
 									<f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.audiencia}" value="#{linha}" />
+									<f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
 								</p:commandLink>
 					  		</p:column>
 					  		

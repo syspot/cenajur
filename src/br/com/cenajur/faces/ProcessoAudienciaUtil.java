@@ -14,22 +14,32 @@ import br.com.cenajur.model.Audiencia;
 import br.com.cenajur.model.AudienciaAdvogado;
 import br.com.cenajur.model.CategoriaDocumento;
 import br.com.cenajur.model.Colaborador;
+import br.com.cenajur.model.ConfiguracoesEmail;
+import br.com.cenajur.model.ConfiguracoesReplaceEmail;
 import br.com.cenajur.model.DocumentoAudiencia;
 import br.com.cenajur.model.Processo;
+import br.com.cenajur.model.ProcessoCliente;
 import br.com.cenajur.model.ProcessoNumero;
+import br.com.cenajur.model.RegrasEmail;
 import br.com.cenajur.model.SituacaoAudiencia;
 import br.com.cenajur.model.TipoCategoria;
 import br.com.cenajur.model.Vara;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
+import br.com.cenajur.util.EmailUtil;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.file.TSFile;
+import br.com.topsys.util.TSDateUtil;
+import br.com.topsys.util.TSParseUtil;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.util.TSFacesUtil;
 
 public class ProcessoAudienciaUtil {
 
+	private ProcessoNumero processoNumeroPrincipal;
+	private ProcessoNumero processoNumeroBackup;
+	
 	private Processo crudModel;
 	private CategoriaDocumento categoriaDocumento;
 	private List<SelectItem> categoriasDocumentos;
@@ -42,18 +52,18 @@ public class ProcessoAudienciaUtil {
 	private Colaborador advogadoSelecionado;
 	
 	private AgendaColaborador agendaColaboradorAux;
-
-	public ProcessoAudienciaUtil() {
-
-	}
 	
-	public ProcessoAudienciaUtil(Processo processo) {
-		setCrudModel(processo);
+	public ProcessoAudienciaUtil() {
 		setCategoriaDocumento(new CategoriaDocumento());
 		getCategoriaDocumento().setTipoCategoria(new TipoCategoria(Constantes.TIPO_CATEGORIA_AUDIENCA));
 		setDocumentoAudiencia(new DocumentoAudiencia());
 		this.initAudiencia();
 		this.initCombo();
+	}
+	
+	public ProcessoAudienciaUtil(Processo processo) {
+		this();
+		setCrudModel(processo);
 	}
 	
 	private void initAudiencia(){
@@ -63,6 +73,7 @@ public class ProcessoAudienciaUtil {
 		this.audiencia.setVara(new Vara());
 		this.audiencia.setDocumentos(new ArrayList<DocumentoAudiencia>());
 		this.audiencia.setAudienciasAdvogados(new ArrayList<AudienciaAdvogado>());
+		this.processoNumeroPrincipal = this.processoNumeroBackup;
 	}
 	
 	private void initCombo(){
@@ -75,12 +86,14 @@ public class ProcessoAudienciaUtil {
 	}
 
 	public void enviarDocumento(FileUploadEvent event) {
-		getDocumentoAudiencia().setDocumento(event.getFile());
-		getDocumentoAudiencia().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
+		
+		getDocumentoAudiencia().setArquivo(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
 		
 		if(CenajurUtil.isDocumentoPdf(event.getFile())){
 			getDocumentoAudiencia().setDescricaoBusca(CenajurUtil.getDescricaoPDF(event.getFile()));
 		}
+		
+		CenajurUtil.criaArquivo(event.getFile(), getDocumentoAudiencia().getCaminhoUploadCompleto());
 		
 	}
 	
@@ -88,7 +101,7 @@ public class ProcessoAudienciaUtil {
 		
 		RequestContext context = RequestContext.getCurrentInstance();
 		
-		if(TSUtil.isEmpty(getDocumentoAudiencia().getDocumento())){
+		if(TSUtil.isEmpty(getDocumentoAudiencia().getArquivo())){
 			CenajurUtil.addErrorMessage("Documento: Campo obrigatório");
 			context.addCallbackParam("sucesso", false);
 			return null;
@@ -132,33 +145,68 @@ public class ProcessoAudienciaUtil {
 		return erro;
 	}
 	
+	private void posPersist(){
+		
+		RegrasEmail regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_AUDIENCIA).getById();
+		
+		EmailUtil emailUtil = new EmailUtil();
+		
+		Processo processo = getCrudModel().getById();
+		
+		ConfiguracoesReplaceEmail configuracaoReplace;
+		
+		for(ConfiguracoesEmail configuracoesEmail : regrasEmail.getConfiguracoesEmails()){
+			
+			if(configuracoesEmail.getFlagImediato()){
+				
+				for(ProcessoCliente processoCliente : processo.getProcessosClientes()){
+					
+					if(!TSUtil.isEmpty(processoCliente.getCliente().getEmail())){
+						
+						String texto = configuracoesEmail.getCorpoEmail();
+						
+						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_PROCESSO).getById();
+						
+						texto = texto.replace(configuracaoReplace.getCodigo(), new ProcessoNumero().obterNumeroProcessoPrincipal(processo).getNumero());
+						
+						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ASSOCIADO).getById();
+						
+						texto = texto.replace(configuracaoReplace.getCodigo(), processoCliente.getCliente().getNome());
+						
+						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DATA_ATUAL).getById();
+						
+						texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(new Date(), TSDateUtil.DD_MM_YYYY_HH_MM));
+						
+						emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
+						
+					}
+					
+				}
+				
+			}
+			
+		}
+	}
+	
 	public String cadastrarAudiencia() throws TSApplicationException{
 		
 		if(validaCampos()){
 			return null;
 		}
 		
+		this.audiencia.setProcessoNumero(processoNumeroPrincipal);
 		this.audiencia.setVara(this.audiencia.getVara().getById());
 		this.audiencia.setDataAtualizacao(new Date());
 		this.audiencia.setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 		this.audiencia.setDataCadastro(new Date());
 		this.audiencia.save();
-
-		for(DocumentoAudiencia doc : this.audiencia.getDocumentos()){
-			
-			if(!TSUtil.isEmpty(doc.getDocumento())){
-				
-				doc.setArquivo(doc.getId() + TSFile.obterExtensaoArquivo(doc.getArquivo()));
-				CenajurUtil.criaArquivo(doc.getDocumento(), doc.getCaminhoUploadCompleto());
-				
-				doc.update();
-			}
-		}
 		
 		CenajurUtil.addInfoMessage("Audiência cadastrada com sucesso");
 		this.initAudiencia();
-		this.audiencia.setProcessoNumero(new ProcessoNumero().obterNumeroProcessoPrincipal(getCrudModel()));
 		getCrudModel().setAudiencias(this.audiencia.findByModel("descricao"));
+		
+		this.posPersist();
+		
 		return null;
 	}
 	
@@ -179,25 +227,12 @@ public class ProcessoAudienciaUtil {
 		this.audiencia.setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 		this.audiencia.update();
 		
-		for(DocumentoAudiencia doc : this.audiencia.getDocumentos()){
-			
-			if(!TSUtil.isEmpty(doc.getDocumento())){
-				
-				DocumentoAudiencia documento = doc.getByModel();
-				
-				doc.setId(documento.getId());
-				doc.setArquivo(doc.getId() + TSFile.obterExtensaoArquivo(doc.getArquivo()));
-				CenajurUtil.criaArquivo(doc.getDocumento(), doc.getCaminhoUploadCompleto());
-				
-				doc.update();
-			}
-			
-		}
-		
 		this.initAudiencia();
-		this.audiencia.setProcessoNumero(new ProcessoNumero().obterNumeroProcessoPrincipal(getCrudModel()));
 		getCrudModel().setAudiencias(this.audiencia.findByModel("descricao"));
 		CenajurUtil.addInfoMessage("Alteração realizada com sucesso");
+		
+		this.posPersist();
+		
 		return null;
 	}
 	
@@ -293,6 +328,22 @@ public class ProcessoAudienciaUtil {
 
 	public void setAgendaColaboradorAux(AgendaColaborador agendaColaboradorAux) {
 		this.agendaColaboradorAux = agendaColaboradorAux;
+	}
+
+	public ProcessoNumero getProcessoNumeroPrincipal() {
+		return processoNumeroPrincipal;
+	}
+
+	public void setProcessoNumeroPrincipal(ProcessoNumero processoNumeroPrincipal) {
+		this.processoNumeroPrincipal = processoNumeroPrincipal;
+	}
+
+	public ProcessoNumero getProcessoNumeroBackup() {
+		return processoNumeroBackup;
+	}
+
+	public void setProcessoNumeroBackup(ProcessoNumero processoNumeroBackup) {
+		this.processoNumeroBackup = processoNumeroBackup;
 	}
 
 }

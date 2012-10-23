@@ -7,7 +7,7 @@
 
 	<ui:param name="mbeanCam" value="${clienteFaces}" />
 
-	<h:form>
+	<h:form rendered="#{autenticacaoFaces.mostrarDialogCam}">
 		
 		<p:dialog id="dialogCam" widgetVar="dlgCam" header="Capturar Imagem" width="350" height="300" modal="true">
 	  

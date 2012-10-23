@@ -67,11 +67,18 @@
 					                    	</p:commandLink>
 					                    </h:panelGrid>
 					                    
+					                    <h:outputText value="Selecionar:" styleClass="#{mensagemDestinatario.css}"/>
+					                    <h:selectBooleanCheckbox value="#{mensagemDestinatario.flagSelecionado}" >
+					                    	<p:ajax process="@this" global="false" />
+					                    </h:selectBooleanCheckbox>
+					                    
 					                </h:panelGrid>
 					            </p:panel>  
 					        </p:column>  
 					  
 					    </p:dataGrid>
+					    
+					    <p:commandButton value="Excluir Selecionadas" icon="ui-icon-minus" action="#{mensagemFaces.excluirMensagensDestinatariosSelecionadas}" ajax="false" style="margin-top:20px" />
 					    
 					    <p:dialog id="dialogViewMensagem" header="Detalhe da mensagem" widgetVar="dlgViewMensagem" modal="true" width="550" appendToBody="true">  
 			        
@@ -86,20 +93,28 @@
 				                <h:inputText value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem.remetente.nome}" readonly="true" style="width: 70%"/>
 				                  
 				                <h:outputText value="Mensagem:" />
-				                <h:inputTextarea value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem.texto}" rows="10" cols="65" style="text-align: lef; wudth: 100%" readonly="true"/>
+				                <h:inputTextarea value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem.texto}" rows="10" cols="55" style="text-align: lef; wudth: 100%" readonly="true"/>
 				                  
 				            </h:panelGrid> 
 				            
-				            <div style="text-align: right">
-				            	<p:commandButton value="Responder" oncomplete="dlgMensagem.show(); dlgViewMensagem.hide();" action="#{mensagemFaces.addDestinatario}" process="@this" style="margin-right: 5px; margin-bottom: 20px">
-				            		<f:setPropertyActionListener target="#{mensagemFaces.destinatarioSelecionado}" value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem.remetente}" />
-				            		<f:setPropertyActionListener target="#{mensagemFaces.flagEnviar}" value="#{true}" />
+				            <h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:100%; margin-top:10px; margin-botton:20px">
+				            
+				            	<p:commandButton value="Histórico" icon="ui-icon-search" action="#{mensagemFaces.pesquisarHistorico}" oncomplete="dlgHistoricoMensagem.show();" process="@this, pgMensagem" >
+				            		<f:setPropertyActionListener target="#{mensagemFaces.mensagemView}" value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem}" />
 				            	</p:commandButton>
-				            	<p:commandButton value="Excluir" action="#{mensagemFaces.excluirMensagemDestinatario}" update="dgMensagem" oncomplete="dlgViewMensagem.hide();" process="@this, pgMensagem" style="margin-right: 25px; margin-bottom: 20px" />
-				            </div>
-					              
+					            
+					            <p:outputPanel style="text-align: right">
+					            	<p:commandButton value="Responder" icon="ui-icon-comment" oncomplete="dlgMensagem.show(); dlgViewMensagem.hide();" action="#{mensagemFaces.responderMensagem}" process="@this, pgMensagem">
+					            		<f:setPropertyActionListener target="#{mensagemFaces.destinatarioSelecionado}" value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem.remetente}" />
+					            		<f:setPropertyActionListener target="#{mensagemFaces.flagEnviar}" value="#{true}" />
+					            	</p:commandButton>
+					            	<p:commandButton value="Excluir" icon="ui-icon-minus" action="#{mensagemFaces.excluirMensagemDestinatario}" update="dgMensagem" oncomplete="dlgViewMensagem.hide();" process="@this, pgMensagem"  />
+					            </p:outputPanel>
+					            
+				            </h:panelGrid>
+				            
 					    </p:dialog>
-		  			
+					    
 		  			</p:tab>
 		  			
 		  			<p:tab id="tabMensagemEnviada" title="Enviadas">
@@ -135,15 +150,24 @@
 					                    	</p:commandLink>
 					                    </h:panelGrid>
 					                    
+					                    <h:outputText value="Selecionar:" />
+					                    <h:selectBooleanCheckbox value="#{mensagem.flagSelecionado}" >
+					                    	<p:ajax process="@this" global="false" />
+					                    </h:selectBooleanCheckbox>
+					                    
 					                </h:panelGrid>
 					            </p:panel>  
 					        </p:column>  
 					  
 					    </p:dataGrid>
 					    
+				    	<p:commandButton value="Excluir Selecionadas" icon="ui-icon-minus" action="#{mensagemFaces.excluirMensagensSelecionadas}" ajax="false" style="margin-top:20px" />
+					    
 		  			</p:tab>
 		  		
 		  		</p:tabView>
+		  		
+		  		<ui:include src="/resources/templates/dialogs/dialogHistoricoMensagem.xhtml" />
 			  
 			</h:form>
 			

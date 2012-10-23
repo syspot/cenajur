@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+  	<p:tabView>
+
+		<p:tab title="Relatórios" >
+		
+		  	<h:form>
+		  	
+		  		<h:panelGrid columns="2">
+		  		
+			  		<p:outputLabel for="dataInicial" value="Data Inicial" />
+			  		<p:outputLabel for="dataFinal" value="Data Final" />
+			  		
+			  		<p:calendar id="dataInicial" value="#{mbean.dataInicial}" pattern="dd/MM/yyyy" />
+			  		<p:calendar id="dataFinal" value="#{mbean.dataFinal}" pattern="dd/MM/yyyy" />
+		  	
+		  		</h:panelGrid>
+		  		
+		  		<p:commandButton value="Gerar Relatório" action="#{mbean.gerarRelatorio}" ajax="false" style="margin-top: 20px" />
+			  
+			</h:form>
+			
+		</p:tab>
+		
+	</p:tabView>
+  	
+</ui:composition>

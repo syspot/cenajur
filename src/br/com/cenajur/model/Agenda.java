@@ -17,6 +17,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.Constantes;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
@@ -50,6 +51,16 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 	@ManyToOne
 	@JoinColumn(name = "processo_numero_id")
 	private ProcessoNumero processoNumero;
+	
+	@ManyToOne
+	private Cliente cliente;
+	
+	@ManyToOne
+	@JoinColumn(name = "tipo_visita_id")
+	private TipoVisita tipoVisita;
+	
+	@Column(name = "telefone_cliente")
+	private String telefoneCliente;
 	
 	@OneToMany(mappedBy = "agenda", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<AgendaColaborador> agendasColaboradores;
@@ -116,6 +127,30 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 		this.processoNumero = processoNumero;
 	}
 
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public TipoVisita getTipoVisita() {
+		return tipoVisita;
+	}
+
+	public void setTipoVisita(TipoVisita tipoVisita) {
+		this.tipoVisita = tipoVisita;
+	}
+
+	public String getTelefoneCliente() {
+		return telefoneCliente;
+	}
+
+	public void setTelefoneCliente(String telefoneCliente) {
+		this.telefoneCliente = telefoneCliente;
+	}
+
 	public List<AgendaColaborador> getAgendasColaboradores() {
 		return agendasColaboradores;
 	}
@@ -159,6 +194,14 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 	public boolean isTipoAudiencia(){
 		return Constantes.TIPO_AGENDA_AUDIENCIA.equals(getTipoAgenda().getId());
 	}
+	
+	public boolean isTipoVisitaDoCliente(){
+		return Constantes.TIPO_AGENDA_VISITA_DO_CLIENTE.equals(getTipoAgenda().getId());
+	}
+	
+	public Date getDataFinalMinima() {
+		return TSUtil.isEmpty(dataInicial) ? dataInicial : CenajurUtil.getDataMaisMeiaHora(dataInicial);
+	}
 
 	@Override
 	public int hashCode() {
@@ -183,6 +226,50 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+	@Override
+	public List<Agenda> findByModel(String... fieldsOrderBy) {
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" from Agenda a where 1 = 1 ");
+		
+		if(!TSUtil.isEmpty(descricao)){
+			query.append(CenajurUtil.getParamSemAcento("a.descricao"));
+		}
+		
+		if(!TSUtil.isEmpty(tipoAgenda) && !TSUtil.isEmpty(tipoAgenda.getId())){
+			query.append("and a.tipoAgenda.id = ? ");
+		}
+		
+		if(!TSUtil.isEmpty(dataInicial)){
+			query.append("and date(a.dataInicial) = date(?) ");
+		}
+		
+		if(!TSUtil.isEmpty(dataFinal)){
+			query.append("and date(a.dataFinal) = date(?) ");
+		}
+		
+		List<Object> params = new ArrayList<Object>();
+		
+		if(!TSUtil.isEmpty(descricao)){
+			params.add(CenajurUtil.tratarString(descricao));
+		}
+		
+		if(!TSUtil.isEmpty(tipoAgenda) && !TSUtil.isEmpty(tipoAgenda.getId())){
+			params.add(tipoAgenda.getId());
+		}
+		
+		if(!TSUtil.isEmpty(dataInicial)){
+			params.add(dataInicial);
+		}
+		
+		if(!TSUtil.isEmpty(dataFinal)){
+			params.add(dataFinal);
+		}
+		
+		return super.find(query.toString(), "dataInicial", params.toArray());
 	}
 
 	public List<Agenda> pesquisarAgendas(Date dataInicial, Date dataFinal) {
@@ -211,6 +298,10 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 		}
 		
 		return super.find(query.toString(), "a.dataInicial", params.toArray());
+	}
+	
+	public List<Agenda> pesquisarVisitasProximas(int qtdDias){
+		return super.find("select a from Agenda a where a.dataInicial between ? and ? ", null, new Date(), CenajurUtil.getDataMaisDias(qtdDias));
 	}
 
 }

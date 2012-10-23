@@ -7,7 +7,7 @@
 	<p:outputPanel id="opGridDocumentosAudiencia" autoUpdate="true">
 			  	
 	  	<p:dataTable emptyMessage="Nenhum documento encontrado" style="width: 90%" paginator="true"
-				paginatorAlwaysVisible="false" rows="10" value="#{mbean.processoAudienciaUtil.audiencia.documentos}" var="documento">
+				paginatorAlwaysVisible="false" rows="10" value="#{mbeanProcessoAudiencia.audiencia.documentos}" var="documento">
 	  	
 	  		<p:column headerText="Categoria">
 	  			<h:outputText value="#{documento.categoriaDocumento.descricao}" />
@@ -28,9 +28,9 @@
 	  		</p:column>
 	  		
 			<p:column headerText="Excluir" styleClass="coluna5">
-				<p:commandLink process="@this" action="#{mbean.processoAudienciaUtil.removerDocumentoAudiencia}" global="false">
+				<p:commandLink process="@this" action="#{mbeanProcessoAudiencia.removerDocumentoAudiencia}" global="false">
 					<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
-					<f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.documentoAudienciaSelecionado}" value="#{documento}" />
+					<f:setPropertyActionListener target="#{mbeanProcessoAudiencia.documentoAudienciaSelecionado}" value="#{documento}" />
 				</p:commandLink>
 			</p:column>
 	  		

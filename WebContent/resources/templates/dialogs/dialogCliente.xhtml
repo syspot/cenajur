@@ -10,7 +10,7 @@
 	<ui:param name="nomeDialog" value="dlgCliente" />
 	<ui:param name="addDependente" value="${true}" />
 
-	<h:form>
+	<h:form rendered="#{autenticacaoFaces.mostrarDialogCliente}">
 		
 		<p:dialog id="dialogCliente" widgetVar="dlgCliente" width="600" height="400" modal="true">
 	  

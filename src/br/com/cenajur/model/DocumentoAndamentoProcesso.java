@@ -12,11 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
-import org.primefaces.model.UploadedFile;
-
-import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.Constantes;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
@@ -24,6 +20,11 @@ import br.com.topsys.util.TSUtil;
 @Entity
 @Table(name = "documentos_andamentos_processos")
 public class DocumentoAndamentoProcesso extends TSActiveRecordAb<DocumentoAndamentoProcesso>{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2823369704674122534L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="documentos_andamentos_processos_id")
@@ -44,9 +45,6 @@ public class DocumentoAndamentoProcesso extends TSActiveRecordAb<DocumentoAndame
 	@ManyToOne
 	@JoinColumn(name = "categoria_documento_id")
 	private CategoriaDocumento categoriaDocumento;
-	
-	@Transient
-	private UploadedFile documento;
 	
 	@Column(name = "flag_permissao_cliente")
 	private Boolean flagPermissaoCliente;
@@ -99,14 +97,6 @@ public class DocumentoAndamentoProcesso extends TSActiveRecordAb<DocumentoAndame
 		this.categoriaDocumento = categoriaDocumento;
 	}
 
-	public UploadedFile getDocumento() {
-		return documento;
-	}
-
-	public void setDocumento(UploadedFile documento) {
-		this.documento = documento;
-	}
-
 	public Boolean getFlagPermissaoCliente() {
 		return flagPermissaoCliente;
 	}
@@ -152,11 +142,6 @@ public class DocumentoAndamentoProcesso extends TSActiveRecordAb<DocumentoAndame
 				return false;
 		} else if (!descricao.equals(other.descricao))
 			return false;
-		if (documento == null) {
-			if (other.documento != null)
-				return false;
-		} else if (!documento.equals(other.documento))
-			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -166,11 +151,11 @@ public class DocumentoAndamentoProcesso extends TSActiveRecordAb<DocumentoAndame
 	}
 
 	public String getCaminhoUploadCompleto(){
-		return Constantes.PASTA_UPLOAD_ARQUIVO + CenajurUtil.getAnoMes(andamentoProcesso.getDataCadastro()) + Constantes.PASTA_ANDAMENTO_PROCESSO + arquivo;
+		return Constantes.PASTA_UPLOAD_ARQUIVO + Constantes.PASTA_ANDAMENTO_PROCESSO + arquivo;
 	}
 	
 	public String getCaminhoDownloadCompleto(){
-		return Constantes.PASTA_DOWNLOAD_ARQUIVO + CenajurUtil.getAnoMesWeb(andamentoProcesso.getDataCadastro()) + Constantes.PASTA_ANDAMENTO_PROCESSO + arquivo;
+		return Constantes.PASTA_DOWNLOAD_ARQUIVO + Constantes.PASTA_ANDAMENTO_PROCESSO + arquivo;
 	}
 	
 	@Override

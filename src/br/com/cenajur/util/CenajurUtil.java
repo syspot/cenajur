@@ -70,6 +70,11 @@ public class CenajurUtil {
 		return "%" + str.toLowerCase() + "%"; 
 	}
 	
+	public static String formataNumeroProcessoBusca(String campo){
+		return " and translate(lower(trim(".concat(campo).concat(")), '.-_*/\\<>|=+;:', '%%%%%%%%%%%%%')"
+				+ " like translate(lower(trim(?)), '.-_*/\\<>|=+;:', '%%%%%%%%%%%%%') ");
+	}
+	
 	public static String semAcento(String campo){
 		return "translate(lower(trim(".concat(campo).concat(")), 'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ', 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')");
 	}
@@ -109,7 +114,20 @@ public class CenajurUtil {
 		return c.getTime();
 	}
 	
+	public static Date getDataMaisMeiaHora(Date data){
+		Calendar c = Calendar.getInstance();
+		c.setTime(data);
+		c.add(Calendar.MINUTE, 30);
+		return c.getTime();
+	}
+	
 	public static Date getDataMenosDias(int qtdDias){
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.DAY_OF_MONTH, qtdDias);
+		return c.getTime();
+	}
+	
+	public static Date getDataMaisDias(int qtdDias){
 		Calendar c = Calendar.getInstance();
 		c.add(Calendar.DAY_OF_MONTH, qtdDias);
 		return c.getTime();
@@ -234,10 +252,24 @@ public class CenajurUtil {
 		return c.get(Calendar.YEAR);
 	}
 	
-	
 	public static Integer obterMesAtual(){
 		Calendar c = Calendar.getInstance();
 		return c.get(Calendar.MONTH + 1);
+	}
+	
+	public static Integer converterStringInteiro(String string){
+		
+		try{
+			
+			Integer inteiro = Integer.valueOf(string);
+			
+			return inteiro;
+			
+		} catch(NumberFormatException e){
+			
+			return null;
+		}
+		
 	}
 	
 	public static String obterDescricaoAgenda(Agenda agenda){

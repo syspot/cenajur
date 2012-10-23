@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:param name="mbeanPesquisa" value="${colaboradorPesquisaFaces}" />
+	<ui:param name="mbeanColaboradorAcao" value="${agendaCrudFaces}" />
+	<ui:param name="nomeDialog" value="dlgColaborador3" />
+	<ui:param name="metodoAdicao" value="addAgendaColaborador" />
+	<ui:param name="colaboradorSelecionado" value="colaboradorSelecionado" />
+	<ui:param name="atualizar" value="atualizarAgendasColaboradores()" />
+
+	<h:form rendered="#{autenticacaoFaces.mostrarDialogColaborador3}">
+		
+		<p:dialog id="dialogColaborador3" header="Pesquisa de Colaborador" widgetVar="dlgColaborador3" width="550" height="350" modal="true">
+	  
+	  		<ui:include src="/resources/templates/includes/include_dialog_colaborador.xhtml" />
+			  			
+		</p:dialog>
+	
+	</h:form>
+
+</ui:component>

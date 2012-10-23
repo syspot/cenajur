@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="/resources/templates/templateCRUD.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+	<ui:param name="mbean" value="${agendaCrudFaces}" />
+  	<ui:param name="mbeanModel" value="${agendaCrudFaces.crudModel}" />
+  	<ui:param name="mbeanPesquisaModel" value="${agendaCrudFaces.crudPesquisaModel}" />
+  	
+  	<ui:define name="cadastro">
+  	
+  		<h:panelGrid columns="1" style="width:50%">
+			
+			<p:outputLabel for="processoAgenda" value="Processo" />  		
+  			<p:outputPanel autoUpdate="true" style="width:100%">
+				<p:inputText id="processoAgenda" value="#{mbeanModel.processoNumero.numero}" readonly="true" style="width:45%"/>
+				<p:commandButton type="button" icon="ui-icon-plus" value="Add" onclick="dlgProcesso4.show();" />
+			</p:outputPanel>
+			
+			<p:outputLabel for="tipoAgenda" value="Tipo de Agenda" />
+			<p:selectOneMenu id="tipoAgenda" value="#{mbeanModel.tipoAgenda.id}" required="true" requiredMessage="Tipo de Agenda: Campo obrigatório" style="width:60%">
+				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+				<f:selectItems value="#{mbean.tiposAgendas}" />
+				<p:ajax event="change" update="pgColaboradorAgenda, pgClienteAgenda, dtAgendasColaboradores" listener="#{mbean.alterarTipoAgenda}"/>
+			</p:selectOneMenu>
+			
+  		</h:panelGrid>
+  	
+	  	<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width: 30%">
+
+			<p:outputLabel for="dataInicioAgenda" value="Data Início" />
+			<p:outputLabel for="dataFimAgenda" value="Data Fim" />
+			
+			<p:calendar id="dataInicioAgenda" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data: Campo obrigatório" value="#{mbeanModel.dataInicial}" />
+			<p:calendar id="dataFimAgenda" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data: Campo obrigatório" value="#{mbeanModel.dataFinal}" mindate="#{mbeanModel.dataFinalMinima}" />
+			
+		</h:panelGrid>
+	
+		<h:panelGrid id="pgClienteAgenda" columns="3" columnClasses="coluna50, coluna15, coluna35" style="width:60%">
+			
+			<p:outputLabel for="clienteAgenda" value="Cliente" rendered="#{mbeanModel.tipoVisitaDoCliente}"/>
+			<p:outputLabel for="tipoVisitaCliente" value="Tipo de Visita" rendered="#{mbeanModel.tipoVisitaDoCliente}"/>
+			<p:outputLabel for="telefoneClienteAgenda" value="Telefone" rendered="#{mbeanModel.tipoVisitaDoCliente}"/>
+			
+			<p:outputPanel autoUpdate="true" style="width:100%" rendered="#{mbeanModel.tipoVisitaDoCliente}">
+				<p:inputText id="clienteAgenda" value="#{mbeanModel.cliente.nome}" readonly="true" style="width:75%"/>
+				<p:commandButton type="button" icon="ui-icon-plus" value="Add" onclick="dlgCliente6.show();" />
+			</p:outputPanel>
+			<p:selectOneMenu id="tipoVisitaCliente" value="#{mbeanModel.tipoVisita.id}" rendered="#{mbeanModel.tipoVisitaDoCliente}">
+				<f:selectItems value="#{mbean.tiposVisitas}" />
+			</p:selectOneMenu>
+			<p:inputMask id="telefoneClienteAgenda" mask="(99) 9999-9999" value="#{mbeanModel.telefoneCliente}" maxlength="14" styleClass="coluna90" rendered="#{mbeanModel.tipoVisitaDoCliente}"/>
+		
+		</h:panelGrid>
+	
+		<h:panelGrid style="width: 50%">
+	
+			<p:outputLabel for="descricaoAgenda" value="Descrição" />
+			<p:inputTextarea id="descricaoAgenda" value="#{mbeanModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" cols="80" rows="10"/>
+		
+		</h:panelGrid>
+
+		<h:panelGrid id="pgColaboradorAgenda" columns="2" columnClasses="coluna50_3, coluna50_3">
+			<p:commandButton type="button" value="Add Colaborador" onclick="dlgColaborador3.show();" style="margin-top: 10px; margin-right: 10px" rendered="#{!mbeanModel.tipoAudiencia}"/>
+			<p:commandButton type="button" value="Add Colaborador" onclick="dlgAdvogado6.show();" style="margin-top: 10px; margin-right: 10px" rendered="#{mbeanModel.tipoAudiencia}"/>
+			<h:panelGrid columns="1">
+				<p:outputLabel for="flagGeralAgenda" value="Geral" />
+				<p:selectBooleanCheckbox id="flagGeralAgenda" value="#{mbeanModel.flagGeral}" />
+			</h:panelGrid>
+		</h:panelGrid>
+	
+		<p:outputPanel id="opAgendasColaboradores">
+		
+			<p:dataTable id="dtAgendasColaboradores" value="#{mbeanModel.agendasColaboradores}" var="agendaColaborador"
+						emptyMessage="Nenhum colaborador adicionado" style="width:99%">
+				
+				<p:column headerText="Nome" styleClass="coluna20">
+					<h:outputText value="#{agendaColaborador.colaborador.apelido}" />
+				</p:column>
+				
+				<p:column headerText="Mensagem individual" styleClass="coluna75">
+					<p:inputText value="#{agendaColaborador.descricao}" maxlength="200" styleClass="coluna97">
+						<p:ajax event="blur" global="false"/>
+					</p:inputText>
+				</p:column>
+				
+				<p:column headerText="Status" styleClass="coluna5">
+					<h:outputText value="#{agendaColaborador.status}" title="#{agendaColaborador.textoResposta}" styleClass="#{agendaColaborador.css}" />
+				</p:column>
+				
+				<p:column headerText="Excluir" styleClass="coluna5">
+					<p:commandLink action="#{mbean.removerAgendaColaborador}" oncomplete="atualizarAgendasColaboradores();" process="@this" icon="delete16" global="false">
+						<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+						<f:setPropertyActionListener target="#{mbean.agendaColaboradorSelecionado}" value="#{agendaColaborador}" />
+					</p:commandLink>
+				</p:column>
+			
+			</p:dataTable>
+			
+			<p:remoteCommand name="atualizarAgendasColaboradores" process="@this" update="opAgendasColaboradores"/>
+			
+		</p:outputPanel>
+	  	
+  	</ui:define>
+  	
+  	<ui:define name="pesquisaCampos">
+  	
+  		<h:panelGrid>
+  		
+  			<p:outputLabel for="descricaoPesquisa" value="Descrição" />
+  			<p:inputText id="descricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" maxlength="100" />
+  			
+  			<p:outputLabel for="tipoAgendaPesquisa" value="Tipo de Agenda" />
+			<p:selectOneMenu id="tipoAgendaPesquisa" value="#{mbeanPesquisaModel.tipoAgenda.id}" style="width:60%">
+				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+				<f:selectItems value="#{mbean.tiposAgendas}" />
+			</p:selectOneMenu>
+  		
+  		</h:panelGrid>
+  	
+  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width: 30%">
+
+			<p:outputLabel for="dataInicioAgendaPesquisa" value="Data Início" />
+			<p:outputLabel for="dataFimAgendaPesquisa" value="Data Fim" />
+			
+			<p:calendar id="dataInicioAgendaPesquisa" pattern="dd/MM/yyyy HH:mm" value="#{mbeanPesquisaModel.dataInicial}" />
+			<p:calendar id="dataFimAgendaPesquisa" pattern="dd/MM/yyyy HH:mm" value="#{mbeanPesquisaModel.dataFinal}" />
+			
+		</h:panelGrid>
+	  	
+  	</ui:define>
+  	
+  	<ui:define name="colunasTabela">
+  	
+  		<p:column headerText="Tipo de Agenda">
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.tipoAgenda.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
+  		</p:column>
+  	
+  		<p:column headerText="Data Inicial">
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.dataInicial}">
+					<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+	  			</h:outputText>
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}"/>
+			</p:commandLink>
+  		</p:column>
+  	
+  		<p:column headerText="Data Final">
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.dataFinal}">
+					<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+	  			</h:outputText>
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
+  		</p:column>
+  	
+  		<p:column headerText="Descrição">
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
+  		</p:column>
+  		
+  	</ui:define>
+  	
+</ui:composition>

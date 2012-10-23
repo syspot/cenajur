@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+  	
+	  
+	<h:panelGrid columns="4" columnClasses="coluna16, coluna16, coluna16, coluna52" style="width: 100%">
+			  		
+		<p:outputLabel for="tipoAgendaViewRespostaPropria" value="Tipo de Agenda" />
+		<p:outputLabel for="dataInicioAgendaViewRespostaPropria" value="Data Início" />
+		<p:outputLabel for="dataFimAgendaViewRespostaPropria" value="Data Fim" />
+		<p:outputLabel for="processoAgendaViewRespostaPropria" value="Processo" />
+			
+		<p:inputText id="tipoAgendaViewRespostaPropria" value="#{agendaFaces.agenda.tipoAgenda.descricao}" required="true" readonly="true" />
+		<p:inputText id="dataInicioAgendaViewRespostaPropria" required="true" value="#{agendaFaces.agenda.dataInicial}" readonly="true">
+			<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+		</p:inputText>
+		<p:inputText id="dataFimAgendaViewRespostaPropria" required="true" value="#{agendaFaces.agenda.dataFinal}" readonly="true">
+			<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+		</p:inputText>
+		<p:inputText id="processoAgendaViewRespostaPropria" value="#{agendaFaces.agenda.processoNumero.numero}" readonly="true" style="width:65%"/>
+			
+	</h:panelGrid>
+	
+	<h:panelGrid id="pgClienteAgendaViewRespostaPropria" columns="3" columnClasses="coluna50, coluna15, coluna35" style="width:100%">
+		
+		<p:outputLabel for="clienteAgendaViewRespostaPropria" value="Cliente" rendered="#{agendaFaces.agenda.tipoVisitaDoCliente}"/>
+		<p:outputLabel for="tipoVisitaClienteViewRespostaPropria" value="Tipo de Visita" rendered="#{agendaFaces.agenda.tipoVisitaDoCliente}"/>
+		<p:outputLabel for="telefoneClienteAgendaViewRespostaPropria" value="Telefone" rendered="#{agendaFaces.agenda.tipoVisitaDoCliente}"/>
+		
+		<p:outputPanel autoUpdate="true" style="width:100%" rendered="#{agendaFaces.agenda.tipoVisitaDoCliente}">
+			<p:inputText id="clienteAgendaViewRespostaPropria" value="#{agendaFaces.agenda.cliente.nome}" readonly="true" style="width:75%"/>
+			<p:commandButton type="button" icon="ui-icon-plus" value="Add" />
+		</p:outputPanel>
+		<p:inputText id="tipoVisitaClienteViewRespostaPropria" value="#{agendaFaces.agenda.tipoVisita.descricao}" rendered="#{agendaFaces.agenda.tipoVisitaDoCliente}" readonly="true" />
+		<p:inputMask id="telefoneClienteAgendaViewRespostaPropria" mask="(99) 9999-9999" value="#{agendaFaces.agenda.telefoneCliente}" maxlength="14" styleClass="coluna90" rendered="#{agendaFaces.agenda.tipoVisitaDoCliente}" readonly="true"/>
+	
+	</h:panelGrid>
+		
+	<h:panelGrid style="width: 100%">
+	
+		<p:outputLabel for="descricaoAgendaViewRespostaPropria" value="Descrição" />
+		<p:inputTextarea id="descricaoAgendaViewRespostaPropria" value="#{agendaFaces.agenda.descricao}" required="true" autoResize="false" readonly="true" cols="105" rows="5"/>
+		
+		<p:outputLabel for="descricaoParaMimAgendaViewRespostaPropria" value="Para mim" rendered="#{agendaFaces.agendaColaboradorSelecionado != null}"/>
+		<p:inputText id="descricaoParaMimAgendaViewRespostaPropria" value="#{agendaFaces.agendaColaboradorSelecionado.descricao}" readonly="true" styleClass="coluna97" rendered="#{agendaFaces.agendaColaboradorSelecionado != null}"/>
+	
+	</h:panelGrid>
+	
+	<hr />
+		
+	<h:panelGrid style="width: 100%" rendered="#{agendaFaces.agendaColaboradorSelecionado != null}">
+
+		<p:outputLabel for="flagConcluidoAgendaRespostaPropria" value="Concluído" />
+		<p:selectBooleanCheckbox id="flagConcluidoAgendaRespostaPropria" value="#{agendaFaces.agendaColaboradorSelecionado.flagConcluido}" />
+	
+		<p:outputLabel for="descricaoAgendaColaboradorRespostaPropria" value="Resposta" />
+		<p:inputTextarea id="descricaoAgendaColaboradorRespostaPropria" value="#{agendaFaces.agendaColaboradorSelecionado.textoResposta}" autoResize="false" required="true" requiredMessage="Descrição: Campo obrigatório" cols="105" rows="5"/>
+		
+		<p:commandButton value="Salvar" action="#{agendaFaces.salvarAgendaColaborador}" process="@this, opDialogRespostaPropria" oncomplete="handleRequestActionAgenda('dialogRespostaPropria', dlgRespostaPropria, args)" update="opDialogRespostaPropria" style="margin-top: 10px" />
+	
+	</h:panelGrid>
+	
+	<p:commandButton type="button" value="Fechar" onclick="dlgRespostaPropria.hide()" style="margin-top: 10px;" rendered="#{agendaFaces.agendaColaboradorSelecionado == null}"/>
+	
+</ui:composition>

@@ -9,291 +9,34 @@
 	
 	<ui:param name="clienteModel" value="${clienteFaces.crudModel}" />
 	
-	<p:tab id="tabProcessos" title="Processos" rendered="#{clienteModel.id != null and not empty clienteModel.processos}">
+	<p:accordionPanel multiple="true" rendered="#{clienteModel.id != null and not empty clienteFaces.processoAux.processos}">
 	
-		<h:form>
-		
-			<c:forEach var="processo" items="#{clienteModel.processos}">
+		<c:forEach items="#{clienteFaces.processoAux.processos}" var="processo" varStatus="linha2">
 			
-				<h:outputText value="#{processo.situacaoProcesso.descricao}" styleClass="#{processo.situacaoProcesso.css}" />
-				
-				<p:accordionPanel multiple="false" activeIndex="zero">
-					
-					<p:tab title="Número: #{processo.processoNumeroPrincipal.numero}  -  Vara: #{processo.vara.descricao}  -  Objeto: #{processo.objeto.descricao}  -  Lote: #{processo.lote}" titleStyleClass="#{processo.situacaoProcesso.css}" titleStyle="word-spacing: 10px">
-					
-						<p:tabView>
-						
-							<p:tab title="Processo">
-					
-								<p:fieldset>
-					
-									<h:panelGrid columns="3" columnClasses="coluna30, coluna20, coluna30" style="width:50%">
-						
-										<p:outputLabel for="numeroProcesso" value="Número do Processo" />
-										<p:outputLabel for="dataAbertura" value="Data de Abertura" />
-										<p:outputLabel for="lote" value="Lote" />
-						
-										<p:inputText id="numeroProcesso" value="#{processo.processoNumeroPrincipal.numero}" maxlength="30" styleClass="coluna90" readonly="true" />
-										<p:inputText id="dataAbertura" value="#{processo.dataAbertura}" styleClass="coluna90" readonly="true" >
-											<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="America/Sao_Paulo" />
-										</p:inputText>
-										<p:inputText id="lote" value="#{processo.lote}" maxlength="30" styleClass="coluna95" readonly="true"/>
-						
-									</h:panelGrid>
-									
-									<h:panelGrid columns="1" style="width: 70%">
+			<p:tab title="Número: #{processo.processoNumeroPrincipal.numero}  -  Vara: #{processo.vara.descricao}  -  Objeto: #{processo.objeto.descricao}  -  Lote: #{processo.lote}" titleStyleClass="#{processo.situacaoProcesso.css}" titleStyle="word-spacing: 10px">
 			
-										<h:outputText value="Outros números do Processo" />
-										<p:outputPanel autoUpdate="true">
-											<p:inputText value="#{processo.processosNumeros}" readonly="true" styleClass="coluna80" rendered="#{not empty processo.processosNumeros}"/>
-											<p:inputText readonly="true" styleClass="coluna80" rendered="#{empty processo.processosNumeros}"/>
-										</p:outputPanel>
-										
-									</h:panelGrid>
+				<h:form>
+					
+					<p:fieldset>
+					
+						<p:accordionPanel multiple="true" activeIndex="0,1,2">
 						
-								</p:fieldset>
-						
-								<h:panelGrid columns="2" columnClasses="coluna50_2, coluna50_2" style="width:100%">
-						
-									<p:fieldset legend="Parte">
-						
-										<p:outputPanel autoUpdate="true">
-						
-											<p:dataTable value="#{processo.processosClientes}" var="processoCliente" emptyMessage="Nenhum associado selecionado" rowIndexVar="index" style="width:100%">
-						
-												<p:column headerText="Nome" styleClass="coluna70">
-													<h:outputText value="#{processoCliente.cliente.nome}" />
-												</p:column>
-						
-												<p:column headerText="CPF" styleClass="coluna25">
-													<h:outputText value="#{processoCliente.cliente.cpf}" />
-												</p:column>
-						
-											</p:dataTable>
-						
-										</p:outputPanel>
-						
-									</p:fieldset>
-						
-									<p:fieldset legend="Parte Contrária">
-						
-										<p:outputPanel autoUpdate="true">
-						
-											<p:dataTable value="#{processo.processosPartesContrarias}" var="processoParteContraria" emptyMessage="Nenhuma parte contrária selecionada" rowIndexVar="index" style="width:100%">
-						
-												<p:column headerText="Nome" styleClass="coluna95">
-													<h:outputText value="#{processoParteContraria.parteContraria.descricao}" />
-												</p:column>
-												
-												<p:column headerText="Número do Documento" styleClass="coluna95">
-													<h:outputText value="#{processoParteContraria.parteContraria.numeroDocumento}" />
-												</p:column>
-						
-											</p:dataTable>
-						
-										</p:outputPanel>
-						
-									</p:fieldset>
-						
-								</h:panelGrid>
-						
-								<p:fieldset>
-						
-									<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:70%">
-						
-										<p:outputLabel for="parte" value="Tipo de Parte" />
-										<p:outputLabel for="advogado" value="Advogado" />
-										
-										<p:inputText id="parte" value="#{processo.tipoParte.descricao}" styleClass="coluna80" readonly="true"/>
-										<p:inputText id="advogado" value="#{processo.advogado.apelido}" styleClass="coluna80" readonly="true"/>
-						
-										<p:outputLabel for="tipoProcesso" value="Tipo de Processo" />
-										<p:outputLabel for="objeto" value="Objeto" />
-						
-										<p:inputText id="tipoProcesso" value="#{processo.tipoProcesso.descricao}" styleClass="coluna80" readonly="true"/>
-										<p:inputText id="objeto" value="#{processo.objeto.descricao}" styleClass="coluna80" readonly="true"/>
-						
-										<p:outputLabel for="vara" value="Vara" />
-										<p:outputLabel for="comarca" value="Comarca" />
-						
-										<p:inputText id="vara" value="#{processo.vara.descricao}" styleClass="coluna80" readonly="true"/>
-										<p:inputText id="comarca" value="#{processo.comarca.descricao}" styleClass="coluna80" readonly="true"/>
-										
-									</h:panelGrid>
-						
-								</p:fieldset>
-						
-								<p:fieldset>
-						
-									<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:35%">
-						
-										<p:outputLabel for="dataAjuizamento" value="Data de Ajuizamento" />
-										<p:outputLabel for="situacaoProcesso" value="Situação" />
-										
-										<p:inputText id="dataAjuizamento" value="#{processo.dataAjuizamento}" readonly="true">
-											<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="America/Sao_Paulo" />
-										</p:inputText>
-										<p:inputText id="situacaoProcesso" value="#{processo.situacaoProcesso.descricao}" readonly="true"/>
-										
-									</h:panelGrid>
-									
-									<h:panelGrid columns="1">
-									
-										<p:outputLabel for="dataArquivamento" value="Data de Arquivamento" rendered="#{processo.processoArquivado}"/>
-										<p:inputText id="dataArquivamento" value="#{processo.dataArquivamento}" readonly="true" rendered="#{processo.processoArquivado}">
-											<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="America/Sao_Paulo" />
-										</p:inputText>
-										
-									</h:panelGrid>
-						
-								</p:fieldset>
-	  				
-	  						</p:tab>
-	  						
-	  						<p:tab title="Andamento">
-	
-								<p:remoteCommand name="abrirDialogViewAndamento" oncomplete="dlgVisualizarAndamento.show();" update="pgDialogViewAndamento" process="@this"/>
-								  	
-							  	<p:outputPanel id="opGridAndamentoProcesso">
-							  	
-								  	<p:dataTable id="gridAndamentoProcesso" emptyMessage="Nenhum andamento encontrado" style="width: 70%" paginator="true"
-											paginatorAlwaysVisible="false" rows="10" value="#{processo.andamentos}" var="linha">
-								  	
-								  		<p:column headerText="Número do Processo" styleClass="coluna15">
-								  			<h:outputText value="#{linha.processoNumero.numero}" />
-								  		</p:column>
-								  	
-								  		<p:column headerText="Tipo do Andamento">
-								  			<h:outputText value="#{linha.tipoAndamentoProcesso.descricao}" />
-								  		</p:column>
-								  	
-								  		<p:column headerText="Data" style="text-align: center">
-								  			<h:outputText value="#{linha.dataAndamento}" >
-								  				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
-								  			</h:outputText>
-								  		</p:column>
-								  		
-								  		<p:column headerText="Visualizar" styleClass="coluna5">
-								  			<p:commandLink type="button" oncomplete="abrirDialogViewAndamento();" process="@this" global="false">
-												<h:graphicImage value="../resources/images/lupa.png" width="16" style="border: 0px" />
-												<f:setPropertyActionListener target="#{clienteFaces.andamentoProcessoSelecionado}" value="#{linha}" />
-											</p:commandLink>
-								  		</p:column>
-								  		
-								  	</p:dataTable>
-								  	
-					  			</p:outputPanel>
-					  			
-					  			<p:dialog appendToBody="true" modal="true" header="Visualização do Andamento" width="500" widgetVar="dlgVisualizarAndamento">
-						    
-								    <h:panelGrid id="pgDialogViewAndamento" columns="1" columnClasses="coluna100" style="width:95%">
-									
-										<p:outputLabel for="numeroProcessoAndamentoView" value="Processo" />
-										<p:inputText id="numeroProcessoAndamentoView" value="#{clienteFaces.andamentoProcessoSelecionado.processoNumero.numero}" readonly="true" />
-								  		
-									  	<p:outputLabel for="dataAndamentoAndamentoView" value="Data do Andamento" />
-								  		<p:inputText id="dataAndamentoAndamentoView" value="#{clienteFaces.andamentoProcessoSelecionado.dataAndamento}" readonly="true">
-								  			<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
-								  		</p:inputText>
-								 		
-								  		<p:outputLabel for="tipoAndamentoProcessoAndamentoView" value="Tipo do Andamento" />
-								  		<p:inputText id="tipoAndamentoProcessoAndamentoView" value="#{clienteFaces.andamentoProcessoSelecionado.tipoAndamentoProcesso.descricao}" readonly="true" style="width:97%" />
-									  	
-									  	<p:outputLabel for="descricaoAndamentoView" value="Descrição" />
-										<p:inputTextarea id="descricaoAndamentoView" value="#{clienteFaces.andamentoProcessoSelecionado.descricao}" autoResize="false" rows="10" maxlength="500" readonly="true" styleClass="coluna97"/>
-										
-								  	</h:panelGrid>
-								    
-							  	</p:dialog>
-					  			
-					  		</p:tab>
+							<ui:include src="/pages/processo/include_processo_cliente.xhtml" />
+		 						
+		 					<ui:include src="/pages/processo/include_andamento_cliente.xhtml" />
 					  		
-					  		<p:tab title="Audiência">
-			
-								<p:remoteCommand name="abrirDialogViewAudiencia" oncomplete="dlgVisualizarAudiencia.show();" update="opAudienciaView" process="@this"/>
-								 
-							  	<p:outputPanel id="opGridAudiencia">
-							  	
-								  	<p:dataTable id="gridAudiencia" emptyMessage="Nenhum audiência encontrada" style="width: 70%" paginator="true"
-											paginatorAlwaysVisible="false" rows="10" value="#{processo.audiencias}" var="linha">
-								  	
-								  		<p:column headerText="Número do Processo" styleClass="coluna15">
-								  			<h:outputText value="#{linha.processoNumero.numero}" />
-								  		</p:column>
-								  	
-								  		<p:column headerText="Advogado">
-								  			<h:outputText value="#{linha.audienciasAdvogados}" />
-								  		</p:column>
-								  	
-								  		<p:column headerText="Data">
-								  			<h:outputText value="#{linha.dataAudiencia}" >
-								  				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
-							  				</h:outputText>
-								  		</p:column>
-								  		
-								  		<p:column headerText="Visualizar" styleClass="coluna5">
-								  			<p:commandLink type="button" oncomplete="abrirDialogViewAudiencia();" process="@this" global="false">
-												<h:graphicImage value="../resources/images/lupa.png" width="16" style="border: 0px" />
-												<f:setPropertyActionListener target="#{mbean.audienciaSelecionada}" value="#{linha}" />
-											</p:commandLink>
-								  		</p:column>
-								  		
-								  	</p:dataTable>
-								  	
-					  			</p:outputPanel>
-					  			
-							  <p:dialog appendToBody="true" modal="true" header="Visualização da Audiência" width="500" widgetVar="dlgVisualizarAudiencia">
-						    		
-						    		<p:outputPanel id="opAudienciaView">
-						    		
-									    <h:panelGrid columns="1" columnClasses="coluna95">
-						  		
-											<p:outputLabel for="numeroProcessoAudienciaView" value="Processo" />
-											<p:inputText id="numeroProcessoAudienciaView" value="#{clienteFaces.audienciaSelecionada.processoNumero.numero}" readonly="true" />
-									  		
-										  	<p:outputLabel for="dataAudienciaAudienciaView" value="Data da Audiência" />
-									  		<p:inputText id="dataAudienciaAudienciaView" value="#{clienteFaces.audienciaSelecionada.dataAudiencia}" readonly="true">
-									  			<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
-									  		</p:inputText>
-								  		
-								  		</h:panelGrid>
-								  		
-								  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:95%">
-								  		
-									  		<p:outputLabel for="situacaoAudienciaView" value="Situação" />
-										  	<p:outputLabel for="varaAudienciaView" value="Vara" />
-										  	
-									  		<p:inputText id="situacaoAudienciaView" value="#{clienteFaces.audienciaSelecionada.situacaoAudiencia.descricao}" readonly="true" style="width:95%" />
-									  		<p:inputText id="varaAudienciaView" value="#{clienteFaces.audienciaSelecionada.vara.descricao}" readonly="true" style="width:94%" />
-										  	
-									  	</h:panelGrid>
-									  	
-									  	<h:panelGrid columns="1" columnClasses="coluna100" style="width:95%">
-									  	
-										  	<p:outputLabel for="advogadoAudienciaView" value="Advogado" />
-									  		<p:inputText id="advogadoAudienciaView" value="#{clienteFaces.audienciaSelecionada.audienciasAdvogados}" readonly="true" style="width:97%" />
-										  	
-										  	<p:outputLabel for="descricaoAudienciaView" value="Descrição" />
-											<p:inputTextarea id="descricaoAudienciaView" value="#{clienteFaces.audienciaSelecionada.descricao}" readonly="true" autoResize="false" rows="10" maxlength="500" styleClass="coluna97"/>
-											
-									  	</h:panelGrid>
-									  	
-								  	</p:outputPanel>
-								    
-							  	</p:dialog>
-					  			
-					  		</p:tab>
-	  				
-		  				</p:tabView>
+					  		<ui:include src="/pages/processo/include_audiencia_cliente.xhtml" />
+		 				
+		  				</p:accordionPanel>
 						
-					</p:tab>
+					</p:fieldset>
+						
+	  			</h:form>
 	  				
-	  			</p:accordionPanel>
-  			
-  			</c:forEach>
-  			
-  		</h:form>
+			</p:tab>
   		
-  	</p:tab>
+  		</c:forEach>
+  		
+  	</p:accordionPanel>
   	
 </ui:composition>

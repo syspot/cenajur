@@ -7,7 +7,7 @@
 
 	<ui:param name="mbeanPesquisa" value="${lotacaoPesquisaFaces}" />
 
-	<h:form>
+	<h:form rendered="#{autenticacaoFaces.mostrarDialogLotacao}">
 		
 		<p:dialog id="dialogLotacao" widgetVar="dlgLotacao" header="Pesquisa de Lotações" width="600" height="400" modal="true">
 	  

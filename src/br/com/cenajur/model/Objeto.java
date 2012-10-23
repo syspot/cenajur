@@ -18,12 +18,24 @@ import br.com.topsys.util.TSUtil;
 @Table(name = "objetos")
 public class Objeto extends TSActiveRecordAb<Objeto>{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7158408979898638220L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="objetos_id")
 	@SequenceGenerator(name="objetos_id", sequenceName="objetos_id_seq")
 	private Long id;
 	
 	private String descricao;
+	
+	public Objeto() {
+	}
+	
+	public Objeto(Long id) {
+		this.id = id;
+	}
 
 	public Long getId() {
 		return TSUtil.tratarLong(id);

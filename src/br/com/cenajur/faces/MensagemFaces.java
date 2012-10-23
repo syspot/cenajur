@@ -43,6 +43,9 @@ public class MensagemFaces{
 	private MensagemDestinatario mensagemDestinatarioBusca;
 	private int statusBuscaLida;
 	
+	private List<Mensagem> mensagensHistorico;
+	private Mensagem mensagemView;
+	
 	@PostConstruct
 	protected void init() {
 		this.mensagemBusca = new Mensagem();
@@ -61,6 +64,7 @@ public class MensagemFaces{
 		this.limpar();
 		this.pesquisarMensagens();
 		this.qtdMensagensNaoLidas = new MensagemDestinatario().obterQtdNaoLidas(colaboradorConectado).intValue();
+		this.mensagensHistorico = new ArrayList<Mensagem>();
 	}
 	
 	private void tratarStatusLida(){
@@ -73,10 +77,18 @@ public class MensagemFaces{
 		
 	}
 	
+	private void pesquisarMensagensRecebidas(){
+		this.mensagensDestinatariosRecebidas = this.mensagemDestinatarioBusca.pesquisarPorColaborador(colaboradorConectado);
+	}
+	
+	private void pesquisarMensagensEnviadas(){
+		this.mensagensEnviadas = this.mensagemBusca.pesquisarPorColaborador(this.colaboradorConectado);
+	}
+	
 	public String pesquisarMensagens(){
 		tratarStatusLida();
-		this.mensagensDestinatariosRecebidas = this.mensagemDestinatarioBusca.pesquisarPorColaborador(colaboradorConectado);
-		this.mensagensEnviadas = this.mensagemBusca.pesquisarPorColaborador(this.colaboradorConectado);
+		this.pesquisarMensagensRecebidas();
+		this.pesquisarMensagensEnviadas();
 		setTabIndex(1);
 		return null;
 	}
@@ -109,6 +121,11 @@ public class MensagemFaces{
 		
 	}
 	
+	public String responderMensagem(){
+		this.mensagem.setMensagem(this.mensagemDestinatarioSelecionada.getMensagem());
+		return this.addDestinatario();
+	}
+	
 	public String addDestinatario(){
 		MensagemDestinatario mensagemDestinatario = new MensagemDestinatario();
 		mensagemDestinatario.setMensagem(this.mensagem);
@@ -135,6 +152,70 @@ public class MensagemFaces{
 		this.mensagem.setFlagAtivo(Boolean.FALSE);
 		this.mensagem.update();
 		this.clearFields();
+		return null;
+	}
+	
+	private void addMensagemRecursiva(Mensagem mensagem){
+		this.mensagensHistorico.add(mensagem.getById());
+	}
+	
+	public String pesquisarHistorico(){
+		
+		this.mensagensHistorico.clear();
+		
+		while(!TSUtil.isEmpty(this.mensagemView.getMensagem()) && !TSUtil.isEmpty(this.mensagemView.getMensagem().getId())){
+			addMensagemRecursiva(this.mensagemView.getMensagem());
+			this.mensagemView = this.mensagemView.getMensagem();
+		}
+		
+		return null;
+		
+	}
+	
+	public String excluirMensagensDestinatariosSelecionadas() throws TSApplicationException{
+		
+		boolean update = false;
+		
+		for(MensagemDestinatario mensagemDestinatario : this.mensagensDestinatariosRecebidas){
+			
+			if(mensagemDestinatario.isFlagSelecionado()){
+				mensagemDestinatario.setFlagAtivo(Boolean.FALSE);
+				mensagemDestinatario.update();
+				update = true;
+			}
+			
+		}
+		
+		this.pesquisarMensagensRecebidas();
+		
+		if(update){
+			CenajurUtil.addInfoMessage("Mensagens excluídas com sucesso");
+		}
+		
+		return null;
+		
+	}
+	
+	public String excluirMensagensSelecionadas() throws TSApplicationException{
+		
+		boolean update = false;
+		
+		for(Mensagem mensagem : this.mensagensEnviadas){
+			
+			if(mensagem.isFlagSelecionado()){
+				mensagem.setFlagAtivo(Boolean.FALSE);
+				mensagem.update();
+				update = true;
+			}
+			
+		}
+		
+		this.pesquisarMensagensEnviadas();
+		
+		if(update){
+			CenajurUtil.addInfoMessage("Mensagens excluídas com sucesso");
+		}
+		
 		return null;
 	}
 	
@@ -224,6 +305,22 @@ public class MensagemFaces{
 
 	public void setStatusBuscaLida(int statusBuscaLida) {
 		this.statusBuscaLida = statusBuscaLida;
+	}
+
+	public List<Mensagem> getMensagensHistorico() {
+		return mensagensHistorico;
+	}
+
+	public void setMensagensHistorico(List<Mensagem> mensagensHistorico) {
+		this.mensagensHistorico = mensagensHistorico;
+	}
+
+	public Mensagem getMensagemView() {
+		return mensagemView;
+	}
+
+	public void setMensagemView(Mensagem mensagemView) {
+		this.mensagemView = mensagemView;
 	}
 	
 }

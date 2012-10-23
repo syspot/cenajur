@@ -14,6 +14,11 @@ import br.com.topsys.util.TSUtil;
 @Table(name = "situacoes_processos_partes_contrarias")
 public class SituacaoProcessoParteContraria extends TSActiveRecordAb<SituacaoProcessoParteContraria>{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1138576109721130512L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="situacoes_processos_partes_contrarias_id")
 	@SequenceGenerator(name="situacoes_processos_partes_contrarias_id", sequenceName="situacoes_processsos_partes_contrarias_id_seq")

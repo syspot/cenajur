@@ -6,9 +6,10 @@
               xmlns:f="http://java.sun.com/jsf/core">
 
 	<ui:param name="mbeanDocumento" value="${andamentoProcessoFaces}" />
+	<ui:param name="mbeanDocumentoAcao" value="${andamentoProcessoFaces}" />
 	<ui:param name="mbeanDocumentoModel" value="${andamentoProcessoFaces.documentoAndamentoProcesso}" />
 	
-	<h:form enctype="multipart/form-data">
+	<h:form enctype="multipart/form-data" rendered="#{autenticacaoFaces.mostrarDialogDocumentoAndamentoProcesso}">
   
 		<p:dialog id="dialogDocumentoAndamentoProcesso" widgetVar="dlgDocumentoAndamentoProcesso" header="Upload de documento" width="600" modal="true">
 		
@@ -16,7 +17,7 @@
 			
 			<h:panelGrid columns="1" style="width:100%; text-align:center">
 		  		
-		  		<p:commandButton value="Adicionar" action="#{mbeanDocumento.addDocumento}" oncomplete="handleRequestFaces('dialogDocumentoAndamentoProcesso', dlgDocumentoAndamentoProcesso, args)" />
+		  		<p:commandButton value="Adicionar" action="#{mbeanDocumentoAcao.addDocumento}" oncomplete="handleRequestFaces('dialogDocumentoAndamentoProcesso', dlgDocumentoAndamentoProcesso, args)" />
 		  		
 	  		</h:panelGrid>
 	  		

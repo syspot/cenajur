@@ -6,23 +6,23 @@
 	xmlns:f="http://java.sun.com/jsf/core">
   	
 	  
-	<h:panelGrid columns="1" columnClasses="coluna30" style="width:88%">
+	<h:panelGrid columns="1" columnClasses="coluna60" style="width:50%">
   		
 	  	<p:outputLabel for="numeroProcessoPesquisa" value="Número do Processo" />
 	  	<p:inputText id="numeroProcessoPesquisa" value="#{mbeanPesquisa.model.processoNumeroPrincipal.numero}" maxlength="30" styleClass="coluna40"/>
   		  	
   	</h:panelGrid>
   	
-	<h:panelGrid columns="2" columnClasses="coluna45, coluna55" style="width:90%">
+	<h:panelGrid columns="2" columnClasses="coluna45, coluna55" style="width:60%">
 	
 	  	<p:outputLabel for="situacaoProcessoPesquisa" value="Situação" />
 		<p:outputLabel for="advogadoPesquisa" value="Advogado" />
 	  	
-  		<p:selectOneMenu id="situacaoProcessoPesquisa" value="#{mbeanPesquisa.model.situacaoProcesso.id}" style="width:92%">
+  		<p:selectOneMenu id="situacaoProcessoPesquisa" value="#{mbeanPesquisa.model.situacaoProcesso.id}" >
 	  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 	  		<f:selectItems value="#{mbeanPesquisa.situacoesProcessos}" />
 	  	</p:selectOneMenu>
-  		<p:selectOneMenu id="advogadoPesquisa" value="#{mbeanPesquisa.model.advogado.id}" style="width: 100%">
+  		<p:selectOneMenu id="advogadoPesquisa" value="#{mbeanPesquisa.model.advogado.id}" >
 	  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 	  		<f:selectItems value="#{mbeanPesquisa.advogados}" />
 	  	</p:selectOneMenu>

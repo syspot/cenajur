@@ -12,7 +12,7 @@
 	<ui:param name="metodoAdicao" value="addAdvogado" />
 	<ui:param name="colaboradorSelecionado" value="advogadoSelecionado" />
 
-	<h:form>
+	<h:form rendered="#{autenticacaoFaces.mostrarDialogAdvogado}">
 		
 		<p:dialog id="dialogAdvogado" header="Pesquisa de Advogados" widgetVar="dlgAdvogado" width="550" height="350" modal="true">
 	  

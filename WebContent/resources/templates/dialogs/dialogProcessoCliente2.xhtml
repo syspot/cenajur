@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:param name="mbean" value="${processoFaces}" />
+	<ui:param name="mbeanAcao" value="${clienteFaces.processoAux}" />
+
+	<h:form rendered="#{autenticacaoFaces.mostrarDialogProcessoCliente2}">
+		
+		<p:dialog id="dialogArquivarProcessoCliente2" header="Alterar Status" modal="true" widgetVar="dlgArquivarProcessoCliente2" width="330">
+	
+			<p:outputPanel autoUpdate="true">
+			
+				<h:panelGrid id="pgDataArquivamentoProcessoCliente2" columns="2" columnClasses="coluna50, coluna50">
+					
+					<p:outputLabel for="situacaoProcessoCliente2" value="Situação" />
+					<p:outputLabel for="dataArquivamentoProcessoCliente2" value="Data Arquivamento" />
+					
+					<p:selectOneMenu id="situacaoProcessoCliente2" value="#{mbeanAcao.processoClienteSelecionado.situacaoProcessoClienteTemp.id}" style="width:95%">
+						<f:selectItems value="#{mbean.situacoesProcessosClientes}" />
+						<p:ajax update="pgDataArquivamentoProcessoCliente2" listener="#{mbeanAcao.limparDataArquivamentoProcessoCliente}" process="@this" global="false" />
+					</p:selectOneMenu>
+					<p:calendar id="dataArquivamentoProcessoCliente2" required="true" requiredMessage="Data de Arquivamento: Campo obrigatório" pattern="dd/MM/yyyy" value="#{mbeanAcao.processoClienteSelecionado.dataArquivamento}" disabled="#{!mbeanAcao.processoClienteSelecionado.processoClienteArquivado}" styleClass="coluna95" />
+					
+				</h:panelGrid>
+				
+			</p:outputPanel>
+			
+			<h:panelGrid columns="1" style="width:100%; text-align: left">
+				<p:commandButton value="Alterar" oncomplete="handleRequest('dialogArquivarProcessoCliente2', dlgArquivarProcessoCliente2, args)" update="pgDataArquivamentoProcessoCliente2" />
+			</h:panelGrid>
+			
+		</p:dialog>
+	
+	</h:form>
+
+</ui:component>

@@ -6,13 +6,13 @@
 	xmlns:f="http://java.sun.com/jsf/core">
   	
 	  
-	<h:panelGrid columns="2" styleClass="coluna60, coluna40" style="width:70%">
+	<h:panelGrid columns="2" columnClasses="coluna70, coluna30" style="width:98%">
 	  		
   		<p:outputLabel for="nomePesquisa" value="Nome" />
   		<p:outputLabel for="tipoColaboradorPesquisa" value="Tipo" />
   	
-  		<p:inputText id="nomePesquisa" value="#{mbeanPesquisa.model.nome}" maxlength="100" styleClass="coluna92" />
-  		<p:selectOneMenu id="tipoColaboradorPesquisa" value="#{mbeanPesquisa.model.tipoColaborador.id}" style="width:90%" editable="#{empty buscaAdvogado ? true : false}">
+  		<p:inputText id="nomePesquisa" value="#{mbeanPesquisa.model.nome}" maxlength="100" styleClass="coluna95" />
+  		<p:selectOneMenu id="tipoColaboradorPesquisa" value="#{mbeanPesquisa.model.tipoColaborador.id}" disabled="#{empty buscaAdvogado ? false : true}">
 			<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 			<f:selectItems value="#{mbeanPesquisa.tiposColaborador}"/>
 		</p:selectOneMenu>

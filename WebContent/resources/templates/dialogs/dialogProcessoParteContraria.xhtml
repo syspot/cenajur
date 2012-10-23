@@ -7,7 +7,7 @@
 
 	<ui:param name="mbean" value="${processoFaces}" />
 
-	<h:form>
+	<h:form rendered="#{autenticacaoFaces.mostrarDialogProcessoParteContraria}">
 		
 		<p:dialog id="dialogArquivarProcessoParteContraria" header="Alterar Status" modal="true" widgetVar="dlgArquivarProcessoParteContraria" width="330">
 	
@@ -18,7 +18,7 @@
 					<p:outputLabel for="situacaoProcessoParteContraria" value="Situação" />
 					<p:outputLabel for="dataArquivamentoProcessoParteContraria" value="Data Arquivamento" />
 					
-					<p:selectOneMenu id="situacaoProcessoParteContraria" value="#{mbean.processoParteContrariaSelecionada.situacaoProcessoParteContraria.id}" style="width:95%">
+					<p:selectOneMenu id="situacaoProcessoParteContraria" value="#{mbean.processoParteContrariaSelecionada.situacaoProcessoParteContrariaTemp.id}" style="width:95%">
 						<f:selectItems value="#{mbean.situacoesProcessosPartesContrarias}" />
 						<p:ajax update="pgDataArquivamentoProcessoParteContraria" listener="#{mbean.limparDataArquivamentoProcessoParteContraria}" process="@this" global="false" />
 					</p:selectOneMenu>
@@ -29,7 +29,7 @@
 			</p:outputPanel>
 			
 			<h:panelGrid columns="1" style="width:100%; text-align: left">
-				<p:commandButton value="Alterar" action="#{mbean.atualizarProcessoParteContraria}" oncomplete="handleRequest('dialogArquivarProcessoParteContraria', dlgArquivarProcessoParteContraria, args)" />
+				<p:commandButton value="Alterar" oncomplete="handleRequest('dialogArquivarProcessoParteContraria', dlgArquivarProcessoParteContraria, args)" update="pgDataArquivamentoProcessoParteContraria"/>
 			</h:panelGrid>
 			
 		</p:dialog>

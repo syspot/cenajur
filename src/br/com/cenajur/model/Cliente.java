@@ -156,6 +156,9 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	@Transient
 	private String caminhoImagem;
 	
+	@Transient
+	private String faturasAbertas;
+	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
 	}
@@ -503,6 +506,19 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	public String getTipo(){
 		return getFlagAssociado() ? "Associado" : "Dependente";
 	}
+	
+	@Override
+	public String toString() {
+		return this.nome;
+	}
+
+	public String getFaturasAbertas() {
+		return faturasAbertas;
+	}
+
+	public void setFaturasAbertas(String faturasAbertas) {
+		this.faturasAbertas = faturasAbertas;
+	}
 
 	@Override
 	public int hashCode() {
@@ -626,6 +642,10 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		
 		return super.find(query.toString(), "nome", this.obterCondicionalParans().toArray());
 		
+	}
+	
+	public Cliente obterPorCPF(){
+		return super.get(" from Cliente where cpf = ?", cpf);
 	}
 	
 }

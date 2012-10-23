@@ -1145,3 +1145,27 @@ ui-icon.delete {
 .pago{
 	background-color:#32CD32 !important;
 }
+
+.ui-accordion-header .situacaoAtiva, .ui-helper-reset .situacaoAtiva, .ui-state-default .situacaoAtiva, .ui-state-active .situacaoAtiva, .ui-corner-top .situacaoAtiva{
+	border: 1px solid #CBC3BE/*{borderColorDefault}*/;
+	background: white !important;
+	background-color:#32CD32 !important;
+	font-weight: normal/*{fwDefault}*/;
+	color: black/*{fcDefault}*/;
+}
+
+.ui-accordion-header .situacaoSuspensa, .ui-helper-reset .situacaoSuspensa, .ui-state-default .situacaoSuspensa, .ui-state-active .situacaoSuspensa, .ui-corner-top .situacaoSuspensa{
+	border: 1px solid #CBC3BE/*{borderColorDefault}*/;
+	background: white !important;
+	background-color:#EEC900 !important;
+	font-weight: normal/*{fwDefault}*/;
+	color: black/*{fcDefault}*/;
+}
+
+.ui-accordion-header .situacaoCancelada, .ui-helper-reset .situacaoCancelada, .ui-state-default .situacaoCancelada, .ui-state-active .situacaoCancelada, .ui-corner-top .situacaoCancelada{
+	border: 1px solid #CBC3BE/*{borderColorDefault}*/;
+	background: white !important;
+	background-color:#FF4500 !important;
+	font-weight: normal/*{fwDefault}*/;
+	color: black/*{fcDefault}*/;
+}

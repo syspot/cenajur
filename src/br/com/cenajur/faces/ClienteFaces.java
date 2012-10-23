@@ -1,6 +1,7 @@
 package br.com.cenajur.faces;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -22,14 +23,20 @@ import br.com.cenajur.model.Cliente;
 import br.com.cenajur.model.DocumentoCliente;
 import br.com.cenajur.model.Estado;
 import br.com.cenajur.model.EstadoCivil;
+import br.com.cenajur.model.Faturamento;
 import br.com.cenajur.model.Graduacao;
 import br.com.cenajur.model.Lotacao;
 import br.com.cenajur.model.MotivoCancelamento;
 import br.com.cenajur.model.Plano;
 import br.com.cenajur.model.Processo;
+import br.com.cenajur.model.ProcessoCliente;
 import br.com.cenajur.model.ProcessoNumero;
+import br.com.cenajur.model.ProcessoParteContraria;
+import br.com.cenajur.model.SituacaoProcessoCliente;
+import br.com.cenajur.model.SituacaoProcessoParteContraria;
 import br.com.cenajur.model.TipoCategoria;
 import br.com.cenajur.model.TipoPagamento;
+import br.com.cenajur.model.Turno;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
@@ -61,6 +68,9 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	private DocumentoCliente documentoCliente;
 	private DocumentoCliente documentoSelecionado;
 	private Cliente clienteSelecionado;
+	private int statusCliente;
+	
+	private ProcessoAux processoAux;
 	
 	@PostConstruct
 	protected void init() {
@@ -97,6 +107,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		getCrudModel().setDocumentos(new ArrayList<DocumentoCliente>());
 		setDocumentoCliente(new DocumentoCliente());
 		setFlagAlterar(Boolean.FALSE);
+		this.processoAux = new ProcessoAux();
 		return null;
 	}
 
@@ -124,6 +135,17 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		if(getCrudModel().getDiaVencimento() > 31 || getCrudModel().getDiaVencimento() < 1){
 			erro = true;
 			CenajurUtil.addErrorMessage("Dia de vencimento inválido");
+		}
+		
+		if(TSUtil.isEmpty(getCrudModel().getId())){
+			
+			Cliente cliente = getCrudModel().obterPorCPF();
+			
+			if(!TSUtil.isEmpty(cliente)){
+				erro = true;
+				CenajurUtil.addErrorMessage("Já existe um associado cadastrado para esse CPF");
+			}
+			
 		}
 		
 		return erro;
@@ -173,37 +195,61 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		if(getCrudModel().getDataAtualizacao().before(CenajurUtil.getTrimestreAnterior())){
 			CenajurUtil.addDangerMessage("O endereço e telefone estão desatualizados");
 		}
+		
+		Calendar c = Calendar.getInstance();
+		
+		Faturamento faturamento = new Faturamento();
+		
+		faturamento.setCliente(getCrudModel());
+		faturamento.setAno(c.get(Calendar.YEAR));
+		faturamento.setMes(c.get(Calendar.MONTH + 1));
+		
+		List<Faturamento> faturasAbertas = faturamento.pesquisarFaturasAbertas();
+		
+		getCrudModel().setFaturasAbertas("");
+		
+		for(Faturamento fatura : faturasAbertas){
+			
+			getCrudModel().setFaturasAbertas(getCrudModel().getFaturasAbertas() + " " + fatura.getMes() + "/" + fatura.getAno() + " ");
+			
+		}
+		
 		this.atualizarComboCidades();
 		
 		for(Processo processo : getCrudModel().getProcessos()){
+			
 			processo.setProcessoNumeroPrincipal(new ProcessoNumero().obterNumeroProcessoPrincipal(processo));
 			processo.setAudiencias(new Audiencia().findByProcesso(processo));
 			processo.setAndamentos(new AndamentoProcesso().findByProcesso(processo));
+			
+			if(TSUtil.isEmpty(processo.getTurno()) || TSUtil.isEmpty(processo.getTurno().getId())){
+				processo.setTurno(new Turno());
+			}
+			
+			processo.setProcessoNumeroPrincipal(new ProcessoNumero().obterNumeroProcessoPrincipal(processo));
+			processo.setProcessosNumerosTemp(new ProcessoNumero().pesquisarOutrosNumerosProcessos(processo));
+			
+			processo.setAudiencias(new Audiencia().findByProcesso(processo));
+			processo.setAndamentos(new AndamentoProcesso().findByProcesso(processo));
+			
+			for(ProcessoParteContraria processoParteContraria : processo.getProcessosPartesContrarias()){
+				processoParteContraria.setSituacaoProcessoParteContrariaTemp(new SituacaoProcessoParteContraria(processoParteContraria.getSituacaoProcessoParteContraria().getId()));
+			}
+
+			for(ProcessoCliente processoCliente : processo.getProcessosClientes()){
+				processoCliente.setSituacaoProcessoClienteTemp(new SituacaoProcessoCliente(processoCliente.getSituacaoProcessoCliente().getId()));
+			}
+			
 		}
 		
 		this.iniciaObjetosCombo();
+		
+		this.processoAux.setProcessos(getCrudModel().getProcessos());
 		
 	}
 	
 	@Override
 	protected void posPersist() throws TSApplicationException{
-		
-		Cliente aux = getCrudModel().getById();
-		
-		int posicao = 0;
-		
-		for(DocumentoCliente doc : getCrudModel().getDocumentos()){
-			
-			if(!TSUtil.isEmpty(doc.getDocumento())){
-		
-				doc.setId(aux.getDocumentos().get(posicao).getId());
-				doc.setArquivo(doc.getId() + TSFile.obterExtensaoArquivo(doc.getArquivo()));
-				CenajurUtil.criaArquivo(doc.getDocumento(), doc.getCaminhoUploadCompleto());
-				
-				doc.update();
-			}
-			posicao++;
-		}
 		
 		if(!TSUtil.isEmpty(getCrudModel().getBytesImagem())){
 			
@@ -263,19 +309,22 @@ public class ClienteFaces extends CrudFaces<Cliente> {
     }
 	
 	public void enviarDocumento(FileUploadEvent event) {
-		getDocumentoCliente().setDocumento(event.getFile());
-		getDocumentoCliente().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
+		
+		getDocumentoCliente().setArquivo(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
 		
 		if(CenajurUtil.isDocumentoPdf(event.getFile())){
 			getDocumentoCliente().setDescricaoBusca(CenajurUtil.getDescricaoPDF(event.getFile()));
 		}
+		
+		CenajurUtil.criaArquivo(event.getFile(), getDocumentoCliente().getCaminhoUploadCompleto());
+		
 	}
 		
 	public String addDocumento(){
 		
 		RequestContext context = RequestContext.getCurrentInstance();
 		
-		if(TSUtil.isEmpty(getDocumentoCliente().getDocumento())){
+		if(TSUtil.isEmpty(getDocumentoCliente().getArquivo())){
 			CenajurUtil.addErrorMessage("Documento: Campo obrigatório");
 			context.addCallbackParam("sucesso", false);
 			return null;
@@ -300,6 +349,21 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	public String removerDocumento(){
 		getCrudModel().getDocumentos().remove(this.documentoSelecionado);
 		return null;
+	}
+	
+	@Override
+	protected void preFind() {
+		this.tratarSituacao();
+	}
+	
+	private void tratarSituacao(){
+		
+		switch(statusCliente){
+			case 1: getCrudPesquisaModel().setFlagAtivo(Boolean.TRUE); break;
+			case 2: getCrudPesquisaModel().setFlagAtivo(Boolean.FALSE); break;
+			default: getCrudPesquisaModel().setFlagAtivo(null); break;
+		}
+		
 	}
 	
 	public List<SelectItem> getEstados() {
@@ -436,6 +500,22 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 
 	public void setClienteSelecionado(Cliente clienteSelecionado) {
 		this.clienteSelecionado = clienteSelecionado;
+	}
+
+	public int getStatusCliente() {
+		return statusCliente;
+	}
+
+	public void setStatusCliente(int statusCliente) {
+		this.statusCliente = statusCliente;
+	}
+
+	public ProcessoAux getProcessoAux() {
+		return processoAux;
+	}
+
+	public void setProcessoAux(ProcessoAux processoAux) {
+		this.processoAux = processoAux;
 	}
 	
 }

@@ -15,6 +15,11 @@ import br.com.topsys.database.hibernate.TSActiveRecordAb;
 @Table(name = "audiencias_advogados")
 public class AudienciaAdvogado extends TSActiveRecordAb<AudienciaAdvogado>{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1938633766717220310L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "audiencias_advogados_id")
 	@SequenceGenerator(name="audiencias_advogados_id", sequenceName="audiencias_advogados_id_seq")

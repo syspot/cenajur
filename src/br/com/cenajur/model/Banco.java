@@ -19,6 +19,11 @@ import br.com.topsys.util.TSUtil;
 @Table(name = "bancos")
 public class Banco extends TSActiveRecordAb<Banco>{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8226803192119140886L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "bancos_id")
 	@SequenceGenerator(name="bancos_id", sequenceName="bancos_id_seq")

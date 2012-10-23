@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
@@ -40,6 +41,9 @@ public class MensagemDestinatario extends TSActiveRecordAb<MensagemDestinatario>
 	
 	@Column(name = "flag_ativo")
 	private Boolean flagAtivo;
+	
+	@Transient
+	private boolean flagSelecionado;
 	
 	public MensagemDestinatario() {
 	}
@@ -88,6 +92,14 @@ public class MensagemDestinatario extends TSActiveRecordAb<MensagemDestinatario>
 		this.flagAtivo = flagAtivo;
 	}
 	
+	public boolean isFlagSelecionado() {
+		return flagSelecionado;
+	}
+
+	public void setFlagSelecionado(boolean flagSelecionado) {
+		this.flagSelecionado = flagSelecionado;
+	}
+
 	public String getCss(){
 		return flagLida ? "" : "mensagemNaoLida";
 	}

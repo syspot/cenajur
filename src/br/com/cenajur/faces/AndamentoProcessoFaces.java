@@ -14,16 +14,24 @@ import org.primefaces.event.FileUploadEvent;
 
 import br.com.cenajur.model.AndamentoProcesso;
 import br.com.cenajur.model.CategoriaDocumento;
+import br.com.cenajur.model.ConfiguracoesEmail;
+import br.com.cenajur.model.ConfiguracoesReplaceEmail;
 import br.com.cenajur.model.DocumentoAndamentoProcesso;
+import br.com.cenajur.model.Processo;
+import br.com.cenajur.model.ProcessoCliente;
 import br.com.cenajur.model.ProcessoNumero;
+import br.com.cenajur.model.RegrasEmail;
 import br.com.cenajur.model.TipoAndamentoProcesso;
 import br.com.cenajur.model.TipoCategoria;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
+import br.com.cenajur.util.EmailUtil;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.exception.TSSystemException;
 import br.com.topsys.file.TSFile;
+import br.com.topsys.util.TSDateUtil;
+import br.com.topsys.util.TSParseUtil;
 import br.com.topsys.util.TSUtil;
 
 @ViewScoped
@@ -103,17 +111,41 @@ public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 	@Override
 	protected void posPersist() throws TSSystemException, TSApplicationException{
 		
-		for(DocumentoAndamentoProcesso doc : getCrudModel().getDocumentos()){
+		RegrasEmail regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_ANDAMENTO_PROCESSO).getById();
+		
+		EmailUtil emailUtil = new EmailUtil();
+		
+		Processo processo = getCrudModel().getProcessoNumero().getProcesso().getById();
+		
+		ConfiguracoesReplaceEmail configuracaoReplace;
+		
+		for(ConfiguracoesEmail configuracoesEmail : regrasEmail.getConfiguracoesEmails()){
 			
-			if(!TSUtil.isEmpty(doc.getDocumento())){
+			if(configuracoesEmail.getFlagImediato()){
 				
-				DocumentoAndamentoProcesso documento = doc.getByModel();
-				
-				doc.setId(documento.getId());
-				doc.setArquivo(doc.getId() + TSFile.obterExtensaoArquivo(doc.getArquivo()));
-				CenajurUtil.criaArquivo(doc.getDocumento(), doc.getCaminhoUploadCompleto());
-				
-				doc.update();
+				for(ProcessoCliente processoCliente : processo.getProcessosClientes()){
+					
+					if(!TSUtil.isEmpty(processoCliente.getCliente().getEmail())){
+						
+						String texto = configuracoesEmail.getCorpoEmail();
+						
+						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_PROCESSO).getById();
+						
+						texto = texto.replace(configuracaoReplace.getCodigo(), new ProcessoNumero().obterNumeroProcessoPrincipal(processo).getNumero());
+						
+						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ASSOCIADO).getById();
+						
+						texto = texto.replace(configuracaoReplace.getCodigo(), processoCliente.getCliente().getNome());
+						
+						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DATA_ATUAL).getById();
+						
+						texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(new Date(), TSDateUtil.DD_MM_YYYY_HH_MM));
+						
+						emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
+						
+					}
+					
+				}
 				
 			}
 			
@@ -128,12 +160,14 @@ public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 	}
 	
 	public void enviarDocumento(FileUploadEvent event) {
-		getDocumentoAndamentoProcesso().setDocumento(event.getFile());
-		getDocumentoAndamentoProcesso().setArquivo(CenajurUtil.obterNomeTemporarioArquivo(event.getFile()));
+		
+		getDocumentoAndamentoProcesso().setArquivo(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
 		
 		if(CenajurUtil.isDocumentoPdf(event.getFile())){
 			getDocumentoAndamentoProcesso().setDescricaoBusca(CenajurUtil.getDescricaoPDF(event.getFile()));
 		}
+		
+		CenajurUtil.criaArquivo(event.getFile(), getDocumentoAndamentoProcesso().getCaminhoUploadCompleto());
 		
 	}
 		
@@ -141,7 +175,7 @@ public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 		
 		RequestContext context = RequestContext.getCurrentInstance();
 		
-		if(TSUtil.isEmpty(getDocumentoAndamentoProcesso().getDocumento())){
+		if(TSUtil.isEmpty(getDocumentoAndamentoProcesso().getArquivo())){
 			CenajurUtil.addErrorMessage("Documento: Campo obrigatório");
 			context.addCallbackParam("sucesso", false);
 			return null;

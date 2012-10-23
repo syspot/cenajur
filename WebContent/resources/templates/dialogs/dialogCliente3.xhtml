@@ -9,7 +9,7 @@
 	<ui:param name="mbeanClienteAcao" value="${faturamentoFaces}" />
 	<ui:param name="nomeDialog" value="dlgCliente3" />
 
-	<h:form>
+	<h:form rendered="#{autenticacaoFaces.mostrarDialogCliente3}">
 		
 		<p:dialog id="dialogCliente3" widgetVar="dlgCliente3" header="Pesquisa de Associados" width="600" height="400" modal="true">
 	  
