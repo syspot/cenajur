@@ -51,7 +51,7 @@
 	<h:panelGrid style="width: 100%">
 
 		<p:outputLabel for="descricaoAgenda" value="Descrição" />
-		<p:inputTextarea id="descricaoAgenda" value="#{agendaFaces.agenda.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" cols="95" rows="10"/>
+		<p:inputTextarea id="descricaoAgenda" value="#{agendaFaces.agenda.descricao}" required="#{!agendaFaces.agenda.tipoVisitaDoCliente}" requiredMessage="Descrição: Campo obrigatório" cols="95" rows="10"/>
 	
 	</h:panelGrid>
 

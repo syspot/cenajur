@@ -150,6 +150,11 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	@Column(name = "dia_vencimento")
 	private Integer diaVencimento;
 	
+	private String observacoes;
+	
+	@Column(name = "flag_rematricula")
+	private Boolean flagRematricula;
+	
 	@Transient
 	private byte[] bytesImagem;
 	
@@ -158,6 +163,9 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	
 	@Transient
 	private String faturasAbertas;
+	
+	@Transient
+	private List<Agenda> visitas;
 	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -503,6 +511,22 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		this.diaVencimento = diaVencimento;
 	}
 
+	public String getObservacoes() {
+		return observacoes;
+	}
+
+	public Boolean getFlagRematricula() {
+		return flagRematricula;
+	}
+
+	public void setFlagRematricula(Boolean flagRematricula) {
+		this.flagRematricula = flagRematricula;
+	}
+
+	public void setObservacoes(String observacoes) {
+		this.observacoes = observacoes;
+	}
+
 	public String getTipo(){
 		return getFlagAssociado() ? "Associado" : "Dependente";
 	}
@@ -518,6 +542,14 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 
 	public void setFaturasAbertas(String faturasAbertas) {
 		this.faturasAbertas = faturasAbertas;
+	}
+
+	public List<Agenda> getVisitas() {
+		return visitas;
+	}
+
+	public void setVisitas(List<Agenda> visitas) {
+		this.visitas = visitas;
 	}
 
 	@Override

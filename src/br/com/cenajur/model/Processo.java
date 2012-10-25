@@ -113,6 +113,8 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	@ManyToOne
 	private Turno turno;
 	
+	private String observacoes;
+	
 	@Transient
 	private List<AndamentoProcesso> andamentos;
 	
@@ -302,6 +304,14 @@ public class Processo extends TSActiveRecordAb<Processo>{
 
 	public void setTurno(Turno turno) {
 		this.turno = turno;
+	}
+
+	public String getObservacoes() {
+		return observacoes;
+	}
+
+	public void setObservacoes(String observacoes) {
+		this.observacoes = observacoes;
 	}
 
 	public ProcessoNumero getProcessoNumeroPrincipal() {
@@ -606,6 +616,16 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	@SuppressWarnings("unchecked")
 	public List<Model> pesquisarAnosProcesso(){
 		return new Processo().findBySQL(Model.class, new String[]{"ano"}, "SELECT DISTINCT TO_CHAR(data_cadastro, 'YYYY') AS ANO FROM PROCESSOS ORDER BY ANO DESC", null);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<AnoModel> pesquisarCanceladosPorAno(Long ano){
+		return new Processo().findBySQL(AnoModel.class, new String[]{"descricao", "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez", "tot"}, "select * from fc_clientes_cancelados_por_ano(?)", ano);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<AnoModel> pesquisarCanceladosPorAnoTotal(Long ano){
+		return new Processo().findBySQL(AnoModel.class, new String[]{"descricao", "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez", "tot"}, "select * from fc_clientes_cancelados_por_ano_total(?)", ano);
 	}
 
 }

@@ -58,7 +58,7 @@
 		<h:panelGrid style="width: 50%">
 	
 			<p:outputLabel for="descricaoAgenda" value="Descrição" />
-			<p:inputTextarea id="descricaoAgenda" value="#{mbeanModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" cols="80" rows="10"/>
+			<p:inputTextarea id="descricaoAgenda" value="#{mbeanModel.descricao}" required="#{!mbeanModel.tipoVisitaDoCliente}" requiredMessage="Descrição: Campo obrigatório" cols="80" rows="10"/>
 		
 		</h:panelGrid>
 

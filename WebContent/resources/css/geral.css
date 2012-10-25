@@ -1169,3 +1169,7 @@ ui-icon.delete {
 	font-weight: normal/*{fwDefault}*/;
 	color: black/*{fcDefault}*/;
 }
+
+.ui-dt-c{
+	text-align:center;
+}
