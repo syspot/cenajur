@@ -14,6 +14,7 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.CaptureEvent;
 import org.primefaces.event.FileUploadEvent;
 
+import br.com.cenajur.model.Agenda;
 import br.com.cenajur.model.AndamentoProcesso;
 import br.com.cenajur.model.Audiencia;
 import br.com.cenajur.model.Banco;
@@ -245,6 +246,8 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		this.iniciaObjetosCombo();
 		
 		this.processoAux.setProcessos(getCrudModel().getProcessos());
+		
+		getCrudModel().setVisitas(new Agenda().pesquisarVisitasPorCliente(getCrudModel()));
 		
 	}
 	

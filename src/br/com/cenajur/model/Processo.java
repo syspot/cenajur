@@ -113,6 +113,8 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	@ManyToOne
 	private Turno turno;
 	
+	private String observacoes;
+	
 	@Transient
 	private List<AndamentoProcesso> andamentos;
 	
@@ -302,6 +304,14 @@ public class Processo extends TSActiveRecordAb<Processo>{
 
 	public void setTurno(Turno turno) {
 		this.turno = turno;
+	}
+
+	public String getObservacoes() {
+		return observacoes;
+	}
+
+	public void setObservacoes(String observacoes) {
+		this.observacoes = observacoes;
 	}
 
 	public ProcessoNumero getProcessoNumeroPrincipal() {

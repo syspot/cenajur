@@ -26,10 +26,13 @@
 				<p:inputText value="#{mbeanProcessoModel.processosNumerosTemp}" readonly="true" styleClass="coluna80" rendered="#{not empty mbeanProcessoModel.processosNumerosTemp}"/>
 				<p:inputText readonly="true" styleClass="coluna80" rendered="#{empty mbeanProcessoModel.processosNumerosTemp}"/>
 				<p:commandButton type="button" value="Editar" onclick="dlgNumeroProcesso.show()" rendered="#{empty cadastroViaCliente ? true : false}" />
-				<p:commandButton value="Editar" action="#{clienteFaces.processoAux.iniciarNumerosProcessos}" oncomplete="dlgNumeroProcesso2.show()" global="false" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}">
+				<p:commandButton value="Editar" process="@this" action="#{clienteFaces.processoAux.iniciarNumerosProcessos}" oncomplete="dlgNumeroProcesso2.show()" global="false" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}">
 					<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
 				</p:commandButton>
 			</p:outputPanel>
+			
+			<p:outputLabel for="observacoes" value="Observações" />
+			<p:inputText id="observacoes" value="#{mbeanProcessoModel.observacoes}" maxlength="200" styleClass="coluna90" />
 			
 		</h:panelGrid>
 
@@ -42,7 +45,7 @@
 			<p:outputPanel id="opAssociados" autoUpdate="true">
 
 				<p:commandButton type="button" value="Adicionar Associado" icon="ui-icon-plus" onclick="dlgCliente.show();" rendered="#{empty cadastroViaCliente ? true : false}" style="margin-bottom:5px" />
-				<p:commandButton value="Adicionar Associado" icon="ui-icon-plus" oncomplete="dlgCliente4.show();" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}" style="margin-bottom:5px">
+				<p:commandButton value="Adicionar Associado" process="@this" icon="ui-icon-plus" oncomplete="dlgCliente4.show();" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}" style="margin-bottom:5px">
 					<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
 				</p:commandButton>
 				
@@ -97,7 +100,7 @@
 			<p:outputPanel autoUpdate="true">
 
 				<p:commandButton type="button" value="Adicionar Parte Contrária" icon="ui-icon-plus" onclick="dlgParteContraria.show();" rendered="#{empty cadastroViaCliente ? true : false}" style="margin-bottom:5px"/>
-				<p:commandButton value="Adicionar Parte Contrária" icon="ui-icon-plus" onclick="dlgParteContraria2.show();" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}" style="margin-bottom:5px">
+				<p:commandButton process="@this" value="Adicionar Parte Contrária" icon="ui-icon-plus" onclick="dlgParteContraria2.show();" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}" style="margin-bottom:5px">
 					<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
 				</p:commandButton>
 				<p:dataTable value="#{mbeanProcessoModel.processosPartesContrarias}" var="processoParteContraria" emptyMessage="Nenhuma parte contrária selecionada" rowIndexVar="index" style="width:100%">
@@ -219,7 +222,7 @@
   		<h:panelGrid columns="1" style="width:60%">
 
 			<p:commandButton type="button" value="Adicionar Documento" icon="ui-icon-plus" onclick="dlgDocumentoProcesso.show();" rendered="#{empty cadastroViaCliente ? true : false}"/>
-			<p:commandButton value="Adicionar Documento" icon="ui-icon-plus" oncomplete="dlgDocumentoProcesso2.show();" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}">
+			<p:commandButton process="@this" value="Adicionar Documento" icon="ui-icon-plus" oncomplete="dlgDocumentoProcesso2.show();" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}">
 				<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
 			</p:commandButton>
 			

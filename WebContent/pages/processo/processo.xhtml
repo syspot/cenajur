@@ -13,6 +13,14 @@
 	<ui:define name="cadastro">
 
 		<ui:include src="/pages/processo/include_cadastro_processo.xhtml" />
+		
+		<p:accordionPanel multiple="true" activeIndex="0, 1" style="margin-top:30px">
+		
+			<ui:include src="/pages/processo/tab_andamento_processo.xhtml" />
+
+			<ui:include src="/pages/processo/tab_audiencia.xhtml" />
+		
+		</p:accordionPanel>
 
 	</ui:define>
 
@@ -155,12 +163,4 @@
 
 	</ui:define>
 
-	<ui:define name="tabsmeio">
-
-		<ui:include src="/pages/processo/tab_andamento_processo.xhtml" />
-
-		<ui:include src="/pages/processo/tab_audiencia.xhtml" />
-
-	</ui:define>
-	
 </ui:composition>

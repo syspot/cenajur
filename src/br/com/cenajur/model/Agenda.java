@@ -20,6 +20,8 @@ import javax.persistence.Transient;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.Constantes;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
+import br.com.topsys.util.TSDateUtil;
+import br.com.topsys.util.TSParseUtil;
 import br.com.topsys.util.TSUtil;
 
 @Entity
@@ -97,6 +99,10 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 
 	public Date getDataInicial() {
 		return dataInicial;
+	}
+	
+	public String getDataInicialFormatada() {
+		return TSParseUtil.dateToString(dataInicial, TSDateUtil.DD_MM_YYYY_HH_MM);
 	}
 
 	public void setDataInicial(Date dataInicial) {
@@ -294,6 +300,29 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 		if(!TSUtil.isEmpty(colaboradorBusca) && !TSUtil.isEmpty(colaboradorBusca.getId())){
 			
 			params.add(colaboradorBusca.getId());
+			
+		}
+		
+		return super.find(query.toString(), "a.dataInicial", params.toArray());
+	}
+	
+	public List<Agenda> pesquisarVisitasPorCliente(Cliente cliente) {
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" select distinct a from Agenda a left outer join fetch a.agendasColaboradores ac where 1 = 1 ");
+		
+		if(!TSUtil.isEmpty(cliente) && !TSUtil.isEmpty(cliente.getId())){
+			
+			query.append(" and a.cliente.id = ? ");
+			
+		}
+		
+		List<Object> params = new ArrayList<Object>();
+		
+		if(!TSUtil.isEmpty(cliente) && !TSUtil.isEmpty(cliente.getId())){
+			
+			params.add(cliente.getId());
 			
 		}
 		

@@ -9,7 +9,7 @@
 	
 	<ui:param name="clienteModel" value="${clienteFaces.crudModel}" />
 	
-	<p:accordionPanel multiple="true" rendered="#{clienteModel.id != null and not empty clienteFaces.processoAux.processos}">
+	<p:accordionPanel multiple="true" activeIndex="-999"  rendered="#{clienteModel.id != null and not empty clienteFaces.processoAux.processos}">
 	
 		<c:forEach items="#{clienteFaces.processoAux.processos}" var="processo" varStatus="linha2">
 			

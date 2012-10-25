@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	>
+	
+	<ui:param name="clienteModel" value="${clienteFaces.crudModel}" />
+	
+	<p:accordionPanel multiple="true" activeIndex="-999"  rendered="#{clienteModel.id != null and not empty clienteModel.visitas}">
+	
+		<c:forEach items="#{clienteModel.visitas}" var="visita" varStatus="linha2">
+			
+			<p:tab title="#{visita.dataInicialFormatada}" titleStyle="word-spacing: 10px">
+			
+				<h:form>
+					
+					<h:panelGrid columns="1" style="width:50%">
+			
+						<p:outputLabel for="processoAgenda" value="Processo" />  		
+			  			<p:outputPanel autoUpdate="true" style="width:100%">
+							<p:inputText id="processoAgenda" value="#{visita.processoNumero.numero}" readonly="true" style="width:45%"/>
+						</p:outputPanel>
+						
+						<p:outputLabel for="tipoAgenda" value="Tipo de Agenda" />
+						<p:inputText id="tipoAgenda" value="#{visita.tipoAgenda.descricao}" readonly="true" style="width:60%" />
+						
+			  		</h:panelGrid>
+			  	
+				  	<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width: 30%">
+			
+						<p:outputLabel for="dataInicioAgenda" value="Data Início" />
+						<p:outputLabel for="dataFimAgenda" value="Data Fim" />
+						
+						<p:inputText id="dataInicioAgenda" pattern="dd/MM/yyyy HH:mm" readonly="true" value="#{visita.dataInicial}" >
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+						</p:inputText>
+						<p:inputText id="dataFimAgenda" pattern="dd/MM/yyyy HH:mm" readonly="true" value="#{visita.dataFinal}" >
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+						</p:inputText>
+						
+					</h:panelGrid>
+				
+					<h:panelGrid id="pgClienteAgenda" columns="3" columnClasses="coluna50, coluna15, coluna35" style="width:60%">
+						
+						<p:outputLabel for="clienteAgenda" value="Cliente" />
+						<p:outputLabel for="tipoVisitaCliente" value="Tipo de Visita" />
+						<p:outputLabel for="telefoneClienteAgenda" value="Telefone" />
+						
+						<p:inputText id="clienteAgenda" value="#{visita.cliente.nome}" readonly="true" styleClass="coluna95"/>
+						<p:inputText id="tipoVisitaCliente" value="#{visita.tipoVisita.descricao}" readonly="true" />
+						<p:inputText id="telefoneClienteAgenda" value="#{visita.telefoneCliente}" readonly="true" maxlength="14" styleClass="coluna80" rendered="#{visita.tipoVisitaDoCliente}"/>
+					
+					</h:panelGrid>
+				
+					<h:panelGrid style="width: 50%">
+				
+						<p:outputLabel for="descricaoAgenda" value="Descrição" />
+						<p:inputTextarea id="descricaoAgenda" value="#{visita.descricao}" readonly="true" cols="80" rows="10"/>
+					
+					</h:panelGrid>
+			
+					<h:panelGrid columns="1">
+						<p:outputLabel for="flagGeralAgenda" value="Geral" />
+						<p:selectBooleanCheckbox id="flagGeralAgenda" value="#{visita.flagGeral}" />
+					</h:panelGrid>
+				
+					<p:outputPanel id="opAgendasColaboradores">
+					
+						<p:dataTable id="dtAgendasColaboradores" value="#{visita.agendasColaboradores}" var="agendaColaborador"
+									emptyMessage="Nenhum colaborador adicionado" style="width:99%">
+							
+							<p:column headerText="Nome" styleClass="coluna20">
+								<h:outputText value="#{agendaColaborador.colaborador.apelido}" />
+							</p:column>
+							
+							<p:column headerText="Mensagem individual" styleClass="coluna75">
+								<p:inputText value="#{agendaColaborador.descricao}" readonly="true" maxlength="200" styleClass="coluna97" />
+							</p:column>
+							
+							<p:column headerText="Status" styleClass="coluna5">
+								<h:outputText value="#{agendaColaborador.status}" title="#{agendaColaborador.textoResposta}" styleClass="#{agendaColaborador.css}" />
+							</p:column>
+							
+						</p:dataTable>
+						
+					</p:outputPanel>
+						
+	  			</h:form>
+	  				
+			</p:tab>
+  		
+  		</c:forEach>
+  		
+  	</p:accordionPanel>
+  	
+</ui:composition>
