@@ -14,7 +14,7 @@
 			<p:outputLabel for="lote" value="Lote" />
 
 			<p:inputText id="numeroProcesso" required="true" requiredMessage="Número do Processo: Campo obrigatório" value="#{mbeanProcessoModel.processoNumeroPrincipal.numero}" maxlength="30" styleClass="coluna90" />
-			<p:calendar id="dataAbertura" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Abertura: Campo obrigatório" value="#{mbeanProcessoModel.dataAbertura}" />
+			<p:calendar id="dataAbertura" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" navigator="true" required="true" requiredMessage="Data de Abertura: Campo obrigatório" value="#{mbeanProcessoModel.dataAbertura}" />
 			<p:inputText id="lote" value="#{mbeanProcessoModel.lote}" maxlength="30" styleClass="coluna95" />
 
 		</h:panelGrid>
@@ -200,7 +200,7 @@
 			<p:outputLabel for="situacaoProcesso" value="Situação" />
 			<p:outputLabel for="dataArquivamento" value="Data de Arquivamento" />
 
-			<p:calendar id="dataAjuizamento" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Ajuizamento: Campo obrigatório" value="#{mbeanProcessoModel.dataAjuizamento}" style="width:90%" />
+			<p:calendar id="dataAjuizamento" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" navigator="true" required="true" requiredMessage="Data de Ajuizamento: Campo obrigatório" value="#{mbeanProcessoModel.dataAjuizamento}" style="width:90%" />
 			<p:selectOneMenu id="turno" value="#{mbeanProcessoModel.turno.id}" style="width:95%">
 				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 				<f:selectItems value="#{mbeanProcesso.turnos}" />

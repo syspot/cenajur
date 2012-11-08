@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:param name="mbeanDocumento" value="${colaboradorFaces}" />
+	<ui:param name="mbeanDocumentoAcao" value="${colaboradorFaces}" />
+	<ui:param name="mbeanDocumentoModel" value="${colaboradorFaces.documentoColaborador}" />
+	
+	<h:form enctype="multipart/form-data" rendered="#{autenticacaoFaces.mostrarDialogDocumentoColaborador}">
+  
+		<p:dialog id="dialogDocumentoColaborador" widgetVar="dlgDocumentoColaborador" header="Upload de documento" width="600" modal="true">
+		
+			<h:panelGrid id="pgCategoriaDocumento" columns="2" columnClasses="coluna60, coluna40" style="width:50%">
+		
+				<p:outputPanel style="width:100%">
+				
+					<p:outputLabel for="categoriaDocumento" value="Categoria" /><br/>
+					<p:selectOneMenu id="categoriaDocumento" required="true" requiredMessage="Categoria do Documento: Campo obrigatório" value="#{mbeanDocumentoAcao.categoriaDocumento.id}" >
+						<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+						<f:selectItems value="#{mbeanDocumento.categoriasDocumentos}" />
+					</p:selectOneMenu>
+				
+				</p:outputPanel>
+				
+				<h:panelGrid columns="1" style="width:100%">
+				
+				
+				</h:panelGrid>
+				
+		  		
+			</h:panelGrid>
+			
+			<h:panelGrid id="pgDocumento" columns="1" columnClasses="coluna90" style="width:100%">
+			
+				<p:outputLabel for="descricaoDocumento" value="Descrição" />
+				<p:inputTextarea id="descricaoDocumento" value="#{mbeanDocumentoModel.descricao}" autoResize="false" rows="10" maxlength="500" style="width:88%"/>
+						
+				<p:outputLabel for="documento" value="Documento" />
+				<p:fileUpload id="documento" label="Selecionar Documento" fileUploadListener="#{mbeanDocumentoAcao.enviarDocumento}" auto="true" multiple="false" style="width:90%"/>
+			 		
+			</h:panelGrid>
+			
+			<h:panelGrid columns="1" style="width:100%; text-align:center">
+		  		
+		  		<p:commandButton value="Adicionar" action="#{mbeanDocumento.addDocumento}" oncomplete="handleRequestFaces('dialogDocumentoColaborador', dlgDocumentoColaborador, args)" />
+		  		
+	  		</h:panelGrid>
+	  		
+		</p:dialog>
+	
+	</h:form>
+
+</ui:component>

@@ -292,6 +292,11 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		return null;
 	}
 	
+	public String addLotacaoPesquisa(){
+		getCrudPesquisaModel().setLotacao(this.lotacaoSelecionada);
+		return null;
+	}
+	
 	public String addCliente(){
 		getCrudModel().setTitular(this.clienteSelecionado);
 		return null;

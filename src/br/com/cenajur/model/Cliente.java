@@ -531,6 +531,14 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		return getFlagAssociado() ? "Associado" : "Dependente";
 	}
 	
+	public String getSituacao(){
+		return getFlagAtivo() ? "Ativo" : "Cancelado";
+	}
+	
+	public String getCssSituacao(){
+		return getFlagAtivo() ? "situacaoAtiva" : "situacaoCancelada";
+	}
+	
 	@Override
 	public String toString() {
 		return this.nome;
@@ -597,6 +605,10 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 			query.append(" and c.cidade.id = ? ");
 		}
 		
+		if(!TSUtil.isEmpty(lotacao) && !TSUtil.isEmpty(lotacao.getId())){
+			query.append(" and c.lotacao.id = ? ");
+		}
+		
 		if(!TSUtil.isEmpty(flagAtivo)){
 			query.append(" and c.flagAtivo = ? ");
 		}
@@ -622,6 +634,10 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		
 		if(!TSUtil.isEmpty(cidade) && !TSUtil.isEmpty(cidade.getId())){
 			params.add(cidade.getId());
+		}
+		
+		if(!TSUtil.isEmpty(lotacao) && !TSUtil.isEmpty(lotacao.getId())){
+			params.add(lotacao.getId());
 		}
 
 		if(!TSUtil.isEmpty(flagAtivo)){

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -98,6 +100,9 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 	
 	@Column(name = "flag_permissao_agenda")
 	private Boolean flagPermissaoAgenda;
+	
+	@OneToMany(mappedBy = "colaborador", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<DocumentoColaborador> documentos;
 	
 	public Colaborador() {
 	}
@@ -328,6 +333,14 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 
 	public void setFlagPermissaoAgenda(Boolean flagPermissaoAgenda) {
 		this.flagPermissaoAgenda = flagPermissaoAgenda;
+	}
+
+	public List<DocumentoColaborador> getDocumentos() {
+		return documentos;
+	}
+
+	public void setDocumentos(List<DocumentoColaborador> documentos) {
+		this.documentos = documentos;
 	}
 
 	@Override

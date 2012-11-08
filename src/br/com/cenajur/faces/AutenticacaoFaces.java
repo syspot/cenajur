@@ -686,6 +686,10 @@ public class AutenticacaoFaces extends TSMainFaces{
 		return Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId());
 	}
 	
+	public boolean isMostrarDialogDocumentoColaborador(){
+		return Constantes.PERMISSAO_COLABORADOR.equals(this.permissaoSelecionada.getId());
+	}
+	
 	public boolean isMostrarDialogDocumentoProcesso(){
 		return Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId())  || Constantes.PERMISSAO_PROCESSO.equals(this.permissaoSelecionada.getId());
 	}

@@ -20,6 +20,7 @@ public class Constantes {
 	public static final Long TIPO_CATEGORIA_ANDAMENTO_PROCESSO = 3L;
 	public static final Long TIPO_CATEGORIA_CLIENTE = 4L;
 	public static final Long TIPO_CATEGORIA_GERAL = 5L;
+	public static final Long TIPO_CATEGORIA_COLABORADOR = 6L;
 	
 	public static final Long TIPO_AGENDA_TAREFA = 1L;
 	public static final Long TIPO_AGENDA_AUDIENCIA = 3L;

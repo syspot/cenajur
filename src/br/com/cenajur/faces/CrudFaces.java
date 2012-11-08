@@ -29,7 +29,7 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 	protected void clearFields() {
 		this.limpar();
 		this.limparPesquisa();
-		this.tabIndex = 0;
+		this.tabIndex = 1;
 	}
 	
 	public String limpar(){

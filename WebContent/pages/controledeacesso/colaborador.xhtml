@@ -37,7 +37,7 @@
 		  		<p:inputText id="rg" required="true" requiredMessage="RG: Campo obrigatório" validatorMessage="RG inválido" value="#{mbeanModel.rg}" maxlength="20" styleClass="coluna90">
 		  			<f:validateRegex pattern="[0-9]*" for="rg"/>
 		  		</p:inputText>
-		  		<p:calendar id="dataNascimento" pattern="dd/MM/yyyy" navigator="true" yearRange="c-100:c" required="true" requiredMessage="Data de Nascimento: Campo obrigatório" value="#{mbeanModel.dataNascimento}" style="width:90%"/>
+		  		<p:calendar id="dataNascimento" pattern="dd/MM/yyyy" navigator="true" yearRange="c-100:c" required="true" requiredMessage="Data de Nascimento: Campo obrigatório" value="#{mbeanModel.dataNascimento}" onkeypress="formatar(this, '##/##/####')" style="width:90%"/>
 		  		
   			</h:panelGrid>
   			
@@ -47,7 +47,7 @@
   		
   		<p:fieldset legend="Endereço">
   		
-  			<h:panelGrid columns="4" columnClasses="coluna10, coluna40, coluna10, coluna40" style="width:80%">
+  			<h:panelGrid columns="4" columnClasses="coluna15, coluna40, coluna10, coluna35" style="width:85%">
 
 				<p:outputLabel for="cep" value="Cep"/>
 		  		<p:outputLabel for="logradouro" value="Logradouro"/>
@@ -56,12 +56,12 @@
 		  			  		
 		  		<p:inputMask id="cep" required="true" requiredMessage="Cep: Campo obrigatório" mask="99.999-999" value="#{mbeanModel.cep}" maxlength="10" styleClass="coluna85"/>
 		  		<p:inputText id="logradouro" required="true" requiredMessage="Logradouro: Campo obrigatório" value="#{mbeanModel.logradouro}" maxlength="100" styleClass="coluna95"/>
-		  		<p:inputText id="numero" required="true" requiredMessage="Número: Campo obrigatório" value="#{mbeanModel.numero}" maxlength="6" styleClass="coluna80"/>
+		  		<p:inputText id="numero" value="#{mbeanModel.numero}" maxlength="6" styleClass="coluna80"/>
 		  		<p:inputText id="complemento" value="#{mbeanModel.complemento}" maxlength="50" styleClass="coluna90"/>
 		  	
 		  	</h:panelGrid>
 		  	
-		  	<h:panelGrid columns="5" columnClasses="coluna30, coluna20, coluna20, coluna15, coluna15" style="width:80%">
+		  	<h:panelGrid columns="5" columnClasses="coluna20, coluna20, coluna20, coluna20, coluna20" style="width:85%">
 		  	
 		  		<p:outputLabel for="bairro" value="Bairro"/>
 			  	<p:outputLabel for="estado" value="Estado"/>
@@ -81,8 +81,8 @@
 		  				<f:selectItems value="#{mbean.cidades}" />
 		  			</p:selectOneMenu>
 	  			</p:outputPanel>
-		  		<p:inputMask id="telefone" required="true" requiredMessage="Telefone: Campo obrigatório" mask="(99) 9999-9999" value="#{mbeanModel.telefone}" maxlength="14" styleClass="coluna90"/>
-		  		<p:inputMask id="celular" mask="(99) 9999-9999" value="#{mbeanModel.celular}" maxlength="14" styleClass="coluna90"/>
+		  		<p:inputMask id="telefone" required="true" requiredMessage="Telefone: Campo obrigatório" mask="(99) 9999-9999" value="#{mbeanModel.telefone}" maxlength="14" styleClass="coluna95"/>
+		  		<p:inputMask id="celular" mask="(99) 9999-9999" value="#{mbeanModel.celular}" maxlength="14" styleClass="coluna95"/>
 		  	
 		  	</h:panelGrid>
 		  		
@@ -121,7 +121,7 @@
 	  			<p:outputLabel for="situacao" value="Ativo" />
 	  			<p:outputLabel for="flagPermissaoAgenda" value="Agenda" />
 	  			
-	  			<p:calendar id="dataAdmissao" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Admissão: Campo obrigatório" value="#{mbeanModel.dataAdmissao}" style="width:95%"/>
+	  			<p:calendar id="dataAdmissao" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" navigator="true" required="true" requiredMessage="Data de Admissão: Campo obrigatório" value="#{mbeanModel.dataAdmissao}" style="width:95%"/>
 	  			<p:selectOneMenu id="tipoColaborador" required="true" requiredMessage="Tipo de Colaborador: Campo obrigatório" value="#{mbeanModel.tipoColaborador.id}" style="width:93%">
 	  				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 	  				<f:selectItems value="#{mbean.tiposColaborador}"/>
@@ -141,12 +141,24 @@
 	  			
 	  			<h:panelGrid id="pgDataDesligamento">
 		  			<p:outputLabel for="dataDesligamento" value="Data de Desligamento" rendered="#{!mbeanModel.flagAtivo}"/>
-		  			<p:calendar id="dataDesligamento" pattern="dd/MM/yyyy" value="#{mbeanModel.dataDesligamento}" styleClass="coluna90" rendered="#{!mbeanModel.flagAtivo}"/>
+		  			<p:calendar id="dataDesligamento" pattern="dd/MM/yyyy"  onkeypress="formatar(this, '##/##/####')" value="#{mbeanModel.dataDesligamento}" styleClass="coluna90" rendered="#{!mbeanModel.flagAtivo}"/>
   				</h:panelGrid>
   				
   			</h:panelGrid>
   			
   		</p:fieldset>
+  		
+  		<p:fieldset legend="Documentos">
+	  	
+	  		<h:panelGrid columns="1" style="width:60%">
+
+				<p:commandButton type="button" value="Adicionar Documento" icon="ui-icon-plus" onclick="dlgDocumentoColaborador.show();" update="pgCategoriaDocumento" />
+			
+				<ui:include src="/pages/processo/include_grid_documentos.xhtml"/>
+		  	
+		  	</h:panelGrid>
+			
+	  	</p:fieldset>
   		
   	</ui:define>
   	

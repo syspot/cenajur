@@ -34,6 +34,7 @@
  		<mapping class="br.com.cenajur.model.DocumentoAndamentoProcesso" />
  		<mapping class="br.com.cenajur.model.DocumentoAudiencia" />
  		<mapping class="br.com.cenajur.model.DocumentoCliente" />
+ 		<mapping class="br.com.cenajur.model.DocumentoColaborador" />
  		<mapping class="br.com.cenajur.model.DocumentoGeral" />
  		<mapping class="br.com.cenajur.model.DocumentoPesquisa" />
  		<mapping class="br.com.cenajur.model.DocumentoProcesso" />

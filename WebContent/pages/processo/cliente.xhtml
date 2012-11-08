@@ -40,7 +40,7 @@
   					<h:panelGrid columns="1">
   			
 			  			<p:outputLabel for="dataAdesao" value="Data de Adesão" style="color:red"/>
-				  		<p:calendar id="dataAdesao" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Adesão: Campo obrigatório" value="#{mbeanModel.dataAdesao}" styleClass="coluna90" style="color:red"/>
+				  		<p:calendar id="dataAdesao" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" navigator="true" required="true" requiredMessage="Data de Adesão: Campo obrigatório" value="#{mbeanModel.dataAdesao}" styleClass="coluna90" style="color:red"/>
 				  		
 		  			</h:panelGrid>
 		  			
@@ -67,7 +67,7 @@
 				  	
 				  		<p:inputMask id="cpf" required="true" requiredMessage="CPF: Campo obrigatório" mask="999.999.999-99" value="#{mbeanModel.cpf}" maxlength="15" styleClass="coluna90"/>
 				  		<p:inputText id="rg" required="true" requiredMessage="RG: Campo obrigatório" value="#{mbeanModel.rg}" maxlength="20" styleClass="coluna90"/>
-				  		<p:calendar id="dataNascimento" pattern="dd/MM/yyyy" navigator="true" yearRange="c-100:c" required="true" requiredMessage="Data de Nascimento: Campo obrigatório" value="#{mbeanModel.dataNascimento}" style="width:95%"/>
+				  		<p:calendar id="dataNascimento" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" navigator="true" yearRange="c-100:c" required="true" requiredMessage="Data de Nascimento: Campo obrigatório" value="#{mbeanModel.dataNascimento}" style="width:95%"/>
 					  	<p:selectOneMenu id="estadoCivil" required="true" requiredMessage="Estado Civil: Campo obrigatório" value="#{mbeanModel.estadoCivil.id}" style="width:100%">
 					  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 					  		<f:selectItems value="#{mbean.estadosCivis}" />
@@ -306,6 +306,20 @@
 	  	
 	  	</h:panelGrid>
 	  	
+	  	<h:panelGrid style="width:50%">
+	  	
+	  		<p:outputLabel for="lotacaoPesquisa" value="Lotação" />
+
+  			<p:outputPanel autoUpdate="true">
+  				<p:inputText id="lotacaoPesquisa" value="#{mbeanPesquisaModel.lotacao.descricao}" readonly="true" styleClass="coluna70" />
+  				<p:commandButton type="button" icon="ui-icon-plus" value="Adicionar" onclick="dlgLotacao2.show();" rendered="#{mbeanPesquisaModel.lotacao.id == null}"/>
+  				<p:commandButton value="Remover" process="@this" rendered="#{mbeanPesquisaModel.lotacao.id != null}">
+  					<f:setPropertyActionListener target="#{mbeanPesquisaModel.lotacao}" value="#{null}" />
+  				</p:commandButton>
+			</p:outputPanel>
+	  	
+	  	</h:panelGrid>
+	  	
   	</ui:define>
   	
   	<ui:define name="colunasTabela">
@@ -334,6 +348,13 @@
   		<p:column headerText="Graduação">
   			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
 	  			<h:outputText value="#{linha.graduacao.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
+  		</p:column>
+  		
+  		<p:column headerText="Situação">
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.situacao}" styleClass="#{linha.cssSituacao}" />
 				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
 			</p:commandLink>
   		</p:column>

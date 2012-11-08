@@ -9,15 +9,23 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
+import org.primefaces.context.RequestContext;
+import org.primefaces.event.FileUploadEvent;
+
+import br.com.cenajur.model.CategoriaDocumento;
 import br.com.cenajur.model.Cidade;
 import br.com.cenajur.model.Colaborador;
+import br.com.cenajur.model.DocumentoCliente;
+import br.com.cenajur.model.DocumentoColaborador;
 import br.com.cenajur.model.Estado;
 import br.com.cenajur.model.Grupo;
+import br.com.cenajur.model.TipoCategoria;
 import br.com.cenajur.model.TipoColaborador;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
 import br.com.cenajur.util.Utilitarios;
+import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.util.TSFacesUtil;
 
@@ -29,6 +37,10 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 	private List<SelectItem> cidades;
 	private List<SelectItem> tiposColaborador;
 	private List<SelectItem> grupos;
+	private DocumentoColaborador documentoColaborador;
+	private CategoriaDocumento categoriaDocumento;
+	private List<SelectItem> categoriasDocumentos;
+	private DocumentoCliente documentoSelecionado;
 	
 	@PostConstruct
 	protected void init() {
@@ -50,6 +62,7 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 		this.estados = super.initCombo(new Estado().findAll(), "id", "descricao");
 		this.cidades = super.initCombo(new Cidade().findAll(), "id", "descricao");
 		this.tiposColaborador = super.initCombo(new TipoColaborador().findAll(), "id", "descricao");
+		this.categoriasDocumentos = this.initCombo(getCategoriaDocumento().findByModel("descricao"), "id", "descricao");
 	}
 	
 	@Override
@@ -63,6 +76,10 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 		getCrudModel().getCidade().setEstado(new Estado());
 		getCrudModel().setTipoColaborador(new TipoColaborador());
 		getCrudModel().setGrupo(new Grupo());
+		getCrudModel().setDocumentos(new ArrayList<DocumentoColaborador>());
+		setCategoriaDocumento(new CategoriaDocumento());
+		getCategoriaDocumento().setTipoCategoria(new TipoCategoria(Constantes.TIPO_CATEGORIA_COLABORADOR));
+		setDocumentoColaborador(new DocumentoColaborador());
 		setFlagAlterar(Boolean.FALSE);
 		return null;
 	}
@@ -122,8 +139,51 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 		this.atualizarComboCidades();
 	}
 	
+	public String removerDocumento(){
+		getCrudModel().getDocumentos().remove(this.documentoSelecionado);
+		return null;
+	}
+	
 	public String atualizarComboCidades(){
 		this.cidades = super.initCombo(getCrudModel().getCidade().findCombo(), "id", "descricao");
+		return null;
+	}
+	
+	public void enviarDocumento(FileUploadEvent event) {
+		
+		getDocumentoColaborador().setArquivo(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
+		
+		if(CenajurUtil.isDocumentoPdf(event.getFile())){
+			getDocumentoColaborador().setDescricaoBusca(CenajurUtil.getDescricaoPDF(event.getFile()));
+		}
+		
+		CenajurUtil.criaArquivo(event.getFile(), getDocumentoColaborador().getCaminhoUploadCompleto());
+		
+	}
+	
+	public String addDocumento(){
+		
+		RequestContext context = RequestContext.getCurrentInstance();
+		
+		if(TSUtil.isEmpty(getDocumentoColaborador().getArquivo())){
+			CenajurUtil.addErrorMessage("Documento: Campo obrigatório");
+			context.addCallbackParam("sucesso", false);
+			return null;
+		}
+		
+		if(getDocumentoColaborador().getDescricao().length() > 100){
+			CenajurUtil.addErrorMessage("Descrição: Campo muito longo, tamanho máximo de 100 caracteres");
+			context.addCallbackParam("sucesso", false);
+			return null;
+		}
+		
+		context.addCallbackParam("sucesso", true);
+		
+		getDocumentoColaborador().setColaborador(getCrudModel());
+		getDocumentoColaborador().setCategoriaDocumento(getCategoriaDocumento().getById());
+		getCrudModel().getDocumentos().add(getDocumentoColaborador());
+		getCategoriaDocumento().setId(null);
+		setDocumentoColaborador(new DocumentoColaborador());
 		return null;
 	}
 	
@@ -162,6 +222,37 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 	public void setGrupos(List<SelectItem> grupos) {
 		this.grupos = grupos;
 	}
-	
+
+	public DocumentoColaborador getDocumentoColaborador() {
+		return documentoColaborador;
+	}
+
+	public void setDocumentoColaborador(DocumentoColaborador documentoColaborador) {
+		this.documentoColaborador = documentoColaborador;
+	}
+
+	public CategoriaDocumento getCategoriaDocumento() {
+		return categoriaDocumento;
+	}
+
+	public void setCategoriaDocumento(CategoriaDocumento categoriaDocumento) {
+		this.categoriaDocumento = categoriaDocumento;
+	}
+
+	public List<SelectItem> getCategoriasDocumentos() {
+		return categoriasDocumentos;
+	}
+
+	public void setCategoriasDocumentos(List<SelectItem> categoriasDocumentos) {
+		this.categoriasDocumentos = categoriasDocumentos;
+	}
+
+	public DocumentoCliente getDocumentoSelecionado() {
+		return documentoSelecionado;
+	}
+
+	public void setDocumentoSelecionado(DocumentoCliente documentoSelecionado) {
+		this.documentoSelecionado = documentoSelecionado;
+	}
 	
 }

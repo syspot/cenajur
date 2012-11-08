@@ -9,7 +9,7 @@
 
 	<h:form rendered="#{autenticacaoFaces.mostrarDialogNumeroProcesso}">
 		
-		<p:dialog id="dialogNumeroProcesso" widgetVar="dlgNumeroProcesso"  header="Adicionar Número do Processo" width="350" modal="true" closable="false">
+		<p:dialog id="dialogNumeroProcesso" widgetVar="dlgNumeroProcesso"  header="Adicionar Número do Processo" width="400" modal="true" closable="false">
 			
 			<p:commandButton icon="ui-icon-plus" value="adicionar" action="#{mbean.addNumeroProcesso}" process="@this, opNumeroProcesso" style="margin-bottom: 10px"/>
 			
@@ -18,7 +18,7 @@
 				<p:dataTable value="#{mbean.crudModel.processosNumerosTemp}" var="processoNumero" emptyMessage="Nenhum número adicionado">
 			
 					<p:column headerText="Número">
-						<p:inputText id="numeroProcesso" required="true" requiredMessage="Número: Campo obrigatório" value="#{processoNumero.numero}" maxlength="30" styleClass="coluna90" />
+						<p:inputText id="numeroProcesso" required="true" requiredMessage="Número: Campo obrigatório" value="#{processoNumero.numero}" maxlength="30" styleClass="coluna95" />
 					</p:column>
 					
 					<p:column headerText="Excluir" styleClass="coluna5">

@@ -23,7 +23,7 @@
 				</p:outputPanel>
 		  		
 			  	<p:outputLabel for="dataAndamento" value="Data do Andamento" />
-		  		<p:calendar id="dataAndamento" pattern="dd/MM/yyyy" required="true" requiredMessage="Data do Andamento: Campo obrigatório" value="#{mbeanModel.dataAndamento}"/>
+		  		<p:calendar id="dataAndamento" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" navigator="true" required="true" requiredMessage="Data do Andamento: Campo obrigatório" value="#{mbeanModel.dataAndamento}"/>
 	  		
 		  		<p:outputLabel for="tipoAndamentoProcesso" value="Tipo do Andamento" />
 		  		<p:selectOneMenu id="tipoAndamentoProcesso" required="true" requiredMessage="Tipo do Andamento: Campo obrigatório" value="#{mbeanModel.tipoAndamentoProcesso.id}" style="width:92%">
