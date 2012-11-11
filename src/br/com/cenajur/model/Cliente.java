@@ -696,4 +696,39 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		return super.get(" from Cliente where cpf = ?", cpf);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<AnoModel> pesquisarPorBancoPorAno(Long ano){
+		return super.findBySQL(AnoModel.class, new String[]{"descricao", "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez", "tot"}, "select * from fc_clientes_por_banco_ano(?)", ano);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<AnoModel> pesquisarSemLotePorAno(Long ano){
+		return super.findBySQL(AnoModel.class, new String[]{"descricao", "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez", "tot"}, "select * from fc_clientes_sem_lote_ano(?)", ano);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<AnoModel> pesquisarAdesaoPorAno(Long ano){
+		return super.findBySQL(AnoModel.class, new String[]{"descricao", "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez", "tot"}, "select * from fc_clientes_adesao_por_ano(?)", ano);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<AnoModel> pesquisarRematriculadosPorAno(Long ano){
+		return super.findBySQL(AnoModel.class, new String[]{"descricao", "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez", "tot"}, "select * from fc_clientes_rematriculados_por_ano(?)", ano);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<AnoModel> pesquisarCanceladosPorAno2(Long ano){
+		return super.findBySQL(AnoModel.class, new String[]{"descricao", "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez", "tot"}, "select * from fc_clientes_cancelados_por_ano_2(?)", ano);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<AnoModel> pesquisarCanceladosPorAno(Long ano){
+		return super.findBySQL(AnoModel.class, new String[]{"descricao", "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez", "tot"}, "select * from fc_clientes_cancelados_por_ano(?)", ano);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<AnoModel> pesquisarCanceladosPorAnoTotal(Long ano){
+		return super.findBySQL(AnoModel.class, new String[]{"descricao", "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez", "tot"}, "select * from fc_clientes_cancelados_por_ano_total(?)", ano);
+	}
+	
 }
