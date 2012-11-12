@@ -79,4 +79,7 @@ public class Constantes {
 	public static final Long PERMISSAO_AGENDA = 26L;
 	public static final Long PERMISSAO_GRUPO = 9L;
 	
+	public static final Long EMAIL_ID = 1L;
+	
+	
 }

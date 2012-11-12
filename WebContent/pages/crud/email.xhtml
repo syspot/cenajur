@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+	<ui:param name="mbean" value="${emailFaces}" />
+  	<ui:param name="mbeanModel" value="${emailFaces.crudModel}" />
+  	
+  	<p:tabView id="tabview" dynamic="false">
+
+		<p:tab id="tabCadastro" title="Regras de Bloqueio" >
+			
+			<h:form id="formCadastro" prependId="false">
+        		
+				<h:panelGrid columns="1" styleClass="coluna100">
+				
+					<p:fieldset legend="Informações de Envio de Email" style="width: 97.5%">
+				
+						<h:panelGrid columns="2" style="width:60%">
+						
+							<p:outputLabel for="email" value="Email" />
+							<p:outputLabel for="senha" value="Senha" />
+							
+							<p:inputText id="email" value="#{mbeanModel.email}" required="true" requiredMessage="Email: Campo obrigatório" styleClass="coluna90" maxlength="100" />
+							<p:password id="senha" value="#{mbeanModel.senha}" required="true" requiredMessage="Senha: Campo obrigatório" styleClass="coluna90" maxlength="30" />
+						
+						</h:panelGrid>
+						
+						<h:panelGrid>
+						
+							<p:commandButton value="Alterar" action="#{mbean.updateEvent}" update="@form" />
+						
+						</h:panelGrid>
+							
+					</p:fieldset>
+					
+				</h:panelGrid>
+					
+			</h:form>
+			
+        </p:tab>
+        
+	</p:tabView>
+  	
+</ui:composition>
