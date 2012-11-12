@@ -722,13 +722,43 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<AnoModel> pesquisarCanceladosPorAno(Long ano){
-		return super.findBySQL(AnoModel.class, new String[]{"descricao", "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez", "tot"}, "select * from fc_clientes_cancelados_por_ano(?)", ano);
+	public List<AnoModel> pesquisarCanceladosPorAno(Long ano, boolean flagAssociado){
+		return super.findBySQL(AnoModel.class, new String[]{"descricao", "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez", "tot"}, "select * from fc_clientes_cancelados_por_ano(?, ?)", ano, flagAssociado);
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<AnoModel> pesquisarCanceladosPorAnoTotal(Long ano){
-		return super.findBySQL(AnoModel.class, new String[]{"descricao", "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez", "tot"}, "select * from fc_clientes_cancelados_por_ano_total(?)", ano);
+	public List<AnoModel> pesquisarCanceladosPorAnoTotal(Long ano, boolean flagAssociado){
+		return super.findBySQL(AnoModel.class, new String[]{"descricao", "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez", "tot"}, "select * from fc_clientes_cancelados_por_ano_total(?, ?)", ano, flagAssociado);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<AnoModel> pesquisarAdimplenciaPorBanco(Long ano, Banco banco){
+		return super.findBySQL(AnoModel.class, new String[]{"descricao", "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez", "tot"}, "select * from fc_adimplencia_por_banco(?, ?)", ano, banco.getId());
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<AnoModel> pesquisarInadimplenciaPorBanco(Long ano, Banco banco){
+		return super.findBySQL(AnoModel.class, new String[]{"descricao", "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez", "tot"}, "select * from fc_inadimplencia_por_banco(?, ?)", ano, banco.getId());
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<AnoModel> pesquisarFaturamentoPorBanco(Long ano, Banco banco){
+		return super.findBySQL(AnoModel.class, new String[]{"descricao", "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez", "tot"}, "select * from fc_faturamento_por_banco(?, ?)", ano, banco.getId());
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<AnoModel> pesquisarAdimplenciaSemLote(Long ano){
+		return super.findBySQL(AnoModel.class, new String[]{"descricao", "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez", "tot"}, "select * from fc_adimplencia_sem_lote(?)", ano);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<AnoModel> pesquisarInadimplenciaSemLote(Long ano){
+		return super.findBySQL(AnoModel.class, new String[]{"descricao", "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez", "tot"}, "select * from fc_inadimplencia_sem_lote(?)", ano);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<AnoModel> pesquisarFaturamentoTotalSemLote(Long ano){
+		return super.findBySQL(AnoModel.class, new String[]{"descricao", "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez", "tot"}, "select * from fc_faturamento_total_sem_lote(?)", ano);
 	}
 	
 }
