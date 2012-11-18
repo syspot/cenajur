@@ -22,7 +22,7 @@ public class RelatorioAssociadosPorRegiaoFaces{
 
         try {
 
-            StringBuilder nomeRelatorio = new StringBuilder("relatorioProcesso_2012");
+            StringBuilder nomeRelatorio = new StringBuilder("relatorioAssociadosPorCidade");
 
             Map<String, Object> parametros = new HashMap<String, Object>();
 
