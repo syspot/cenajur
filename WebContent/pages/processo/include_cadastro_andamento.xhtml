@@ -19,7 +19,7 @@
 							<p:inputText id="numeroProcessoAndamento" value="#{mbeanProcessoAndamento.processoNumeroPrincipal.numero}" readonly="true" />
 					  		
 						  	<p:outputLabel for="dataAndamentoAndamento" value="Data do Andamento" />
-					  		<p:calendar id="dataAndamentoAndamento" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data do Andamento: Campo obrigatório" value="#{mbeanProcessoAndamento.andamentoProcesso.dataAndamento}"/>
+					  		<p:calendar  navigator="true" id="dataAndamentoAndamento" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data do Andamento: Campo obrigatório" value="#{mbeanProcessoAndamento.andamentoProcesso.dataAndamento}"/>
 					 		
 					  		<p:outputLabel for="tipoAndamentoProcessoAndamento" value="Tipo do Andamento" />
 					  		<p:selectOneMenu id="tipoAndamentoProcessoAndamento" required="true" requiredMessage="Tipo do Andamento: Campo obrigatório" value="#{mbeanProcessoAndamento.andamentoProcesso.tipoAndamentoProcesso.id}" style="width:92%">

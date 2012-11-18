@@ -14,7 +14,7 @@
 			<p:outputLabel for="lote" value="Lote" />
 
 			<p:inputText id="numeroProcesso" required="true" requiredMessage="Número do Processo: Campo obrigatório" value="#{mbeanProcessoModel.processoNumeroPrincipal.numero}" maxlength="30" styleClass="coluna90" />
-			<p:calendar id="dataAbertura" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" navigator="true" required="true" requiredMessage="Data de Abertura: Campo obrigatório" value="#{mbeanProcessoModel.dataAbertura}" />
+			<p:calendar  navigator="true" id="dataAbertura" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" required="true" requiredMessage="Data de Abertura: Campo obrigatório" value="#{mbeanProcessoModel.dataAbertura}" />
 			<p:inputText id="lote" value="#{mbeanProcessoModel.lote}" maxlength="30" styleClass="coluna95" />
 
 		</h:panelGrid>
@@ -200,7 +200,7 @@
 			<p:outputLabel for="situacaoProcesso" value="Situação" />
 			<p:outputLabel for="dataArquivamento" value="Data de Arquivamento" />
 
-			<p:calendar id="dataAjuizamento" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" navigator="true" required="true" requiredMessage="Data de Ajuizamento: Campo obrigatório" value="#{mbeanProcessoModel.dataAjuizamento}" style="width:90%" />
+			<p:calendar  navigator="true" id="dataAjuizamento" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" required="true" requiredMessage="Data de Ajuizamento: Campo obrigatório" value="#{mbeanProcessoModel.dataAjuizamento}" style="width:90%" />
 			<p:selectOneMenu id="turno" value="#{mbeanProcessoModel.turno.id}" style="width:95%">
 				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 				<f:selectItems value="#{mbeanProcesso.turnos}" />
@@ -211,7 +211,7 @@
 				<p:ajax update="opDataArquivamento" process="@this" global="false" />
 			</p:selectOneMenu>
 			<p:outputPanel id="opDataArquivamento">
-				<p:calendar id="dataArquivamento" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Arquivamento: Campo obrigatório" value="#{mbeanProcessoModel.dataArquivamento}" disabled="#{!mbeanProcessoModel.processoArquivado}" style="width:90%" />
+				<p:calendar  navigator="true" id="dataArquivamento" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Arquivamento: Campo obrigatório" value="#{mbeanProcessoModel.dataArquivamento}" disabled="#{!mbeanProcessoModel.processoArquivado}" style="width:90%" />
 			</p:outputPanel>
 		</h:panelGrid>
 

@@ -31,7 +31,7 @@
 				  	<p:outputLabel for="dataAudiencia" value="Data da Audiência" />
 		  			<p:outputLabel for="flagClienteCiente" value="Associado Ciente" />
 		  			
-			  		<p:calendar id="dataAudiencia" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data da Audiência: Campo obrigatório" value="#{mbeanModel.dataAudiencia}"/>
+			  		<p:calendar  navigator="true" id="dataAudiencia" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data da Audiência: Campo obrigatório" value="#{mbeanModel.dataAudiencia}"/>
 			  		<p:selectBooleanCheckbox id="flagClienteCiente" value="#{mbeanModel.flagClienteCiente}" />
 				  	
 			  		<p:outputLabel for="situacaoAudiencia" value="Situação" />
@@ -85,7 +85,7 @@
 	  		<p:outputLabel for="situacaoAudienciaPesquisa" value="Situação" />
 	  		
 			<p:inputText id="processoPesquisa" value="#{mbeanPesquisaModel.processoNumero.numero}" />
-	  		<p:calendar id="dataAudienciaPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataAudiencia}"/>
+	  		<p:calendar  navigator="true" id="dataAudienciaPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataAudiencia}"/>
 	  		<p:selectOneMenu id="situacaoAudienciaPesquisa" value="#{mbeanPesquisaModel.situacaoAudiencia.id}" style="width:95%">
 		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 		  		<f:selectItems value="#{mbean.situacoesAudiencias}" />

@@ -27,7 +27,7 @@
 						  	<p:outputLabel for="dataAudienciaAudiencia" value="Data da Audiência" />
 				  			<p:outputLabel for="flagClienteCienteAudiencia" value="Associado ciente" />
 				  		
-					  		<p:calendar id="dataAudienciaAudiencia" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data da Audiência: Campo obrigatório" value="#{mbeanProcessoAudiencia.audiencia.dataAudiencia}"/>
+					  		<p:calendar  navigator="true" id="dataAudienciaAudiencia" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data da Audiência: Campo obrigatório" value="#{mbeanProcessoAudiencia.audiencia.dataAudiencia}"/>
 					  		<p:selectBooleanCheckbox id="flagClienteCienteAudiencia" value="#{mbeanProcessoAudiencia.audiencia.flagClienteCiente}" />
 					  		
 					  		<p:outputLabel for="situacaoAudiencia" value="Situação" />

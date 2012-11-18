@@ -36,8 +36,8 @@
 				<p:outputLabel for="lotePesquisa" value="Lote" />
 
 				<p:inputText id="numeroProcessoPesquisa" value="#{mbeanProcessoPesquisaModel.processoNumeroPrincipal.numero}" maxlength="30" styleClass="coluna85" />
-				<p:calendar id="dataAberturaPesquisa" pattern="dd/MM/yyyy" value="#{mbeanProcessoPesquisaModel.dataAbertura}" />
-				<p:calendar id="dataAjuizamentoPesquisa" pattern="dd/MM/yyyy" value="#{mbeanProcessoPesquisaModel.dataAjuizamento}" styleClass="coluna90" />
+				<p:calendar  navigator="true" id="dataAberturaPesquisa" pattern="dd/MM/yyyy" value="#{mbeanProcessoPesquisaModel.dataAbertura}" />
+				<p:calendar  navigator="true" id="dataAjuizamentoPesquisa" pattern="dd/MM/yyyy" value="#{mbeanProcessoPesquisaModel.dataAjuizamento}" styleClass="coluna90" />
 				<p:inputText id="lotePesquisa" value="#{mbeanProcessoPesquisaModel.lote}" maxlength="30" styleClass="coluna85" />
 
 			</h:panelGrid>
@@ -107,7 +107,7 @@
 					<f:selectItems value="#{mbeanProcesso.situacoesProcessos}" />
 					<p:ajax update="pgDataArquivamentoPesquisa" process="pgDataArquivamentoPesquisa" global="false" />
 				</p:selectOneMenu>
-				<p:calendar id="dataArquivamentoPesquisa" pattern="dd/MM/yyyy" value="#{mbeanProcessoPesquisaModel.dataArquivamento}" disabled="#{!mbeanProcessoPesquisaModel.processoArquivado}" style="width:90%" />
+				<p:calendar  navigator="true" id="dataArquivamentoPesquisa" pattern="dd/MM/yyyy" value="#{mbeanProcessoPesquisaModel.dataArquivamento}" disabled="#{!mbeanProcessoPesquisaModel.processoArquivado}" style="width:90%" />
 
 			</h:panelGrid>
 

@@ -20,7 +20,7 @@
 		  	<p:outputLabel for="dataAudienciaAudienciaAgenda" value="Data da Audiência" />
   			<p:outputLabel for="flagClienteCienteAudienciaAgenda" value="Associado ciente" />
   		
-	  		<p:calendar id="dataAudienciaAudienciaAgenda" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data da Audiência: Campo obrigatório" value="#{agendaFaces.processoAudienciaUtil.audiencia.dataAudiencia}"/>
+	  		<p:calendar  navigator="true" id="dataAudienciaAudienciaAgenda" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data da Audiência: Campo obrigatório" value="#{agendaFaces.processoAudienciaUtil.audiencia.dataAudiencia}"/>
 	  		<p:selectBooleanCheckbox id="flagClienteCienteAudienciaAgenda" value="#{agendaFaces.processoAudienciaUtil.audiencia.flagClienteCiente}" />
 	  		
 	  		<p:outputLabel for="situacaoAudienciaAgenda" value="Situação" />

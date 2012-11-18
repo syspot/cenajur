@@ -33,8 +33,8 @@
 			<p:outputLabel for="dataInicioAgenda" value="Data Início" />
 			<p:outputLabel for="dataFimAgenda" value="Data Fim" />
 			
-			<p:calendar id="dataInicioAgenda" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data: Campo obrigatório" value="#{mbeanModel.dataInicial}" />
-			<p:calendar id="dataFimAgenda" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data: Campo obrigatório" value="#{mbeanModel.dataFinal}" mindate="#{mbeanModel.dataFinalMinima}" />
+			<p:calendar  navigator="true" id="dataInicioAgenda" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data: Campo obrigatório" value="#{mbeanModel.dataInicial}" />
+			<p:calendar  navigator="true" id="dataFimAgenda" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data: Campo obrigatório" value="#{mbeanModel.dataFinal}" mindate="#{mbeanModel.dataFinalMinima}" />
 			
 		</h:panelGrid>
 	
@@ -125,8 +125,8 @@
 			<p:outputLabel for="dataInicioAgendaPesquisa" value="Data Início" />
 			<p:outputLabel for="dataFimAgendaPesquisa" value="Data Fim" />
 			
-			<p:calendar id="dataInicioAgendaPesquisa" pattern="dd/MM/yyyy HH:mm" value="#{mbeanPesquisaModel.dataInicial}" />
-			<p:calendar id="dataFimAgendaPesquisa" pattern="dd/MM/yyyy HH:mm" value="#{mbeanPesquisaModel.dataFinal}" />
+			<p:calendar  navigator="true" id="dataInicioAgendaPesquisa" pattern="dd/MM/yyyy HH:mm" value="#{mbeanPesquisaModel.dataInicial}" />
+			<p:calendar  navigator="true" id="dataFimAgendaPesquisa" pattern="dd/MM/yyyy HH:mm" value="#{mbeanPesquisaModel.dataFinal}" />
 			
 		</h:panelGrid>
 	  	

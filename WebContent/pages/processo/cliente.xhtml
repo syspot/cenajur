@@ -40,7 +40,7 @@
   					<h:panelGrid columns="1">
   			
 			  			<p:outputLabel for="dataAdesao" value="Data de Adesão" style="color:red"/>
-				  		<p:calendar id="dataAdesao" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" navigator="true" required="true" requiredMessage="Data de Adesão: Campo obrigatório" value="#{mbeanModel.dataAdesao}" styleClass="coluna90" style="color:red"/>
+				  		<p:calendar  navigator="true" id="dataAdesao" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" required="true" requiredMessage="Data de Adesão: Campo obrigatório" value="#{mbeanModel.dataAdesao}" styleClass="coluna90" style="color:red"/>
 				  		
 		  			</h:panelGrid>
 		  			
@@ -67,7 +67,7 @@
 				  	
 				  		<p:inputMask id="cpf" required="true" requiredMessage="CPF: Campo obrigatório" mask="999.999.999-99" value="#{mbeanModel.cpf}" maxlength="15" styleClass="coluna90"/>
 				  		<p:inputText id="rg" required="true" requiredMessage="RG: Campo obrigatório" value="#{mbeanModel.rg}" maxlength="20" styleClass="coluna90"/>
-				  		<p:calendar id="dataNascimento" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" navigator="true" yearRange="c-100:c" required="true" requiredMessage="Data de Nascimento: Campo obrigatório" value="#{mbeanModel.dataNascimento}" style="width:95%"/>
+				  		<p:calendar  navigator="true" id="dataNascimento" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" yearRange="c-100:c" required="true" requiredMessage="Data de Nascimento: Campo obrigatório" value="#{mbeanModel.dataNascimento}" style="width:95%"/>
 					  	<p:selectOneMenu id="estadoCivil" required="true" requiredMessage="Estado Civil: Campo obrigatório" value="#{mbeanModel.estadoCivil.id}" style="width:100%">
 					  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 					  		<f:selectItems value="#{mbean.estadosCivis}" />
@@ -228,7 +228,7 @@
 			  	<p:outputLabel for="dataCancelamento" value="Data de Cancelamento" rendered="#{!mbeanModel.flagAtivo}"/>
 		  		<p:outputLabel for="motivoCancelamento" value="Motivo de Cancelamento" rendered="#{!mbeanModel.flagAtivo}"/>
 		  	
-		  		<p:calendar id="dataCancelamento" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Cancelamento: Campo obrigatório" value="#{mbeanModel.dataCancelamento}" styleClass="coluna90" rendered="#{!mbeanModel.flagAtivo}"/>
+		  		<p:calendar  navigator="true" id="dataCancelamento" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Cancelamento: Campo obrigatório" value="#{mbeanModel.dataCancelamento}" styleClass="coluna90" rendered="#{!mbeanModel.flagAtivo}"/>
 			  	<p:selectOneMenu id="motivoCancelamento" required="true" requiredMessage="Motivo do Cancelamento: Campo obrigatório" value="#{mbeanModel.motivoCancelamento.id}" style="width:95%" rendered="#{!mbeanModel.flagAtivo}">
 			  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 			  		<f:selectItems value="#{mbean.motivosCancelamentos}" />
