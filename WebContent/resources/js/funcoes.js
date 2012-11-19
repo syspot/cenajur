@@ -26,6 +26,34 @@ PrimeFaces.locales['pt_BR'] = {
         allDayText : 'Todo Dia'
     };
 
+PrimeFaces.locales['en_US'] = {
+        closeText: 'Fechar',
+        prevText: 'Anterior',
+        nextText: 'Pr&oacute;ximo',
+        currentText: 'Come&ccedil;o',
+        monthNames: ['Janeiro','Fevereiro','Mar&ccedil;o','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+        monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago','Set','Out','Nov','Dez'],
+        dayNames: ['Domingo','Segunda','Ter&ccedil;a','Quarta','Quinta','Sexta','S&aacute;bado'],
+        dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','S&aacute;b'],
+        dayNamesMin: ['D','S','T','Q','Q','S','S'],
+        weekHeader: 'Semana',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: '',
+        timeOnlyTitle: 'S&oacute; Horas',
+        timeText: 'Tempo',
+        hourText: 'Hora',
+        minuteText: 'Minuto',
+        secondText: 'Segundo',
+        currentText: 'Data Atual',
+        ampm: false,
+        month: 'M&ecirc;s',
+        week: 'Semana',
+        day: 'Dia',
+        allDayText : 'Todo Dia'
+    };
+
 function handleRequest(idDialog, widgerVar, args){
 	if(args.validationFailed && !args.sucesso) {      	
 		jQuery(idDialog).effect("shake", { times:3 }, 100);
@@ -103,8 +131,8 @@ function MascaraMoeda(objTextBox, SeparadorMilesimo, SeparadorDecimal, e){
     var aux = aux2 = '';
     var whichCode = (window.Event) ? e.which : e.keyCode;
     if (whichCode == 13) return true;
-    key = String.fromCharCode(whichCode); // Valor para o código da Chave
-    if (strCheck.indexOf(key) == -1) return false; // Chave inválida
+    key = String.fromCharCode(whichCode); // Valor para o cï¿½digo da Chave
+    if (strCheck.indexOf(key) == -1) return false; // Chave invï¿½lida
     len = objTextBox.value.length;
     for(i = 0; i < len; i++)
         if ((objTextBox.value.charAt(i) != '0') && (objTextBox.value.charAt(i) != SeparadorDecimal)) break;
