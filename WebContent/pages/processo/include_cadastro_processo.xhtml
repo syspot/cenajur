@@ -7,19 +7,19 @@
 	
   	<p:fieldset>
 
-		<h:panelGrid columns="3" columnClasses="coluna30, coluna20, coluna30" style="width:50%">
+		<h:panelGrid columns="3" columnClasses="coluna60, coluna20, coluna20" style="width:100%">
 
 			<p:outputLabel for="numeroProcesso" value="Número do Processo" />
 			<p:outputLabel for="dataAbertura" value="Data de Abertura" />
 			<p:outputLabel for="lote" value="Lote" />
 
-			<p:inputText id="numeroProcesso" required="true" requiredMessage="Número do Processo: Campo obrigatório" value="#{mbeanProcessoModel.processoNumeroPrincipal.numero}" maxlength="30" styleClass="coluna90" />
+			<p:inputText id="numeroProcesso" required="true" requiredMessage="Número do Processo: Campo obrigatório" value="#{mbeanProcessoModel.processoNumeroPrincipal.numero}" maxlength="30" styleClass="coluna95" />
 			<p:calendar  navigator="true" id="dataAbertura" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" required="true" requiredMessage="Data de Abertura: Campo obrigatório" value="#{mbeanProcessoModel.dataAbertura}" />
 			<p:inputText id="lote" value="#{mbeanProcessoModel.lote}" maxlength="30" styleClass="coluna95" />
 
 		</h:panelGrid>
 		
-		<h:panelGrid columns="1" style="width: 70%">
+		<h:panelGrid columns="1" style="width: 100%">
 		
 			<h:outputText value="Outros números do Processo" />
 			<p:outputPanel autoUpdate="true">

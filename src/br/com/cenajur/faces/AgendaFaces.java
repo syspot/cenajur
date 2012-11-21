@@ -80,6 +80,7 @@ public class AgendaFaces {
 		this.event = new DefaultScheduleEvent();
 		this.agendaBusca = new Agenda();
 		this.agendaBusca.setColaboradorBusca(new Colaborador());
+		this.agendaBusca.setTipoAgenda(new TipoAgenda());
 		this.initCombo();
 		this.limpar();
 		this.atualizarSchedule();

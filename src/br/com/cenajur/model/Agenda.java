@@ -104,6 +104,10 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 	public String getDataInicialFormatada() {
 		return TSParseUtil.dateToString(dataInicial, TSDateUtil.DD_MM_YYYY_HH_MM);
 	}
+	
+	public String getTitleAba() {
+		return TSParseUtil.dateToString(dataInicial, TSDateUtil.DD_MM_YYYY_HH_MM) + " -- | --  " + CenajurUtil.obterResumoGrid(getDescricao(), 100);
+	}
 
 	public void setDataInicial(Date dataInicial) {
 		this.dataInicial = dataInicial;
@@ -292,6 +296,12 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 			
 		}
 		
+		if(!TSUtil.isEmpty(tipoAgenda) && !TSUtil.isEmpty(tipoAgenda.getId())){
+			
+			query.append(" and a.tipoAgenda.id = ? ");
+			
+		}
+		
 		List<Object> params = new ArrayList<Object>();
 		
 		params.add(dataInicial);
@@ -303,6 +313,12 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 			
 		}
 		
+		if(!TSUtil.isEmpty(tipoAgenda) && !TSUtil.isEmpty(tipoAgenda.getId())){
+			
+			params.add(tipoAgenda.getId());
+			
+		}
+
 		return super.find(query.toString(), "a.dataInicial", params.toArray());
 	}
 	
@@ -326,7 +342,7 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 			
 		}
 		
-		return super.find(query.toString(), "a.dataInicial", params.toArray());
+		return super.find(query.toString(), "a.dataInicial desc", params.toArray());
 	}
 	
 	public List<Agenda> pesquisarVisitasProximas(int qtdDias){

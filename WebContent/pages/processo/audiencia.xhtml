@@ -16,11 +16,11 @@
   		
   			<p:outputPanel style="width:100%">
   			
-	  			<h:panelGrid columns="1" columnClasses="coluna100" style="width: 50%">
+	  			<h:panelGrid columns="1" columnClasses="coluna100" style="width: 100%">
 	  		
 			  		<p:outputPanel autoUpdate="true">
 						<p:outputLabel for="processo" value="Processo" /><br/>
-						<p:inputText id="processo" value="#{mbeanModel.processoNumero.numero}" required="true" requiredMessage="Processo: Campo obrigatório" readonly="true" />
+						<p:inputText id="processo" value="#{mbeanModel.processoNumero.numero}" required="true" requiredMessage="Processo: Campo obrigatório" readonly="true" styleClass="coluna70" />
 						<p:commandButton type="button" value="Adicionar" icon="ui-icon-plus" onclick="dlgProcesso.show();" />
 					</p:outputPanel>
 		  		
@@ -78,22 +78,28 @@
   	
   	<ui:define name="pesquisaCampos">
   	
-  		<h:panelGrid columns="3" columnClasses="coluna30, coluna30, coluna30" style="width: 45%">
+  		<h:panelGrid columns="1" style="width: 47%">
   		
 			<p:outputLabel for="processoPesquisa" value="Processo" />
-		  	<p:outputLabel for="dataAudienciaPesquisa" value="Data da Audiência" />
-	  		<p:outputLabel for="situacaoAudienciaPesquisa" value="Situação" />
 	  		
-			<p:inputText id="processoPesquisa" value="#{mbeanPesquisaModel.processoNumero.numero}" />
-	  		<p:calendar  navigator="true" id="dataAudienciaPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataAudiencia}"/>
-	  		<p:selectOneMenu id="situacaoAudienciaPesquisa" value="#{mbeanPesquisaModel.situacaoAudiencia.id}" style="width:95%">
-		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-		  		<f:selectItems value="#{mbean.situacoesAudiencias}" />
-		  	</p:selectOneMenu>
+			<p:inputText id="processoPesquisa" value="#{mbeanPesquisaModel.processoNumero.numero}" styleClass="coluna90"/>
   		
   		</h:panelGrid>
   		
-  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:45%">
+  		<h:panelGrid columns="2" columnClasses="coluna20, coluna80" style="width:46.5%">
+  		
+		  	<p:outputLabel for="dataAudienciaPesquisa" value="Data da Audiência" />
+	  		<p:outputLabel for="situacaoAudienciaPesquisa" value="Situação" />
+  			
+	  		<p:calendar  navigator="true" id="dataAudienciaPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataAudiencia}"/>
+	  		<p:selectOneMenu id="situacaoAudienciaPesquisa" value="#{mbeanPesquisaModel.situacaoAudiencia.id}" style="width:90%">
+		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+		  		<f:selectItems value="#{mbean.situacoesAudiencias}" />
+		  	</p:selectOneMenu>
+  			
+  		</h:panelGrid>
+  		
+  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:44%">
   		
 		  	<p:outputLabel for="advogadoPesquisa" value="Advogado" />
 		  	<p:outputLabel for="varaPesquisa" value="Vara" />

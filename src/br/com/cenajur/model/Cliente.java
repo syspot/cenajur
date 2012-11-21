@@ -156,9 +156,6 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	private Boolean flagRematricula;
 	
 	@Transient
-	private byte[] bytesImagem;
-	
-	@Transient
 	private String caminhoImagem;
 	
 	@Transient
@@ -477,14 +474,6 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 
 	public void setFlagAssociado(Boolean flagAssociado) {
 		this.flagAssociado = flagAssociado;
-	}
-
-	public byte[] getBytesImagem() {
-		return bytesImagem;
-	}
-
-	public void setBytesImagem(byte[] bytesImagem) {
-		this.bytesImagem = bytesImagem;
 	}
 
 	public String getCaminhoImagem() {

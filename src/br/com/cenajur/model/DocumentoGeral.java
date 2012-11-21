@@ -1,5 +1,6 @@
 package br.com.cenajur.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import javax.persistence.Table;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.Constantes;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
+import br.com.topsys.util.TSUtil;
 
 @Entity
 @Table(name = "documentos_gerais")
@@ -142,7 +144,22 @@ public class DocumentoGeral extends TSActiveRecordAb<DocumentoGeral> {
 	
 	@Override
 	public List<DocumentoGeral> findByModel(String... fieldsOrderBy) {
-		return super.findBySQL("select d.* from documentos d where to_tsquery('PORTUGUESE', ?) @@ descricao_busca", getDescricaoBusca());
+		
+		StringBuilder query = new StringBuilder();
+
+		query.append(" select d.* from documentos_gerais d where 1 = 1 ");
+
+		if (!TSUtil.isEmpty(getDescricaoBusca())) {
+			query.append(" and to_tsquery(?) @@ descricao_busca ");
+		}
+		
+		List<Object> params = new ArrayList<Object>();
+
+		if (!TSUtil.isEmpty(getDescricaoBusca())) {
+			params.add(getDescricaoBusca());
+		}
+		
+		return super.findBySQL(query.toString(), params.toArray());
 	}
 	
 }

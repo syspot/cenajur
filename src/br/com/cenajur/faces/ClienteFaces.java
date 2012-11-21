@@ -254,18 +254,6 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	@Override
 	protected void posPersist() throws TSApplicationException{
 		
-		if(!TSUtil.isEmpty(getCrudModel().getBytesImagem())){
-			
-			String nomeImagem = getCrudModel().getId() + TSFile.obterExtensaoArquivo(getCrudModel().getUrlImagem());
-			
-			getCrudModel().setUrlImagem(Constantes.PASTA_DOWNLOAD_IMAGEM + CenajurUtil.getAnoMesWeb(getCrudModel().getDataCadastro()) + nomeImagem);
-			
-			CenajurUtil.criaArquivo(getCrudModel().getBytesImagem(), Constantes.PASTA_UPLOAD_IMAGEM + CenajurUtil.getAnoMes(getCrudModel().getDataCadastro()) + nomeImagem);
-			
-			getCrudModel().update();
-			
-		}
-		
 		this.iniciaObjetosCombo();
 		
 	}
@@ -304,15 +292,11 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	
 	public void oncapture(CaptureEvent captureEvent) {  
           
-        byte[] data = captureEvent.getData();  
+        String nomeFoto = TSUtil.gerarId() + ".jpg";
         
-        String nomeFoto = CenajurUtil.gerarNumeroAleatorio() + Constantes.FOTO_CAM_TEMP;
-		String arquivo = Constantes.PASTA_UPLOAD_IMAGEM_TEMP + nomeFoto;
+        getCrudModel().setUrlImagem(Constantes.PASTA_DOWNLOAD_ARQUIVO + Constantes.PASTA_CLIENTE + nomeFoto);
 		
-		CenajurUtil.criaArquivo(data, arquivo);
-		
-		getCrudModel().setUrlImagem(Constantes.PASTA_DOWNLOAD_IMAGEM_TMP + nomeFoto);
-		getCrudModel().setBytesImagem(data);
+		CenajurUtil.criaArquivo(captureEvent.getData(), Constantes.PASTA_UPLOAD_ARQUIVO + Constantes.PASTA_CLIENTE + nomeFoto);
 		
     }
 	

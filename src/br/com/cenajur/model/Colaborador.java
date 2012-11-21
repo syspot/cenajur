@@ -104,6 +104,9 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 	@OneToMany(mappedBy = "colaborador", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<DocumentoColaborador> documentos;
 	
+	@Column(name = "url_imagem")
+	private String urlImagem;
+	
 	public Colaborador() {
 	}
 	
@@ -341,6 +344,14 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 
 	public void setDocumentos(List<DocumentoColaborador> documentos) {
 		this.documentos = documentos;
+	}
+
+	public String getUrlImagem() {
+		return urlImagem;
+	}
+
+	public void setUrlImagem(String urlImagem) {
+		this.urlImagem = urlImagem;
 	}
 
 	@Override

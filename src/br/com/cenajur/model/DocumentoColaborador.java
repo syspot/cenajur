@@ -97,11 +97,11 @@ public class DocumentoColaborador extends TSActiveRecordAb<DocumentoColaborador>
 	}
 	
 	public String getCaminhoUploadCompleto(){
-		return Constantes.PASTA_UPLOAD_ARQUIVO + Constantes.PASTA_CLIENTE + arquivo;
+		return Constantes.PASTA_UPLOAD_ARQUIVO + Constantes.PASTA_COLABORADOR + arquivo;
 	}
 	
 	public String getCaminhoDownloadCompleto(){
-		return Constantes.PASTA_DOWNLOAD_ARQUIVO + Constantes.PASTA_CLIENTE + arquivo;
+		return Constantes.PASTA_DOWNLOAD_ARQUIVO + Constantes.PASTA_COLABORADOR + arquivo;
 	}
 
 	@Override

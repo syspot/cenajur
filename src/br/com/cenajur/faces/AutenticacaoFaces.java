@@ -574,6 +574,10 @@ public class AutenticacaoFaces extends TSMainFaces{
 		return Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId());
 	}
 	
+	public boolean isMostrarDialogCam2(){
+		return Constantes.PERMISSAO_COLABORADOR.equals(this.permissaoSelecionada.getId());
+	}
+	
 	public boolean isMostrarDialogCliente(){
 		return Constantes.PERMISSAO_PROCESSO.equals(this.permissaoSelecionada.getId()) || Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId());
 	}
@@ -716,6 +720,10 @@ public class AutenticacaoFaces extends TSMainFaces{
 	
 	public boolean isMostrarDialogViewFotoCliente(){
 		return Constantes.PERMISSAO_CLIENTE.equals(this.permissaoSelecionada.getId());
+	}
+	
+	public boolean isMostrarDialogViewFotoColaborador(){
+		return Constantes.PERMISSAO_COLABORADOR.equals(this.permissaoSelecionada.getId());
 	}
 
 }

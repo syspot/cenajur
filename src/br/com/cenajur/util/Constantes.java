@@ -37,11 +37,11 @@ public class Constantes {
 	//public static final String PASTA_UPLOAD_IMAGEM_TEMP = "E:\\imagens\\tmp/";
 	public static final String PASTA_UPLOAD_IMAGEM_TEMP = "/imagens/tmp/";
 	
-	//public static final String PASTA_DOWNLOAD_ARQUIVO = "http://localhost:8080/arquivos/";
+	//public static final String PASTA_DOWNLOAD_ARQUIVO = "http://localhost:80/arquivos/";
 	public static final String PASTA_DOWNLOAD_ARQUIVO = "http://177.70.17.250:8080/arquivos/";
-	//public static final String PASTA_DOWNLOAD_IMAGEM = "http://localhost:8080/imagens/";
+	//public static final String PASTA_DOWNLOAD_IMAGEM = "http://localhost:80/imagens/";
 	public static final String PASTA_DOWNLOAD_IMAGEM = "http://177.70.17.250:8080/imagens/";
-	//public static final String PASTA_DOWNLOAD_IMAGEM_TMP = "http://localhost:8080/imagens/tmp/";
+	//public static final String PASTA_DOWNLOAD_IMAGEM_TMP = "http://localhost:80/imagens/tmp/";
 	public static final String PASTA_DOWNLOAD_IMAGEM_TMP = "http://177.70.17.250:8080/imagens/tmp/";
 	
 	//public static final String PASTA_ANDAMENTO_PROCESSO = "andamentos_processos\\";
@@ -51,10 +51,12 @@ public class Constantes {
 	//public static final String PASTA_AUDIENCIA = "audiencias\\";
 	public static final String PASTA_AUDIENCIA = "audiencias/";
 	
+	//public static final String PASTA_GERAL = "geral\\";
 	public static final String PASTA_GERAL = "geral/";
-	//public static final String PASTA_GERAL = "geral/";
-	public static final String PASTA_CLIENTE = "clientes\\";
-	//public static final String PASTA_CLIENTE = "clientes/";
+	//public static final String PASTA_CLIENTE = "clientes\\";
+	public static final String PASTA_CLIENTE = "clientes/";
+	//public static final String PASTA_COLABORADOR = "colaboradores\\";
+	public static final String PASTA_COLABORADOR = "colaboradores/";
 	
 	public static final String DOC_TEMP = "doc_temp";
 	public static final String FOTO_CAM_TEMP = "_foto_cam.jpg";

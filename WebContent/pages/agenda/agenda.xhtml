@@ -11,17 +11,23 @@
 				
 				<p:fieldset style="margin-bottom: 20px;">
 				
-					<h:panelGrid columns="3" columnClasses="coluna20, coluna30, coluna50" style="width:30%">
+					<h:panelGrid columns="4" columnClasses="coluna20, coluna10, coluna40, coluna40" style="width:60%">
 					
+						<h:outputText value="Tipo de Agenda" />
 						<p:outputLabel for="buscaIndividual" value="Individual" />
 						<p:outputLabel for="colaboradorBusca" value="Colaborador" />
-						<br/>
+						<h:outputText value="" />
+						
+						<p:selectOneMenu id="comboTipoAgenda" value="#{agendaFaces.agendaBusca.tipoAgenda.id}" >
+							<f:selectItem itemLabel="Todas" itemValue="" />
+							<f:selectItems value="#{agendaFaces.tiposAgendas}" />
+						</p:selectOneMenu>
 						
 						<p:selectBooleanCheckbox id="buscaIndividual" value="#{agendaFaces.buscaIndividual}">
 							<p:ajax event="change" listener="#{agendaFaces.mudarStatusBusca}" update="opComboColaborador" />
 						</p:selectBooleanCheckbox>
 						<p:outputPanel id="opComboColaborador">
-							<p:selectOneMenu id="colaboradorBusca" value="#{agendaFaces.agendaBusca.colaboradorBusca.id}" disabled="#{agendaFaces.buscaIndividual}">
+							<p:selectOneMenu id="colaboradorBusca" value="#{agendaFaces.agendaBusca.colaboradorBusca.id}" disabled="#{agendaFaces.buscaIndividual}" style="width: 95%">
 								<f:selectItem itemLabel="Todos" itemValue="" />
 								<f:selectItems value="#{agendaFaces.colaboradores}" />
 							</p:selectOneMenu>

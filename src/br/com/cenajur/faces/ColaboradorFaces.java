@@ -10,6 +10,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.CaptureEvent;
 import org.primefaces.event.FileUploadEvent;
 
 import br.com.cenajur.model.CategoriaDocumento;
@@ -186,6 +187,16 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 		setDocumentoColaborador(new DocumentoColaborador());
 		return null;
 	}
+	
+	public void oncapture(CaptureEvent captureEvent) {  
+        
+		String nomeFoto = TSUtil.gerarId() + ".jpg";
+        
+		getCrudModel().setUrlImagem(Constantes.PASTA_DOWNLOAD_ARQUIVO + Constantes.PASTA_COLABORADOR + nomeFoto);
+		
+		CenajurUtil.criaArquivo(captureEvent.getData(), Constantes.PASTA_UPLOAD_ARQUIVO + Constantes.PASTA_COLABORADOR + nomeFoto);
+		
+    }
 	
 	public boolean isAdvogado(){
 		return Constantes.TIPO_COLABORADOR_ADVOGADO.equals(getCrudModel().getTipoColaborador().getId());

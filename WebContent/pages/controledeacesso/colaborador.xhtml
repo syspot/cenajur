@@ -150,11 +150,23 @@
   		
   		<p:fieldset legend="Documentos">
 	  	
-	  		<h:panelGrid columns="1" style="width:60%">
+	  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:98%">
 
-				<p:commandButton type="button" value="Adicionar Documento" icon="ui-icon-plus" onclick="dlgDocumentoColaborador.show();" update="pgCategoriaDocumento" />
-			
-				<ui:include src="/pages/processo/include_grid_documentos.xhtml"/>
+				<h:panelGrid style="width:100%">
+				
+					<p:commandButton type="button" value="Adicionar Documento" icon="ui-icon-plus" onclick="dlgDocumentoColaborador.show();" update="pgCategoriaDocumento" />
+				
+					<ui:include src="/pages/processo/include_grid_documentos.xhtml"/>
+				
+				</h:panelGrid>
+				
+				<p:outputPanel autoUpdate="true" style="width:100%; text-align: center;">
+  				
+  					<img src="${mbeanModel.urlImagem}" width="120" height="150"/><br/>
+  					<p:commandButton type="button" value="Abrir Câmera" onclick="dlgCam2.show();" update="pgCam2"/>
+  					<p:commandButton type="button" value="Visualizar" onclick="dlgViewFotoColaborador.show();" update="pgViewFotoColaborador" rendered="#{mbeanModel.urlImagem != null}"/>
+  
+  				</p:outputPanel>
 		  	
 		  	</h:panelGrid>
 			

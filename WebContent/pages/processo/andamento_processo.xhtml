@@ -18,7 +18,7 @@
 	  		
 		  		<p:outputPanel autoUpdate="true">
 					<p:outputLabel for="processo" value="Processo" /><br/>
-					<p:inputText id="processo" value="#{mbeanModel.processoNumero.numero}" required="true" requiredMessage="Processo: Campo obrigatório" readonly="true" />
+					<p:inputText id="processo" value="#{mbeanModel.processoNumero.numero}" required="true" requiredMessage="Processo: Campo obrigatório" readonly="true" styleClass="coluna70" />
 					<p:commandButton type="button" icon="ui-icon-plus" value="Adicionar" onclick="dlgProcesso2.show();" />
 				</p:outputPanel>
 		  		
@@ -50,14 +50,20 @@
   	
   	<ui:define name="pesquisaCampos">
   	
-  		<h:panelGrid columns="3" columnClasses="coluna33, coluna33, coluna33" style="width:47%">
+  		<h:panelGrid columns="1" style="width:50%">
   		
 			<p:outputLabel for="processoPesquisa" value="Processo" />
+	  		
+			<p:inputText id="processoPesquisa" value="#{mbeanPesquisaModel.processoNumero.numero}" styleClass="coluna95" />
+  		
+  		</h:panelGrid>
+  		
+  		<h:panelGrid columns="2" columnClasses="coluna20, coluna50" style="width:50%">
+  		
 		  	<p:outputLabel for="dataAndamentoPesquisa" value="Data do Andamento" />
 	  		<p:outputLabel for="tipoAndamentoProcessoPesquisa" value="Tipo do Andamento" />
-	  		
-			<p:inputText id="processoPesquisa" value="#{mbeanPesquisaModel.processoNumero.numero}" styleClass="coluna90" />
-	  		<p:calendar  navigator="true" id="dataAndamentoPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataAndamento}" style="width:95%"/>
+  			
+	  		<p:calendar  navigator="true" id="dataAndamentoPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataAndamento}" />
 	  		<p:selectOneMenu id="tipoAndamentoProcessoPesquisa" value="#{mbeanPesquisaModel.tipoAndamentoProcesso.id}" style="width:95%">
 		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 		  		<f:selectItems value="#{mbean.tiposAndamentosProcessos}" />

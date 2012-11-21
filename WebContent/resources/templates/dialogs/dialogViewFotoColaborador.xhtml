@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:param name="mbeanCamView" value="${colaboradorFaces.crudModel}" />
+
+	<h:form rendered="#{autenticacaoFaces.mostrarDialogViewFotoColaborador}">
+	
+		<p:dialog id="dialogViewFotoColaborador" widgetVar="dlgViewFotoColaborador" header="Visualização de foto do Associado" width="350" height="300" modal="true">
+	  
+	  		<p:ajax update="pgViewFotoColaborador" global="false"/>
+	  		
+	  		<h:panelGrid id="pgViewFotoColaborador">
+				
+				<p:outputPanel autoUpdate="true" style="width:100%; text-align: center;">
+				
+					<img src="${mbeanCamView.urlImagem}"/>
+				
+				</p:outputPanel>
+		  		
+	  		</h:panelGrid>
+	  		
+		</p:dialog>
+	
+	</h:form>
+
+</ui:component>
