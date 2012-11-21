@@ -18,7 +18,7 @@
 			
 			<h:panelGrid columns="1" style="width:100%; text-align:center">
 		  		
-		  		<p:commandButton value="Adicionar" action="#{mbeanDocumentoAcao.addDocumento}" oncomplete="handleRequestFaces('dialogDocumentoProcesso2', dlgDocumentoProcesso2, args)" />
+		  		<p:commandButton value="Adicionar" update="pgDocumentoAll" action="#{mbeanDocumentoAcao.addDocumento}" oncomplete="handleRequestFaces('dialogDocumentoProcesso2', dlgDocumentoProcesso2, args)" />
 		  		
 	  		</h:panelGrid>
 	  		

@@ -15,14 +15,10 @@
 	  	
 	  		<p:column headerText="Visualizar" styleClass="coluna5">
 	  		
-	  			<p:outputPanel rendered="#{documento.id != null}">
+	  			<p:outputPanel>
 		  			<a target="_blank" href="${documento.caminhoDownloadCompleto}">
 						<h:graphicImage value="../resources/images/lupa.png" width="16" style="border: 0px" />
 					</a>
-				</p:outputPanel>
-				
-	  			<p:outputPanel rendered="#{documento.id == null}">
-	  				<h:outputText value="-"/>
 				</p:outputPanel>
 				
 	  		</p:column>
