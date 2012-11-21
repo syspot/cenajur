@@ -294,9 +294,9 @@ public class ClienteFaces extends CrudFaces<Cliente> {
           
         String nomeFoto = TSUtil.gerarId() + ".jpg";
         
-        getCrudModel().setUrlImagem(Constantes.PASTA_DOWNLOAD_ARQUIVO + Constantes.PASTA_CLIENTE + nomeFoto);
+        getCrudModel().setUrlImagem(Constantes.PASTA_DOWNLOAD_IMAGEM + nomeFoto);
 		
-		CenajurUtil.criaArquivo(captureEvent.getData(), Constantes.PASTA_UPLOAD_ARQUIVO + Constantes.PASTA_CLIENTE + nomeFoto);
+		CenajurUtil.criaArquivo(captureEvent.getData(), Constantes.PASTA_UPLOAD_IMAGEM + nomeFoto);
 		
     }
 	

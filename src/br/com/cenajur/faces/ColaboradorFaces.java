@@ -192,9 +192,9 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
         
 		String nomeFoto = TSUtil.gerarId() + ".jpg";
         
-		getCrudModel().setUrlImagem(Constantes.PASTA_DOWNLOAD_ARQUIVO + Constantes.PASTA_COLABORADOR + nomeFoto);
+		getCrudModel().setUrlImagem(Constantes.PASTA_DOWNLOAD_IMAGEM + nomeFoto);
 		
-		CenajurUtil.criaArquivo(captureEvent.getData(), Constantes.PASTA_UPLOAD_ARQUIVO + Constantes.PASTA_COLABORADOR + nomeFoto);
+		CenajurUtil.criaArquivo(captureEvent.getData(), Constantes.PASTA_UPLOAD_IMAGEM + nomeFoto);
 		
     }
 	
