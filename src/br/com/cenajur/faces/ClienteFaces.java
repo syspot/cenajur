@@ -3,7 +3,9 @@ package br.com.cenajur.faces;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -38,12 +40,14 @@ import br.com.cenajur.model.SituacaoProcessoParteContraria;
 import br.com.cenajur.model.TipoCategoria;
 import br.com.cenajur.model.TipoPagamento;
 import br.com.cenajur.model.Turno;
+import br.com.cenajur.relat.JasperUtil;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
+import br.com.topsys.web.util.TSFacesUtil;
 
 @SessionScoped
 @ManagedBean(name = "clienteFaces")
@@ -356,6 +360,28 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 			default: getCrudPesquisaModel().setFlagAtivo(null); break;
 		}
 		
+	}
+	
+	public String imprimirTermoCancelamentoContrato(){
+		
+		try {
+
+            Map<String, Object> parametros = new HashMap<String, Object>();
+
+            parametros.put("SUBREPORT_DIR", TSFacesUtil.getServletContext().getRealPath("WEB-INF/relatorios/"));
+            parametros.put("P_CLIENTE_ID", getCrudModel().getId());
+
+            new JasperUtil().gerarRelatorio("cancelamentoContrato.jasper", "termoCancelamentoContrato", parametros);
+
+        } catch (Exception ex) {
+
+            CenajurUtil.addErrorMessage("Não foi possível gerar o termo de cancelamento de contrato");
+
+            ex.printStackTrace();
+
+        }
+		
+		return null;
 	}
 	
 	public List<SelectItem> getEstados() {

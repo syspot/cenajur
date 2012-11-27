@@ -2,7 +2,9 @@ package br.com.cenajur.faces;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -34,6 +36,7 @@ import br.com.cenajur.model.SituacaoAudiencia;
 import br.com.cenajur.model.TipoAgenda;
 import br.com.cenajur.model.TipoVisita;
 import br.com.cenajur.model.Vara;
+import br.com.cenajur.relat.JasperUtil;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
@@ -297,7 +300,13 @@ public class AgendaFaces {
 				
 					if(!TSUtil.isEmpty(this.agenda.getCliente().getEmail())){
 						
-						String texto = configuracoesEmail.getCorpoEmail();
+						StringBuilder corpoEmail = new StringBuilder(CenajurUtil.getTopoEmail());
+						
+						corpoEmail.append(configuracoesEmail.getCorpoEmail());
+						
+						corpoEmail.append(CenajurUtil.getRodapeEmail());
+						
+						String texto = corpoEmail.toString();
 						
 						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ASSOCIADO).getById();
 						
@@ -361,7 +370,19 @@ public class AgendaFaces {
 	public String salvarAgendaColaborador() throws TSApplicationException{
 		
 		RequestContext context = RequestContext.getCurrentInstance();
-
+		
+		if(TSUtil.isEmpty(this.agendaColaboradorSelecionado.getTextoResposta())){
+			context.addCallbackParam("sucesso", false);
+		} else{
+			context.addCallbackParam("sucesso", true);
+		}
+		
+		if(this.agendaColaboradorSelecionado.getFlagConcluido() && this.agendaColaboradorSelecionado.getAgenda().isTipoVisitaDoCliente()){
+			context.addCallbackParam("imprimirFichaAtendimento", true);
+		} else{
+			context.addCallbackParam("imprimirFichaAtendimento", false);
+		}
+		
 		if(this.agendaColaboradorSelecionado.getFlagConcluido() && this.agendaColaboradorSelecionado.getAgenda().isTipoAudiencia()){
 			
 			context.addCallbackParam("criarAudiencia", true);
@@ -455,6 +476,34 @@ public class AgendaFaces {
 		this.agenda.getAgendasColaboradores().remove(this.agendaColaboradorSelecionado);
 		this.agendaColaboradorSelecionado = new AgendaColaborador();
 		return null;
+	}
+	
+	public String imprimirFichaAtendimento() throws TSApplicationException{
+		
+		Long idAgendaColaborador = CenajurUtil.getParamFormatado(TSFacesUtil.getRequestParameter("agendaColaboradorIdSubmit"));
+		
+		if(!TSUtil.isEmpty(idAgendaColaborador)){
+			
+			try {
+				
+				Map<String, Object> parametros = new HashMap<String, Object>();
+				
+				parametros.put("P_AGENDA_COLABORADOR_ID", idAgendaColaborador);
+				
+				new JasperUtil().gerarRelatorio("fichaAtendimento.jasper", "ficha_atendimento", parametros);
+				
+			} catch (Exception ex) {
+				
+				CenajurUtil.addErrorMessage("Não foi possível gerar a ficha de atendimento.");
+				
+				ex.printStackTrace();
+				
+			}
+		
+		}
+		
+		return null;
+		
 	}
 	
 	public boolean isUsuarioMaster(){

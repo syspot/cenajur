@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatProcessoPorTipo" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f37734dc-0305-41c0-ba1d-0a06a2e568bb">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="P_CLIENTE_ID" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT PN.NUMERO AS NUMERO_PROCESSO, V.DESCRICAO AS VARA,
+       (SELECT array_to_string(
+              array(SELECT PC.DESCRICAO FROM PROCESSOS_PARTES_CONTRARIAS PPC
+                            INNER JOIN PARTES_CONTRARIAS PC ON PC.ID = PPC.PARTE_CONTRARIA_ID
+                            WHERE P.ID = PPC.PROCESSO_ID
+              ), ', ')
+       ) AS PARTE_CONTRARIA, SP.DESCRICAO AS SITUACAO
+       FROM PROCESSOS P
+       INNER JOIN PROCESSOS_NUMEROS PN ON P.ID = PN.PROCESSO_ID AND PN.FLAG_PRINCIPAL
+       INNER JOIN VARAS V ON V.ID = P.VARA_ID
+       INNER JOIN SITUACOES_PROCESSOS SP ON SP.ID = P.SITUACAO_PROCESSO_ID
+       INNER JOIN PROCESSOS_CLIENTES PCLI ON PCLI.PROCESSO_ID = P.ID AND PCLI.CLIENTE_ID = $P{P_CLIENTE_ID}]]>
+	</queryString>
+	<field name="numero_processo" class="java.lang.String"/>
+	<field name="vara" class="java.lang.String"/>
+	<field name="parte_contraria" class="java.lang.String"/>
+	<field name="situacao" class="java.lang.String"/>
+	<detail>
+		<band height="83">
+			<staticText>
+				<reportElement uuid="171cfeca-1c62-4acb-bc31-0c73042ba7f6" x="22" y="8" width="100" height="16"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Processo número:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="0d3f3965-110a-4f77-8c9d-e1de88ca14b5" x="124" y="8" width="414" height="16"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{numero_processo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="2bb8dd0b-4cf5-40f6-b0c4-00c66f2114ad" x="22" y="25" width="100" height="16"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vara:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="34861d53-3993-4ae8-8e52-311caacf5991" x="124" y="25" width="414" height="16"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{vara}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="e40af65f-9990-4add-b22e-6b95b7c1921f" x="22" y="42" width="100" height="16"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Parte Contrária:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="6546ff53-2734-43b2-a554-c1411571e348" x="124" y="42" width="414" height="16"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{parte_contraria}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="c89715a5-47d0-4949-bba5-faf1cb2c0919" x="22" y="59" width="100" height="16"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Situação:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b1871133-2e3e-4b8e-88f7-0168c31b165c" x="124" y="59" width="205" height="16"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{situacao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

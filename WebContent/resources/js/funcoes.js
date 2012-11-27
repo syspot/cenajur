@@ -103,12 +103,22 @@ function handleRequestActionCliente(idDialog, widgerVar, args){
 }
 
 function handleRequestActionAgenda(idDialog, widgerVar, args){
-	if(args.criarAudiencia) {
-		addAudiencia();
-		widgerVar.hide();
-	} else {  
-		widgerVar.hide();
-	}  
+	
+	if(args.sucesso){
+		
+		if(args.criarAudiencia) {
+			addAudiencia();
+			widgerVar.hide();
+		} else {  
+			widgerVar.hide();
+		}  
+		
+		if(args.imprimirFichaAtendimento){
+			jQuery("#agendaColaboradorIdSubmit").val(jQuery("#agendaColaboradorId").val());
+			dlgAgenda.hide();
+			dlgImprimirFichaAtendimento.show();
+		}
+	}
 	
 }
 

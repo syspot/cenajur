@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
@@ -57,10 +58,15 @@ public class Faturamento extends TSActiveRecordAb<Faturamento>{
 	private Boolean flagCancelado;
 	
 	private String observacao;
+	
+	private String identificacao;
 
 	private Integer mes;
 	
 	private Integer ano;
+	
+	@Transient
+	private Boolean flagSelecionado;
 	
 	@ManyToOne
 	@JoinColumn(name = "colaborador_geracao_id")
@@ -168,6 +174,22 @@ public class Faturamento extends TSActiveRecordAb<Faturamento>{
 
 	public void setColaboradorGeracao(Colaborador colaboradorGeracao) {
 		this.colaboradorGeracao = colaboradorGeracao;
+	}
+
+	public Boolean getFlagSelecionado() {
+		return TSUtil.isEmpty(flagSelecionado) ? false : flagSelecionado;
+	}
+
+	public void setFlagSelecionado(Boolean flagSelecionado) {
+		this.flagSelecionado = flagSelecionado;
+	}
+
+	public String getIdentificacao() {
+		return identificacao;
+	}
+
+	public void setIdentificacao(String identificacao) {
+		this.identificacao = identificacao;
 	}
 
 	@Override

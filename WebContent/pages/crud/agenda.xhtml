@@ -107,13 +107,13 @@
   	
   	<ui:define name="pesquisaCampos">
   	
-  		<h:panelGrid>
+  		<h:panelGrid style="width:48%">
   		
   			<p:outputLabel for="descricaoPesquisa" value="Descrição" />
-  			<p:inputText id="descricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" maxlength="100" />
+  			<p:inputText id="descricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" maxlength="100" styleClass="coluna60" />
   			
   			<p:outputLabel for="tipoAgendaPesquisa" value="Tipo de Agenda" />
-			<p:selectOneMenu id="tipoAgendaPesquisa" value="#{mbeanPesquisaModel.tipoAgenda.id}" style="width:60%">
+			<p:selectOneMenu id="tipoAgendaPesquisa" value="#{mbeanPesquisaModel.tipoAgenda.id}" style="width:61%">
 				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 				<f:selectItems value="#{mbean.tiposAgendas}" />
 			</p:selectOneMenu>

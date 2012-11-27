@@ -1146,6 +1146,10 @@ ui-icon.delete {
 	background-color:#32CD32 !important;
 }
 
+.pendente{
+	background-color:#EEC900 !important;
+}
+
 .ui-accordion-header .situacaoAtiva, .ui-helper-reset .situacaoAtiva, .ui-state-default .situacaoAtiva, .ui-state-active .situacaoAtiva, .ui-corner-top .situacaoAtiva{
 	border: 1px solid #CBC3BE/*{borderColorDefault}*/;
 	background: white !important;

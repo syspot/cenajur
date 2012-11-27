@@ -84,28 +84,36 @@
 			  	
 		  		<p:commandButton value="Pesquisar" action="#{mbean.findEvent}" update="dtFaturamento" style="margin-top: 10px"/>
 		  	
-		  		<p:remoteCommand name="alterarFaturamento" action="#{mbean.updateEvent}" global="false" />
+		  		<p:remoteCommand name="alterarFaturamento" action="#{mbean.updateEvent}" update="@form" global="false" />
 		  		
-		  		<p:dataTable id="dtFaturamento" emptyMessage="Nenhum registro encontrado" rows="20" 
+		  		<p:dataTable id="dtFaturamento" emptyMessage="Nenhum registro encontrado" rows="20" paginator="true" paginatorAlwaysVisible="false"
 		  			var="faturamento" value="#{mbean.grid}" style="width:100%; margin-top: 30px">
 		  		
 		  			<p:column headerText="Id">
-		  				<h:outputText value="#{faturamento.id}"></h:outputText>
+		  				<h:outputText value="#{faturamento.id}" />
 		  			</p:column>
 		  			
 		  			<p:column headerText="Nome do Cliente">
-		  				<h:outputText value="#{faturamento.cliente.nome}"></h:outputText>
+		  				<h:outputText value="#{faturamento.cliente.nome}" />
 		  			</p:column>
 		  			
 		  			<p:column headerText="Plano">
-		  				<h:outputText value="#{faturamento.plano.descricao}"></h:outputText>
+		  				<h:outputText value="#{faturamento.plano.descricao}" />
 		  			</p:column>
 		  			
 		  			<p:column headerText="Valor">
-		  				<h:outputText value="#{faturamento.valor}"></h:outputText>
+		  				<h:outputText value="#{faturamento.valor}" >
+		  					<f:convertNumber type="number" minFractionDigits="2" pattern="###,###,##0.00" locale="pt_BR" />
+		  				</h:outputText>
 		  			</p:column>
 		  			
-		  			<p:column headerText="Cancelar" styleClass="coluna10" style="text-align: center">
+		  			<p:column headerText="Referência">
+		  				<h:outputText value="#{faturamento.mes}" />
+		  				<h:outputText value="/" />
+		  				<h:outputText value="#{faturamento.ano}" />
+		  			</p:column>
+		  			
+		  			<p:column headerText="Cancelar" styleClass="coluna10" style="text-align: center" rendered="false">
 		  				<h:outputText value="Cancelado" rendered="#{faturamento.flagCancelado}" styleClass="cancelado" />		  			
 		  				<p:commandLink action="#{mbean.updateEvent}" title="Cancelar" rendered="#{!faturamento.flagCancelado}">
 							<h:graphicImage value="../resources/images/hide.png" style="border: 0px" />	                     
@@ -115,7 +123,7 @@
 						</p:commandLink>
 		  			</p:column>
 		  			
-		  			<p:column headerText="Pagar" styleClass="coluna10" style="text-align: center">
+		  			<p:column headerText="Pagar" styleClass="coluna10" style="text-align: center" rendered="false">
 						<h:outputText value="Pago" rendered="#{faturamento.flagPago}" styleClass="pago" />		  			
 		  				<p:commandLink action="#{mbean.updateEvent}" title="Pagar" rendered="#{!faturamento.flagPago and !faturamento.flagCancelado}">
 							<h:graphicImage value="../resources/images/passed.png" style="border: 0px" />	                     
@@ -124,8 +132,32 @@
 	  						<f:setPropertyActionListener target="#{mbean.inserindo}" value="#{false}" />
 						</p:commandLink>
 		  			</p:column>
+		  			
+		  			<p:column headerText="Situação" styleClass="coluna10" style="text-align: center">
+						<h:outputText value="Pago" rendered="#{faturamento.flagPago and !faturamento.flagCancelado}" styleClass="pago" />
+						<h:outputText value="Cancelado" rendered="#{faturamento.flagCancelado}" styleClass="cancelado" />
+						<h:outputText value="Pendente" rendered="#{!faturamento.flagPago and !faturamento.flagCancelado}" styleClass="pendente" />
+		  			</p:column>
+		  			
+		  			<p:column headerText="Selecionar" styleClass="coluna10" style="text-align: center">
+						<p:selectBooleanCheckbox value="#{faturamento.flagSelecionado}" >
+							<p:ajax process="@this" global="false"/>
+						</p:selectBooleanCheckbox>
+		  			</p:column>
+		  			
+		  			<p:column headerText="Gerar Comprovante" styleClass="coluna10" style="text-align: center">
+		  				<p:commandLink action="#{mbean.gerarComprovante}" ajax="false" title="Imprimir Comprovante" rendered="#{faturamento.flagPago and !faturamento.flagCancelado}">
+							<h:graphicImage value="../resources/images/pdf.png" style="border: 0px" width="20" height="20" />                   
+							<f:setPropertyActionListener target="#{mbean.crudModel}" value="#{faturamento}" />
+						</p:commandLink>
+		  			</p:column>
 		  		
 		  		</p:dataTable>
+		  		
+		  		<div style="text-align: right; margin-top: 20px">
+			  		<p:commandButton value="Pagar Selecionados" icon="ui-icon-check" action="#{mbean.pagarSelecionados}" process="@this, dtFaturamento" update="@form"/>
+			  		<p:commandButton value="Cancelar Selecionados" icon="ui-icon-close" action="#{mbean.cancelarSelecionados}" process="@this, dtFaturamento" update="@form"/>
+		  		</div>
 		  		
 			</h:form>
 			

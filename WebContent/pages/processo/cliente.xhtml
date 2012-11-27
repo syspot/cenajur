@@ -206,11 +206,12 @@
 			  	
 	  		</h:panelGrid>
 	  		
-	  		<h:panelGrid columns="3" columnClasses="coluna50, coluna10, coluna40" style="width:50%">
+	  		<h:panelGrid columns="4" columnClasses="coluna50, coluna10, coluna10, coluna30" style="width:60%">
 	  		
 		  		<p:outputLabel for="tipoPagamento" value="Tipo de Pagamento" />
 			  	<p:outputLabel for="flagAtivo" value="Ativo" />		  	
 			  	<p:outputLabel for="flagRematricula" value="Rematrícula" />		  	
+			  	<h:outputText value="" />		  	
 		  		
 			  	<p:selectOneMenu id="tipoPagamento" required="true" requiredMessage="Tipo de Pagamento: Campo obrigatório" value="#{mbeanModel.tipoPagamento.id}" style="width:90%">
 			  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
@@ -220,6 +221,7 @@
 		  			<p:ajax update="pgInformacoesCancelamento" listener="#{mbean.mudarStatusCliente}" global="false"/>
 		  		</p:selectBooleanCheckbox>
 		  		<p:selectBooleanCheckbox id="flagRematricula" value="#{mbeanModel.flagRematricula}" />
+		  		<p:commandButton value="Imprimir Termo de Cancelamento de contrato" action="#{mbean.imprimirTermoCancelamentoContrato}" ajax="false" rendered="#{mbean.flagAlterar}" style="width:300px" />
 			  	
 		  	</h:panelGrid>
 		  	

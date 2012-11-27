@@ -370,4 +370,25 @@ public class CenajurUtil {
 		return retorno;
 	}
 	
+	public static String getTopoEmail(){
+		return "<img src='http://www.agepol.org.br/cenajurdigital/img/top1_index.jpg' /><br/><br/>";
+	}
+	
+	public static String getRodapeEmail(){
+		return "<br/><br/><hr width='200px' align='left'>Este e-mail da AGEPOL/CENAJUR é enviado somente para usuários cadastrados.<br/>"
+				+ "Para alterar suas opções ou cancelar o recebimento, envie mensagem para o e-mail: cenajur@cenajur.com.br com o assunto: Cancelar envio de E-mail ou acesse o quadro (deixe seu recado) na página principal da AGEPOL/CENAJUR, informando no teor da mensagem.";
+	}
+	
+	public static Long getParamFormatado(String param) {
+
+		Long inteiro = null;
+
+		try {
+			inteiro = Long.valueOf(param);
+		} catch (NumberFormatException e) {
+		}
+
+		return inteiro;
+	}
+	
 }

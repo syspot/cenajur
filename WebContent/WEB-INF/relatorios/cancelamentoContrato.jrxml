@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatProcessoPorTipo" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f37734dc-0305-41c0-ba1d-0a06a2e568bb">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="48"/>
+	<parameter name="P_CLIENTE_ID" class="java.lang.Long"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT C.ID, C.NOME, C.MATRICULA, C.RG FROM CLIENTES C WHERE C.ID = $P{P_CLIENTE_ID}]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="matricula" class="java.lang.String"/>
+	<field name="rg" class="java.lang.String"/>
+	<detail>
+		<band height="366">
+			<staticText>
+				<reportElement uuid="662a7c9e-a1b7-4147-8fa1-16d247bdbc08" x="158" y="33" width="232" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANCELAMENTO DE CONTRATO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b1447f6a-8e8c-4f12-9ec6-b0bf6441a764" x="222" y="58" width="45" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MAT.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="3101b2d2-4ae6-4063-ab88-4e5c8a79054b" x="273" y="58" width="100" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{matricula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5c8852cb-916e-4b44-8a27-29dbdae1a58e" x="42" y="125" width="462" height="93"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA["Eu, " + $F{nome} + ", RG " + $F{rg} + ", solicito o cancelamento do contrato junto ao CET/CENAJUR, por motivo pessoal, produzindo seus efeitos 30 (trinta) dias após a assinatura deste, conforme a cláusula 6ª do Contrato de Prestação de Serviços firmado entre as partes. " +
+"\n \n" +
+"Outrossim, regovo, neste momento, os poderes que foram outorgados aos advogados deste escritório, nos autos do(s) seguintes(s) processo(s):"]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement uuid="c33042ef-5bf1-401e-9be3-250c9533df97" x="42" y="247" width="462" height="100"/>
+				<subreportParameter name="P_CLIENTE_ID">
+					<subreportParameterExpression><![CDATA[$P{P_CLIENTE_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/informacoesProcesso.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="157">
+			<line>
+				<reportElement uuid="7d844485-dffc-4ed6-bb70-91951e9ba369" x="81" y="43" width="100" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="f3bbbf59-bc53-46f1-ae0e-d4285debb677" x="197" y="43" width="34" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="704e7de5-988e-4603-b7d0-e48751ca8360" x="261" y="44" width="123" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="15470e16-55db-42e9-a6e4-abe0d83d7250" x="413" y="44" width="48" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="f0191b2a-c051-4b43-847a-8e2c573be015" x="392" y="34" width="18" height="20"/>
+				<textElement/>
+				<text><![CDATA[de]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6943a343-091e-4ce5-a5dc-b2b83a18698d" x="239" y="34" width="18" height="19"/>
+				<textElement/>
+				<text><![CDATA[de]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="02c7402a-579d-4d14-a557-cb0a417fc1d3" x="184" y="33" width="8" height="20"/>
+				<textElement/>
+				<text><![CDATA[,]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="2bbd7673-d8c3-4d46-ba94-4174cfc9768f" x="133" y="108" width="274" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="94767b15-8995-497b-9b4e-af7018cd04a7" x="239" y="120" width="66" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Assinatura]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+</jasperReport>

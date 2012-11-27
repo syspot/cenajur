@@ -15,6 +15,7 @@ import br.com.cenajur.model.Processo;
 import br.com.cenajur.model.ProcessoCliente;
 import br.com.cenajur.model.ProcessoNumero;
 import br.com.cenajur.model.RegrasEmail;
+import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.Constantes;
 import br.com.cenajur.util.EmailUtil;
 import br.com.topsys.exception.TSApplicationException;
@@ -51,7 +52,13 @@ public class EnviarEmailJob {
 						
 						if(!TSUtil.isEmpty(processoCliente.getCliente().getEmail())){
 							
-							String texto = configuracoesEmail.getCorpoEmail();
+							StringBuilder corpoEmail = new StringBuilder(CenajurUtil.getTopoEmail());
+							
+							corpoEmail.append(configuracoesEmail.getCorpoEmail());
+							
+							corpoEmail.append(CenajurUtil.getRodapeEmail());
+							
+							String texto = corpoEmail.toString();
 							
 							configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_PROCESSO).getById();
 							

@@ -163,7 +163,13 @@ public class ProcessoAudienciaUtil {
 					
 					if(!TSUtil.isEmpty(processoCliente.getCliente().getEmail())){
 						
-						String texto = configuracoesEmail.getCorpoEmail();
+						StringBuilder corpoEmail = new StringBuilder(CenajurUtil.getTopoEmail());
+						
+						corpoEmail.append(configuracoesEmail.getCorpoEmail());
+						
+						corpoEmail.append(CenajurUtil.getRodapeEmail());
+						
+						String texto = corpoEmail.toString();
 						
 						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_PROCESSO).getById();
 						

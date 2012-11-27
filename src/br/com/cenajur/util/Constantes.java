@@ -82,6 +82,7 @@ public class Constantes {
 	public static final Long PERMISSAO_GRUPO = 9L;
 	
 	public static final Long EMAIL_ID = 1L;
+	public static final Long MENSAGEM_COMPROVANTE_PAGAMENTO_ID = 1L;
 	
 	
 }

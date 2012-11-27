@@ -5,26 +5,24 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core">
 	
-	<ui:param name="mbean" value="${emailFaces}" />
-  	<ui:param name="mbeanModel" value="${emailFaces.crudModel}" />
+	<ui:param name="mbean" value="${mensagemComprovantePagamentoFaces}" />
+  	<ui:param name="mbeanModel" value="${mensagemComprovantePagamentoFaces.crudModel}" />
   	
   	<p:tabView id="tabview" dynamic="false">
 
-		<p:tab id="tabCadastro" title="Email" >
+		<p:tab id="tabCadastro" title="Mensagem do Comprovante de Pagamento" >
 			
 			<h:form id="formCadastro" prependId="false">
         		
 				<h:panelGrid columns="1" styleClass="coluna100">
 				
-					<p:fieldset legend="Informações de Envio de Email" style="width: 97.5%">
+					<p:fieldset style="width: 97.5%">
 				
-						<h:panelGrid columns="2" style="width:60%">
+						<h:panelGrid columns="1" style="width:60%">
 						
-							<p:outputLabel for="email" value="Email" />
-							<p:outputLabel for="senha" value="Senha" />
+							<p:outputLabel for="descricao" value="Descrição" />
 							
-							<p:inputText id="email" value="#{mbeanModel.email}" required="true" requiredMessage="Email: Campo obrigatório" styleClass="coluna90" maxlength="100" />
-							<p:password id="senha" value="#{mbeanModel.senha}" required="true" requiredMessage="Senha: Campo obrigatório" styleClass="coluna90" maxlength="30" />
+							<p:inputTextarea id="descricao" value="#{mbeanModel.descricao}" maxlength="200" cols="80" rows="10" styleClass="coluna90" />
 						
 						</h:panelGrid>
 						
