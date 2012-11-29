@@ -31,6 +31,8 @@
  		<mapping class="br.com.cenajur.model.Comarca" />
  		<mapping class="br.com.cenajur.model.ConfiguracoesEmail" />
  		<mapping class="br.com.cenajur.model.ConfiguracoesReplaceEmail" />
+ 		<mapping class="br.com.cenajur.model.ContadorEmail" />
+ 		<mapping class="br.com.cenajur.model.ContadorSms" />
  		<mapping class="br.com.cenajur.model.DocumentoAndamentoProcesso" />
  		<mapping class="br.com.cenajur.model.DocumentoAudiencia" />
  		<mapping class="br.com.cenajur.model.DocumentoCliente" />
@@ -71,6 +73,7 @@
  		<mapping class="br.com.cenajur.model.TipoCategoria" />
  		<mapping class="br.com.cenajur.model.TipoColaborador" />
  		<mapping class="br.com.cenajur.model.TipoDocumento" />
+ 		<mapping class="br.com.cenajur.model.TipoInformacao" />
  		<mapping class="br.com.cenajur.model.TipoPagamento" />
  		<mapping class="br.com.cenajur.model.TipoParte" />
  		<mapping class="br.com.cenajur.model.TipoProcesso" />

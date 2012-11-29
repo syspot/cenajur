@@ -88,5 +88,13 @@ public class Constantes {
 	public static final Long EMAIL_ID = 1L;
 	public static final Long MENSAGEM_COMPROVANTE_PAGAMENTO_ID = 1L;
 	
+	public static final Long TIPO_INFORMACAO_AUDIENCIA_ID = 1L;
+	public static final Long TIPO_INFORMACAO_ANDAMENTO_ID = 2L;
+	public static final Long TIPO_INFORMACAO_ANIVERSARIO_ID = 3L;
+	public static final Long TIPO_INFORMACAO_PROCESSO_NOVO_ID = 4L;
+	public static final Long TIPO_INFORMACAO_INADIMPLENCIA_ID = 5L;
+	public static final Long TIPO_INFORMACAO_ASSOCIADOS_NOVOS_ID = 6L;
+	public static final Long TIPO_INFORMACAO_VISITAS_ID = 7L;
+	
 	
 }

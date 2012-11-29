@@ -217,4 +217,8 @@ public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 		
 		return super.find(query.toString(), "a.dataAndamento", params.toArray());
 	}
+	
+	public List<AndamentoProcesso> pesquisarAndamentoRecente(){
+		return super.find("select ap from AndamentoProcesso ap where date(ap.dataAndamento) = date(current_date() - 1) ", null);
+	}
 }
