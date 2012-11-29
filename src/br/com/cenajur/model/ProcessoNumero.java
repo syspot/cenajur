@@ -1,6 +1,7 @@
 package br.com.cenajur.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -38,6 +39,9 @@ public class ProcessoNumero extends TSActiveRecordAb<ProcessoNumero>{
 	
 	@Column(name = "flag_principal")
 	private Boolean flagPrincipal;
+	
+	@Column(name = "data_cadastro")
+	private Date dataCadastro;
 	
 	@OneToMany(mappedBy = "processoNumero")
 	@org.hibernate.annotations.OrderBy(clause = "dataAndamento desc")
@@ -81,6 +85,14 @@ public class ProcessoNumero extends TSActiveRecordAb<ProcessoNumero>{
 
 	public void setFlagPrincipal(Boolean flagPrincipal) {
 		this.flagPrincipal = flagPrincipal;
+	}
+
+	public Date getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
 	}
 
 	public List<AndamentoProcesso> getAndamentos() {
@@ -197,4 +209,9 @@ public class ProcessoNumero extends TSActiveRecordAb<ProcessoNumero>{
 		
 		return  super.find(query.toString(), "pn.numero", param.toArray());
 	}
+	
+	public List<ProcessoNumero> pesquisarProcessosNovos(){
+		return super.find("select pn from ProcessoNumero pn where date(pn.dataCadastro) = date(current_date() - 1) ", null);
+	}
+	
 }

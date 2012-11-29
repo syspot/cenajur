@@ -69,6 +69,10 @@ public class Constantes {
 	public static final Long CONFIGURACOES_REPLACE_EMAIL_PROCESSO = 2L;
 	public static final Long CONFIGURACOES_REPLACE_EMAIL_DATA_ATUAL = 4L;
 	public static final Long CONFIGURACOES_REPLACE_EMAIL_DATA_VISITA = 5L;
+	public static final Long CONFIGURACOES_REPLACE_EMAIL_LOCAL = 6L;
+	public static final Long CONFIGURACOES_REPLACE_EMAIL_DATA = 7L;
+	public static final Long CONFIGURACOES_REPLACE_EMAIL_HORA = 8L;
+	public static final Long CONFIGURACOES_REPLACE_EMAIL_ADVOGADO = 9L;
 	
 	public static final Long PERMISSAO_MENSAGENS = 18L;
 	public static final Long PERMISSAO_COLABORADOR = 8L;

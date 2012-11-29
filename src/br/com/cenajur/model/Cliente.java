@@ -750,4 +750,15 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		return super.findBySQL(AnoModel.class, new String[]{"descricao", "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez", "tot"}, "select * from fc_faturamento_total_sem_lote(?)", ano);
 	}
 	
+	public List<Cliente> pesquisarNovosAssociados(){
+		return super.find("select c from Cliente c where date(c.dataAdesao) = date(current_date() - 1) and c.flagAtivo = true and c.flagAssociado = true ", null);
+	}
+	
+	public List<Cliente> pesquisarAniversariantes(){
+		return super.find("select c from Cliente c where to_char(c.dataNascimento, 'dd/mm') = to_char(current_date(), 'dd/mm') and c.flagAtivo = true and c.flagAssociado = true", null);
+	}
+	
+	public List<Cliente> pesquisarInadimplentes(Integer mes, Integer ano){
+		return super.find("select f.cliente from Faturamento f where f.flagPago = false and f.flagCancelado = false and f.mes <= ? and f.ano <= ? ", null, mes, ano);
+	}
 }

@@ -181,6 +181,7 @@ public class ProcessoAux extends TSMainFaces{
 	public String addNumeroProcesso(){
 		ProcessoNumero processoNumero = new ProcessoNumero();
 		processoNumero.setFlagPrincipal(Boolean.FALSE);
+		processoNumero.setDataCadastro(new Date());
 		processoNumero.setProcesso(this.processos.get(indexProcesso));
 		this.processos.get(indexProcesso).getProcessosNumerosTemp().add(processoNumero);
 		return null;

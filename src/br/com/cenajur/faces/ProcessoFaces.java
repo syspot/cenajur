@@ -359,6 +359,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		ProcessoNumero processoNumero = new ProcessoNumero();
 		processoNumero.setFlagPrincipal(Boolean.FALSE);
 		processoNumero.setProcesso(getCrudModel());
+		processoNumero.setDataCadastro(new Date());
 		getCrudModel().getProcessosNumerosTemp().add(processoNumero);
 		return null;
 	}

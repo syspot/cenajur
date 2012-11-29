@@ -17,13 +17,13 @@
     <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>*.xhtml</url-pattern>
   </servlet-mapping>
-  <filter>  
-    <filter-name>PrimeFaces FileUpload Filter</filter-name>  
-    <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>  
+  <filter>
+    <filter-name>PrimeFaces FileUpload Filter</filter-name>
+    <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
   </filter>
-  <filter-mapping>  
-     <filter-name>PrimeFaces FileUpload Filter</filter-name>  
-     <servlet-name>Faces Servlet</servlet-name>  
+  <filter-mapping>
+    <filter-name>PrimeFaces FileUpload Filter</filter-name>
+    <servlet-name>Faces Servlet</servlet-name>
   </filter-mapping>
   <filter>
     <filter-name>TSActiveRecordFilter</filter-name>
@@ -33,13 +33,13 @@
     <filter-name>TSActiveRecordFilter</filter-name>
     <url-pattern>/pages/*</url-pattern>
   </filter-mapping>
-  <filter>  
-    <filter-name>CenajurFilter</filter-name>  
-    <filter-class>br.com.cenajur.util.CenajurFilter</filter-class>  
+  <filter>
+    <filter-name>CenajurFilter</filter-name>
+    <filter-class>br.com.cenajur.util.CenajurFilter</filter-class>
   </filter>
-  <filter-mapping>  
-    <filter-name>CenajurFilter</filter-name>  
-    <url-pattern>/pages/*</url-pattern>  
+  <filter-mapping>
+    <filter-name>CenajurFilter</filter-name>
+    <url-pattern>/pages/*</url-pattern>
   </filter-mapping>
   <context-param>
     <param-name>com.sun.faces.enableRestoreView11Compatibility</param-name>

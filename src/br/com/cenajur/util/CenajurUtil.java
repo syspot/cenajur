@@ -371,11 +371,11 @@ public class CenajurUtil {
 	}
 	
 	public static String getTopoEmail(){
-		return "<img src='http://www.agepol.org.br/cenajurdigital/img/top1_index.jpg' /><br/><br/>";
+		return "<img src='http://www.agepol.org.br/cenajurdigital/img/top1_index.jpg' /><br/><br/><br/><br/>";
 	}
 	
 	public static String getRodapeEmail(){
-		return "<br/><br/><hr width='200px' align='left'>Este e-mail da AGEPOL/CENAJUR é enviado somente para usuários cadastrados.<br/>"
+		return "<br/><br/><br/><br/><hr width='200px' align='left'>Este e-mail da AGEPOL/CENAJUR é enviado somente para usuários cadastrados.<br/>"
 				+ "Para alterar suas opções ou cancelar o recebimento, envie mensagem para o e-mail: cenajur@cenajur.com.br com o assunto: Cancelar envio de E-mail ou acesse o quadro (deixe seu recado) na página principal da AGEPOL/CENAJUR, informando no teor da mensagem.";
 	}
 	
@@ -389,6 +389,16 @@ public class CenajurUtil {
 		}
 
 		return inteiro;
+	}
+	
+	public static Date getDataEnvioEmailMensal(){
+		
+		Calendar data = Calendar.getInstance();
+		
+		data.set(Calendar.DAY_OF_MONTH, 5);
+		
+		return data.getTime();
+		
 	}
 	
 }
