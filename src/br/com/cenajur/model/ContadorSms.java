@@ -1,6 +1,8 @@
 package br.com.cenajur.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +15,7 @@ import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.exception.TSApplicationException;
+import br.com.topsys.util.TSUtil;
 
 @Entity
 @Table(name = "contador_sms")
@@ -84,17 +87,47 @@ public class ContadorSms extends TSActiveRecordAb<ContadorSms>{
 		return true;
 	}
 	
-	public void gravar(TipoInformacao tipoInformacao){
+	public void gravarPorTipo(TipoInformacao tipoInformacao){
 		
-		this.data = new Date();
-		this.tipoInformacao = tipoInformacao;
+		this.setData(new Date());
+		this.setTipoInformacao(tipoInformacao);
 		
 		try {
 			super.save();
 		} catch (TSApplicationException e) {
 			e.printStackTrace();
 		}
+		
+	}
 	
+	@SuppressWarnings("unchecked")
+	public List<ContadorModel> pesquisarPorPeriodo(Date dataInicio, Date dataFim, TipoInformacao tipoInformacao){
+		
+		StringBuilder query = new StringBuilder("select ti.descricao, count(cs.*) as qtd from contador_sms cs inner join tipos_informacoes ti on cs.tipo_informacao_id = ti.id where 1 = 1 ");
+		
+		if(!TSUtil.isEmpty(dataInicio) && !TSUtil.isEmpty(dataFim)){
+			query.append(" and data between ? and ? ");
+		}
+		
+		if(!TSUtil.isEmpty(tipoInformacao) && !TSUtil.isEmpty(tipoInformacao.getId())){
+			query.append(" and tipo_informacao_id = ? ");
+		}
+		
+		query.append(" group by ti.descricao");
+		
+		List<Object> params = new ArrayList<Object>();
+		
+		if(!TSUtil.isEmpty(dataInicio) && !TSUtil.isEmpty(dataFim)){
+			params.add(dataInicio);
+			params.add(dataFim);
+		}
+		
+		if(!TSUtil.isEmpty(tipoInformacao) && !TSUtil.isEmpty(tipoInformacao.getId())){
+			params.add(tipoInformacao.getId());
+		}
+		
+		return super.findBySQL(ContadorModel.class, new String[]{"descricao", "qtd"}, query.toString() , params.toArray());
+		
 	}
 		
 }

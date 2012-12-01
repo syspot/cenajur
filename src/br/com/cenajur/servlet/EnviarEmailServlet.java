@@ -13,7 +13,7 @@ import br.com.cenajur.jobs.EnviarEmailJob;
 /**
  * Servlet implementation class EnviarEmail
  */
-@WebServlet("/EnviarEmailServlet")
+@WebServlet("/servlet/EnviarEmailServlet")
 public class EnviarEmailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -30,7 +30,7 @@ public class EnviarEmailServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		EnviarEmailJob.processarEnvioEmail();
+		new EnviarEmailJob().processarEnvioEmail();
 		
 	}
 

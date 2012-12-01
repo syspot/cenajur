@@ -33,6 +33,10 @@
     <filter-name>TSActiveRecordFilter</filter-name>
     <url-pattern>/pages/*</url-pattern>
   </filter-mapping>
+    <filter-mapping>
+    <filter-name>TSActiveRecordFilter</filter-name>
+    <url-pattern>/servlet/*</url-pattern>
+  </filter-mapping>
   <filter>
     <filter-name>CenajurFilter</filter-name>
     <filter-class>br.com.cenajur.util.CenajurFilter</filter-class>

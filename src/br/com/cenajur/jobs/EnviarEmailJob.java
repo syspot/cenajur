@@ -11,6 +11,7 @@ import br.com.cenajur.model.Cliente;
 import br.com.cenajur.model.ConfiguracoesEmail;
 import br.com.cenajur.model.ConfiguracoesReplaceEmail;
 import br.com.cenajur.model.ContadorEmail;
+import br.com.cenajur.model.ContadorSms;
 import br.com.cenajur.model.Processo;
 import br.com.cenajur.model.ProcessoCliente;
 import br.com.cenajur.model.ProcessoNumero;
@@ -26,27 +27,27 @@ import br.com.topsys.util.TSUtil;
 
 public class EnviarEmailJob {
 
-	public static void processarEnvioEmail(){
+	public void processarEnvioEmail(){
 		
 		EmailUtil emailUtil = new EmailUtil();
 		
-		enviarEmailAudiencia(emailUtil);
+		this.enviarEmailAudiencia(emailUtil);
 		
-		enviarEmailAndamento(emailUtil);
+		this.enviarEmailAndamento(emailUtil);
 		
-		enviarEmailNovosAssociados(emailUtil);
+		this.enviarEmailNovosAssociados(emailUtil);
 		
-		enviarEmailAniversariantes(emailUtil);
+		this.enviarEmailAniversariantes(emailUtil);
 		
-		enviarEmailInadimplentes(emailUtil);
+		this.enviarEmailInadimplentes(emailUtil);
 		
-		enviarEmailProcessosNovos(emailUtil);
+		this.enviarEmailProcessosNovos(emailUtil);
 		
-		enviarEmailVisitas(emailUtil);
+		this.enviarEmailVisitas(emailUtil);
 		
 	}
 	
-	private static void enviarEmailAudiencia(EmailUtil emailUtil){
+	private void enviarEmailAudiencia(EmailUtil emailUtil){
 		
 		RegrasEmail regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_AUDIENCIA).getById();
 		
@@ -55,8 +56,6 @@ public class EnviarEmailJob {
 		ConfiguracoesReplaceEmail configuracaoReplace;
 		
 		Processo processo = null;
-		
-		TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_AUDIENCIA_ID);
 		
 		for(ConfiguracoesEmail configuracoesEmail : regrasEmail.getConfiguracoesEmails()){
 			
@@ -100,7 +99,10 @@ public class EnviarEmailJob {
 								
 							emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
 							
-							new ContadorEmail().gravar(tipoInformacao);
+							TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_AUDIENCIA_ID);
+							
+							new ContadorEmail().gravarPorTipo(tipoInformacao);
+							new ContadorSms().gravarPorTipo(tipoInformacao);
 							
 						}
 						
@@ -114,9 +116,7 @@ public class EnviarEmailJob {
 		
 	}
 	
-	private static void enviarEmailAndamento(EmailUtil emailUtil){
-		
-		TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_ANDAMENTO_ID);
+	private void enviarEmailAndamento(EmailUtil emailUtil){
 		
 		List<AndamentoProcesso> andamentos = new AndamentoProcesso().pesquisarAndamentoRecente();
 		
@@ -140,7 +140,10 @@ public class EnviarEmailJob {
 					
 					emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), "Cenajur Informa", texto, "text/html");
 					
-					new ContadorEmail().gravar(tipoInformacao);
+					TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_ANDAMENTO_ID);
+					
+					new ContadorEmail().gravarPorTipo(tipoInformacao);
+					new ContadorSms().gravarPorTipo(tipoInformacao);
 					
 				}
 				
@@ -150,9 +153,7 @@ public class EnviarEmailJob {
 		
 	}
 	
-	private static void enviarEmailNovosAssociados(EmailUtil emailUtil){
-		
-		TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_ASSOCIADOS_NOVOS_ID);
+	private void enviarEmailNovosAssociados(EmailUtil emailUtil){
 		
 		List<Cliente> clientes = new Cliente().pesquisarNovosAssociados();
 		
@@ -168,7 +169,10 @@ public class EnviarEmailJob {
 				
 				emailUtil.enviarEmailTratado(cliente.getEmail(), "Boas Vindas", corpoEmail.toString(), "text/html");
 				
-				new ContadorEmail().gravar(tipoInformacao);
+				TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_ASSOCIADOS_NOVOS_ID);
+				
+				new ContadorEmail().gravarPorTipo(tipoInformacao);
+				new ContadorSms().gravarPorTipo(tipoInformacao);
 				
 			}
 				
@@ -176,9 +180,7 @@ public class EnviarEmailJob {
 				
 	}
 	
-	private static void enviarEmailAniversariantes(EmailUtil emailUtil){
-		
-		TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_ANIVERSARIO_ID);
+	private void enviarEmailAniversariantes(EmailUtil emailUtil){
 		
 		List<Cliente> clientes = new Cliente().pesquisarAniversariantes();
 		
@@ -194,7 +196,10 @@ public class EnviarEmailJob {
 				
 				emailUtil.enviarEmailTratado(cliente.getEmail(), "Cenajur Informa", corpoEmail.toString(), "text/html");
 				
-				new ContadorEmail().gravar(tipoInformacao);
+				TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_ANIVERSARIO_ID);
+				
+				new ContadorEmail().gravarPorTipo(tipoInformacao);
+				new ContadorSms().gravarPorTipo(tipoInformacao);
 				
 			}
 				
@@ -202,9 +207,7 @@ public class EnviarEmailJob {
 				
 	}
 	
-	private static void enviarEmailInadimplentes(EmailUtil emailUtil){
-		
-		TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_INADIMPLENCIA_ID);
+	private void enviarEmailInadimplentes(EmailUtil emailUtil){
 		
 		Calendar data = Calendar.getInstance();
 		
@@ -224,7 +227,10 @@ public class EnviarEmailJob {
 					
 					emailUtil.enviarEmailTratado(cliente.getEmail(), "Cenajur Informa", corpoEmail.toString(), "text/html");
 					
-					new ContadorEmail().gravar(tipoInformacao);
+					TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_INADIMPLENCIA_ID);
+					
+					new ContadorEmail().gravarPorTipo(tipoInformacao);
+					new ContadorSms().gravarPorTipo(tipoInformacao);
 					
 				}
 				
@@ -234,9 +240,7 @@ public class EnviarEmailJob {
 				
 	}
 	
-	private static void enviarEmailProcessosNovos(EmailUtil emailUtil){
-		
-		TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_PROCESSO_NOVO_ID);
+	private void enviarEmailProcessosNovos(EmailUtil emailUtil){
 		
 		List<ProcessoNumero> processosNumeros = new ProcessoNumero().pesquisarProcessosNovos();
 		
@@ -254,7 +258,10 @@ public class EnviarEmailJob {
 					
 					emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), "Cenajur Informa", corpoEmail.toString(), "text/html");
 					
-					new ContadorEmail().gravar(tipoInformacao);
+					TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_PROCESSO_NOVO_ID);
+					
+					new ContadorEmail().gravarPorTipo(tipoInformacao);
+					new ContadorSms().gravarPorTipo(tipoInformacao);
 					
 				}
 				
@@ -264,9 +271,7 @@ public class EnviarEmailJob {
 				
 	}
 	
-	private static void enviarEmailVisitas(EmailUtil emailUtil){
-		
-		TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_VISITAS_ID);
+	private void enviarEmailVisitas(EmailUtil emailUtil){
 		
 		ConfiguracoesReplaceEmail configuracaoReplace;
 		
@@ -298,7 +303,10 @@ public class EnviarEmailJob {
 						
 						emailUtil.enviarEmailTratado(visita.getCliente().getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
 						
-						new ContadorEmail().gravar(tipoInformacao);
+						TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_VISITAS_ID);
+						
+						new ContadorEmail().gravarPorTipo(tipoInformacao);
+						new ContadorSms().gravarPorTipo(tipoInformacao);
 						
 					}
 						
