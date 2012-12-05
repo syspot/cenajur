@@ -152,6 +152,8 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	
 	private String observacoes;
 	
+	private String senha;
+	
 	@Column(name = "flag_rematricula")
 	private Boolean flagRematricula;
 	
@@ -163,6 +165,14 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	
 	@Transient
 	private List<Agenda> visitas;
+	
+	public Cliente() {
+
+	}
+	
+	public Cliente(Long id) {
+		this.id = id;
+	}
 	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -500,6 +510,14 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		this.diaVencimento = diaVencimento;
 	}
 
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
 	public String getObservacoes() {
 		return observacoes;
 	}
@@ -760,5 +778,13 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	
 	public List<Cliente> pesquisarInadimplentes(Integer mes, Integer ano){
 		return super.find("select f.cliente from Faturamento f where f.flagPago = false and f.flagCancelado = false and f.mes <= ? and f.ano <= ? ", null, mes, ano);
+	}
+	
+	public List<Cliente> pesquisarInadimplentes(){
+		return super.find("select f.cliente from Faturamento f where f.flagPago = false and f.flagCancelado = false ", null);
+	}
+	
+	public String isMesDevedor(int mes, int ano){
+		return ((Model) super.getBySQL(Model.class, new String[]{"flag"}, "select case when (select count(*) from faturamento f where f.cliente_id = ? and not f.flag_pago and not f.flag_cancelado and f.mes = ? and f.ano = ?) > 0 then true else false end as flag", getId(), mes, ano)).getFlag() ? "X" : "";
 	}
 }

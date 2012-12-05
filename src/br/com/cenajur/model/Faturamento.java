@@ -286,6 +286,14 @@ public class Faturamento extends TSActiveRecordAb<Faturamento>{
 		return super.find(" from Faturamento f where f.flagPago = false and f.flagCancelado = false and f.cliente.id = ? and f.mes < ? and f.ano <= ?", null, getCliente().getId(), getMes(), getAno());
 	}
 	
+	public Model obterMenorData(){
+		return (Model) super.getBySQL(Model.class, new String[]{"ano"}, "select text(min(f.ano)) as ano from faturamento f where not f.flag_pago and not f.flag_cancelado");
+	}
+	
+	public Model obterMaiorData(){
+		return (Model) super.getBySQL(Model.class, new String[]{"ano"}, "select text(max(f.ano)) as ano from faturamento f where not f.flag_pago and not f.flag_cancelado");
+	}
+	
 	public void gerarFaturamento(){
 		try{
 			getSession().createSQLQuery("select fc_gerar_faturamento(" + colaboradorGeracao.getId() + ")").executeUpdate();

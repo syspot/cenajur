@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import br.com.cenajur.model.AgendaColaborador;
+import br.com.cenajur.model.Cliente;
 import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.MensagemDestinatario;
 import br.com.cenajur.model.Menu;
@@ -44,6 +45,7 @@ public class AutenticacaoFaces extends TSMainFaces{
     private boolean flagBloqueado;
     private Colaborador colaboradorSelecionado;
     private Objeto objetoSelecionado;
+    private Cliente clienteSelecionado;
     private Long situacaoProcesso;
     private String ano;
 
@@ -218,6 +220,42 @@ public class AutenticacaoFaces extends TSMainFaces{
     	this.ano = ano;
     	this.colaboradorSelecionado = colaborador;
     	this.objetoSelecionado = objeto;
+    	
+    	return "sucesso";
+    }
+    
+    public String redirecionarParaCliente() {
+    	
+    	boolean valida = false;
+    	
+    	this.permissaoSelecionada = new Permissao(Constantes.PERMISSAO_CLIENTE).getById();
+    	
+    	rotuloLoop:
+    		for(PermissaoGrupo permissaoGrupo : permissaoSelecionada.getPermissoesGrupos()){
+    			
+    			for(PermissaoGrupo permissaoGrupo2 : colaborador.getGrupo().getPermissoesGrupos()){
+    				
+    				if(permissaoGrupo.getId().equals(permissaoGrupo2.getId())){
+    					valida = true;
+    					break rotuloLoop;
+    				}
+    				
+    			}
+    			
+    		}
+    	
+    	Cliente cliente = null;
+    	
+    	if(!TSUtil.isEmpty(clienteSelecionado)){
+    		cliente = new Cliente(clienteSelecionado.getId());
+    	}
+    	
+    	if(valida){
+    		redirecionar();
+    	}
+    	
+    	this.clienteSelecionado = cliente;
+    	
     	
     	return "sucesso";
     }
@@ -542,6 +580,14 @@ public class AutenticacaoFaces extends TSMainFaces{
 		this.ano = ano;
 	}
 	
+	public Cliente getClienteSelecionado() {
+		return clienteSelecionado;
+	}
+
+	public void setClienteSelecionado(Cliente clienteSelecionado) {
+		this.clienteSelecionado = clienteSelecionado;
+	}
+
 	public boolean isMostrarDialogAdvogado(){
 		return Constantes.PERMISSAO_AUDIENCIA.equals(this.permissaoSelecionada.getId());
 	}

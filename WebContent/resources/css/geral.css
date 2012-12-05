@@ -1177,3 +1177,8 @@ ui-icon.delete {
 .ui-dt-c{
 	text-align:center;
 }
+
+#celula1 {
+ width: 200px;
+ _width: 255px;
+}

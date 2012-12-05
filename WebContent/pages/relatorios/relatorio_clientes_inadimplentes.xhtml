@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	
+	<ui:param name="mbean" value="${relatorioClientesInadimplentesFaces}" />
+	
+  	<p:tabView id="tabview" dynamic="false">
+
+		<p:tab id="tabRelatorio" title="Relatório" >
+		
+		  	<h:form id="formRelatorio">
+		  	
+		  		<p:commandButton value="Gerar Relatório" action="#{mbean.gerarRelatorio}" ajax="false" style="margin-bottom:30px; margin-top:20px;" />
+		  		
+		  		<p:panel id="pgGridImpressao" style="width:100%; overflow: auto;">
+		  		
+			  		<div id="grid" class="ui-datatable ui-widget" style="width: 100%; overflow: auto;">
+			  		
+				  		<table>
+				  		
+				  			<thead>
+				  			
+					  			<tr>
+					  			
+					  				<th class="ui-state-default">
+						  				<div class="ui-dt-c"><span></span></div>
+					  				</th>
+					  				
+					  				<c:forEach items="#{mbean.anos}" var="ano">
+							  		
+							  			<th class="ui-state-default" colspan="12">
+							  				<div class="ui-dt-c"><span><h:outputText value="#{ano}" /></span></div>
+						  				</th>
+							  		
+							  		</c:forEach>
+							  		
+					  			</tr>
+					  			
+					  			<tr>
+					  				
+					  				<th class="ui-state-default">
+					  					<div class="ui-dt-c"><span>Nome do Cliente</span></div>
+					  				</th>
+					  				
+					  				<c:forEach items="#{mbean.anos}" var="ano">
+							  		
+							  			<th class="ui-state-default">
+							  				<div class="ui-dt-c"><span>J</span></div>
+						  				</th>
+							  			<th class="ui-state-default" >
+							  				<div class="ui-dt-c"><span>F</span></div>
+						  				</th>
+							  			<th class="ui-state-default" >
+							  				<div class="ui-dt-c"><span>M</span></div>
+						  				</th>
+							  			<th class="ui-state-default" >
+							  				<div class="ui-dt-c"><span>A</span></div>
+						  				</th>
+							  			<th class="ui-state-default" >
+							  				<div class="ui-dt-c"><span>M</span></div>
+						  				</th>
+							  			<th class="ui-state-default" >
+							  				<div class="ui-dt-c"><span>J</span></div>
+						  				</th>
+							  			<th class="ui-state-default" >
+							  				<div class="ui-dt-c"><span>J</span></div>
+						  				</th>
+							  			<th class="ui-state-default" >
+							  				<div class="ui-dt-c"><span>A</span></div>
+						  				</th>
+							  			<th class="ui-state-default" >
+							  				<div class="ui-dt-c"><span>S</span></div>
+						  				</th>
+							  			<th class="ui-state-default" >
+							  				<div class="ui-dt-c"><span>O</span></div>
+						  				</th>
+							  			<th class="ui-state-default" >
+							  				<div class="ui-dt-c"><span>N</span></div>
+						  				</th>
+							  			<th class="ui-state-default" >
+							  				<div class="ui-dt-c"><span>D</span></div>
+						  				</th>
+							  		
+							  		</c:forEach>
+							  		
+					  			</tr>
+					  			
+					  		</thead>
+				  			
+				  			<tbody class="ui-datatable-data ui-widget-content">
+				  			
+				  				<c:forEach items="#{mbean.clientes}" var="cliente">
+				  				
+					  				<tr class="ui-widget-content ui-datatable-even" >
+					  				
+					  					<td id="celula1">
+					  						<div class="ui-dt-c" id="celula1">
+					  							<p:commandLink action="#{autenticacaoFaces.redirecionarParaCliente}" ajax="false">
+								  					<h:outputText value="#{cliente.nome}" />
+													<f:setPropertyActionListener target="#{autenticacaoFaces.clienteSelecionado}" value="#{cliente}" />
+												</p:commandLink>
+				  							</div>
+			  							</td>
+					  				
+			  							<c:forEach items="#{mbean.anos}" var="ano">
+							  		
+								  			<td>
+						  						<div class="ui-dt-c">
+						  							<h:outputText value="#{cliente.isMesDevedor(1, ano)}" style="font-weight: bold; color: red"/>
+					  							</div>
+				  							</td>
+								  			<td>
+						  						<div class="ui-dt-c">
+						  							<h:outputText value="#{cliente.isMesDevedor(2, ano)}" style="font-weight: bold; color: red" />
+					  							</div>
+				  							</td>
+								  			<td>
+						  						<div class="ui-dt-c">
+						  							<h:outputText value="#{cliente.isMesDevedor(3, ano)}" style="font-weight: bold; color: red" />
+					  							</div>
+				  							</td>
+								  			<td>
+						  						<div class="ui-dt-c">
+						  							<h:outputText value="#{cliente.isMesDevedor(4, ano)}" style="font-weight: bold; color: red" />
+					  							</div>
+				  							</td>
+								  			<td>
+						  						<div class="ui-dt-c">
+						  							<h:outputText value="#{cliente.isMesDevedor(5, ano)}" style="font-weight: bold; color: red" />
+					  							</div>
+				  							</td>
+								  			<td>
+						  						<div class="ui-dt-c">
+						  							<h:outputText value="#{cliente.isMesDevedor(6, ano)}" style="font-weight: bold; color: red" />
+					  							</div>
+				  							</td>
+								  			<td>
+						  						<div class="ui-dt-c">
+						  							<h:outputText value="#{cliente.isMesDevedor(7, ano)}" style="font-weight: bold; color: red" />
+					  							</div>
+				  							</td>
+								  			<td>
+						  						<div class="ui-dt-c">
+						  							<h:outputText value="#{cliente.isMesDevedor(8, ano)}" style="font-weight: bold; color: red" />
+					  							</div>
+				  							</td>
+								  			<td>
+						  						<div class="ui-dt-c">
+						  							<h:outputText value="#{cliente.isMesDevedor(9, ano)}" style="font-weight: bold; color: red" />
+					  							</div>
+				  							</td>
+								  			<td>
+						  						<div class="ui-dt-c">
+						  							<h:outputText value="#{cliente.isMesDevedor(10, ano)}" style="font-weight: bold; color: red" />
+					  							</div>
+				  							</td>
+								  			<td>
+						  						<div class="ui-dt-c">
+						  							<h:outputText value="#{cliente.isMesDevedor(11, ano)}" style="font-weight: bold; color: red" />
+					  							</div>
+				  							</td>
+								  			<td>
+						  						<div class="ui-dt-c">
+						  							<h:outputText value="#{cliente.isMesDevedor(12, ano)}" style="font-weight: bold; color: red" />
+					  							</div>
+				  							</td>
+								  		
+								  		</c:forEach>
+								  		
+					  				
+					  				</tr>
+				  			
+						  		</c:forEach>
+						  		
+				  			</tbody>
+				  		
+				  		</table>
+				  		
+				  	</div>
+			  	
+			  	</p:panel>
+			  	
+			  	<p:commandButton value="Imprimir" type="button" icon="ui-icon-print" style="margin-top:10px">  
+			        <p:printer target="pgGridImpressao" />  
+			    </p:commandButton>
+			  	
+			</h:form>
+			
+		</p:tab>
+		
+	</p:tabView>
+  	
+</ui:composition>

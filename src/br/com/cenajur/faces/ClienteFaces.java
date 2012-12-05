@@ -44,6 +44,7 @@ import br.com.cenajur.relat.JasperUtil;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
+import br.com.cenajur.util.Utilitarios;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
@@ -81,6 +82,14 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	protected void init() {
 		this.clearFields();
 		this.initCombo();
+		
+		AutenticacaoFaces autenticacaoFaces = (AutenticacaoFaces) TSFacesUtil.getManagedBean("autenticacaoFaces");
+		
+		if(!TSUtil.isEmpty(autenticacaoFaces) && !TSUtil.isEmpty(autenticacaoFaces.getClienteSelecionado())){
+			this.setCrudModel(autenticacaoFaces.getClienteSelecionado());
+			this.detailEvent();
+		}
+		
 	}
 	
 	private void initCombo(){
@@ -186,6 +195,21 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		if(getCrudModel().getFlagAtivo()){
 			getCrudModel().setDataCancelamento(null);
 			getCrudModel().setMotivoCancelamento(null);
+		}
+	}
+	
+	@Override
+	protected void preUpdate() {
+
+		if(TSUtil.isEmpty(getCrudModel().getSenha())){
+			
+			Cliente c = getCrudModel().getById();
+			getCrudModel().setSenha(c.getSenha());
+			
+		} else{
+			
+			getCrudModel().setSenha(Utilitarios.gerarHash(getCrudModel().getSenha()));
+			
 		}
 	}
 	

@@ -7,6 +7,68 @@
 
 	<p:tabView id="tabview" dynamic="false" activeIndex="#{mbean.tabIndex}">
 
+		<p:tab id="tabPesquisa" title="Pesquisa">
+		
+			<h:form id="formPesquisa" prependId="false">
+			
+				<p:outputPanel id="opPesquisa" layout="block" autoUpdate="#{empty autoUpdatePesquisa ? false : autoUpdatePesquisa}" style="width: 97.5%;">
+				
+					<h:panelGrid columns="1" style="width: 98%">
+					
+						<p:fieldset legend="Filtro" style="width: 100%" toggleable="true">
+						
+							<h:panelGrid columns="1" styleClass="coluna100">
+								
+								<ui:insert name="pesquisaCampos" />
+								
+							</h:panelGrid>
+								
+							<ui:include src="comandoCRUDPesquisa.xhtml" />
+							
+						</p:fieldset>
+					
+					</h:panelGrid>
+					
+					<p:fieldset style="width: 97.5%">
+					
+						<h:commandLink rendered="#{not empty mbean.grid}" style="margin-bottom:10px">  
+				            <p:graphicImage value="../resources/images/pdf.png" />  
+				            <p:dataExporter type="pdf" target="gridPesquisa" fileName="relat" pageOnly="true" encoding="ISO-8859-1" />  
+				        </h:commandLink>
+					
+						<p:dataTable id="gridPesquisa" emptyMessage="Nenhum registro encontrado" style="width: 100%" paginator="true"
+								paginatorAlwaysVisible="false" rows="10" value="#{mbean.grid}" var="linha">
+							
+							<ui:insert name="colunasTabela" />
+							
+							<p:column headerText="Editar" styleClass="coluna5">
+								<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+									<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />	                     
+									<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+								</p:commandLink>
+							</p:column>
+							
+							<p:column headerText="Excluir" styleClass="coluna5">
+								<p:commandLink type="button" icon="delete16" id="clExcluir" onclick="cdExcluir.show()" global="false" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagExcluir}">
+									<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+									<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+								</p:commandLink>
+							</p:column>
+						
+						</p:dataTable>
+							
+					</p:fieldset>
+				         
+				</p:outputPanel>
+				
+				<ui:include src="dialogsPesquisaCRUD.xhtml" />
+				
+			</h:form>
+		
+		</p:tab>
+        
+        <ui:insert name="tabsmeio" />
+
 		<p:tab id="tabCadastro" title="Cadastro" >
 			
 			<h:form id="formCadastro" prependId="false">
@@ -74,68 +136,6 @@
 			</p:outputPanel>
 			
         </p:tab>
-        
-        <ui:insert name="tabsmeio" />
-
-		<p:tab id="tabPesquisa" title="Pesquisa">
-		
-			<h:form id="formPesquisa" prependId="false">
-			
-				<p:outputPanel id="opPesquisa" layout="block" autoUpdate="#{empty autoUpdatePesquisa ? false : autoUpdatePesquisa}" style="width: 97.5%;">
-				
-					<h:panelGrid columns="1" style="width: 98%">
-					
-						<p:fieldset legend="Filtro" style="width: 100%" toggleable="true">
-						
-							<h:panelGrid columns="1" styleClass="coluna100">
-								
-								<ui:insert name="pesquisaCampos" />
-								
-							</h:panelGrid>
-								
-							<ui:include src="comandoCRUDPesquisa.xhtml" />
-							
-						</p:fieldset>
-					
-					</h:panelGrid>
-					
-					<p:fieldset style="width: 97.5%">
-					
-						<h:commandLink rendered="#{not empty mbean.grid}" style="margin-bottom:10px">  
-				            <p:graphicImage value="../resources/images/pdf.png" />  
-				            <p:dataExporter type="pdf" target="gridPesquisa" fileName="relat" pageOnly="true" encoding="ISO-8859-1" />  
-				        </h:commandLink>
-					
-						<p:dataTable id="gridPesquisa" emptyMessage="Nenhum registro encontrado" style="width: 100%" paginator="true"
-								paginatorAlwaysVisible="false" rows="10" value="#{mbean.grid}" var="linha">
-							
-							<ui:insert name="colunasTabela" />
-							
-							<p:column headerText="Editar" styleClass="coluna5">
-								<p:commandLink action="#{mbean.detailEvent}" ajax="false">
-									<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />	                     
-									<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
-								</p:commandLink>
-							</p:column>
-							
-							<p:column headerText="Excluir" styleClass="coluna5">
-								<p:commandLink type="button" icon="delete16" id="clExcluir" onclick="cdExcluir.show()" global="false" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagExcluir}">
-									<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
-									<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
-								</p:commandLink>
-							</p:column>
-						
-						</p:dataTable>
-							
-					</p:fieldset>
-				         
-				</p:outputPanel>
-				
-				<ui:include src="dialogsPesquisaCRUD.xhtml" />
-				
-			</h:form>
-		
-		</p:tab>
 
 		<ui:insert name="tabsfim" />
   

@@ -27,13 +27,28 @@
   		
  		</h:panelGrid>
  		
- 		<h:panelGrid id="pgDocumento" columns="1" columnClasses="coluna90" style="width:100%">
- 		
-			<p:outputLabel for="documento" value="Documento" />
-			<p:fileUpload id="documento" label="Selecionar Documento" fileUploadListener="#{mbean.enviarDocumento}" auto="true" multiple="false" style="width:90%"/>
-	  		
+ 		<h:panelGrid id="pgDocumento" columns="2" columnClasses="coluna70_4, coluna30_4" style="width:50%">
+					
+			<p:outputPanel>
+				<p:outputLabel for="documento" value="Documento" />
+				<p:fileUpload id="documento" label="Selecionar Documento" fileUploadListener="#{mbean.enviarDocumento}" update="pgDocumento" auto="true" multiple="false" style="width:90%"/>
+			</p:outputPanel>
+			
+			<p:outputPanel id="opVisualizacaoDocumento" rendered="#{mbeanModel.arquivo != null}">
+			
+				<style type="text/css">
+					.imagemVisualizacaoDocumento img{height: 56px; align: left;}
+				</style>
+				
+				<div class="imagemVisualizacaoDocumento" align="left" style="text-align: center">
+					<h:graphicImage value="../resources/images/img_upload.jpg" style="border: 0px" />
+					<h:outputText value="#{mbeanModel.arquivo}" />
+				</div>
+				
+			</p:outputPanel>
+			
 		</h:panelGrid>
-	
+ 		
 	</ui:define>
 	
 	

@@ -37,10 +37,13 @@
   				
   				<p:outputPanel style="width:100%">
   				
-  					<h:panelGrid columns="1">
+  					<h:panelGrid columns="2" style="width:40%">
   			
 			  			<p:outputLabel for="dataAdesao" value="Data de Adesão" style="color:red"/>
+			  			<p:outputLabel for="senhaInternet" value="Senha da internet"/>
+				  		
 				  		<p:calendar  navigator="true" id="dataAdesao" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" required="true" requiredMessage="Data de Adesão: Campo obrigatório" value="#{mbeanModel.dataAdesao}" styleClass="coluna90" style="color:red"/>
+				  		<p:password id="senhaInternet" value="#{mbeanModel.senha}" maxlength="300" />
 				  		
 		  			</h:panelGrid>
 		  			

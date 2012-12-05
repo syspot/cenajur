@@ -29,7 +29,7 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 	protected void clearFields() {
 		this.limpar();
 		this.limparPesquisa();
-		this.tabIndex = 1;
+		this.tabIndex = 0;
 	}
 	
 	public String limpar(){
@@ -137,7 +137,7 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 		
 		this.grid = this.crudPesquisaModel.findByModel();
 		
-		this.tabIndex = 1;
+		this.tabIndex = 0;
 		
 		return null;
 		
@@ -147,7 +147,7 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 
 		this.crudModel = this.crudModel.getById();
 		
-		this.tabIndex = 0;
+		this.tabIndex = 1;
 		
 		this.flagAlterar = true;
 		

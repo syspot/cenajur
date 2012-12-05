@@ -7,6 +7,8 @@ public class Model {
 	private BigInteger qtd;
 	
 	private String ano;
+	
+	private Boolean flag;
 
 	public Integer getQtd() {
 		return qtd.intValue();
@@ -22,6 +24,14 @@ public class Model {
 
 	public void setAno(String ano) {
 		this.ano = ano;
+	}
+
+	public Boolean getFlag() {
+		return flag;
+	}
+
+	public void setFlag(Boolean flag) {
+		this.flag = flag;
 	}
 	
 	
