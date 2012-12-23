@@ -49,48 +49,52 @@
 					<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
 				</p:commandButton>
 				
-				<p:dataTable value="#{mbeanProcessoModel.processosClientes}" var="processoCliente" emptyMessage="Nenhum associado selecionado" rowIndexVar="index" style="width:100%">
-
-					<p:column headerText="Nome" styleClass="coluna70">
-						<h:outputText value="#{processoCliente.cliente.nome}" />
-					</p:column>
-
-					<p:column headerText="CPF" styleClass="coluna25">
-						<h:outputText value="#{processoCliente.cliente.cpf}" />
-					</p:column>
-					
-					<p:column headerText="Alterar Situação" styleClass="coluna5">
+				<p:scrollPanel style="width: 100%;height: 200px" mode="native">
+				
+					<p:dataTable value="#{mbeanProcessoModel.processosClientes}" var="processoCliente" emptyMessage="Nenhum associado selecionado" rowIndexVar="index" style="width:100%">
+	
+						<p:column headerText="Nome" styleClass="coluna70">
+							<h:outputText value="#{processoCliente.cliente.nome}" />
+						</p:column>
+	
+						<p:column headerText="CPF" styleClass="coluna25">
+							<h:outputText value="#{processoCliente.cliente.cpf}" />
+						</p:column>
 						
-						<p:commandLink oncomplete="dlgArquivarProcessoCliente.show();" process="@this" rendered="#{empty cadastroViaCliente ? true : false}">
-							<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
-							<f:setPropertyActionListener target="#{mbeanProcesso.processoClienteSelecionado}" value="#{processoCliente}" />
-						</p:commandLink>
-						
-						<p:commandLink oncomplete="dlgArquivarProcessoCliente2.show();" process="@this" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}">
-							<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
-							<f:setPropertyActionListener target="#{clienteFaces.processoAux.processoClienteSelecionado}" value="#{processoCliente}" />
-							<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
-						</p:commandLink>
-						
-					</p:column>
-
-					<p:column headerText="Remover" styleClass="coluna5">
-
-						<p:commandLink action="#{mbeanProcesso.removeCliente}" process="@this" rendered="#{empty cadastroViaCliente ? true : false}">
-							<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
-							<f:setPropertyActionListener target="#{mbeanProcesso.processoClienteSelecionado}" value="#{processoCliente}" />
-						</p:commandLink>
-						
-						<p:commandLink action="#{clienteFaces.processoAux.removeCliente}" process="@this" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}">
-							<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
-							<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
-							<f:setPropertyActionListener target="#{clienteFaces.processoAux.processoClienteSelecionado}" value="#{processoCliente}" />
-						</p:commandLink>
-						
-					</p:column>
-
-				</p:dataTable>
-
+						<p:column headerText="Alterar Situação" styleClass="coluna5">
+							
+							<p:commandLink oncomplete="dlgArquivarProcessoCliente.show();" process="@this" rendered="#{empty cadastroViaCliente ? true : false}">
+								<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
+								<f:setPropertyActionListener target="#{mbeanProcesso.processoClienteSelecionado}" value="#{processoCliente}" />
+							</p:commandLink>
+							
+							<p:commandLink oncomplete="dlgArquivarProcessoCliente2.show();" process="@this" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}">
+								<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
+								<f:setPropertyActionListener target="#{clienteFaces.processoAux.processoClienteSelecionado}" value="#{processoCliente}" />
+								<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
+							</p:commandLink>
+							
+						</p:column>
+	
+						<p:column headerText="Remover" styleClass="coluna5">
+	
+							<p:commandLink action="#{mbeanProcesso.removeCliente}" process="@this" rendered="#{empty cadastroViaCliente ? true : false}">
+								<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+								<f:setPropertyActionListener target="#{mbeanProcesso.processoClienteSelecionado}" value="#{processoCliente}" />
+							</p:commandLink>
+							
+							<p:commandLink action="#{clienteFaces.processoAux.removeCliente}" process="@this" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}">
+								<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+								<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
+								<f:setPropertyActionListener target="#{clienteFaces.processoAux.processoClienteSelecionado}" value="#{processoCliente}" />
+							</p:commandLink>
+							
+						</p:column>
+	
+					</p:dataTable>
+				
+				</p:scrollPanel>
+				
 			</p:outputPanel>
 
 		</p:fieldset>
@@ -103,44 +107,49 @@
 				<p:commandButton process="@this" value="Adicionar Parte Contrária" icon="ui-icon-plus" onclick="dlgParteContraria2.show();" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}" style="margin-bottom:5px">
 					<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
 				</p:commandButton>
-				<p:dataTable value="#{mbeanProcessoModel.processosPartesContrarias}" var="processoParteContraria" emptyMessage="Nenhuma parte contrária selecionada" rowIndexVar="index" style="width:100%">
-
-					<p:column headerText="Nome" styleClass="coluna95">
-						<h:outputText value="#{processoParteContraria.parteContraria.descricao}" />
-					</p:column>
-					
-					<p:column headerText="Alterar Situação" styleClass="coluna5">
+				
+				<p:scrollPanel style="width: 100%;height: 200px" mode="native">
+				
+					<p:dataTable value="#{mbeanProcessoModel.processosPartesContrarias}" var="processoParteContraria" emptyMessage="Nenhuma parte contrária selecionada" rowIndexVar="index" style="width:100%">
+	
+						<p:column headerText="Nome" styleClass="coluna95">
+							<h:outputText value="#{processoParteContraria.parteContraria.descricao}" />
+						</p:column>
 						
-						<p:commandLink process="@this" oncomplete="dlgArquivarProcessoParteContraria.show();" rendered="#{empty cadastroViaCliente ? true : false}">
-							<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
-							<f:setPropertyActionListener target="#{mbeanProcesso.processoParteContrariaSelecionada}" value="#{processoParteContraria}" />
-						</p:commandLink>
+						<p:column headerText="Alterar Situação" styleClass="coluna5">
+							
+							<p:commandLink process="@this" oncomplete="dlgArquivarProcessoParteContraria.show();" rendered="#{empty cadastroViaCliente ? true : false}">
+								<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
+								<f:setPropertyActionListener target="#{mbeanProcesso.processoParteContrariaSelecionada}" value="#{processoParteContraria}" />
+							</p:commandLink>
+							
+							<p:commandLink process="@this" oncomplete="dlgArquivarProcessoParteContraria2.show();" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}">
+								<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
+								<f:setPropertyActionListener target="#{clienteFaces.processoAux.processoParteContrariaSelecionada}" value="#{processoParteContraria}" />
+								<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
+							</p:commandLink>
+							
+						</p:column>
+	
+						<p:column headerText="Remover" style="text-align: center" styleClass="coluna5">
 						
-						<p:commandLink process="@this" oncomplete="dlgArquivarProcessoParteContraria2.show();" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}">
-							<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
-							<f:setPropertyActionListener target="#{clienteFaces.processoAux.processoParteContrariaSelecionada}" value="#{processoParteContraria}" />
-							<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
-						</p:commandLink>
-						
-					</p:column>
-
-					<p:column headerText="Remover" style="text-align: center" styleClass="coluna5">
-					
-						<p:commandLink action="#{mbeanProcesso.removeParteContraria}" process="@this" rendered="#{empty cadastroViaCliente ? true : false}">
-							<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
-							<f:setPropertyActionListener target="#{mbeanProcesso.processoParteContrariaSelecionada}" value="#{processoParteContraria}" />
-						</p:commandLink>
-						
-						<p:commandLink action="#{clienteFaces.processoAux.removeParteContraria}" process="@this" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}">
-							<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
-							<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
-							<f:setPropertyActionListener target="#{clienteFaces.processoAux.processoParteContrariaSelecionada}" value="#{processoParteContraria}" />
-						</p:commandLink>
-						
-					</p:column>
-
-				</p:dataTable>
-
+							<p:commandLink action="#{mbeanProcesso.removeParteContraria}" process="@this" rendered="#{empty cadastroViaCliente ? true : false}">
+								<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+								<f:setPropertyActionListener target="#{mbeanProcesso.processoParteContrariaSelecionada}" value="#{processoParteContraria}" />
+							</p:commandLink>
+							
+							<p:commandLink action="#{clienteFaces.processoAux.removeParteContraria}" process="@this" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}">
+								<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+								<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
+								<f:setPropertyActionListener target="#{clienteFaces.processoAux.processoParteContrariaSelecionada}" value="#{processoParteContraria}" />
+							</p:commandLink>
+							
+						</p:column>
+	
+					</p:dataTable>
+				
+				</p:scrollPanel>
+				
 			</p:outputPanel>
 
 		</p:fieldset>
