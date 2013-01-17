@@ -15,14 +15,17 @@
 		<navigation-case>
 			<from-outcome>entrar</from-outcome>
 			<to-view-id>/pages/dashboard.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>sair</from-outcome>
 			<to-view-id>/pages/login.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>login</from-outcome>
 			<to-view-id>/pages/login.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 	</navigation-rule>
 

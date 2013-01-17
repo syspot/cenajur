@@ -38,11 +38,17 @@
   	<ui:define name="colunasTabela">
   	
   		<p:column headerText="Tipo de Categoria" styleClass="coluna20" style="text-align: center">
-  			<h:outputText value="#{linha.tipoCategoria.descricao}" />
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.tipoCategoria.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
   		</p:column>
   		
   		<p:column headerText="Descrição">
-  			<h:outputText value="#{linha.descricao}" />
+  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+	  			<h:outputText value="#{linha.descricao}" />
+				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+			</p:commandLink>
   		</p:column>
   		
   	</ui:define>

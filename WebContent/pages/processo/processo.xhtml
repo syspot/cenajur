@@ -18,14 +18,26 @@
 	
 	<ui:define name="fimCadastro">
 	
-		<p:accordionPanel multiple="true" activeIndex="0, 1" style="margin-top:30px">
+		<p:outputPanel layout="block" style="width: 98%;">									
+					
+			<p:fieldset style="width: 98.5%">
+				
+				<h:panelGrid style="width: 98.5%;">
+				
+					<p:accordionPanel multiple="true" activeIndex="0, 1" style="margin-top:30px">
 		
-			<ui:include src="/pages/processo/tab_andamento_processo.xhtml" />
-
-			<ui:include src="/pages/processo/tab_audiencia.xhtml" />
-		
-		</p:accordionPanel>
-
+						<ui:include src="/pages/processo/tab_andamento_processo.xhtml" />
+			
+						<ui:include src="/pages/processo/tab_audiencia.xhtml" />
+					
+					</p:accordionPanel>
+				
+				</h:panelGrid>
+				
+			</p:fieldset>
+				
+		</p:outputPanel>
+	
 	</ui:define>
 
 	<ui:define name="pesquisaCampos">

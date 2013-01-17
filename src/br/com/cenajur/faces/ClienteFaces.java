@@ -225,6 +225,17 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 			CenajurUtil.addDangerMessage("O endereço e telefone estão desatualizados");
 		}
 		
+		if(TSUtil.isEmpty(getCrudModel().getCidade())){
+			
+			getCrudModel().setCidade(new Cidade());
+			getCrudModel().getCidade().setEstado(new Estado());
+			
+		} else{
+			
+			this.atualizarComboCidades();
+			
+		}
+		
 		Calendar c = Calendar.getInstance();
 		
 		Faturamento faturamento = new Faturamento();
@@ -242,8 +253,6 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 			getCrudModel().setFaturasAbertas(getCrudModel().getFaturasAbertas() + " " + fatura.getMes() + "/" + fatura.getAno() + " ");
 			
 		}
-		
-		this.atualizarComboCidades();
 		
 		for(Processo processo : getCrudModel().getProcessos()){
 			

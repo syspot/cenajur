@@ -368,29 +368,37 @@
   	
 	<ui:define name="fimCadastro">
 	
-		<h:panelGrid style="width: 98.5%;">
-		
-			<p:tabView>
-			
-				<p:tab title="Processos">
-				
-					<ui:include src="/pages/processo/tab_cliente_processo.xhtml"/>
+		<p:outputPanel layout="block" style="width: 98%;">									
 					
-				</p:tab>
+			<p:fieldset style="width: 98.5%">
 				
-			</p:tabView>
-			
-			<p:tabView>
-			
-				<p:tab title="Visitas">
-				
-					<ui:include src="/pages/processo/include_visita_cliente.xhtml"/>
+				<h:panelGrid style="width: 98.5%;">
+
+					<p:tabView>
 					
-				</p:tab>
+						<p:tab title="Processos">
+						
+							<ui:include src="/pages/processo/tab_cliente_processo.xhtml"/>
+							
+						</p:tab>
+						
+					</p:tabView>
+					
+					<p:tabView>
+					
+						<p:tab title="Visitas">
+						
+							<ui:include src="/pages/processo/include_visita_cliente.xhtml"/>
+							
+						</p:tab>
+						
+					</p:tabView>
 				
-			</p:tabView>
-		
-		</h:panelGrid>
+				</h:panelGrid>
+					
+			</p:fieldset>
+			
+		</p:outputPanel>
 
 	</ui:define>
   	

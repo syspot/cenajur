@@ -48,6 +48,7 @@ public class AutenticacaoFaces extends TSMainFaces{
     private Cliente clienteSelecionado;
     private Long situacaoProcesso;
     private String ano;
+    private String confirmaSenha;
 
     
     public AutenticacaoFaces() {
@@ -446,6 +447,7 @@ public class AutenticacaoFaces extends TSMainFaces{
     		colaborador.setSenha(Utilitarios.gerarHash(this.colaborador.getSenha2()));
     		colaborador.update();
     		CenajurUtil.addInfoMessage("Senha alterada com sucesso");
+    		this.opcao = 1L;
     	}
     	
     	return "login";
@@ -586,6 +588,14 @@ public class AutenticacaoFaces extends TSMainFaces{
 
 	public void setClienteSelecionado(Cliente clienteSelecionado) {
 		this.clienteSelecionado = clienteSelecionado;
+	}
+
+	public String getConfirmaSenha() {
+		return confirmaSenha;
+	}
+
+	public void setConfirmaSenha(String confirmaSenha) {
+		this.confirmaSenha = confirmaSenha;
 	}
 
 	public boolean isMostrarDialogAdvogado(){

@@ -38,10 +38,10 @@
                 <p:inputText id="usuarioAlterar" required="true" requiredMessage="Usuário: Obrigatório" value="#{autenticacaoFaces.colaborador.login}" style="width: 97%;" />
                 <p:outputLabel for="senhaAlterarOriginal" value="Senha:"/>
                 <p:password id="senhaAlterarOriginal" required="true" requiredMessage="Senha: Obrigatório" value="#{autenticacaoFaces.colaborador.senha}" maxlength="20" style="width: 97%;" />
-                <p:outputLabel for="senhaAlterar2" value="Nova Senha:"/>
+                <p:outputLabel for="senhaAlterar" value="Nova Senha:"/>
                 <p:password id="senhaAlterar" required="true" requiredMessage="Nova Senha: Obrigatório" value="#{autenticacaoFaces.colaborador.senha2}" match="senhaAlterar2" maxlength="20" style="width: 97%;" />
                 <p:outputLabel for="senhaAlterar2" value="Repetir Nova Senha:"/>
-                <p:password id="senhaAlterar2" required="true" requiredMessage="Repetir Nova Senha: Obrigatório"  value="#{autenticacaoFaces.colaborador.senha2}" maxlength="20" style="width: 97%;" />
+                <p:password id="senhaAlterar2" required="true" requiredMessage="Repetir Nova Senha: Obrigatório"  value="#{autenticacaoFaces.confirmaSenha}" maxlength="20" style="width: 97%;" />
               </h:panelGrid>
               
               <h:panelGrid styleClass="coluna100" columns="2" columnClasses="coluna40,coluna60" rendered="#{autenticacaoFaces.opcao == 2}">
