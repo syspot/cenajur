@@ -1,392 +1,415 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:composition
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:c="http://java.sun.com/jsp/jstl/core">
-	
-	<ui:param name="mbean" value="${relatorioAdesaoPorAnoFaces}" />
-	
-  	<p:tabView id="tabview" dynamic="false">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-		<p:tab id="tabRelatorio" title="Relatório" >
-		
-		  	<h:form id="formRelatorio">
-		  	
-		  		<h:panelGrid>
-		  			
-		  			<p:outputLabel for="ano" value="Ano" />
-		  			<p:inputMask id="ano" mask="9999" value="#{mbean.ano}" />
-		  		
-			  		<p:commandButton value="Atualizar" action="#{mbean.atualizar}" ajax="false" style="margin-bottom:30px; margin-top:20px;" />
-		  		
-		  		</h:panelGrid>
-		  		
-		  		<p:panel id="pgGridImpressao" style="width:100%">
-		  		
-			  		<div id="grid" class="ui-datatable ui-widget" style="width: 100%">
-			  		
-				  		<table>
-				  		
-				  			<thead>
-				  			
-					  			<tr >
-					  				
-					  				<th class="ui-state-default" >
-					  					<div class="ui-dt-c"><span>Descrição</span></div>
-					  				</th>
-					  				
-					  				<th class="ui-state-default" >
-					  					<div class="ui-dt-c"><span>Jan</span></div>
-					  				</th>
-					  				
-					  				<th class="ui-state-default" >
-					  					<div class="ui-dt-c"><span>Fev</span></div>
-					  				</th>
-					  				
-					  				<th class="ui-state-default" >
-					  					<div class="ui-dt-c"><span>Mar</span></div>
-					  				</th>
-					  				
-					  				<th class="ui-state-default" >
-					  					<div class="ui-dt-c"><span>Abr</span></div>
-					  				</th>
-					  				
-					  				<th class="ui-state-default" >
-					  					<div class="ui-dt-c"><span>Mai</span></div>
-					  				</th>
-					  				
-					  				<th class="ui-state-default" >
-					  					<div class="ui-dt-c"><span>Jun</span></div>
-					  				</th>
-					  				
-					  				<th class="ui-state-default" >
-					  					<div class="ui-dt-c"><span>Jul</span></div>
-					  				</th>
-					  				
-					  				<th class="ui-state-default" >
-					  					<div class="ui-dt-c"><span>Ago</span></div>
-					  				</th>
-					  				
-					  				<th class="ui-state-default" >
-					  					<div class="ui-dt-c"><span>Set</span></div>
-					  				</th>
-					  				
-					  				<th class="ui-state-default" >
-					  					<div class="ui-dt-c"><span>Out</span></div>
-					  				</th>
-					  				
-					  				<th class="ui-state-default" >
-					  					<div class="ui-dt-c"><span>Nov</span></div>
-					  				</th>
-					  				
-					  				<th class="ui-state-default" >
-					  					<div class="ui-dt-c"><span>Dez</span></div>
-					  				</th>
-					  				
-					  				<th class="ui-state-default" >
-					  					<div class="ui-dt-c"><span>Total</span></div>
-					  				</th>
-					  				
-					  			</tr>
-					  			
-					  		</thead>
-				  			
-				  			<tbody class="ui-datatable-data ui-widget-content">
-				  			
-				  				<c:forEach items="#{mbean.grid1}" var="model">
-				  				
-					  				<tr class="ui-widget-content ui-datatable-even" >
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.descricao}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.jan}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.fev}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.mar}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.abr}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.mai}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.jun}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.jul}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.ago}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.set}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.out}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.nov}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.dez}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.tot}" />
-				  							</div>
-			  							</td>
-			  							
-							  		</tr>
-				  			
-						  		</c:forEach>
-						  		
-						  		<c:forEach items="#{mbean.grid2}" var="model">
-				  				
-					  				<tr class="ui-widget-content ui-datatable-even" >
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.descricao}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.jan}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.fev}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.mar}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.abr}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.mai}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.jun}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.jul}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.ago}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.set}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.out}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.nov}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.dez}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.tot}" />
-				  							</div>
-			  							</td>
-			  							
-							  		</tr>
-				  			
-						  		</c:forEach>
-						  		
-						  		<c:forEach items="#{mbean.grid3}" var="model">
-				  				
-					  				<tr class="ui-widget-content ui-datatable-even" >
-					  				
-				  						<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.descricao}" />
-				  							</div>
-			  							</td>
-				  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.jan}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.fev}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.mar}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.abr}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.mai}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.jun}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.jul}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.ago}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.set}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.out}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.nov}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.dez}" />
-				  							</div>
-			  							</td>
-					  				
-					  					<td>
-					  						<div class="ui-dt-c">
-									  			<h:outputText value="#{model.tot}" />
-				  							</div>
-			  							</td>
-			  							
-							  		</tr>
-				  			
-						  		</c:forEach>
-						  		
-				  			</tbody>
-				  		
-				  		</table>
-				  		
-				  	</div>
-			  	
-			  	</p:panel>
-			  	
-			  	<p:commandButton value="Imprimir" type="button" icon="ui-icon-print" style="margin-top:10px">  
-			        <p:printer target="pgGridImpressao" />  
-			    </p:commandButton>
-			  	
-			</h:form>
-			
-		</p:tab>
-		
-	</p:tabView>
-  	
+    <ui:param name="mbean" value="${relatorioAdesaoPorAnoFaces}" />
+
+    <p:tabView id="tabview" dynamic="false">
+
+        <p:tab id="tabRelatorio" title="Relatório">
+
+            <h:form id="formRelatorio">
+
+                <h:panelGrid>
+
+                    <p:outputLabel for="ano" value="Ano" />
+                    <p:inputMask id="ano" mask="9999" value="#{mbean.ano}" />
+
+                    <p:commandButton value="Atualizar" action="#{mbean.atualizar}" ajax="false" style="margin-bottom:30px; margin-top:20px;" />
+
+                </h:panelGrid>
+
+                <p:panel id="pgGridImpressao" style="width:100%">
+
+                    <div id="grid" class="ui-datatable ui-widget" style="width: 100%">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+
+                                    <th class="ui-state-default">
+                                        <div class="ui-dt-c">
+                                            <span>Descrição</span>
+                                        </div>
+                                    </th>
+
+                                    <th class="ui-state-default">
+                                        <div class="ui-dt-c">
+                                            <span>Jan</span>
+                                        </div>
+                                    </th>
+
+                                    <th class="ui-state-default">
+                                        <div class="ui-dt-c">
+                                            <span>Fev</span>
+                                        </div>
+                                    </th>
+
+                                    <th class="ui-state-default">
+                                        <div class="ui-dt-c">
+                                            <span>Mar</span>
+                                        </div>
+                                    </th>
+
+                                    <th class="ui-state-default">
+                                        <div class="ui-dt-c">
+                                            <span>Abr</span>
+                                        </div>
+                                    </th>
+
+                                    <th class="ui-state-default">
+                                        <div class="ui-dt-c">
+                                            <span>Mai</span>
+                                        </div>
+                                    </th>
+
+                                    <th class="ui-state-default">
+                                        <div class="ui-dt-c">
+                                            <span>Jun</span>
+                                        </div>
+                                    </th>
+
+                                    <th class="ui-state-default">
+                                        <div class="ui-dt-c">
+                                            <span>Jul</span>
+                                        </div>
+                                    </th>
+
+                                    <th class="ui-state-default">
+                                        <div class="ui-dt-c">
+                                            <span>Ago</span>
+                                        </div>
+                                    </th>
+
+                                    <th class="ui-state-default">
+                                        <div class="ui-dt-c">
+                                            <span>Set</span>
+                                        </div>
+                                    </th>
+
+                                    <th class="ui-state-default">
+                                        <div class="ui-dt-c">
+                                            <span>Out</span>
+                                        </div>
+                                    </th>
+
+                                    <th class="ui-state-default">
+                                        <div class="ui-dt-c">
+                                            <span>Nov</span>
+                                        </div>
+                                    </th>
+
+                                    <th class="ui-state-default">
+                                        <div class="ui-dt-c">
+                                            <span>Dez</span>
+                                        </div>
+                                    </th>
+
+                                    <th class="ui-state-default">
+                                        <div class="ui-dt-c">
+                                            <span>Total</span>
+                                        </div>
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody class="ui-datatable-data ui-widget-content">
+
+                                <c:forEach items="#{mbean.grid1}" var="model">
+
+                                    <tr class="ui-widget-content ui-datatable-even">
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.descricao}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.jan}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.fev}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.mar}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.abr}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.mai}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.jun}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.jul}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.ago}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.set}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.out}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.nov}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.dez}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.tot}" />
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                </c:forEach>
+
+                                <c:forEach items="#{mbean.grid2}" var="model">
+
+                                    <tr class="ui-widget-content ui-datatable-even">
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.descricao}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.jan}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.fev}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.mar}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.abr}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.mai}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.jun}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.jul}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.ago}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.set}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.out}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.nov}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.dez}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.tot}" />
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                </c:forEach>
+
+                                <c:forEach items="#{mbean.grid3}" var="model">
+
+                                    <tr class="ui-widget-content ui-datatable-even">
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.descricao}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.jan}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.fev}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.mar}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.abr}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.mai}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.jun}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.jul}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.ago}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.set}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.out}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.nov}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.dez}" />
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <h:outputText value="#{model.tot}" />
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                </c:forEach>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </p:panel>
+
+                <p:commandButton value="Imprimir" type="button" icon="ui-icon-print" style="margin-top:10px">
+                    <p:printer target="pgGridImpressao" />
+                </p:commandButton>
+
+            </h:form>
+
+        </p:tab>
+
+    </p:tabView>
+
 </ui:composition>

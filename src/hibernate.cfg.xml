@@ -2,85 +2,90 @@
 <!DOCTYPE hibernate-configuration PUBLIC
 	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
 	"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
-	
+
 <hibernate-configuration>
 
-	<session-factory>
-		
-		<property name="current_session_context_class">thread</property>
+    <session-factory>
 
-		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
-		
-		<property name="hibernate.connection.datasource">java:/comp/env/jdbc/CenajurDS</property>
+        <property name="current_session_context_class">thread</property>
 
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+
+        <property name="hibernate.connection.datasource">java:/comp/env/jdbc/CenajurDS</property>
+
+<<<<<<< HEAD
 		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.temp.use_jdbc_metadata_defaults">true</property>
+=======
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.temp.use_jdbc_metadata_defaults">true</property>
+>>>>>>> 913ef8b77621ba3e695cb15f8cbe127f81130dff
 
- 		<mapping class="br.com.cenajur.model.Agenda" />
- 		<mapping class="br.com.cenajur.model.AgendaColaborador" />
- 		<mapping class="br.com.cenajur.model.AndamentoProcesso" />
- 		<mapping class="br.com.cenajur.model.Audiencia" />
- 		<mapping class="br.com.cenajur.model.AudienciaAdvogado" />
- 		<mapping class="br.com.cenajur.model.Banco" />
- 		<mapping class="br.com.cenajur.model.CategoriaDocumento" />
- 		<mapping class="br.com.cenajur.model.Cidade" />
- 		<mapping class="br.com.cenajur.model.Cliente" />
- 		<mapping class="br.com.cenajur.model.Colaborador" />
- 		<mapping class="br.com.cenajur.model.Comarca" />
- 		<mapping class="br.com.cenajur.model.ConfiguracoesEmail" />
- 		<mapping class="br.com.cenajur.model.ConfiguracoesReplaceEmail" />
- 		<mapping class="br.com.cenajur.model.ContadorEmail" />
- 		<mapping class="br.com.cenajur.model.ContadorSms" />
- 		<mapping class="br.com.cenajur.model.DocumentoAndamentoProcesso" />
- 		<mapping class="br.com.cenajur.model.DocumentoAudiencia" />
- 		<mapping class="br.com.cenajur.model.DocumentoCliente" />
- 		<mapping class="br.com.cenajur.model.DocumentoColaborador" />
- 		<mapping class="br.com.cenajur.model.DocumentoGeral" />
- 		<mapping class="br.com.cenajur.model.DocumentoPesquisa" />
- 		<mapping class="br.com.cenajur.model.DocumentoProcesso" />
- 		<mapping class="br.com.cenajur.model.Email" />
- 		<mapping class="br.com.cenajur.model.Estado" />
- 		<mapping class="br.com.cenajur.model.EstadoCivil" />
- 		<mapping class="br.com.cenajur.model.Faturamento" />
- 		<mapping class="br.com.cenajur.model.Graduacao" />
- 		<mapping class="br.com.cenajur.model.Grupo" />
- 		<mapping class="br.com.cenajur.model.Lotacao" />
- 		<mapping class="br.com.cenajur.model.Mensagem" />
- 		<mapping class="br.com.cenajur.model.MensagemComprovantePagamento" />
- 		<mapping class="br.com.cenajur.model.MensagemDestinatario" />
- 		<mapping class="br.com.cenajur.model.Menu" />
- 		<mapping class="br.com.cenajur.model.MotivoCancelamento" />
- 		<mapping class="br.com.cenajur.model.Objeto" />
- 		<mapping class="br.com.cenajur.model.ParteContraria" />
- 		<mapping class="br.com.cenajur.model.Permissao" />
- 		<mapping class="br.com.cenajur.model.PermissaoGrupo" />
- 		<mapping class="br.com.cenajur.model.Plano" />
- 		<mapping class="br.com.cenajur.model.Processo" />
- 		<mapping class="br.com.cenajur.model.ProcessoCliente" />
- 		<mapping class="br.com.cenajur.model.ProcessoNumero" />
- 		<mapping class="br.com.cenajur.model.ProcessoParteContraria" />
- 		<mapping class="br.com.cenajur.model.RegrasBloqueio" />
- 		<mapping class="br.com.cenajur.model.RegrasEmail" />
- 		<mapping class="br.com.cenajur.model.SituacaoAudiencia" />
- 		<mapping class="br.com.cenajur.model.SituacaoProcesso" />
- 		<mapping class="br.com.cenajur.model.SituacaoProcessoCliente" />
- 		<mapping class="br.com.cenajur.model.SituacaoProcessoParteContraria" />
- 		<mapping class="br.com.cenajur.model.TipoAcesso" />
- 		<mapping class="br.com.cenajur.model.TipoAgenda" />
- 		<mapping class="br.com.cenajur.model.TipoAndamentoProcesso" />
- 		<mapping class="br.com.cenajur.model.TipoCategoria" />
- 		<mapping class="br.com.cenajur.model.TipoColaborador" />
- 		<mapping class="br.com.cenajur.model.TipoDocumento" />
- 		<mapping class="br.com.cenajur.model.TipoInformacao" />
- 		<mapping class="br.com.cenajur.model.TipoPagamento" />
- 		<mapping class="br.com.cenajur.model.TipoParte" />
- 		<mapping class="br.com.cenajur.model.TipoProcesso" />
- 		<mapping class="br.com.cenajur.model.TipoVisita" />
- 		<mapping class="br.com.cenajur.model.Turno" />
- 		<mapping class="br.com.cenajur.model.Usuario" />
- 		<mapping class="br.com.cenajur.model.Vara" />
+        <mapping class="br.com.cenajur.model.Agenda" />
+        <mapping class="br.com.cenajur.model.AgendaColaborador" />
+        <mapping class="br.com.cenajur.model.AndamentoProcesso" />
+        <mapping class="br.com.cenajur.model.Audiencia" />
+        <mapping class="br.com.cenajur.model.AudienciaAdvogado" />
+        <mapping class="br.com.cenajur.model.Banco" />
+        <mapping class="br.com.cenajur.model.CategoriaDocumento" />
+        <mapping class="br.com.cenajur.model.Cidade" />
+        <mapping class="br.com.cenajur.model.Cliente" />
+        <mapping class="br.com.cenajur.model.Colaborador" />
+        <mapping class="br.com.cenajur.model.Comarca" />
+        <mapping class="br.com.cenajur.model.ConfiguracoesEmail" />
+        <mapping class="br.com.cenajur.model.ConfiguracoesReplaceEmail" />
+        <mapping class="br.com.cenajur.model.ContadorEmail" />
+        <mapping class="br.com.cenajur.model.ContadorSms" />
+        <mapping class="br.com.cenajur.model.DocumentoAndamentoProcesso" />
+        <mapping class="br.com.cenajur.model.DocumentoAudiencia" />
+        <mapping class="br.com.cenajur.model.DocumentoCliente" />
+        <mapping class="br.com.cenajur.model.DocumentoColaborador" />
+        <mapping class="br.com.cenajur.model.DocumentoGeral" />
+        <mapping class="br.com.cenajur.model.DocumentoPesquisa" />
+        <mapping class="br.com.cenajur.model.DocumentoProcesso" />
+        <mapping class="br.com.cenajur.model.Email" />
+        <mapping class="br.com.cenajur.model.Estado" />
+        <mapping class="br.com.cenajur.model.EstadoCivil" />
+        <mapping class="br.com.cenajur.model.Faturamento" />
+        <mapping class="br.com.cenajur.model.Graduacao" />
+        <mapping class="br.com.cenajur.model.Grupo" />
+        <mapping class="br.com.cenajur.model.Lotacao" />
+        <mapping class="br.com.cenajur.model.Mensagem" />
+        <mapping class="br.com.cenajur.model.MensagemComprovantePagamento" />
+        <mapping class="br.com.cenajur.model.MensagemDestinatario" />
+        <mapping class="br.com.cenajur.model.Menu" />
+        <mapping class="br.com.cenajur.model.MotivoCancelamento" />
+        <mapping class="br.com.cenajur.model.Objeto" />
+        <mapping class="br.com.cenajur.model.ParteContraria" />
+        <mapping class="br.com.cenajur.model.Permissao" />
+        <mapping class="br.com.cenajur.model.PermissaoGrupo" />
+        <mapping class="br.com.cenajur.model.Plano" />
+        <mapping class="br.com.cenajur.model.Processo" />
+        <mapping class="br.com.cenajur.model.ProcessoCliente" />
+        <mapping class="br.com.cenajur.model.ProcessoNumero" />
+        <mapping class="br.com.cenajur.model.ProcessoParteContraria" />
+        <mapping class="br.com.cenajur.model.RegrasBloqueio" />
+        <mapping class="br.com.cenajur.model.RegrasEmail" />
+        <mapping class="br.com.cenajur.model.SituacaoAudiencia" />
+        <mapping class="br.com.cenajur.model.SituacaoProcesso" />
+        <mapping class="br.com.cenajur.model.SituacaoProcessoCliente" />
+        <mapping class="br.com.cenajur.model.SituacaoProcessoParteContraria" />
+        <mapping class="br.com.cenajur.model.TipoAcesso" />
+        <mapping class="br.com.cenajur.model.TipoAgenda" />
+        <mapping class="br.com.cenajur.model.TipoAndamentoProcesso" />
+        <mapping class="br.com.cenajur.model.TipoCategoria" />
+        <mapping class="br.com.cenajur.model.TipoColaborador" />
+        <mapping class="br.com.cenajur.model.TipoDocumento" />
+        <mapping class="br.com.cenajur.model.TipoInformacao" />
+        <mapping class="br.com.cenajur.model.TipoPagamento" />
+        <mapping class="br.com.cenajur.model.TipoParte" />
+        <mapping class="br.com.cenajur.model.TipoProcesso" />
+        <mapping class="br.com.cenajur.model.TipoVisita" />
+        <mapping class="br.com.cenajur.model.Turno" />
+        <mapping class="br.com.cenajur.model.Usuario" />
+        <mapping class="br.com.cenajur.model.Vara" />
 
-	</session-factory>
+    </session-factory>
 
 </hibernate-configuration>
 	
