@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +28,25 @@ public class Faturamento extends TSActiveRecordAb<Faturamento>{
 	 * 
 	 */
 	private static final long serialVersionUID = 2314602226026074016L;
-
+	
+	public Faturamento(){
+	}
+	
+	public Faturamento(Long id, Double valor, Integer ano, Integer mes, Boolean flagPago, Boolean flagCancelado, String clienteNome, String planoDescricao){
+		this.cliente = new Cliente();
+		this.cliente.setNome(clienteNome);
+		this.plano = new Plano();
+		this.plano.setDescricao(planoDescricao);
+		this.flagPago = flagPago;
+		this.flagCancelado = flagCancelado;
+		this.ano = ano;
+		this.mes = mes;
+		this.id = id;
+		this.valor = valor;
+	}
+	
+	
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="faturamento_id")
 	@SequenceGenerator(name="faturamento_id", sequenceName="faturamento_id_seq")
@@ -217,17 +236,18 @@ public class Faturamento extends TSActiveRecordAb<Faturamento>{
 		return true;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Faturamento> findByModel(String... fieldsOrderBy) {
 		
-		StringBuilder query = new StringBuilder(" from Faturamento f where 1 = 1 ");
+		StringBuilder query = new StringBuilder("select new Faturamento(f.id,f.valor,f.ano,f.mes,f.flagPago,f.flagCancelado,c.nome,p.descricao) from Faturamento f join f.cliente c join f.plano p where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(getCliente()) && !TSUtil.isEmpty(getCliente().getId())){
-			query.append(" and f.cliente.id = ?");
+			query.append(" and c.id = ?");
 		}
 		
 		if(!TSUtil.isEmpty(getPlano()) && !TSUtil.isEmpty(getPlano().getId())){
-			query.append(" and f.plano.id = ?");
+			query.append(" and p.id = ?");
 		}
 		
 		if(!TSUtil.isEmpty(getMes())){
@@ -274,7 +294,9 @@ public class Faturamento extends TSActiveRecordAb<Faturamento>{
 			params.add(getFlagCancelado());
 		}
 		
-		return super.find(query.toString(), null, params.toArray());
+		List list= super.find(query.toString(), null, params.toArray());
+		
+		return list;
 		
 	}
 	
@@ -298,7 +320,7 @@ public class Faturamento extends TSActiveRecordAb<Faturamento>{
 		try{
 			getSession().createSQLQuery("select fc_gerar_faturamento(" + colaboradorGeracao.getId() + ")").executeUpdate();
 		}catch(Exception e){
-			// a function é executada, mas sobe exceção no retorno que deve ser abafada.
+			// a function ï¿½ executada, mas sobe exceï¿½ï¿½o no retorno que deve ser abafada.
 		}
 	}
 	
