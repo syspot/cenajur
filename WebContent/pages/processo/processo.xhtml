@@ -1,182 +1,183 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <ui:composition template="/resources/templates/templateCRUD.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 
-	<ui:param name="mbean" value="${processoFaces}" />
-	<ui:param name="mbeanModel" value="${processoFaces.crudModel}" />
-	<ui:param name="mbeanProcesso" value="${processoFaces}" />
-	<ui:param name="mbeanProcessoAndamento" value="${processoFaces.processoAndamentoUtil}" />
-	<ui:param name="mbeanProcessoAudiencia" value="${processoFaces.processoAudienciaUtil}" />
-	<ui:param name="mbeanProcessoModel" value="${processoFaces.crudModel}" />
-	<ui:param name="mbeanProcessoPesquisaModel" value="${processoFaces.crudPesquisaModel}" />
-	<ui:param name="informacoesCadastro" value="${true}" />
+    <ui:param name="mbean" value="${processoFaces}" />
+    <ui:param name="mbeanModel" value="${processoFaces.crudModel}" />
+    <ui:param name="mbeanProcesso" value="${processoFaces}" />
+    <ui:param name="mbeanProcessoAndamento" value="${processoFaces.processoAndamentoUtil}" />
+    <ui:param name="mbeanProcessoAudiencia" value="${processoFaces.processoAudienciaUtil}" />
+    <ui:param name="mbeanProcessoModel" value="${processoFaces.crudModel}" />
+    <ui:param name="mbeanProcessoPesquisaModel" value="${processoFaces.crudPesquisaModel}" />
+    <ui:param name="informacoesCadastro" value="${true}" />
+    <ui:param name="gridComCss" value="${true}" />
 
-	<ui:define name="cadastro">
+    <ui:define name="cadastro">
 
-		<ui:include src="/pages/processo/include_cadastro_processo.xhtml" />
-	
-	</ui:define>
-	
-	<ui:define name="fimCadastro">
-	
-		<p:outputPanel layout="block" style="width: 98%;">									
-					
-			<p:fieldset style="width: 98.5%">
-				
-				<h:panelGrid style="width: 98.5%;">
-				
-					<p:accordionPanel multiple="true" activeIndex="0, 1" style="margin-top:30px">
-		
-						<ui:include src="/pages/processo/tab_andamento_processo.xhtml" />
-			
-						<ui:include src="/pages/processo/tab_audiencia.xhtml" />
-					
-					</p:accordionPanel>
-				
-				</h:panelGrid>
-				
-			</p:fieldset>
-				
-		</p:outputPanel>
-	
-	</ui:define>
+        <ui:include src="/pages/processo/include_cadastro_processo.xhtml" />
 
-	<ui:define name="pesquisaCampos">
+    </ui:define>
 
-		<p:fieldset>
+    <ui:define name="fimCadastro">
 
-			<h:panelGrid columns="4" columnClasses="coluna40, coluna10, coluna10, coluna20" style="width:100%">
+        <p:outputPanel layout="block" style="width: 98%;">
 
-				<p:outputLabel for="numeroProcessoPesquisa" value="Número do Processo" />
-				<p:outputLabel for="dataAberturaPesquisa" value="Data de Abertura" />
-				<p:outputLabel for="dataAjuizamentoPesquisa" value="Data de Ajuizamento" />
-				<p:outputLabel for="lotePesquisa" value="Lote" />
+            <p:fieldset style="width: 98.5%">
 
-				<p:inputText id="numeroProcessoPesquisa" value="#{mbeanProcessoPesquisaModel.processoNumeroPrincipal.numero}" maxlength="30" styleClass="coluna95" />
-				<p:calendar  navigator="true" id="dataAberturaPesquisa" pattern="dd/MM/yyyy" value="#{mbeanProcessoPesquisaModel.dataAbertura}" />
-				<p:calendar  navigator="true" id="dataAjuizamentoPesquisa" pattern="dd/MM/yyyy" value="#{mbeanProcessoPesquisaModel.dataAjuizamento}" styleClass="coluna95" />
-				<p:inputText id="lotePesquisa" value="#{mbeanProcessoPesquisaModel.lote}" maxlength="30" styleClass="coluna95" />
+                <h:panelGrid style="width: 98.5%;">
 
-			</h:panelGrid>
+                    <p:accordionPanel multiple="true" activeIndex="0, 1" style="margin-top:30px">
 
-		</p:fieldset>
+                        <ui:include src="/pages/processo/tab_andamento_processo.xhtml" />
 
-		<p:fieldset>
+                        <ui:include src="/pages/processo/tab_audiencia.xhtml" />
 
-			<h:panelGrid columns="3" columnClasses="coluna30, coluna30, coluna30" style="width:70%">
+                    </p:accordionPanel>
 
-				<p:outputLabel for="tipoProcessoPesquisa" value="Tipo de Processo" />
-				<p:outputLabel for="partePesquisa" value="Tipo de Parte" />
-				<p:outputLabel for="advogadoPesquisa" value="Advogado" />
+                </h:panelGrid>
 
-				<p:selectOneMenu id="tipoProcessoPesquisa" value="#{mbeanProcessoPesquisaModel.tipoProcesso.id}" style="width:95%">
-					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-					<f:selectItems value="#{mbeanProcesso.tiposProcessos}" />
-				</p:selectOneMenu>
-				<p:selectOneMenu id="partePesquisa" value="#{mbeanProcessoPesquisaModel.tipoParte.id}" style="width:95%">
-					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-					<f:selectItems value="#{mbeanProcesso.tiposPartes}" />
-				</p:selectOneMenu>
-				<p:selectOneMenu id="advogadoPesquisa" value="#{mbeanProcessoPesquisaModel.advogado.id}" style="width:95%">
-					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-					<f:selectItems value="#{mbeanProcesso.advogados}" />
-				</p:selectOneMenu>
+            </p:fieldset>
 
-			</h:panelGrid>
+        </p:outputPanel>
 
-			<h:panelGrid columns="3" columnClasses="coluna30, coluna30, coluna30" style="width:70%">
+    </ui:define>
 
-				<p:outputLabel for="objetoPesquisa" value="Objeto" />
-				<p:outputLabel for="comarcaPesquisa" value="Comarca" />
-				<p:outputLabel for="varaPesquisa" value="Vara" />
+    <ui:define name="pesquisaCampos">
 
-				<p:selectOneMenu id="objetoPesquisa" value="#{mbeanProcessoPesquisaModel.objeto.id}" style="width:95%">
-					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-					<f:selectItems value="#{mbeanProcesso.objetos}" />
-				</p:selectOneMenu>
-				<p:selectOneMenu id="comarcaPesquisa" value="#{mbeanProcessoPesquisaModel.comarca.id}" style="width:95%">
-					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-					<f:selectItems value="#{mbeanProcesso.comarcas}" />
-				</p:selectOneMenu>
-				<p:selectOneMenu id="varaPesquisa" value="#{mbeanProcessoPesquisaModel.vara.id}" style="width:95%">
-					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-					<f:selectItems value="#{mbeanProcesso.varas}" />
-				</p:selectOneMenu>
+        <p:fieldset>
 
-			</h:panelGrid>
+            <h:panelGrid columns="4" columnClasses="coluna40, coluna10, coluna10, coluna20" style="width:100%">
 
-		</p:fieldset>
+                <p:outputLabel for="numeroProcessoPesquisa" value="Número do Processo" />
+                <p:outputLabel for="dataAberturaPesquisa" value="Data de Abertura" />
+                <p:outputLabel for="dataAjuizamentoPesquisa" value="Data de Ajuizamento" />
+                <p:outputLabel for="lotePesquisa" value="Lote" />
 
-		<p:fieldset>
+                <p:inputText id="numeroProcessoPesquisa" value="#{mbeanProcessoPesquisaModel.processoNumeroPrincipal.numero}" maxlength="30" styleClass="coluna95" />
+                <p:calendar navigator="true" id="dataAberturaPesquisa" pattern="dd/MM/yyyy" value="#{mbeanProcessoPesquisaModel.dataAbertura}" timeZone="America/Recife" />
+                <p:calendar navigator="true" id="dataAjuizamentoPesquisa" pattern="dd/MM/yyyy" value="#{mbeanProcessoPesquisaModel.dataAjuizamento}" styleClass="coluna95" timeZone="America/Recife" />
+                <p:inputText id="lotePesquisa" value="#{mbeanProcessoPesquisaModel.lote}" maxlength="30" styleClass="coluna95" />
 
-			<h:panelGrid id="pgDataArquivamentoPesquisa" columns="3" columnClasses="coluna40, coluna60" style="width:58%">
+            </h:panelGrid>
 
-				<p:outputLabel for="turnoPesquisa" value="Turno" />
-				<p:outputLabel for="situacaoProcessoPesquisa" value="Situação" />
-				<p:outputLabel for="dataArquivamentoPesquisa" value="Data de Arquivamento" />
+        </p:fieldset>
 
-				<p:selectOneMenu id="turnoPesquisa" value="#{mbeanProcessoPesquisaModel.turno.id}" style="width:95%">
-					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-					<f:selectItems value="#{mbeanProcesso.turnos}" />
-				</p:selectOneMenu>
-				<p:selectOneMenu id="situacaoProcessoPesquisa" value="#{mbeanProcessoPesquisaModel.situacaoProcesso.id}" style="width:95%">
-					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-					<f:selectItems value="#{mbeanProcesso.situacoesProcessos}" />
-					<p:ajax update="pgDataArquivamentoPesquisa" process="pgDataArquivamentoPesquisa" global="false" />
-				</p:selectOneMenu>
-				<p:calendar  navigator="true" id="dataArquivamentoPesquisa" pattern="dd/MM/yyyy" value="#{mbeanProcessoPesquisaModel.dataArquivamento}" disabled="#{!mbeanProcessoPesquisaModel.processoArquivado}" style="width:90%" />
+        <p:fieldset>
 
-			</h:panelGrid>
+            <h:panelGrid columns="3" columnClasses="coluna30, coluna30, coluna30" style="width:70%">
 
-		</p:fieldset>
+                <p:outputLabel for="tipoProcessoPesquisa" value="Tipo de Processo" />
+                <p:outputLabel for="partePesquisa" value="Tipo de Parte" />
+                <p:outputLabel for="advogadoPesquisa" value="Advogado" />
 
-	</ui:define>
+                <p:selectOneMenu id="tipoProcessoPesquisa" value="#{mbeanProcessoPesquisaModel.tipoProcesso.id}" style="width:95%">
+                    <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+                    <f:selectItems value="#{mbeanProcesso.tiposProcessos}" />
+                </p:selectOneMenu>
+                <p:selectOneMenu id="partePesquisa" value="#{mbeanProcessoPesquisaModel.tipoParte.id}" style="width:95%">
+                    <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+                    <f:selectItems value="#{mbeanProcesso.tiposPartes}" />
+                </p:selectOneMenu>
+                <p:selectOneMenu id="advogadoPesquisa" value="#{mbeanProcessoPesquisaModel.advogado.id}" style="width:95%">
+                    <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+                    <f:selectItems value="#{mbeanProcesso.advogados}" />
+                </p:selectOneMenu>
 
-	<ui:define name="colunasTabela">
+            </h:panelGrid>
 
-		<p:column headerText="Número" styleClass="coluna35">
-			<p:commandLink action="#{mbeanProcesso.detailEvent}" ajax="false">
-				<h:outputText value="#{linha.processosNumeros}" />
-				<f:setPropertyActionListener target="#{mbeanProcessoModel}" value="#{linha}" />
-			</p:commandLink>
-		</p:column>
-		
-		<p:column headerText="Clientes" styleClass="coluna40">
-			<p:commandLink action="#{mbeanProcesso.detailEvent}" ajax="false">
-				<h:outputText value="#{linha.processosClientes}" />
-				<f:setPropertyActionListener target="#{mbeanProcessoModel}" value="#{linha}" />
-			</p:commandLink>
-		</p:column>
+            <h:panelGrid columns="3" columnClasses="coluna30, coluna30, coluna30" style="width:70%">
 
-		<p:column headerText="Advogado" styleClass="coluna15">
-			<p:commandLink action="#{mbeanProcesso.detailEvent}" ajax="false">
-				<h:outputText value="#{linha.advogado.apelido}" />
-				<f:setPropertyActionListener target="#{mbeanProcessoModel}" value="#{linha}" />
-			</p:commandLink>
-		</p:column>
+                <p:outputLabel for="objetoPesquisa" value="Objeto" />
+                <p:outputLabel for="comarcaPesquisa" value="Comarca" />
+                <p:outputLabel for="varaPesquisa" value="Vara" />
 
-<!-- 		<p:column headerText="Tipo" styleClass="coluna10"> -->
-<!-- 			<p:commandLink action="#{mbeanProcesso.detailEvent}" ajax="false"> -->
-<!-- 				<h:outputText value="#{linha.tipoProcesso.descricao}" /> -->
-<!-- 				<f:setPropertyActionListener target="#{mbeanProcessoModel}" value="#{linha}" /> -->
-<!-- 			</p:commandLink> -->
-<!-- 		</p:column> -->
+                <p:selectOneMenu id="objetoPesquisa" value="#{mbeanProcessoPesquisaModel.objeto.id}" style="width:95%">
+                    <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+                    <f:selectItems value="#{mbeanProcesso.objetos}" />
+                </p:selectOneMenu>
+                <p:selectOneMenu id="comarcaPesquisa" value="#{mbeanProcessoPesquisaModel.comarca.id}" style="width:95%">
+                    <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+                    <f:selectItems value="#{mbeanProcesso.comarcas}" />
+                </p:selectOneMenu>
+                <p:selectOneMenu id="varaPesquisa" value="#{mbeanProcessoPesquisaModel.vara.id}" style="width:95%">
+                    <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+                    <f:selectItems value="#{mbeanProcesso.varas}" />
+                </p:selectOneMenu>
 
-<!-- 		<p:column headerText="Data de Abertura" styleClass="coluna15"> -->
-<!-- 			<p:commandLink action="#{mbeanProcesso.detailEvent}" ajax="false"> -->
-<!-- 				<h:outputText value="#{linha.dataAbertura}"> -->
-<!-- 					<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" /> -->
-<!-- 				</h:outputText> -->
-<!-- 				<f:setPropertyActionListener target="#{mbeanProcessoModel}" value="#{linha}" /> -->
-<!-- 			</p:commandLink> -->
-<!-- 		</p:column> -->
+            </h:panelGrid>
 
-		<p:column headerText="Situação" styleClass="coluna10">
-			<p:commandLink action="#{mbeanProcesso.detailEvent}" ajax="false">
-				<h:outputText value="#{linha.situacaoProcesso.descricao}" styleClass="#{linha.situacaoProcesso.css}" />
-				<f:setPropertyActionListener target="#{mbeanProcessoModel}" value="#{linha}" />
-			</p:commandLink>
-		</p:column>
+        </p:fieldset>
 
-	</ui:define>
+        <p:fieldset>
+
+            <h:panelGrid id="pgDataArquivamentoPesquisa" columns="3" columnClasses="coluna40, coluna60" style="width:58%">
+
+                <p:outputLabel for="turnoPesquisa" value="Turno" />
+                <p:outputLabel for="situacaoProcessoPesquisa" value="Situação" />
+                <p:outputLabel for="dataArquivamentoPesquisa" value="Data de Arquivamento" />
+
+                <p:selectOneMenu id="turnoPesquisa" value="#{mbeanProcessoPesquisaModel.turno.id}" style="width:95%">
+                    <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+                    <f:selectItems value="#{mbeanProcesso.turnos}" />
+                </p:selectOneMenu>
+                <p:selectOneMenu id="situacaoProcessoPesquisa" value="#{mbeanProcessoPesquisaModel.situacaoProcesso.id}" style="width:95%">
+                    <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+                    <f:selectItems value="#{mbeanProcesso.situacoesProcessos}" />
+                    <p:ajax update="pgDataArquivamentoPesquisa" process="pgDataArquivamentoPesquisa" global="false" />
+                </p:selectOneMenu>
+                <p:calendar navigator="true" id="dataArquivamentoPesquisa" pattern="dd/MM/yyyy" value="#{mbeanProcessoPesquisaModel.dataArquivamento}" disabled="#{!mbeanProcessoPesquisaModel.processoArquivado}" style="width:90%" timeZone="America/Recife" />
+
+            </h:panelGrid>
+
+        </p:fieldset>
+
+    </ui:define>
+
+    <ui:define name="colunasTabelaComCss">
+
+        <p:column headerText="Número" styleClass="coluna35">
+            <p:commandLink action="#{mbeanProcesso.detailEvent}" ajax="false">
+                <h:outputText value="#{linha.processosNumeros}" />
+                <f:setPropertyActionListener target="#{mbeanProcessoModel}" value="#{linha}" />
+            </p:commandLink>
+        </p:column>
+
+        <p:column headerText="Clientes" styleClass="coluna40">
+            <p:commandLink action="#{mbeanProcesso.detailEvent}" ajax="false">
+                <h:outputText value="#{linha.processosClientes}" />
+                <f:setPropertyActionListener target="#{mbeanProcessoModel}" value="#{linha}" />
+            </p:commandLink>
+        </p:column>
+
+        <p:column headerText="Advogado" styleClass="coluna15">
+            <p:commandLink action="#{mbeanProcesso.detailEvent}" ajax="false">
+                <h:outputText value="#{linha.advogado.apelido}" />
+                <f:setPropertyActionListener target="#{mbeanProcessoModel}" value="#{linha}" />
+            </p:commandLink>
+        </p:column>
+
+        <!-- 		<p:column headerText="Tipo" styleClass="coluna10"> -->
+        <!-- 			<p:commandLink action="#{mbeanProcesso.detailEvent}" ajax="false"> -->
+        <!-- 				<h:outputText value="#{linha.tipoProcesso.descricao}" /> -->
+        <!-- 				<f:setPropertyActionListener target="#{mbeanProcessoModel}" value="#{linha}" /> -->
+        <!-- 			</p:commandLink> -->
+        <!-- 		</p:column> -->
+
+        <!-- 		<p:column headerText="Data de Abertura" styleClass="coluna15"> -->
+        <!-- 			<p:commandLink action="#{mbeanProcesso.detailEvent}" ajax="false"> -->
+        <!-- 				<h:outputText value="#{linha.dataAbertura}"> -->
+        <!-- 					<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" /> -->
+        <!-- 				</h:outputText> -->
+        <!-- 				<f:setPropertyActionListener target="#{mbeanProcessoModel}" value="#{linha}" /> -->
+        <!-- 			</p:commandLink> -->
+        <!-- 		</p:column> -->
+
+        <p:column headerText="Situação" styleClass="coluna10">
+            <p:commandLink action="#{mbeanProcesso.detailEvent}" ajax="false">
+                <h:outputText value="#{linha.situacaoProcesso.descricao}" />
+                <f:setPropertyActionListener target="#{mbeanProcessoModel}" value="#{linha}" />
+            </p:commandLink>
+        </p:column>
+
+    </ui:define>
 
 </ui:composition>

@@ -542,7 +542,7 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		return getFlagAtivo() ? "Ativo" : "Cancelado";
 	}
 	
-	public String getCssSituacao(){
+	public String getCss(){
 		return getFlagAtivo() ? "situacaoAtiva" : "situacaoCancelada";
 	}
 	
@@ -597,7 +597,7 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		StringBuilder query = new StringBuilder();
 		
 		if(!TSUtil.isEmpty(matricula)){
-			query.append(" and ").append(CenajurUtil.semAcento("c.matricula")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
+			query.append(" and c.matricula = ? ");
 		}
 		
 		if(!TSUtil.isEmpty(nome)){
@@ -628,7 +628,7 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		List<Object> params = new ArrayList<Object>();
 		
 		if(!TSUtil.isEmpty(matricula)){
-			params.add(CenajurUtil.tratarString(matricula));
+			params.add(matricula);
 		}
 		
 		if(!TSUtil.isEmpty(nome)){
@@ -781,7 +781,7 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	}
 	
 	public List<Cliente> pesquisarInadimplentes(){
-		return super.find("select f.cliente from Faturamento f where f.flagPago = false and f.flagCancelado = false ", null);
+		return super.find("select distinct f.cliente from Faturamento f where f.flagPago = false and f.flagCancelado = false ", null);
 	}
 	
 	public String isMesDevedor(int mes, int ano){

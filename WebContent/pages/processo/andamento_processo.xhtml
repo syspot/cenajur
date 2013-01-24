@@ -23,9 +23,9 @@
 				</p:outputPanel>
 		  		
 			  	<p:outputLabel for="dataAndamento" value="Data do Andamento" />
-		  		<p:calendar  navigator="true" id="dataAndamento" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" required="true" requiredMessage="Data do Andamento: Campo obrigatório" value="#{mbeanModel.dataAndamento}"/>
-	  		
-		  		<p:outputLabel for="tipoAndamentoProcesso" value="Tipo do Andamento" />
+                <p:calendar navigator="true" id="dataAndamento" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" required="true" requiredMessage="Data do Andamento: Campo obrigatório" value="#{mbeanModel.dataAndamento}" timeZone="America/Recife"/>
+
+                <p:outputLabel for="tipoAndamentoProcesso" value="Tipo do Andamento" />
 		  		<p:selectOneMenu id="tipoAndamentoProcesso" required="true" requiredMessage="Tipo do Andamento: Campo obrigatório" value="#{mbeanModel.tipoAndamentoProcesso.id}" style="width:92%">
 			  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 			  		<f:selectItems value="#{mbean.tiposAndamentosProcessos}" />
@@ -62,9 +62,9 @@
   		
 		  	<p:outputLabel for="dataAndamentoPesquisa" value="Data do Andamento" />
 	  		<p:outputLabel for="tipoAndamentoProcessoPesquisa" value="Tipo do Andamento" />
-  			
-	  		<p:calendar  navigator="true" id="dataAndamentoPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataAndamento}" />
-	  		<p:selectOneMenu id="tipoAndamentoProcessoPesquisa" value="#{mbeanPesquisaModel.tipoAndamentoProcesso.id}" style="width:95%">
+
+            <p:calendar navigator="true" id="dataAndamentoPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataAndamento}" timeZone="America/Recife"/>
+            <p:selectOneMenu id="tipoAndamentoProcessoPesquisa" value="#{mbeanPesquisaModel.tipoAndamentoProcesso.id}" style="width:95%">
 		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 		  		<f:selectItems value="#{mbean.tiposAndamentosProcessos}" />
 		  	</p:selectOneMenu>

@@ -1,55 +1,51 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:composition
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
-	
-		<p:tab id="tabAgenda" title="Agenda" >
-		
-			<h:form>
-				
-				<p:fieldset style="margin-bottom: 20px;">
-				
-					<h:panelGrid columns="4" columnClasses="coluna20, coluna10, coluna40, coluna40" style="width:60%">
-					
-						<h:outputText value="Tipo de Agenda" />
-						<p:outputLabel for="buscaIndividual" value="Individual" />
-						<p:outputLabel for="colaboradorBusca" value="Colaborador" />
-						<h:outputText value="" />
-						
-						<p:selectOneMenu id="comboTipoAgenda" value="#{agendaFaces.agendaBusca.tipoAgenda.id}" >
-							<f:selectItem itemLabel="Todas" itemValue="" />
-							<f:selectItems value="#{agendaFaces.tiposAgendas}" />
-						</p:selectOneMenu>
-						
-						<p:selectBooleanCheckbox id="buscaIndividual" value="#{agendaFaces.buscaIndividual}">
-							<p:ajax event="change" listener="#{agendaFaces.mudarStatusBusca}" update="opComboColaborador" />
-						</p:selectBooleanCheckbox>
-						<p:outputPanel id="opComboColaborador">
-							<p:selectOneMenu id="colaboradorBusca" value="#{agendaFaces.agendaBusca.colaboradorBusca.id}" disabled="#{agendaFaces.buscaIndividual}" style="width: 95%">
-								<f:selectItem itemLabel="Todos" itemValue="" />
-								<f:selectItems value="#{agendaFaces.colaboradores}" />
-							</p:selectOneMenu>
-						</p:outputPanel>
-						
-						<p:commandButton value="Atualizar" icon="ui-icon-refresh" action="#{agendaFaces.atualizarSchedule}" oncomplete="myschedule.update()" style="width: 100px;" />
-					
-					</h:panelGrid>
-					
-				</p:fieldset>
-				
-			    <p:schedule value="#{agendaFaces.lazyEventModel}" widgetVar="myschedule" allDaySlot="false" draggable="false" resizable="false" view="agendaWeek" axisFormat="HH:00">
-			  
-			        <p:ajax event="dateSelect" listener="#{agendaFaces.onDateSelect}" oncomplete="atualizarDialogAgenda();" global="false"/>  
-			        <p:ajax event="eventSelect" listener="#{agendaFaces.onEventSelect}" oncomplete="atualizarDialogAgenda();" global="false"/>  
-			        <p:ajax event="eventMove" listener="#{agendaFaces.onEventMove}" oncomplete="atualizarDialogAgenda();" global="false" />  
-			        <p:ajax event="eventResize" listener="#{agendaFaces.onEventResize}" oncomplete="atualizarDialogAgenda();" global="false" />  
-			  
-			    </p:schedule>  
-			  
-			</h:form>
-			
-		</p:tab>
-		
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+    <p:tab id="tabAgenda" title="Agenda">
+
+        <h:form>
+
+            <p:fieldset style="margin-bottom: 20px;">
+
+                <h:panelGrid columns="4" columnClasses="coluna20, coluna10, coluna40, coluna40" style="width:60%">
+
+                    <h:outputText value="Tipo de Agenda" />
+                    <p:outputLabel for="buscaIndividual" value="Individual" />
+                    <p:outputLabel for="colaboradorBusca" value="Colaborador" />
+                    <h:outputText value="" />
+
+                    <p:selectOneMenu id="comboTipoAgenda" value="#{agendaFaces.agendaBusca.tipoAgenda.id}">
+                        <f:selectItem itemLabel="Todas" itemValue="" />
+                        <f:selectItems value="#{agendaFaces.tiposAgendas}" />
+                    </p:selectOneMenu>
+
+                    <p:selectBooleanCheckbox id="buscaIndividual" value="#{agendaFaces.buscaIndividual}">
+                        <p:ajax event="change" listener="#{agendaFaces.mudarStatusBusca}" update="opComboColaborador" />
+                    </p:selectBooleanCheckbox>
+                    <p:outputPanel id="opComboColaborador">
+                        <p:selectOneMenu id="colaboradorBusca" value="#{agendaFaces.agendaBusca.colaboradorBusca.id}" disabled="#{agendaFaces.buscaIndividual}" style="width: 95%">
+                            <f:selectItem itemLabel="Todos" itemValue="" />
+                            <f:selectItems value="#{agendaFaces.colaboradores}" />
+                        </p:selectOneMenu>
+                    </p:outputPanel>
+
+                    <p:commandButton value="Atualizar" icon="ui-icon-refresh" action="#{agendaFaces.atualizarSchedule}" oncomplete="myschedule.update()" style="width: 100px;" />
+
+                </h:panelGrid>
+
+            </p:fieldset>
+
+            <p:schedule value="#{agendaFaces.lazyEventModel}" widgetVar="myschedule" allDaySlot="false" draggable="false" resizable="false" view="agendaWeek" axisFormat="HH:00" timeZone="America/Recife">
+
+                <p:ajax event="dateSelect" listener="#{agendaFaces.onDateSelect}" oncomplete="atualizarDialogAgenda();" global="false" />
+                <p:ajax event="eventSelect" listener="#{agendaFaces.onEventSelect}" oncomplete="atualizarDialogAgenda();" global="false" />
+                <p:ajax event="eventMove" listener="#{agendaFaces.onEventMove}" oncomplete="atualizarDialogAgenda();" global="false" />
+                <p:ajax event="eventResize" listener="#{agendaFaces.onEventResize}" oncomplete="atualizarDialogAgenda();" global="false" />
+
+            </p:schedule>
+
+        </h:form>
+
+    </p:tab>
+
 </ui:composition>

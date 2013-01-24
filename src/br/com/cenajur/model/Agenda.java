@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,7 +39,7 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 	@SequenceGenerator(name="agendas_id", sequenceName="agendas_id_seq")
 	private Long id;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "tipo_agenda_id")
 	private TipoAgenda tipoAgenda;
 	
@@ -253,12 +254,8 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 			query.append("and a.tipoAgenda.id = ? ");
 		}
 		
-		if(!TSUtil.isEmpty(dataInicial)){
-			query.append("and date(a.dataInicial) = date(?) ");
-		}
-		
-		if(!TSUtil.isEmpty(dataFinal)){
-			query.append("and date(a.dataFinal) = date(?) ");
+		if(!TSUtil.isEmpty(dataInicial) && !TSUtil.isEmpty(dataFinal)){
+			query.append(" and a.dataInicial between ? and ? ");
 		}
 		
 		List<Object> params = new ArrayList<Object>();
@@ -271,11 +268,8 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 			params.add(tipoAgenda.getId());
 		}
 		
-		if(!TSUtil.isEmpty(dataInicial)){
+		if(!TSUtil.isEmpty(dataInicial) && !TSUtil.isEmpty(dataFinal)){
 			params.add(dataInicial);
-		}
-		
-		if(!TSUtil.isEmpty(dataFinal)){
 			params.add(dataFinal);
 		}
 		

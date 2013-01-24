@@ -365,6 +365,10 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	public boolean isProcessoUnico(){
 		return (TSUtil.isEmpty(getProcessosNumeros()) || getProcessosNumeros().size() < 2);
 	}
+	
+	public String getCss(){
+		return TSUtil.isEmpty(getSituacaoProcesso()) ? "" : getSituacaoProcesso().getCss();
+	}
 
 	@Override
 	public int hashCode() {

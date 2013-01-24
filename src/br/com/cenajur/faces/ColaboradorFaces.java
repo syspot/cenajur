@@ -106,7 +106,7 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 		
 		boolean erro = false;
 		
-		if(!TSUtil.isValidCPF(TSUtil.removerNaoDigitos(getCrudModel().getCpf()))){
+		if(TSUtil.isEmpty(getCrudModel().getId()) && !TSUtil.isValidCPF(TSUtil.removerNaoDigitos(getCrudModel().getCpf()))){
 			erro = true;
 			CenajurUtil.addErrorMessage("CPF inválido");
 		}

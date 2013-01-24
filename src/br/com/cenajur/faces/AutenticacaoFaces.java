@@ -409,7 +409,7 @@ public class AutenticacaoFaces extends TSMainFaces{
     	Colaborador colaborador = this.colaborador.autenticarPorLogin();
     	
     	if(TSUtil.isEmpty(colaborador)){
-    		CenajurUtil.addErrorMessage("Usuário não localizado");
+    		super.addErrorMessage("Usuário não localizado");
     	} else{
     		
     		try {
@@ -424,11 +424,11 @@ public class AutenticacaoFaces extends TSMainFaces{
 	    		
 	    		new EmailUtil().sendMail(colaborador.getEmail(), "Recuperação de Senha", texto, null);
 	    		
-	    		CenajurUtil.addInfoMessage("Uma nova senha foi enviada para seu e-mail");
+	    		super.addInfoMessage("Uma nova senha foi enviada para seu e-mail");
 	    		
 			} catch (Exception e) { 
 				e.printStackTrace();
-				CenajurUtil.addInfoMessage("Ocorreu um erro ao tentar enviar a senha para o email cadastrado");
+				super.addErrorMessage("Ocorreu um erro ao tentar enviar a senha para o email cadastrado");
 			}
     		
     	}

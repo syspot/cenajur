@@ -22,7 +22,7 @@
 						<f:selectItems value="#{mbean.situacoesProcessosClientes}" />
 						<p:ajax update="pgDataArquivamentoProcessoCliente" listener="#{mbean.limparDataArquivamentoProcessoCliente}" process="@this" global="false" />
 					</p:selectOneMenu>
-					<p:calendar  navigator="true" id="dataArquivamentoProcessoCliente" required="true" requiredMessage="Data de Arquivamento: Campo obrigatório" pattern="dd/MM/yyyy" value="#{mbean.processoClienteSelecionado.dataArquivamento}" disabled="#{!mbean.processoClienteSelecionado.processoClienteArquivado}" styleClass="coluna95" />
+					<p:calendar  navigator="true" id="dataArquivamentoProcessoCliente" required="true" requiredMessage="Data de Arquivamento: Campo obrigatório" pattern="dd/MM/yyyy" value="#{mbean.processoClienteSelecionado.dataArquivamento}" disabled="#{!mbean.processoClienteSelecionado.processoClienteArquivado}" styleClass="coluna95" timeZone="America/Recife"/>
 					
 				</h:panelGrid>
 				

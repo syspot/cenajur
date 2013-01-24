@@ -1174,6 +1174,26 @@ ui-icon.delete {
 	color: black/*{fcDefault}*/;
 }
 
+.ui-widget-content .situacaoAtiva, .ui-datatable-even .situacaoAtiva{
+	
+}
+
+.ui-widget-content .situacaoSuspensa, .ui-datatable-even .situacaoSuspensa{
+	border: 1px solid #CBC3BE/*{borderColorDefault}*/;
+	background: white !important;
+	background-color:#EEC900 !important;
+	font-weight: normal/*{fwDefault}*/;
+	color: black/*{fcDefault}*/;
+}
+
+.ui-widget-content .situacaoCancelada, .ui-datatable-even .situacaoCancelada{
+	border: 1px solid #CBC3BE/*{borderColorDefault}*/;
+	background: white !important;
+	background-color:#FF4500 !important;
+	font-weight: normal/*{fwDefault}*/;
+	color: black/*{fcDefault}*/;
+}
+
 .ui-dt-c{
 	text-align:center;
 }
