@@ -294,9 +294,9 @@ public class Faturamento extends TSActiveRecordAb<Faturamento>{
 			params.add(getFlagCancelado());
 		}
 		
-		List list= super.find(query.toString(), null, params.toArray());
+		return super.find(query.toString(), null, params.toArray());
 		
-		return list;
+		
 		
 	}
 	
