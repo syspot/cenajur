@@ -6,18 +6,13 @@
 	<parameter name="DATA_INICIAL" class="java.util.Date"/>
 	<parameter name="DATA_FINAL" class="java.util.Date"/>
 	<queryString>
-		<![CDATA[SELECT CI.DESCRICAO,
-       (SELECT COUNT(C.*) FROM CLIENTES C WHERE C.DATA_CADASTRO BETWEEN COALESCE($P{DATA_INICIAL}, C.DATA_CADASTRO) AND COALESCE($P{DATA_FINAL}, C.DATA_CADASTRO) AND C.CIDADE_ID = CI.ID AND C.FLAG_ATIVO) AS QTD_ATIVO,
-       (SELECT COUNT(C.*) FROM CLIENTES C WHERE C.DATA_CADASTRO BETWEEN COALESCE($P{DATA_INICIAL}, C.DATA_CADASTRO) AND COALESCE($P{DATA_FINAL}, C.DATA_CADASTRO) AND C.CIDADE_ID = CI.ID AND NOT C.FLAG_ATIVO) AS QTD_CANCELADO
- FROM CIDADES CI]]>
+		<![CDATA[SELECT CI.DESCRICAO, SUM(CASE WHEN C.FLAG_ATIVO THEN 1 ELSE 0 END) ATIVO , SUM(CASE WHEN C.FLAG_ATIVO THEN 0 ELSE 1 END) CANCELADO FROM CIDADES CI, CLIENTES C WHERE C.CIDADE_ID = CI.ID AND
+C.DATA_CADASTRO BETWEEN COALESCE($P{DATA_INICIAL}, C.DATA_ADESAO) AND COALESCE($P{DATA_FINAL},C.DATA_ADESAO) GROUP BY CI.DESCRICAO
+]]>
 	</queryString>
 	<field name="descricao" class="java.lang.String"/>
-	<field name="qtd_ativo" class="java.lang.Long"/>
-	<field name="qtd_cancelado" class="java.lang.Long"/>
-	<variable name="total_ativo" class="java.lang.Integer" resetType="Column" calculation="Sum">
-		<variableExpression><![CDATA[]]></variableExpression>
-		<initialValueExpression><![CDATA[$F{qtd_ativo}]]></initialValueExpression>
-	</variable>
+	<field name="ativo" class="java.lang.Long"/>
+	<field name="cancelado" class="java.lang.Long"/>
 	<title>
 		<band height="83">
 			<staticText>
@@ -64,12 +59,12 @@
 			<textField>
 				<reportElement uuid="4d43a38b-097d-4c63-b0c8-358a0d181074" x="246" y="2" width="65" height="20"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{qtd_ativo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{ativo}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="fd7bc2d1-1b6b-4cfa-b098-1b4e25dbc915" x="321" y="2" width="71" height="20"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{qtd_cancelado}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cancelado}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
