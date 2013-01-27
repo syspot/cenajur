@@ -1,85 +1,80 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:composition 
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
-	
-	<p:tab id="tabAndamentoProcesso" title="Andamento" rendered="#{mbeanModel.id != null}">
-	
-		<h:form>
-		
-			<ui:include src="/pages/processo/include_cadastro_andamento.xhtml" />
-			
-			<p:remoteCommand action="#{mbeanProcessoAndamento.removerAndamentoProcesso}" name="removerAndamentoProcesso" update="opGridAndamentoProcesso" process="@this"/>
-			
-		  	<p:outputPanel id="opGridAndamentoProcesso" style="width: 97.5%;">
-					
-				<h:panelGrid columns="1" style="width: 98%">
-				
-					<p:fieldset style="width: 97.5%">
-	
-						<p:dataTable id="gridAndamentoProcesso" emptyMessage="Nenhum andamento encontrado" style="width: 100%" paginator="true"
-								paginatorAlwaysVisible="false" rows="10" value="#{mbeanModel.andamentos}" var="linha">
-			  	
-					  		<p:column headerText="Descrição" styleClass="coluna50">
-					  			<p:commandLink process="@this" action="#{mbeanProcessoAndamento.obterAndamentoProcesso}" update="@form">
-						  			<h:outputText value="#{linha.resumoDescricao}" />
-									<f:setPropertyActionListener target="#{mbeanProcessoAndamento.andamentoProcesso}" value="#{linha}" />
-									<f:setPropertyActionListener target="#{mbeanProcessoAndamento.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
-								</p:commandLink>
-					  		</p:column>
-					  	
-					  		<p:column headerText="Tipo do Andamento">
-					  			<p:commandLink process="@this" action="#{mbeanProcessoAndamento.obterAndamentoProcesso}" update="@form">
-						  			<h:outputText value="#{linha.tipoAndamentoProcesso.descricao}" />
-									<f:setPropertyActionListener target="#{mbeanProcessoAndamento.andamentoProcesso}" value="#{linha}" />
-									<f:setPropertyActionListener target="#{mbeanProcessoAndamento.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
-								</p:commandLink>
-					  		</p:column>
-					  	
-					  		<p:column headerText="Data" style="text-align: center">
-					  			<p:commandLink process="@this" action="#{mbeanProcessoAndamento.obterAndamentoProcesso}" update="@form">
-						  			<h:outputText value="#{linha.dataAndamento}" >
-						  				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
-						  			</h:outputText>
-									<f:setPropertyActionListener target="#{mbeanProcessoAndamento.andamentoProcesso}" value="#{linha}" />
-									<f:setPropertyActionListener target="#{mbeanProcessoAndamento.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
-								</p:commandLink>
-					  		</p:column>
-					  		
-					  		<p:column headerText="Editar" styleClass="coluna5">
-					  			<p:commandLink process="@this" action="#{mbeanProcessoAndamento.obterAndamentoProcesso}" update="@form">
-									<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
-									<f:setPropertyActionListener target="#{mbeanProcessoAndamento.andamentoProcesso}" value="#{linha}" />
-									<f:setPropertyActionListener target="#{mbeanProcessoAndamento.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
-								</p:commandLink>
-					  		</p:column>
-					  		
-							<p:column headerText="Excluir" styleClass="coluna5">
-								<p:commandLink type="button" onclick="cdExcluirAndamento.show();" process="@this" global="false">
-									<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
-									<f:setPropertyActionListener target="#{mbeanProcessoAndamento.andamentoProcessoSelecionado}" value="#{linha}" />
-								</p:commandLink>
-							</p:column>
-					  		
-					  	</p:dataTable>
-			  						
-					</p:fieldset>
-					
-				</h:panelGrid>
-					
- 			</p:outputPanel>
-	 			
- 			<p:confirmDialog message="Confirma exclusão do registro?" appendToBody="true" header="Aviso" severity="alert" widgetVar="cdExcluirAndamento">
-    
-			    <p:commandButton value="Sim" onclick="removerAndamentoProcesso(); cdExcluirAndamento.hide();" update="opGridAndamentoProcesso" process="opGridAndamentoProcesso" />
-			    <p:commandButton value="Não" onclick="cdExcluirAndamento.hide()" />
-			    
-		  	</p:confirmDialog>
-  		
-  		</h:form>
-  		
-  	</p:tab>
-  	
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+    <p:tab id="tabAndamentoProcesso" title="Andamento" rendered="#{mbeanModel.id != null}">
+
+        <h:form>
+
+            <ui:include src="/pages/processo/include_cadastro_andamento.xhtml" />
+
+            <p:remoteCommand action="#{mbeanProcessoAndamento.removerAndamentoProcesso}" name="removerAndamentoProcesso" update="opGridAndamentoProcesso" process="@this" />
+
+            <p:outputPanel id="opGridAndamentoProcesso" style="width: 97.5%;">
+
+                <h:panelGrid columns="1" style="width: 98%">
+
+                    <p:fieldset style="width: 97.5%">
+
+                        <p:dataTable id="gridAndamentoProcesso" emptyMessage="Nenhum andamento encontrado" style="width: 100%" paginator="true" paginatorAlwaysVisible="false" rows="10" value="#{mbeanModel.andamentos}" var="linha">
+
+                            <p:column headerText="Descrição" styleClass="coluna50">
+                                <p:commandLink process="@this" action="#{mbeanProcessoAndamento.obterAndamentoProcesso}" update="@form">
+                                    <h:outputText value="#{linha.resumoDescricao}" />
+                                    <f:setPropertyActionListener target="#{mbeanProcessoAndamento.andamentoProcesso}" value="#{linha}" />
+                                    <f:setPropertyActionListener target="#{mbeanProcessoAndamento.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
+                                </p:commandLink>
+                            </p:column>
+
+                            <p:column headerText="Tipo do Andamento">
+                                <p:commandLink process="@this" action="#{mbeanProcessoAndamento.obterAndamentoProcesso}" update="@form">
+                                    <h:outputText value="#{linha.tipoAndamentoProcesso.descricao}" />
+                                    <f:setPropertyActionListener target="#{mbeanProcessoAndamento.andamentoProcesso}" value="#{linha}" />
+                                    <f:setPropertyActionListener target="#{mbeanProcessoAndamento.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
+                                </p:commandLink>
+                            </p:column>
+
+                            <p:column headerText="Data" style="text-align: center">
+                                <p:commandLink process="@this" action="#{mbeanProcessoAndamento.obterAndamentoProcesso}" update="@form">
+                                    <h:outputText value="#{linha.dataAndamento}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
+                                    </h:outputText>
+                                    <f:setPropertyActionListener target="#{mbeanProcessoAndamento.andamentoProcesso}" value="#{linha}" />
+                                    <f:setPropertyActionListener target="#{mbeanProcessoAndamento.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
+                                </p:commandLink>
+                            </p:column>
+
+                            <p:column headerText="Editar" styleClass="coluna5">
+                                <p:commandLink process="@this" action="#{mbeanProcessoAndamento.obterAndamentoProcesso}" update="@form">
+                                    <h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
+                                    <f:setPropertyActionListener target="#{mbeanProcessoAndamento.andamentoProcesso}" value="#{linha}" />
+                                    <f:setPropertyActionListener target="#{mbeanProcessoAndamento.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
+                                </p:commandLink>
+                            </p:column>
+
+                            <p:column headerText="Excluir" styleClass="coluna5">
+                                <p:commandLink type="button" onclick="cdExcluirAndamento.show();" process="@this" global="false">
+                                    <h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+                                    <f:setPropertyActionListener target="#{mbeanProcessoAndamento.andamentoProcessoSelecionado}" value="#{linha}" />
+                                </p:commandLink>
+                            </p:column>
+
+                        </p:dataTable>
+
+                    </p:fieldset>
+
+                </h:panelGrid>
+
+            </p:outputPanel>
+
+            <p:confirmDialog message="Confirma exclusão do registro?" appendToBody="true" header="Aviso" severity="alert" widgetVar="cdExcluirAndamento">
+
+                <p:commandButton value="Sim" onclick="removerAndamentoProcesso(); cdExcluirAndamento.hide();" update="opGridAndamentoProcesso" process="opGridAndamentoProcesso" />
+                <p:commandButton value="Não" onclick="cdExcluirAndamento.hide()" />
+
+            </p:confirmDialog>
+
+        </h:form>
+
+    </p:tab>
+
 </ui:composition>

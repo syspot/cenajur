@@ -1,92 +1,87 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:composition 
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
-	
-	<p:tab id="tabAudiencia" title="Audiência" rendered="#{mbeanModel.id != null}">
-	
-		<h:form>
-		
-			<ui:include src="/pages/processo/include_cadastro_audiencia.xhtml" />
-			 
-			<p:remoteCommand action="#{mbean.processoAudienciaUtil.removerAudiencia}" name="removerAudiencia" update="opGridAudiencia" process="@this"/>
-			 
-		  	<p:outputPanel id="opGridAudiencia" style="width: 97.5%;">
-		  	
-		  		<h:panelGrid columns="1" style="width: 98%">
-				
-					<p:fieldset style="width: 97.5%">
-					
-					  	<p:dataTable id="gridAudiencia" emptyMessage="Nenhum audiência encontrada" style="width: 100%" paginator="true"
-								paginatorAlwaysVisible="false" rows="10" value="#{mbeanModel.audiencias}" var="linha">
-					  	
-					  		<p:column headerText="Descrição" styleClass="coluna30">
-					  			<p:commandLink process="@this" action="#{mbean.processoAudienciaUtil.obterAudiencia}" update="@form">
-						  			<h:outputText value="#{linha.resumoDescricao}" />
-									<f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.audiencia}" value="#{linha}" />
-								</p:commandLink>
-					  		</p:column>
-					  	
-					  		<p:column headerText="Vara">
-					  			<p:commandLink process="@this" action="#{mbean.processoAudienciaUtil.obterAudiencia}" update="@form">
-						  			<h:outputText value="#{linha.vara.descricao}" />
-									<f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.audiencia}" value="#{linha}" />
-									<f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
-								</p:commandLink>
-					  		</p:column>
-					  	
-					  		<p:column headerText="Advogado">
-					  			<p:commandLink process="@this" action="#{mbean.processoAudienciaUtil.obterAudiencia}" update="@form">
-						  			<h:outputText value="#{linha.audienciasAdvogados}" />
-									<f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.audiencia}" value="#{linha}" />
-									<f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
-								</p:commandLink>
-					  		</p:column>
-					  	
-					  		<p:column headerText="Data">
-					  			<p:commandLink process="@this" action="#{mbean.processoAudienciaUtil.obterAudiencia}" update="@form">
-						  			<h:outputText value="#{linha.dataAudiencia}" >
-						  				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
-					  				</h:outputText>
-									<f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.audiencia}" value="#{linha}" />
-									<f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
-								</p:commandLink>
-					  		</p:column>
-					  		
-					  		<p:column headerText="Editar" styleClass="coluna5">
-					  			<p:commandLink process="@this" action="#{mbean.processoAudienciaUtil.obterAudiencia}" update="@form">
-									<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
-									<f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.audiencia}" value="#{linha}" />
-									<f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
-								</p:commandLink>
-					  		</p:column>
-					  		
-							<p:column headerText="Excluir" styleClass="coluna5">
-								<p:commandLink type="button" onclick="cdExcluirAudiencia.show();" process="@this">
-									<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
-									<f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.audienciaSelecionada}" value="#{linha}" />
-								</p:commandLink>
-							</p:column>
-					  		
-					  	</p:dataTable>
-					  	
-				  	</p:fieldset>
-				  	
-			  	</h:panelGrid>
-			  	
-  			</p:outputPanel>
-  			
-  			<p:confirmDialog message="Confirma exclusão do registro?" appendToBody="true" header="Aviso" severity="alert" widgetVar="cdExcluirAudiencia">
-	    
-			    <p:commandButton value="Sim" onclick="removerAudiencia(); cdExcluirAudiencia.hide();" update="opGridAudiencia" process="opGridAudiencia" />
-			    <p:commandButton value="Não" onclick="cdExcluirAudiencia.hide()" />
-			    
-		  	</p:confirmDialog>
-		  
-  		</h:form>
-  		
-  	</p:tab>
-  	
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+    <p:tab id="tabAudiencia" title="Audiência" rendered="#{mbeanModel.id != null}">
+
+        <h:form>
+
+            <ui:include src="/pages/processo/include_cadastro_audiencia.xhtml" />
+
+            <p:remoteCommand action="#{mbean.processoAudienciaUtil.removerAudiencia}" name="removerAudiencia" update="opGridAudiencia" process="@this" />
+
+            <p:outputPanel id="opGridAudiencia" style="width: 97.5%;">
+
+                <h:panelGrid columns="1" style="width: 98%">
+
+                    <p:fieldset style="width: 97.5%">
+
+                        <p:dataTable id="gridAudiencia" emptyMessage="Nenhum audiência encontrada" style="width: 100%" paginator="true" paginatorAlwaysVisible="false" rows="10" value="#{mbeanModel.audiencias}" var="linha">
+
+                            <p:column headerText="Descrição" styleClass="coluna30">
+                                <p:commandLink process="@this" action="#{mbean.processoAudienciaUtil.obterAudiencia}" update="@form">
+                                    <h:outputText value="#{linha.resumoDescricao}" />
+                                    <f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.audiencia}" value="#{linha}" />
+                                </p:commandLink>
+                            </p:column>
+
+                            <p:column headerText="Vara">
+                                <p:commandLink process="@this" action="#{mbean.processoAudienciaUtil.obterAudiencia}" update="@form">
+                                    <h:outputText value="#{linha.vara.descricao}" />
+                                    <f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.audiencia}" value="#{linha}" />
+                                    <f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
+                                </p:commandLink>
+                            </p:column>
+
+                            <p:column headerText="Advogado" rendered="false">
+                                <p:commandLink process="@this" action="#{mbean.processoAudienciaUtil.obterAudiencia}" update="@form">
+                                    <h:outputText value="#{linha.audienciasAdvogados}" />
+                                    <f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.audiencia}" value="#{linha}" />
+                                    <f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
+                                </p:commandLink>
+                            </p:column>
+
+                            <p:column headerText="Data">
+                                <p:commandLink process="@this" action="#{mbean.processoAudienciaUtil.obterAudiencia}" update="@form">
+                                    <h:outputText value="#{linha.dataAudiencia}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
+                                    </h:outputText>
+                                    <f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.audiencia}" value="#{linha}" />
+                                    <f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
+                                </p:commandLink>
+                            </p:column>
+
+                            <p:column headerText="Editar" styleClass="coluna5">
+                                <p:commandLink process="@this" action="#{mbean.processoAudienciaUtil.obterAudiencia}" update="@form">
+                                    <h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
+                                    <f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.audiencia}" value="#{linha}" />
+                                    <f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
+                                </p:commandLink>
+                            </p:column>
+
+                            <p:column headerText="Excluir" styleClass="coluna5">
+                                <p:commandLink type="button" onclick="cdExcluirAudiencia.show();" process="@this">
+                                    <h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+                                    <f:setPropertyActionListener target="#{mbean.processoAudienciaUtil.audienciaSelecionada}" value="#{linha}" />
+                                </p:commandLink>
+                            </p:column>
+
+                        </p:dataTable>
+
+                    </p:fieldset>
+
+                </h:panelGrid>
+
+            </p:outputPanel>
+
+            <p:confirmDialog message="Confirma exclusão do registro?" appendToBody="true" header="Aviso" severity="alert" widgetVar="cdExcluirAudiencia">
+
+                <p:commandButton value="Sim" onclick="removerAudiencia(); cdExcluirAudiencia.hide();" update="opGridAudiencia" process="opGridAudiencia" />
+                <p:commandButton value="Não" onclick="cdExcluirAudiencia.hide()" />
+
+            </p:confirmDialog>
+
+        </h:form>
+
+    </p:tab>
+
 </ui:composition>

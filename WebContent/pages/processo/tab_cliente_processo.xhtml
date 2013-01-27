@@ -1,42 +1,36 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:composition 
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	>
-	
-	<ui:param name="clienteModel" value="${clienteFaces.crudModel}" />
-	
-	<p:accordionPanel multiple="true" activeIndex="-999"  rendered="#{clienteModel.id != null and not empty clienteFaces.processoAux.processos}">
-	
-		<c:forEach items="#{clienteFaces.processoAux.processos}" var="processo" varStatus="linha2">
-			
-			<p:tab title="Número: #{processo.processoNumeroPrincipal.numero}  -  Vara: #{processo.vara.descricao}  -  Objeto: #{processo.objeto.descricao}  -  Lote: #{processo.lote}" titleStyleClass="#{processo.situacaoProcesso.css}" titleStyle="word-spacing: 10px">
-			
-				<h:form>
-					
-					<p:fieldset>
-					
-						<p:accordionPanel multiple="true" activeIndex="0,1,2">
-						
-							<ui:include src="/pages/processo/include_processo_cliente.xhtml" />
-		 						
-		 					<ui:include src="/pages/processo/include_andamento_cliente.xhtml" />
-					  		
-					  		<ui:include src="/pages/processo/include_audiencia_cliente.xhtml" />
-		 				
-		  				</p:accordionPanel>
-						
-					</p:fieldset>
-						
-	  			</h:form>
-	  				
-			</p:tab>
-  		
-  		</c:forEach>
-  		
-  	</p:accordionPanel>
-  	
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:param name="clienteModel" value="${clienteFaces.crudModel}" />
+
+    <p:accordionPanel multiple="true" activeIndex="-999" rendered="#{clienteModel.id != null and not empty clienteFaces.processoAux.processos}">
+
+        <c:forEach items="#{clienteFaces.processoAux.processos}" var="processo" varStatus="linha2">
+
+            <p:tab title="Número: #{processo.processoNumeroPrincipal.numero}  -  Vara: #{processo.vara.descricao}  -  Objeto: #{processo.objeto.descricao}  -  Lote: #{processo.lote}" titleStyleClass="#{processo.situacaoProcesso.css}" titleStyle="word-spacing: 10px">
+
+                <h:form>
+
+                    <p:fieldset>
+
+                        <p:accordionPanel multiple="true" activeIndex="0,1,2">
+
+                            <ui:include src="/pages/processo/include_processo_cliente.xhtml" />
+
+                            <ui:include src="/pages/processo/include_andamento_cliente.xhtml" />
+
+                            <ui:include src="/pages/processo/include_audiencia_cliente.xhtml" />
+
+                        </p:accordionPanel>
+
+                    </p:fieldset>
+
+                </h:form>
+
+            </p:tab>
+
+        </c:forEach>
+
+    </p:accordionPanel>
+
 </ui:composition>
