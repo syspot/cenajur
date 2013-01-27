@@ -89,7 +89,7 @@
 		<p:column headerText="Data Cadastro">
 			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
 				<h:outputText value="#{linha.dataCadastro}" >
-					<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="America/Sao_Paulo" />
+					<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="America/Recife" />
 				</h:outputText>
 				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
 			</p:commandLink>

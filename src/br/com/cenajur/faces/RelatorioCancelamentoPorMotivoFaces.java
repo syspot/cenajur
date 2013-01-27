@@ -1,22 +1,43 @@
 package br.com.cenajur.faces;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import br.com.cenajur.model.Cliente;
+import br.com.cenajur.relat.JasperUtil;
+import br.com.cenajur.util.CenajurUtil;
 
 @ViewScoped
 @ManagedBean(name = "relatorioCancelamentoPorMotivoFaces")
-public class RelatorioCancelamentoPorMotivoFaces extends RelatorioPorAnoFaces {
+public class RelatorioCancelamentoPorMotivoFaces {
 
 	private boolean flagAssociado;
+	private Long ano;
 	
-	@Override
-	public String atualizar(){
-		setGrid(new Cliente().pesquisarCanceladosPorAno(getAno(), flagAssociado));
-		setGridTotal(new Cliente().pesquisarCanceladosPorAnoTotal(getAno(), flagAssociado));
-		return null;
-	}
+	public String gerarRelatorio() {
+
+        try {
+
+            Map<String, Object> parametros = new HashMap<String, Object>();
+
+            parametros.put("ano", ano);
+            parametros.put("flag_associado", flagAssociado);
+
+            new JasperUtil().gerarRelatorio("relatCancelamento.jasper", "relatorio_cancelamento".toString(), parametros);
+
+        } catch (Exception ex) {
+
+            CenajurUtil.addErrorMessage("Não foi possível gerar relatório.");
+
+            ex.printStackTrace();
+
+        }
+
+        return "sucesso";
+
+    }
 
 	public boolean isFlagAssociado() {
 		return flagAssociado;
@@ -24,6 +45,14 @@ public class RelatorioCancelamentoPorMotivoFaces extends RelatorioPorAnoFaces {
 
 	public void setFlagAssociado(boolean flagAssociado) {
 		this.flagAssociado = flagAssociado;
+	}
+
+	public Long getAno() {
+		return ano;
+	}
+
+	public void setAno(Long ano) {
+		this.ano = ano;
 	}
 
 }

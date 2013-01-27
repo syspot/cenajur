@@ -52,7 +52,7 @@
 		  		<p:column headerText="Data" styleClass="coluna20">
 	  				<p:commandLink type="button" oncomplete="abrirDialogViewAudiencia();" process="@this" global="false">
 		  				<h:outputText value="#{linha.dataAudiencia}" >
-			  				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+			  				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
 		  				</h:outputText>
 		  				<f:setPropertyActionListener target="#{mbeanProcessoAudiencia.audiencia}" value="#{linha}" />
 			  			<f:setPropertyActionListener target="#{mbeanProcessoAudiencia.crudModel}" value="#{processo}" />

@@ -7,7 +7,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,6 +21,8 @@ import org.hibernate.FlushMode;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.transform.Transformers;
 
 import br.com.cenajur.util.CenajurUtil;
@@ -55,9 +56,11 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	
 	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL, orphanRemoval = true)
 	@org.hibernate.annotations.OrderBy(clause = "flag_principal asc, numero")
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<ProcessoNumero> processosNumeros;
 	
 	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL, orphanRemoval = true)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<ProcessoCliente> processosClientes;
 	
 	@ManyToOne
@@ -107,7 +110,7 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	@JoinColumn(name = "colaborador_atualizacao_id")
 	private Colaborador colaboradorAtualizacao;
 	
-	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<DocumentoProcesso> documentos;
 	
 	@ManyToOne
@@ -400,7 +403,7 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		
 		StringBuilder query = new StringBuilder();
 		
-		query.append(" select distinct p from Processo p left outer join fetch p.processosNumeros pn where 1 = 1 ");
+		query.append(" select distinct p from Processo p where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(processoNumeroPrincipal) && !TSUtil.isEmpty(processoNumeroPrincipal.getNumero())){
 			query.append(CenajurUtil.formataNumeroProcessoBusca("pn.numero"));

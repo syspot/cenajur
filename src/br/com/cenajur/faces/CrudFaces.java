@@ -67,14 +67,18 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 	protected void preUpdate(){
 	}
 	
-	protected void posDetail(){
+	protected void preFind(){
 	}
 	
-	protected void preFind(){
+	protected void posDetail(){
 	}
 	
 	protected void posPersist() throws TSApplicationException{
 	}
+	
+	protected void posFind(){
+	}
+
 	
 	@Override
 	protected String insert() throws TSApplicationException {
@@ -172,6 +176,8 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 		preFind();
 		
 		this.grid = this.crudPesquisaModel.findByModel();
+		
+		posFind();
 		
 		TSFacesUtil.gerarResultadoLista(this.grid);
 		

@@ -65,6 +65,17 @@ public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 	@JoinColumn(name = "colaborador_atualizacao_id")
 	private Colaborador colaboradorAtualizacao;
 	
+	public AndamentoProcesso() {
+	}
+	
+	public AndamentoProcesso(Long id, String descricao, String descricaoTipoAndamento, Date dataAndamento) {
+		this.id = id;
+		this.descricao = descricao;
+		this.tipoAndamentoProcesso = new TipoAndamentoProcesso();
+		this.tipoAndamentoProcesso.setDescricao(descricaoTipoAndamento);
+		this.dataAndamento = dataAndamento;
+	}
+	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
 	}
@@ -175,10 +186,10 @@ public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 		
 		StringBuilder query = new StringBuilder();
 		
-		query.append(" select distinct a from AndamentoProcesso a inner join a.processoNumero pn where 1 = 1 ");
+		query.append(" select new AndamentoProcesso(a.id, a.descricao, a.tipoAndamentoProcesso.descricao, a.dataAndamento) from AndamentoProcesso a  where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(processoNumero) && !TSUtil.isEmpty(processoNumero.getNumero())){
-			query.append(CenajurUtil.getParamSemAcento("pn.numero"));
+			query.append(CenajurUtil.getParamSemAcento("a.processoNumero.numero"));
 		}
 		
 		if(!TSUtil.isEmpty(dataAndamento)){

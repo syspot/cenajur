@@ -53,7 +53,7 @@
 					                    
 					                    <h:outputText value="Data:" styleClass="#{mensagemDestinatario.css}"/>
 					                    <h:outputText value="#{mensagemDestinatario.mensagem.data}" styleClass="#{mensagemDestinatario.css}">
-					                    	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+					                    	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
 				                    	</h:outputText>  
 					                      
 					                    <h:outputText value="Remetente:" styleClass="#{mensagemDestinatario.css}"/>
@@ -86,7 +86,7 @@
 				                    
 				                <h:outputText value="Data:" />  
 				                <h:inputText value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem.data}" readonly="true">
-				                	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+				                	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
 				                </h:inputText>
 				                  
 				                <h:outputText value="Remetente:" />
@@ -136,7 +136,7 @@
 					                    
 					                    <h:outputText value="Data:" />
 					                    <h:outputText value="#{mensagem.data}" >
-					                    	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+					                    	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
 				                    	</h:outputText>  
 					                      
 					                    <h:outputText value="Destinatários:" />

@@ -99,7 +99,7 @@
   		<p:column headerText="Data" style="text-align: center" styleClass="coluna20">
   			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
 	  			<h:outputText value="#{linha.dataAndamento}">
-	  				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+	  				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
 	  			</h:outputText>
 				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
 			</p:commandLink>

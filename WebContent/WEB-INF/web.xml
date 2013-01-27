@@ -2,12 +2,12 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>Cenajur</display-name>
   <context-param>
-     <param-name>timezone</param-name>
-     <param-value>GMT-3</param-value>
+    <param-name>timezone</param-name>
+    <param-value>GMT-3</param-value>
   </context-param>
   <context-param>
-	 <param-name>javax.faces.PROJECT_STAGE</param-name>
-	 <param-value>Production</param-value>
+    <param-name>javax.faces.PROJECT_STAGE</param-name>
+    <param-value>Production</param-value>
   </context-param>
   <context-param>
     <param-name>primefaces.THEME</param-name>
@@ -41,7 +41,6 @@
     <filter-name>TSActiveRecordFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-
   <filter>
     <filter-name>CenajurFilter</filter-name>
     <filter-class>br.com.cenajur.util.CenajurFilter</filter-class>

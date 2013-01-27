@@ -82,6 +82,18 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 	@Transient
 	private Colaborador colaboradorBusca;
 
+	public Agenda() {
+	}
+	
+	public Agenda(Long id, String tipoAgendaDescricao, Date dataInicial, Date dataFinal, String descricao) {
+		this.id = id;
+		this.tipoAgenda = new TipoAgenda();
+		this.tipoAgenda.setDescricao(tipoAgendaDescricao);
+		this.dataInicial = dataInicial;
+		this.dataFinal = dataFinal;
+		this.descricao = descricao;
+	}
+	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
 	}
@@ -244,7 +256,7 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 		
 		StringBuilder query = new StringBuilder();
 		
-		query.append(" from Agenda a where 1 = 1 ");
+		query.append(" select new Agenda(a.id, a.tipoAgenda.descricao, a.dataInicial, a.dataFinal, a.descricao) from Agenda a where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(descricao)){
 			query.append(CenajurUtil.getParamSemAcento("a.descricao"));

@@ -138,7 +138,7 @@
             </p:commandLink>
         </p:column>
 
-        <p:column headerText="Advogado" styleClass="coluna30">
+        <p:column headerText="Advogado" styleClass="coluna30" rendered="false">
             <p:commandLink action="#{mbean.detailEvent}" ajax="false">
                 <h:outputText value="#{linha.audienciasAdvogados}" />
                 <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
@@ -148,7 +148,7 @@
         <p:column headerText="Data" styleClass="coluna20" style="text-align: center">
             <p:commandLink action="#{mbean.detailEvent}" ajax="false">
                 <h:outputText value="#{linha.dataAudiencia}">
-                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
+                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
                 </h:outputText>
                 <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
             </p:commandLink>
