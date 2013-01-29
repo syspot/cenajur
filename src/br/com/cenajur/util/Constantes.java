@@ -96,5 +96,7 @@ public class Constantes {
 	public static final Long TIPO_INFORMACAO_ASSOCIADOS_NOVOS_ID = 6L;
 	public static final Long TIPO_INFORMACAO_VISITAS_ID = 7L;
 	
+	public static final Long TIPO_PROCESSO_COLETIVO = 3L;
+	
 	
 }

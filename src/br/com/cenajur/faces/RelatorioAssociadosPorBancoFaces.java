@@ -12,7 +12,7 @@ public class RelatorioAssociadosPorBancoFaces extends RelatorioPorAnoFaces{
 	@Override
 	public String atualizar(){
 		setGrid(new Cliente().pesquisarPorBancoPorAno(getAno()));
-		setGridTotal(new Cliente().pesquisarSemLotePorAno(getAno()));
+		setGridTotal(new Cliente().pesquisarBancoPorAno(getAno()));
 		return null;
 	}
 	

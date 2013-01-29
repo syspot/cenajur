@@ -19,7 +19,7 @@ import br.com.topsys.util.TSUtil;
 
 @Entity
 @Table(name = "documentos")
-public class DocumentoPesquisa extends TSActiveRecordAb<DocumentoPesquisa>{
+public class DocumentoPesquisa extends TSActiveRecordAb<DocumentoPesquisa> {
 
 	/**
 	 * 
@@ -27,25 +27,25 @@ public class DocumentoPesquisa extends TSActiveRecordAb<DocumentoPesquisa>{
 	private static final long serialVersionUID = -6849280530069013442L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="documentos_id")
-	@SequenceGenerator(name="documentos_id", sequenceName="documentos_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "documentos_id")
+	@SequenceGenerator(name = "documentos_id", sequenceName = "documentos_id_seq")
 	private Long id;
-	
+
 	@Column(name = "descricao_busca")
 	private String descricaoBusca;
-	
+
 	@Column(name = "url_arquivo")
 	private String urlArquivo;
-	
+
 	@Column(name = "categoria_id")
 	private Long categoriaId;
-	
+
 	@Column(name = "categoria_descricao")
 	private String categoriaDescricao;
-	
+
 	@Column(name = "titulo")
 	private String titulo;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "tipo_categoria_id")
 	private TipoCategoria tipoCategoria;
@@ -130,27 +130,35 @@ public class DocumentoPesquisa extends TSActiveRecordAb<DocumentoPesquisa>{
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public List<DocumentoPesquisa> findByModel(String... fieldsOrderBy) {
 
 		StringBuilder query = new StringBuilder();
-		
+
 		query.append(" select d.* from documentos d where 1 = 1 ");
-		
-		if(!TSUtil.isEmpty(descricaoBusca)){
+
+		if (!TSUtil.isEmpty(tipoCategoria) && !TSUtil.isEmpty(tipoCategoria.getId())) {
+			query.append(" and tipo_categoria_id = ? ");
+		}
+
+		if (!TSUtil.isEmpty(descricaoBusca)) {
 			query.append("and d.descricao_busca @@ to_tsquery(?) ");
 		}
-		
+
 		List<Object> params = new ArrayList<Object>();
-		
-		if(!TSUtil.isEmpty(descricaoBusca)){
+
+		if (!TSUtil.isEmpty(tipoCategoria) && !TSUtil.isEmpty(tipoCategoria.getId())) {
+			params.add(tipoCategoria.getId());
+		}
+
+		if (!TSUtil.isEmpty(descricaoBusca)) {
 			params.add(CenajurUtil.getTsVectorBusca(descricaoBusca));
 		}
-		
+
 		query.append(" order by d.tipo_categoria_id ");
-		
+
 		return super.findBySQL(query.toString(), params.toArray());
 	}
-	
+
 }

@@ -147,19 +147,27 @@ public class DocumentoGeral extends TSActiveRecordAb<DocumentoGeral> {
 		
 		StringBuilder query = new StringBuilder();
 
-		query.append(" select d.* from documentos_gerais d where 1 = 1 ");
+		query.append(" from DocumentoGeral dg where 1 = 1 ");
 
-		if (!TSUtil.isEmpty(getDescricaoBusca())) {
-			query.append(" and to_tsquery(?) @@ descricao_busca ");
+		if (!TSUtil.isEmpty(this.descricao)) {
+			query.append(CenajurUtil.getParamSemAcento("dg.descricao"));
+		}
+		
+		if (!TSUtil.isEmpty(this.categoriaDocumento) && !TSUtil.isEmpty(this.categoriaDocumento.getId())) {
+			query.append(" and dg.categoriaDocumento.id = ? ");
 		}
 		
 		List<Object> params = new ArrayList<Object>();
 
-		if (!TSUtil.isEmpty(getDescricaoBusca())) {
-			params.add(getDescricaoBusca());
+		if (!TSUtil.isEmpty(this.descricao)) {
+			params.add(CenajurUtil.tratarString(this.descricao));
 		}
 		
-		return super.findBySQL(query.toString(), params.toArray());
+		if (!TSUtil.isEmpty(this.categoriaDocumento) && !TSUtil.isEmpty(this.categoriaDocumento.getId())) {
+			params.add(this.categoriaDocumento.getId());
+		}
+		
+		return super.find(query.toString(), "dg.descricao", params.toArray());
 	}
 	
 }

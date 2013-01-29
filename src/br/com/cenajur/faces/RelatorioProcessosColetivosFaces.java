@@ -28,7 +28,7 @@ public class RelatorioProcessosColetivosFaces{
 	
 	public String gerarRelatorio() {
 
-       this.objetos = new Objeto().findAll();
+       this.objetos = new Objeto().pesquisaPorProcessosColetivos();
        
        List<Model> models = new Processo().pesquisarAnosProcesso();
        

@@ -714,8 +714,8 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<AnoModel> pesquisarSemLotePorAno(Long ano){
-		return super.findBySQL(AnoModel.class, new String[]{"descricao", "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez", "tot"}, "select * from fc_clientes_sem_lote_ano(?)", ano);
+	public List<AnoModel> pesquisarBancoPorAno(Long ano){
+		return super.findBySQL(AnoModel.class, new String[]{"descricao", "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez", "tot"}, "select * from fc_clientes_total_ano(?)", ano);
 	}
 	
 	@SuppressWarnings("unchecked")

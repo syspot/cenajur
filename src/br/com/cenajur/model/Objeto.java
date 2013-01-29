@@ -7,10 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.cenajur.util.CenajurUtil;
+import br.com.cenajur.util.Constantes;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
@@ -30,11 +32,19 @@ public class Objeto extends TSActiveRecordAb<Objeto>{
 	
 	private String descricao;
 	
+	@OneToMany(mappedBy = "objeto")
+	private List<Processo> processos;
+	
 	public Objeto() {
 	}
 	
 	public Objeto(Long id) {
 		this.id = id;
+	}
+	
+	public Objeto(Long id, String descricao) {
+		this.id = id;
+		this.descricao = descricao;
 	}
 
 	public Long getId() {
@@ -51,6 +61,14 @@ public class Objeto extends TSActiveRecordAb<Objeto>{
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public List<Processo> getProcessos() {
+		return processos;
+	}
+
+	public void setProcessos(List<Processo> processos) {
+		this.processos = processos;
 	}
 
 	@Override
@@ -96,6 +114,10 @@ public class Objeto extends TSActiveRecordAb<Objeto>{
 		}
 		
 		return super.find(query.toString(), "descricao", params.toArray());
+	}
+	
+	public List<Objeto> pesquisaPorProcessosColetivos() {
+		return super.find(" select distinct new Objeto(o.id, o.descricao) from Objeto o inner join o.processos p where p.tipoProcesso.id = ? ", "o.descricao", Constantes.TIPO_PROCESSO_COLETIVO);
 	}
 	
 }

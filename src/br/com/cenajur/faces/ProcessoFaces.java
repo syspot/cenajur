@@ -113,7 +113,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 			}
 			
 			if(entrei){
-				this.setTabIndex(1);
+				this.setTabIndex(0);
 				this.findEvent();
 			}
 		}

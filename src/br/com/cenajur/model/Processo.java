@@ -623,7 +623,7 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	
 	@SuppressWarnings("unchecked")
 	public List<Model> pesquisarAnosProcesso(){
-		return super.findBySQL(Model.class, new String[]{"ano"}, "SELECT DISTINCT TO_CHAR(data_cadastro, 'YYYY') AS ANO FROM PROCESSOS ORDER BY ANO DESC", null);
+		return super.findBySQL(Model.class, new String[]{"ano"}, "SELECT DISTINCT TO_CHAR(data_abertura, 'YYYY') AS ANO FROM PROCESSOS P WHERE P.TIPO_PROCESSO_ID = ? ORDER BY ANO DESC", Constantes.TIPO_PROCESSO_COLETIVO);
 	}
 	
 }

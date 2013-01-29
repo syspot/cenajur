@@ -1,62 +1,62 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:composition 
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
-	
-	<ui:param name="mbean" value="${documentoPesquisaFaces}" />
-	<ui:param name="mbeanModel" value="${documentoPesquisaFaces.model}" />
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 
-	<h:form>
-			
-		<p:outputPanel layout="block" style="width: 97.5%;">
-		
-			<h:panelGrid columns="1" style="width: 98%">
-			
-				<p:fieldset legend="Filtro" style="width: 100%" toggleable="true">
-				
-					<h:panelGrid columns="1" styleClass="coluna100" style="width:40%">
-						
-						<p:outputLabel for="descricao" value="Descrição" />
-						<p:inputText id="descricao" value="#{mbeanModel.descricaoBusca}" styleClass="coluna90"/>
-						
-						<p:commandButton value="Pesquisar" action="#{mbean.find}" update="@form"/>
-					</h:panelGrid>
-						
-				</p:fieldset>
-			
-			</h:panelGrid>
-			
-			<p:fieldset style="width: 97.5%">
+    <ui:param name="mbean" value="${documentoPesquisaFaces}" />
+    <ui:param name="mbeanModel" value="${documentoPesquisaFaces.model}" />
 
-				<p:dataTable id="gridPesquisa" emptyMessage="Nenhum registro encontrado" style="width: 100%" paginator="true"
-								paginatorAlwaysVisible="false" rows="10" value="#{mbean.grid}" var="linha">
-											
-					<p:column headerText="Tipo">
-						<h:outputText value="#{linha.tipoCategoria.descricao}" />
-					</p:column>
-											
-					<p:column headerText="Título">
-						<h:outputText value="#{linha.titulo}" />
-					</p:column>
-											
-					<p:column headerText="Categoria do Documento">
-						<h:outputText value="#{linha.categoriaDescricao}" />
-					</p:column>
-				
-					<p:column headerText="Visualizar" styleClass="coluna5">
-						<a target="_blank" href="${linha.urlArquivo}">
-							<h:graphicImage value="../resources/images/lupa.png" width="16" style="border: 0px" />
-						</a>
-					</p:column>
-					
-				</p:dataTable>
-				
-			</p:fieldset>
-				
-		</p:outputPanel>
-				
-	</h:form>
-	
+    <h:form>
+
+        <p:outputPanel layout="block" style="width: 97.5%;">
+
+            <h:panelGrid columns="1" style="width: 98%">
+
+                <p:fieldset legend="Filtro" style="width: 100%" toggleable="true">
+
+                    <h:panelGrid columns="1" styleClass="coluna100" style="width:40%">
+
+                        <p:outputLabel for="descricao" value="Descrição" />
+                        <p:inputText id="descricao" value="#{mbeanModel.descricaoBusca}" styleClass="coluna90" />
+                        
+                        <p:outputLabel for="tipoDocumento" value="Tipo" />
+                         <p:selectOneMenu id="tipoDocumento" value="#{mbeanModel.tipoCategoria.id}" style="width:94%">
+                            <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+                            <f:selectItems value="#{mbean.tiposCategorias}" />
+                        </p:selectOneMenu>
+
+                        <p:commandButton value="Pesquisar" action="#{mbean.find}" update="@form" />
+                    </h:panelGrid>
+
+                </p:fieldset>
+
+            </h:panelGrid>
+
+            <p:fieldset style="width: 97.5%">
+
+                <p:dataTable id="gridPesquisa" emptyMessage="Nenhum registro encontrado" style="width: 100%" paginator="true" paginatorAlwaysVisible="false" rows="10" value="#{mbean.grid}" var="linha">
+
+                    <p:column headerText="Tipo">
+                        <h:outputText value="#{linha.tipoCategoria.descricao}" />
+                    </p:column>
+
+                    <p:column headerText="Título">
+                        <h:outputText value="#{linha.titulo}" />
+                    </p:column>
+
+                    <p:column headerText="Categoria do Documento">
+                        <h:outputText value="#{linha.categoriaDescricao}" />
+                    </p:column>
+
+                    <p:column headerText="Visualizar" styleClass="coluna5">
+                        <a target="_blank" href="${linha.urlArquivo}"> <h:graphicImage value="../resources/images/lupa.png" width="16" style="border: 0px" />
+                        </a>
+                    </p:column>
+
+                </p:dataTable>
+
+            </p:fieldset>
+
+        </p:outputPanel>
+
+    </h:form>
+
 </ui:composition>

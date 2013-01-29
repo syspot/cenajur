@@ -1,1 +1,6 @@
 <Resource auth="Container" driverClassName="org.postgresql.Driver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/CenajurDS" password="15rt01" type="javax.sql.DataSource" url="jdbc:postgresql://localhost:5432/cenajur" username="postgres"/>
+
+<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/cenajur</property>
+<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+<property name="hibernate.connection.username">postgres</property>
+<property name="hibernate.connection.password">15rt01</property>

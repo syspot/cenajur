@@ -9,6 +9,20 @@
 
     <ui:define name="cadastro">
 
+        <h:panelGrid columns="2" rendered="#{mbeanModel.id != null}">
+            
+            <h:outputText value="Situação:" style="font-weight: bold; font-size: 1.6em; text-align: left" rendered="#{!mbeanModel.flagAtivo}"/>
+            <h:outputText value="Cancelado" style="font-weight: bold; font-size: 1.6em; color: red; text-align: left" rendered="#{!mbeanModel.flagAtivo}"/>
+            
+        </h:panelGrid>
+
+        <h:panelGrid columns="2" rendered="#{mbeanModel.id != null}">
+            
+            <h:outputText value="Matrícula:" style="font-weight: bold; font-size: 1.6em; text-align: left" />
+            <h:outputText value="#{mbeanModel.matricula}" style="font-weight: bold; font-size: 1.6em; color: red; text-align: left" />
+            
+        </h:panelGrid>
+        
         <h:panelGrid columns="4" rendered="#{mbeanModel.id != null}">
 
             <h:outputText value="Nome:" style="font-weight: bold; font-size: 1.6em; text-align: left" />
