@@ -573,24 +573,36 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		return coll;
 	}
 	
+	public Integer obterTotalAtivoColetivo(){
+		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where p.situacao_processo_id = 1 and p.tipo_processo_id = ?", Constantes.TIPO_PROCESSO_COLETIVO)).getQtd();
+	}
+	
 	public Integer obterTotalAtivo(){
-		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where p.situacao_processo_id = 1")).getQtd();
+		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where p.situacao_processo_id = 1 ")).getQtd();
 	}
 
+	public Integer obterTotalSuspensoColetivo(){
+		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where p.situacao_processo_id = 2 and p.tipo_processo_id = ?", Constantes.TIPO_PROCESSO_COLETIVO)).getQtd();
+	}
+	
 	public Integer obterTotalSuspenso(){
-		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where p.situacao_processo_id = 2")).getQtd();
+		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where p.situacao_processo_id = 2 ")).getQtd();
 	}
 
+	public Integer obterTotalArquivadoColetivo(){
+		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where p.situacao_processo_id = 3 and p.tipo_processo_id = ?", Constantes.TIPO_PROCESSO_COLETIVO)).getQtd();
+	}
+	
 	public Integer obterTotalArquivado(){
-		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where p.situacao_processo_id = 3")).getQtd();
+		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where p.situacao_processo_id = 3 ")).getQtd();
 	}
 	
 	public Integer obterTotalAtivoPorAno(String ano){
-		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where to_char(p.data_abertura, 'YYYY') = coalesce(?, to_char(p.data_abertura, 'YYYY'))  and p.situacao_processo_id = 1", ano)).getQtd();
+		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where to_char(p.data_abertura, 'YYYY') = coalesce(?, to_char(p.data_abertura, 'YYYY'))  and p.situacao_processo_id = 1 and p.tipo_processo_id = ? ", ano, Constantes.TIPO_PROCESSO_COLETIVO)).getQtd();
 	}
 	
 	public Integer obterTotalAtivoPorAnoObjeto(String ano, Objeto objeto){
-		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where to_char(p.data_abertura, 'YYYY') = coalesce(?, to_char(p.data_abertura, 'YYYY'))  and p.objeto_id = ? and p.situacao_processo_id = 1", ano, objeto.getId())).getQtd();
+		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where to_char(p.data_abertura, 'YYYY') = coalesce(?, to_char(p.data_abertura, 'YYYY'))  and p.objeto_id = ? and p.situacao_processo_id = 1 and p.tipo_processo_id = ?", ano, objeto.getId(), Constantes.TIPO_PROCESSO_COLETIVO)).getQtd();
 	}
 	
 	public Integer obterTotalAtivoPorAnoAdvogado(String ano, Colaborador advogado){
@@ -598,7 +610,7 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	}
 	
 	public Integer obterTotalAtivoPorObjeto(Objeto objeto){
-		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where p.objeto_id = ? and p.situacao_processo_id = 1", objeto.getId())).getQtd();
+		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where p.objeto_id = ? and p.situacao_processo_id = 1 and p.tipo_processo_id = ?", objeto.getId(), Constantes.TIPO_PROCESSO_COLETIVO)).getQtd();
 	}
 	
 	public Integer obterTotalAtivoPorAdvogado(Colaborador advogado){
@@ -606,7 +618,7 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	}
 	
 	public Integer obterTotalSuspensoPorObjeto(Objeto objeto){
-		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where p.objeto_id = ? and p.situacao_processo_id = 2", objeto.getId())).getQtd();
+		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where p.objeto_id = ? and p.situacao_processo_id = 2 and p.tipo_processo_id = ?", objeto.getId(), Constantes.TIPO_PROCESSO_COLETIVO)).getQtd();
 	}
 	
 	public Integer obterTotalSuspensoPorAdvogado(Colaborador advogado){
@@ -614,7 +626,7 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	}
 	
 	public Integer obterTotalArquivadoPorObjeto(Objeto objeto){
-		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where p.objeto_id = ? and p.situacao_processo_id = 3", objeto.getId())).getQtd();
+		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where p.objeto_id = ? and p.situacao_processo_id = 3 and p.tipo_processo_id = ?", objeto.getId(), Constantes.TIPO_PROCESSO_COLETIVO)).getQtd();
 	}
 	
 	public Integer obterTotalArquivadoPorAdvogado(Colaborador advogado){

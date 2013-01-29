@@ -1,192 +1,195 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:composition
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:c="http://java.sun.com/jsp/jstl/core">
-	
-	<ui:param name="mbean" value="${relatorioProcessosAdvogadosFaces}" />
-	
-  	<p:tabView id="tabview" dynamic="false">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-		<p:tab id="tabRelatorio" title="Relatório" >
-		
-		  	<h:form id="formRelatorio">
-		  	
-		  		<p:commandButton value="Gerar Relatório" action="#{mbean.gerarRelatorio}" ajax="false" style="margin-bottom:30px; margin-top:20px;" />
-		  		
-		  		<p:panel id="pgGridImpressao" style="width:100%">
-		  		
-			  		<div id="grid" class="ui-datatable ui-widget" style="width: 100%">
-			  		
-				  		<table>
-				  		
-				  			<thead>
-				  			
-					  			<tr >
-					  				
-					  				<th class="ui-state-default" >
-					  					<div class="ui-dt-c"><span>Advogados</span></div>
-					  				</th>
-					  				
-					  				<th class="ui-state-default" >
-					  					<div class="ui-dt-c"><span>Ativos</span></div>
-					  				</th>
-					  				
-					  				<c:forEach items="#{mbean.anos}" var="ano">
-							  		
-							  			<th class="ui-state-default" >
-							  				<div class="ui-dt-c"><span><h:outputText value="#{ano}" /></span></div>
-						  				</th>
-							  		
-							  		</c:forEach>
-							  		
-						  			<th class="ui-state-default" >
-						  				<div class="ui-dt-c"><span>Suspenso</span></div>
-					  				</th>
-					  				
-						  			<th class="ui-state-default" >
-						  				<div class="ui-dt-c"><span>Arquivados</span></div>
-					  				</th>
-							  		
-					  			</tr>
-					  			
-					  		</thead>
-				  			
-				  			<tbody class="ui-datatable-data ui-widget-content">
-				  			
-				  				<c:forEach items="#{mbean.advogados}" var="advogado">
-				  				
-					  				<tr class="ui-widget-content ui-datatable-even" >
-					  				
-					  					<td >
-					  						<div class="ui-dt-c">
-					  							<p:commandLink action="#{autenticacaoFaces.redirecionarParaColaborador}" ajax="false">
-										  			<h:outputText value="#{advogado.nome}" />
-													<f:setPropertyActionListener target="#{autenticacaoFaces.colaboradorSelecionado}" value="#{advogado}" />
-												</p:commandLink>
-				  							</div>
-			  							</td>
-					  				
-					  					<td >
-					  						<div class="ui-dt-c">
-					  							<p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
-										  			#{mbean.processo.obterTotalAtivoPorAdvogado(advogado)}
-													<f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{1}" />
-													<f:setPropertyActionListener target="#{autenticacaoFaces.colaboradorSelecionado}" value="#{advogado}" />
-												</p:commandLink>
-				  							</div>
-			  							</td>
-			  							
-			  							<c:forEach items="#{mbean.anos}" var="ano">
-							  		
-								  			<td >
-						  						<div class="ui-dt-c">
-						  						
-						  							<p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
-											  			#{mbean.processo.obterTotalAtivoPorAnoAdvogado(ano, advogado)}
-														<f:setPropertyActionListener target="#{autenticacaoFaces.ano}" value="#{ano}" />
-														<f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{1}" />
-														<f:setPropertyActionListener target="#{autenticacaoFaces.colaboradorSelecionado}" value="#{advogado}" />
-													</p:commandLink>
-												
-					  							</div>
-				  							</td>
-								  		
-								  		</c:forEach>
-								  		
-								  		<td >
-					  						<div class="ui-dt-c">
-					  							<p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
-										  			#{mbean.processo.obterTotalSuspensoPorAdvogado(advogado)}
-													<f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{2}" />
-													<f:setPropertyActionListener target="#{autenticacaoFaces.colaboradorSelecionado}" value="#{advogado}" />
-												</p:commandLink>
-				  							</div>
-			  							</td>
-								  		
-								  		<td >
-					  						<div class="ui-dt-c">
-					  							<p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
-										  			#{mbean.processo.obterTotalArquivadoPorAdvogado(advogado)}
-													<f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{3}" />
-													<f:setPropertyActionListener target="#{autenticacaoFaces.colaboradorSelecionado}" value="#{advogado}" />
-												</p:commandLink>
-				  							</div>
-			  							</td>
-					  				
-					  				</tr>
-				  			
-						  		</c:forEach>
-						  		
-						  		<tr class="ui-widget-content ui-datatable-even" >
-					  				
-				  					<td >
-				  						<div class="ui-dt-c">
-				  							TOTAL
-			  							</div>
-		  							</td>
-				  				
-				  					<td >
-				  						<div class="ui-dt-c">
-				  							<p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
-									  			#{mbean.processo.obterTotalAtivo()}
-												<f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{1}" />
-											</p:commandLink>
-			  							</div>
-		  							</td>
-		  							
-		  							<c:forEach items="#{mbean.anos}" var="ano">
-						  		
-							  			<td >
-					  						<div class="ui-dt-c">
-					  							<p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
+    <ui:param name="mbean" value="${relatorioProcessosAdvogadosFaces}" />
+
+    <p:tabView id="tabview" dynamic="false">
+
+        <p:tab id="tabRelatorio" title="Relatório">
+
+            <h:form id="formRelatorio">
+
+                <p:commandButton value="Gerar Relatório" action="#{mbean.gerarRelatorio}" ajax="false" style="margin-bottom:30px; margin-top:20px;" />
+
+                <p:panel id="pgGridImpressao" style="width:100%">
+
+                    <div id="grid" class="ui-datatable ui-widget" style="width: 100%">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+
+                                    <th class="ui-state-default">
+                                        <div class="ui-dt-c">
+                                            <span>Advogados</span>
+                                        </div>
+                                    </th>
+
+                                    <th class="ui-state-default">
+                                        <div class="ui-dt-c">
+                                            <span>Ativos</span>
+                                        </div>
+                                    </th>
+
+                                    <c:forEach items="#{mbean.anos}" var="ano">
+
+                                        <th class="ui-state-default">
+                                            <div class="ui-dt-c">
+                                                <span><h:outputText value="#{ano}" /></span>
+                                            </div>
+                                        </th>
+
+                                    </c:forEach>
+
+                                    <th class="ui-state-default">
+                                        <div class="ui-dt-c">
+                                            <span>Suspenso</span>
+                                        </div>
+                                    </th>
+
+                                    <th class="ui-state-default">
+                                        <div class="ui-dt-c">
+                                            <span>Arquivados</span>
+                                        </div>
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody class="ui-datatable-data ui-widget-content">
+
+                                <c:forEach items="#{mbean.advogados}" var="advogado">
+
+                                    <tr class="ui-widget-content ui-datatable-even">
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <p:commandLink action="#{autenticacaoFaces.redirecionarParaColaborador}" ajax="false">
+                                                    <h:outputText value="#{advogado.nome}" />
+                                                    <f:setPropertyActionListener target="#{autenticacaoFaces.colaboradorSelecionado}" value="#{advogado}" />
+                                                </p:commandLink>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
+                                                    #{mbean.processo.obterTotalAtivoPorAdvogado(advogado)}
+                                                    <f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{1}" />
+                                                    <f:setPropertyActionListener target="#{autenticacaoFaces.colaboradorSelecionado}" value="#{advogado}" />
+                                                </p:commandLink>
+                                            </div>
+                                        </td>
+
+                                        <c:forEach items="#{mbean.anos}" var="ano">
+
+                                            <td>
+                                                <div class="ui-dt-c">
+
+                                                    <p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
+                                                        #{mbean.processo.obterTotalAtivoPorAnoAdvogado(ano, advogado)}
+                                                        <f:setPropertyActionListener target="#{autenticacaoFaces.ano}" value="#{ano}" />
+                                                        <f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{1}" />
+                                                        <f:setPropertyActionListener target="#{autenticacaoFaces.colaboradorSelecionado}" value="#{advogado}" />
+                                                    </p:commandLink>
+
+                                                </div>
+                                            </td>
+
+                                        </c:forEach>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
+                                                    #{mbean.processo.obterTotalSuspensoPorAdvogado(advogado)}
+                                                    <f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{2}" />
+                                                    <f:setPropertyActionListener target="#{autenticacaoFaces.colaboradorSelecionado}" value="#{advogado}" />
+                                                </p:commandLink>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
+                                                    #{mbean.processo.obterTotalArquivadoPorAdvogado(advogado)}
+                                                    <f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{3}" />
+                                                    <f:setPropertyActionListener target="#{autenticacaoFaces.colaboradorSelecionado}" value="#{advogado}" />
+                                                </p:commandLink>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                </c:forEach>
+
+                                <tr class="ui-widget-content ui-datatable-even">
+
+                                    <td>
+                                        <div class="ui-dt-c">TOTAL</div>
+                                    </td>
+
+                                    <td>
+                                        <div class="ui-dt-c">
+                                            <p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
+                                                #{mbean.processo.obterTotalAtivo()}
+                                                <f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{1}" />
+                                            </p:commandLink>
+                                        </div>
+                                    </td>
+
+                                    <c:forEach items="#{mbean.anos}" var="ano">
+
+                                        <td>
+                                            <div class="ui-dt-c">
+                                                <p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
 										  			#{mbean.processo.obterTotalAtivoPorAno(ano)}
 													<f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{1}" />
-													<f:setPropertyActionListener target="#{autenticacaoFaces.ano}" value="#{ano}" />
-												</p:commandLink>
-				  							</div>
-			  							</td>
-							  		
-							  		</c:forEach>
-							  		
-							  		<td >
-				  						<div class="ui-dt-c">
-				  							<p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
+                                                    <f:setPropertyActionListener target="#{autenticacaoFaces.ano}" value="#{ano}" />
+                                                </p:commandLink>
+                                            </div>
+                                        </td>
+
+                                    </c:forEach>
+
+                                    <td>
+                                        <div class="ui-dt-c">
+                                            <p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
 									  			#{mbean.processo.obterTotalSuspenso()}
 												<f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{2}" />
-											</p:commandLink>
-			  							</div>
-		  							</td>
-							  		
-							  		<td >
-				  						<div class="ui-dt-c">
-				  							<p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
+                                            </p:commandLink>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="ui-dt-c">
+                                            <p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
 									  			#{mbean.processo.obterTotalArquivado()}
 												<f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{3}" />
-											</p:commandLink>
-			  							</div>
-		  							</td>
-				  				
-				  				</tr>
-						  		
-				  			</tbody>
-				  		
-				  		</table>
-				  		
-				  	</div>
-			  	
-			  	</p:panel>
-			  	
-			  	<p:commandButton value="Imprimir" type="button" icon="ui-icon-print" style="margin-top:10px">  
-			        <p:printer target="pgGridImpressao" />  
-			    </p:commandButton>
-			  	
-			</h:form>
-			
-		</p:tab>
-		
-	</p:tabView>
-  	
+                                            </p:commandLink>
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </p:panel>
+
+                <p:commandButton value="Imprimir" type="button" icon="ui-icon-print" style="margin-top:10px">
+                    <p:printer target="pgGridImpressao" />
+                </p:commandButton>
+
+            </h:form>
+
+        </p:tab>
+
+    </p:tabView>
+
 </ui:composition>

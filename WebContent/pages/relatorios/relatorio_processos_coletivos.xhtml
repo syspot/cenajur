@@ -77,8 +77,8 @@
                                         <td>
                                             <div class="ui-dt-c">
                                                 <p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
-										  			#{mbean.processo.obterTotalAtivoPorObjeto(objeto)}
-													<f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{1}" />
+                                                    #{mbean.processo.obterTotalAtivoPorObjeto(objeto)}
+                                                    <f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{1}" />
                                                     <f:setPropertyActionListener target="#{autenticacaoFaces.objetoSelecionado}" value="#{objeto}" />
                                                 </p:commandLink>
                                             </div>
@@ -89,8 +89,8 @@
                                             <td>
                                                 <div class="ui-dt-c">
                                                     <p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
-											  			#{mbean.processo.obterTotalAtivoPorAnoObjeto(ano, objeto)}
-														<f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{1}" />
+                                                        #{mbean.processo.obterTotalAtivoPorAnoObjeto(ano, objeto)}
+                                                        <f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{1}" />
                                                         <f:setPropertyActionListener target="#{autenticacaoFaces.ano}" value="#{ano}" />
                                                         <f:setPropertyActionListener target="#{autenticacaoFaces.objetoSelecionado}" value="#{objeto}" />
                                                     </p:commandLink>
@@ -102,8 +102,8 @@
                                         <td>
                                             <div class="ui-dt-c">
                                                 <p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
-										  			#{mbean.processo.obterTotalSuspensoPorObjeto(objeto)}
-													<f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{2}" />
+                                                    #{mbean.processo.obterTotalSuspensoPorObjeto(objeto)}
+                                                    <f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{2}" />
                                                     <f:setPropertyActionListener target="#{autenticacaoFaces.objetoSelecionado}" value="#{objeto}" />
                                                 </p:commandLink>
                                             </div>
@@ -112,8 +112,8 @@
                                         <td>
                                             <div class="ui-dt-c">
                                                 <p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
-										  			#{mbean.processo.obterTotalArquivadoPorObjeto(objeto)}
-													<f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{3}" />
+			    #{mbean.processo.obterTotalArquivadoPorObjeto(objeto)}
+                                                    <f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{3}" />
                                                     <f:setPropertyActionListener target="#{autenticacaoFaces.objetoSelecionado}" value="#{objeto}" />
                                                 </p:commandLink>
                                             </div>
@@ -132,8 +132,8 @@
                                     <td>
                                         <div class="ui-dt-c">
                                             <p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
-									  			#{mbean.processo.obterTotalAtivo()}
-												<f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{1}" />
+			#{mbean.processo.obterTotalAtivoColetivo()}
+                                                <f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{1}" />						  			
                                             </p:commandLink>
                                         </div>
                                     </td>
@@ -143,8 +143,8 @@
                                         <td>
                                             <div class="ui-dt-c">
                                                 <p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
-										  			#{mbean.processo.obterTotalAtivoPorAno(ano)}
-													<f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{1}" />
+              			    #{mbean.processo.obterTotalAtivoPorAno(ano)}
+            			    <f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{1}" />
                                                     <f:setPropertyActionListener target="#{autenticacaoFaces.ano}" value="#{ano}" />
                                                 </p:commandLink>
                                             </div>
@@ -155,8 +155,8 @@
                                     <td>
                                         <div class="ui-dt-c">
                                             <p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
-									  			#{mbean.processo.obterTotalSuspenso()}
-												<f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{2}" />
+                                                #{mbean.processo.obterTotalSuspensoColetivo()}
+                                                <f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{2}" />
                                             </p:commandLink>
                                         </div>
                                     </td>
@@ -164,8 +164,8 @@
                                     <td>
                                         <div class="ui-dt-c">
                                             <p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
-									  			#{mbean.processo.obterTotalArquivado()}
-												<f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{3}" />
+                                                #{mbean.processo.obterTotalArquivadoColetivo()}
+                                                <f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{3}" />
                                             </p:commandLink>
                                         </div>
                                     </td>

@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -236,7 +235,6 @@ public class Faturamento extends TSActiveRecordAb<Faturamento>{
 		return true;
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Faturamento> findByModel(String... fieldsOrderBy) {
 		

@@ -43,6 +43,7 @@ public class GerarRelatorioClientesInadimplentes extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		Map parametros = new HashMap();
@@ -63,6 +64,7 @@ public class GerarRelatorioClientesInadimplentes extends HttpServlet {
 		// TODO Auto-generated method stub
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void gerarRelatorioHtml(String jasper, String nomeRelatorio, Map parametros, HttpServletRequest request,
 			HttpServletResponse response) throws SQLException, ClassNotFoundException, JRException, IOException {
 
