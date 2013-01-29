@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatProcesso" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cb9b1ecb-4315-432b-b2bd-51fc2e8898ae">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatProcesso" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="cb9b1ecb-4315-432b-b2bd-51fc2e8898ae">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="DATA_INICIAL" class="java.lang.String"/>
-	<parameter name="DATA_FINAL" class="java.lang.String"/>
+	<parameter name="DATA_INICIAL" class="java.util.Date"/>
+	<parameter name="DATA_FINAL" class="java.util.Date"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\Java\\workspace eclipse novo\\Cenajur\\src\\br\\com\\cenajur\\relat\\"]]></defaultValueExpression>
 	</parameter>
@@ -13,7 +13,7 @@
 		<groupHeader>
 			<band height="243">
 				<subreport>
-					<reportElement uuid="f01126cd-6110-42d2-88d1-c30b3c2c5617" x="24" y="9" width="500" height="47"/>
+					<reportElement uuid="f01126cd-6110-42d2-88d1-c30b3c2c5617" x="0" y="9" width="500" height="47"/>
 					<subreportParameter name="DATA_INICIAL">
 						<subreportParameterExpression><![CDATA[$P{DATA_INICIAL}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -24,7 +24,7 @@
 					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/relatProcessoPorTipo.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport>
-					<reportElement uuid="bea1cc1e-f4f2-410f-b069-6b26670e923d" positionType="Float" x="24" y="68" width="500" height="50"/>
+					<reportElement uuid="bea1cc1e-f4f2-410f-b069-6b26670e923d" positionType="Float" x="0" y="68" width="500" height="50"/>
 					<subreportParameter name="DATA_INICIAL">
 						<subreportParameterExpression><![CDATA[$P{DATA_INICIAL}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -35,7 +35,7 @@
 					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/relatProcessoPorAdvogado.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport>
-					<reportElement uuid="003257ec-60a0-4308-882b-faec656e1375" positionType="Float" x="24" y="128" width="500" height="51"/>
+					<reportElement uuid="003257ec-60a0-4308-882b-faec656e1375" positionType="Float" x="0" y="128" width="500" height="51"/>
 					<subreportParameter name="DATA_INICIAL">
 						<subreportParameterExpression><![CDATA[$P{DATA_INICIAL}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -46,7 +46,7 @@
 					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/relatProcessoPorVara.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport>
-					<reportElement uuid="277c5845-eb1a-48e7-96d1-cd17ef6e8471" positionType="Float" x="24" y="189" width="500" height="47"/>
+					<reportElement uuid="277c5845-eb1a-48e7-96d1-cd17ef6e8471" positionType="Float" x="0" y="189" width="500" height="47"/>
 					<subreportParameter name="DATA_INICIAL">
 						<subreportParameterExpression><![CDATA[$P{DATA_INICIAL}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -66,17 +66,20 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="105" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement uuid="049ec8d1-5769-4c3f-9049-58772f05eaa2" x="111" y="35" width="329" height="40" backcolor="#C9C9C9"/>
+			</rectangle>
 			<staticText>
-				<reportElement uuid="1fc05615-6ba8-42d8-8f33-3b7a7f0ead72" x="128" y="40" width="298" height="35"/>
-				<textElement textAlignment="Center">
+				<reportElement uuid="1fc05615-6ba8-42d8-8f33-3b7a7f0ead72" x="128" y="38" width="298" height="35"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="20" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Relatório de Processos Geral]]></text>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement uuid="d3abf384-94b7-4e0b-8db7-7de9145be60c" x="388" y="10" width="158" height="20"/>
-				<textElement>
+				<reportElement uuid="d3abf384-94b7-4e0b-8db7-7de9145be60c" x="392" y="10" width="158" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>

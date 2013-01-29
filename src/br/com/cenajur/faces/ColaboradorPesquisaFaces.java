@@ -38,6 +38,7 @@ public class ColaboradorPesquisaFaces extends PesquisaFaces<Colaborador> {
 	protected void preFind() {
 		if(getFlagBuscaAdvogado()){
 			this.getModel().setTipoColaborador(new TipoColaborador(Constantes.TIPO_COLABORADOR_ADVOGADO));
+			this.getModel().setFlagAtivo(Boolean.TRUE);
 		}
 	}
 	

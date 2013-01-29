@@ -1,180 +1,172 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:composition
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
-	
-  	<p:tabView id="tabview" dynamic="false">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 
-		<p:tab id="tabMensagem" title="#{mensagemFaces.qtdMensagensNaoLidas > 0 ? mensagemFaces.titleAbaMensagem : 'Mensagens'}" >
-		
-		  	<h:form id="formMensagem">
-		  	
-		  		<p:fieldset>
-		  		
-			  		<p:commandButton value="Nova Mensagem" icon="novo" oncomplete="dlgMensagem.show();" style="width: 150px; margin-bottom: 10px; margin-top:10px">
-			  			<f:setPropertyActionListener target="#{mensagemFaces.flagEnviar}" value="#{true}" />
-			  		</p:commandButton>
-			  		
-			  		<p:commandButton value="Atualizar" icon="ui-icon-refresh" ajax="false" action="#{mensagemFaces.pesquisarMensagens}" style="width: 100px; margin-bottom: 10px; margin-top:10px; margin-left: 10px" />
-		  		
-		  		</p:fieldset>
-		  		
-		  		<p:tabView id="tabviewMensagens" style="margin-top: 10px">
-		  		
-		  			<p:tab id="tabMensagemRecebida" title="Recebidas">
-						
-						<p:poll interval="120" listener="#{mensagemFaces.pesquisarMensagens}" update="dgMensagem" process="@this" global="false" />
-		  			
-		  				<p:remoteCommand name="abrirModelMensagem" oncomplete="dlgViewMensagem.show();" update="pgMensagem, dgMensagem" process="@this" global="false" />
-		  				<p:remoteCommand name="atualizarMensagensRecebidas" process="@this" global="false" update="dgMensagem"/>
-		  				
-		  				<h:panelGrid style="width:20%; margin-bottom: 10px;">
-		  				
-			  				<p:outputLabel for="flagLida" value="Não Lidas" />
-			  				<p:selectOneMenu id="flagLida" value="#{mensagemFaces.statusBuscaLida}" style="width:95%">
-						  		<f:selectItem itemLabel="Todas" itemValue="#{0}" />
-						  		<f:selectItem itemLabel="Lidas" itemValue="#{1}" />
-						  		<f:selectItem itemLabel="Não Lidas" itemValue="#{2}" />
-						  		<p:ajax event="change" listener="#{mensagemFaces.pesquisarMensagens}" oncomplete="atualizarMensagensRecebidas()" global="false" />
-						  	</p:selectOneMenu>
-		  				
-		  				</h:panelGrid>
-	  					
-					    <p:dataGrid id="dgMensagem" var="mensagemDestinatario" value="#{mensagemFaces.mensagensDestinatariosRecebidas}" columns="3"  
-					        rows="12" paginator="true"  paginatorAlwaysVisible="false" emptyMessage="Nenhuma mensagem encontrada"
-					        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-					        rowsPerPageTemplate="9,12,15">
-					          
-					        <p:column>  
-					            <p:panel>  
-					                <h:panelGrid columns="2" columnClasses="coluna25_2, coluna75_2" style="width:100%; vertical-align: top">
-					                    
-					                    <h:outputText value="Data:" styleClass="#{mensagemDestinatario.css}"/>
-					                    <h:outputText value="#{mensagemDestinatario.mensagem.data}" styleClass="#{mensagemDestinatario.css}">
-					                    	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
-				                    	</h:outputText>  
-					                      
-					                    <h:outputText value="Remetente:" styleClass="#{mensagemDestinatario.css}"/>
-					                    <h:outputText value="#{mensagemDestinatario.mensagem.remetente.nome}" styleClass="#{mensagemDestinatario.css}"/>
-					                      
-					                    <h:outputText value="Mensagem:" styleClass="#{mensagemDestinatario.css}"/>
-					                    <h:panelGrid columns="2">
-					                    	<h:outputText value="#{mensagemDestinatario.mensagem.textoResumo}" style="text-align: lef;" styleClass="#{mensagemDestinatario.css}"/>
-					                    	<p:commandLink action="#{mensagemFaces.lerMensagem}" oncomplete="abrirModelMensagem();" process="@this" global="false" value="Detalhe" style="text-align: lef; color: #0000FF">
-					                    		<f:setPropertyActionListener target="#{mensagemFaces.mensagemDestinatarioSelecionada}" value="#{mensagemDestinatario}"/>
-					                    	</p:commandLink>
-					                    </h:panelGrid>
-					                    
-					                    <h:outputText value="Selecionar:" styleClass="#{mensagemDestinatario.css}"/>
-					                    <h:selectBooleanCheckbox value="#{mensagemDestinatario.flagSelecionado}" >
-					                    	<p:ajax process="@this" global="false" />
-					                    </h:selectBooleanCheckbox>
-					                    
-					                </h:panelGrid>
-					            </p:panel>  
-					        </p:column>  
-					  
-					    </p:dataGrid>
-					    
-					    <p:commandButton value="Excluir Selecionadas" icon="ui-icon-minus" action="#{mensagemFaces.excluirMensagensDestinatariosSelecionadas}" ajax="false" style="margin-top:20px" />
-					    
-					    <p:dialog id="dialogViewMensagem" header="Detalhe da mensagem" widgetVar="dlgViewMensagem" modal="true" width="550" appendToBody="true">  
-			        
-				            <h:panelGrid id="pgMensagem" columns="2" columnClasses="coluna15_2, coluna85_2" style="width:100%; vertical-align: top">
-				                    
-				                <h:outputText value="Data:" />  
-				                <h:inputText value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem.data}" readonly="true">
-				                	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
-				                </h:inputText>
-				                  
-				                <h:outputText value="Remetente:" />
-				                <h:inputText value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem.remetente.nome}" readonly="true" style="width: 70%"/>
-				                  
-				                <h:outputText value="Mensagem:" />
-				                <h:inputTextarea value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem.texto}" rows="10" cols="55" style="text-align: lef; wudth: 100%" readonly="true"/>
-				                  
-				            </h:panelGrid> 
-				            
-				            <h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:100%; margin-top:10px; margin-botton:20px">
-				            
-				            	<p:commandButton value="Histórico" icon="ui-icon-search" action="#{mensagemFaces.pesquisarHistorico}" oncomplete="dlgHistoricoMensagem.show();" process="@this, pgMensagem" >
-				            		<f:setPropertyActionListener target="#{mensagemFaces.mensagemView}" value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem}" />
-				            	</p:commandButton>
-					            
-					            <p:outputPanel style="text-align: right">
-					            	<p:commandButton value="Responder" icon="ui-icon-comment" oncomplete="dlgMensagem.show(); dlgViewMensagem.hide();" action="#{mensagemFaces.responderMensagem}" process="@this, pgMensagem">
-					            		<f:setPropertyActionListener target="#{mensagemFaces.destinatarioSelecionado}" value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem.remetente}" />
-					            		<f:setPropertyActionListener target="#{mensagemFaces.flagEnviar}" value="#{true}" />
-					            	</p:commandButton>
-					            	<p:commandButton value="Excluir" icon="ui-icon-minus" action="#{mensagemFaces.excluirMensagemDestinatario}" update="dgMensagem" oncomplete="dlgViewMensagem.hide();" process="@this, pgMensagem"  />
-					            </p:outputPanel>
-					            
-				            </h:panelGrid>
-				            
-					    </p:dialog>
-					    
-		  			</p:tab>
-		  			
-		  			<p:tab id="tabMensagemEnviada" title="Enviadas">
-						
-		  				<p:remoteCommand name="abrirModelMensagemEnviada" oncomplete="dlgMensagem.show();" process="@this" global="false" >
-		  					<f:setPropertyActionListener target="#{mensagemFaces.flagEnviar}" value="#{false}" />
-		  				</p:remoteCommand>
-		  		
-		  				<p:remoteCommand name="atualizarMensagensEnviadas" process="@this" global="false" update="dgMensagemEnviada"/>
-		  				
-					    <p:dataGrid id="dgMensagemEnviada" var="mensagem" value="#{mensagemFaces.mensagensEnviadas}" columns="3"  
-					        rows="12" paginator="true"  paginatorAlwaysVisible="false" emptyMessage="Nenhuma mensagem encontrada"
-					        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-					        rowsPerPageTemplate="9,12,15">  
-					          
-					        <p:column>  
-					            <p:panel>  
-					                <h:panelGrid columns="2" columnClasses="coluna25_2, coluna75_2" style="width:100%; vertical-align: top">
-					                    
-					                    <h:outputText value="Data:" />
-					                    <h:outputText value="#{mensagem.data}" >
-					                    	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
-				                    	</h:outputText>  
-					                      
-					                    <h:outputText value="Destinatários:" />
-					                    <h:outputText value="#{mensagem.mensagensDestinatarios}" />
-					                      
-					                    <h:outputText value="Mensagem:" />
-					                    <h:panelGrid columns="2">
-					                    	<h:outputText value="#{mensagem.textoResumo}" style="text-align: lef;" />
-					                    	<p:commandLink oncomplete="abrirModelMensagemEnviada();" process="@this" global="false" value="Detalhe" style="text-align: lef; color: #0000FF">
-					                    		<f:setPropertyActionListener target="#{mensagemFaces.mensagem}" value="#{mensagem}" />
-					                    	</p:commandLink>
-					                    </h:panelGrid>
-					                    
-					                    <h:outputText value="Selecionar:" />
-					                    <h:selectBooleanCheckbox value="#{mensagem.flagSelecionado}" >
-					                    	<p:ajax process="@this" global="false" />
-					                    </h:selectBooleanCheckbox>
-					                    
-					                </h:panelGrid>
-					            </p:panel>  
-					        </p:column>  
-					  
-					    </p:dataGrid>
-					    
-				    	<p:commandButton value="Excluir Selecionadas" icon="ui-icon-minus" action="#{mensagemFaces.excluirMensagensSelecionadas}" ajax="false" style="margin-top:20px" />
-					    
-		  			</p:tab>
-		  		
-		  		</p:tabView>
-		  		
-		  		<ui:include src="/resources/templates/dialogs/dialogHistoricoMensagem.xhtml" />
-			  
-			</h:form>
-			
-		</p:tab>
-		
-		<ui:include src="/pages/agenda/agenda.xhtml" />
-		
-	</p:tabView>
-  	
+    <p:tabView id="tabview" dynamic="false">
+
+        <p:tab id="tabMensagem" title="#{mensagemFaces.qtdMensagensNaoLidas > 0 ? mensagemFaces.titleAbaMensagem : 'Mensagens'}">
+
+            <h:form id="formMensagem">
+
+                <p:fieldset>
+
+                    <p:commandButton value="Nova Mensagem" icon="novo" oncomplete="dlgMensagem.show();" style="width: 150px; margin-bottom: 10px; margin-top:10px">
+                        <f:setPropertyActionListener target="#{mensagemFaces.flagEnviar}" value="#{true}" />
+                    </p:commandButton>
+
+                    <p:commandButton value="Atualizar" icon="ui-icon-refresh" ajax="false" action="#{mensagemFaces.pesquisarMensagens}" style="width: 100px; margin-bottom: 10px; margin-top:10px; margin-left: 10px" />
+
+                </p:fieldset>
+
+                <p:tabView id="tabviewMensagens" style="margin-top: 10px">
+
+                    <p:tab id="tabMensagemRecebida" title="Recebidas">
+
+                        <p:poll interval="120" listener="#{mensagemFaces.pesquisarMensagens}" update="dgMensagem" process="@this" global="false" />
+
+                        <p:remoteCommand name="abrirModelMensagem" oncomplete="dlgViewMensagem.show();" update="pgMensagem, dgMensagem" process="@this" global="false" />
+                        <p:remoteCommand name="atualizarMensagensRecebidas" process="@this" global="false" update="dgMensagem" />
+
+                        <h:panelGrid style="width:20%; margin-bottom: 10px;">
+
+                            <p:outputLabel for="flagLida" value="Não Lidas" />
+                            <p:selectOneMenu id="flagLida" value="#{mensagemFaces.statusBuscaLida}" style="width:95%">
+                                <f:selectItem itemLabel="Todas" itemValue="#{0}" />
+                                <f:selectItem itemLabel="Lidas" itemValue="#{1}" />
+                                <f:selectItem itemLabel="Não Lidas" itemValue="#{2}" />
+                                <p:ajax event="change" listener="#{mensagemFaces.pesquisarMensagens}" oncomplete="atualizarMensagensRecebidas()" global="false" />
+                            </p:selectOneMenu>
+
+                        </h:panelGrid>
+
+                        <p:dataGrid id="dgMensagem" var="mensagemDestinatario" value="#{mensagemFaces.mensagensDestinatariosRecebidas}" columns="3" rows="12" paginator="true" paginatorAlwaysVisible="false" emptyMessage="Nenhuma mensagem encontrada"
+                            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="9,12,15">
+
+                            <p:column>
+                                <p:panel>
+                                    <h:panelGrid columns="2" columnClasses="coluna25_2, coluna75_2" style="width:100%; vertical-align: top">
+
+                                        <h:outputText value="Data:" styleClass="#{mensagemDestinatario.css}" />
+                                        <h:outputText value="#{mensagemDestinatario.mensagem.data}" styleClass="#{mensagemDestinatario.css}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
+                                        </h:outputText>
+
+                                        <h:outputText value="Remetente:" styleClass="#{mensagemDestinatario.css}" />
+                                        <h:outputText value="#{mensagemDestinatario.mensagem.remetente.nome}" styleClass="#{mensagemDestinatario.css}" />
+
+                                        <h:outputText value="Mensagem:" styleClass="#{mensagemDestinatario.css}" />
+                                        <h:panelGrid columns="2">
+                                            <h:outputText value="#{mensagemDestinatario.mensagem.textoResumo}" style="text-align: lef;" styleClass="#{mensagemDestinatario.css}" />
+                                            <p:commandLink action="#{mensagemFaces.lerMensagem}" oncomplete="abrirModelMensagem();" process="@this" global="false" value="Detalhe" style="text-align: lef; color: #0000FF">
+                                                <f:setPropertyActionListener target="#{mensagemFaces.mensagemDestinatarioSelecionada}" value="#{mensagemDestinatario}" />
+                                            </p:commandLink>
+                                        </h:panelGrid>
+
+                                        <h:outputText value="Selecionar:" styleClass="#{mensagemDestinatario.css}" />
+                                        <h:selectBooleanCheckbox value="#{mensagemDestinatario.flagSelecionado}">
+                                            <p:ajax process="@this" global="false" />
+                                        </h:selectBooleanCheckbox>
+
+                                    </h:panelGrid>
+                                </p:panel>
+                            </p:column>
+
+                        </p:dataGrid>
+
+                        <p:commandButton value="Excluir Selecionadas" icon="ui-icon-minus" action="#{mensagemFaces.excluirMensagensDestinatariosSelecionadas}" ajax="false" style="margin-top:20px" />
+
+                        <p:dialog id="dialogViewMensagem" header="Detalhe da mensagem" widgetVar="dlgViewMensagem" modal="true" width="550" appendToBody="true">
+
+                            <h:panelGrid id="pgMensagem" columns="2" columnClasses="coluna15_2, coluna85_2" style="width:100%; vertical-align: top">
+
+                                <h:outputText value="Data:" />
+                                <h:inputText value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem.data}" readonly="true">
+                                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
+                                </h:inputText>
+
+                                <h:outputText value="Remetente:" />
+                                <h:inputText value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem.remetente.nome}" readonly="true" style="width: 70%" />
+
+                                <h:outputText value="Mensagem:" />
+                                <h:inputTextarea value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem.texto}" rows="10" cols="55" style="text-align: lef; wudth: 100%" readonly="true" />
+
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:100%; margin-top:10px; margin-botton:20px">
+
+                                <p:commandButton value="Histórico" icon="ui-icon-search" action="#{mensagemFaces.pesquisarHistorico}" oncomplete="dlgHistoricoMensagem.show();" process="@this, pgMensagem">
+                                    <f:setPropertyActionListener target="#{mensagemFaces.mensagemView}" value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem}" />
+                                </p:commandButton>
+
+                                <p:outputPanel style="text-align: right">
+                                    <p:commandButton value="Responder" icon="ui-icon-comment" oncomplete="dlgMensagem.show(); dlgViewMensagem.hide();" action="#{mensagemFaces.responderMensagem}" process="@this, pgMensagem">
+                                        <f:setPropertyActionListener target="#{mensagemFaces.destinatarioSelecionado}" value="#{mensagemFaces.mensagemDestinatarioSelecionada.mensagem.remetente}" />
+                                        <f:setPropertyActionListener target="#{mensagemFaces.flagEnviar}" value="#{true}" />
+                                    </p:commandButton>
+                                    <p:commandButton value="Excluir" icon="ui-icon-minus" action="#{mensagemFaces.excluirMensagemDestinatario}" update="dgMensagem" oncomplete="dlgViewMensagem.hide();" process="@this, pgMensagem" />
+                                </p:outputPanel>
+
+                            </h:panelGrid>
+
+                        </p:dialog>
+
+                    </p:tab>
+
+                    <p:tab id="tabMensagemEnviada" title="Enviadas">
+
+                        <p:remoteCommand name="abrirModelMensagemEnviada" oncomplete="dlgMensagem.show();" process="@this" global="false">
+                            <f:setPropertyActionListener target="#{mensagemFaces.flagEnviar}" value="#{false}" />
+                        </p:remoteCommand>
+
+                        <p:remoteCommand name="atualizarMensagensEnviadas" process="@this" global="false" update="dgMensagemEnviada" />
+
+                        <p:dataGrid id="dgMensagemEnviada" var="mensagem" value="#{mensagemFaces.mensagensEnviadas}" columns="3" rows="12" paginator="true" paginatorAlwaysVisible="false" emptyMessage="Nenhuma mensagem encontrada"
+                            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="9,12,15">
+
+                            <p:column>
+                                <p:panel>
+                                    <h:panelGrid columns="2" columnClasses="coluna25_2, coluna75_2" style="width:100%; vertical-align: top">
+
+                                        <h:outputText value="Data:" />
+                                        <h:outputText value="#{mensagem.data}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
+                                        </h:outputText>
+
+                                        <h:outputText value="Destinatários:" />
+                                        <h:outputText value="#{mensagem.mensagensDestinatarios}" />
+
+                                        <h:outputText value="Mensagem:" />
+                                        <h:panelGrid columns="2">
+                                            <h:outputText value="#{mensagem.textoResumo}" style="text-align: lef;" />
+                                            <p:commandLink oncomplete="abrirModelMensagemEnviada();" process="@this" global="false" value="Detalhe" style="text-align: lef; color: #0000FF">
+                                                <f:setPropertyActionListener target="#{mensagemFaces.mensagem}" value="#{mensagem}" />
+                                            </p:commandLink>
+                                        </h:panelGrid>
+
+                                        <h:outputText value="Selecionar:" />
+                                        <h:selectBooleanCheckbox value="#{mensagem.flagSelecionado}">
+                                            <p:ajax process="@this" global="false" />
+                                        </h:selectBooleanCheckbox>
+
+                                    </h:panelGrid>
+                                </p:panel>
+                            </p:column>
+
+                        </p:dataGrid>
+
+                        <p:commandButton value="Excluir Selecionadas" icon="ui-icon-minus" action="#{mensagemFaces.excluirMensagensSelecionadas}" ajax="false" style="margin-top:20px" />
+
+                    </p:tab>
+
+                </p:tabView>
+
+                <ui:include src="/resources/templates/dialogs/dialogHistoricoMensagem.xhtml" />
+
+            </h:form>
+
+        </p:tab>
+
+        <ui:include src="/pages/agenda/agenda.xhtml" />
+
+    </p:tabView>
+
 </ui:composition>

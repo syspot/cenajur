@@ -180,10 +180,10 @@ public class MensagemDestinatario extends TSActiveRecordAb<MensagemDestinatario>
 	}
 	
 	public Integer obterQtdNaoLidas(Colaborador destinatario){
-		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, " select count(*) as qtd from mensagens_destinatarios md where md.flag_lida = false and md.destinatario_id = ? ", destinatario.getId())).getQtd();
+		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, " select count(*) as qtd from mensagens_destinatarios md where md.flag_lida = false and md.flag_ativo = true and md.destinatario_id = ? ", destinatario.getId())).getQtd();
 	}
 	
 	public List<MensagemDestinatario> perquisarMensagensNaoLidas(Colaborador colaborador, int dias){
-		return super.find(" from MensagemDestinatario md where md.flagLida = false and md.destinatario.id = ? and md.mensagem.data < CURRENT_DATE - ? ", null, colaborador.getId(), dias);
+		return super.find(" from MensagemDestinatario md where md.flagLida = false and md.flagAtivo = true and md.destinatario.id = ? and md.mensagem.data < CURRENT_DATE - ? ", null, colaborador.getId(), dias);
 	}
 }

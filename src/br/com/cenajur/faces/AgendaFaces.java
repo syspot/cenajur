@@ -164,7 +164,7 @@ public class AgendaFaces {
     public String onDateSelect(DateSelectEvent selectEvent) {  
         this.limpar();
         agenda.setDataInicial(selectEvent.getDate());
-        agenda.setDataFinal(CenajurUtil.getDataMaisMeiaHora(selectEvent.getDate()));
+        agenda.setDataFinal(CenajurUtil.getDataMaisUmaHora(selectEvent.getDate()));
         return null;
     }
     

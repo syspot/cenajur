@@ -1,6 +1,8 @@
 package br.com.cenajur.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +17,7 @@ import javax.persistence.Transient;
 
 import br.com.cenajur.util.Constantes;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
+import br.com.topsys.util.TSUtil;
 
 @Entity
 @Table(name = "processos_clientes")
@@ -51,6 +54,10 @@ public class ProcessoCliente extends TSActiveRecordAb<ProcessoCliente>{
 	
 	public ProcessoCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+	
+	public ProcessoCliente(Processo processo) {
+		this.processo = processo;
 	}
 	
 	public Long getId() {
@@ -138,6 +145,27 @@ public class ProcessoCliente extends TSActiveRecordAb<ProcessoCliente>{
 		} else if (!processo.equals(other.processo))
 			return false;
 		return true;
+	}
+	
+	@Override
+	public List<ProcessoCliente> findByModel(String... fieldsOrderBy) {
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" from ProcessoCliente pc inner join pc.cliente c where 1 = 1 ");
+		
+		if(!TSUtil.isEmpty(processo) && !TSUtil.isEmpty(processo.getId())){
+			query.append(" and pc.processo.id = ? ");
+		}
+		
+		List<Object> params = new ArrayList<Object>();
+		
+		if(!TSUtil.isEmpty(processo) && !TSUtil.isEmpty(processo.getId())){
+			params.add(getProcesso().getId());
+		}
+		
+		return super.find(query.toString(), "c.matricula", params.toArray());
+		
 	}
 	
 }

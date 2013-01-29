@@ -7,7 +7,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -706,6 +705,11 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	
 	@SuppressWarnings("unchecked")
 	public List<AnoModel> pesquisarPorBancoPorAno(Long ano){
+		return super.findBySQL(AnoModel.class, new String[]{"descricao", "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez", "tot"}, "select * from fc_clientes_por_banco_ano(?)", ano);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<AnoModel> pesquisarPorBancoPorAnoTotal(Long ano){
 		return super.findBySQL(AnoModel.class, new String[]{"descricao", "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez", "tot"}, "select * from fc_clientes_por_banco_ano(?)", ano);
 	}
 	

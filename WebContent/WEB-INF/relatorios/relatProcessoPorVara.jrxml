@@ -1,30 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatProcessoPorTipo" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f37734dc-0305-41c0-ba1d-0a06a2e568bb">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatProcessoPorVara" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f37734dc-0305-41c0-ba1d-0a06a2e568bb">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="DATA_INICIAL" class="java.util.Date"/>
 	<parameter name="DATA_FINAL" class="java.util.Date"/>
 	<queryString>
-		<![CDATA[SELECT V.DESCRICAO,
-       (SELECT COUNT(P.*) FROM PROCESSOS P WHERE P.DATA_CADASTRO BETWEEN COALESCE($P{DATA_INICIAL}, P.DATA_CADASTRO) AND COALESCE($P{DATA_FINAL}, P.DATA_CADASTRO) AND P.VARA_ID = V.ID AND P.SITUACAO_PROCESSO_ID = 1) AS QTD_ATIVO,
-       (SELECT COUNT(P.*) FROM PROCESSOS P WHERE P.DATA_CADASTRO BETWEEN COALESCE($P{DATA_INICIAL}, P.DATA_CADASTRO) AND COALESCE($P{DATA_FINAL}, P.DATA_CADASTRO) AND P.VARA_ID = V.ID AND P.SITUACAO_PROCESSO_ID = 2) AS QTD_SUSPENSO,
-       (SELECT COUNT(P.*) FROM PROCESSOS P WHERE P.DATA_CADASTRO BETWEEN COALESCE($P{DATA_INICIAL}, P.DATA_CADASTRO) AND COALESCE($P{DATA_FINAL}, P.DATA_CADASTRO) AND P.VARA_ID = V.ID AND P.SITUACAO_PROCESSO_ID = 3) AS QTD_ARQUIVADO
- FROM VARAS V]]>
+		<![CDATA[SELECT v.descricao,
+       sum(case when P.SITUACAO_PROCESSO_ID = 1 then 1 else 0 end) QTD_ATIVO,
+       sum(case when P.SITUACAO_PROCESSO_ID = 2 then 1 else 0 end) QTD_SUSPENSO,
+       sum(case when P.SITUACAO_PROCESSO_ID = 3 then 1 else 0 end) QTD_ARQUIVADO
+ FROM varas v, processos p
+ where v.id = p.vara_id
+   and P.DATA_CADASTRO BETWEEN $P{DATA_INICIAL} and $P{DATA_FINAL}
+ group by v.descricao]]>
 	</queryString>
 	<field name="descricao" class="java.lang.String"/>
 	<field name="qtd_ativo" class="java.lang.Long"/>
 	<field name="qtd_suspenso" class="java.lang.Long"/>
 	<field name="qtd_arquivado" class="java.lang.Long"/>
-	<variable name="total_ativo" class="java.lang.Integer" resetType="Column" calculation="Sum">
-		<variableExpression><![CDATA[]]></variableExpression>
-		<initialValueExpression><![CDATA[$F{qtd_ativo}]]></initialValueExpression>
+	<variable name="qtd_arquivado_1" class="java.lang.Long" resetType="Page" calculation="Sum">
+		<variableExpression><![CDATA[$F{qtd_arquivado}]]></variableExpression>
+	</variable>
+	<variable name="qtd_suspenso_1" class="java.lang.Long" resetType="Page" calculation="Sum">
+		<variableExpression><![CDATA[$F{qtd_suspenso}]]></variableExpression>
+	</variable>
+	<variable name="qtd_ativo_1" class="java.lang.Long" resetType="Page" calculation="Sum">
+		<variableExpression><![CDATA[$F{qtd_ativo}]]></variableExpression>
 	</variable>
 	<title>
-		<band height="41">
+		<band height="68">
+			<rectangle radius="10">
+				<reportElement uuid="7df68964-b1ce-4a5e-a970-9bcbbdd132f4" x="98" y="3" width="360" height="36" backcolor="#C9C9C9"/>
+			</rectangle>
 			<staticText>
-				<reportElement uuid="d1410cc2-2979-4aa9-b931-400b4539012b" x="103" y="5" width="278" height="27"/>
-				<textElement textAlignment="Center">
+				<reportElement uuid="d1410cc2-2979-4aa9-b931-400b4539012b" x="97" y="3" width="360" height="36"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Relatório de Processo por Vara]]></text>
@@ -32,30 +43,42 @@
 		</band>
 	</title>
 	<columnHeader>
-		<band height="23">
+		<band height="27">
+			<rectangle radius="10">
+				<reportElement uuid="6811a0f2-9202-4072-a7bd-5127d3d624bd" x="444" y="3" width="78" height="20" backcolor="#C9C9C9"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement uuid="6dacba99-f7f9-4b6d-bd75-d55b3cda3a57" x="348" y="3" width="76" height="20" backcolor="#C9C9C9"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement uuid="dda981f2-4ac6-426f-a1c2-5b9a5eab9ad1" x="260" y="3" width="59" height="20" backcolor="#C9C9C9"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement uuid="b2fd61ae-747a-4cc2-84af-c4887fbcfff0" x="35" y="3" width="210" height="20" backcolor="#C9C9C9"/>
+			</rectangle>
 			<staticText>
-				<reportElement uuid="0cd9753f-fc56-4c52-81f7-4b22e8e7e552" x="66" y="3" width="111" height="20"/>
+				<reportElement uuid="0cd9753f-fc56-4c52-81f7-4b22e8e7e552" x="82" y="5" width="111" height="20"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Vara]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="4bab2c10-e762-4235-b987-f55952e20a83" x="240" y="3" width="37" height="20"/>
+				<reportElement uuid="4bab2c10-e762-4235-b987-f55952e20a83" x="274" y="5" width="37" height="20"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Ativos]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="f553eb9a-8844-485d-9a2b-9b34f8e97b45" x="304" y="3" width="71" height="20"/>
+				<reportElement uuid="f553eb9a-8844-485d-9a2b-9b34f8e97b45" x="356" y="5" width="71" height="20"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Suspensos]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="c7fd3f75-faa8-4fa3-b861-31a8367a7364" x="386" y="3" width="70" height="20"/>
+				<reportElement uuid="c7fd3f75-faa8-4fa3-b861-31a8367a7364" x="452" y="5" width="70" height="20"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -64,27 +87,83 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="23">
+		<band height="30">
 			<textField>
-				<reportElement uuid="3dd6608d-d26e-4962-9796-c16dbeea33ac" x="36" y="2" width="176" height="20"/>
+				<reportElement uuid="3dd6608d-d26e-4962-9796-c16dbeea33ac" x="35" y="9" width="210" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="4d43a38b-097d-4c63-b0c8-358a0d181074" x="229" y="2" width="65" height="20"/>
+				<reportElement uuid="4d43a38b-097d-4c63-b0c8-358a0d181074" x="263" y="9" width="65" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{qtd_ativo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="fd7bc2d1-1b6b-4cfa-b098-1b4e25dbc915" x="304" y="2" width="71" height="20"/>
+				<reportElement uuid="fd7bc2d1-1b6b-4cfa-b098-1b4e25dbc915" x="352" y="9" width="71" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{qtd_suspenso}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="9ecfb29a-9b9e-4c23-aa73-098c1556cee9" x="386" y="2" width="70" height="20"/>
+				<reportElement uuid="9ecfb29a-9b9e-4c23-aa73-098c1556cee9" x="449" y="9" width="70" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{qtd_arquivado}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
+	<summary>
+		<band height="33">
+			<textField>
+				<reportElement uuid="71ed2a3c-6f9e-4565-8ccd-624af1a47368" x="449" y="8" width="70" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{qtd_arquivado_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="568b0569-30fd-4737-959f-e4d5473e7056" x="352" y="8" width="71" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{qtd_suspenso_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b1d1027b-be3c-4b2c-b904-279079a71c03" x="263" y="8" width="65" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{qtd_ativo_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="bd63f41b-a0f4-42ef-9b30-08012f0db460" x="35" y="8" width="210" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</summary>
 </jasperReport>

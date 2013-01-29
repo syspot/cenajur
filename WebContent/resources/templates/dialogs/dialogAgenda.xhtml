@@ -1,84 +1,81 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:component xmlns="http://www.w3.org/1999/xhtml"
-              xmlns:ui="http://java.sun.com/jsf/facelets"
-              xmlns:h="http://java.sun.com/jsf/html"
-              xmlns:p="http://primefaces.org/ui"
-              xmlns:f="http://java.sun.com/jsf/core">
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 
-	
-	<h:form rendered="#{autenticacaoFaces.mostrarDialogAgenda}">
-		
-		<ui:param name="mbean" value="${agendaFaces}" />
-		
-		<p:remoteCommand name="atualizarDialogAgenda" process="@this" update="opDialogAgenda, opAgendasColaboradores" oncomplete="dlgAgenda.show();" global="false"/>
-		<p:remoteCommand name="atualizarAgendasColaboradores" process="@this" update="opAgendasColaboradores"/>
-		
-		<p:dialog id="dialogAgenda" header="Cadastro de Agenda" widgetVar="dlgAgenda" width="720" height="460" modal="true">
-	  
-	  		<p:ajax event="close" listener="#{agendaFaces.limpar}" update="opDialogAgenda"/>
-	  		
-	  		<p:outputPanel id="opDialogAgenda" style="width:100%">
-	  		
-	  			<p:outputPanel id="opDialogAgendaSolicitante" rendered="#{agendaFaces.usuarioMaster and agendaFaces.agendaColaboradorSelecionado.id == null}">
-	  			
-			  		<ui:include src="/pages/agenda/include_dialog_agenda_solicitante.xhtml" />
-			  	
-		  		</p:outputPanel>
-		  		
-				<p:outputPanel rendered="#{(agendaFaces.usuarioMaster and agendaFaces.agendaColaboradorSelecionado.id != null) 
+
+    <h:form rendered="#{autenticacaoFaces.mostrarDialogAgenda}">
+
+        <ui:param name="mbean" value="${agendaFaces}" />
+
+        <p:remoteCommand name="atualizarDialogAgenda" process="@this" update="opDialogAgenda, opAgendasColaboradores" oncomplete="dlgAgenda.show();" global="false" />
+        <p:remoteCommand name="atualizarAgendasColaboradores" process="@this" update="opAgendasColaboradores" />
+
+        <p:dialog id="dialogAgenda" header="Cadastro de Agenda" widgetVar="dlgAgenda" width="720" height="460" modal="true">
+
+            <p:ajax event="close" listener="#{agendaFaces.limpar}" update="opDialogAgenda" />
+
+            <p:outputPanel id="opDialogAgenda" style="width:100%">
+
+                <p:outputPanel id="opDialogAgendaSolicitante" rendered="#{agendaFaces.usuarioMaster and agendaFaces.agendaColaboradorSelecionado.id == null}">
+
+                    <ui:include src="/pages/agenda/include_dialog_agenda_solicitante.xhtml" />
+
+                </p:outputPanel>
+
+                <p:outputPanel rendered="#{(agendaFaces.usuarioMaster and agendaFaces.agendaColaboradorSelecionado.id != null) 
 									|| (agendaFaces.agenda.id != null and !agendaFaces.usuarioMaster)}">
-				
-					<ui:include src="/pages/agenda/include_dialog_agenda_resposta.xhtml" />
-					
-					<input type="hidden" id="agendaColaboradorId" name="agendaColaboradorId" value="${agendaFaces.agendaColaboradorSelecionado.id}" />
-				
-				</p:outputPanel>
-		  		
-				<p:outputPanel rendered="#{agendaFaces.agenda.id == null and !agendaFaces.usuarioMaster}">
-					<h:outputText value="Você não possui permissão para editar a Agenda" style="margin-top: 20px"/><br/>
-					<p:commandButton type="button" value="Fechar" onclick="myschedule.update();" oncomplete="dlgAgenda.hide();" style="margin-top: 20px" />
-				</p:outputPanel>
-					
-			</p:outputPanel>
-			
-		</p:dialog>
-		
-		<p:remoteCommand name="addAudiencia" process="@this" oncomplete="dlgAudiencia.show()" update="opDialogAudiencia" global="false"/>
-		
-		<p:dialog id="dialogAudiencia" header="Cadastro de Audiência" widgetVar="dlgAudiencia" width="700" modal="true">
-		
-			<p:outputPanel id="opDialogAudiencia">
-			
-				<ui:include src="/pages/agenda/include_dialog_agenda_audiencia.xhtml" />
-					
-			</p:outputPanel>
-			
-		</p:dialog>
-		
-		<p:dialog id="dialogRespostaPropria" header="Fechar Agenda" widgetVar="dlgRespostaPropria" width="700" modal="true">
-		
-			<p:outputPanel autoUpdate="true" id="opDialogRespostaPropria">
-			
-				<ui:include src="/pages/agenda/include_dialog_agenda_resposta_propria.xhtml" />
-				
-				<input type="hidden" id="agendaColaboradorId" name="agendaColaboradorId" value="${agendaFaces.agendaColaboradorSelecionado.id}" />
-					
-			</p:outputPanel>
-			
-		</p:dialog>
-		
-	</h:form>
-	
-	<h:form>
-	
-		<input type="hidden" id="agendaColaboradorIdSubmit" name="agendaColaboradorIdSubmit" value="${agendaFaces.agendaColaboradorSelecionado.id}" />
-		
-		<p:confirmDialog id="dialogImprimirFichaAtendimento" widgetVar="dlgImprimirFichaAtendimento" message="Deseja imprimir a ficha de atendimento?" header="Ficha de Atendimento">
-	    
-		    <p:commandButton value="Sim" onclick="dlgImprimirFichaAtendimento.hide()" ajax="false" action="#{agendaFaces.imprimirFichaAtendimento}" />
-		    <p:commandButton value="Não" onclick="dlgImprimirFichaAtendimento.hide()" />
-		    
-	  	</p:confirmDialog>
-	</h:form>
+
+                    <ui:include src="/pages/agenda/include_dialog_agenda_resposta.xhtml" />
+
+                    <input type="hidden" id="agendaColaboradorId" name="agendaColaboradorId" value="${agendaFaces.agendaColaboradorSelecionado.id}" />
+
+                </p:outputPanel>
+
+                <p:outputPanel rendered="#{agendaFaces.agenda.id == null and !agendaFaces.usuarioMaster}">
+                    <h:outputText value="Você não possui permissão para editar a Agenda" style="margin-top: 20px" />
+                    <br />
+                    <p:commandButton type="button" value="Fechar" onclick="myschedule.update();" oncomplete="dlgAgenda.hide();" style="margin-top: 20px" />
+                </p:outputPanel>
+
+            </p:outputPanel>
+
+        </p:dialog>
+
+        <p:remoteCommand name="addAudiencia" process="@this" oncomplete="dlgAudiencia.show()" update="opDialogAudiencia" global="false" />
+
+        <p:dialog id="dialogAudiencia" header="Cadastro de Audiência" widgetVar="dlgAudiencia" width="700" modal="true">
+
+            <p:outputPanel id="opDialogAudiencia">
+
+                <ui:include src="/pages/agenda/include_dialog_agenda_audiencia.xhtml" />
+
+            </p:outputPanel>
+
+        </p:dialog>
+
+        <p:dialog id="dialogRespostaPropria" header="Fechar Agenda" widgetVar="dlgRespostaPropria" width="700" modal="true">
+
+            <p:outputPanel autoUpdate="true" id="opDialogRespostaPropria">
+
+                <ui:include src="/pages/agenda/include_dialog_agenda_resposta_propria.xhtml" />
+
+                <input type="hidden" id="agendaColaboradorId" name="agendaColaboradorId" value="${agendaFaces.agendaColaboradorSelecionado.id}" />
+
+            </p:outputPanel>
+
+        </p:dialog>
+
+    </h:form>
+
+    <h:form>
+
+        <input type="hidden" id="agendaColaboradorIdSubmit" name="agendaColaboradorIdSubmit" value="${agendaFaces.agendaColaboradorSelecionado.id}" />
+
+        <p:confirmDialog id="dialogImprimirFichaAtendimento" widgetVar="dlgImprimirFichaAtendimento" message="Deseja imprimir a ficha de atendimento?" header="Ficha de Atendimento">
+
+            <p:commandButton value="Sim" onclick="dlgImprimirFichaAtendimento.hide()" ajax="false" action="#{agendaFaces.imprimirFichaAtendimento}" />
+            <p:commandButton value="Não" onclick="dlgImprimirFichaAtendimento.hide()" />
+
+        </p:confirmDialog>
+    </h:form>
 
 </ui:component>
