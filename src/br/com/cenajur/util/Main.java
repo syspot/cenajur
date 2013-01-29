@@ -1,5 +1,6 @@
 package br.com.cenajur.util;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.FlushMode;
@@ -39,14 +40,16 @@ public class Main {
 		Query queryObject = null;
 			
 			session.setFlushMode(FlushMode.NEVER);
-			queryObject = session.createQuery(" select a from Audiencia a join fetch a.agenda ag join fetch a.processoNumero pn" +
-					" join fetch pn.processo pr");
+			queryObject = session.createQuery("  from Audiencia a " );
+					//" inner join a.audienciasAdvogados aa");
 
 			coll = queryObject.list();
 			
 			for (Audiencia audiencia2 : coll) {
-				System.out.println(audiencia2.getDescricao());
+				System.out.println(audiencia2.getId());
 			}
+			
+			System.out.println(coll.size());
 		
 	}
 

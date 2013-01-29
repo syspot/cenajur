@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,8 +18,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -57,8 +56,7 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 	@ManyToOne
 	private Vara vara;
 	
-	@OneToMany(mappedBy = "audiencia", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Fetch(value = FetchMode.SUBSELECT)
+	@OneToMany(mappedBy = "audiencia", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<AudienciaAdvogado> audienciasAdvogados;
 	
 	private String descricao;
@@ -244,7 +242,7 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 		
 		StringBuilder query = new StringBuilder();
 		
-		query.append(" select distinct a from Audiencia a where 1 = 1 ");
+		query.append(" select distinct new Audiencia(a.id, a.descricao, a.vara.descricao, a.dataAudiencia) from Audiencia a inner join a.audienciasAdvogados aa where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(processoNumero) && !TSUtil.isEmpty(processoNumero.getNumero())){
 			query.append(CenajurUtil.getParamSemAcento("a.processoNumero.numero"));
