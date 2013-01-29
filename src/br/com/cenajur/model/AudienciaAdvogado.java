@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -26,9 +27,11 @@ public class AudienciaAdvogado extends TSActiveRecordAb<AudienciaAdvogado>{
 	private Long id;
 	
 	@ManyToOne
+	@JoinColumn(name = "audiencia_id")
 	private Audiencia audiencia;
 	
 	@ManyToOne
+	@JoinColumn(name = "advogado_id")
 	private Colaborador advogado;
 
 	public Long getId() {

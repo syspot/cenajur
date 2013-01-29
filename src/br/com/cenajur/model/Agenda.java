@@ -33,6 +33,18 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 	 * 
 	 */
 	private static final long serialVersionUID = -7867621300772491361L;
+	
+	public Agenda() {
+	}
+	
+	public Agenda(Long id, String tipoAgendaDescricao, Date dataInicial, Date dataFinal, String descricao) {
+		this.id = id;
+		this.tipoAgenda = new TipoAgenda();
+		this.tipoAgenda.setDescricao(tipoAgendaDescricao);
+		this.dataInicial = dataInicial;
+		this.dataFinal = dataFinal;
+		this.descricao = descricao;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="agendas_id")
@@ -82,17 +94,7 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 	@Transient
 	private Colaborador colaboradorBusca;
 
-	public Agenda() {
-	}
 	
-	public Agenda(Long id, String tipoAgendaDescricao, Date dataInicial, Date dataFinal, String descricao) {
-		this.id = id;
-		this.tipoAgenda = new TipoAgenda();
-		this.tipoAgenda.setDescricao(tipoAgendaDescricao);
-		this.dataInicial = dataInicial;
-		this.dataFinal = dataFinal;
-		this.descricao = descricao;
-	}
 	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
