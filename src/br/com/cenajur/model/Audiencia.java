@@ -244,7 +244,7 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 		
 		StringBuilder query = new StringBuilder();
 		
-		query.append(" select distinct a from Audiencia a inner join a.audienciasAdvogados aa where 1 = 1 ");
+		query.append(" select distinct a from Audiencia a where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(processoNumero) && !TSUtil.isEmpty(processoNumero.getNumero())){
 			query.append(CenajurUtil.getParamSemAcento("a.processoNumero.numero"));

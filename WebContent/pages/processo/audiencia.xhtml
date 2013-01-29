@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:composition template="/resources/templates/templateCRUD.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/resources/templates/templateCRUD.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <ui:param name="mbean" value="${audienciaFaces}" />
     <ui:param name="mbeanModel" value="${audienciaFaces.crudModel}" />
@@ -120,40 +120,43 @@
 
         </h:panelGrid>
 
-    </ui:define>
+<table>
+    <c:forEach items="#{mbean.grid}" var="linha">
 
-    <ui:define name="colunasTabela">
-
-        <p:column headerText="Data" styleClass="coluna20" style="text-align: center">
+        <tr>
+        <td>
             <p:commandLink action="#{mbean.detailEvent}" ajax="false">
                 <h:outputText value="#{linha.dataAudiencia}">
                     <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
                 </h:outputText>
                 <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
             </p:commandLink>
-        </p:column>
+        </td>
 
-        <p:column headerText="Vara" styleClass="coluna20">
+        <td>
             <p:commandLink action="#{mbean.detailEvent}" ajax="false">
                 <h:outputText value="#{linha.vara.descricao}" />
                 <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
             </p:commandLink>
-        </p:column>
+        </td>
 
-        <p:column headerText="Advogado" styleClass="coluna30" rendered="false">
+        <td>
             <p:commandLink action="#{mbean.detailEvent}" ajax="false">
                 <h:outputText value="#{linha.audienciasAdvogados}" />
                 <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
             </p:commandLink>
-        </p:column>
+        </td>
         
-        <p:column headerText="Descrição" styleClass="coluna30">
+        <td>
             <p:commandLink action="#{mbean.detailEvent}" ajax="false">
                 <h:outputText value="#{linha.resumoDescricao}" />
                 <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
             </p:commandLink>
-        </p:column>
-
+        </td>
+</tr>
+    </c:forEach>
+    </table>
     </ui:define>
+
 
 </ui:composition>
