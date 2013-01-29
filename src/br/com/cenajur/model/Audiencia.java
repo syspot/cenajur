@@ -39,7 +39,7 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 	@SequenceGenerator(name="audiencias_id", sequenceName="audiencias_id_seq")
 	private Long id;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "processo_numero_id")
 	private ProcessoNumero processoNumero;
 	
@@ -49,11 +49,11 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 	@Column(name = "data_cadastro")
 	private Date dataCadastro;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "situacao_audiencia_id")
 	private SituacaoAudiencia situacaoAudiencia;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	private Vara vara;
 	
 	@OneToMany(mappedBy = "audiencia", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
@@ -64,7 +64,7 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 	@Column(name = "data_atualizacao")
 	private Date dataAtualizacao;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "colaborador_atualizacao_id")
 	private Colaborador colaboradorAtualizacao;
 	
@@ -78,7 +78,8 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 	@Transient
 	private Colaborador advogado;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "agenda_id")
 	private Agenda agenda;
 	
 	public Audiencia() {
