@@ -47,7 +47,8 @@
 
                 <p:scrollPanel style="width: 100%;height: 200px" mode="native">
 
-                    <p:dataTable value="#{mbeanProcessoModel.processosClientes}" var="processoCliente" emptyMessage="Nenhum associado selecionado" rowIndexVar="index" style="width:100%">
+                    <p:dataTable value="#{mbeanProcessoModel.processosClientes}" var="processoCliente" sortBy="#{processoCliente.cliente.matricula}"
+                            emptyMessage="Nenhum associado selecionado" rowIndexVar="index" style="width:100%">
 
                         <p:column headerText="Matrícula" styleClass="coluna25">
                             <h:outputText value="#{processoCliente.cliente.matricula}" />

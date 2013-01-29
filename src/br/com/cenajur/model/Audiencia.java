@@ -17,6 +17,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -56,6 +58,7 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 	private Vara vara;
 	
 	@OneToMany(mappedBy = "audiencia", cascade = CascadeType.ALL, orphanRemoval = true)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<AudienciaAdvogado> audienciasAdvogados;
 	
 	private String descricao;
@@ -233,7 +236,7 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 	}
 	
 	public List<Audiencia> findByProcesso(Processo processo){
-		return super.find("from Audiencia a where a.processoNumero.processo.id = ?",null,processo.getId());
+		return super.find("from Audiencia a where a.processoNumero.processo.id = ? ", "a.dataAudiencia",processo.getId());
 	}
 	
 	@Override
@@ -241,7 +244,7 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 		
 		StringBuilder query = new StringBuilder();
 		
-		query.append(" select distinct new Audiencia(a.id, a.descricao, a.vara.descricao, a.dataAudiencia) from Audiencia a inner join a.audienciasAdvogados aa where 1 = 1 ");
+		query.append(" select distinct a from Audiencia a inner join a.audienciasAdvogados aa where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(processoNumero) && !TSUtil.isEmpty(processoNumero.getNumero())){
 			query.append(CenajurUtil.getParamSemAcento("a.processoNumero.numero"));

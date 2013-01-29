@@ -1,110 +1,107 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:composition template="/resources/templates/templateCRUD.xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
-	
-  	<ui:param name="mbean" value="${andamentoProcessoFaces}" />
-  	<ui:param name="mbeanModel" value="${andamentoProcessoFaces.crudModel}" />
-  	<ui:param name="mbeanPesquisaModel" value="${andamentoProcessoFaces.crudPesquisaModel}" />
-  	<ui:param name="informacoesCadastro" value="${true}" />
-  	
-  	<ui:define name="cadastro">
-  	
-  		<h:panelGrid columns="2" columnClasses="coluna50_2, coluna50_2" style="width:100%">
-  		
-	  		<h:panelGrid columns="1" columnClasses="coluna100" style="width:100%">
-	  		
-		  		<p:outputPanel autoUpdate="true">
-					<p:outputLabel for="processo" value="Processo" /><br/>
-					<p:inputText id="processo" value="#{mbeanModel.processoNumero.numero}" required="true" requiredMessage="Processo: Campo obrigatório" readonly="true" styleClass="coluna70" />
-					<p:commandButton type="button" icon="ui-icon-plus" value="Adicionar" onclick="dlgProcesso2.show();" />
-				</p:outputPanel>
-		  		
-			  	<p:outputLabel for="dataAndamento" value="Data do Andamento" />
-                <p:calendar navigator="true" id="dataAndamento" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" required="true" requiredMessage="Data do Andamento: Campo obrigatório" value="#{mbeanModel.dataAndamento}" timeZone="America/Recife"/>
+<ui:composition template="/resources/templates/templateCRUD.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:param name="mbean" value="${andamentoProcessoFaces}" />
+    <ui:param name="mbeanModel" value="${andamentoProcessoFaces.crudModel}" />
+    <ui:param name="mbeanPesquisaModel" value="${andamentoProcessoFaces.crudPesquisaModel}" />
+    <ui:param name="informacoesCadastro" value="${true}" />
+
+    <ui:define name="cadastro">
+
+        <h:panelGrid columns="2" columnClasses="coluna50_2, coluna50_2" style="width:100%">
+
+            <h:panelGrid columns="1" columnClasses="coluna100" style="width:100%">
+
+                <p:outputPanel autoUpdate="true">
+                    <p:outputLabel for="processo" value="Processo" />
+                    <br />
+                    <p:inputText id="processo" value="#{mbeanModel.processoNumero.numero}" required="true" requiredMessage="Processo: Campo obrigatório" readonly="true" styleClass="coluna70" />
+                    <p:commandButton type="button" icon="ui-icon-plus" value="Adicionar" onclick="dlgProcesso2.show();" />
+                </p:outputPanel>
+
+                <p:outputLabel for="dataAndamento" value="Data do Andamento" />
+                <p:calendar navigator="true" id="dataAndamento" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" required="true" requiredMessage="Data do Andamento: Campo obrigatório" value="#{mbeanModel.dataAndamento}" timeZone="America/Recife" />
 
                 <p:outputLabel for="tipoAndamentoProcesso" value="Tipo do Andamento" />
-		  		<p:selectOneMenu id="tipoAndamentoProcesso" required="true" requiredMessage="Tipo do Andamento: Campo obrigatório" value="#{mbeanModel.tipoAndamentoProcesso.id}" style="width:92%">
-			  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-			  		<f:selectItems value="#{mbean.tiposAndamentosProcessos}" />
-			  	</p:selectOneMenu>
-			  	
-			  	<p:outputLabel for="descricao" value="Descrição" />
-				<p:inputTextarea id="descricao" value="#{mbeanModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" autoResize="false" rows="10" maxlength="500" styleClass="coluna90"/>
-				
-		  	</h:panelGrid>
-		  	
-		  	<h:panelGrid columns="1" style="width:100%">
+                <p:selectOneMenu id="tipoAndamentoProcesso" required="true" requiredMessage="Tipo do Andamento: Campo obrigatório" value="#{mbeanModel.tipoAndamentoProcesso.id}" style="width:92%">
+                    <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+                    <f:selectItems value="#{mbean.tiposAndamentosProcessos}" />
+                </p:selectOneMenu>
 
-				<p:commandButton type="button" value="Adicionar Documento" icon="ui-icon-plus" onclick="dlgDocumentoAndamentoProcesso.show();" update="pgCategoriaDocumento" />
-			
-				<ui:include src="/pages/processo/include_grid_documentos.xhtml"/>
-		  	
-		  	</h:panelGrid>
-	  	
-  		</h:panelGrid>
-  		
-  	</ui:define>
-  	
-  	<ui:define name="pesquisaCampos">
-  	
-  		<h:panelGrid columns="1" style="width:50%">
-  		
-			<p:outputLabel for="processoPesquisa" value="Processo" />
-	  		
-			<p:inputText id="processoPesquisa" value="#{mbeanPesquisaModel.processoNumero.numero}" styleClass="coluna95" />
-  		
-  		</h:panelGrid>
-  		
-  		<h:panelGrid columns="2" columnClasses="coluna20, coluna50" style="width:50%">
-  		
-		  	<p:outputLabel for="dataAndamentoPesquisa" value="Data do Andamento" />
-	  		<p:outputLabel for="tipoAndamentoProcessoPesquisa" value="Tipo do Andamento" />
+                <p:outputLabel for="descricao" value="Descrição" />
+                <p:inputTextarea id="descricao" value="#{mbeanModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" autoResize="false" rows="10" maxlength="500" styleClass="coluna90" />
 
-            <p:calendar navigator="true" id="dataAndamentoPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataAndamento}" timeZone="America/Recife"/>
+            </h:panelGrid>
+
+            <h:panelGrid columns="1" style="width:100%">
+
+                <p:commandButton type="button" value="Adicionar Documento" icon="ui-icon-plus" onclick="dlgDocumentoAndamentoProcesso.show();" update="pgCategoriaDocumento" />
+
+                <ui:include src="/pages/processo/include_grid_documentos.xhtml" />
+
+            </h:panelGrid>
+
+        </h:panelGrid>
+
+    </ui:define>
+
+    <ui:define name="pesquisaCampos">
+
+        <h:panelGrid columns="1" style="width:50%">
+
+            <p:outputLabel for="processoPesquisa" value="Processo" />
+
+            <p:inputText id="processoPesquisa" value="#{mbeanPesquisaModel.processoNumero.numero}" styleClass="coluna95" />
+
+        </h:panelGrid>
+
+        <h:panelGrid columns="2" columnClasses="coluna20, coluna50" style="width:50%">
+
+            <p:outputLabel for="dataAndamentoPesquisa" value="Data do Andamento" />
+            <p:outputLabel for="tipoAndamentoProcessoPesquisa" value="Tipo do Andamento" />
+
+            <p:calendar navigator="true" id="dataAndamentoPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataAndamento}" timeZone="America/Recife" />
             <p:selectOneMenu id="tipoAndamentoProcessoPesquisa" value="#{mbeanPesquisaModel.tipoAndamentoProcesso.id}" style="width:95%">
-		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-		  		<f:selectItems value="#{mbean.tiposAndamentosProcessos}" />
-		  	</p:selectOneMenu>
-  		
-  		</h:panelGrid>
-  		
-  		<h:panelGrid columns="1" columnClasses="coluna100" style="width: 50%">
-  			
-  			<p:outputLabel for="descricaoPesquisa" value="Descrição" />
-			<p:inputTextarea id="descricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" autoResize="false" rows="10" maxlength="500" styleClass="coluna90"/>
-  		
-  		</h:panelGrid>
-  		
-  	</ui:define>
-  	
-  	<ui:define name="colunasTabela">
-  	
-  		<p:column headerText="Descrição" styleClass="coluna50">
-  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
-	  			<h:outputText value="#{linha.resumoDescricao}" />
-				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
-			</p:commandLink>
-  		</p:column>
-  	
-  		<p:column headerText="Tipo do Andamento" styleClass="coluna30">
-  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
-	  			<h:outputText value="#{linha.tipoAndamentoProcesso.descricao}" />
-				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
-			</p:commandLink>
-  		</p:column>
-  	
-  		<p:column headerText="Data" style="text-align: center" styleClass="coluna20">
-  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
-	  			<h:outputText value="#{linha.dataAndamento}">
-	  				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
-	  			</h:outputText>
-				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
-			</p:commandLink>
-  		</p:column>
-  		
-  	</ui:define>
-  	
+                <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+                <f:selectItems value="#{mbean.tiposAndamentosProcessos}" />
+            </p:selectOneMenu>
+
+        </h:panelGrid>
+
+        <h:panelGrid columns="1" columnClasses="coluna100" style="width: 50%">
+
+            <p:outputLabel for="descricaoPesquisa" value="Descrição" />
+            <p:inputTextarea id="descricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" autoResize="false" rows="10" maxlength="500" styleClass="coluna90" />
+
+        </h:panelGrid>
+
+    </ui:define>
+
+    <ui:define name="colunasTabela">
+
+        <p:column headerText="Data" style="text-align: center" styleClass="coluna20">
+            <p:commandLink action="#{mbean.detailEvent}" ajax="false">
+                <h:outputText value="#{linha.dataAndamento}">
+                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
+                </h:outputText>
+                <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+            </p:commandLink>
+        </p:column>
+
+        <p:column headerText="Tipo do Andamento" styleClass="coluna30">
+            <p:commandLink action="#{mbean.detailEvent}" ajax="false">
+                <h:outputText value="#{linha.tipoAndamentoProcesso.descricao}" />
+                <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+            </p:commandLink>
+        </p:column>
+
+        <p:column headerText="Descrição" styleClass="coluna50">
+            <p:commandLink action="#{mbean.detailEvent}" ajax="false">
+                <h:outputText value="#{linha.resumoDescricao}" />
+                <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+            </p:commandLink>
+        </p:column>
+
+    </ui:define>
+
 </ui:composition>

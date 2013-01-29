@@ -124,9 +124,11 @@
 
     <ui:define name="colunasTabela">
 
-        <p:column headerText="Descrição" styleClass="coluna30">
+        <p:column headerText="Data" styleClass="coluna20" style="text-align: center">
             <p:commandLink action="#{mbean.detailEvent}" ajax="false">
-                <h:outputText value="#{linha.resumoDescricao}" />
+                <h:outputText value="#{linha.dataAudiencia}">
+                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
+                </h:outputText>
                 <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
             </p:commandLink>
         </p:column>
@@ -144,12 +146,10 @@
                 <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
             </p:commandLink>
         </p:column>
-
-        <p:column headerText="Data" styleClass="coluna20" style="text-align: center">
+        
+        <p:column headerText="Descrição" styleClass="coluna30">
             <p:commandLink action="#{mbean.detailEvent}" ajax="false">
-                <h:outputText value="#{linha.dataAudiencia}">
-                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
-                </h:outputText>
+                <h:outputText value="#{linha.resumoDescricao}" />
                 <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
             </p:commandLink>
         </p:column>

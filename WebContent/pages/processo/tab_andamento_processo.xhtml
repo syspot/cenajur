@@ -15,16 +15,19 @@
 
                     <p:fieldset style="width: 97.5%">
 
-                        <p:dataTable id="gridAndamentoProcesso" emptyMessage="Nenhum andamento encontrado" style="width: 100%" paginator="true" paginatorAlwaysVisible="false" rows="10" value="#{mbeanModel.andamentos}" var="linha">
+                        <p:dataTable id="gridAndamentoProcesso" emptyMessage="Nenhum andamento encontrado" sortBy="#{linha.dataAndamento}" 
+                                paginator="true" paginatorAlwaysVisible="false" rows="10" value="#{mbeanModel.andamentos}" var="linha" style="width: 100%">
 
-                            <p:column headerText="Descrição" styleClass="coluna50">
+                            <p:column headerText="Data" style="text-align: center">
                                 <p:commandLink process="@this" action="#{mbeanProcessoAndamento.obterAndamentoProcesso}" update="@form">
-                                    <h:outputText value="#{linha.resumoDescricao}" />
+                                    <h:outputText value="#{linha.dataAndamento}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
+                                    </h:outputText>
                                     <f:setPropertyActionListener target="#{mbeanProcessoAndamento.andamentoProcesso}" value="#{linha}" />
                                     <f:setPropertyActionListener target="#{mbeanProcessoAndamento.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
                                 </p:commandLink>
                             </p:column>
-
+                            
                             <p:column headerText="Tipo do Andamento">
                                 <p:commandLink process="@this" action="#{mbeanProcessoAndamento.obterAndamentoProcesso}" update="@form">
                                     <h:outputText value="#{linha.tipoAndamentoProcesso.descricao}" />
@@ -33,11 +36,9 @@
                                 </p:commandLink>
                             </p:column>
 
-                            <p:column headerText="Data" style="text-align: center">
+                            <p:column headerText="Descrição" styleClass="coluna50">
                                 <p:commandLink process="@this" action="#{mbeanProcessoAndamento.obterAndamentoProcesso}" update="@form">
-                                    <h:outputText value="#{linha.dataAndamento}">
-                                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
-                                    </h:outputText>
+                                    <h:outputText value="#{linha.resumoDescricao}" />
                                     <f:setPropertyActionListener target="#{mbeanProcessoAndamento.andamentoProcesso}" value="#{linha}" />
                                     <f:setPropertyActionListener target="#{mbeanProcessoAndamento.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
                                 </p:commandLink>

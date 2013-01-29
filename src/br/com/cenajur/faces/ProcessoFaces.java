@@ -255,7 +255,6 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		
 		getCrudModel().setAudiencias(new Audiencia().findByProcesso(getCrudModel()));
 		getCrudModel().setAndamentos(new AndamentoProcesso().findByProcesso(getCrudModel()));
-		getCrudModel().setProcessosClientes(new ProcessoCliente(getCrudModel()).findByModel());
 		
 		for(ProcessoCliente processoCliente : getCrudModel().getProcessosClientes()){
 			processoCliente.setSituacaoProcessoClienteTemp(new SituacaoProcessoCliente(processoCliente.getSituacaoProcessoCliente().getId()));

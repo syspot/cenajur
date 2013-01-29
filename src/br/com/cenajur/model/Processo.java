@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -55,8 +56,8 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	private ProcessoNumero processoNumeroPrincipal;
 	
 	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL, orphanRemoval = true)
-	@org.hibernate.annotations.OrderBy(clause = "flag_principal asc, numero")
 	@Fetch(value = FetchMode.SUBSELECT)
+	@OrderBy(value = "flagPrincipal asc, numero")
 	private List<ProcessoNumero> processosNumeros;
 	
 	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL, orphanRemoval = true)
