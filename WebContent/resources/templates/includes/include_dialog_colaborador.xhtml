@@ -1,46 +1,41 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:composition 
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
-  	
-	  
-	<h:panelGrid columns="2" columnClasses="coluna70, coluna30" style="width:98%">
-	  		
-  		<p:outputLabel for="nomePesquisa" value="Nome" />
-  		<p:outputLabel for="tipoColaboradorPesquisa" value="Tipo" />
-  	
-  		<p:inputText id="nomePesquisa" value="#{mbeanPesquisa.model.nome}" maxlength="100" styleClass="coluna95" />
-  		<p:selectOneMenu id="tipoColaboradorPesquisa" value="#{mbeanPesquisa.model.tipoColaborador.id}" disabled="#{empty buscaAdvogado ? false : true}">
-			<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-			<f:selectItems value="#{mbeanPesquisa.tiposColaborador}"/>
-		</p:selectOneMenu>
-  		
-	</h:panelGrid>
- 		
-	<p:commandButton value="Pesquisar" icon="pesquisar" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="width: 140px; margin-left: 5px; margin-top: 10px; margin-bottom: 30px">
-		<f:setPropertyActionListener target="#{mbeanPesquisa.flagBuscaAdvogado}" value="#{buscaAdvogado}" />
-	</p:commandButton>
-	
-	<p:dataTable id="gridPesquisa" emptyMessage="Nenhum colaborador encontrado" paginator="true"
-				paginatorAlwaysVisible="false" rows="5" value="#{mbeanPesquisa.grid}" var="colaborador">
-	
-		<p:column headerText="Nome">
-			<h:outputText value="#{colaborador.nome}" />
-		</p:column>
-		
-		<p:column headerText="Tipo">
-  			<h:outputText value="#{colaborador.tipoColaborador.descricao}" />
-  		</p:column>
-	
-		<p:column headerText="Adicionar" styleClass="coluna10" style="text-align:center;">
-			<p:commandLink action="#{mbeanColaboradorAcao[metodoAdicao]}" process="@form" global="false" onclick="#{nomeDialog}.hide()" oncomplete="#{atualizar}">
-				<h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
-				<f:setPropertyActionListener target="#{mbeanColaboradorAcao[colaboradorSelecionado]}" value="#{colaborador}" />
-			</p:commandLink>
-		</p:column>
-	
-	</p:dataTable>
-	
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <h:panelGrid columns="2" columnClasses="coluna70, coluna30" style="width:98%">
+
+        <p:outputLabel for="nomePesquisa" value="Nome" />
+        <p:outputLabel for="tipoColaboradorPesquisa" value="Tipo" />
+
+        <p:inputText id="nomePesquisa" value="#{mbeanPesquisa.model.nome}" maxlength="100" styleClass="coluna95" />
+        <p:selectOneMenu id="tipoColaboradorPesquisa" value="#{mbeanPesquisa.model.tipoColaborador.id}" disabled="#{empty buscaAdvogado ? false : true}">
+            <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+            <f:selectItems value="#{mbeanPesquisa.tiposColaborador}" />
+        </p:selectOneMenu>
+
+    </h:panelGrid>
+
+    <p:commandButton value="Pesquisar" icon="pesquisar" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="width: 140px; margin-left: 5px; margin-top: 10px; margin-bottom: 30px">
+        <f:setPropertyActionListener target="#{mbeanPesquisa.flagBuscaAdvogado}" value="#{buscaAdvogado}" />
+    </p:commandButton>
+
+    <p:dataTable id="gridPesquisa" emptyMessage="Nenhum colaborador encontrado" paginator="true" paginatorAlwaysVisible="false" rows="5" value="#{mbeanPesquisa.grid}" var="colaborador">
+
+        <p:column headerText="Nome">
+            <h:outputText value="#{colaborador.nome}" />
+        </p:column>
+
+        <p:column headerText="Tipo">
+            <h:outputText value="#{colaborador.tipoColaborador.descricao}" />
+        </p:column>
+
+        <p:column headerText="Adicionar" styleClass="coluna10" style="text-align:center;">
+            <p:commandLink action="#{mbeanColaboradorAcao[metodoAdicao]}" process="@form" global="false" onclick="#{nomeDialog}.hide()" oncomplete="#{atualizar}">
+                <h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
+                <f:setPropertyActionListener target="#{mbeanColaboradorAcao[colaboradorSelecionado]}" value="#{colaborador}" />
+            </p:commandLink>
+        </p:column>
+
+    </p:dataTable>
+
 </ui:composition>

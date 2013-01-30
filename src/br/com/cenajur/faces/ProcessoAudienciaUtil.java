@@ -175,13 +175,21 @@ public class ProcessoAudienciaUtil {
 						
 						texto = texto.replace(configuracaoReplace.getCodigo(), new ProcessoNumero().obterNumeroProcessoPrincipal(processo).getNumero());
 						
-						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ASSOCIADO).getById();
+						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ADVOGADO).getById();
 						
-						texto = texto.replace(configuracaoReplace.getCodigo(), processoCliente.getCliente().getNome());
+						texto = texto.replace(configuracaoReplace.getCodigo(), this.audiencia.getAudienciasAdvogados().toString());
 						
-						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DATA_ATUAL).getById();
+						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DATA).getById();
 						
-						texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(new Date(), TSDateUtil.DD_MM_YYYY_HH_MM));
+						texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(this.audiencia.getDataAudiencia(), TSDateUtil.DD_MM_YYYY));
+						
+						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_HORA).getById();
+						
+						texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(this.audiencia.getDataAudiencia(), TSDateUtil.HH_MM));
+						
+						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_LOCAL).getById();
+						
+						texto = texto.replace(configuracaoReplace.getCodigo(), this.audiencia.getVara().getDescricao());
 						
 						emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
 						

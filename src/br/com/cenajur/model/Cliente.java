@@ -734,6 +734,11 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<AnoModel> pesquisarTotalPorAno(Long ano){
+		return super.findBySQL(AnoModel.class, new String[]{"descricao", "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez", "tot"}, "select * from fc_clientes_total_por_ano(?)", ano);
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<AnoModel> pesquisarCanceladosPorAno(Long ano, boolean flagAssociado){
 		return super.findBySQL(AnoModel.class, new String[]{"descricao", "jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez", "tot"}, "select * from fc_clientes_cancelados_por_ano(?, ?)", ano, flagAssociado);
 	}

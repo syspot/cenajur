@@ -19,6 +19,7 @@ public class RelatorioAdesaoPorAnoFaces {
 	private List<AnoModel> grid1;
 	private List<AnoModel> grid2;
 	private List<AnoModel> grid3;
+	private List<AnoModel> gridTotal;
 	
 	public RelatorioAdesaoPorAnoFaces() {
 		this.ano = new Long(Calendar.getInstance().get(Calendar.YEAR));
@@ -29,6 +30,7 @@ public class RelatorioAdesaoPorAnoFaces {
 		setGrid1(new Cliente().pesquisarAdesaoPorAno(getAno()));
 		setGrid2(new Cliente().pesquisarRematriculadosPorAno(getAno()));
 		setGrid3(new Cliente().pesquisarCanceladosPorAno2(getAno()));
+		setGridTotal(new Cliente().pesquisarTotalPorAno(getAno()));
 		return null;
 	}
 	
@@ -62,6 +64,14 @@ public class RelatorioAdesaoPorAnoFaces {
 
 	public void setGrid3(List<AnoModel> grid3) {
 		this.grid3 = grid3;
+	}
+
+	public List<AnoModel> getGridTotal() {
+		return gridTotal;
+	}
+
+	public void setGridTotal(List<AnoModel> gridTotal) {
+		this.gridTotal = gridTotal;
 	}
 	
 }
