@@ -1,58 +1,57 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:composition 
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
-	
-		<p:outputPanel layout="block" style="width: 97.5%;">
-			
-			<h:panelGrid id="pgCadastroAndamento" columns="1" style="width: 98%">
-				
-				<p:fieldset style="width: 100%" toggleable="true">
-					
-					<h:panelGrid columns="2" columnClasses="coluna50_2, coluna50_2" style="width:100%">
-		
-						<h:panelGrid columns="1" columnClasses="coluna100" style="width:100%">
-							
-							<p:outputLabel for="numeroProcessoAndamento" value="Processo" />
-							<p:inputText id="numeroProcessoAndamento" value="#{mbeanProcessoAndamento.processoNumeroPrincipal.numero}" readonly="true" styleClass="coluna90"/>
-					  		
-						  	<p:outputLabel for="dataAndamentoAndamento" value="Data do Andamento" />
-                        <p:calendar navigator="true" id="dataAndamentoAndamento" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data do Andamento: Campo obrigatório" value="#{mbeanProcessoAndamento.andamentoProcesso.dataAndamento}" timeZone="America/Recife"/>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+    <p:outputPanel layout="block" style="width: 97.5%;">
+
+        <h:panelGrid id="pgCadastroAndamento" columns="1" style="width: 98%">
+
+            <p:fieldset style="width: 100%" toggleable="true">
+
+                <h:panelGrid columns="2" columnClasses="coluna50_2, coluna50_2" style="width:100%">
+
+                    <h:panelGrid columns="1" columnClasses="coluna100" style="width:100%">
+
+                        <p:outputLabel for="numeroProcessoAndamento" value="Processo" />
+                        <p:inputText id="numeroProcessoAndamento" value="#{mbeanProcessoAndamento.processoNumeroPrincipal.numero}" readonly="true" styleClass="coluna90" />
+
+                        <p:outputLabel for="dataAndamentoAndamento" value="Data do Andamento" />
+                        <p:calendar navigator="true" id="dataAndamentoAndamento" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data do Andamento: Campo obrigatório" value="#{mbeanProcessoAndamento.andamentoProcesso.dataAndamento}" timeZone="America/Recife" />
 
                         <p:outputLabel for="tipoAndamentoProcessoAndamento" value="Tipo do Andamento" />
-					  		<p:selectOneMenu id="tipoAndamentoProcessoAndamento" required="true" requiredMessage="Tipo do Andamento: Campo obrigatório" value="#{mbeanProcessoAndamento.andamentoProcesso.tipoAndamentoProcesso.id}" style="width:92%">
-						  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-						  		<f:selectItems value="#{mbeanProcesso.tiposAndamentosProcessos}" />
-						  	</p:selectOneMenu>
-						  	
-						  	<p:outputLabel for="descricaoAndamento" value="Descrição" />
-							<p:inputTextarea id="descricaoAndamento" value="#{mbeanProcessoAndamento.andamentoProcesso.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" autoResize="false" rows="10" maxlength="500" styleClass="coluna90"/>
-							
-					  	</h:panelGrid>
-					  	
-					  	<h:panelGrid columns="1" style="width:100%">
-			
-							<p:commandButton type="button" value="Adicionar Documento" icon="ui-icon-plus" onclick="dlgDocumentoTabAndamentoProcesso.show();" update="pgCategoriaDocumento" rendered="#{empty cadastroViaCliente ? true : false}" />
-							<p:commandButton type="button" value="Adicionar Documento" icon="ui-icon-plus" onclick="dlgDocumentoTabAndamentoProcesso2.show();" update="pgCategoriaDocumento" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}"/>
-						
-							<ui:include src="/pages/processo/include_grid_tab_andamento_processo_documentos.xhtml" />
-					  	
-					  	</h:panelGrid>
-				  	
-					</h:panelGrid>
-					
-				  	<p:commandButton id="btnSalvarAndamento" value="Cadastrar" icon="salvar" action="#{mbeanProcessoAndamento.cadastrarAndamentoProcesso}" update="@form" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" rendered="#{mbeanProcessoAndamento.andamentoProcesso.id == null and empty cadastroViaCliente ? true : false}" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}" />
-				  	<p:commandButton id="btnAlterarAndamento" value="Alterar" icon="salvar" action="#{mbeanProcessoAndamento.alterarAndamentoProcesso}" update="@form" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" rendered="#{mbeanProcessoAndamento.andamentoProcesso.id != null and empty cadastroViaCliente ? true : false}" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}" />
-				  	<p:commandButton id="btnCancelarAndamento" value="Novo Cadastro" icon="novo" action="#{mbeanProcessoAndamento.limpar}" process="@this" update="@form" style="width: 140px; margin-left: 5px;" rendered="#{empty cadastroViaCliente ? true : false}"/>
-				  	
-				  	<p:commandButton value="Alterar" icon="salvar" action="#{mbeanProcessoAndamento.alterarAndamentoProcesso}" process="@this, pgCadastroAndamento" oncomplete="handleRequest('dialogVisualizarAndamento', dlgVisualizarAndamento, args)" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" rendered="#{mbeanProcessoAndamento.andamentoProcesso.id != null and not empty cadastroViaCliente ? cadastroViaCliente : false}" />
-				
-				</p:fieldset>
-				
-			</h:panelGrid>
-			
-		</p:outputPanel>
+                        <p:selectOneMenu id="tipoAndamentoProcessoAndamento" value="#{mbeanProcessoAndamento.andamentoProcesso.tipoAndamentoProcesso.id}" style="width:92%">
+                            <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+                            <f:selectItems value="#{mbeanProcesso.tiposAndamentosProcessos}" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="descricaoAndamento" value="Descrição" />
+                        <p:inputTextarea id="descricaoAndamento" value="#{mbeanProcessoAndamento.andamentoProcesso.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" autoResize="false" rows="10" maxlength="500" styleClass="coluna90" />
+
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="1" style="width:100%">
+
+                        <p:commandButton type="button" value="Adicionar Documento" icon="ui-icon-plus" onclick="dlgDocumentoTabAndamentoProcesso.show();" update="pgCategoriaDocumento" rendered="#{empty cadastroViaCliente ? true : false}" />
+                        <p:commandButton type="button" value="Adicionar Documento" icon="ui-icon-plus" onclick="dlgDocumentoTabAndamentoProcesso2.show();" update="pgCategoriaDocumento" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}" />
+
+                        <ui:include src="/pages/processo/include_grid_tab_andamento_processo_documentos.xhtml" />
+
+                    </h:panelGrid>
+
+                </h:panelGrid>
+
+                <p:commandButton id="btnSalvarAndamento" value="Cadastrar" icon="salvar" action="#{mbeanProcessoAndamento.cadastrarAndamentoProcesso}" update="@form" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" rendered="#{mbeanProcessoAndamento.andamentoProcesso.id == null and empty cadastroViaCliente ? true : false}"
+                    disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}" />
+                <p:commandButton id="btnAlterarAndamento" value="Alterar" icon="salvar" action="#{mbeanProcessoAndamento.alterarAndamentoProcesso}" update="@form" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" rendered="#{mbeanProcessoAndamento.andamentoProcesso.id != null and empty cadastroViaCliente ? true : false}"
+                    disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}" />
+                <p:commandButton id="btnCancelarAndamento" value="Novo Cadastro" icon="novo" action="#{mbeanProcessoAndamento.limpar}" process="@this" update="@form" style="width: 140px; margin-left: 5px;" rendered="#{empty cadastroViaCliente ? true : false}" />
+
+                <p:commandButton value="Alterar" icon="salvar" action="#{mbeanProcessoAndamento.alterarAndamentoProcesso}" process="@this, pgCadastroAndamento" oncomplete="handleRequest('dialogVisualizarAndamento', dlgVisualizarAndamento, args)" style="margin-left: 5px; margin-top:10px; margin-bottom:20px"
+                    rendered="#{mbeanProcessoAndamento.andamentoProcesso.id != null and not empty cadastroViaCliente ? cadastroViaCliente : false}" />
+
+            </p:fieldset>
+
+        </h:panelGrid>
+
+    </p:outputPanel>
 
 </ui:composition>

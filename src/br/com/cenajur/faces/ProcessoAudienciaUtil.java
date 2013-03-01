@@ -132,6 +132,8 @@ public class ProcessoAudienciaUtil {
 		
 		boolean erro = false;
 		
+		RequestContext context = RequestContext.getCurrentInstance();
+		
 		if(TSUtil.isEmpty(this.audiencia.getAudienciasAdvogados())){
 			erro = true;
 			CenajurUtil.addErrorMessage("Advogado: Campo obrigatório");
@@ -141,6 +143,22 @@ public class ProcessoAudienciaUtil {
 			erro = true;
 			CenajurUtil.addErrorMessage("Descrição: Campo muito longo, tamanho máximo de 500 caracteres");
 		}
+		
+		if(TSUtil.isEmpty(this.audiencia.getSituacaoAudiencia()) 
+				|| TSUtil.isEmpty(this.audiencia.getSituacaoAudiencia().getId())){
+			
+			erro = true;
+			CenajurUtil.addErrorMessage("Situação: Campo obrigatório");
+		}
+		
+		if(TSUtil.isEmpty(this.audiencia.getVara()) 
+				|| TSUtil.isEmpty(this.audiencia.getVara().getId())){
+			
+			erro = true;
+			CenajurUtil.addErrorMessage("Vara: Campo obrigatório");
+		}
+		
+		context.addCallbackParam("sucesso", !erro);
 		
 		return erro;
 	}

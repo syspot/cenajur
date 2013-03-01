@@ -88,6 +88,13 @@ public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 			erro = true;
 			CenajurUtil.addErrorMessage("Processo: Campo obrigatório");
 		}
+		
+		if(TSUtil.isEmpty(getCrudModel().getTipoAndamentoProcesso()) 
+				|| TSUtil.isEmpty(getCrudModel().getTipoAndamentoProcesso().getId())){
+			
+			erro = true;
+			CenajurUtil.addErrorMessage("Tipo do Andamento: Campo obrigatório");
+		}
 
 		if(getCrudModel().getDescricao().length() > 500){
 			erro = true;

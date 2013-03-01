@@ -121,12 +121,22 @@ public class ProcessoAndamentoUtil {
 	private boolean validaCampos(){
 		
 		boolean erro = false;
-		
+
+		RequestContext context = RequestContext.getCurrentInstance();
+    	
+		if(TSUtil.isEmpty(this.andamentoProcesso.getTipoAndamentoProcesso()) 
+				|| TSUtil.isEmpty(this.andamentoProcesso.getTipoAndamentoProcesso().getId())){
+			
+			erro = true;
+			CenajurUtil.addErrorMessage("Tipo do Andamento: Campo obrigatório");
+		}
 
 		if(this.andamentoProcesso.getDescricao().length() > 500){
 			erro = true;
 			CenajurUtil.addErrorMessage("Descrição: Campo muito longo, tamanho máximo de 500 caracteres");
 		}
+		
+		context.addCallbackParam("sucesso", !erro);
 		
 		return erro;
 	}

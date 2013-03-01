@@ -181,6 +181,20 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 			CenajurUtil.addErrorMessage("Descrição: Campo muito longo, tamanho máximo de 500 caracteres");
 		}
 		
+		if(TSUtil.isEmpty(getCrudModel().getSituacaoAudiencia()) 
+				|| TSUtil.isEmpty(getCrudModel().getSituacaoAudiencia().getId())){
+			
+			erro = true;
+			CenajurUtil.addErrorMessage("Situação: Campo obrigatório");
+		}
+		
+		if(TSUtil.isEmpty(getCrudModel().getVara()) 
+				|| TSUtil.isEmpty(getCrudModel().getVara().getId())){
+			
+			erro = true;
+			CenajurUtil.addErrorMessage("Vara: Campo obrigatório");
+		}
+		
 		return erro;
 	}
 	

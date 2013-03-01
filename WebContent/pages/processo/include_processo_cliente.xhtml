@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:composition 
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
-	
-  	<ui:param name="mbeanProcesso" value="${processoFaces}" />
-	<ui:param name="mbeanProcessoModel" value="${processo}" />
-	<ui:param name="cadastroViaCliente" value="${true}" />
-	
-  	<p:tab id="tabProcesso" title="Processo">
-		
-		<ui:include src="/pages/processo/include_cadastro_processo.xhtml" />
-		
-		<p:commandButton value="Alterar" process="tabProcesso" icon="salvar" action="#{clienteFaces.processoAux.updateProcesso}" update="@form" style="margin-left: 5px; margin-top: 10px;" >
-			<f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
-		</p:commandButton>
-	
-	</p:tab>
-  	
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:param name="mbeanProcesso" value="${processoFaces}" />
+    <ui:param name="mbeanProcessoModel" value="${processo}" />
+    <ui:param name="cadastroViaCliente" value="${true}" />
+
+    <p:tab id="tabProcesso" title="Processo">
+
+        <ui:include src="/pages/processo/include_cadastro_processo.xhtml" />
+
+        <p:commandButton value="Alterar" process="tabProcesso" icon="salvar" action="#{clienteFaces.processoAux.updateProcesso}" update="@form" style="margin-left: 5px; margin-top: 10px;">
+            <f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
+        </p:commandButton>
+
+    </p:tab>
+
 </ui:composition>

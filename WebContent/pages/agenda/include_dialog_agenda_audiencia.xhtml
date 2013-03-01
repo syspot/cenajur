@@ -1,58 +1,55 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:composition 
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
-  	
-	  
-	<p:outputPanel style="width:100%" rendered="#{agendaFaces.processoAudienciaUtil != null}">
-				
-		<h:panelGrid columns="1" columnClasses="coluna100" style="width:100%">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 
-			<p:outputLabel for="numeroProcessoAudienciaAgenda" value="Processo" />
-			<p:inputText id="numeroProcessoAudienciaAgenda" value="#{agendaFaces.processoAudienciaUtil.audiencia.processoNumero.numero}" readonly="true" />
-	  		
-  		</h:panelGrid>
-  		
-  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:95%">
-  		
-		  	<p:outputLabel for="dataAudienciaAudienciaAgenda" value="Data da Audiência" />
-  			<p:outputLabel for="flagClienteCienteAudienciaAgenda" value="Associado ciente" />
-  		
-	  		<p:calendar  navigator="true" id="dataAudienciaAudienciaAgenda" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data da Audiência: Campo obrigatório" value="#{agendaFaces.processoAudienciaUtil.audiencia.dataAudiencia}" timeZone="America/Recife"/>
-	  		<p:selectBooleanCheckbox id="flagClienteCienteAudienciaAgenda" value="#{agendaFaces.processoAudienciaUtil.audiencia.flagClienteCiente}" />
-	  		
-	  		<p:outputLabel for="situacaoAudienciaAgenda" value="Situação" />
-		  	<p:outputLabel for="varaAudienciaAgenda" value="Vara" />
-		  	
-	  		<p:selectOneMenu id="situacaoAudienciaAgenda" required="true" requiredMessage="Situação: Campo obrigatório" value="#{agendaFaces.processoAudienciaUtil.audiencia.situacaoAudiencia.id}" style="width:95%">
-		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-		  		<f:selectItems value="#{agendaFaces.situacoesAudiencias}" />
-		  	</p:selectOneMenu>
-	  		<p:selectOneMenu id="varaAudienciaAgenda" required="true" requiredMessage="Vara: Campo obrigatório" value="#{agendaFaces.processoAudienciaUtil.audiencia.vara.id}" style="width:94%">
-		  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-		  		<f:selectItems value="#{agendaFaces.varas}" />
-		  	</p:selectOneMenu>
-		  	
-	  	</h:panelGrid>
-	  	
-	  	<h:panelGrid columns="1" columnClasses="coluna100" style="width:100%">
-	  	
-		  	<p:outputPanel autoUpdate="true">
-				<h:outputLabel value="Advogado" /><br/>
-				<p:inputText required="true" requiredMessage="Advogado: Campo obrigatório" readonly="true" rendered="#{empty agendaFaces.processoAudienciaUtil.audiencia.audienciasAdvogados}" styleClass="coluna72"/>
-				<p:inputText value="#{agendaFaces.processoAudienciaUtil.audiencia.audienciasAdvogados}" required="true" requiredMessage="Advogado: Campo obrigatório" readonly="true" rendered="#{not empty agendaFaces.processoAudienciaUtil.audiencia.audienciasAdvogados}" styleClass="coluna72"/>
-				<p:commandButton type="button" value="Adicionar" icon="ui-icon-plus" onclick="dlgAdvogado4.show();" />
-			</p:outputPanel>
-		  	
-		  	<p:outputLabel for="descricaoAudiencia" value="Descrição" />
-			<p:inputTextarea id="descricaoAudiencia" value="#{agendaFaces.processoAudienciaUtil.audiencia.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" autoResize="false" rows="10" maxlength="500" styleClass="coluna90"/>
-			
-	  	</h:panelGrid>
-	  	
-	  	<p:commandButton value="Salvar" icon="salvar" action="#{agendaFaces.salvarAudiencia}" oncomplete="handleRequest('dialogAudiencia', dlgAudiencia, args)" process="@this, opDialogAudiencia" update="opDialogAudiencia" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" />
-	  	
-	</p:outputPanel>
-	
+
+    <p:outputPanel style="width:100%" rendered="#{agendaFaces.processoAudienciaUtil != null}">
+
+        <h:panelGrid columns="1" columnClasses="coluna100" style="width:100%">
+
+            <p:outputLabel for="numeroProcessoAudienciaAgenda" value="Processo" />
+            <p:inputText id="numeroProcessoAudienciaAgenda" value="#{agendaFaces.processoAudienciaUtil.audiencia.processoNumero.numero}" readonly="true" />
+
+        </h:panelGrid>
+
+        <h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:95%">
+
+            <p:outputLabel for="dataAudienciaAudienciaAgenda" value="Data da Audiência" />
+            <p:outputLabel for="flagClienteCienteAudienciaAgenda" value="Associado ciente" />
+
+            <p:calendar navigator="true" id="dataAudienciaAudienciaAgenda" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data da Audiência: Campo obrigatório" value="#{agendaFaces.processoAudienciaUtil.audiencia.dataAudiencia}" timeZone="America/Recife" />
+            <p:selectBooleanCheckbox id="flagClienteCienteAudienciaAgenda" value="#{agendaFaces.processoAudienciaUtil.audiencia.flagClienteCiente}" />
+
+            <p:outputLabel for="situacaoAudienciaAgenda" value="Situação" />
+            <p:outputLabel for="varaAudienciaAgenda" value="Vara" />
+
+            <p:selectOneMenu id="situacaoAudienciaAgenda" required="true" requiredMessage="Situação: Campo obrigatório" value="#{agendaFaces.processoAudienciaUtil.audiencia.situacaoAudiencia.id}" style="width:95%">
+                <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+                <f:selectItems value="#{agendaFaces.situacoesAudiencias}" />
+            </p:selectOneMenu>
+            <p:selectOneMenu id="varaAudienciaAgenda" required="true" requiredMessage="Vara: Campo obrigatório" value="#{agendaFaces.processoAudienciaUtil.audiencia.vara.id}" style="width:94%">
+                <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+                <f:selectItems value="#{agendaFaces.varas}" />
+            </p:selectOneMenu>
+
+        </h:panelGrid>
+
+        <h:panelGrid columns="1" columnClasses="coluna100" style="width:100%">
+
+            <p:outputPanel autoUpdate="true">
+                <h:outputLabel value="Advogado" />
+                <br />
+                <p:inputText required="true" requiredMessage="Advogado: Campo obrigatório" readonly="true" rendered="#{empty agendaFaces.processoAudienciaUtil.audiencia.audienciasAdvogados}" styleClass="coluna72" />
+                <p:inputText value="#{agendaFaces.processoAudienciaUtil.audiencia.audienciasAdvogados}" required="true" requiredMessage="Advogado: Campo obrigatório" readonly="true" rendered="#{not empty agendaFaces.processoAudienciaUtil.audiencia.audienciasAdvogados}" styleClass="coluna72" />
+                <p:commandButton type="button" value="Adicionar" icon="ui-icon-plus" onclick="dlgAdvogado4.show();" />
+            </p:outputPanel>
+
+            <p:outputLabel for="descricaoAudiencia" value="Descrição" />
+            <p:inputTextarea id="descricaoAudiencia" value="#{agendaFaces.processoAudienciaUtil.audiencia.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" autoResize="false" rows="10" maxlength="500" styleClass="coluna90" />
+
+        </h:panelGrid>
+
+        <p:commandButton value="Salvar" icon="salvar" action="#{agendaFaces.salvarAudiencia}" oncomplete="handleRequest('dialogAudiencia', dlgAudiencia, args)" process="@this, opDialogAudiencia" update="opDialogAudiencia" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" />
+
+    </p:outputPanel>
+
 </ui:composition>
