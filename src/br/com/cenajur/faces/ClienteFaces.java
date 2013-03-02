@@ -249,9 +249,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		getCrudModel().setFaturasAbertas("");
 		
 		for(Faturamento fatura : faturasAbertas){
-			
 			getCrudModel().setFaturasAbertas(getCrudModel().getFaturasAbertas() + " " + fatura.getMes() + "/" + fatura.getAno() + " ");
-			
 		}
 		
 		for(Processo processo : getCrudModel().getProcessos()){
@@ -259,16 +257,11 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 			processo.setProcessoNumeroPrincipal(new ProcessoNumero().obterNumeroProcessoPrincipal(processo));
 			processo.setAudiencias(new Audiencia().findByProcesso(processo));
 			processo.setAndamentos(new AndamentoProcesso().findByProcesso(processo));
-			
-			if(TSUtil.isEmpty(processo.getTurno()) || TSUtil.isEmpty(processo.getTurno().getId())){
-				processo.setTurno(new Turno());
-			}
-			
-			processo.setProcessoNumeroPrincipal(new ProcessoNumero().obterNumeroProcessoPrincipal(processo));
 			processo.setProcessosNumerosTemp(new ProcessoNumero().pesquisarOutrosNumerosProcessos(processo));
 			
-			processo.setAudiencias(new Audiencia().findByProcesso(processo));
-			processo.setAndamentos(new AndamentoProcesso().findByProcesso(processo));
+			if(TSUtil.isEmpty(processo.getTurno())){
+				processo.setTurno(new Turno());
+			}
 			
 			for(ProcessoParteContraria processoParteContraria : processo.getProcessosPartesContrarias()){
 				processoParteContraria.setSituacaoProcessoParteContrariaTemp(new SituacaoProcessoParteContraria(processoParteContraria.getSituacaoProcessoParteContraria().getId()));

@@ -27,6 +27,7 @@
                 <p:commandLink process="@this" action="#{clienteFaces.processoAux.removerDocumento}" global="false" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}">
                     <h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
                     <f:setPropertyActionListener target="#{clienteFaces.processoAux.documentoSelecionado}" value="#{documento}" />
+                    <f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
                 </p:commandLink>
 
             </p:column>

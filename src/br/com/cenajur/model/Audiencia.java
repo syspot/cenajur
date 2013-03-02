@@ -20,6 +20,8 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import br.com.cenajur.util.CenajurUtil;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
@@ -56,7 +58,7 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Vara vara;
 	
-	@OneToMany(mappedBy = "audiencia", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "audiencia", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	@Fetch(value = FetchMode.SUBSELECT)
 	private List<AudienciaAdvogado> audienciasAdvogados;
 	
@@ -70,7 +72,7 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 	private Colaborador colaboradorAtualizacao;
 	
 	@OneToMany(mappedBy = "audiencia", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Fetch(value = FetchMode.SUBSELECT)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<DocumentoAudiencia> documentos;
 	
 	@Column(name = "flag_cliente_ciente")

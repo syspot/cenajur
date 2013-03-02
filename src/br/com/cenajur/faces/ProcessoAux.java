@@ -7,6 +7,8 @@ import java.util.List;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 
+import br.com.cenajur.model.AndamentoProcesso;
+import br.com.cenajur.model.Audiencia;
 import br.com.cenajur.model.CategoriaDocumento;
 import br.com.cenajur.model.Cliente;
 import br.com.cenajur.model.DocumentoProcesso;
@@ -17,6 +19,7 @@ import br.com.cenajur.model.ProcessoNumero;
 import br.com.cenajur.model.ProcessoParteContraria;
 import br.com.cenajur.model.SituacaoProcessoCliente;
 import br.com.cenajur.model.SituacaoProcessoParteContraria;
+import br.com.cenajur.model.Turno;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
@@ -75,6 +78,11 @@ public class ProcessoAux extends TSMainFaces{
 			erro = true;
 		}
 		
+		if(TSUtil.isEmpty(this.processos.get(indexProcesso).getAdvogado().getId())){
+			this.addErrorMessage("Advogado: Campo obrigatório");
+			erro = true;
+		}
+		
 		return erro;
 	}
 	
@@ -105,7 +113,13 @@ public class ProcessoAux extends TSMainFaces{
 	}
 	
 	private void posUpdate() throws TSApplicationException{
+		
 		this.processos.get(indexProcesso).setProcessosNumerosTemp(new ProcessoNumero().pesquisarOutrosNumerosProcessos(this.processos.get(indexProcesso)));
+		
+		if(TSUtil.isEmpty(this.processos.get(indexProcesso).getTurno())){
+			this.processos.get(indexProcesso).setTurno(new Turno());
+		}
+		
 	}
 	
 	public String updateProcesso() throws TSApplicationException {
@@ -209,6 +223,22 @@ public class ProcessoAux extends TSMainFaces{
 			
 		}
 		
+		return null;
+	}
+	
+	public String alterarAndamentoProcesso() throws TSApplicationException{
+		this.processoAndamentoUtil.alterarAndamentoProcesso();
+		if(!TSUtil.isEmpty(this.processos) && indexProcesso < this.processos.size()){
+			this.processos.get(indexProcesso).setAndamentos(new AndamentoProcesso().findByProcesso(this.processos.get(indexProcesso)));
+		}
+		return null;
+	}
+	
+	public String alterarAudiencia() throws TSApplicationException{
+		this.processoAudienciaUtil.alterarAudiencia();
+		if(!TSUtil.isEmpty(this.processos) && indexProcesso < this.processos.size()){
+			this.processos.get(indexProcesso).setAudiencias(new Audiencia().findByProcesso(this.processos.get(indexProcesso)));
+		}
 		return null;
 	}
 	

@@ -38,11 +38,11 @@ public class Constantes {
 	public static final String PASTA_UPLOAD_IMAGEM_TEMP = "/imagens/tmp/";
 	
 	//public static final String PASTA_DOWNLOAD_ARQUIVO = "http://localhost:80/arquivos/";
-	public static final String PASTA_DOWNLOAD_ARQUIVO = "http://177.70.17.250:8080/arquivos/";
+	public static final String PASTA_DOWNLOAD_ARQUIVO = "http://www.agepol.org.br/arquivos/";
 	//public static final String PASTA_DOWNLOAD_IMAGEM = "http://localhost:80/imagens/";
-	public static final String PASTA_DOWNLOAD_IMAGEM = "http://177.70.17.250:8080/imagens/";
+	public static final String PASTA_DOWNLOAD_IMAGEM = "http://www.agepol.org.br/imagens/";
 	//public static final String PASTA_DOWNLOAD_IMAGEM_TMP = "http://localhost:80/imagens/tmp/";
-	public static final String PASTA_DOWNLOAD_IMAGEM_TMP = "http://177.70.17.250:8080/imagens/tmp/";
+	public static final String PASTA_DOWNLOAD_IMAGEM_TMP = "http://www.agepol.org.br/imagens/tmp/";
 	
 	//public static final String PASTA_ANDAMENTO_PROCESSO = "andamentos_processos\\";
 	public static final String PASTA_ANDAMENTO_PROCESSO = "andamentos_processos/";

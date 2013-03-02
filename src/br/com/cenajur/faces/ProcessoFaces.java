@@ -1,3 +1,4 @@
+
 package br.com.cenajur.faces;
 
 import java.util.ArrayList;
@@ -227,6 +228,11 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 
 		if(getCrudModel().getProcessosPartesContrarias().isEmpty()){
 			this.addErrorMessage("Selecione ao menos uma parte contrária");
+			erro = true;
+		}
+		
+		if(TSUtil.isEmpty(getCrudModel().getAdvogado().getId())){
+			this.addErrorMessage("Advogado: Campo obrigatório");
 			erro = true;
 		}
 		

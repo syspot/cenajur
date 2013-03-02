@@ -7,7 +7,7 @@
         <ui:param name="cadastroViaCliente" value="${true}" />
         <ui:param name="mbeanProcessoAndamento" value="${clienteFaces.processoAux.processoAndamentoUtil}" />
 
-        <p:remoteCommand name="abrirDialogViewAndamento" oncomplete="dlgVisualizarAndamento.show();" update="pgDialogViewAndamento" process="@this" />
+        <p:remoteCommand name="abrirDialogViewAndamento" oncomplete="dlgVisualizarAndamento.show();" action="#{mbeanProcessoAndamento.abrirDialogAndamento}" update=":tabview:formViewAndamento:dialogVisualizarAndamento" process="@this" />
 
         <p:outputPanel id="opGridAndamentoProcesso2">
 
@@ -16,9 +16,9 @@
                 <p:column headerText="Descrição" styleClass="coluna40">
                     <p:commandLink oncomplete="abrirDialogViewAndamento();" process="@this" global="false">
                         <h:outputText value="#{linha.resumoDescricao}" />
-                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.andamentoProcesso}" value="#{linha}" />
-                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.crudModel}" value="#{processo}" />
-                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
+                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.andamentoProcesso.id}" value="#{linha.id}" />
+                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.crudModel.id}" value="#{processo.id}" />
+                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.processoNumeroPrincipal.id}" value="#{linha.processoNumero.id}" />
                         <f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
                     </p:commandLink>
                 </p:column>
@@ -26,9 +26,9 @@
                 <p:column headerText="Tipo do Andamento" styleClass="coluna20">
                     <p:commandLink oncomplete="abrirDialogViewAndamento();" process="@this" global="false">
                         <h:outputText value="#{linha.tipoAndamentoProcesso.descricao}" />
-                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.andamentoProcesso}" value="#{linha}" />
-                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.crudModel}" value="#{processo}" />
-                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
+                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.andamentoProcesso.id}" value="#{linha.id}" />
+                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.crudModel.id}" value="#{processo.id}" />
+                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.processoNumeroPrincipal.id}" value="#{linha.processoNumero.id}" />
                         <f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
                     </p:commandLink>
                 </p:column>
@@ -38,9 +38,9 @@
                         <h:outputText value="#{linha.dataAndamento}">
                             <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
                         </h:outputText>
-                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.andamentoProcesso}" value="#{linha}" />
-                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.crudModel}" value="#{processo}" />
-                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
+                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.andamentoProcesso.id}" value="#{linha.id}" />
+                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.crudModel.id}" value="#{processo.id}" />
+                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.processoNumeroPrincipal.id}" value="#{linha.processoNumero.id}" />
                         <f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
                     </p:commandLink>
                 </p:column>
@@ -48,9 +48,9 @@
                 <p:column headerText="Visualizar" styleClass="coluna5">
                     <p:commandLink oncomplete="abrirDialogViewAndamento();" process="@this" global="false">
                         <h:graphicImage value="../resources/images/lupa.png" width="16" style="border: 0px" />
-                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.andamentoProcesso}" value="#{linha}" />
-                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.crudModel}" value="#{processo}" />
-                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.processoNumeroPrincipal}" value="#{linha.processoNumero}" />
+                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.andamentoProcesso.id}" value="#{linha.id}" />
+                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.crudModel.id}" value="#{processo.id}" />
+                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.processoNumeroPrincipal.id}" value="#{linha.processoNumero.id}" />
                         <f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
                     </p:commandLink>
                 </p:column>
@@ -58,16 +58,6 @@
             </p:dataTable>
 
         </p:outputPanel>
-
-        <p:dialog appendToBody="true" modal="true" header="Visualização do Andamento" width="500" id="dialogVisualizarAndamento" widgetVar="dlgVisualizarAndamento" styleClass="dialog80">
-
-            <h:panelGrid id="pgDialogViewAndamento" columns="1" columnClasses="coluna100" style="width:95%">
-
-                <ui:include src="/pages/processo/include_cadastro_andamento.xhtml" />
-
-            </h:panelGrid>
-
-        </p:dialog>
 
     </p:tab>
 

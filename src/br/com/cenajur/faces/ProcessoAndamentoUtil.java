@@ -47,6 +47,7 @@ public class ProcessoAndamentoUtil {
 	private DocumentoAndamentoProcesso documentoAndamentoProcessoSelecionado;
 	
 	public ProcessoAndamentoUtil() {
+		this.crudModel = new Processo();
 		setCategoriaDocumento(new CategoriaDocumento());
 		getCategoriaDocumento().setTipoCategoria(new TipoCategoria(Constantes.TIPO_CATEGORIA_ANDAMENTO_PROCESSO));
 		setDocumentoAndamentoProcesso(new DocumentoAndamentoProcesso());
@@ -60,10 +61,16 @@ public class ProcessoAndamentoUtil {
 	}
 	
 	private void initAndamentoProcesso(){
+		
 		this.andamentoProcesso = new AndamentoProcesso();
 		this.andamentoProcesso.setTipoAndamentoProcesso(new TipoAndamentoProcesso());
 		this.andamentoProcesso.setDocumentos(new ArrayList<DocumentoAndamentoProcesso>());
 		this.processoNumeroPrincipal = this.processoNumeroBackup;
+		
+		if(TSUtil.isEmpty(processoNumeroPrincipal)){
+			this.processoNumeroPrincipal = new ProcessoNumero();
+		}
+		
 	}
 	
 	private void initCombo(){
@@ -141,7 +148,7 @@ public class ProcessoAndamentoUtil {
 		return erro;
 	}
 	
-	private void posPersist(){
+	private void enviarEmail(){
 		
 		RegrasEmail regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_ANDAMENTO_PROCESSO).getById();
 		
@@ -203,11 +210,13 @@ public class ProcessoAndamentoUtil {
 		this.andamentoProcesso.setDataCadastro(new Date());
 		this.andamentoProcesso.save();
 		
-		CenajurUtil.addInfoMessage("Andamento cadastrado com sucesso");
-		this.initAndamentoProcesso();
-		getCrudModel().setAndamentos(this.andamentoProcesso.findByModel("descricao"));
+		this.enviarEmail();
 		
-		this.posPersist();
+		CenajurUtil.addInfoMessage("Andamento cadastrado com sucesso");
+
+		this.initAndamentoProcesso();
+		
+		getCrudModel().setAndamentos(new AndamentoProcesso().findByProcesso(getCrudModel()));
 		
 		return null;
 	}
@@ -229,12 +238,23 @@ public class ProcessoAndamentoUtil {
 		this.andamentoProcesso.setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 		this.andamentoProcesso.update();
 		
+		this.enviarEmail();
+		
+		this.processoNumeroBackup = this.processoNumeroPrincipal;
+		
 		this.initAndamentoProcesso();
-		getCrudModel().setAndamentos(this.andamentoProcesso.findByModel("descricao"));
+		
+		getCrudModel().setAndamentos(new AndamentoProcesso().findByProcesso(getCrudModel()));
+		
 		CenajurUtil.addInfoMessage("Alteração realizada com sucesso");
 		
-		this.posPersist();
-		
+		return null;
+	}
+	
+	public String abrirDialogAndamento(){
+		this.andamentoProcesso = this.andamentoProcesso.getById();
+		this.processoNumeroPrincipal = this.processoNumeroPrincipal.getById();
+		this.crudModel = this.crudModel.getById();
 		return null;
 	}
 	
