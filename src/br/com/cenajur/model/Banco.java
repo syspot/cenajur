@@ -30,6 +30,8 @@ public class Banco extends TSActiveRecordAb<Banco>{
 	private Long id;
 	
 	private String descricao;
+	
+	private Integer lote;
 
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -45,6 +47,14 @@ public class Banco extends TSActiveRecordAb<Banco>{
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public Integer getLote() {
+		return TSUtil.tratarInteger(lote);
+	}
+
+	public void setLote(Integer lote) {
+		this.lote = lote;
 	}
 
 	@Override
@@ -80,7 +90,7 @@ public class Banco extends TSActiveRecordAb<Banco>{
 		query.append(" from Banco b where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(descricao)){
-			query.append("and ").append(CenajurUtil.semAcento("b.descricao")).append(" like ").append(CenajurUtil.semAcento("?")).append(" ");
+			query.append(CenajurUtil.getParamSemAcento("b.descricao"));
 		}
 		
 		List<Object> params = new ArrayList<Object>();

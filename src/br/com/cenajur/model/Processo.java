@@ -406,7 +406,7 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		
 		StringBuilder query = new StringBuilder();
 		
-		query.append(" select distinct p from Processo p where 1 = 1 ");
+		query.append(" select distinct p from Processo p inner join p.processosNumeros pn where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(processoNumeroPrincipal) && !TSUtil.isEmpty(processoNumeroPrincipal.getNumero())){
 			query.append(CenajurUtil.formataNumeroProcessoBusca("pn.numero"));
