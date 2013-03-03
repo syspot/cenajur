@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="/resources/templates/templateCRUD.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:param name="mbean" value="${logEnvioEmailFaces}" />
+    <ui:param name="mbeanModel" value="${logEnvioEmailFaces.crudModel}" />
+    <ui:param name="mbeanPesquisaModel" value="${logEnvioEmailFaces.crudPesquisaModel}" />
+
+    <ui:define name="cadastro">
+
+        <h:panelGrid style="width: 100%">
+        
+            <p:outputLabel for="data" value="Data" />
+            <p:inputText id="data" value="#{mbeanModel.data}" style="width: 40%" maxlength="300" >
+                <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
+            </p:inputText>
+    
+            <p:outputLabel for="assunto" value="Assunto" />
+            <p:inputText id="assunto" value="#{mbeanModel.assunto}" style="width: 40%" maxlength="300" />
+            
+            <p:outputLabel for="texto" value="Texto" />
+            <p:inputTextarea id="texto" value="#{mbeanModel.texto}" rows="6" cols="80" />
+            
+            <p:outputLabel for="cliente" value="Cliente" />
+            <p:inputText id="cliente" value="#{mbeanModel.cliente.nome}" style="width: 40%" maxlength="300" />
+            
+            <p:outputLabel for="emailCliente" value="Email do Cliente" />
+            <p:inputText id="emailCliente" value="#{mbeanModel.emailCliente}" style="width: 40%" maxlength="300" />
+        
+        </h:panelGrid>
+        
+    </ui:define>
+
+    <ui:define name="pesquisaCampos">
+
+        <p:outputLabel for="dataPesquisa" value="Data" />
+        <p:calendar id="dataPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.data}" timeZone="America/Recife" style="width: 40%"  />
+
+    </ui:define>
+
+    <ui:define name="colunasTabela">
+
+        <p:column headerText="Assunto">
+            <p:commandLink action="#{mbean.detailEvent}" ajax="false">
+                <h:outputText value="#{linha.assunto}" />
+                <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+            </p:commandLink>
+        </p:column>
+
+        <p:column headerText="Texto">
+            <p:commandLink action="#{mbean.detailEvent}" ajax="false">
+                <h:outputText value="#{linha.texto}" />
+                <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+            </p:commandLink>
+        </p:column>
+
+        <p:column headerText="Data">
+            <p:commandLink action="#{mbean.detailEvent}" ajax="false">
+                <h:outputText value="#{linha.data}" />
+                <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+            </p:commandLink>
+        </p:column>
+
+    </ui:define>
+
+</ui:composition>

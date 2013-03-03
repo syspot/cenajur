@@ -2,7 +2,6 @@ package br.com.cenajur.faces;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +21,6 @@ import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSUtil;
-import br.com.topsys.web.util.TSFacesUtil;
 
 @ViewScoped
 @ManagedBean(name = "faturamentoFaces")
@@ -195,10 +193,9 @@ public class FaturamentoFaces extends CrudFaces<Faturamento> {
 		
 		try {
 
-            Map<String, Object> parametros = new HashMap<String, Object>();
+            Map<String, Object> parametros = CenajurUtil.getHashMapReport();
 
             parametros.put("P_FATURAMENTO_ID", getCrudModel().getId());
-            parametros.put("SUBREPORT_DIR", TSFacesUtil.getServletContext().getRealPath("resources/images/"));
 
             new JasperUtil().gerarRelatorio("comprovantePagamento.jasper", "comprovante", parametros);
 

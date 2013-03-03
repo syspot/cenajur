@@ -2,6 +2,7 @@ package br.com.cenajur.faces;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -48,6 +49,7 @@ public class AutenticacaoFaces extends TSMainFaces{
     private Cliente clienteSelecionado;
     private Long situacaoProcesso;
     private String ano;
+    private Date data;
     private String confirmaSenha;
 
     
@@ -72,6 +74,28 @@ public class AutenticacaoFaces extends TSMainFaces{
     	this.objetoSelecionado = null;
     	this.situacaoProcesso = null;
     	this.ano = null;
+    	this.data = null;
+    }
+    
+    private boolean isPossuiPermissao(){
+    	
+    	boolean valida = false;
+    	
+    	rotuloLoop:
+    		for(PermissaoGrupo permissaoGrupo : permissaoSelecionada.getPermissoesGrupos()){
+    			
+    			for(PermissaoGrupo permissaoGrupo2 : colaborador.getGrupo().getPermissoesGrupos()){
+    				
+    				if(permissaoGrupo.getId().equals(permissaoGrupo2.getId())){
+    					valida = true;
+    					break rotuloLoop;
+    				}
+    				
+    			}
+    			
+    		}
+    	
+    	return valida;
     }
     
     public String redirecionar() {
@@ -104,23 +128,7 @@ public class AutenticacaoFaces extends TSMainFaces{
     
     public String redirecionarParaColaborador() {
     	
-    	boolean valida = false;
-    	
     	this.permissaoSelecionada = new Permissao(Constantes.PERMISSAO_COLABORADOR).getById();
-    	
-    	rotuloLoop:
-    	for(PermissaoGrupo permissaoGrupo : permissaoSelecionada.getPermissoesGrupos()){
-			
-    		for(PermissaoGrupo permissaoGrupo2 : colaborador.getGrupo().getPermissoesGrupos()){
-    			
-    			if(permissaoGrupo.getId().equals(permissaoGrupo2.getId())){
-    				valida = true;
-    				break rotuloLoop;
-    			}
-    			
-    		}
-			
-		}
     	
     	Colaborador colaborador = null;
     	
@@ -128,7 +136,7 @@ public class AutenticacaoFaces extends TSMainFaces{
     		colaborador = new Colaborador(colaboradorSelecionado.getId());
     	}
     	
-    	if(valida){
+    	if(this.isPossuiPermissao()){
     		redirecionar();
     	}
     	
@@ -139,23 +147,7 @@ public class AutenticacaoFaces extends TSMainFaces{
     
     public String redirecionarParaObjeto() {
     	
-    	boolean valida = false;
-    	
     	this.permissaoSelecionada = new Permissao(Constantes.PERMISSAO_OBJETO).getById();
-    	
-    	rotuloLoop:
-    	for(PermissaoGrupo permissaoGrupo : permissaoSelecionada.getPermissoesGrupos()){
-    		
-    		for(PermissaoGrupo permissaoGrupo2 : colaborador.getGrupo().getPermissoesGrupos()){
-    			
-    			if(permissaoGrupo.getId().equals(permissaoGrupo2.getId())){
-    				valida = true;
-    				break rotuloLoop;
-    			}
-    			
-    		}
-    		
-    	}
     	
     	Objeto objeto = null;
     	
@@ -163,7 +155,7 @@ public class AutenticacaoFaces extends TSMainFaces{
     		objeto = new Objeto(objetoSelecionado.getId());
     	}
     	
-    	if(valida){
+    	if(this.isPossuiPermissao()){
     		redirecionar();
     	}
     	
@@ -172,25 +164,20 @@ public class AutenticacaoFaces extends TSMainFaces{
     	return "sucesso";
     }
     
+    public String redirecionarParaLogEmail() {
+    	
+    	this.permissaoSelecionada = new Permissao(Constantes.PERMISSAO_LOG_ENVIO_EMAIL).getById();
+    	
+    	if(this.isPossuiPermissao()){
+    		redirecionar();
+    	}
+    	
+    	return "sucesso";
+    }
+    
     public String redirecionarParaProcesso() {
     	
-    	boolean valida = false;
-    	
     	this.permissaoSelecionada = new Permissao(Constantes.PERMISSAO_PROCESSO).getById();
-    	
-    	rotuloLoop:
-		for(PermissaoGrupo permissaoGrupo : permissaoSelecionada.getPermissoesGrupos()){
-			
-			for(PermissaoGrupo permissaoGrupo2 : colaborador.getGrupo().getPermissoesGrupos()){
-				
-				if(permissaoGrupo.getId().equals(permissaoGrupo2.getId())){
-					valida = true;
-					break rotuloLoop;
-				}
-				
-			}
-			
-		}
     	
     	Long situacaoProcessoId = null;
     	String ano = null;
@@ -213,7 +200,7 @@ public class AutenticacaoFaces extends TSMainFaces{
     		objeto = new Objeto(objetoSelecionado.getId());
     	}
     	
-    	if(valida){
+    	if(this.isPossuiPermissao()){
     		redirecionar();
     	}
     	
@@ -227,23 +214,7 @@ public class AutenticacaoFaces extends TSMainFaces{
     
     public String redirecionarParaCliente() {
     	
-    	boolean valida = false;
-    	
     	this.permissaoSelecionada = new Permissao(Constantes.PERMISSAO_CLIENTE).getById();
-    	
-    	rotuloLoop:
-    		for(PermissaoGrupo permissaoGrupo : permissaoSelecionada.getPermissoesGrupos()){
-    			
-    			for(PermissaoGrupo permissaoGrupo2 : colaborador.getGrupo().getPermissoesGrupos()){
-    				
-    				if(permissaoGrupo.getId().equals(permissaoGrupo2.getId())){
-    					valida = true;
-    					break rotuloLoop;
-    				}
-    				
-    			}
-    			
-    		}
     	
     	Cliente cliente = null;
     	
@@ -251,12 +222,11 @@ public class AutenticacaoFaces extends TSMainFaces{
     		cliente = new Cliente(clienteSelecionado.getId());
     	}
     	
-    	if(valida){
+    	if(this.isPossuiPermissao()){
     		redirecionar();
     	}
     	
     	this.clienteSelecionado = cliente;
-    	
     	
     	return "sucesso";
     }
@@ -588,6 +558,14 @@ public class AutenticacaoFaces extends TSMainFaces{
 
 	public void setClienteSelecionado(Cliente clienteSelecionado) {
 		this.clienteSelecionado = clienteSelecionado;
+	}
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
 	}
 
 	public String getConfirmaSenha() {

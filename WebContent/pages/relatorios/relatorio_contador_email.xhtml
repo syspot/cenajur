@@ -1,12 +1,64 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:composition
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
-	
-	<ui:param name="mbean" value="${relatorioEmailFaces}" />
-	
-  	<ui:include src="/resources/templates/templateRelatorioContador.xhtml" />
-  	
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:param name="mbean" value="${relatorioEmailFaces}" />
+
+    <p:tabView>
+
+        <p:tab title="Relatórios">
+
+            <h:form>
+
+                <h:panelGrid columns="2">
+
+                    <p:outputLabel for="dataInicial" value="Data Inicial" />
+                    <p:outputLabel for="dataFinal" value="Data Final" />
+
+                    <p:calendar navigator="true" id="dataInicial" value="#{mbean.dataInicio}" pattern="dd/MM/yyyy" timeZone="America/Recife" />
+                    <p:calendar navigator="true" id="dataFinal" value="#{mbean.dataFim}" pattern="dd/MM/yyyy" timeZone="America/Recife" />
+
+                </h:panelGrid>
+
+                <h:panelGrid>
+
+                    <p:outputLabel for="tipoInformacao" value="Tipo" />
+                    <p:selectOneMenu id="tipoInformacao" value="#{mbean.tipoInformacao.id}">
+                        <f:selectItem itemLabel="TODOS" itemValue="#{null}" />
+                        <f:selectItems value="#{mbean.tiposInformacoes}" />
+                    </p:selectOneMenu>
+                </h:panelGrid>
+
+                <p:commandButton value="Atualizar" action="#{mbean.atualizar}" ajax="false" style="margin-top: 20px" />
+
+                <p:dataTable value="#{mbean.grid}" var="contador" emptyMessage="Nenhuma informação encontrada" style="width:50%">
+
+                    <p:column headerText="Descrição">
+                        <p:commandLink action="#{autenticacaoFaces.redirecionarParaLogEmail}" ajax="false">
+                            <h:outputText value="#{contador.descricao}" />
+                            <f:setPropertyActionListener target="#{autenticacaoFaces.data}" value="#{contador.data}" />
+                        </p:commandLink>
+                    </p:column>
+
+                    <p:column headerText="data">
+                        <p:commandLink action="#{autenticacaoFaces.redirecionarParaLogEmail}" ajax="false">
+                            <h:outputText value="#{contador.data}" />
+                            <f:setPropertyActionListener target="#{autenticacaoFaces.data}" value="#{contador.data}" />
+                        </p:commandLink>
+                    </p:column>
+
+                    <p:column headerText="Qtd">
+                        <p:commandLink action="#{autenticacaoFaces.redirecionarParaLogEmail}" ajax="false">
+                            <h:outputText value="#{contador.qtd}" />
+                            <f:setPropertyActionListener target="#{autenticacaoFaces.data}" value="#{contador.data}" />
+                        </p:commandLink>
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+
+        </p:tab>
+
+    </p:tabView>
+
 </ui:composition>

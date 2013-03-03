@@ -1,6 +1,5 @@
 package br.com.cenajur.faces;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
@@ -20,7 +19,7 @@ public class RelatorioCancelamentoPorMotivoFaces {
 
         try {
 
-            Map<String, Object> parametros = new HashMap<String, Object>();
+            Map<String, Object> parametros = CenajurUtil.getHashMapReport();
 
             parametros.put("ano", ano);
             parametros.put("flag_associado", flagAssociado);

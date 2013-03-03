@@ -3,7 +3,6 @@ package br.com.cenajur.faces;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -392,9 +391,8 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		
 		try {
 
-            Map<String, Object> parametros = new HashMap<String, Object>();
+			Map<String, Object> parametros = CenajurUtil.getHashMapReport();
 
-            parametros.put("SUBREPORT_DIR", TSFacesUtil.getServletContext().getRealPath("WEB-INF/relatorios/"));
             parametros.put("P_CLIENTE_ID", getCrudModel().getId());
 
             new JasperUtil().gerarRelatorio("cancelamentoContrato.jasper", "termoCancelamentoContrato", parametros);

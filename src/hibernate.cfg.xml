@@ -44,6 +44,7 @@
         <mapping class="br.com.cenajur.model.Faturamento" />
         <mapping class="br.com.cenajur.model.Graduacao" />
         <mapping class="br.com.cenajur.model.Grupo" />
+        <mapping class="br.com.cenajur.model.LogEnvioEmail" />
         <mapping class="br.com.cenajur.model.Lotacao" />
         <mapping class="br.com.cenajur.model.Mensagem" />
         <mapping class="br.com.cenajur.model.MensagemComprovantePagamento" />

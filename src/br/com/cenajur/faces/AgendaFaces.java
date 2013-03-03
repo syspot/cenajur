@@ -2,7 +2,6 @@ package br.com.cenajur.faces;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -486,7 +485,7 @@ public class AgendaFaces {
 			
 			try {
 				
-				Map<String, Object> parametros = new HashMap<String, Object>();
+				Map<String, Object> parametros = CenajurUtil.getHashMapReport();
 				
 				parametros.put("P_AGENDA_COLABORADOR_ID", idAgendaColaborador);
 				

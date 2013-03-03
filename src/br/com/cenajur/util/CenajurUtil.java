@@ -7,7 +7,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -25,6 +28,7 @@ import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSDateUtil;
 import br.com.topsys.util.TSParseUtil;
 import br.com.topsys.util.TSUtil;
+import br.com.topsys.web.util.TSFacesUtil;
 
 public class CenajurUtil {
 
@@ -406,6 +410,15 @@ public class CenajurUtil {
 		
 		return data.getTime();
 		
+	}
+	
+	public static Map<String, Object> getHashMapReport(){
+		
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("SUBREPORT_DIR", TSFacesUtil.getServletContext().getRealPath("WEB-INF/relatorios/"));
+		parametros.put("REPORT_LOCALE", new Locale("pt","BR"));
+		
+		return parametros;
 	}
 	
 }

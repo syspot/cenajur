@@ -106,7 +106,7 @@ public class ContadorEmail extends TSActiveRecordAb<ContadorEmail>{
 	@SuppressWarnings("unchecked")
 	public List<ContadorModel> pesquisarPorPeriodo(Date dataInicio, Date dataFim, TipoInformacao tipoInformacao){
 		
-		StringBuilder query = new StringBuilder("select ti.descricao, count(ce.*) as qtd from contador_emails ce inner join tipos_informacoes ti on ce.tipo_informacao_id = ti.id where 1 = 1 ");
+		StringBuilder query = new StringBuilder("select ti.descricao, count(ce.*) as qtd, ce.data from contador_emails ce inner join tipos_informacoes ti on ce.tipo_informacao_id = ti.id where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(dataInicio) && !TSUtil.isEmpty(dataFim)){
 			query.append(" and data between ? and ? ");
@@ -116,7 +116,7 @@ public class ContadorEmail extends TSActiveRecordAb<ContadorEmail>{
 			query.append(" and tipo_informacao_id = ? ");
 		}
 		
-		query.append(" group by ti.descricao");
+		query.append(" group by ti.descricao, ce.data");
 		
 		List<Object> params = new ArrayList<Object>();
 		
@@ -129,7 +129,7 @@ public class ContadorEmail extends TSActiveRecordAb<ContadorEmail>{
 			params.add(tipoInformacao.getId());
 		}
 		
-		return super.findBySQL(ContadorModel.class, new String[]{"descricao", "qtd"}, query.toString() , params.toArray());
+		return super.findBySQL(ContadorModel.class, new String[]{"descricao", "qtd", "data"}, query.toString() , params.toArray());
 	}
 	
 }

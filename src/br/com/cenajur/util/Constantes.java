@@ -77,6 +77,7 @@ public class Constantes {
 	public static final Long PERMISSAO_MENSAGENS = 18L;
 	public static final Long PERMISSAO_COLABORADOR = 8L;
 	public static final Long PERMISSAO_OBJETO = 2L;
+	public static final Long PERMISSAO_LOG_ENVIO_EMAIL = 49L;
 	public static final Long PERMISSAO_PROCESSO = 13L;
 	public static final Long PERMISSAO_CLIENTE = 12L;
 	public static final Long PERMISSAO_AUDIENCIA = 16L;

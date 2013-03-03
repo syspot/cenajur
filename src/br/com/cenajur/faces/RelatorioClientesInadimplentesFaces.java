@@ -1,6 +1,5 @@
 package br.com.cenajur.faces;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -19,7 +18,7 @@ public class RelatorioClientesInadimplentesFaces{
 
         try {
 
-            Map<String, Object> parametros = new HashMap<String, Object>();
+            Map<String, Object> parametros = CenajurUtil.getHashMapReport();
 
             new JasperUtil().gerarRelatorioHtml("relatClientesInadimplentes.jasper", "relatorio_clientes_inadimplentes".toString(), parametros);
 

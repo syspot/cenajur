@@ -1,13 +1,11 @@
 package br.com.cenajur.faces;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import br.com.cenajur.relat.JasperUtil;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.topsys.util.TSUtil;
-import br.com.topsys.web.util.TSFacesUtil;
 
 public abstract class RelatorioModeloFaces{
 
@@ -41,9 +39,8 @@ public abstract class RelatorioModeloFaces{
 		
         try {
 
-            Map<String, Object> parametros = new HashMap<String, Object>();
+            Map<String, Object> parametros = CenajurUtil.getHashMapReport();
 
-            parametros.put("SUBREPORT_DIR", TSFacesUtil.getServletContext().getRealPath("WEB-INF/relatorios/"));
             parametros.put("DATA_INICIAL", dataInicial);
             parametros.put("DATA_FINAL", dataFinal);
 
