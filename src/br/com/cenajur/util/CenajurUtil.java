@@ -382,7 +382,7 @@ public class CenajurUtil {
 	}
 	
 	public static String getTopoEmail(){
-		return "<img src='http://www.agepol.org.br/cenajurdigital/img/top1_index.jpg' /><br/><br/><br/><br/>";
+		return "<img src='http://www.cenajur.com.br/cenajurdigital/img/top1_index.jpg' /><br/><br/><br/><br/>";
 	}
 	
 	public static String getRodapeEmail(){

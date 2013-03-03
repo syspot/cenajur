@@ -13,6 +13,7 @@ import br.com.cenajur.model.Cliente;
 import br.com.cenajur.model.ConfiguracoesEmail;
 import br.com.cenajur.model.ConfiguracoesReplaceEmail;
 import br.com.cenajur.model.ContadorEmail;
+import br.com.cenajur.model.LogEnvioEmail;
 import br.com.cenajur.model.Processo;
 import br.com.cenajur.model.ProcessoCliente;
 import br.com.cenajur.model.ProcessoNumero;
@@ -21,40 +22,51 @@ import br.com.cenajur.model.TipoInformacao;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.Constantes;
 import br.com.cenajur.util.EmailUtil;
+import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSDateUtil;
 import br.com.topsys.util.TSParseUtil;
 import br.com.topsys.util.TSUtil;
 
 
 public class EnviarEmailJob {
+	
+	private static String ASSUNTO_GERAL = "Cenajur Informa";
 
 	public void processarEnvioEmail(){
 		
 		EmailUtil emailUtil = new EmailUtil();
 		
-		this.enviarEmailAudiencia(emailUtil);
-		
-		this.enviarEmailAndamento(emailUtil);
-		
-		this.enviarEmailNovosAssociados(emailUtil);
-		
-		this.enviarEmailAniversariantes(emailUtil);
-		
-		this.enviarEmailInadimplentes(emailUtil);
-		
-		this.enviarEmailProcessosNovos(emailUtil);
-		
-		this.enviarEmailVisitas(emailUtil);
-		
-		//this.enviarMensagem2("557188992709", "Teste oficial pelo Java 2");
+		try {
+			
+			this.enviarEmailAudiencia(emailUtil);
+			
+			this.enviarEmailAndamento(emailUtil);
+			
+			this.enviarEmailNovosAssociados(emailUtil);
+			
+			this.enviarEmailAniversariantes(emailUtil);
+			
+			this.enviarEmailInadimplentes(emailUtil);
+			
+			this.enviarEmailProcessosNovos(emailUtil);
+			
+			this.enviarEmailVisitas(emailUtil);
+			
+			//this.enviarMensagem2("557188992709", "Teste oficial pelo Java 2");
+			
+		} catch (TSApplicationException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
-	private void enviarEmailAudiencia(EmailUtil emailUtil){
+	private void enviarEmailAudiencia(EmailUtil emailUtil) throws TSApplicationException{
 		
 		RegrasEmail regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_AUDIENCIA).getById();
 		
 		List<Audiencia> audiencias = new Audiencia().pesquisarAudienciasProximas(regrasEmail.getDiasEnvio());
+		
+		TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_AUDIENCIA_ID);
 		
 		ConfiguracoesReplaceEmail configuracaoReplace;
 		
@@ -102,12 +114,11 @@ public class EnviarEmailJob {
 							
 							String texto = corpoEmail.toString();
 							
-							TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_AUDIENCIA_ID);
-								
 							if(!TSUtil.isEmpty(processoCliente.getCliente().getEmail())){
 								
 								emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
 								new ContadorEmail().gravarPorTipo(tipoInformacao);
+								new LogEnvioEmail(configuracoesEmail.getAssunto(), texto, processoCliente.getCliente(), processoCliente.getCliente().getEmail()).save();
 								
 							}
 							
@@ -130,9 +141,11 @@ public class EnviarEmailJob {
 		
 	}
 	
-	private void enviarEmailAndamento(EmailUtil emailUtil){
+	private void enviarEmailAndamento(EmailUtil emailUtil) throws TSApplicationException{
 		
 		List<AndamentoProcesso> andamentos = new AndamentoProcesso().pesquisarAndamentoRecente();
+		
+		TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_ANDAMENTO_ID);
 		
 		Processo processo = null;
 		
@@ -154,12 +167,11 @@ public class EnviarEmailJob {
 					
 					String texto = corpoEmail.toString();
 					
-					TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_ANDAMENTO_ID);
-					
 					if(!TSUtil.isEmpty(processoCliente.getCliente().getEmail())){
 						
-						emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), "Cenajur Informa", texto, "text/html");
+						emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), ASSUNTO_GERAL, texto, "text/html");
 						new ContadorEmail().gravarPorTipo(tipoInformacao);
+						new LogEnvioEmail(ASSUNTO_GERAL, texto, processoCliente.getCliente(), processoCliente.getCliente().getEmail()).save();
 						
 					}
 					
@@ -178,9 +190,11 @@ public class EnviarEmailJob {
 		
 	}
 	
-	private void enviarEmailNovosAssociados(EmailUtil emailUtil){
+	private void enviarEmailNovosAssociados(EmailUtil emailUtil) throws TSApplicationException{
 		
 		List<Cliente> clientes = new Cliente().pesquisarNovosAssociados();
+		
+		String assunto = "Boas Vindas";
 		
 		for(Cliente cliente : clientes){
 			
@@ -198,8 +212,9 @@ public class EnviarEmailJob {
 				
 				if(!TSUtil.isEmpty(cliente.getEmail())){
 					
-					emailUtil.enviarEmailTratado(cliente.getEmail(), "Boas Vindas", corpoEmail.toString(), "text/html");
+					emailUtil.enviarEmailTratado(cliente.getEmail(), assunto, corpoEmail.toString(), "text/html");
 					new ContadorEmail().gravarPorTipo(tipoInformacao);
+					new LogEnvioEmail(assunto, corpoEmail.toString(), cliente, cliente.getEmail()).save();
 					
 				}
 				
@@ -216,7 +231,7 @@ public class EnviarEmailJob {
 				
 	}
 	
-	private void enviarEmailAniversariantes(EmailUtil emailUtil){
+	private void enviarEmailAniversariantes(EmailUtil emailUtil) throws TSApplicationException{
 		
 		List<Cliente> clientes = new Cliente().pesquisarAniversariantes();
 		
@@ -236,8 +251,9 @@ public class EnviarEmailJob {
 				
 				if(!TSUtil.isEmpty(cliente.getEmail())){
 					
-					emailUtil.enviarEmailTratado(cliente.getEmail(), "Cenajur Informa", corpoEmail.toString(), "text/html");
+					emailUtil.enviarEmailTratado(cliente.getEmail(), ASSUNTO_GERAL, corpoEmail.toString(), "text/html");
 					new ContadorEmail().gravarPorTipo(tipoInformacao);
+					new LogEnvioEmail(ASSUNTO_GERAL, corpoEmail.toString(), cliente, cliente.getEmail()).save();
 					
 				}
 				
@@ -254,7 +270,7 @@ public class EnviarEmailJob {
 				
 	}
 	
-	private void enviarEmailInadimplentes(EmailUtil emailUtil){
+	private void enviarEmailInadimplentes(EmailUtil emailUtil) throws TSApplicationException{
 		
 		Calendar data = Calendar.getInstance();
 		
@@ -278,8 +294,9 @@ public class EnviarEmailJob {
 					
 					if(!TSUtil.isEmpty(cliente.getEmail())){
 						
-						emailUtil.enviarEmailTratado(cliente.getEmail(), "Cenajur Informa", corpoEmail.toString(), "text/html");
+						emailUtil.enviarEmailTratado(cliente.getEmail(), ASSUNTO_GERAL, corpoEmail.toString(), "text/html");
 						new ContadorEmail().gravarPorTipo(tipoInformacao);
+						new LogEnvioEmail(ASSUNTO_GERAL, corpoEmail.toString(), cliente, cliente.getEmail()).save();
 						
 					}
 					
@@ -298,7 +315,7 @@ public class EnviarEmailJob {
 				
 	}
 	
-	private void enviarEmailProcessosNovos(EmailUtil emailUtil){
+	private void enviarEmailProcessosNovos(EmailUtil emailUtil) throws TSApplicationException{
 		
 		List<ProcessoNumero> processosNumeros = new ProcessoNumero().pesquisarProcessosNovos();
 		
@@ -320,8 +337,9 @@ public class EnviarEmailJob {
 					
 					if(!TSUtil.isEmpty(processoCliente.getCliente().getEmail())){
 						
-						emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), "Cenajur Informa", corpoEmail.toString(), "text/html");
+						emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), ASSUNTO_GERAL, corpoEmail.toString(), "text/html");
 						new ContadorEmail().gravarPorTipo(tipoInformacao);
+						new LogEnvioEmail(ASSUNTO_GERAL, corpoEmail.toString(), processoCliente.getCliente(), processoCliente.getCliente().getEmail()).save();
 						
 					}
 					
@@ -340,9 +358,11 @@ public class EnviarEmailJob {
 				
 	}
 	
-	private void enviarEmailVisitas(EmailUtil emailUtil){
+	private void enviarEmailVisitas(EmailUtil emailUtil) throws TSApplicationException{
 		
 		ConfiguracoesReplaceEmail configuracaoReplace;
+		
+		TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_VISITAS_ID);
 		
 		RegrasEmail regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_VISITA_COM_CLIENTE).getById();
 		
@@ -370,12 +390,11 @@ public class EnviarEmailJob {
 						
 						textoLimpo = textoLimpo.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(visita.getDataInicial(), TSDateUtil.DD_MM_YYYY_HH_MM));
 						
-						TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_VISITAS_ID);
-						
 						if(!TSUtil.isEmpty(visita.getCliente().getEmail())){
 							
 							emailUtil.enviarEmailTratado(visita.getCliente().getEmail(), configuracoesEmail.getAssunto(), textoLimpo, "text/html");
 							new ContadorEmail().gravarPorTipo(tipoInformacao);
+							new LogEnvioEmail(configuracoesEmail.getAssunto(), textoLimpo, visita.getCliente(), visita.getCliente().getEmail()).save();
 							
 						}
 						
@@ -396,7 +415,7 @@ public class EnviarEmailJob {
 		
 	}
 	
-	private void enviarMensagem(String tel, String msg){
+	public void enviarMensagem(String tel, String msg){
 		
 		tel = tel.replaceAll("\\D", "");
 		

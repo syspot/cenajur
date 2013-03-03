@@ -41,7 +41,9 @@
 
                     <p:column headerText="data">
                         <p:commandLink action="#{autenticacaoFaces.redirecionarParaLogEmail}" ajax="false">
-                            <h:outputText value="#{contador.data}" />
+                            <h:outputText value="#{contador.data}" >
+                                <f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" />
+                            </h:outputText>
                             <f:setPropertyActionListener target="#{autenticacaoFaces.data}" value="#{contador.data}" />
                         </p:commandLink>
                     </p:column>

@@ -28,6 +28,8 @@ import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.faces.TSMainFaces;
 import br.com.topsys.web.util.TSFacesUtil;
 
+import com.ibm.icu.util.Calendar;
+
 @SessionScoped
 @ManagedBean(name = "autenticacaoFaces")
 public class AutenticacaoFaces extends TSMainFaces{
@@ -168,9 +170,14 @@ public class AutenticacaoFaces extends TSMainFaces{
     	
     	this.permissaoSelecionada = new Permissao(Constantes.PERMISSAO_LOG_ENVIO_EMAIL).getById();
     	
+    	Calendar c = Calendar.getInstance();
+    	c.setTime(data);
+    	
     	if(this.isPossuiPermissao()){
     		redirecionar();
     	}
+    	
+    	this.data = c.getTime();
     	
     	return "sucesso";
     }
@@ -236,9 +243,7 @@ public class AutenticacaoFaces extends TSMainFaces{
         this.permissaoGrupoSelecionada.setGrupo(this.colaborador.getGrupo());
         this.permissaoGrupoSelecionada.setPermissao(this.permissaoSelecionada);
         
-        int posicao = this.colaborador.getGrupo().getPermissoesGrupos().indexOf(permissaoGrupoSelecionada);
-        
-        this.permissaoGrupoSelecionada = this.colaborador.getGrupo().getPermissoesGrupos().get(posicao);
+        this.permissaoGrupoSelecionada = this.permissaoGrupoSelecionada.obterPorGrupoPermissao();
     }
 
     public String logout() {

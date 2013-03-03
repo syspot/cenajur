@@ -11,7 +11,7 @@
         
             <p:outputLabel for="data" value="Data" />
             <p:inputText id="data" value="#{mbeanModel.data}" style="width: 40%" maxlength="300" >
-                <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
+                <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" />
             </p:inputText>
     
             <p:outputLabel for="assunto" value="Assunto" />
@@ -26,6 +26,12 @@
             <p:outputLabel for="emailCliente" value="Email do Cliente" />
             <p:inputText id="emailCliente" value="#{mbeanModel.emailCliente}" style="width: 40%" maxlength="300" />
         
+            <p:fieldset legend="Corpo do email formatado" style="margin-top: 20px">
+            
+                <h:outputText escape="false" value="#{mbeanModel.texto}" />
+            
+            </p:fieldset>
+        
         </h:panelGrid>
         
     </ui:define>
@@ -33,7 +39,7 @@
     <ui:define name="pesquisaCampos">
 
         <p:outputLabel for="dataPesquisa" value="Data" />
-        <p:calendar id="dataPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.data}" timeZone="America/Recife" style="width: 40%"  />
+        <p:calendar id="dataPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.data}" style="width: 40%"  />
 
     </ui:define>
 

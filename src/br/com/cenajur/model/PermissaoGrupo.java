@@ -41,6 +41,18 @@ public class PermissaoGrupo extends TSActiveRecordAb<PermissaoGrupo> {
 	@Column(name = "flag_excluir")
 	private Boolean flagExcluir;
 
+	public PermissaoGrupo() {
+		super();
+	}
+
+	public PermissaoGrupo(Long id, Boolean flagInserir, Boolean flagAlterar, Boolean flagExcluir) {
+		super();
+		this.id = id;
+		this.flagInserir = flagInserir;
+		this.flagAlterar = flagAlterar;
+		this.flagExcluir = flagExcluir;
+	}
+
 	public Long getId() {
 		return TSUtil.tratarLong(id);
 	}
@@ -118,6 +130,10 @@ public class PermissaoGrupo extends TSActiveRecordAb<PermissaoGrupo> {
 		} else if (!permissao.equals(other.permissao))
 			return false;
 		return true;
+	}
+	
+	public PermissaoGrupo obterPorGrupoPermissao(){
+		return super.get(" select new PermissaoGrupo(pg.id, pg.flagInserir, pg.flagAlterar, pg.flagExcluir) from PermissaoGrupo pg where pg.grupo.id = ? and pg.permissao.id = ? ", getGrupo().getId(), getPermissao().getId());
 	}
 
 }

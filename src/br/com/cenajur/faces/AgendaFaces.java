@@ -29,10 +29,13 @@ import br.com.cenajur.model.Cliente;
 import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.ConfiguracoesEmail;
 import br.com.cenajur.model.ConfiguracoesReplaceEmail;
+import br.com.cenajur.model.ContadorEmail;
+import br.com.cenajur.model.LogEnvioEmail;
 import br.com.cenajur.model.ProcessoNumero;
 import br.com.cenajur.model.RegrasEmail;
 import br.com.cenajur.model.SituacaoAudiencia;
 import br.com.cenajur.model.TipoAgenda;
+import br.com.cenajur.model.TipoInformacao;
 import br.com.cenajur.model.TipoVisita;
 import br.com.cenajur.model.Vara;
 import br.com.cenajur.relat.JasperUtil;
@@ -287,6 +290,8 @@ public class AgendaFaces {
 		
 		if(this.agenda.isTipoVisitaDoCliente()){
 			
+			TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_VISITAS_ID);
+			
 			RegrasEmail regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_VISITA_COM_CLIENTE).getById();
 			
 			EmailUtil emailUtil = new EmailUtil();
@@ -320,6 +325,9 @@ public class AgendaFaces {
 						texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(this.agenda.getDataInicial(), TSDateUtil.DD_MM_YYYY_HH_MM));
 						
 						emailUtil.enviarEmailTratado(this.agenda.getCliente().getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
+						new ContadorEmail().gravarPorTipo(tipoInformacao);
+						new LogEnvioEmail(configuracoesEmail.getAssunto(), texto, this.agenda.getCliente(), this.agenda.getCliente().getEmail()).save();
+						
 						
 					}
 						

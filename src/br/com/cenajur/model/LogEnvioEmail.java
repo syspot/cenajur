@@ -15,6 +15,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
+import br.com.topsys.util.TSDateUtil;
+import br.com.topsys.util.TSParseUtil;
 import br.com.topsys.util.TSUtil;
 
 @Entity
@@ -44,6 +46,19 @@ public class LogEnvioEmail extends TSActiveRecordAb<LogEnvioEmail>{
 	@Column(name = "email_cliente")
 	private String emailCliente;
 	
+	public LogEnvioEmail() {
+		super();
+	}
+
+	public LogEnvioEmail(String assunto, String texto, Cliente cliente, String emailCliente) {
+		super();
+		this.data = new Date();
+		this.assunto = assunto;
+		this.texto = texto;
+		this.cliente = cliente;
+		this.emailCliente = emailCliente;
+	}
+
 	public Long getId() {
 		return TSUtil.tratarLong(id);
 	}
@@ -131,7 +146,7 @@ public class LogEnvioEmail extends TSActiveRecordAb<LogEnvioEmail>{
 		List<Object> params = new ArrayList<Object>();
 		
 		if(!TSUtil.isEmpty(data)){
-			params.add(data);
+			params.add(TSParseUtil.dateToString(data, TSDateUtil.DD_MM_YYYY));
 		}
 		
 		return super.find(query.toString(), "data", params.toArray());

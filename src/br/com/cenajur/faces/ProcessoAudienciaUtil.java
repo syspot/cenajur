@@ -16,13 +16,16 @@ import br.com.cenajur.model.CategoriaDocumento;
 import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.ConfiguracoesEmail;
 import br.com.cenajur.model.ConfiguracoesReplaceEmail;
+import br.com.cenajur.model.ContadorEmail;
 import br.com.cenajur.model.DocumentoAudiencia;
+import br.com.cenajur.model.LogEnvioEmail;
 import br.com.cenajur.model.Processo;
 import br.com.cenajur.model.ProcessoCliente;
 import br.com.cenajur.model.ProcessoNumero;
 import br.com.cenajur.model.RegrasEmail;
 import br.com.cenajur.model.SituacaoAudiencia;
 import br.com.cenajur.model.TipoCategoria;
+import br.com.cenajur.model.TipoInformacao;
 import br.com.cenajur.model.Vara;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
@@ -171,6 +174,8 @@ public class ProcessoAudienciaUtil {
 		
 		RegrasEmail regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_AUDIENCIA).getById();
 		
+		TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_AUDIENCIA_ID);
+		
 		EmailUtil emailUtil = new EmailUtil();
 		
 		Processo processo = getCrudModel().getById();
@@ -214,6 +219,12 @@ public class ProcessoAudienciaUtil {
 						texto = texto.replace(configuracaoReplace.getCodigo(), this.audiencia.getVara().getDescricao());
 						
 						emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
+						new ContadorEmail().gravarPorTipo(tipoInformacao);
+						try {
+							new LogEnvioEmail(configuracoesEmail.getAssunto(), texto, processoCliente.getCliente(), processoCliente.getCliente().getEmail()).save();
+						} catch (TSApplicationException e) {
+							e.printStackTrace();
+						}
 						
 					}
 					

@@ -22,7 +22,7 @@ public class LogEnvioEmailFaces extends CrudFaces<LogEnvioEmail> {
 		
 		if(!TSUtil.isEmpty(autenticacaoFaces) && !TSUtil.isEmpty(autenticacaoFaces.getData())){
 			this.getCrudPesquisaModel().setData(autenticacaoFaces.getData());
-			this.findEvent();
+			setGrid(getCrudPesquisaModel().findByModel());
 		}
 		
 	}
