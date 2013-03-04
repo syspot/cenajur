@@ -167,9 +167,14 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	private List<Agenda> visitas;
 	
 	public Cliente() {
-
 	}
 	
+	public Cliente(Long id, String nome) {
+		super();
+		this.id = id;
+		this.nome = nome;
+	}
+
 	public Cliente(Long id) {
 		this.id = id;
 	}

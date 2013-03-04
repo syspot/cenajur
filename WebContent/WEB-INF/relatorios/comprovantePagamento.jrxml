@@ -5,6 +5,7 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="P_FATURAMENTO_ID" class="java.lang.Long"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
+	<parameter name="DIR_IMAGE" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT C.MATRICULA, C.NOME, F.IDENTIFICACAO, F.DATA_BAIXA, F.VALOR, TP.DESCRICAO AS TIPO_PAGAMENTO,
        CAST(F.MES AS TEXT) || '/' || CAST(F.ANO AS TEXT) AS REFERENCIA,
@@ -172,7 +173,7 @@ WHERE F.ID = $P{P_FATURAMENTO_ID}]]>
 			</textField>
 			<image hAlign="Center" vAlign="Middle" isUsingCache="true">
 				<reportElement uuid="82a44e5c-0fae-423b-90f4-0c201b30d368" x="12" y="342" width="147" height="64"/>
-				<imageExpression><![CDATA[$P{SUBREPORT_DIR} + "/logo_min.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_IMAGE} + "/logo_min.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement uuid="cfca1ab6-4bd4-4270-b0b1-01b3e0677a9b" x="391" y="437" width="18" height="20"/>
@@ -209,7 +210,7 @@ WHERE F.ID = $P{P_FATURAMENTO_ID}]]>
 			</textField>
 			<image hAlign="Center" vAlign="Middle" isUsingCache="true">
 				<reportElement uuid="82a44e5c-0fae-423b-90f4-0c201b30d368" x="12" y="11" width="147" height="62"/>
-				<imageExpression><![CDATA[$P{SUBREPORT_DIR} + "/logo_min.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_IMAGE} + "/logo_min.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement uuid="af6f0e0a-6188-4f4e-9cb4-1b5cb2cc8ec3" x="20" y="107" width="35" height="20"/>

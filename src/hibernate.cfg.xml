@@ -13,7 +13,7 @@
 
         <property name="hibernate.connection.datasource">java:/comp/env/jdbc/CenajurDS</property>
 
-        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.show_sql">false</property>
         <property name="hibernate.temp.use_jdbc_metadata_defaults">true</property>
 
         <mapping class="br.com.cenajur.model.Agenda" />

@@ -1,23 +1,27 @@
 package br.com.cenajur.util;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConnectionFactory {
+import org.hibernate.engine.spi.SessionFactoryImplementor;
 
-	private static final String URL = "jdbc:postgresql://localhost/cenajur";
-    private static final String LOGIN_BANCO_CENAJUR = "postgres";
-    private static final String SENHA_BANCO_CENAJUR = "15rt01";
+import br.com.topsys.exception.TSSystemException;
+import br.com.topsys.util.TSHibernateUtil;
+// DEUS PAI...deleta isso
+
+public final class ConnectionFactory {
+
 
     private ConnectionFactory() {
     }
 
-    public static Connection getConnection() throws ClassNotFoundException, SQLException {
-        
-        Class.forName("org.postgresql.Driver");
-        
-        return DriverManager.getConnection(URL, LOGIN_BANCO_CENAJUR, SENHA_BANCO_CENAJUR);
+    public static Connection getConnection()  {
+    	try {
+			return ((SessionFactoryImplementor) TSHibernateUtil.getSessionFactory()).getConnectionProvider().getConnection();
+		} catch (SQLException e) {
+			throw new TSSystemException(e);
+		} 
+       
     }
     
     public static void closeConnection(Connection con) {

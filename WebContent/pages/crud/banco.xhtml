@@ -10,9 +10,6 @@
         <p:outputLabel for="descricao" value="Descrição" />
         <p:inputText id="descricao" value="#{mbeanModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" style="width: 40%" maxlength="50" />
         
-        <p:outputLabel for="lote" value="Lote" />
-        <p:inputText id="lote" value="#{mbeanModel.lote}" style="width: 20%" maxlength="5" />
-
     </ui:define>
 
     <ui:define name="pesquisaCampos">
@@ -27,13 +24,6 @@
         <p:column headerText="Descrição">
             <p:commandLink action="#{mbean.detailEvent}" ajax="false">
                 <h:outputText value="#{linha.descricao}" />
-                <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
-            </p:commandLink>
-        </p:column>
-
-        <p:column headerText="Lote">
-            <p:commandLink action="#{mbean.detailEvent}" ajax="false">
-                <h:outputText value="#{linha.lote}" />
                 <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
             </p:commandLink>
         </p:column>

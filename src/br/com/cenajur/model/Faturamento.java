@@ -16,35 +16,17 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
+import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSUtil;
 
 @Entity
 @Table(name = "faturamento")
 public class Faturamento extends TSActiveRecordAb<Faturamento>{
 
-
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2314602226026074016L;
-	
-	public Faturamento(){
-	}
-	
-	public Faturamento(Long id, Double valor, Integer ano, Integer mes, Boolean flagPago, Boolean flagCancelado, String clienteNome, String planoDescricao){
-		this.cliente = new Cliente();
-		this.cliente.setNome(clienteNome);
-		this.plano = new Plano();
-		this.plano.setDescricao(planoDescricao);
-		this.flagPago = flagPago;
-		this.flagCancelado = flagCancelado;
-		this.ano = ano;
-		this.mes = mes;
-		this.id = id;
-		this.valor = valor;
-	}
-	
-	
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="faturamento_id")
@@ -83,12 +65,29 @@ public class Faturamento extends TSActiveRecordAb<Faturamento>{
 	
 	private Integer ano;
 	
+	private Long lote;
+	
 	@Transient
 	private Boolean flagSelecionado;
 	
 	@ManyToOne
 	@JoinColumn(name = "colaborador_geracao_id")
 	private Colaborador colaboradorGeracao;
+	
+	public Faturamento(){
+	}
+	
+	public Faturamento(Long id, Double valor, Integer ano, Integer mes, Boolean flagPago, Boolean flagCancelado, Long clienteId, String clienteNome, Long planoId, String planoDescricao, Long lote){
+		this.cliente = new Cliente(clienteId, clienteNome);
+		this.plano = new Plano(planoId, planoDescricao);
+		this.flagPago = flagPago;
+		this.flagCancelado = flagCancelado;
+		this.ano = ano;
+		this.mes = mes;
+		this.id = id;
+		this.valor = valor;
+		this.lote = lote;
+	}
 	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -210,6 +209,14 @@ public class Faturamento extends TSActiveRecordAb<Faturamento>{
 		this.identificacao = identificacao;
 	}
 
+	public Long getLote() {
+		return TSUtil.tratarLong(lote);
+	}
+
+	public void setLote(Long lote) {
+		this.lote = lote;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -238,7 +245,7 @@ public class Faturamento extends TSActiveRecordAb<Faturamento>{
 	@Override
 	public List<Faturamento> findByModel(String... fieldsOrderBy) {
 		
-		StringBuilder query = new StringBuilder("select new Faturamento(f.id,f.valor,f.ano,f.mes,f.flagPago,f.flagCancelado,c.nome,p.descricao) from Faturamento f join f.cliente c join f.plano p where 1 = 1 ");
+		StringBuilder query = new StringBuilder("select new Faturamento(f.id, f.valor, f.ano, f.mes, f.flagPago, f.flagCancelado, c.id, c.nome, p.id, p.descricao, f.lote) from Faturamento f join f.cliente c join f.plano p where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(getCliente()) && !TSUtil.isEmpty(getCliente().getId())){
 			query.append(" and c.id = ?");
@@ -294,8 +301,6 @@ public class Faturamento extends TSActiveRecordAb<Faturamento>{
 		
 		return super.find(query.toString(), null, params.toArray());
 		
-		
-		
 	}
 	
 	public Faturamento obterFaturamentoAtivo(){
@@ -320,6 +325,10 @@ public class Faturamento extends TSActiveRecordAb<Faturamento>{
 		}catch(Exception e){
 			// a function � executada, mas sobe exce��o no retorno que deve ser abafada.
 		}
+	}
+	
+	public void pagar() throws TSApplicationException {
+		super.update(" update Faturamento set identificacao = ?, flagPago = ?, dataBaixa = ?, colaboradorBaixa.id = ?, lote = ?  where id = ? ", getIdentificacao(), getFlagPago(), getDataBaixa(), getColaboradorBaixa().getId(), getLote(), getId());
 	}
 	
 }

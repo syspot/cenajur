@@ -21,6 +21,7 @@ import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSUtil;
+import br.com.topsys.web.util.TSFacesUtil;
 
 @ViewScoped
 @ManagedBean(name = "faturamentoFaces")
@@ -160,7 +161,7 @@ public class FaturamentoFaces extends CrudFaces<Faturamento> {
 				faturamento.setFlagPago(Boolean.TRUE);
 				faturamento.setDataBaixa(new Date());
 				faturamento.setColaboradorBaixa(this.colaboradorConectado);
-				faturamento.update();
+				faturamento.pagar();
 				
 			}
 			
@@ -196,6 +197,7 @@ public class FaturamentoFaces extends CrudFaces<Faturamento> {
             Map<String, Object> parametros = CenajurUtil.getHashMapReport();
 
             parametros.put("P_FATURAMENTO_ID", getCrudModel().getId());
+            parametros.put("DIR_IMAGE", TSFacesUtil.getServletContext().getRealPath("resources/images/"));
 
             new JasperUtil().gerarRelatorio("comprovantePagamento.jasper", "comprovante", parametros);
 

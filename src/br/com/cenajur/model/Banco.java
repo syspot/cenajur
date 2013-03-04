@@ -31,8 +31,6 @@ public class Banco extends TSActiveRecordAb<Banco>{
 	
 	private String descricao;
 	
-	private Integer lote;
-
 	public Long getId() {
 		return TSUtil.tratarLong(id);
 	}
@@ -47,14 +45,6 @@ public class Banco extends TSActiveRecordAb<Banco>{
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
-	}
-
-	public Integer getLote() {
-		return TSUtil.tratarInteger(lote);
-	}
-
-	public void setLote(Integer lote) {
-		this.lote = lote;
 	}
 
 	@Override
