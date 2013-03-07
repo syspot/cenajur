@@ -170,7 +170,7 @@ public class ProcessoAudienciaUtil {
 		return erro;
 	}
 	
-	private void enviarEmail2(){
+	private void enviarEmail() throws TSApplicationException{
 		
 		RegrasEmail regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_AUDIENCIA).getById();
 		
@@ -216,15 +216,12 @@ public class ProcessoAudienciaUtil {
 						
 						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_LOCAL).getById();
 						
-						texto = texto.replace(configuracaoReplace.getCodigo(), this.audiencia.getVara().getDescricao());
+						texto = texto.replace(configuracaoReplace.getCodigo(), this.audiencia.getVara().getById().getDescricao());
 						
 						emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
 						new ContadorEmail().gravarPorTipo(tipoInformacao);
-						try {
-							new LogEnvioEmail(configuracoesEmail.getAssunto(), texto, processoCliente.getCliente(), processoCliente.getCliente().getEmail()).save();
-						} catch (TSApplicationException e) {
-							e.printStackTrace();
-						}
+						
+						new LogEnvioEmail(configuracoesEmail.getAssunto(), texto, processoCliente.getCliente(), processoCliente.getCliente().getEmail()).save();
 						
 					}
 					
@@ -248,7 +245,7 @@ public class ProcessoAudienciaUtil {
 		this.audiencia.setDataCadastro(new Date());
 		this.audiencia.save();
 		
-		//this.enviarEmail();
+		this.enviarEmail();
 		
 		CenajurUtil.addInfoMessage("Audiência cadastrada com sucesso");
 		
@@ -276,7 +273,7 @@ public class ProcessoAudienciaUtil {
 		this.audiencia.setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 		this.audiencia.update();
 		
-		//this.enviarEmail();
+		this.enviarEmail();
 		
 		this.initAudiencia();
 		

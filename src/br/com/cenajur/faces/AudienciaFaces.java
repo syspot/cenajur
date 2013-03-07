@@ -152,7 +152,7 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 						
 						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_LOCAL).getById();
 						
-						texto = texto.replace(configuracaoReplace.getCodigo(), getCrudModel().getVara().getDescricao());
+						texto = texto.replace(configuracaoReplace.getCodigo(), getCrudModel().getVara().getById().getDescricao());
 						
 						emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
 						new ContadorEmail().gravarPorTipo(tipoInformacao);

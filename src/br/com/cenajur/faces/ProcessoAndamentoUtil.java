@@ -151,7 +151,7 @@ public class ProcessoAndamentoUtil {
 		return erro;
 	}
 	
-	private void enviarEmail2(){
+	private void enviarEmail() throws TSApplicationException{
 		
 		RegrasEmail regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_ANDAMENTO_PROCESSO).getById();
 		
@@ -193,11 +193,8 @@ public class ProcessoAndamentoUtil {
 						
 						emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
 						new ContadorEmail().gravarPorTipo(tipoInformacao);
-						try {
-							new LogEnvioEmail(configuracoesEmail.getAssunto(), texto, processoCliente.getCliente(), processoCliente.getCliente().getEmail()).save();
-						} catch (TSApplicationException e) {
-							e.printStackTrace();
-						}
+						
+						new LogEnvioEmail(configuracoesEmail.getAssunto(), texto, processoCliente.getCliente(), processoCliente.getCliente().getEmail()).save();
 						
 					}
 					
@@ -221,7 +218,7 @@ public class ProcessoAndamentoUtil {
 		this.andamentoProcesso.setDataCadastro(new Date());
 		this.andamentoProcesso.save();
 		
-		//this.enviarEmail();
+		this.enviarEmail();
 		
 		CenajurUtil.addInfoMessage("Andamento cadastrado com sucesso");
 
@@ -249,7 +246,7 @@ public class ProcessoAndamentoUtil {
 		this.andamentoProcesso.setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 		this.andamentoProcesso.update();
 		
-		//this.enviarEmail();
+		this.enviarEmail();
 		
 		this.processoNumeroBackup = this.processoNumeroPrincipal;
 		
