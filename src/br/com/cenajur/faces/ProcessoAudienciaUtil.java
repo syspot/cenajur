@@ -170,7 +170,7 @@ public class ProcessoAudienciaUtil {
 		return erro;
 	}
 	
-	private void enviarEmail(){
+	private void enviarEmail2(){
 		
 		RegrasEmail regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_AUDIENCIA).getById();
 		
@@ -248,7 +248,7 @@ public class ProcessoAudienciaUtil {
 		this.audiencia.setDataCadastro(new Date());
 		this.audiencia.save();
 		
-		this.enviarEmail();
+		//this.enviarEmail();
 		
 		CenajurUtil.addInfoMessage("Audiência cadastrada com sucesso");
 		
@@ -276,7 +276,7 @@ public class ProcessoAudienciaUtil {
 		this.audiencia.setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 		this.audiencia.update();
 		
-		this.enviarEmail();
+		//this.enviarEmail();
 		
 		this.initAudiencia();
 		

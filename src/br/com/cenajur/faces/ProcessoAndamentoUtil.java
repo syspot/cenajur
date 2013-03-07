@@ -151,7 +151,7 @@ public class ProcessoAndamentoUtil {
 		return erro;
 	}
 	
-	private void enviarEmail(){
+	private void enviarEmail2(){
 		
 		RegrasEmail regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_ANDAMENTO_PROCESSO).getById();
 		
@@ -221,7 +221,7 @@ public class ProcessoAndamentoUtil {
 		this.andamentoProcesso.setDataCadastro(new Date());
 		this.andamentoProcesso.save();
 		
-		this.enviarEmail();
+		//this.enviarEmail();
 		
 		CenajurUtil.addInfoMessage("Andamento cadastrado com sucesso");
 
@@ -249,7 +249,7 @@ public class ProcessoAndamentoUtil {
 		this.andamentoProcesso.setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 		this.andamentoProcesso.update();
 		
-		this.enviarEmail();
+		//this.enviarEmail();
 		
 		this.processoNumeroBackup = this.processoNumeroPrincipal;
 		

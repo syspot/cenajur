@@ -77,6 +77,8 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	
 	private ProcessoAux processoAux;
 	
+	private String senha;
+	
 	@PostConstruct
 	protected void init() {
 		this.clearFields();
@@ -121,6 +123,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		setDocumentoCliente(new DocumentoCliente());
 		setFlagAlterar(Boolean.FALSE);
 		this.processoAux = new ProcessoAux();
+		this.senha = null;
 		return null;
 	}
 
@@ -195,20 +198,9 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 			getCrudModel().setDataCancelamento(null);
 			getCrudModel().setMotivoCancelamento(null);
 		}
-	}
-	
-	@Override
-	protected void preUpdate() {
-
-		if(TSUtil.isEmpty(getCrudModel().getSenha())){
-			
-			Cliente c = getCrudModel().getById();
-			getCrudModel().setSenha(c.getSenha());
-			
-		} else{
-			
-			getCrudModel().setSenha(Utilitarios.gerarHash(getCrudModel().getSenha()));
-			
+		
+		if(!TSUtil.isEmpty(this.senha)){
+			getCrudModel().setSenha(Utilitarios.gerarHash(this.senha));
 		}
 	}
 	
@@ -558,6 +550,14 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 
 	public void setProcessoAux(ProcessoAux processoAux) {
 		this.processoAux = processoAux;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 	
 }

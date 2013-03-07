@@ -43,6 +43,9 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 	private List<SelectItem> categoriasDocumentos;
 	private DocumentoCliente documentoSelecionado;
 	
+	private String senha;
+	private String senha2;
+	
 	@PostConstruct
 	protected void init() {
 		
@@ -71,8 +74,6 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 		setCrudModel(new Colaborador());
 		getCrudModel().setFlagAtivo(Boolean.TRUE);
 		getCrudModel().setLogin(null);
-		getCrudModel().setSenha(null);
-		getCrudModel().setSenha2(null);
 		getCrudModel().setCidade(new Cidade());
 		getCrudModel().getCidade().setEstado(new Estado());
 		getCrudModel().setTipoColaborador(new TipoColaborador());
@@ -82,6 +83,8 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 		getCategoriaDocumento().setTipoCategoria(new TipoCategoria(Constantes.TIPO_CATEGORIA_COLABORADOR));
 		setDocumentoColaborador(new DocumentoColaborador());
 		setFlagAlterar(Boolean.FALSE);
+		this.senha = null;
+		this.senha2 = null;
 		return null;
 	}
 	
@@ -99,6 +102,10 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 	protected void prePersist() {
 		getCrudModel().setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 		getCrudModel().setDataAtualizacao(new Date());
+		
+		if(!TSUtil.isEmpty(this.senha)){
+			getCrudModel().setSenha(Utilitarios.gerarHash(this.senha));
+		}
 	}
 	
 	@Override
@@ -115,28 +122,7 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 	}
 	
 	@Override
-	protected void preInsert() {
-		getCrudModel().setSenha(Utilitarios.gerarHash(getCrudModel().getSenha()));
-	}
-	
-	@Override
-	protected void preUpdate() {
-		
-		if(TSUtil.isEmpty(getCrudModel().getSenha())){
-			
-			Colaborador c = getCrudModel().getById();
-			getCrudModel().setSenha(c.getSenha());
-			
-		} else{
-			
-			getCrudModel().setSenha(Utilitarios.gerarHash(getCrudModel().getSenha()));
-			
-		}
-	}
-	
-	@Override
 	protected void posDetail() {
-		getCrudModel().setSenha(null);
 		this.atualizarComboCidades();
 	}
 	
@@ -264,6 +250,22 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 
 	public void setDocumentoSelecionado(DocumentoCliente documentoSelecionado) {
 		this.documentoSelecionado = documentoSelecionado;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public String getSenha2() {
+		return senha2;
+	}
+
+	public void setSenha2(String senha2) {
+		this.senha2 = senha2;
 	}
 	
 }

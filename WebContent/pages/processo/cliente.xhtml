@@ -6,6 +6,7 @@
     <ui:param name="mbeanPesquisaModel" value="${clienteFaces.crudPesquisaModel}" />
     <ui:param name="informacoesCadastro" value="${true}" />
     <ui:param name="gridComCss" value="${true}" />
+    <ui:param name="mostrarBtnUpdate" value="${false}" />
 
     <ui:define name="cadastro">
 
@@ -51,10 +52,11 @@
                     <h:panelGrid columns="2" style="width:40%">
 
                         <p:outputLabel for="dataAdesao" value="Data de Adesão" style="color:red" />
-                        <p:outputLabel for="senhaInternet" value="Senha da internet" />
+                        <h:outputText value="Senha da internet" />
 
                         <p:calendar navigator="true" id="dataAdesao" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" required="true" requiredMessage="Data de Adesão: Campo obrigatório" value="#{mbeanModel.dataAdesao}" styleClass="coluna90" style="color:red" timeZone="America/Recife" />
-                        <p:password id="senhaInternet" value="#{mbeanModel.senha}" maxlength="300" redisplay="true" />
+                        <p:password value="#{mbean.senha}" maxlength="15" required="true" requiredMessage="Senha da internet: Campo obrigatório" redisplay="true" rendered="#{mbeanModel.id == null}"/>
+                        <p:password value="#{mbean.senha}" maxlength="15" redisplay="true" rendered="#{mbeanModel.id != null}"/>
 
                     </h:panelGrid>
 
@@ -285,6 +287,8 @@
             </h:panelGrid>
 
         </p:fieldset>
+        
+        <p:commandButton id="btnAlterar3" value="Alterar" icon="salvar" action="#{mbean.updateEvent}" update="@form, :tabview:opDadosExtras" style="margin-left: 5px; margin-top: 10px;" rendered="#{mbeanModel.id != null}" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}"/>        
 
     </ui:define>
 
@@ -380,11 +384,11 @@
 
     <ui:define name="fimCadastro">
 
-        <p:outputPanel layout="block" style="width: 97.5%;">
+        <p:outputPanel id="opDadosExtras" layout="block" style="width: 97.5%;">
 
             <h:panelGrid columns="1" style="width: 98%">
                 
-                <p:fieldset legend="Processos" toggleable="true" style="width: 100%">
+                <p:fieldset legend="Processos" toggleable="true" style="width: 100%" rendered="#{mbeanModel.id != null and not empty mbean.processoAux.processos}">
 
                     <p:outputPanel layout="inline">
                     
@@ -394,7 +398,7 @@
 
                 </p:fieldset>
                 
-                <p:fieldset legend="Visitas" toggleable="true" style="width: 100%">
+                <p:fieldset legend="Visitas" toggleable="true" style="width: 100%" rendered="#{mbeanModel.id != null and not empty mbeanModel.visitas}">
                 
                     <p:outputPanel layout="inline">
 

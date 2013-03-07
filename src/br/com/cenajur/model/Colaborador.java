@@ -290,6 +290,14 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 		this.senha = senha;
 	}
 
+	public String getSenha2() {
+		return senha2;
+	}
+
+	public void setSenha2(String senha2) {
+		this.senha2 = senha2;
+	}
+
 	public TipoColaborador getTipoColaborador() {
 		return tipoColaborador;
 	}
@@ -304,14 +312,6 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 
 	public void setGrupo(Grupo grupo) {
 		this.grupo = grupo;
-	}
-
-	public String getSenha2() {
-		return senha2;
-	}
-
-	public void setSenha2(String senha2) {
-		this.senha2 = senha2;
 	}
 
 	public Date getDataAtualizacao() {
