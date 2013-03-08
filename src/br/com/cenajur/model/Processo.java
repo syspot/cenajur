@@ -68,7 +68,7 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	@ManyToOne
 	private Objeto objeto;
 	
-	private Integer lote;
+	private String lote;
 	
 	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ProcessoParteContraria> processosPartesContrarias;
@@ -164,11 +164,11 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		this.objeto = objeto;
 	}
 
-	public Integer getLote() {
-		return TSUtil.tratarInteger(lote);
+	public String getLote() {
+		return lote;
 	}
 
-	public void setLote(Integer lote) {
+	public void setLote(String lote) {
 		this.lote = lote;
 	}
 
