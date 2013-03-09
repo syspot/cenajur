@@ -259,11 +259,12 @@
 
         <p:fieldset legend="Informações Bancárias">
 
-            <h:panelGrid columns="3" columnClasses="coluna30, coluna30, coluna30" style="width:50%">
+            <h:panelGrid columns="4" columnClasses="coluna30, coluna20, coluna20, coluna20" style="width:60%">
 
                 <p:outputLabel for="banco" value="Banco" />
                 <p:outputLabel for="agencia" value="Agência" />
                 <p:outputLabel for="conta" value="Conta" />
+                <p:outputLabel for="lote" value="Lote" />
 
                 <p:selectOneMenu id="banco" value="#{mbeanModel.banco.id}" style="width:90%">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
@@ -271,6 +272,7 @@
                 </p:selectOneMenu>
                 <p:inputText id="agencia" value="#{mbeanModel.agencia}" maxlength="15" styleClass="coluna90" />
                 <p:inputText id="conta" value="#{mbeanModel.conta}" maxlength="15" styleClass="coluna90" />
+                <p:inputText id="lote" value="#{mbeanModel.lote}" maxlength="25" styleClass="coluna90" />
 
             </h:panelGrid>
 

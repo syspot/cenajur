@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -107,7 +108,7 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	
 	private String conta;
 	
-	private Integer lote;
+	private String lote;
 	
 	@ManyToOne
 	private Lotacao lotacao;
@@ -166,6 +167,12 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	@Transient
 	private List<Agenda> visitas;
 	
+	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
+	private List<Faturamento> faturamentos;
+	
+	@Transient
+	private Date dataAudiencia;
+	
 	public Cliente() {
 	}
 	
@@ -173,6 +180,16 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		super();
 		this.id = id;
 		this.nome = nome;
+	}
+	
+	public Cliente(Long id, String nome, String telefone, String celular, String email, Date dataAudiencia) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.telefone = telefone;
+		this.celular = celular;
+		this.email = email;
+		this.dataAudiencia = dataAudiencia;
 	}
 
 	public Cliente(Long id) {
@@ -407,11 +424,11 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		this.conta = conta;
 	}
 
-	public Integer getLote() {
+	public String getLote() {
 		return lote;
 	}
 
-	public void setLote(Integer lote) {
+	public void setLote(String lote) {
 		this.lote = lote;
 	}
 
@@ -562,6 +579,22 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 
 	public void setFaturasAbertas(String faturasAbertas) {
 		this.faturasAbertas = faturasAbertas;
+	}
+
+	public List<Faturamento> getFaturamentos() {
+		return faturamentos;
+	}
+
+	public void setFaturamentos(List<Faturamento> faturamentos) {
+		this.faturamentos = faturamentos;
+	}
+
+	public Date getDataAudiencia() {
+		return dataAudiencia;
+	}
+
+	public void setDataAudiencia(Date dataAudiencia) {
+		this.dataAudiencia = dataAudiencia;
 	}
 
 	public List<Agenda> getVisitas() {
@@ -801,5 +834,9 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	
 	public String isMesDevedor(int mes, int ano){
 		return ((Model) super.getBySQL(Model.class, new String[]{"flag"}, "select case when (select count(*) from faturamento f where f.cliente_id = ? and not f.flag_pago and not f.flag_cancelado and f.mes = ? and f.ano = ?) > 0 then true else false end as flag", getId(), mes, ano)).getFlag() ? "X" : "";
+	}
+	
+	public List<Cliente> pesquisarClientesInadimplentesComAudiencia(Date dataInicial, Date dataFinal, Integer mes, Integer ano){
+		return super.find("select distinct new Cliente(c.id, c.nome, c.telefone, c.celular, c.email, a.dataAudiencia) from Audiencia a inner join a.processoNumero pn inner join pn.processo p inner join p.processosClientes pc inner join pc.cliente c inner join c.faturamentos f where date(a.dataAudiencia) between date(?) and date(?) and f.flagPago = false and f.flagCancelado = false and f.mes < ? and f.ano <= ? ", "c.nome", dataInicial, dataFinal, mes, ano);
 	}
 }

@@ -33,24 +33,24 @@
 
     <br />
 
-    <p:commandButton rendered="#{addDependente != null}" value="Pesquisar" icon="pesquisar" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="width: 155px; margin-left: 5px;">
+    <p:commandButton rendered="#{addDependente != null}" onclick="gridCliente.getPaginator().setPage(0);" value="Pesquisar" icon="pesquisar" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="width: 155px; margin-left: 5px;">
         <f:setPropertyActionListener target="#{mbeanPesquisa.clienteExcessao}" value="#{clienteExcessao}" />
         <f:setPropertyActionListener target="#{mbeanPesquisa.pesquisaComDependentes}" value="#{true}" />
     </p:commandButton>
 
-    <p:commandButton rendered="#{addDependente == null}" value="Pesquisar" icon="pesquisar" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="width: 155px; margin-left: 5px;">
+    <p:commandButton rendered="#{addDependente == null}" onclick="gridCliente.getPaginator().setPage(0);" value="Pesquisar" icon="pesquisar" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="width: 155px; margin-left: 5px;">
         <f:setPropertyActionListener target="#{mbeanPesquisa.clienteExcessao}" value="#{clienteExcessao}" />
         <f:setPropertyActionListener target="#{mbeanPesquisa.pesquisaComDependentes}" value="#{false}" />
     </p:commandButton>
 
-    <p:commandButton rendered="#{addDependente != null}" value="Adicionar Dependente" icon="ui-icon-plus" update="opDialogCliente, titleDialog" style="width: 180px; margin-left: 5px;">
+    <p:commandButton rendered="#{addDependente != null}" onclick="gridCliente.getPaginator().setPage(0);" value="Adicionar Dependente" icon="ui-icon-plus" update="opDialogCliente, titleDialog" style="width: 180px; margin-left: 5px;">
         <f:setPropertyActionListener target="#{mbeanPesquisa.cadastrando}" value="#{true}" />
     </p:commandButton>
 
     <br />
     <br />
 
-    <p:dataTable id="gridPesquisa" emptyMessage="Nenhum associado encontrado" paginator="true" paginatorAlwaysVisible="false" rows="5" value="#{mbeanPesquisa.grid}" var="cliente">
+    <p:dataTable id="gridPesquisa" widgetVar="gridCliente" emptyMessage="Nenhum associado encontrado" paginator="true" paginatorAlwaysVisible="false" rows="5" value="#{mbeanPesquisa.grid}" var="cliente">
 
         <p:column headerText="Matrícula">
             <h:outputText value="#{cliente.matricula}" />

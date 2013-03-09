@@ -29,7 +29,7 @@
                         </p:selectOneMenu>
                     </p:outputPanel>
 
-                    <p:commandButton value="Atualizar" icon="ui-icon-refresh" action="#{agendaFaces.atualizarSchedule}" oncomplete="myschedule.update()" style="width: 100px;" />
+                    <p:commandButton value="Atualizar" icon="ui-icon-refresh" action="#{agendaFaces.atualizarSchedule}" update="@form" style="width: 100px;" />
 
                 </h:panelGrid>
 

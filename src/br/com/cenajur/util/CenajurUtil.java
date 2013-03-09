@@ -22,6 +22,7 @@ import org.primefaces.model.UploadedFile;
 
 import br.com.cenajur.model.Agenda;
 import br.com.cenajur.model.AgendaColaborador;
+import br.com.cenajur.model.Faturamento;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.exception.TSSystemException;
 import br.com.topsys.file.TSFile;
@@ -419,6 +420,18 @@ public class CenajurUtil {
 		parametros.put("REPORT_LOCALE", new Locale("pt","BR"));
 		
 		return parametros;
+	}
+	
+	public static Faturamento obterFaturamentoDevedor(){
+		
+		Calendar c = Calendar.getInstance();
+		
+		Faturamento faturamento = new Faturamento();
+		
+		faturamento.setAno(c.get(Calendar.YEAR));
+		faturamento.setMes(c.get(Calendar.MONTH + 1));
+		
+		return faturamento;
 	}
 	
 }

@@ -23,6 +23,7 @@ encoding//src/br/com/cenajur/faces/RegrasEmailFaces.java=ISO-8859-1
 encoding//src/br/com/cenajur/faces/RelatorioAdesaoPorAnoFaces.java=ISO-8859-1
 encoding//src/br/com/cenajur/faces/RelatorioAssociadosPorBancoFaces.java=ISO-8859-1
 encoding//src/br/com/cenajur/faces/RelatorioAssociadosPorRegiaoFaces.java=ISO-8859-1
+encoding//src/br/com/cenajur/faces/RelatorioAudienciaInadimplentesFaces.java=ISO-8859-1
 encoding//src/br/com/cenajur/faces/RelatorioCancelamentoPorMotivoFaces.java=ISO-8859-1
 encoding//src/br/com/cenajur/faces/RelatorioClientesInadimplentesFaces.java=ISO-8859-1
 encoding//src/br/com/cenajur/faces/RelatorioContadorFaces.java=ISO-8859-1

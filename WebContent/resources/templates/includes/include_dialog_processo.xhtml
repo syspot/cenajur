@@ -27,12 +27,12 @@
 
     <br />
 
-    <p:commandButton value="Pesquisar" icon="pesquisar" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="width: 140px; margin-left: 5px;" />
+    <p:commandButton value="Pesquisar" icon="pesquisar" onclick="gridProcesso.getPaginator().setPage(0);" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="width: 140px; margin-left: 5px;" />
 
     <br />
     <br />
 
-    <p:dataTable id="gridPesquisa" emptyMessage="Nenhum processo encontrado" value="#{mbeanPesquisa.grid}" var="processo">
+    <p:dataTable id="gridPesquisa" widgetVar="gridProcesso" emptyMessage="Nenhum processo encontrado" value="#{mbeanPesquisa.grid}" var="processo">
 
         <p:column headerText="Número">
             <h:outputText value="#{processo.processoNumeroPrincipal.numero}" />

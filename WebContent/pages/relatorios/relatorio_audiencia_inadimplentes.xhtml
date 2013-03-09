@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:param name="mbean" value="${relatorioAudienciaInadimplentesFaces}" />
+
+    <p:tabView id="tabview" dynamic="false">
+
+        <p:tab id="tabRelatorio" title="Relatório">
+
+            <h:form id="formRelatorio">
+
+                    <h:panelGrid>
+    
+                        <h:outputText value="Período da audiência" />
+                        <h:panelGrid columns="3" columnClasses="coluna25, coluna5, coluna25">
+                            <p:calendar navigator="true" size="15" pattern="dd/MM/yyyy" locale="pt_BR" timeZone="#{initParam.timezone}" value="#{mbean.dataInicial}" required="true" requiredMessage="Data inicial: Campo obrigatório" />
+                            <h:outputLabel value="a" />
+                            <p:calendar navigator="true" pattern="dd/MM/yyyy" locale="pt_BR" timeZone="#{initParam.timezone}" size="15" value="#{mbean.dataFinal}" required="true" requiredMessage="Data final: Campo obrigatório" />
+                        </h:panelGrid>
+    
+                        <p:commandButton value="Pesquisa" icon="pesquisar" action="#{mbean.find}" onclick="widgetVar.getPaginator().setPage(0);" update="@form" style="width: 120px; margin-bottom: 20px; margin-top:10px" />
+    
+                    </h:panelGrid>
+                
+                <p:panel id="pgGridImpressao" widgetVar="widgetVar" style="width:100%">
+
+                    <p:dataTable value="#{mbean.clientes}" var="cliente" emptyMessage="Nenhum registro encontrado">
+
+                        <p:column headerText="Nome" styleClass="coluna30">
+                            <h:outputText value="#{cliente.nome}" />
+                        </p:column>
+
+                        <p:column headerText="Telefone" styleClass="coluna10">
+                            <h:outputText value="#{cliente.telefone}" />
+                        </p:column>
+                        
+                        <p:column headerText="Celular" styleClass="coluna10">
+                            <h:outputText value="#{cliente.celular}" />
+                        </p:column>
+
+                        <p:column headerText="Email" styleClass="coluna20">
+                            <h:outputText value="#{cliente.email}" />
+                        </p:column>
+
+                        <p:column headerText="Data audiência" styleClass="coluna15">
+                            <h:outputText value="#{cliente.dataAudiencia}" >
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Faturas abertas" styleClass="coluna20">
+                            <h:outputText value="#{cliente.faturasAbertas}" />
+                        </p:column>
+
+                    </p:dataTable>
+
+                </p:panel>
+
+                <p:commandButton value="Imprimir" type="button" icon="ui-icon-print" style="margin-top:10px">
+                    <p:printer target="pgGridImpressao" />
+                </p:commandButton>
+
+            </h:form>
+
+        </p:tab>
+
+    </p:tabView>
+
+</ui:composition>

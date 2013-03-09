@@ -77,6 +77,12 @@ public class Faturamento extends TSActiveRecordAb<Faturamento>{
 	public Faturamento(){
 	}
 	
+	public Faturamento(Integer mes, Integer ano) {
+		super();
+		this.mes = mes;
+		this.ano = ano;
+	}
+
 	public Faturamento(Long id, Double valor, Integer ano, Integer mes, Boolean flagPago, Boolean flagCancelado, Long clienteId, String clienteNome, Long planoId, String planoDescricao, Long lote){
 		this.cliente = new Cliente(clienteId, clienteNome);
 		this.plano = new Plano(planoId, planoDescricao);
@@ -308,7 +314,7 @@ public class Faturamento extends TSActiveRecordAb<Faturamento>{
 	}
 	
 	public List<Faturamento> pesquisarFaturasAbertas(){
-		return super.find(" from Faturamento f where f.flagPago = false and f.flagCancelado = false and f.cliente.id = ? and f.mes < ? and f.ano <= ?", null, getCliente().getId(), getMes(), getAno());
+		return super.find(" select new Faturamento(f.mes, f.ano) from Faturamento f where f.flagPago = false and f.flagCancelado = false and f.cliente.id = ? and f.mes < ? and f.ano <= ?", null, getCliente().getId(), getMes(), getAno());
 	}
 	
 	public Model obterMenorData(){

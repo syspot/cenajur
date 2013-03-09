@@ -15,11 +15,11 @@
 
     </h:panelGrid>
 
-    <p:commandButton value="Pesquisar" icon="pesquisar" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="width: 140px; margin-left: 5px; margin-top: 10px; margin-bottom: 30px">
+    <p:commandButton value="Pesquisar" icon="pesquisar" onclick="gridColaborador.getPaginator().setPage(0);" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="width: 140px; margin-left: 5px; margin-top: 10px; margin-bottom: 30px">
         <f:setPropertyActionListener target="#{mbeanPesquisa.flagBuscaAdvogado}" value="#{buscaAdvogado}" />
     </p:commandButton>
 
-    <p:dataTable id="gridPesquisa" emptyMessage="Nenhum colaborador encontrado" paginator="true" paginatorAlwaysVisible="false" rows="5" value="#{mbeanPesquisa.grid}" var="colaborador">
+    <p:dataTable id="gridPesquisa" widgetVar="gridColaborador" emptyMessage="Nenhum colaborador encontrado" paginator="true" paginatorAlwaysVisible="false" rows="5" value="#{mbeanPesquisa.grid}" var="colaborador">
 
         <p:column headerText="Nome">
             <h:outputText value="#{colaborador.nome}" />

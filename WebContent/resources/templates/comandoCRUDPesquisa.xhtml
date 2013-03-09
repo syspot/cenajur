@@ -5,7 +5,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core">
 
-	<p:commandButton value="Pesquisar" icon="pesquisar" action="#{mbean.findEvent}" update="@form" style="width: 140px; margin-left: 5px; margin-top:20px;"/>
+	<p:commandButton value="Pesquisar" icon="pesquisar" action="#{mbean.findEvent}" onclick="widgetVar.getPaginator().setPage(0);" update="@form" style="width: 140px; margin-left: 5px; margin-top:20px;"/>
   
   	<p:commandButton value="Nova Pesquisa" icon="novo" action="#{mbean.limparPesquisa}" update="@form" style="width: 140px; margin-left: 5px; margin-top:20px;"/>
 

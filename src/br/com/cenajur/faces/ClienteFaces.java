@@ -1,7 +1,6 @@
 package br.com.cenajur.faces;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -227,13 +226,9 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 			
 		}
 		
-		Calendar c = Calendar.getInstance();
-		
-		Faturamento faturamento = new Faturamento();
+		Faturamento faturamento = CenajurUtil.obterFaturamentoDevedor();
 		
 		faturamento.setCliente(getCrudModel());
-		faturamento.setAno(c.get(Calendar.YEAR));
-		faturamento.setMes(c.get(Calendar.MONTH + 1));
 		
 		List<Faturamento> faturasAbertas = faturamento.pesquisarFaturasAbertas();
 		

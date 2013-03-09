@@ -1,39 +1,36 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:component xmlns="http://www.w3.org/1999/xhtml"
-              xmlns:ui="http://java.sun.com/jsf/facelets"
-              xmlns:h="http://java.sun.com/jsf/html"
-              xmlns:p="http://primefaces.org/ui"
-              xmlns:f="http://java.sun.com/jsf/core">
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 
-	<ui:param name="mbean" value="${processoFaces}" />
+    <ui:param name="mbean" value="${processoFaces}" />
 
-	<h:form rendered="#{autenticacaoFaces.mostrarDialogProcessoCliente}">
-		
-		<p:dialog id="dialogArquivarProcessoCliente" header="Alterar Status" modal="true" widgetVar="dlgArquivarProcessoCliente" width="330">
-	
-			<p:outputPanel autoUpdate="true">
-			
-				<h:panelGrid id="pgDataArquivamentoProcessoCliente" columns="2" columnClasses="coluna50, coluna50">
-					
-					<p:outputLabel for="situacaoProcessoCliente" value="Situação" />
-					<p:outputLabel for="dataArquivamentoProcessoCliente" value="Data Arquivamento" />
-					
-					<p:selectOneMenu id="situacaoProcessoCliente" value="#{mbean.processoClienteSelecionado.situacaoProcessoClienteTemp.id}" style="width:95%">
-						<f:selectItems value="#{mbean.situacoesProcessosClientes}" />
-						<p:ajax update="pgDataArquivamentoProcessoCliente" listener="#{mbean.limparDataArquivamentoProcessoCliente}" process="@this" global="false" />
-					</p:selectOneMenu>
-					<p:calendar  navigator="true" id="dataArquivamentoProcessoCliente" required="true" requiredMessage="Data de Arquivamento: Campo obrigatório" pattern="dd/MM/yyyy" value="#{mbean.processoClienteSelecionado.dataArquivamento}" disabled="#{!mbean.processoClienteSelecionado.processoClienteArquivado}" styleClass="coluna95" timeZone="America/Recife"/>
-					
-				</h:panelGrid>
-				
-			</p:outputPanel>
-			
-			<h:panelGrid columns="1" style="width:100%; text-align: left">
-				<p:commandButton value="Alterar" oncomplete="handleRequest('dialogArquivarProcessoCliente', dlgArquivarProcessoCliente, args)" update="pgDataArquivamentoProcessoCliente" />
-			</h:panelGrid>
-			
-		</p:dialog>
-	
-	</h:form>
+    <h:form rendered="#{autenticacaoFaces.mostrarDialogProcessoCliente}">
+
+        <p:dialog id="dialogArquivarProcessoCliente" header="Alterar Status" modal="true" widgetVar="dlgArquivarProcessoCliente" width="330">
+
+            <p:outputPanel autoUpdate="true">
+
+                <h:panelGrid id="pgDataArquivamentoProcessoCliente" columns="2" columnClasses="coluna50, coluna50">
+
+                    <p:outputLabel for="situacaoProcessoCliente" value="Situação" />
+                    <p:outputLabel for="dataArquivamentoProcessoCliente" value="Data Arquivamento" />
+
+                    <p:selectOneMenu id="situacaoProcessoCliente" value="#{mbean.processoClienteSelecionado.situacaoProcessoClienteTemp.id}" style="width:95%">
+                        <f:selectItems value="#{mbean.situacoesProcessosClientes}" />
+                        <p:ajax update="pgDataArquivamentoProcessoCliente" listener="#{mbean.limparDataArquivamentoProcessoCliente}" process="@this" global="false" />
+                    </p:selectOneMenu>
+                    <p:calendar navigator="true" id="dataArquivamentoProcessoCliente" required="true" requiredMessage="Data de Arquivamento: Campo obrigatório" pattern="dd/MM/yyyy" value="#{mbean.processoClienteSelecionado.dataArquivamento}" disabled="#{!mbean.processoClienteSelecionado.processoClienteArquivado}" styleClass="coluna95"
+                        timeZone="America/Recife" />
+
+                </h:panelGrid>
+
+            </p:outputPanel>
+
+            <h:panelGrid columns="1" style="width:100%; text-align: left">
+                <p:commandButton value="Alterar" oncomplete="handleRequest('dialogArquivarProcessoCliente', dlgArquivarProcessoCliente, args)" update="pgDataArquivamentoProcessoCliente" />
+            </h:panelGrid>
+
+        </p:dialog>
+
+    </h:form>
 
 </ui:component>

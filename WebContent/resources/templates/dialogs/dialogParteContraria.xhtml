@@ -1,56 +1,52 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:component xmlns="http://www.w3.org/1999/xhtml"
-              xmlns:ui="http://java.sun.com/jsf/facelets"
-              xmlns:h="http://java.sun.com/jsf/html"
-              xmlns:p="http://primefaces.org/ui"
-              xmlns:f="http://java.sun.com/jsf/core">
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 
-	<ui:param name="mbeanPesquisa" value="${parteContrariaPesquisaFaces}" />
-	<ui:param name="mbeanPersist" value="${parteContrariaFaces}" />
-	<ui:param name="mbeanPersistModel" value="${parteContrariaFaces.parteContraria}" />
-	<ui:param name="mbeanAcao" value="${processoFaces}" />
-	<ui:param name="nomeDialog" value="dlgParteContraria" />
+    <ui:param name="mbeanPesquisa" value="${parteContrariaPesquisaFaces}" />
+    <ui:param name="mbeanPersist" value="${parteContrariaFaces}" />
+    <ui:param name="mbeanPersistModel" value="${parteContrariaFaces.parteContraria}" />
+    <ui:param name="mbeanAcao" value="${processoFaces}" />
+    <ui:param name="nomeDialog" value="dlgParteContraria" />
 
-	<h:form rendered="#{autenticacaoFaces.mostrarDialogParteContraria}">
-		
-		<p:dialog id="dialogParteContraria" widgetVar="dlgParteContraria" width="600" height="400" modal="true">
-	  
-	  		<p:ajax event="close" listener="#{mbeanPersist.limpar}" update="opParteContraria, dialogParteContraria"/>
-	  		
-  			<f:facet name="header">
-  				<h:outputText id="titleDialog" value="#{mbeanPesquisa.cadastrando ? 'Cadastro de Parte Contrária' : 'Pesquisa de Parte Contrária'}" />
-  			</f:facet>
-  			
-	  		<p:outputPanel id="opParteContraria">
-	  		
-		  		<p:outputPanel rendered="#{!mbeanPesquisa.cadastrando}">
-		  		
-		  			<ui:include src="/resources/templates/includes/include_dialog_parte_contraria.xhtml" />
-		  		
-		  		</p:outputPanel>
-		  		
-		  		<p:outputPanel rendered="#{mbeanPesquisa.cadastrando}">
-		  			
-			  		<ui:include src="/resources/templates/includes/include_dialog_cadastro_parte_contraria.xhtml" />
-				  	
-		  			<p:commandButton value="Salvar" action="#{mbeanPersist.inserirPorDialogPesquisa}" update="opParteContraria, titleDialog" oncomplete="handleRequestActionParteContraria('dialogParteContraria', dlgParteContraria, args)" style="margin-top: 30px">
-		  				<f:setPropertyActionListener target="#{mbeanPesquisa.cadastrando}" value="#{false}" />
-		  			</p:commandButton>
-		  			<p:commandButton value="Voltar" process="@this" update="opParteContraria, titleDialog" style="margin-top: 30px">
-		  				<f:setPropertyActionListener target="#{mbeanPesquisa.cadastrando}" value="#{false}" />
-		  			</p:commandButton>
-		  	
-		  		</p:outputPanel>
-	  
-	  		</p:outputPanel>
-	  		
-	  		<p:remoteCommand name="addParteContraria" action="#{mbeanAcao.addParteContraria}" process="@this">
-	  			<f:setPropertyActionListener target="#{mbeanAcao.parteContrariaSelecionada}" value="#{mbeanPersistModel}" />
-	  			<f:setPropertyActionListener target="#{mbeanPesquisa.cadastrando}" value="#{false}" />
-	  		</p:remoteCommand>
-	  		
-		</p:dialog>
-	
-	</h:form>
+    <h:form rendered="#{autenticacaoFaces.mostrarDialogParteContraria}">
+
+        <p:dialog id="dialogParteContraria" widgetVar="dlgParteContraria" width="600" height="400" modal="true">
+
+            <p:ajax event="close" listener="#{mbeanPersist.limpar}" update="opParteContraria, dialogParteContraria" />
+
+            <f:facet name="header">
+                <h:outputText id="titleDialog" value="#{mbeanPesquisa.cadastrando ? 'Cadastro de Parte Contrária' : 'Pesquisa de Parte Contrária'}" />
+            </f:facet>
+
+            <p:outputPanel id="opParteContraria">
+
+                <p:outputPanel rendered="#{!mbeanPesquisa.cadastrando}">
+
+                    <ui:include src="/resources/templates/includes/include_dialog_parte_contraria.xhtml" />
+
+                </p:outputPanel>
+
+                <p:outputPanel rendered="#{mbeanPesquisa.cadastrando}">
+
+                    <ui:include src="/resources/templates/includes/include_dialog_cadastro_parte_contraria.xhtml" />
+
+                    <p:commandButton value="Salvar" action="#{mbeanPersist.inserirPorDialogPesquisa}" update="opParteContraria, titleDialog" oncomplete="handleRequestActionParteContraria('dialogParteContraria', dlgParteContraria, args)" style="margin-top: 30px">
+                        <f:setPropertyActionListener target="#{mbeanPesquisa.cadastrando}" value="#{false}" />
+                    </p:commandButton>
+                    <p:commandButton value="Voltar" process="@this" update="opParteContraria, titleDialog" style="margin-top: 30px">
+                        <f:setPropertyActionListener target="#{mbeanPesquisa.cadastrando}" value="#{false}" />
+                    </p:commandButton>
+
+                </p:outputPanel>
+
+            </p:outputPanel>
+
+            <p:remoteCommand name="addParteContraria" action="#{mbeanAcao.addParteContraria}" process="@this">
+                <f:setPropertyActionListener target="#{mbeanAcao.parteContrariaSelecionada}" value="#{mbeanPersistModel}" />
+                <f:setPropertyActionListener target="#{mbeanPesquisa.cadastrando}" value="#{false}" />
+            </p:remoteCommand>
+
+        </p:dialog>
+
+    </h:form>
 
 </ui:component>
