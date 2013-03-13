@@ -498,7 +498,7 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 	}
 	
 	public List<Colaborador> findAllAdvogadosComProcessos(){
-		return super.find(" select new Colaborador(c.id, c.nome, c.apelido) from Colaborador c inner join c.processos p where c.tipoColaborador.id = ? and c.flagAtivo = true  ", "apelido", Constantes.TIPO_COLABORADOR_ADVOGADO);
+		return super.find(" select distinct new Colaborador(c.id, c.nome, c.apelido) from Colaborador c inner join c.processos p where c.tipoColaborador.id = ? and c.flagAtivo = true  ", "c.nome", Constantes.TIPO_COLABORADOR_ADVOGADO);
 	}
 	
 }

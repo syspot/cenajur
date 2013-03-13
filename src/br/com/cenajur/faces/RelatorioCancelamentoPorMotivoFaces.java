@@ -12,7 +12,6 @@ import br.com.cenajur.util.CenajurUtil;
 @ManagedBean(name = "relatorioCancelamentoPorMotivoFaces")
 public class RelatorioCancelamentoPorMotivoFaces {
 
-	private boolean flagAssociado;
 	private Long ano;
 	
 	public String gerarRelatorio() {
@@ -22,7 +21,6 @@ public class RelatorioCancelamentoPorMotivoFaces {
             Map<String, Object> parametros = CenajurUtil.getHashMapReport();
 
             parametros.put("ano", ano);
-            parametros.put("flag_associado", flagAssociado);
 
             new JasperUtil().gerarRelatorio("relatCancelamento.jasper", "relatorio_cancelamento".toString(), parametros);
 
@@ -37,14 +35,6 @@ public class RelatorioCancelamentoPorMotivoFaces {
         return "sucesso";
 
     }
-
-	public boolean isFlagAssociado() {
-		return flagAssociado;
-	}
-
-	public void setFlagAssociado(boolean flagAssociado) {
-		this.flagAssociado = flagAssociado;
-	}
 
 	public Long getAno() {
 		return ano;

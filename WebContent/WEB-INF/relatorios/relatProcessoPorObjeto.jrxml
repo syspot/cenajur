@@ -19,13 +19,13 @@
 	<field name="qtd_ativo" class="java.lang.Long"/>
 	<field name="qtd_suspenso" class="java.lang.Long"/>
 	<field name="qtd_arquivado" class="java.lang.Long"/>
-	<variable name="qtd_arquivado_1" class="java.lang.Long" resetType="None" calculation="Sum">
+	<variable name="qtd_arquivado_1" class="java.lang.Long" calculation="Sum">
 		<variableExpression><![CDATA[$F{qtd_arquivado}]]></variableExpression>
 	</variable>
-	<variable name="qtd_suspenso_1" class="java.lang.Long" resetType="None" calculation="Sum">
+	<variable name="qtd_suspenso_1" class="java.lang.Long" calculation="Sum">
 		<variableExpression><![CDATA[$F{qtd_suspenso}]]></variableExpression>
 	</variable>
-	<variable name="qtd_ativo_1" class="java.lang.Long" resetType="None" calculation="Sum">
+	<variable name="qtd_ativo_1" class="java.lang.Long" calculation="Sum">
 		<variableExpression><![CDATA[$F{qtd_ativo}]]></variableExpression>
 	</variable>
 	<title>

@@ -22,13 +22,13 @@
                                 <tr>
 
                                     <th class="ui-state-default">
-                                        <div class="ui-dt-c">
+                                        <div class="ui-dt-c center">
                                             <span>Advogados</span>
                                         </div>
                                     </th>
 
                                     <th class="ui-state-default">
-                                        <div class="ui-dt-c">
+                                        <div class="ui-dt-c center">
                                             <span>Ativos</span>
                                         </div>
                                     </th>
@@ -36,7 +36,7 @@
                                     <c:forEach items="#{mbean.anos}" var="ano">
 
                                         <th class="ui-state-default">
-                                            <div class="ui-dt-c">
+                                            <div class="ui-dt-c center">
                                                 <span><h:outputText value="#{ano}" /></span>
                                             </div>
                                         </th>
@@ -44,13 +44,13 @@
                                     </c:forEach>
 
                                     <th class="ui-state-default">
-                                        <div class="ui-dt-c">
+                                        <div class="ui-dt-c center">
                                             <span>Suspenso</span>
                                         </div>
                                     </th>
 
                                     <th class="ui-state-default">
-                                        <div class="ui-dt-c">
+                                        <div class="ui-dt-c center">
                                             <span>Arquivados</span>
                                         </div>
                                     </th>
@@ -75,7 +75,7 @@
                                         </td>
 
                                         <td>
-                                            <div class="ui-dt-c">
+                                            <div class="ui-dt-c center">
                                                 <p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
                                                     #{mbean.processo.obterTotalAtivoPorAdvogado(advogado)}
                                                     <f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{1}" />
@@ -87,7 +87,7 @@
                                         <c:forEach items="#{mbean.anos}" var="ano">
 
                                             <td>
-                                                <div class="ui-dt-c">
+                                                <div class="ui-dt-c center">
 
                                                     <p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
                                                         #{mbean.processo.obterTotalAtivoPorAnoAdvogado(ano, advogado)}
@@ -102,7 +102,7 @@
                                         </c:forEach>
 
                                         <td>
-                                            <div class="ui-dt-c">
+                                            <div class="ui-dt-c center">
                                                 <p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
                                                     #{mbean.processo.obterTotalSuspensoPorAdvogado(advogado)}
                                                     <f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{2}" />
@@ -112,7 +112,7 @@
                                         </td>
 
                                         <td>
-                                            <div class="ui-dt-c">
+                                            <div class="ui-dt-c center">
                                                 <p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
                                                     #{mbean.processo.obterTotalArquivadoPorAdvogado(advogado)}
                                                     <f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{3}" />
@@ -128,11 +128,11 @@
                                 <tr class="ui-widget-content ui-datatable-even">
 
                                     <td>
-                                        <div class="ui-dt-c">TOTAL</div>
+                                        <div class="ui-dt-c center">TOTAL</div>
                                     </td>
 
                                     <td>
-                                        <div class="ui-dt-c">
+                                        <div class="ui-dt-c center">
                                             <p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
                                                 #{mbean.processo.obterTotalAtivo()}
                                                 <f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{1}" />
@@ -143,7 +143,7 @@
                                     <c:forEach items="#{mbean.anos}" var="ano">
 
                                         <td>
-                                            <div class="ui-dt-c">
+                                            <div class="ui-dt-c center">
                                                 <p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
 										  			#{mbean.processo.obterTotalAtivoPorAno(ano)}
 													<f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{1}" />
@@ -155,7 +155,7 @@
                                     </c:forEach>
 
                                     <td>
-                                        <div class="ui-dt-c">
+                                        <div class="ui-dt-c center">
                                             <p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
 									  			#{mbean.processo.obterTotalSuspenso()}
 												<f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{2}" />
@@ -164,7 +164,7 @@
                                     </td>
 
                                     <td>
-                                        <div class="ui-dt-c">
+                                        <div class="ui-dt-c center">
                                             <p:commandLink action="#{autenticacaoFaces.redirecionarParaProcesso}" ajax="false">
 									  			#{mbean.processo.obterTotalArquivado()}
 												<f:setPropertyActionListener target="#{autenticacaoFaces.situacaoProcesso}" value="#{3}" />

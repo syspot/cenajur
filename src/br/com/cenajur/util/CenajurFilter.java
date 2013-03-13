@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.topsys.util.TSUtil;
+import br.com.topsys.web.util.TSFacesUtil;
 
 /**
  * Servlet Filter implementation class Cenajur
@@ -22,6 +23,7 @@ public class CenajurFilter implements Filter {
 
 	@Override
 	public void destroy() {
+		TSFacesUtil.getRequest().getSession().invalidate();
 	}
 	
 	@Override
@@ -44,25 +46,31 @@ public class CenajurFilter implements Filter {
 	    int indiceFimUri = pagina.lastIndexOf("?") == -1 ? pagina.length() : pagina.lastIndexOf("?");
 
 	    pagina = pagina.substring(pagina.lastIndexOf("/") + 1, indiceFimUri);
-
-	    if((pasta.equals("pages")) && (!pagina.contains("login.xhtml"))) {
-	      
-	    	if (TSUtil.isEmpty(request.getSession().getAttribute("colaboradorConectado"))) {
-	    		response.sendRedirect(request.getContextPath() + "/pages/login.xhtml");
-	    	}
-	    	
-	    } else if ((pagina.contains("login.xhtml")) && (!TSUtil.isEmpty(request.getSession().getAttribute("colaboradorConectado")))) {
-	    	
-	    	request.getSession().removeAttribute("autenticacaoFaces");
-
-	    	request.getSession().removeAttribute("colaboradorConectado");
-	    	
-	    }
-
-	    if (!response.isCommitted()) {
-	    	chain.doFilter(request, response);
-	    }
 	    
+	    if(pasta.equals("servlet")){
+	    	
+	    	chain.doFilter(request, response);
+	    	
+	    } else if(pasta.contains("pages")){
+	    	
+    		if(!pagina.contains("login.xhtml") && !pagina.contains("dashboard.xhtml")){
+    			
+    			response.sendRedirect(request.getContextPath() + "/pages/login.xhtml");
+    			
+    		} else if(TSUtil.isEmpty(request.getSession().getAttribute("colaboradorConectado")) && pagina.contains("dashboard.xhtml")){
+    			
+    			response.sendRedirect(request.getContextPath() + "/pages/login.xhtml");
+			
+    		} else{
+    			
+    			chain.doFilter(request, response);
+    			
+    		}
+    		
+    	} else{
+    		response.sendRedirect(request.getContextPath() + "/pages/login.xhtml");
+    	}
+	    		
 	}
 	
 }

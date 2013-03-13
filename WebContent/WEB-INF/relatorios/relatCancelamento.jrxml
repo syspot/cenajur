@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatProcessoPorTipo" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f37734dc-0305-41c0-ba1d-0a06a2e568bb">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="1.100000000000001"/>
+	<property name="ireport.x" value="156"/>
 	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
@@ -27,11 +27,8 @@
 	<parameter name="ano" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="flag_associado" class="java.lang.Boolean">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
 	<queryString>
-		<![CDATA[SELECT * FROM fc_clientes_cancelados_por_ano($P{ano}, $P{flag_associado});]]>
+		<![CDATA[SELECT * FROM fc_clientes_cancelados_por_ano($P{ano});]]>
 	</queryString>
 	<field name="descricao" class="java.lang.String"/>
 	<field name="jan" class="java.lang.Long"/>
@@ -47,6 +44,45 @@
 	<field name="nov" class="java.lang.Long"/>
 	<field name="dez" class="java.lang.Long"/>
 	<field name="tot" class="java.lang.Long"/>
+	<variable name="total_jan" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{jan}]]></variableExpression>
+	</variable>
+	<variable name="total_fev" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{fev}]]></variableExpression>
+	</variable>
+	<variable name="total_mar" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{mar}]]></variableExpression>
+	</variable>
+	<variable name="total_abr" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{abr}]]></variableExpression>
+	</variable>
+	<variable name="total_mai" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{mai}]]></variableExpression>
+	</variable>
+	<variable name="total_jun" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{jun}]]></variableExpression>
+	</variable>
+	<variable name="total_jul" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{jul}]]></variableExpression>
+	</variable>
+	<variable name="total_ago" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{ago}]]></variableExpression>
+	</variable>
+	<variable name="total_set" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{set}]]></variableExpression>
+	</variable>
+	<variable name="total_out" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{out}]]></variableExpression>
+	</variable>
+	<variable name="total_nov" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{nov}]]></variableExpression>
+	</variable>
+	<variable name="total_dez" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{dez}]]></variableExpression>
+	</variable>
+	<variable name="total_total" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{tot}]]></variableExpression>
+	</variable>
 	<title>
 		<band height="83">
 			<rectangle radius="10">
@@ -55,7 +91,7 @@
 			<staticText>
 				<reportElement uuid="d1410cc2-2979-4aa9-b931-400b4539012b" x="223" y="19" width="320" height="36"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="18" isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Relatório de Cancelamentos]]></text>
 			</staticText>
@@ -67,10 +103,10 @@
 				<reportElement uuid="b8f1f3e6-12a1-443e-a0b2-bab4c4b6ed3f" x="753" y="21" width="31" height="20" backcolor="#C9C9C9"/>
 			</rectangle>
 			<rectangle radius="10">
-				<reportElement uuid="a51af909-a345-4a81-81b2-1e7fcbe55e0b" x="708" y="20" width="31" height="20" backcolor="#C9C9C9"/>
+				<reportElement uuid="a51af909-a345-4a81-81b2-1e7fcbe55e0b" x="711" y="20" width="31" height="20" backcolor="#C9C9C9"/>
 			</rectangle>
 			<rectangle radius="10">
-				<reportElement uuid="be5d2e49-9993-4a2a-a1ec-da059396364d" x="669" y="21" width="31" height="20" backcolor="#C9C9C9"/>
+				<reportElement uuid="be5d2e49-9993-4a2a-a1ec-da059396364d" x="671" y="21" width="31" height="20" backcolor="#C9C9C9"/>
 			</rectangle>
 			<rectangle radius="10">
 				<reportElement uuid="abbdef34-33ce-4ee7-9be6-0fe9ba8cb971" x="632" y="21" width="31" height="20" backcolor="#C9C9C9"/>
@@ -108,91 +144,91 @@
 			<staticText>
 				<reportElement uuid="0cd9753f-fc56-4c52-81f7-4b22e8e7e552" x="84" y="20" width="111" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12" isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Motivo]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="ad5325f6-332b-4d4c-ac27-3d4372dd372e" x="296" y="20" width="21" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[jan]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="1214757a-f4c7-4b72-a8ec-c53464a450c8" x="334" y="20" width="21" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[fev]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="4bf99e43-a999-40cf-bd99-13b2f8ea62e2" x="372" y="20" width="21" height="20"/>
+				<reportElement uuid="4bf99e43-a999-40cf-bd99-13b2f8ea62e2" x="366" y="20" width="27" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[mar]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="1304b745-870f-4efc-a3e4-2c2f6608c417" x="410" y="20" width="21" height="20"/>
+				<reportElement uuid="1304b745-870f-4efc-a3e4-2c2f6608c417" x="408" y="20" width="21" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[abr]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="ddb0589d-d8aa-420a-9934-1642538e6ef7" x="448" y="20" width="21" height="20"/>
+				<reportElement uuid="ddb0589d-d8aa-420a-9934-1642538e6ef7" x="442" y="20" width="27" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[mai]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="7bf66798-2e4c-4c42-8fa5-00ca6b4d3478" x="486" y="20" width="21" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[jun]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="510d7eaf-c217-4e65-bee9-c656ca6e68c4" x="524" y="20" width="21" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[jul]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="dc2d5af5-b840-41ab-829b-06dbddc2f2e5" x="562" y="20" width="21" height="20"/>
+				<reportElement uuid="dc2d5af5-b840-41ab-829b-06dbddc2f2e5" x="556" y="20" width="27" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ago]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="7d0ed6e2-6e9d-40a9-bfdb-1c0ed3b74805" x="600" y="20" width="21" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[set]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="8b8a53c4-bd51-43d8-85f6-3b43bedefa84" x="638" y="20" width="21" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[out]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="19a55d9c-4702-44d4-9f7a-882f7fbd14ee" x="676" y="20" width="21" height="20"/>
+				<reportElement uuid="19a55d9c-4702-44d4-9f7a-882f7fbd14ee" x="671" y="20" width="28" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[nov]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="7bccd242-973c-4541-a8b1-2a57e540b320" x="714" y="20" width="21" height="20"/>
+				<reportElement uuid="7bccd242-973c-4541-a8b1-2a57e540b320" x="716" y="20" width="21" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[dez]]></text>
 			</staticText>
@@ -209,7 +245,9 @@
 		<band height="23">
 			<textField isStretchWithOverflow="true">
 				<reportElement uuid="fc208a8f-a07d-40d5-a9e0-74c174c717f6" x="0" y="3" width="269" height="20"/>
-				<textElement/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -217,7 +255,9 @@
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{jan}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -225,7 +265,9 @@
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{fev}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -233,7 +275,9 @@
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{mar}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -241,7 +285,9 @@
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{abr}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -249,7 +295,9 @@
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{mai}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -257,7 +305,9 @@
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{jun}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -265,7 +315,9 @@
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{jul}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -273,7 +325,9 @@
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{ago}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -281,7 +335,9 @@
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{set}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -289,23 +345,29 @@
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{out}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="4ada32f8-c804-413a-b6a6-71e1d5d76aa5" x="676" y="3" width="21" height="20"/>
+				<reportElement uuid="4ada32f8-c804-413a-b6a6-71e1d5d76aa5" x="678" y="3" width="21" height="20"/>
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{nov}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6fce5113-a296-4b9f-8080-afe74e53cd9f" x="714" y="3" width="21" height="20"/>
+				<reportElement uuid="6fce5113-a296-4b9f-8080-afe74e53cd9f" x="716" y="3" width="21" height="20"/>
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{dez}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -313,9 +375,87 @@
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{tot}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
+	<summary>
+		<band height="20">
+			<textField>
+				<reportElement uuid="110f81d1-f47c-4f84-a7c8-6c78242c7b1f" x="296" y="0" width="21" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{total_jan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ffd43eab-ae14-4d10-93f9-fc44cda3f8fb" x="334" y="0" width="21" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{total_fev}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="cdd52ec2-a460-4b57-81b8-2c4f340ca93e" x="372" y="0" width="21" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{total_mar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8c07c9f5-db20-49ad-aca1-cd482e4aaa29" x="410" y="0" width="21" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{total_abr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="84d0d96a-5f8b-4907-8dc7-6bcd56ee1b15" x="448" y="0" width="21" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{total_mai}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d21492b6-a105-422e-98e9-ef7d580e7628" x="487" y="0" width="20" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{total_jun}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a5e7572b-2d54-41c2-9d53-1f4e8f183efe" x="524" y="0" width="21" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{total_jul}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9b56f3aa-dc61-4a09-9c05-ad58d067df10" x="562" y="0" width="21" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{total_ago}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="01c76ce0-601f-45aa-b55e-a5077853fc03" x="601" y="0" width="20" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{total_set}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fe19ca90-2393-4481-9559-0815d96775b0" x="639" y="0" width="20" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{total_out}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b5860647-b4f7-4616-b030-58b87994d181" x="678" y="0" width="21" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{total_nov}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="32a21581-bd54-4c2a-bf16-c26d1ce5825d" x="716" y="0" width="21" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{total_dez}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="57b0d488-f7ca-4e7f-9361-c5526ac1e4c4" x="753" y="0" width="33" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{total_total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="65e7fb8b-28fe-44c7-b66a-6228242093be" x="188" y="0" width="81" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</summary>
 </jasperReport>

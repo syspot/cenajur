@@ -19,13 +19,13 @@
 	<field name="qtd_ativo" class="java.lang.Long"/>
 	<field name="qtd_suspenso" class="java.lang.Long"/>
 	<field name="qtd_arquivado" class="java.lang.Long"/>
-	<variable name="qtd_arquivado_1" class="java.lang.Long" resetType="None" calculation="Sum">
+	<variable name="qtd_arquivado_1" class="java.lang.Long" calculation="Sum">
 		<variableExpression><![CDATA[$F{qtd_arquivado}]]></variableExpression>
 	</variable>
-	<variable name="qtd_suspenso_1" class="java.lang.Long" resetType="None" calculation="Sum">
+	<variable name="qtd_suspenso_1" class="java.lang.Long" calculation="Sum">
 		<variableExpression><![CDATA[$F{qtd_suspenso}]]></variableExpression>
 	</variable>
-	<variable name="qtd_ativo_1" class="java.lang.Long" resetType="None" calculation="Sum">
+	<variable name="qtd_ativo_1" class="java.lang.Long" calculation="Sum">
 		<variableExpression><![CDATA[$F{qtd_ativo}]]></variableExpression>
 	</variable>
 	<title>
@@ -122,8 +122,8 @@
 			</textField>
 		</band>
 	</detail>
-	<lastPageFooter>
-		<band height="21">
+	<summary>
+		<band height="20">
 			<textField>
 				<reportElement uuid="71ed2a3c-6f9e-4565-8ccd-624af1a47368" x="449" y="0" width="70" height="20"/>
 				<box>
@@ -165,5 +165,5 @@
 				<text><![CDATA[Total]]></text>
 			</staticText>
 		</band>
-	</lastPageFooter>
+	</summary>
 </jasperReport>

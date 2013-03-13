@@ -13,7 +13,7 @@
 		<groupHeader>
 			<band height="243">
 				<subreport>
-					<reportElement uuid="f01126cd-6110-42d2-88d1-c30b3c2c5617" x="0" y="9" width="473" height="47"/>
+					<reportElement uuid="f01126cd-6110-42d2-88d1-c30b3c2c5617" x="41" y="9" width="473" height="47"/>
 					<subreportParameter name="DATA_INICIAL">
 						<subreportParameterExpression><![CDATA[$P{DATA_INICIAL}]]></subreportParameterExpression>
 					</subreportParameter>

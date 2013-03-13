@@ -1097,6 +1097,10 @@ ui-icon.delete {
 	width: 10px; text-align: center;
 }
 
+.center {
+	text-align: center;
+}
+
 .ui-fieldset{
 	padding: 0.6em 1em;
 	margin-top:5px;
