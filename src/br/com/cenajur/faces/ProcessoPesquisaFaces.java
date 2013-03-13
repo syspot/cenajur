@@ -52,16 +52,6 @@ public class ProcessoPesquisaFaces extends PesquisaFaces<Processo> {
 		return null;
 	}
 	
-	@Override
-	protected void posFind() {
-		
-		for(Processo processo: getGrid()){
-			processo.setProcessoNumeroPrincipal(new ProcessoNumero().obterNumeroProcessoPrincipal(processo));
-			processo.getProcessosNumeros();
-		}
-		
-	}
-	
 	public String obterNumeroProcesso(){
 		this.processoSelecionado.getProcessosNumeros();
 		return null;

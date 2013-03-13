@@ -310,6 +310,8 @@ public class ProcessoAudienciaUtil {
 	
 	public String obterAudiencia(){
 		this.audiencia = this.audiencia.getById();
+		this.audiencia.getSituacaoAudiencia().getId();
+		this.audiencia.getVara().getId();
 		return null;
 	}
 	

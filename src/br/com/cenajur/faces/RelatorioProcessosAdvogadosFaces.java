@@ -25,7 +25,7 @@ public class RelatorioProcessosAdvogadosFaces{
 	
 	public String gerarRelatorio() {
 
-       this.advogados = new Colaborador().findAllAdvogados();
+       this.advogados = new Colaborador().findAllAdvogadosComProcessos();
        
        List<Model> models = new Processo().pesquisarAnosProcesso();
        

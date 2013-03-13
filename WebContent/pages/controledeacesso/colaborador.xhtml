@@ -4,11 +4,19 @@
     <ui:param name="mbean" value="${colaboradorFaces}" />
     <ui:param name="mbeanModel" value="${colaboradorFaces.crudModel}" />
     <ui:param name="mbeanPesquisaModel" value="${colaboradorFaces.crudPesquisaModel}" />
+    <ui:param name="gridComCss" value="${true}" />
 
     <ui:define name="cadastro">
 
         <p:fieldset legend="Informações Gerais">
-
+            
+            <h:panelGrid style="width: 30%">
+        
+                <p:outputLabel for="matricula" value="Matrícula" />
+                <p:inputText id="matricula" value="#{mbeanModel.matricula}" maxlength="30" styleClass="coluna90" />
+            
+            </h:panelGrid>
+        
             <h:panelGrid columns="3" columnClasses="coluna40, coluna40, coluna20" style="width:88%">
 
                 <p:outputLabel for="nome" value="Nome" />
@@ -35,6 +43,13 @@
                 </p:inputText>
                 <p:calendar navigator="true" id="dataNascimento" pattern="dd/MM/yyyy" yearRange="c-100:c" required="true" requiredMessage="Data de Nascimento: Campo obrigatório" value="#{mbeanModel.dataNascimento}" onkeypress="formatar(this, '##/##/####')" style="width:90%" timeZone="America/Recife" />
 
+            </h:panelGrid>
+            
+            <h:panelGrid style="width: 100%">
+        
+                <p:outputLabel for="observacoes" value="Observações" />
+                <p:inputText id="observacoes" value="#{mbeanModel.observacoes}" maxlength="200" styleClass="coluna90" />
+            
             </h:panelGrid>
 
         </p:fieldset>
@@ -109,7 +124,7 @@
 
             </h:panelGrid>
 
-            <h:panelGrid columns="5" columnClasses="coluna30, coluna30, coluna30, coluna10, coluna 10" style="width:55%">
+            <h:panelGrid columns="5" columnClasses="coluna30, coluna30, coluna30, coluna10, coluna10" style="width:55%">
 
                 <p:outputLabel for="dataAdmissao" value="Data de Admissão" />
                 <p:outputLabel for="tipoColaborador" value="Tipo" />
@@ -173,6 +188,13 @@
 
     <ui:define name="pesquisaCampos">
 
+        <h:panelGrid style="width: 30%">
+        
+            <p:outputLabel for="matriculaPesquisa" value="Matrícula" />
+            <p:inputText id="matriculaPesquisa" value="#{mbeanPesquisaModel.matricula}" maxlength="30" styleClass="coluna90" />
+        
+        </h:panelGrid>
+        
         <h:panelGrid columns="2" styleClass="coluna60, coluna40" style="width:70%">
 
             <p:outputLabel for="nomePesquisa" value="Nome" />
@@ -203,9 +225,16 @@
 
     </ui:define>
 
-    <ui:define name="colunasTabela">
+    <ui:define name="colunasTabelaComCss">
 
-        <p:column headerText="Nome">
+        <p:column headerText="Matrícula" sortBy="#{linha.matricula}">
+            <p:commandLink action="#{mbean.detailEvent}" ajax="false">
+                <h:outputText value="#{linha.matricula}" />
+                <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+            </p:commandLink>
+        </p:column>
+
+        <p:column headerText="Nome" sortBy="#{linha.nome}">
             <p:commandLink action="#{mbean.detailEvent}" ajax="false">
                 <h:outputText value="#{linha.nome}" />
                 <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />

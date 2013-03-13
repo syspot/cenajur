@@ -32,13 +32,13 @@
                     <p:selectBooleanCheckbox id="flagClienteCiente" value="#{mbeanModel.flagClienteCiente}" />
 
                     <p:outputLabel for="situacaoAudiencia" value="Situação" />
-                    <p:outputLabel for="vara" value="Vara" />
+                    <p:outputLabel for="vara" value="Local" />
 
                     <p:selectOneMenu id="situacaoAudiencia" required="true" requiredMessage="Situação: Campo obrigatório" value="#{mbeanModel.situacaoAudiencia.id}" style="width:95%">
                         <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                         <f:selectItems value="#{mbean.situacoesAudiencias}" />
                     </p:selectOneMenu>
-                    <p:selectOneMenu id="vara" required="true" requiredMessage="Vara: Campo obrigatório" value="#{mbeanModel.vara.id}" style="width:94%">
+                    <p:selectOneMenu id="vara" required="true" requiredMessage="Local: Campo obrigatório" value="#{mbeanModel.vara.id}" style="width:94%">
                         <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                         <f:selectItems value="#{mbean.varas}" />
                     </p:selectOneMenu>
@@ -100,7 +100,7 @@
         <h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:44%">
 
             <p:outputLabel for="advogadoPesquisa" value="Advogado" />
-            <p:outputLabel for="varaPesquisa" value="Vara" />
+            <p:outputLabel for="varaPesquisa" value="Local" />
 
             <p:selectOneMenu id="advogadoPesquisa" value="#{mbeanPesquisaModel.advogado.id}" style="width:92%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
@@ -133,7 +133,7 @@
             </p:commandLink>
         </p:column>
 
-        <p:column headerText="Vara" styleClass="coluna20">
+        <p:column headerText="Local" styleClass="coluna20">
             <p:commandLink action="#{mbean.detailEvent}" ajax="false">
                 <h:outputText value="#{linha.vara.descricao}" />
                 <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />

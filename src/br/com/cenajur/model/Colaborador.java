@@ -36,6 +36,8 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 	@SequenceGenerator(name="colaboradores_id", sequenceName="colaboradores_id_seq")
 	private Long id;
 	
+	private String matricula;
+	
 	private String nome;
 	
 	private String apelido;
@@ -107,6 +109,11 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 	@Column(name = "url_imagem")
 	private String urlImagem;
 	
+	private String observacoes;
+	
+	@OneToMany(mappedBy = "advogado")
+	private List<Processo> processos;
+	
 	public Colaborador() {
 	}
 	
@@ -114,6 +121,21 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 		this.id = id;
 	}
 	
+	public Colaborador(Long id, String nome, String apelido) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.apelido = apelido;
+	}
+
+	public String getMatricula() {
+		return matricula;
+	}
+
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
+	}
+
 	public Colaborador(TipoColaborador tipoColaborador) {
 		this.tipoColaborador = tipoColaborador;
 	}
@@ -353,6 +375,26 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 	public void setUrlImagem(String urlImagem) {
 		this.urlImagem = urlImagem;
 	}
+	
+	public String getObservacoes() {
+		return observacoes;
+	}
+
+	public void setObservacoes(String observacoes) {
+		this.observacoes = observacoes;
+	}
+
+	public List<Processo> getProcessos() {
+		return processos;
+	}
+
+	public void setProcessos(List<Processo> processos) {
+		this.processos = processos;
+	}
+
+	public String getCss(){
+		return getFlagAtivo() ? "" : "situacaoCancelada";
+	}
 
 	@Override
 	public int hashCode() {
@@ -390,6 +432,10 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 		
 		query.append(" from Colaborador c where 1 = 1 ");
 		
+		if(!TSUtil.isEmpty(matricula)){
+			query.append(" and c.matricula = ? ");
+		}
+		
 		if(!TSUtil.isEmpty(nome)){
 			query.append(CenajurUtil.getParamSemAcento("c.nome"));
 		}
@@ -415,6 +461,10 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 		}
 		
 		List<Object> params = new ArrayList<Object>();
+		
+		if(!TSUtil.isEmpty(matricula)){
+			params.add(matricula);
+		}
 		
 		if(!TSUtil.isEmpty(nome)){
 			params.add(CenajurUtil.tratarString(nome));
@@ -445,6 +495,10 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 	
 	public List<Colaborador> findAllAdvogados(){
 		return super.find(" from Colaborador c where c.tipoColaborador.id = ? and c.flagAtivo = true ", "apelido", Constantes.TIPO_COLABORADOR_ADVOGADO);
+	}
+	
+	public List<Colaborador> findAllAdvogadosComProcessos(){
+		return super.find(" select new Colaborador(c.id, c.nome, c.apelido) from Colaborador c inner join c.processos p where c.tipoColaborador.id = ? and c.flagAtivo = true  ", "apelido", Constantes.TIPO_COLABORADOR_ADVOGADO);
 	}
 	
 }

@@ -2,61 +2,55 @@
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 
 
-    <h:panelGrid columns="1" columnClasses="coluna60" style="width:50%">
+    <h:panelGrid columns="4" columnClasses="coluna25, coluna25, coluna25, coluna25" style="width:80%">
 
         <p:outputLabel for="numeroProcessoPesquisa" value="Número do Processo" />
-        <p:inputText id="numeroProcessoPesquisa" value="#{mbeanPesquisa.model.processoNumeroPrincipal.numero}" required="true" requiredMessage="Número do Processo: Campo obrigatório" maxlength="30" styleClass="coluna40" />
-
-    </h:panelGrid>
-
-    <h:panelGrid columns="2" columnClasses="coluna45, coluna55" style="width:60%">
-
-        <p:outputLabel for="situacaoProcessoPesquisa" value="Situação" />
         <p:outputLabel for="advogadoPesquisa" value="Advogado" />
+        <p:outputLabel for="situacaoProcessoPesquisa" value="Situação" />
+        <h:outputText value="" />
 
-        <p:selectOneMenu id="situacaoProcessoPesquisa" value="#{mbeanPesquisa.model.situacaoProcesso.id}">
-            <f:selectItem itemLabel="Não Selecionado" itemValue="" />
-            <f:selectItems value="#{mbeanPesquisa.situacoesProcessos}" />
-        </p:selectOneMenu>
-        <p:selectOneMenu id="advogadoPesquisa" value="#{mbeanPesquisa.model.advogado.id}">
+        <p:inputText id="numeroProcessoPesquisa" value="#{mbeanPesquisa.model.processoNumeroPrincipal.numero}" required="true" requiredMessage="Número do Processo: Campo obrigatório" maxlength="30" styleClass="coluna90" />
+        <p:selectOneMenu id="advogadoPesquisa" value="#{mbeanPesquisa.model.advogado.id}" style="width: 90%">
             <f:selectItem itemLabel="Não Selecionado" itemValue="" />
             <f:selectItems value="#{mbeanPesquisa.advogados}" />
         </p:selectOneMenu>
+        <p:selectOneMenu id="situacaoProcessoPesquisa" value="#{mbeanPesquisa.model.situacaoProcesso.id}" style="width: 90%">
+            <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+            <f:selectItems value="#{mbeanPesquisa.situacoesProcessos}" />
+        </p:selectOneMenu>
+        <p:commandButton value="Pesquisar" icon="pesquisar" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="width: 140px;" />
 
     </h:panelGrid>
 
-    <br />
-
-    <p:commandButton value="Pesquisar" icon="pesquisar" onclick="gridProcesso.getPaginator().setPage(0);" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="width: 140px; margin-left: 5px;" />
-
-    <br />
-    <br />
-
-    <p:dataTable id="gridPesquisa" widgetVar="gridProcesso" emptyMessage="Nenhum processo encontrado" value="#{mbeanPesquisa.grid}" var="processo">
-
-        <p:column headerText="Número">
-            <h:outputText value="#{processo.processoNumeroPrincipal.numero}" />
-        </p:column>
-
-        <p:column headerText="Advogado">
-            <h:outputText value="#{processo.advogado.apelido}" />
-        </p:column>
-
-        <p:column headerText="Situação">
-            <h:outputText value="#{processo.situacaoProcesso.descricao}" />
-        </p:column>
-
-        <p:column headerText="Adicionar" style="text-align:center;">
-            <p:commandLink action="#{mbeanPesquisa.obterNumeroProcesso}" oncomplete="#{nomeDialogProcessoNumero}.show();" rendered="#{!processo.processoUnico}">
-                <h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
-                <f:setPropertyActionListener target="#{mbeanPesquisa.processoSelecionado}" value="#{processo}" />
-            </p:commandLink>
-            <p:commandLink action="#{mbeanProcessoAcao.addProcessoNumero}" oncomplete="#{nomeDialog}.hide();" rendered="#{processo.processoUnico}">
-                <h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
-                <f:setPropertyActionListener target="#{mbeanProcessoAcao.processoNumeroSelecionado}" value="#{processo.processoNumeroPrincipal}" />
-            </p:commandLink>
-        </p:column>
-
-    </p:dataTable>
+    <p:scrollPanel mode="native" style="width: 100%; height: 300px; margin-top: 20px">
+    
+        <p:dataTable id="gridPesquisa" widgetVar="gridProcesso" emptyMessage="Nenhum processo encontrado" value="#{mbeanPesquisa.grid}" var="processo">
+    
+            <p:column headerText="Número" styleClass="coluna20">
+                <h:outputText value="#{processo.processosNumeros}" />
+            </p:column>
+    
+            <p:column headerText="Associados" styleClass="coluna60">
+                <h:outputText value="#{processo.processosClientes}" />
+            </p:column>
+    
+            <p:column headerText="Situação" styleClass="coluna15">
+                <h:outputText value="#{processo.situacaoProcesso.descricao}" />
+            </p:column>
+    
+            <p:column headerText="Adicionar" style="text-align:center;" styleClass="coluna5_2">
+                <p:commandLink action="#{mbeanPesquisa.obterNumeroProcesso}" oncomplete="#{nomeDialogProcessoNumero}.show();" rendered="#{!processo.processoUnico}">
+                    <h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
+                    <f:setPropertyActionListener target="#{mbeanPesquisa.processoSelecionado}" value="#{processo}" />
+                </p:commandLink>
+                <p:commandLink action="#{mbeanProcessoAcao.addProcessoNumero}" oncomplete="#{nomeDialog}.hide();" rendered="#{processo.processoUnico}">
+                    <h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
+                    <f:setPropertyActionListener target="#{mbeanProcessoAcao.processoNumeroSelecionado}" value="#{processo.processoNumeroUnico}" />
+                </p:commandLink>
+            </p:column>
+    
+        </p:dataTable>
+        
+    </p:scrollPanel>
 
 </ui:composition>

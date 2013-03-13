@@ -39,14 +39,20 @@
 
                 </h:panelGrid>
 
-                <p:commandButton id="btnSalvarAndamento" value="Cadastrar" icon="salvar" action="#{mbeanProcessoAndamento.cadastrarAndamentoProcesso}" update="@form" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" rendered="#{mbeanProcessoAndamento.andamentoProcesso.id == null and empty cadastroViaCliente ? true : false}"
+                <p:commandButton id="btnSalvarAndamento" value="Cadastrar" icon="salvar" action="#{mbeanProcessoAndamento.cadastrarAndamentoProcesso}" update="@form" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" rendered="#{false}"
+                    disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagInserir}" />
+                <p:commandButton id="btnSalvarAndamento2" value="Cadastrar" icon="salvar" action="#{mbeanProcessoAndamento.cadastrarAndamentoProcesso}" oncomplete="handleRequest('dialogCadastroAndamentoProcesso', dlgCadastroAndamentoProcesso, args)" update="pgCadastroAndamento, :tabview:tabAudienciaAndamento:formAndamento:opGridAndamentoProcesso" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" rendered="#{mbeanProcessoAndamento.andamentoProcesso.id == null and empty cadastroViaCliente ? true : false}"
+                    disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagInserir}" />
+                    
+                <p:commandButton id="btnAlterarAndamento" value="Alterar" icon="salvar" action="#{mbeanProcessoAndamento.alterarAndamentoProcesso}" update="@form" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" rendered="#{false}"
                     disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}" />
-                <p:commandButton id="btnAlterarAndamento" value="Alterar" icon="salvar" action="#{mbeanProcessoAndamento.alterarAndamentoProcesso}" update="@form" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" rendered="#{mbeanProcessoAndamento.andamentoProcesso.id != null and empty cadastroViaCliente ? true : false}"
-                    disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}" />
-                <p:commandButton id="btnCancelarAndamento" value="Novo Cadastro" icon="novo" action="#{mbeanProcessoAndamento.limpar}" process="@this" update="@form" style="width: 140px; margin-left: 5px;" rendered="#{empty cadastroViaCliente ? true : false}" />
-
+                    
                 <p:commandButton value="Alterar" icon="salvar" action="#{mbeanProcessoAux.alterarAndamentoProcesso}" process="@this, pgCadastroAndamento" oncomplete="handleRequest('dialogVisualizarAndamento', dlgVisualizarAndamento, args)" style="margin-left: 5px; margin-top:10px; margin-bottom:20px"
                     rendered="#{mbeanProcessoAndamento.andamentoProcesso.id != null and not empty cadastroViaCliente ? cadastroViaCliente : false}" update=":tabview:apProcessos:formProcesso#{clienteFaces.processoAux.indexProcesso}:apProcesso:opGridAndamentoProcesso2" />
+                <p:commandButton value="Alterar" icon="salvar" action="#{mbeanProcessoAndamento.alterarAndamentoProcesso}" process="@this, pgCadastroAndamento" oncomplete="handleRequest('dialogCadastroAndamentoProcesso', dlgCadastroAndamentoProcesso, args)" style="margin-left: 5px; margin-top:10px; margin-bottom:20px"
+                    rendered="#{mbeanProcessoAndamento.andamentoProcesso.id != null and empty cadastroViaCliente ? true : false}" update="pgCadastroAndamento, :tabview:tabAudienciaAndamento:formAndamento:opGridAndamentoProcesso" />
+                    
+                <p:commandButton id="btnCancelarAndamento" value="Novo Cadastro" icon="novo" action="#{mbeanProcessoAndamento.limpar}" process="@this" update="pgCadastroAndamento" style="width: 140px; margin-left: 5px;" />
 
             </p:fieldset>
 

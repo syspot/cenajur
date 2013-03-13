@@ -9,6 +9,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
+import org.primefaces.context.RequestContext;
+
 import br.com.cenajur.model.ParteContraria;
 import br.com.cenajur.model.TipoDocumento;
 import br.com.cenajur.util.ColaboradorUtil;
@@ -21,6 +23,8 @@ public class ParteContrariaFaces extends CrudFaces<ParteContraria> {
 	private ParteContraria parteContraria;
 	
 	private List<SelectItem> tiposDocumentos;
+	
+	private boolean viaDialog;
 	
 	@PostConstruct
 	protected void init() {
@@ -57,10 +61,28 @@ public class ParteContrariaFaces extends CrudFaces<ParteContraria> {
 		getCrudModel().setDataAtualizacao(new Date());
 	}
 	
-	public String inserirPorDialogPesquisa() throws TSApplicationException{
-		this.parteContraria.setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
-		this.parteContraria.setDataAtualizacao(new Date());
-		this.parteContraria.save();
+	@Override
+	protected String insert() throws TSApplicationException {
+		
+		if(viaDialog){
+			
+			RequestContext context = RequestContext.getCurrentInstance();
+			
+			this.parteContraria.setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
+			this.parteContraria.setDataAtualizacao(new Date());
+			
+			this.parteContraria.save();
+				
+			context.addCallbackParam("sucesso", true);
+			
+			this.parteContraria = this.parteContraria.getById();
+			
+		} else{
+			
+			super.insert();
+			
+		}
+		
 		return null;
 	}
 	
@@ -78,6 +100,14 @@ public class ParteContrariaFaces extends CrudFaces<ParteContraria> {
 
 	public void setParteContraria(ParteContraria parteContraria) {
 		this.parteContraria = parteContraria;
+	}
+
+	public boolean isViaDialog() {
+		return viaDialog;
+	}
+
+	public void setViaDialog(boolean viaDialog) {
+		this.viaDialog = viaDialog;
 	}
 
 }

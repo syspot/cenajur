@@ -136,6 +136,9 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	@Transient
 	private String ano;
 	
+	@Transient
+	private String nomeClienteBusca;
+	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
 	}
@@ -368,8 +371,20 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		this.ano = ano;
 	}
 
+	public String getNomeClienteBusca() {
+		return nomeClienteBusca;
+	}
+
+	public void setNomeClienteBusca(String nomeClienteBusca) {
+		this.nomeClienteBusca = nomeClienteBusca;
+	}
+
 	public boolean isProcessoUnico(){
 		return (TSUtil.isEmpty(getProcessosNumeros()) || getProcessosNumeros().size() < 2);
+	}
+	
+	public ProcessoNumero getProcessoNumeroUnico(){
+		return !TSUtil.isEmpty(getProcessosNumeros()) && getProcessosNumeros().size() < 2 ? getProcessosNumeros().get(0) : null;
 	}
 	
 	public String getCss(){
@@ -406,7 +421,17 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		
 		StringBuilder query = new StringBuilder();
 		
-		query.append(" select distinct p from Processo p inner join p.processosNumeros pn where 1 = 1 ");
+		query.append(" select distinct p from Processo p inner join p.processosNumeros pn ");
+		
+		if(!TSUtil.isEmpty(nomeClienteBusca)){
+		
+			query.append(" inner join p.processosClientes pc where " + CenajurUtil.semAcento("pc.cliente.nome") + " like " + CenajurUtil.semAcento("?") + " ");
+
+		} else{
+			
+			query.append(" where 1 = 1 ");
+		
+		}
 		
 		if(!TSUtil.isEmpty(processoNumeroPrincipal) && !TSUtil.isEmpty(processoNumeroPrincipal.getNumero())){
 			query.append(CenajurUtil.formataNumeroProcessoBusca("pn.numero"));
@@ -464,7 +489,12 @@ public class Processo extends TSActiveRecordAb<Processo>{
 			query.append(" and p.lote = ? ");
 		}
 		
+		
 		List<Object> params = new ArrayList<Object>();
+		
+		if(!TSUtil.isEmpty(nomeClienteBusca)){
+			params.add(CenajurUtil.tratarString(nomeClienteBusca));
+		}
 		
 		if(!TSUtil.isEmpty(processoNumeroPrincipal) && !TSUtil.isEmpty(processoNumeroPrincipal.getNumero())){
 			params.add(CenajurUtil.tratarString(processoNumeroPrincipal.getNumero()));

@@ -25,7 +25,7 @@
 
                 <h:panelGrid style="width: 98.5%;">
 
-                    <p:accordionPanel multiple="true" activeIndex="0, 1" style="margin-top:30px">
+                    <p:accordionPanel id="tabAudienciaAndamento" multiple="true" activeIndex="0, 1" style="margin-top:30px">
 
                         <ui:include src="/pages/processo/tab_andamento_processo.xhtml" />
 
@@ -44,7 +44,14 @@
     <ui:define name="pesquisaCampos">
 
         <p:fieldset>
-
+            
+            <h:panelGrid style="width: 30%">
+            
+                <p:outputLabel for="nomeClienteBusca" value="Nome do Associado" />
+                <p:inputText id="nomeClienteBusca" value="#{mbeanProcessoPesquisaModel.nomeClienteBusca}" styleClass="coluna90"/>
+            
+            </h:panelGrid>
+            
             <h:panelGrid columns="4" columnClasses="coluna40, coluna10, coluna10, coluna20" style="width:100%">
 
                 <p:outputLabel for="numeroProcessoPesquisa" value="Número do Processo" />
@@ -141,7 +148,7 @@
             </p:commandLink>
         </p:column>
 
-        <p:column headerText="Clientes" styleClass="coluna40">
+        <p:column headerText="Associados" styleClass="coluna40">
             <p:commandLink action="#{mbeanProcesso.detailEvent}" ajax="false">
                 <h:outputText value="#{linha.processosClientes}" />
                 <f:setPropertyActionListener target="#{mbeanProcessoModel}" value="#{linha}" />

@@ -29,8 +29,9 @@
 
                     <ui:include src="/resources/templates/includes/include_dialog_cadastro_parte_contraria.xhtml" />
 
-                    <p:commandButton value="Salvar" action="#{mbeanPersist.inserirPorDialogPesquisa}" update="opParteContraria, titleDialog" oncomplete="handleRequestActionParteContraria('dialogParteContraria', dlgParteContraria, args)" style="margin-top: 30px">
-                        <f:setPropertyActionListener target="#{mbeanPesquisa.cadastrando}" value="#{false}" />
+                    <p:commandButton value="Salvar" action="#{mbeanPersist.insertEvent}" update="opParteContraria, titleDialog" oncomplete="handleRequestActionParteContraria('dialogParteContraria', dlgParteContraria, args)" style="margin-top: 30px" >
+                        <f:setPropertyActionListener target="#{mbeanPersist.viaDialog}" value="#{true}" />
+                        <f:setPropertyActionListener target="#{processoFaces.parteContrariaSelecionada}" value="#{parteContrariaFaces.parteContraria}" />
                     </p:commandButton>
                     <p:commandButton value="Voltar" process="@this" update="opParteContraria, titleDialog" style="margin-top: 30px">
                         <f:setPropertyActionListener target="#{mbeanPesquisa.cadastrando}" value="#{false}" />
@@ -40,8 +41,7 @@
 
             </p:outputPanel>
 
-            <p:remoteCommand name="addParteContraria" action="#{mbeanAcao.addParteContraria}" process="@this">
-                <f:setPropertyActionListener target="#{mbeanAcao.parteContrariaSelecionada}" value="#{mbeanPersistModel}" />
+            <p:remoteCommand name="addParteContraria" action="#{processoFaces.addParteContraria}" oncomplete="dialogParteContraria.hide();" process="@this" update="opParteContraria">
                 <f:setPropertyActionListener target="#{mbeanPesquisa.cadastrando}" value="#{false}" />
             </p:remoteCommand>
 

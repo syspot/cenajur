@@ -121,7 +121,7 @@ public class Cidade extends TSActiveRecordAb<Cidade>{
 		
 		params.add(estado.getId());
 		
-		return super.find(query.toString(), null, params.toArray());
+		return super.find(query.toString(), "c.descricao", params.toArray());
 	}
 	
 }

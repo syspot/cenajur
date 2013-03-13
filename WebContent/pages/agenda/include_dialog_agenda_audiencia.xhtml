@@ -20,13 +20,13 @@
             <p:selectBooleanCheckbox id="flagClienteCienteAudienciaAgenda" value="#{agendaFaces.processoAudienciaUtil.audiencia.flagClienteCiente}" />
 
             <p:outputLabel for="situacaoAudienciaAgenda" value="Situação" />
-            <p:outputLabel for="varaAudienciaAgenda" value="Vara" />
+            <p:outputLabel for="varaAudienciaAgenda" value="Local" />
 
             <p:selectOneMenu id="situacaoAudienciaAgenda" required="true" requiredMessage="Situação: Campo obrigatório" value="#{agendaFaces.processoAudienciaUtil.audiencia.situacaoAudiencia.id}" style="width:95%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{agendaFaces.situacoesAudiencias}" />
             </p:selectOneMenu>
-            <p:selectOneMenu id="varaAudienciaAgenda" required="true" requiredMessage="Vara: Campo obrigatório" value="#{agendaFaces.processoAudienciaUtil.audiencia.vara.id}" style="width:94%">
+            <p:selectOneMenu id="varaAudienciaAgenda" required="true" requiredMessage="Local: Campo obrigatório" value="#{agendaFaces.processoAudienciaUtil.audiencia.vara.id}" style="width:94%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{agendaFaces.varas}" />
             </p:selectOneMenu>

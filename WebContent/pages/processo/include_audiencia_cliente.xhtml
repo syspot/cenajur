@@ -24,7 +24,7 @@
                     </p:commandLink>
                 </p:column>
 
-                <p:column headerText="Vara" styleClass="coluna20">
+                <p:column headerText="Local" styleClass="coluna20">
                     <p:commandLink type="button" oncomplete="abrirDialogViewAudiencia();" process="@this" global="false">
                         <h:outputText value="#{linha.vara.descricao}" />
                         <f:setPropertyActionListener target="#{mbeanProcessoAudiencia.audiencia.id}" value="#{linha.id}" />

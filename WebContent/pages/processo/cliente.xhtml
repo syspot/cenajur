@@ -347,14 +347,14 @@
 
     <ui:define name="colunasTabelaComCss">
 
-        <p:column headerText="Matrícula">
+        <p:column headerText="Matrícula" sortBy="#{linha.matricula}">
             <p:commandLink action="#{mbean.detailEvent}" ajax="false">
                 <h:outputText value="#{linha.matricula}" />
                 <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
             </p:commandLink>
         </p:column>
 
-        <p:column headerText="Nome">
+        <p:column headerText="Nome" sortBy="#{linha.nome}">
             <p:commandLink action="#{mbean.detailEvent}" ajax="false">
                 <h:outputText value="#{linha.nome}" />
                 <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />

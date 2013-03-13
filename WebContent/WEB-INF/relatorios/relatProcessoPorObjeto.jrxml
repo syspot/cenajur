@@ -19,13 +19,13 @@
 	<field name="qtd_ativo" class="java.lang.Long"/>
 	<field name="qtd_suspenso" class="java.lang.Long"/>
 	<field name="qtd_arquivado" class="java.lang.Long"/>
-	<variable name="qtd_arquivado_1" class="java.lang.Long" resetType="Page" calculation="Sum">
+	<variable name="qtd_arquivado_1" class="java.lang.Long" resetType="None" calculation="Sum">
 		<variableExpression><![CDATA[$F{qtd_arquivado}]]></variableExpression>
 	</variable>
-	<variable name="qtd_suspenso_1" class="java.lang.Long" resetType="Page" calculation="Sum">
+	<variable name="qtd_suspenso_1" class="java.lang.Long" resetType="None" calculation="Sum">
 		<variableExpression><![CDATA[$F{qtd_suspenso}]]></variableExpression>
 	</variable>
-	<variable name="qtd_ativo_1" class="java.lang.Long" resetType="Page" calculation="Sum">
+	<variable name="qtd_ativo_1" class="java.lang.Long" resetType="None" calculation="Sum">
 		<variableExpression><![CDATA[$F{qtd_ativo}]]></variableExpression>
 	</variable>
 	<title>
@@ -122,10 +122,10 @@
 			</textField>
 		</band>
 	</detail>
-	<summary>
-		<band height="33">
+	<lastPageFooter>
+		<band height="20">
 			<textField>
-				<reportElement uuid="71ed2a3c-6f9e-4565-8ccd-624af1a47368" x="449" y="8" width="70" height="20"/>
+				<reportElement uuid="71ed2a3c-6f9e-4565-8ccd-624af1a47368" x="449" y="0" width="70" height="20"/>
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
@@ -135,7 +135,7 @@
 				<textFieldExpression><![CDATA[$V{qtd_arquivado_1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="568b0569-30fd-4737-959f-e4d5473e7056" x="352" y="8" width="71" height="20"/>
+				<reportElement uuid="568b0569-30fd-4737-959f-e4d5473e7056" x="352" y="0" width="71" height="20"/>
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
@@ -145,7 +145,7 @@
 				<textFieldExpression><![CDATA[$V{qtd_suspenso_1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="b1d1027b-be3c-4b2c-b904-279079a71c03" x="263" y="8" width="65" height="20"/>
+				<reportElement uuid="b1d1027b-be3c-4b2c-b904-279079a71c03" x="263" y="0" width="65" height="20"/>
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
@@ -155,7 +155,7 @@
 				<textFieldExpression><![CDATA[$V{qtd_ativo_1}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bd63f41b-a0f4-42ef-9b30-08012f0db460" x="35" y="8" width="210" height="20"/>
+				<reportElement uuid="bd63f41b-a0f4-42ef-9b30-08012f0db460" x="35" y="0" width="210" height="20"/>
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
@@ -165,5 +165,5 @@
 				<text><![CDATA[Total]]></text>
 			</staticText>
 		</band>
-	</summary>
+	</lastPageFooter>
 </jasperReport>

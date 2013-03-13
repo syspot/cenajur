@@ -1,41 +1,37 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:composition 
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
-  	
-	  
-	<h:panelGrid columns="1" style="width:53%; margin-top: 20px">
-			  		
-	  	<p:outputLabel for="descricaoParteContraria" value="Descrição" />
-	  	<p:inputText id="descricaoParteContraria" value="#{mbeanPersistModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" styleClass="coluna60" maxlength="50"/>
-	  	
-  	</h:panelGrid>
-  	
-  	<h:panelGrid columns="2" columnClasses="coluna65, coluna35" style="width:90%">
-  	
-	  	<p:outputLabel for="nomeAdvogadoParteContraria" value="Nome do Advogado" />
-	  	<p:outputLabel for="oabAdvogadoParteContraria" value="OAB do Advogado" />
- 		
-	  	<p:inputText id="nomeAdvogadoParteContraria" value="#{mbeanPersistModel.nomeAdvogado}" styleClass="coluna96" maxlength="50"/>
-	  	<p:inputText id="oabAdvogadoParteContraria"  value="#{mbeanPersistModel.oabAdvogado}" maxlength="30" styleClass="coluna90"/>
-  	
-  	</h:panelGrid>
-  	
-  	<h:panelGrid id="pgTipoDocumento" columns="3" columnClasses="coluna33, coluna30, coluna33" style="width:90%">
-  	
-	  	<p:outputLabel for="tipoDocumentoParteContraria" value="Tipo de Documento" />
-	  	<p:outputLabel for="numeroDocumentoParteContraria" value="Número" />
-	  	<p:outputLabel for="telefoneParteContraria" value="Telefone" />
-	  	
-	  	<p:selectOneMenu id="tipoDocumentoParteContraria" value="#{mbeanPersistModel.tipoDocumento.id}" style="width:95%">
-	  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-	  		<f:selectItems value="#{mbeanPersist.tiposDocumentos}" />
-	  	</p:selectOneMenu>
-	  	<p:inputText id="numeroDocumentoParteContraria" value="#{mbeanPersistModel.numeroDocumento}" required="true" requiredMessage="Número: Campo obrigatório" style="width: 90%" maxlength="50"/>
-	  	<p:inputMask id="telefoneParteContraria" mask="(99) 9999-9999" value="#{mbeanPersistModel.telefone}" maxlength="14" styleClass="coluna90"/>
-  	
-  	</h:panelGrid>
-	  		
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <h:panelGrid columns="1" style="width:53%; margin-top: 20px">
+
+        <p:outputLabel for="descricaoParteContraria" value="Descrição" />
+        <p:inputText id="descricaoParteContraria" value="#{mbeanPersistModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" styleClass="coluna60" maxlength="50" />
+
+    </h:panelGrid>
+
+    <h:panelGrid columns="2" columnClasses="coluna65, coluna35" style="width:90%">
+
+        <p:outputLabel for="nomeAdvogadoParteContraria" value="Nome do Advogado" />
+        <p:outputLabel for="oabAdvogadoParteContraria" value="OAB do Advogado" />
+
+        <p:inputText id="nomeAdvogadoParteContraria" value="#{mbeanPersistModel.nomeAdvogado}" styleClass="coluna96" maxlength="50" />
+        <p:inputText id="oabAdvogadoParteContraria" value="#{mbeanPersistModel.oabAdvogado}" maxlength="30" styleClass="coluna90" />
+
+    </h:panelGrid>
+
+    <h:panelGrid id="pgTipoDocumento" columns="3" columnClasses="coluna33, coluna30, coluna33" style="width:90%">
+
+        <p:outputLabel for="tipoDocumentoParteContraria" value="Tipo de Documento" />
+        <p:outputLabel for="numeroDocumentoParteContraria" value="Número" />
+        <p:outputLabel for="telefoneParteContraria" value="Telefone" />
+
+        <p:selectOneMenu id="tipoDocumentoParteContraria" value="#{mbeanPersistModel.tipoDocumento.id}" required="true" requiredMessage="Tipo de Documento: Campo obrigatório"  style="width:95%">
+            <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+            <f:selectItems value="#{mbeanPersist.tiposDocumentos}" />
+        </p:selectOneMenu>
+        <p:inputText id="numeroDocumentoParteContraria" value="#{mbeanPersistModel.numeroDocumento}" required="true" requiredMessage="Número: Campo obrigatório" style="width: 90%" maxlength="50" />
+        <p:inputMask id="telefoneParteContraria" mask="(99) 9999-9999" value="#{mbeanPersistModel.telefone}" maxlength="14" styleClass="coluna90" />
+
+    </h:panelGrid>
+
 </ui:composition>
