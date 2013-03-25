@@ -82,7 +82,7 @@
                 <p:commandButton value="Alterar" icon="salvar" process="@this, pgAlteracaoAudiencia" action="#{mbeanProcessoAudiencia.alterarAudiencia}" oncomplete="handleRequest('dialogCadastroAudiencia', dlgCadastroAudiencia, args)" style="margin-left: 5px; margin-top:10px; margin-bottom:20px"
                     rendered="#{mbeanProcessoAudiencia.audiencia.id != null and empty cadastroViaCliente ? true : false}" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}" update="pgAlteracaoAudiencia, :tabview:tabAudienciaAndamento:formCadastroAudiencia:opGridAudiencia"/>
                     
-                <p:commandButton id="btnCancelarAudiencia" value="Novo Cadastro" icon="novo" action="#{mbeanProcessoAudiencia.limpar}" process="@this" update="pgDadosCadastroAudienciaDialog" style="width: 140px; margin-left: 5px;" rendered="#{empty cadastroViaCliente ? true : false}" />
+                <p:commandButton id="btnCancelarAudiencia" value="Novo Cadastro" icon="ui-icon-document" action="#{mbeanProcessoAudiencia.limpar}" process="@this" update="pgDadosCadastroAudienciaDialog" style="margin-left: 5px;" rendered="#{empty cadastroViaCliente ? true : false}" />
 
             </p:fieldset>
 

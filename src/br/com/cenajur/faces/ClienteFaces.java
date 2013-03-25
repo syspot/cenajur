@@ -270,6 +270,10 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	@Override
 	protected void posPersist() throws TSApplicationException{
 		
+		if(!getCrudModel().getFlagAtivo()){
+			getCrudModel().inativarDependentes();
+		}
+		
 		this.iniciaObjetosCombo();
 		
 	}

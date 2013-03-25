@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:param name="mbeanPesquisa" value="${clientePesquisaFaces}" />
+    <ui:param name="mbeanClienteAcao" value="${clientePesquisaFaces}" />
+    <ui:param name="nomeDialog" value="dlgCliente7" />
+
+    <h:form rendered="#{autenticacaoFaces.mostrarDialogCliente || autenticacaoFaces.mostrarDialogCliente4}">
+
+        <p:dialog id="dialogCliente7" header="Pesquisa de Associado" widgetVar="dlgCliente7" styleClass="dialog80" modal="true">
+
+            <h:panelGrid columns="5" columnClasses="coluna15, coluna35, coluna15, coluna30, coluna5" style="width:100%">
+
+                <p:outputLabel for="matriculaPesquisa2" value="Matrícula" />
+                <p:outputLabel for="nomePesquisa2" value="Nome" />
+                <p:outputLabel for="estadoPesquisa2" value="Estado" />
+                <p:outputLabel for="cidadePesquisa2" value="Cidade" />
+                <p:outputLabel for="flagAtivoPesquisa2" value="Ativo" />
+        
+                <p:inputText id="matriculaPesquisa2" value="#{mbeanPesquisa.model.matricula}" maxlength="30" styleClass="coluna90" />
+                <p:inputText id="nomePesquisa2" value="#{mbeanPesquisa.model.nome}" maxlength="100" styleClass="coluna95" />
+                <p:selectOneMenu id="estadoPesquisa2" value="#{mbeanPesquisa.model.cidade.estado.id}" style="width: 90%">
+                    <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+                    <f:selectItems value="#{mbeanPesquisa.estados}" />
+                    <p:ajax update="cidadePesquisa2" listener="#{mbeanPesquisa.atualizarComboCidades}" />
+                </p:selectOneMenu>
+                <p:selectOneMenu id="cidadePesquisa2" value="#{mbeanPesquisa.model.cidade.id}" disabled="#{mbeanPesquisa.model.cidade.estado.id == null}" style="width: 90%">
+                    <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+                    <f:selectItems value="#{mbeanPesquisa.cidades}" />
+                </p:selectOneMenu>
+                <p:selectBooleanCheckbox id="flagAtivoPesquisa2" value="#{mbeanPesquisa.model.flagAtivo}" />
+        
+            </h:panelGrid>
+        
+            <p:commandButton rendered="#{addDependente == null}" onclick="gridCliente2.getPaginator().setPage(0);" value="Pesquisar" icon="ui-icon-search" action="#{mbeanPesquisa.find}" update="gridPesquisa2" style="width: 155px; margin-left: 5px;">
+                <f:setPropertyActionListener target="#{mbeanPesquisa.clienteExcessao}" value="#{clienteExcessao}" />
+                <f:setPropertyActionListener target="#{mbeanPesquisa.pesquisaComDependentes}" value="#{false}" />
+            </p:commandButton>
+            
+            <p:scrollPanel mode="native" style="width: 100%; height: 250px; margin-top: 20px">
+            
+                <p:dataTable id="gridPesquisa2" widgetVar="gridCliente2" emptyMessage="Nenhum associado encontrado" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="20" value="#{mbeanPesquisa.grid}" var="cliente">
+            
+                    <p:column headerText="Matrícula">
+                        <h:outputText value="#{cliente.matricula}" />
+                    </p:column>
+            
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{cliente.nome}" />
+                    </p:column>
+            
+                    <p:column headerText="Tipo">
+                        <h:outputText value="#{cliente.tipo}" />
+                    </p:column>
+            
+                    <p:column headerText="Adicionar" styleClass="coluna10" style="text-align:center;">
+                        <p:commandLink oncomplete="#{nomeDialog}.hide()">
+                            <h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
+                            <f:setPropertyActionListener target="#{mbeanClienteAcao.dependente.titular}" value="#{cliente}" />
+                        </p:commandLink>
+                    </p:column>
+            
+                </p:dataTable>
+            
+            </p:scrollPanel>
+            
+        </p:dialog>
+
+    </h:form>
+
+</ui:component>

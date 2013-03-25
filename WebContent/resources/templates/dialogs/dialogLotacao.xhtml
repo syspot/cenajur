@@ -28,7 +28,7 @@
                     <f:selectItems value="#{mbeanPesquisa.cidades}" />
                 </p:selectOneMenu>
 
-                <p:commandButton value="Pesquisar" icon="pesquisar" onclick="gridLotacao.getPaginator().setPage(0);" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="width: 140px; margin-left: 5px;" />
+                <p:commandButton value="Pesquisar" icon="ui-icon-search" onclick="gridLotacao.getPaginator().setPage(0);" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="margin-left: 5px;" />
 
             </h:panelGrid>
 

@@ -13,19 +13,19 @@
                 <ui:param name="mbeanPesquisaModel" value="#{faturamentoFaces.crudPesquisaModel}" />
 
                 <div align="right" style="width: 97.5%">
-                    <p:commandButton value="Adicionar Manual" oncomplete="dlgFaturamento.show();" icon="novo" style="width: 150px; margin-left: 5px;">
-                        <f:setPropertyActionListener target="#{mbean.inserindo}" value="#{true}" />
-                    </p:commandButton>
-                    <p:commandButton value="Gerar Faturamento Mensal" icon="ui-icon-refresh" action="#{mbean.gerarFaturamento}" style="width: 200px; margin-left: 5px;" />
+                    <p:commandButton value="Adicionar Manual" process="@this" global="false" oncomplete="dlgFaturamento.show();" icon="ui-icon-document" style="width: 150px; margin-left: 5px;"/>
+                    <p:commandButton value="Gerar Faturamento Mensal" icon="ui-icon-arrowrefresh-1-e" action="#{mbean.gerarFaturamento}" style="width: 200px; margin-left: 5px;" />
                 </div>
 
                 <h:panelGrid style="width:50%">
 
-                    <h:outputText value="Cliente" />
+                    <h:outputText value="Associado" />
                     <p:outputPanel autoUpdate="true">
                         <p:inputText value="#{mbeanPesquisaModel.cliente.nome}" readonly="true" styleClass="coluna80" rendered="#{not empty mbeanPesquisaModel.cliente}" />
                         <p:inputText readonly="true" styleClass="coluna80" rendered="#{empty mbeanPesquisaModel.cliente}" />
-                        <p:commandButton type="button" value="Add" icon="ui-icon-plus" onclick="dlgCliente3.show()" rendered="#{empty mbeanPesquisaModel.cliente}" />
+                        <p:commandButton value="Add" icon="ui-icon-plus" process="@this" global="false" oncomplete="dlgCliente3.show()" rendered="#{empty mbeanPesquisaModel.cliente}" >
+                            <f:setPropertyActionListener target="#{mbean.inserindo}" value="#{false}" />
+                        </p:commandButton>
                         <p:commandButton value="Remover" action="#{mbean.removerCliente}" rendered="#{not empty mbeanPesquisaModel.cliente}" />
                     </p:outputPanel>
 
@@ -72,7 +72,7 @@
 
                 </h:panelGrid>
 
-                <p:commandButton value="Pesquisar" action="#{mbean.findEvent}" update="@form" style="margin-top: 10px" />
+                <p:commandButton value="Pesquisar" action="#{mbean.findEvent}" icon="ui-icon-search" update="@form" style="margin-top: 10px" />
 
                 <p:remoteCommand name="alterarFaturamento" action="#{mbean.updateEvent}" update="@form" global="false" />
 
@@ -84,7 +84,7 @@
                         </p:selectBooleanCheckbox>
                     </p:column>
 
-                    <p:column headerText="Nome do Cliente">
+                    <p:column headerText="Nome do Associado">
                         <h:outputText value="#{faturamento.cliente.nome}" />
                     </p:column>
 

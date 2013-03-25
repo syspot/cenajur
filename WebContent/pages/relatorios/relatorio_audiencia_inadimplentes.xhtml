@@ -18,7 +18,7 @@
                             <p:calendar navigator="true" pattern="dd/MM/yyyy" locale="pt_BR" timeZone="#{initParam.timezone}" size="15" value="#{mbean.dataFinal}" required="true" requiredMessage="Data final: Campo obrigatório" />
                         </h:panelGrid>
     
-                        <p:commandButton value="Pesquisa" icon="pesquisar" action="#{mbean.find}" onclick="widgetVar.getPaginator().setPage(0);" update="@form" style="width: 120px; margin-bottom: 20px; margin-top:10px" />
+                        <p:commandButton value="Pesquisa" icon="ui-icon-search" action="#{mbean.find}" onclick="widgetVar.getPaginator().setPage(0);" update="@form" style="margin-bottom: 20px; margin-top:10px" />
     
                     </h:panelGrid>
                 

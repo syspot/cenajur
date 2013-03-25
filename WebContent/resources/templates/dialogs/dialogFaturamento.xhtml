@@ -18,7 +18,9 @@
                     <p:outputPanel autoUpdate="true">
                         <p:inputText value="#{mbeanModel.cliente.nome}" readonly="true" styleClass="coluna80" rendered="#{not empty mbeanModel.cliente}" />
                         <p:inputText readonly="true" styleClass="coluna80" rendered="#{empty mbeanModel.cliente}" />
-                        <p:commandButton type="button" value="Add" icon="ui-icon-plus" onclick="dlgCliente3.show()" />
+                        <p:commandButton value="Add" icon="ui-icon-plus" process="@this" global="false" oncomplete="dlgCliente3.show()" >
+                            <f:setPropertyActionListener target="#{mbean.inserindo}" value="#{true}" />
+                        </p:commandButton>
                     </p:outputPanel>
 
                 </h:panelGrid>
@@ -61,7 +63,7 @@
 
                 </h:panelGrid>
 
-                <p:commandButton value="Inserir" action="#{mbean.insertEvent}" update="opDialogFaturamento" oncomplete="handleRequestFaces('dialogFaturamento', dlgFaturamento, args)" />
+                <p:commandButton value="Inserir" icon="ui-icon-disk" action="#{mbean.insertEvent}" update="opDialogFaturamento" oncomplete="handleRequestFaces('dialogFaturamento', dlgFaturamento, args)" />
 
             </p:outputPanel>
 

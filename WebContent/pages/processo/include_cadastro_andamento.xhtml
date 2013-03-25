@@ -52,7 +52,7 @@
                 <p:commandButton value="Alterar" icon="salvar" action="#{mbeanProcessoAndamento.alterarAndamentoProcesso}" process="@this, pgCadastroAndamento" oncomplete="handleRequest('dialogCadastroAndamentoProcesso', dlgCadastroAndamentoProcesso, args)" style="margin-left: 5px; margin-top:10px; margin-bottom:20px"
                     rendered="#{mbeanProcessoAndamento.andamentoProcesso.id != null and empty cadastroViaCliente ? true : false}" update="pgCadastroAndamento, :tabview:tabAudienciaAndamento:formAndamento:opGridAndamentoProcesso" />
                     
-                <p:commandButton id="btnCancelarAndamento" value="Novo Cadastro" icon="novo" action="#{mbeanProcessoAndamento.limpar}" process="@this" update="pgCadastroAndamento" style="width: 140px; margin-left: 5px;" />
+                <p:commandButton id="btnCancelarAndamento" value="Novo Cadastro" icon="ui-icon-document" action="#{mbeanProcessoAndamento.limpar}" process="@this" update="pgCadastroAndamento" style="margin-left: 5px;" />
 
             </p:fieldset>
 

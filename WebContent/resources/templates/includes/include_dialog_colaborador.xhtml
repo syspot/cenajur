@@ -15,7 +15,7 @@
 
     </h:panelGrid>
 
-    <p:commandButton value="Pesquisar" icon="pesquisar" onclick="gridColaborador.getPaginator().setPage(0);" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="width: 140px; margin-left: 5px; margin-top: 10px; margin-bottom: 30px">
+    <p:commandButton value="Pesquisar" icon="ui-icon-search" onclick="gridColaborador.getPaginator().setPage(0);" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="margin-left: 5px; margin-top: 10px; margin-bottom: 30px">
         <f:setPropertyActionListener target="#{mbeanPesquisa.flagBuscaAdvogado}" value="#{buscaAdvogado}" />
     </p:commandButton>
 

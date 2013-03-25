@@ -2,28 +2,22 @@
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 
 
-    <h:panelGrid columns="2" columnClasses="coluna30, coluna70" style="width:95%">
+    <h:panelGrid columns="5" columnClasses="coluna15, coluna35, coluna15, coluna30, coluna5" style="width:100%">
 
         <p:outputLabel for="matriculaPesquisa" value="Matrícula" />
         <p:outputLabel for="nomePesquisa" value="Nome" />
-
-        <p:inputText id="matriculaPesquisa" value="#{mbeanPesquisa.model.matricula}" maxlength="30" styleClass="coluna90" />
-        <p:inputText id="nomePesquisa" value="#{mbeanPesquisa.model.nome}" maxlength="100" styleClass="coluna95" />
-
-    </h:panelGrid>
-
-    <h:panelGrid id="pgCidadePesquisa" columns="3" columnClasses="coluna35, coluna35, coluna30" style="width:65%">
-
         <p:outputLabel for="estadoPesquisa" value="Estado" />
         <p:outputLabel for="cidadePesquisa" value="Cidade" />
         <p:outputLabel for="flagAtivoPesquisa" value="Ativo" />
 
-        <p:selectOneMenu id="estadoPesquisa" value="#{mbeanPesquisa.model.cidade.estado.id}">
+        <p:inputText id="matriculaPesquisa" value="#{mbeanPesquisa.model.matricula}" maxlength="30" styleClass="coluna90" />
+        <p:inputText id="nomePesquisa" value="#{mbeanPesquisa.model.nome}" maxlength="100" styleClass="coluna95" />
+        <p:selectOneMenu id="estadoPesquisa" value="#{mbeanPesquisa.model.cidade.estado.id}" style="width: 90%">
             <f:selectItem itemLabel="Não Selecionado" itemValue="" />
             <f:selectItems value="#{mbeanPesquisa.estados}" />
-            <p:ajax update="pgCidadePesquisa" listener="#{mbeanPesquisa.atualizarComboCidades}" global="false" />
+            <p:ajax update="cidadePesquisa" listener="#{mbeanPesquisa.atualizarComboCidades}" />
         </p:selectOneMenu>
-        <p:selectOneMenu id="cidadePesquisa" value="#{mbeanPesquisa.model.cidade.id}" disabled="#{mbeanPesquisa.model.cidade.estado.id == null}">
+        <p:selectOneMenu id="cidadePesquisa" value="#{mbeanPesquisa.model.cidade.id}" disabled="#{mbeanPesquisa.model.cidade.estado.id == null}" style="width: 90%">
             <f:selectItem itemLabel="Não Selecionado" itemValue="" />
             <f:selectItems value="#{mbeanPesquisa.cidades}" />
         </p:selectOneMenu>
@@ -33,12 +27,12 @@
 
     <br />
 
-    <p:commandButton rendered="#{addDependente != null}" onclick="gridCliente.getPaginator().setPage(0);" value="Pesquisar" icon="pesquisar" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="width: 155px; margin-left: 5px;">
+    <p:commandButton rendered="#{addDependente != null}" onclick="gridCliente.getPaginator().setPage(0);" value="Pesquisar" icon="ui-icon-search" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="margin-left: 5px;">
         <f:setPropertyActionListener target="#{mbeanPesquisa.clienteExcessao}" value="#{clienteExcessao}" />
         <f:setPropertyActionListener target="#{mbeanPesquisa.pesquisaComDependentes}" value="#{true}" />
     </p:commandButton>
 
-    <p:commandButton rendered="#{addDependente == null}" onclick="gridCliente.getPaginator().setPage(0);" value="Pesquisar" icon="pesquisar" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="width: 155px; margin-left: 5px;">
+    <p:commandButton rendered="#{addDependente == null}" onclick="gridCliente.getPaginator().setPage(0);" value="Pesquisar" icon="ui-icon-search" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="margin-left: 5px;">
         <f:setPropertyActionListener target="#{mbeanPesquisa.clienteExcessao}" value="#{clienteExcessao}" />
         <f:setPropertyActionListener target="#{mbeanPesquisa.pesquisaComDependentes}" value="#{false}" />
     </p:commandButton>
@@ -49,28 +43,32 @@
 
     <br />
     <br />
-
-    <p:dataTable id="gridPesquisa" widgetVar="gridCliente" emptyMessage="Nenhum associado encontrado" paginator="true" paginatorAlwaysVisible="false" rows="5" value="#{mbeanPesquisa.grid}" var="cliente">
-
-        <p:column headerText="Matrícula">
-            <h:outputText value="#{cliente.matricula}" />
-        </p:column>
-
-        <p:column headerText="Nome">
-            <h:outputText value="#{cliente.nome}" />
-        </p:column>
-
-        <p:column headerText="Tipo">
-            <h:outputText value="#{cliente.tipo}" />
-        </p:column>
-
-        <p:column headerText="Adicionar" styleClass="coluna10" style="text-align:center;">
-            <p:commandLink action="#{mbeanClienteAcao.addCliente}" oncomplete="#{nomeDialog}.hide()">
-                <h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
-                <f:setPropertyActionListener target="#{mbeanClienteAcao.clienteSelecionado}" value="#{cliente}" />
-            </p:commandLink>
-        </p:column>
-
-    </p:dataTable>
-
+    
+    <p:scrollPanel mode="native" style="width: 100%; height: 250px; margin-top: 20px">
+    
+        <p:dataTable id="gridPesquisa" widgetVar="gridCliente" emptyMessage="Nenhum associado encontrado" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="20" value="#{mbeanPesquisa.grid}" var="cliente">
+    
+            <p:column headerText="Matrícula">
+                <h:outputText value="#{cliente.matricula}" />
+            </p:column>
+    
+            <p:column headerText="Nome">
+                <h:outputText value="#{cliente.nome}" />
+            </p:column>
+    
+            <p:column headerText="Tipo">
+                <h:outputText value="#{cliente.tipo}" />
+            </p:column>
+    
+            <p:column headerText="Adicionar" styleClass="coluna10" style="text-align:center;">
+                <p:commandLink action="#{mbeanClienteAcao.addCliente}" oncomplete="#{nomeDialog}.hide()">
+                    <h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
+                    <f:setPropertyActionListener target="#{mbeanClienteAcao.clienteSelecionado}" value="#{cliente}" />
+                </p:commandLink>
+            </p:column>
+    
+        </p:dataTable>
+    
+    </p:scrollPanel>
+    
 </ui:composition>

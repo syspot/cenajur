@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sub_outorgados" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8df0a82b-80cf-4f5f-a783-232886f2bf66">
+	<property name="ireport.zoom" value="3.1384283767210035"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="60"/>
+	<queryString>
+		<![CDATA[SELECT NOME, OAB, RG FROM COLABORADORES where oab is not null]]>
+	</queryString>
+	<field name="nome" class="java.lang.String"/>
+	<field name="oab" class="java.lang.String"/>
+	<field name="rg" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="41">
+			<staticText>
+				<reportElement uuid="2d001a56-60f3-4b49-8729-200ebd184a93" x="10" y="0" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OUTORGADOS]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="41" splitType="Stretch">
+			<textField>
+				<reportElement uuid="756932de-1009-486f-9066-91cd1e2ce125" x="56" y="0" width="359" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="2f7b1b0f-b8ca-4f52-990d-2b0e2b20017f" x="10" y="0" width="34" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="1f48a9b0-2495-4398-bb3d-359238e13ff3" x="56" y="20" width="359" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{oab} != null ? $F{oab} : ""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="d778b756-0bdc-4127-9983-3f0c2da54e00" x="10" y="20" width="34" height="20">
+					<printWhenExpression><![CDATA[$F{oab} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OAB]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="644cd2d7-0136-47a6-918c-b10feaa00ae6" x="10" y="21" width="34" height="20">
+					<printWhenExpression><![CDATA[($F{oab} == null && $F{rg} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RG]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="23171f0a-61b4-4f52-a355-ae6bec92be58" x="56" y="21" width="359" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{oab} == null && $F{rg} != null) ? $F{rg} : ""]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="1e44a620-360e-4a5c-b94c-69c479989ff6" x="0" y="40" width="555" height="1"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

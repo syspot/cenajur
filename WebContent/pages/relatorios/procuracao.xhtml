@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:param name="mbean" value="${procuracaoFaces}" />
+    <ui:param name="mbeanPesquisa" value="${clientePesquisaFaces}" />
+    <ui:param name="mbeanClienteAcao" value="${procuracaoFaces}" />
+    <ui:param name="nomeDialog" value="dlgCliente" />
+    
+    <ui:param name="mbeanPesquisaAdvogado" value="${colaboradorPesquisaFaces}" />
+    <ui:param name="mbeanColaboradorAcao" value="${procuracaoFaces}" />
+    <ui:param name="buscaAdvogado" value="#{true}" />
+    <ui:param name="metodoAdicao" value="addAdvogado" />
+    <ui:param name="colaboradorSelecionado" value="advogadoSelecionado" />
+
+    <p:tabView>
+
+        <p:tab title="Procuração">
+
+            <h:form id="formProcuracao" prependId="false" style="width: 100%">
+            
+                <p:fieldset>
+
+                    <p:outputLabel for="cliente" value="Associado" /><br/>
+                    <p:outputPanel autoUpdate="true" style="width:50%">
+                        <p:inputText id="cliente" value="#{mbean.clienteSelecionado.nome}" readonly="true" style="width:40%;" required="true" requiredMessage="Associado: Campo Obrigatório"/>
+                        <p:commandButton type="button" icon="ui-icon-plus" value="Add" onclick="dlgCliente.show();" style="margin-left: 10px" />
+                    </p:outputPanel> <br/>
+    
+                    <p:outputLabel for="advogado" value="Advogado" /><br/>
+                    <p:outputPanel autoUpdate="true" style="width:50%">
+                        <p:inputText id="advogado" value="#{mbean.advogadoSelecionado.nome}" readonly="true" style="width:40%;" />
+                        <p:commandButton type="button" icon="ui-icon-plus" value="Add" onclick="dlgAdvogado.show();" style="margin-left: 10px" />
+                    </p:outputPanel><br/>
+                    
+                    <p:outputLabel for="flagColetivo" value="Procuração Coletiva" /><br/>
+                    <p:selectBooleanCheckbox id="flagColetivo" value="#{mbean.flagColetivo}" /><br/><br/>
+    
+                    <p:commandButton value="Gerar Relatório" icon="ui-icon-print" action="#{mbean.gerarRelatorio}" ajax="false" style="margin-top: 20px" />
+                
+                </p:fieldset>
+                
+            </h:form>
+            
+            <h:form id="formDialogCLiente" prependId="true">
+
+                <p:dialog id="dialogCliente" widgetVar="dlgCliente" header="Pesquisa de Associados" styleClass="dialog80">
+        
+                    <p:ajax listener="#{mbeanPesquisa.limpar}" update="@form" global="false" />
+        
+                    <ui:include src="/resources/templates/includes/include_dialog_cliente.xhtml" />
+        
+                </p:dialog>
+        
+            </h:form>
+            
+            <h:form id="formDialogAdvogado" prependId="true">
+
+                <p:dialog id="dialogAdvogado" header="Pesquisa de Advogados" widgetVar="dlgAdvogado" styleClass="dialog80">
+        
+                    <h:panelGrid columns="2" columnClasses="coluna70, coluna30" style="width:98%">
+
+                        <p:outputLabel for="nomePesquisa" value="Nome" />
+                        <p:outputLabel for="tipoColaboradorPesquisa" value="Tipo" />
+                
+                        <p:inputText id="nomePesquisa" value="#{mbeanPesquisaAdvogado.model.nome}" maxlength="100" styleClass="coluna95" />
+                        <p:selectOneMenu id="tipoColaboradorPesquisa" value="#{mbeanPesquisaAdvogado.model.tipoColaborador.id}" disabled="#{empty buscaAdvogado ? false : true}">
+                            <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+                            <f:selectItems value="#{mbeanPesquisaAdvogado.tiposColaborador}" />
+                        </p:selectOneMenu>
+                
+                    </h:panelGrid>
+                
+                    <p:commandButton value="Pesquisar" icon="ui-icon-search" onclick="gridColaborador.getPaginator().setPage(0);" action="#{mbeanPesquisaAdvogado.find}" update="gridPesquisa" style="margin-left: 5px; margin-top: 10px; margin-bottom: 30px">
+                        <f:setPropertyActionListener target="#{mbeanPesquisaAdvogado.flagBuscaAdvogado}" value="#{buscaAdvogado}" />
+                    </p:commandButton>
+                
+                    <p:dataTable id="gridPesquisa" widgetVar="gridColaborador" emptyMessage="Nenhum colaborador encontrado" paginator="true" paginatorAlwaysVisible="false" rows="5" value="#{mbeanPesquisaAdvogado.grid}" var="colaborador">
+                
+                        <p:column headerText="Nome">
+                            <h:outputText value="#{colaborador.nome}" />
+                        </p:column>
+                
+                        <p:column headerText="Tipo">
+                            <h:outputText value="#{colaborador.tipoColaborador.descricao}" />
+                        </p:column>
+                
+                        <p:column headerText="Adicionar" styleClass="coluna10" style="text-align:center;">
+                            <p:commandLink action="#{mbeanColaboradorAcao[metodoAdicao]}" process="@form" global="false" onclick="dlgAdvogado.hide()" oncomplete="#{atualizar}">
+                                <h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
+                                <f:setPropertyActionListener target="#{mbeanColaboradorAcao[colaboradorSelecionado]}" value="#{colaborador}" />
+                            </p:commandLink>
+                        </p:column>
+                
+                    </p:dataTable>
+        
+                </p:dialog>
+        
+            </h:form>
+
+        </p:tab>
+
+    </p:tabView>
+
+</ui:composition>

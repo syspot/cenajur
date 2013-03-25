@@ -57,6 +57,10 @@ public class Cidade extends TSActiveRecordAb<Cidade>{
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
+	
+	public String getNomeCompleto(){
+		return getDescricao() + " - " + getEstado().getById().getDescricao();
+	}
 
 	@Override
 	public int hashCode() {

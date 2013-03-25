@@ -42,6 +42,7 @@ public class ClientePesquisaFaces extends PesquisaFaces<Cliente> {
 		this.dependente = new Cliente();
 		this.dependente.setFlagAtivo(Boolean.TRUE);
 		this.dependente.setFlagAssociado(Boolean.FALSE);
+		this.dependente.setFlagRematricula(Boolean.FALSE);
 		return null;
 	}
 	
@@ -74,6 +75,7 @@ public class ClientePesquisaFaces extends PesquisaFaces<Cliente> {
 	
 	public String atualizarComboCidades(){
 		this.cidades = super.initCombo(getModel().getCidade().findCombo(), "id", "descricao");
+		getModel().getCidade().setId(null);
 		return null;
 	}
 	

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:param name="mbean" value="${declaracaoSituacaoEconomicaFaces}" />
+    <ui:param name="mbeanPesquisa" value="${clientePesquisaFaces}" />
+    <ui:param name="mbeanClienteAcao" value="${declaracaoSituacaoEconomicaFaces}" />
+    <ui:param name="nomeDialog" value="dlgCliente" />
+
+    <p:tabView>
+
+        <p:tab title="Declaração de Situação Econômica">
+
+            <h:form id="formDeclaracaoSituacaoEconomica" prependId="false">
+
+                <p:outputLabel for="cliente" value="Associado" /><br/>
+                <p:outputPanel autoUpdate="true" style="width:100%">
+                    <p:inputText id="cliente" value="#{mbean.clienteSelecionado.nome}" readonly="true" style="width:75%;" required="true" requiredMessage="Associado: Campo Obrigatório"/>
+                    <p:commandButton type="button" icon="ui-icon-plus" value="Add" onclick="dlgCliente.show();" style="margin-left: 10px" />
+                </p:outputPanel>
+
+                <p:commandButton value="Gerar Relatório" action="#{mbean.gerarRelatorio}" ajax="false" style="margin-top: 20px" />
+
+            </h:form>
+            
+            <h:form id="formDialogCLiente" prependId="false">
+
+                <p:dialog id="dialogCliente" widgetVar="dlgCliente" header="Pesquisa de Associados" styleClass="dialog80">
+        
+                    <p:ajax listener="#{mbeanPesquisa.limpar}" update="@form" global="false" />
+        
+                    <ui:include src="/resources/templates/includes/include_dialog_cliente.xhtml" />
+        
+                </p:dialog>
+        
+            </h:form>
+
+        </p:tab>
+
+    </p:tabView>
+
+</ui:composition>

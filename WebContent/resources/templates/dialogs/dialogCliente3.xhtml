@@ -1,24 +1,20 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:component xmlns="http://www.w3.org/1999/xhtml"
-              xmlns:ui="http://java.sun.com/jsf/facelets"
-              xmlns:h="http://java.sun.com/jsf/html"
-              xmlns:p="http://primefaces.org/ui"
-              xmlns:f="http://java.sun.com/jsf/core">
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 
-	<ui:param name="mbeanPesquisa" value="${clientePesquisaFaces}" />
-	<ui:param name="mbeanClienteAcao" value="${faturamentoFaces}" />
-	<ui:param name="nomeDialog" value="dlgCliente3" />
+    <ui:param name="mbeanPesquisa" value="${clientePesquisaFaces}" />
+    <ui:param name="mbeanClienteAcao" value="${faturamentoFaces}" />
+    <ui:param name="nomeDialog" value="dlgCliente3" />
 
-	<h:form rendered="#{autenticacaoFaces.mostrarDialogCliente3}">
-		
-		<p:dialog dynamic="true" id="dialogCliente3" widgetVar="dlgCliente3" header="Pesquisa de Associados" width="600" height="400" modal="true">
-	  
-	  		<p:ajax listener="#{mbeanPesquisa.limpar}" update="@form" global="false" />
-	  		
-	  		<ui:include src="/resources/templates/includes/include_dialog_cliente.xhtml"/>
-	  
-		</p:dialog>
-	
-	</h:form>
+    <h:form rendered="#{autenticacaoFaces.mostrarDialogCliente3}">
+
+        <p:dialog dynamic="true" id="dialogCliente3" widgetVar="dlgCliente3" header="Pesquisa de Associados" styleClass="dialog80" modal="true">
+
+            <p:ajax listener="#{mbeanPesquisa.limpar}" update="@form" global="false" />
+
+            <ui:include src="/resources/templates/includes/include_dialog_cliente.xhtml" />
+
+        </p:dialog>
+
+    </h:form>
 
 </ui:component>
