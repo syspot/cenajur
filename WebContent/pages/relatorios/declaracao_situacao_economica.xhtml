@@ -11,14 +11,19 @@
         <p:tab title="Declaração de Situação Econômica">
 
             <h:form id="formDeclaracaoSituacaoEconomica" prependId="false">
+            
+                <p:fieldset>
 
-                <p:outputLabel for="cliente" value="Associado" /><br/>
-                <p:outputPanel autoUpdate="true" style="width:100%">
-                    <p:inputText id="cliente" value="#{mbean.clienteSelecionado.nome}" readonly="true" style="width:75%;" required="true" requiredMessage="Associado: Campo Obrigatório"/>
-                    <p:commandButton type="button" icon="ui-icon-plus" value="Add" onclick="dlgCliente.show();" style="margin-left: 10px" />
-                </p:outputPanel>
-
-                <p:commandButton value="Gerar Relatório" action="#{mbean.gerarRelatorio}" ajax="false" style="margin-top: 20px" />
+                    <p:outputLabel for="cliente" value="Associado" /><br/>
+                    <p:outputPanel autoUpdate="true" style="width:100%">
+                        <p:inputText id="cliente" value="#{mbean.clienteSelecionado.nome}" readonly="true" style="width:75%;" required="true" requiredMessage="Associado: Campo Obrigatório"/>
+                        <p:commandButton type="button" icon="ui-icon-plus" value="Add" onclick="dlgCliente.show();" style="margin-left: 10px" />
+                    </p:outputPanel>
+                
+                    <p:commandButton value="Gerar Relatório" icon="ui-icon-print" action="#{mbean.gerarRelatorio}" ajax="false" style="margin-top: 20px" />
+                
+                </p:fieldset>
+                
 
             </h:form>
             

@@ -1,34 +1,30 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:composition
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
-	
-	<ui:param name="mbean" value="${relatorioAssociadosPorRegiaoFaces}" />
-	
-  	<p:tabView id="tabview" dynamic="false">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 
-		<p:tab id="tabMensagem" title="#{mensagemFaces.qtdMensagensNaoLidas > 0 ? mensagemFaces.titleAbaMensagem : 'Mensagens'}" >
-		
-		  	<h:form id="formMensagem">
-		  	
-		  		<h:panelGrid columns="2">
-		  		
-			  		<p:outputLabel for="dataInicial" value="Data Inicial" />
-			  		<p:outputLabel for="dataFinal" value="Data Final" />
-			  		
-			  		<p:calendar  navigator="true" id="dataInicial" value="#{mbean.dataInicial}" pattern="dd/MM/yyyy" timeZone="America/Recife"/>
-			  		<p:calendar  navigator="true" id="dataFinal" value="#{mbean.dataFinal}" pattern="dd/MM/yyyy" timeZone="America/Recife"/>
-		  	
-		  		</h:panelGrid>
-		  		
-		  		<p:commandButton value="Gerar Relatório" action="#{mbean.gerarRelatorio}" ajax="false" />
-			  
-			</h:form>
-			
-		</p:tab>
-		
-	</p:tabView>
-  	
+    <ui:param name="mbean" value="${relatorioAssociadosPorRegiaoFaces}" />
+
+    <p:tabView id="tabview" dynamic="false">
+
+        <p:tab id="tabMensagem" title="#{mensagemFaces.qtdMensagensNaoLidas > 0 ? mensagemFaces.titleAbaMensagem : 'Mensagens'}">
+
+            <h:form id="formMensagem">
+
+                <h:panelGrid columns="2">
+
+                    <p:outputLabel for="dataInicial" value="Data Inicial" />
+                    <p:outputLabel for="dataFinal" value="Data Final" />
+
+                    <p:calendar navigator="true" id="dataInicial" value="#{mbean.dataInicial}" pattern="dd/MM/yyyy" timeZone="America/Recife" />
+                    <p:calendar navigator="true" id="dataFinal" value="#{mbean.dataFinal}" pattern="dd/MM/yyyy" timeZone="America/Recife" />
+
+                </h:panelGrid>
+
+                <p:commandButton value="Gerar Relatório" icon="ui-icon-print" action="#{mbean.gerarRelatorio}" ajax="false" />
+
+            </h:form>
+
+        </p:tab>
+
+    </p:tabView>
+
 </ui:composition>
