@@ -15,6 +15,7 @@ import br.com.cenajur.model.ParteContraria;
 import br.com.cenajur.model.TipoDocumento;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.topsys.exception.TSApplicationException;
+import br.com.topsys.util.TSUtil;
 
 @ViewScoped
 @ManagedBean(name = "parteContrariaFaces")
@@ -57,8 +58,21 @@ public class ParteContrariaFaces extends CrudFaces<ParteContraria> {
 
 	@Override
 	protected void prePersist() {
+		
 		getCrudModel().setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 		getCrudModel().setDataAtualizacao(new Date());
+		
+		if(TSUtil.isEmpty(getCrudModel().getTipoDocumento().getId())){
+			getCrudModel().setTipoDocumento(null);
+		}
+		
+	}
+	
+	@Override
+	protected void posDetail() {
+		if(TSUtil.isEmpty(getCrudModel().getTipoDocumento())){
+			getCrudModel().setTipoDocumento(new TipoDocumento());
+		}
 	}
 	
 	@Override
@@ -70,6 +84,10 @@ public class ParteContrariaFaces extends CrudFaces<ParteContraria> {
 			
 			this.parteContraria.setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 			this.parteContraria.setDataAtualizacao(new Date());
+			
+			if(TSUtil.isEmpty(this.parteContraria.getTipoDocumento().getId())){
+				this.parteContraria.setTipoDocumento(null);
+			}
 			
 			this.parteContraria.save();
 				

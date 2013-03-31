@@ -6,17 +6,21 @@
     <ui:param name="mbeanPesquisaModel" value="${bancoFaces.crudPesquisaModel}" />
 
     <ui:define name="cadastro">
-
-        <p:outputLabel for="descricao" value="Descrição" />
-        <p:inputText id="descricao" value="#{mbeanModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" style="width: 40%" maxlength="50" />
+        
+        <h:panelGrid style="width: 100%">
+            <p:outputLabel for="descricao" value="Descrição" />
+            <p:inputText id="descricao" value="#{mbeanModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" style="width: 40%" maxlength="50" />
+        </h:panelGrid>
         
     </ui:define>
 
     <ui:define name="pesquisaCampos">
 
-        <p:outputLabel for="descricaoPesquisa" value="Descrição" />
-        <p:inputText id="descricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" style="width: 40%" maxlength="50" />
-
+        <h:panelGrid style="width: 100%">
+            <p:outputLabel for="descricaoPesquisa" value="Descrição" />
+            <p:inputText id="descricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" style="width: 40%" maxlength="50" />
+        </h:panelGrid>
+        
     </ui:define>
 
     <ui:define name="colunasTabela">

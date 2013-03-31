@@ -111,8 +111,28 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 	
 	private String observacoes;
 	
+	@Column(name = "ordem_impressao")
+	private Integer ordemImpressao;
+	
+	@Column(name = "flag_procuracao_individual")
+	private Boolean flagProcuracaoIndividual;
+	
 	@OneToMany(mappedBy = "advogado")
 	private List<Processo> processos;
+	
+	@OneToMany(mappedBy = "colaborador")
+	private List<AgendaColaborador> agendasColaboradores;
+	
+	@Transient
+	private boolean pesquisaComQtdVisitas;
+	
+	@Transient
+	private Long qtdVisitasDias;
+	
+	private String ctps;
+	
+	@Column(name = "ctps_serie")
+	private String ctpsSerie;
 	
 	public Colaborador() {
 	}
@@ -126,6 +146,15 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 		this.id = id;
 		this.nome = nome;
 		this.apelido = apelido;
+	}
+
+	public Colaborador(Long id, String nome, String apelido, Long idTipoColaborador, String descricaoColaborador, Long qtd) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.apelido = apelido;
+		this.tipoColaborador = new TipoColaborador(idTipoColaborador, descricaoColaborador);
+		this.qtdVisitasDias = qtd;
 	}
 
 	public String getMatricula() {
@@ -392,8 +421,72 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 		this.processos = processos;
 	}
 
+	public Integer getOrdemImpressao() {
+		return TSUtil.tratarInteger(ordemImpressao);
+	}
+
+	public void setOrdemImpressao(Integer ordemImpressao) {
+		this.ordemImpressao = TSUtil.tratarInteger(ordemImpressao);
+	}
+
+	public Boolean getFlagProcuracaoIndividual() {
+		return flagProcuracaoIndividual;
+	}
+
+	public void setFlagProcuracaoIndividual(Boolean flagProcuracaoIndividual) {
+		this.flagProcuracaoIndividual = flagProcuracaoIndividual;
+	}
+
 	public String getCss(){
 		return getFlagAtivo() ? "" : "situacaoCancelada";
+	}
+
+	public boolean isPesquisaComQtdVisitas() {
+		return pesquisaComQtdVisitas;
+	}
+
+	public void setPesquisaComQtdVisitas(boolean pesquisaComQtdVisitas) {
+		this.pesquisaComQtdVisitas = pesquisaComQtdVisitas;
+	}
+
+	public List<AgendaColaborador> getAgendasColaboradores() {
+		return agendasColaboradores;
+	}
+
+	public void setAgendasColaboradores(List<AgendaColaborador> agendasColaboradores) {
+		this.agendasColaboradores = agendasColaboradores;
+	}
+
+	public Long getQtdVisitasDias() {
+		return qtdVisitasDias;
+	}
+
+	public void setQtdVisitasDias(Long qtdVisitasDias) {
+		this.qtdVisitasDias = qtdVisitasDias;
+	}
+	
+	public boolean isTipoColaboradorAdvogado(){
+		return Constantes.TIPO_COLABORADOR_ADVOGADO.equals(tipoColaborador.getId());
+	}
+	
+	public boolean isTipoColaboradorEstagiario(){
+		return Constantes.TIPO_COLABORADOR_ESTAGIARIO.equals(tipoColaborador.getId());
+	}
+
+	public String getCtps() {
+		return ctps;
+	}
+
+	public void setCtps(String ctps) {
+		this.ctps = ctps;
+	}
+
+	public String getCtpsSerie() {
+		return ctpsSerie;
+	}
+
+	public void setCtpsSerie(String ctpsSerie) {
+		this.ctpsSerie = ctpsSerie;
 	}
 
 	@Override
@@ -430,7 +523,11 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 		
 		StringBuilder query = new StringBuilder();
 		
-		query.append(" from Colaborador c where 1 = 1 ");
+		if(pesquisaComQtdVisitas){
+			query.append(" select distinct new Colaborador(c.id, c.nome, c.apelido, c.tipoColaborador.id, c.tipoColaborador.descricao, count(a.id) as qtd) from Colaborador c left join c.agendasColaboradores ac left join ac.agenda a with a.tipoAgenda.id = 4 and date(a.dataInicial) = current_date where 1 = 1 ");
+		} else{
+			query.append(" from Colaborador c where 1 = 1 ");
+		}
 		
 		if(!TSUtil.isEmpty(matricula)){
 			query.append(" and c.matricula = ? ");
@@ -490,11 +587,23 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 			params.add(flagAtivo);
 		}
 		
-		return super.find(query.toString(), "nome", params.toArray());
+		if (pesquisaComQtdVisitas) {
+			query.append(" group by c.id, c.nome, c.tipoColaborador.id, c.tipoColaborador.descricao order by qtd asc ");
+		}
+		
+		return super.find(query.toString(), "c.nome", params.toArray());
 	}
 	
 	public List<Colaborador> findAllAdvogados(){
 		return super.find(" from Colaborador c where c.tipoColaborador.id = ? and c.flagAtivo = true ", "apelido", Constantes.TIPO_COLABORADOR_ADVOGADO);
+	}
+	
+	public List<Colaborador> findAdvogadosProcuracaoIndividual(){
+		return super.find(" from Colaborador c where c.tipoColaborador.id = ? and c.flagAtivo = true and c.flagProcuracaoIndividual = true ", "ordemImpressao", Constantes.TIPO_COLABORADOR_ADVOGADO);
+	}
+	
+	public List<Colaborador> findAllAdvogadosOrderByOrdemImpressao(){
+		return super.find(" from Colaborador c where c.tipoColaborador.id = ? and c.flagAtivo = true ", "ordemImpressao", Constantes.TIPO_COLABORADOR_ADVOGADO);
 	}
 	
 	public List<Colaborador> findAllAdvogadosComProcessos(){

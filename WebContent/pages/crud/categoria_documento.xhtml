@@ -1,56 +1,58 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:composition template="/resources/templates/templateCRUD.xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
-	
-  	<ui:param name="mbean" value="${categoriaDocumentoFaces}" />
-  	<ui:param name="mbeanModel" value="${categoriaDocumentoFaces.crudModel}" />
-  	<ui:param name="mbeanPesquisaModel" value="${categoriaDocumentoFaces.crudPesquisaModel}" />
-  	
-  	<ui:define name="cadastro">
-  	
-	  	<p:outputLabel for="descricao" value="Descrição" />
-	  	<p:inputText id="descricao" value="#{mbeanModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" style="width: 40%" maxlength="50"/>
-	  	
-	  	<p:outputLabel for="tipoCategoria" value="Tipo de Categoria" />
-	  	<p:selectOneMenu id="tipoCategoria" required="true" requiredMessage="Tipo de Categoria: Campo obrigatório" value="#{mbeanModel.tipoCategoria.id}" style="width:20%">
-	  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-	  		<f:selectItems value="#{mbean.tiposCategorias}" />
-	  	</p:selectOneMenu>
-	  	
-  	</ui:define>
-  	
-  	<ui:define name="pesquisaCampos">
-  	
-  		<p:outputLabel for="descricaoPesquisa" value="Descrição" />
-	  	<p:inputText id="descricaoPesquisa"  value="#{mbeanPesquisaModel.descricao}" style="width: 40%" maxlength="50"/>
-	  	
-	  	<p:outputLabel for="tipoCategoriaPesquisa" value="Tipo de Categoria" />
-	  	<p:selectOneMenu id="tipoCategoriaPesquisa" value="#{mbeanPesquisaModel.tipoCategoria.id}" style="width:20%">
-	  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-	  		<f:selectItems value="#{mbean.tiposCategorias}" />
-	  	</p:selectOneMenu>
-	  	
-  	</ui:define>
-  	
-  	<ui:define name="colunasTabela">
-  	
-  		<p:column headerText="Tipo de Categoria" styleClass="coluna20" style="text-align: center">
-  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
-	  			<h:outputText value="#{linha.tipoCategoria.descricao}" />
-				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
-			</p:commandLink>
-  		</p:column>
-  		
-  		<p:column headerText="Descrição">
-  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
-	  			<h:outputText value="#{linha.descricao}" />
-				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
-			</p:commandLink>
-  		</p:column>
-  		
-  	</ui:define>
-  	
+<ui:composition template="/resources/templates/templateCRUD.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:param name="mbean" value="${categoriaDocumentoFaces}" />
+    <ui:param name="mbeanModel" value="${categoriaDocumentoFaces.crudModel}" />
+    <ui:param name="mbeanPesquisaModel" value="${categoriaDocumentoFaces.crudPesquisaModel}" />
+
+    <ui:define name="cadastro">
+        
+        <h:panelGrid style="width: 100%">
+            <p:outputLabel for="descricao" value="Descrição" />
+            <p:inputText id="descricao" value="#{mbeanModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" style="width: 40%" maxlength="50" />
+    
+            <p:outputLabel for="tipoCategoria" value="Tipo de Categoria" />
+            <p:selectOneMenu id="tipoCategoria" required="true" requiredMessage="Tipo de Categoria: Campo obrigatório" value="#{mbeanModel.tipoCategoria.id}" style="width:20%">
+                <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+                <f:selectItems value="#{mbean.tiposCategorias}" />
+            </p:selectOneMenu>
+        </h:panelGrid>
+        
+    </ui:define>
+
+    <ui:define name="pesquisaCampos">
+    
+        <h:panelGrid style="width: 100%">
+        
+            <p:outputLabel for="descricaoPesquisa" value="Descrição" />
+            <p:inputText id="descricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" style="width: 40%" maxlength="50" />
+    
+            <p:outputLabel for="tipoCategoriaPesquisa" value="Tipo de Categoria" />
+            <p:selectOneMenu id="tipoCategoriaPesquisa" value="#{mbeanPesquisaModel.tipoCategoria.id}" style="width:20%">
+                <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+                <f:selectItems value="#{mbean.tiposCategorias}" />
+            </p:selectOneMenu>
+            
+        </h:panelGrid>
+        
+    </ui:define>
+
+    <ui:define name="colunasTabela">
+
+        <p:column headerText="Tipo de Categoria" styleClass="coluna20" style="text-align: center">
+            <p:commandLink action="#{mbean.detailEvent}" ajax="false">
+                <h:outputText value="#{linha.tipoCategoria.descricao}" />
+                <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+            </p:commandLink>
+        </p:column>
+
+        <p:column headerText="Descrição">
+            <p:commandLink action="#{mbean.detailEvent}" ajax="false">
+                <h:outputText value="#{linha.descricao}" />
+                <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+            </p:commandLink>
+        </p:column>
+
+    </ui:define>
+
 </ui:composition>

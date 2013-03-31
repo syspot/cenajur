@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:panelGrid style="width: 100%; text-align: right">
+        <p:commandButton value="Novo" icon="ui-icon-document" process="@this" update="opLotacao, titleDialog">
+            <f:setPropertyActionListener target="#{mbeanPesquisa.cadastrando}" value="#{true}" />
+        </p:commandButton>
+    </h:panelGrid>
+    
+    <h:panelGrid id="pgCampos" columns="2" columnClasses="coluna60, coluna40" style="width:90%">
+
+        <p:outputLabel for="dlgDescricaoLotacao" value="Descrição" />
+        <p:outputLabel for="dlgBairroLotacao" value="Bairro" />
+
+        <p:inputText id="dlgDescricaoLotacao" value="#{mbeanPesquisa.model.descricao}" maxlength="50" styleClass="coluna90" />
+        <p:inputText id="dlgBairroLotacao" value="#{mbeanPesquisa.model.bairro}" maxlength="50" styleClass="coluna90" />
+
+        <p:outputLabel for="dlgEstadoLotacao" value="Estado" />
+        <p:outputLabel for="dlgCidadeLotacao" value="Cidade" />
+
+        <p:selectOneMenu id="dlgEstadoLotacao" value="#{mbeanPesquisa.model.cidade.estado.id}" style="width:92%">
+            <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+            <f:selectItems value="#{mbeanPesquisa.estados}" />
+            <p:ajax listener="#{mbeanPesquisa.atualizarComboCidades}" update="pgCampos" />
+        </p:selectOneMenu>
+        <p:selectOneMenu id="dlgCidadeLotacao" value="#{mbeanPesquisa.model.cidade.id}" style="width:90%" disabled="#{mbeanPesquisa.model.cidade.estado.id == null}">
+            <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+            <f:selectItems value="#{mbeanPesquisa.cidades}" />
+        </p:selectOneMenu>
+
+        <p:commandButton value="Pesquisar" icon="ui-icon-search" onclick="gridLotacao.getPaginator().setPage(0);" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="margin-left: 5px;" />
+
+    </h:panelGrid>
+
+    <p:scrollPanel mode="native" style="width: 100%; height: 250px; margin-top: 20px">
+
+        <p:dataTable id="gridPesquisa" widgetVar="gridLotacao" emptyMessage="Nenhuma lotação encontrada" paginator="true" paginatorAlwaysVisible="false" rows="20" value="#{mbeanPesquisa.grid}" var="lotacao">
+    
+            <p:column headerText="Descrição">
+                <p:commandLink action="#{clienteFaces.addLotacao}" process="@this" oncomplete="dlgLotacao.hide()" global="false">
+                    <h:outputText value="#{lotacao.descricao}" />
+                    <f:setPropertyActionListener target="#{clienteFaces.lotacaoSelecionada}" value="#{lotacao}" />
+                </p:commandLink>
+            </p:column>
+    
+            <p:column headerText="Cidade">
+                <p:commandLink action="#{clienteFaces.addLotacao}" process="@this" oncomplete="dlgLotacao.hide()" global="false">
+                    <h:outputText value="#{lotacao.cidade.descricao}" />
+                    <f:setPropertyActionListener target="#{clienteFaces.lotacaoSelecionada}" value="#{lotacao}" />
+                </p:commandLink>
+            </p:column>
+    
+            <p:column headerText="Adicionar" styleClass="coluna10" style="text-align:center;">
+                <p:commandLink action="#{clienteFaces.addLotacao}" process="@this" oncomplete="dlgLotacao.hide()" global="false">
+                    <h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
+                    <f:setPropertyActionListener target="#{clienteFaces.lotacaoSelecionada}" value="#{lotacao}" />
+                </p:commandLink>
+            </p:column>
+    
+        </p:dataTable>
+    
+    </p:scrollPanel>
+    
+</ui:composition>

@@ -1,95 +1,95 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:composition template="/resources/templates/templateCRUD.xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
-	
-  	<ui:param name="mbean" value="${configuracoesEmailFaces}" />
-  	<ui:param name="mbeanModel" value="${configuracoesEmailFaces.crudModel}" />
-  	<ui:param name="mbeanPesquisaModel" value="${configuracoesEmailFaces.crudPesquisaModel}" />
-  	
-  	<ui:define name="cadastro">
-  		
-  		<h:panelGrid columns="2" style="width:100%">
-  		
-  			<h:panelGrid style="width:100%">
-  			
-  				<p:outputLabel for="regrasEmail" value="Regra de Email" />
-			  	<p:selectOneMenu id="regrasEmail" required="true" requiredMessage="Regra de Email: Campo obrigatório" value="#{mbeanModel.regrasEmail.id}">
-			  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-			  		<f:selectItems value="#{mbean.regrasEmails}" />
-			  	</p:selectOneMenu>
-		  	
-			  	<p:outputLabel for="assunto" value="Assunto" />
-			  	<p:inputText id="assunto" value="#{mbeanModel.assunto}" required="true" requiredMessage="Assunto: Campo obrigatório" style="width: 80%" maxlength="200"/>
-			  	
-			  	<p:outputLabel for="corpoEmail" value="Corpo do Email" />
-			  	<p:editor id="corpoEmail" value="#{mbeanModel.corpoEmail}" />
-			  	
-			  	<p:outputLabel for="flagImediato" value="Envio imediato" />
-			  	<p:selectBooleanCheckbox id="flagImediato" value="#{mbeanModel.flagImediato}" />
-	  	
-  			</h:panelGrid>
-  			
-  			<h:panelGrid style="width:100%">
-  			
-				<p:dataTable value="#{mbean.configuracoesReplaceEmail}" var="config">
-				
-					<f:facet name="header">
-						<h:outputText value="Copie o código e cole onde deseja substituir no texto" />
-					</f:facet>
-					
-					<p:column headerText="Descrição">
-						<h:outputText value="#{config.descricao}" />
-					</p:column>
-					
-					<p:column headerText="Código">
-						<h:outputText value="#{config.codigo}" />
-					</p:column>
-					
-				</p:dataTable>
-  					
-  			</h:panelGrid>
-  		
-  		</h:panelGrid>
-	  	
-	  	
-	  	
-  	</ui:define>
-  	
-  	<ui:define name="pesquisaCampos">
-  	
-  		<p:outputLabel for="regrasEmailPesquisa" value="Regra de Email" />
-	  	<p:selectOneMenu id="regrasEmailPesquisa" value="#{mbeanPesquisaModel.regrasEmail.id}" style="width:20%">
-	  		<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-	  		<f:selectItems value="#{mbean.regrasEmails}" />
-	  	</p:selectOneMenu>
-  	
-	  	<p:outputLabel for="assuntoPesquisa" value="Assunto" />
-	  	<p:inputText id="assuntoPesquisa" value="#{mbeanPesquisaModel.assunto}" style="width: 40%" maxlength="200"/>
-	  	
-	  	<p:outputLabel for="flagImediatoPesquisa" value="Envio imediato" />
-	  	<p:selectBooleanCheckbox id="flagImediatoPesquisa" value="#{mbeanPesquisaModel.flagImediato}" />
-	  	
-  	</ui:define>
-  	
-  	<ui:define name="colunasTabela">
-  	
-  		<p:column headerText="Regra de Email" styleClass="coluna30" style="text-align: center">
-  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
-	  			<h:outputText value="#{linha.regrasEmail.descricao}" />
-				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
-			</p:commandLink>
-  		</p:column>
-  		
-  		<p:column headerText="Assunto">
-  			<p:commandLink action="#{mbean.detailEvent}" ajax="false">
-	  			<h:outputText value="#{linha.assunto}" />
-				<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
-			</p:commandLink>
-  		</p:column>
-  		
-  	</ui:define>
-  	
+<ui:composition template="/resources/templates/templateCRUD.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:param name="mbean" value="${configuracoesEmailFaces}" />
+    <ui:param name="mbeanModel" value="${configuracoesEmailFaces.crudModel}" />
+    <ui:param name="mbeanPesquisaModel" value="${configuracoesEmailFaces.crudPesquisaModel}" />
+
+    <ui:define name="cadastro">
+
+        <h:panelGrid columns="2" style="width:100%">
+
+            <h:panelGrid style="width:100%">
+
+                <p:outputLabel for="regrasEmail" value="Regra de Email" />
+                <p:selectOneMenu id="regrasEmail" required="true" requiredMessage="Regra de Email: Campo obrigatório" value="#{mbeanModel.regrasEmail.id}">
+                    <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+                    <f:selectItems value="#{mbean.regrasEmails}" />
+                </p:selectOneMenu>
+
+                <p:outputLabel for="assunto" value="Assunto" />
+                <p:inputText id="assunto" value="#{mbeanModel.assunto}" required="true" requiredMessage="Assunto: Campo obrigatório" style="width: 80%" maxlength="200" />
+
+                <p:outputLabel for="corpoEmail" value="Corpo do Email" />
+                <p:editor id="corpoEmail" value="#{mbeanModel.corpoEmail}" />
+
+                <p:outputLabel for="flagImediato" value="Envio imediato" />
+                <p:selectBooleanCheckbox id="flagImediato" value="#{mbeanModel.flagImediato}" />
+
+            </h:panelGrid>
+
+            <h:panelGrid style="width:100%">
+
+                <p:dataTable value="#{mbean.configuracoesReplaceEmail}" var="config">
+
+                    <f:facet name="header">
+                        <h:outputText value="Copie o código e cole onde deseja substituir no texto" />
+                    </f:facet>
+
+                    <p:column headerText="Descrição">
+                        <h:outputText value="#{config.descricao}" />
+                    </p:column>
+
+                    <p:column headerText="Código">
+                        <h:outputText value="#{config.codigo}" />
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:panelGrid>
+
+        </h:panelGrid>
+
+
+
+    </ui:define>
+
+    <ui:define name="pesquisaCampos">
+        
+        <h:panelGrid style="width: 100%">
+        
+            <p:outputLabel for="regrasEmailPesquisa" value="Regra de Email" />
+            <p:selectOneMenu id="regrasEmailPesquisa" value="#{mbeanPesquisaModel.regrasEmail.id}" style="width:20%">
+                <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+                <f:selectItems value="#{mbean.regrasEmails}" />
+            </p:selectOneMenu>
+    
+            <p:outputLabel for="assuntoPesquisa" value="Assunto" />
+            <p:inputText id="assuntoPesquisa" value="#{mbeanPesquisaModel.assunto}" style="width: 40%" maxlength="200" />
+    
+            <p:outputLabel for="flagImediatoPesquisa" value="Envio imediato" />
+            <p:selectBooleanCheckbox id="flagImediatoPesquisa" value="#{mbeanPesquisaModel.flagImediato}" />
+        
+        </h:panelGrid>
+        
+    </ui:define>
+
+    <ui:define name="colunasTabela">
+
+        <p:column headerText="Regra de Email" styleClass="coluna30" style="text-align: center">
+            <p:commandLink action="#{mbean.detailEvent}" ajax="false">
+                <h:outputText value="#{linha.regrasEmail.descricao}" />
+                <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+            </p:commandLink>
+        </p:column>
+
+        <p:column headerText="Assunto">
+            <p:commandLink action="#{mbean.detailEvent}" ajax="false">
+                <h:outputText value="#{linha.assunto}" />
+                <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+            </p:commandLink>
+        </p:column>
+
+    </ui:define>
+
 </ui:composition>

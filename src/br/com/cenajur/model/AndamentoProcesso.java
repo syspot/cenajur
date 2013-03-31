@@ -1,7 +1,6 @@
 package br.com.cenajur.model;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -64,6 +64,12 @@ public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 	@ManyToOne
 	@JoinColumn(name = "colaborador_atualizacao_id")
 	private Colaborador colaboradorAtualizacao;
+	
+	@Transient
+	private Date dataInicial;
+	
+	@Transient
+	private Date dataFinal;
 	
 	public AndamentoProcesso() {
 	}
@@ -152,6 +158,22 @@ public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 		this.colaboradorAtualizacao = colaboradorAtualizacao;
 	}
 
+	public Date getDataInicial() {
+		return dataInicial;
+	}
+
+	public void setDataInicial(Date dataInicial) {
+		this.dataInicial = dataInicial;
+	}
+
+	public Date getDataFinal() {
+		return dataFinal;
+	}
+
+	public void setDataFinal(Date dataFinal) {
+		this.dataFinal = dataFinal;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -192,8 +214,8 @@ public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 			query.append(CenajurUtil.getParamSemAcento("a.processoNumero.numero"));
 		}
 		
-		if(!TSUtil.isEmpty(dataAndamento)){
-			query.append("and day(a.dataAndamento) = ? and month(a.dataAndamento) = ? and year(a.dataAndamento) = ? ");
+		if(!TSUtil.isEmpty(dataInicial) && !TSUtil.isEmpty(dataFinal)){
+			query.append("and date(a.dataAndamento) between date(?) and date(?) ");
 		}
 		
 		if(!TSUtil.isEmpty(tipoAndamentoProcesso) && !TSUtil.isEmpty(tipoAndamentoProcesso.getId())){
@@ -210,12 +232,9 @@ public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 			params.add(CenajurUtil.tratarString(processoNumero.getNumero()));
 		}
 		
-		if(!TSUtil.isEmpty(dataAndamento)){
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(dataAndamento);
-			params.add(calendar.get(Calendar.DAY_OF_MONTH));
-			params.add(calendar.get(Calendar.MONTH) + 1);
-			params.add(calendar.get(Calendar.YEAR));
+		if(!TSUtil.isEmpty(dataInicial) && !TSUtil.isEmpty(dataFinal)){
+			params.add(dataInicial);
+			params.add(dataFinal);
 		}
 		
 		if(!TSUtil.isEmpty(tipoAndamentoProcesso) && !TSUtil.isEmpty(tipoAndamentoProcesso.getId())){

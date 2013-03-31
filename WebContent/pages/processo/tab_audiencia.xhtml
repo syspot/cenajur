@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 
-    <p:tab id="tabAudiencia" title="Audiência" rendered="#{mbeanModel.id != null}">
+    <p:tab id="tabAudiencia" title="Audiência (#{mbeanModel.audiencias.size()})" rendered="#{mbeanModel.id != null}">
 
         <h:form id="formCadastroAudiencia">
         

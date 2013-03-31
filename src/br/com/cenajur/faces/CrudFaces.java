@@ -22,6 +22,8 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 	
 	private boolean flagAlterar;
 	
+	private Integer statusPesquisa;
+	
 	@SuppressWarnings("unchecked")
 	private Class<T> modelClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	
@@ -78,6 +80,9 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 	
 	protected void posFind(){
 	}
+	
+	protected void tratarException(){
+	}
 
 	
 	@Override
@@ -95,7 +100,12 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 		
 		this.preInsert();
 		
-		this.crudModel.save();
+		try{
+			this.crudModel.save();
+		} catch(Exception e){
+			tratarException();
+			throw new TSApplicationException(e.getMessage());
+		}
 		
 		this.posPersist();
 		
@@ -127,7 +137,12 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 		
 		this.preUpdate();
 		
-		this.crudModel.update();
+		try{
+			this.crudModel.update();
+		} catch(Exception e){
+			tratarException();
+			throw new TSApplicationException(e.getMessage());
+		}
 		
 		this.posPersist();
 		
@@ -181,6 +196,8 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 		
 		TSFacesUtil.gerarResultadoLista(this.grid);
 		
+		this.tabIndex = 0;
+		
 		return null;
 		
 	}
@@ -223,6 +240,14 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 
 	public void setFlagAlterar(boolean flagAlterar) {
 		this.flagAlterar = flagAlterar;
+	}
+
+	public Integer getStatusPesquisa() {
+		return statusPesquisa;
+	}
+
+	public void setStatusPesquisa(Integer statusPesquisa) {
+		this.statusPesquisa = statusPesquisa;
 	}
 	
 }

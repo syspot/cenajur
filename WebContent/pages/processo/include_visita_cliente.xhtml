@@ -10,7 +10,7 @@
             <p:tab title="#{visita.titleAba}">
 
                 <h:form>
-
+                
                     <h:panelGrid columns="1" style="width:50%">
 
                         <p:outputLabel for="processoAgenda" value="Processo" />
@@ -75,6 +75,12 @@
 
                             <p:column headerText="Status" styleClass="coluna5">
                                 <h:outputText value="#{agendaColaborador.status}" title="#{agendaColaborador.textoResposta}" styleClass="#{agendaColaborador.css}" />
+                            </p:column>
+
+                            <p:column headerText="Ficha de Atendimento" styleClass="coluna5">
+                                <p:commandButton id="btnImprimirVisita" value="Gerar" icon="ui-icon-print" action="#{clienteFaces.imprimirFichaAtendimento}" ajax="false" style="margin-left: 5px;" >
+                                    <f:setPropertyActionListener target="#{clienteFaces.idAgendaColaborador}" value="#{agendaColaborador.id}" />
+                                </p:commandButton>
                             </p:column>
 
                         </p:dataTable>

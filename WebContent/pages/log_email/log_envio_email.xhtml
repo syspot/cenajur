@@ -37,10 +37,14 @@
     </ui:define>
 
     <ui:define name="pesquisaCampos">
-
-        <p:outputLabel for="dataPesquisa" value="Data" />
-        <p:calendar id="dataPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.data}" style="width: 40%"  />
-
+        
+        <h:panelGrid style="width: 100%">
+        
+            <p:outputLabel for="dataPesquisa" value="Data" />
+            <p:calendar id="dataPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.data}" style="width: 40%"  />
+        
+        </h:panelGrid>
+        
     </ui:define>
 
     <ui:define name="colunasTabela">

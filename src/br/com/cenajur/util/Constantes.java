@@ -8,12 +8,17 @@ public class Constantes {
 	public static final String COLABORADOR_CONECTADO = "colaboradorConectado";
 	
 	public static final Long TIPO_COLABORADOR_ADVOGADO = 2L;
+	public static final Long TIPO_COLABORADOR_ESTAGIARIO = 50L;
 	
 	public static final Long SITUACAO_PROCESSO_ARQUIVADO = 3L;
 	public static final Long SITUACAO_PROCESSO_CLIENTE_ATIVO = 1L;
 	public static final Long SITUACAO_PROCESSO_CLIENTE_ARQUIVADO = 2L;
 	public static final Long SITUACAO_PROCESSO_PARTE_CONTRARIA_ATIVO = 1L;
 	public static final Long SITUACAO_PROCESSO_PARTE_CONTRARIA_ARQUIVADO = 2L;
+	
+	public static final Long SITUACAO_AUDIENCIA_AGUARDANDO = 3L;
+	public static final Long SITUACAO_AUDIENCIA_REALIZADA = 1L;
+	public static final Long SITUACAO_AUDIENCIA_NAO_REALIZADA = 2L;
 	
 	public static final Long TIPO_CATEGORIA_PROCESSO = 1L;
 	public static final Long TIPO_CATEGORIA_AUDIENCA = 2L;

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:param name="mbean" value="${envioSMSFaces}" />
+    <ui:param name="mbeanPesquisa" value="${clientePesquisaFaces}" />
+    <ui:param name="mbeanClienteAcao" value="${envioSMSFaces}" />
+    <ui:param name="nomeDialog" value="dlgCliente5" />
+
+    <p:tabView id="tabview" dynamic="false">
+
+        <p:tab id="tabCadastro" title="Enviar SMS">
+
+            <h:form id="formCadastro" prependId="false">
+
+                <p:fieldset style="width: 97.5%">
+
+                    <h:panelGrid columns="1" style="width:60%">
+
+                        <p:outputLabel for="cliente" value="Associado" />
+                        <p:outputPanel autoUpdate="true" style="width:100%">
+                            <p:inputText id="cliente" value="#{mbean.clienteSelecionado.nome}" readonly="true" style="width:75%;" />
+                            <p:commandButton type="button" icon="ui-icon-plus" value="Add" onclick="dlgCliente5.show();" style="margin-left: 10px" />
+                        </p:outputPanel>
+        
+                        <p:outputLabel for="msg" value="Mensagem" />
+                        <p:inputTextarea id="msg" value="#{mbean.msg}" maxlength="200" cols="80" rows="10" styleClass="coluna90" />
+
+                        <p:commandButton value="Enviar" icon="salvar" action="#{mbean.enviarMsg}" update="@form" />
+
+                    </h:panelGrid>
+
+                </p:fieldset>
+
+            <p:dialog id="dialogCliente5" header="Pesquisa de Associados" widgetVar="dlgCliente5" styleClass="dialog80">
+
+                <p:ajax listener="#{mbeanPesquisa.limpar}" update="@form" global="false" />
+    
+                <ui:include src="/resources/templates/includes/include_dialog_cliente.xhtml" />
+    
+            </p:dialog>
+            
+            </h:form>
+
+        </p:tab>
+
+    </p:tabView>
+
+</ui:composition>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 
-    <p:tab title="Andamento">
+    <p:tab title="Andamento (#{processo.andamentos.size()})">
 
         <ui:param name="mbeanProcesso" value="${processoFaces}" />
         <ui:param name="cadastroViaCliente" value="${true}" />
@@ -12,27 +12,7 @@
         <p:outputPanel id="opGridAndamentoProcesso2">
 
             <p:dataTable id="gridAndamentoProcesso2" emptyMessage="Nenhum andamento encontrado" style="width: 100%" paginator="true" paginatorAlwaysVisible="false" rows="10" value="#{processo.andamentos}" var="linha">
-
-                <p:column headerText="Descrição" styleClass="coluna40">
-                    <p:commandLink oncomplete="abrirDialogViewAndamento();" process="@this" global="false">
-                        <h:outputText value="#{linha.resumoDescricao}" />
-                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.andamentoProcesso.id}" value="#{linha.id}" />
-                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.crudModel.id}" value="#{processo.id}" />
-                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.processoNumeroPrincipal.id}" value="#{linha.processoNumero.id}" />
-                        <f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
-                    </p:commandLink>
-                </p:column>
-
-                <p:column headerText="Tipo do Andamento" styleClass="coluna20">
-                    <p:commandLink oncomplete="abrirDialogViewAndamento();" process="@this" global="false">
-                        <h:outputText value="#{linha.tipoAndamentoProcesso.descricao}" />
-                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.andamentoProcesso.id}" value="#{linha.id}" />
-                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.crudModel.id}" value="#{processo.id}" />
-                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.processoNumeroPrincipal.id}" value="#{linha.processoNumero.id}" />
-                        <f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
-                    </p:commandLink>
-                </p:column>
-
+                
                 <p:column headerText="Data" styleClass="coluna20" style="text-align: center">
                     <p:commandLink oncomplete="abrirDialogViewAndamento();" process="@this" global="false">
                         <h:outputText value="#{linha.dataAndamento}">
@@ -44,10 +24,30 @@
                         <f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
                     </p:commandLink>
                 </p:column>
-
-                <p:column headerText="Visualizar" styleClass="coluna5">
+                
+                <p:column headerText="Tipo do Andamento" styleClass="coluna20">
                     <p:commandLink oncomplete="abrirDialogViewAndamento();" process="@this" global="false">
-                        <h:graphicImage value="../resources/images/lupa.png" width="16" style="border: 0px" />
+                        <h:outputText value="#{linha.tipoAndamentoProcesso.descricao}" />
+                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.andamentoProcesso.id}" value="#{linha.id}" />
+                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.crudModel.id}" value="#{processo.id}" />
+                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.processoNumeroPrincipal.id}" value="#{linha.processoNumero.id}" />
+                        <f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
+                    </p:commandLink>
+                </p:column>
+                
+                <p:column headerText="Descrição" styleClass="coluna40">
+                    <p:commandLink oncomplete="abrirDialogViewAndamento();" process="@this" global="false">
+                        <h:outputText value="#{linha.resumoDescricao}" />
+                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.andamentoProcesso.id}" value="#{linha.id}" />
+                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.crudModel.id}" value="#{processo.id}" />
+                        <f:setPropertyActionListener target="#{mbeanProcessoAndamento.processoNumeroPrincipal.id}" value="#{linha.processoNumero.id}" />
+                        <f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
+                    </p:commandLink>
+                </p:column>
+
+                <p:column headerText="Editar" styleClass="coluna5">
+                    <p:commandLink oncomplete="abrirDialogViewAndamento();" process="@this" global="false">
+                        <h:graphicImage value="../resources/images/doc.png" width="16" style="border: 0px" />
                         <f:setPropertyActionListener target="#{mbeanProcessoAndamento.andamentoProcesso.id}" value="#{linha.id}" />
                         <f:setPropertyActionListener target="#{mbeanProcessoAndamento.crudModel.id}" value="#{processo.id}" />
                         <f:setPropertyActionListener target="#{mbeanProcessoAndamento.processoNumeroPrincipal.id}" value="#{linha.processoNumero.id}" />

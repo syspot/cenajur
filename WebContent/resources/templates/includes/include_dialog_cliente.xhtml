@@ -41,23 +41,29 @@
         <f:setPropertyActionListener target="#{mbeanPesquisa.cadastrando}" value="#{true}" />
     </p:commandButton>
 
-    <br />
-    <br />
-    
     <p:scrollPanel mode="native" style="width: 100%; height: 250px; margin-top: 20px">
     
         <p:dataTable id="gridPesquisa" widgetVar="gridCliente" emptyMessage="Nenhum associado encontrado" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="20" value="#{mbeanPesquisa.grid}" var="cliente">
     
             <p:column headerText="Matrícula">
-                <h:outputText value="#{cliente.matricula}" />
+                <p:commandLink action="#{mbeanClienteAcao.addCliente}" oncomplete="#{nomeDialog}.hide()">
+                    <h:outputText value="#{cliente.matricula}" />
+                    <f:setPropertyActionListener target="#{mbeanClienteAcao.clienteSelecionado}" value="#{cliente}" />
+                </p:commandLink>
             </p:column>
     
             <p:column headerText="Nome">
-                <h:outputText value="#{cliente.nome}" />
+                <p:commandLink action="#{mbeanClienteAcao.addCliente}" oncomplete="#{nomeDialog}.hide()">
+                    <h:outputText value="#{cliente.nome}" />
+                    <f:setPropertyActionListener target="#{mbeanClienteAcao.clienteSelecionado}" value="#{cliente}" />
+                </p:commandLink>
             </p:column>
     
             <p:column headerText="Tipo">
-                <h:outputText value="#{cliente.tipo}" />
+                <p:commandLink action="#{mbeanClienteAcao.addCliente}" oncomplete="#{nomeDialog}.hide()">
+                    <h:outputText value="#{cliente.tipo}" />
+                    <f:setPropertyActionListener target="#{mbeanClienteAcao.clienteSelecionado}" value="#{cliente}" />
+                </p:commandLink>
             </p:column>
     
             <p:column headerText="Adicionar" styleClass="coluna10" style="text-align:center;">

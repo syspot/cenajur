@@ -7,13 +7,30 @@
     <ui:param name="informacoesCadastro" value="${true}" />
     <ui:param name="gridComCss" value="${true}" />
     <ui:param name="mostrarBtnUpdate" value="${false}" />
-
+    
+    <ui:define name="btnSuperior">
+        <p:commandButton ajax="false" value="Cancelamento de Contrato" icon="ui-icon-print" action="#{mbean.imprimirTermoCancelamentoContrato}" rendered="#{mbeanModel.id != null and !mbeanModel.flagAtivo}" style="width: 200px"/>
+        <p:commandButton ajax="false" value="Atestado de Pobreza" icon="ui-icon-print" action="#{mbean.imprimirAtestadoPobreza}" style="margin-top: 20px; width: 180px" />    
+    </ui:define>
+    <ui:define name="btnSuperior2">
+        <p:commandButton ajax="false" value="Procuração Individual" icon="ui-icon-print" action="#{mbean.imprimirProcuracaoIndividual}" style="margin-top: 10px;" />    
+        <p:commandButton ajax="false" value="Procuração Coletiva" icon="ui-icon-print" action="#{mbean.imprimirProcuracaoColetiva}" style="margin-top: 10px; width: 200px" />    
+        <p:commandButton ajax="false" value="Carta Canc. de Contrato" icon="ui-icon-print" action="#{mbean.imprimirCartaCancelamentoContrato}" style="margin-top: 10px; width: 180px" />    
+    </ui:define>
+    
     <ui:define name="cadastro">
 
         <h:panelGrid columns="2" rendered="#{mbeanModel.id != null}">
             
             <h:outputText value="Situação:" style="font-weight: bold; font-size: 1.6em; text-align: left" rendered="#{!mbeanModel.flagAtivo}"/>
             <h:outputText value="Cancelado" style="font-weight: bold; font-size: 1.6em; color: red; text-align: left" rendered="#{!mbeanModel.flagAtivo}"/>
+            
+        </h:panelGrid>
+        
+        <h:panelGrid columns="2" rendered="#{mbeanModel.id != null and mbeanModel.observacoes != null}" style="margin-bottom: 20px">
+            
+            <h:outputText value="Aviso:" style="font-weight: bold; font-size: 1.6em; text-align: left" />
+            <h:outputText value="#{mbeanModel.observacoes}" style="font-weight: bold; font-size: 1.6em; color: red; text-align: left" />
             
         </h:panelGrid>
 
@@ -45,17 +62,17 @@
 
         <p:fieldset legend="Informações Gerais">
 
-            <h:panelGrid columns="2" columnClasses="coluna80, coluna20_1" style="width:100%">
+            <p:outputPanel styleClass="DuasColunas">
 
-                <p:outputPanel style="width:100%">
+                <p:outputPanel styleClass="Coluna80" layout="block">
 
                     <h:panelGrid columns="2" style="width:40%">
 
                         <p:outputLabel for="dataAdesao" value="Data de Adesão" style="color:red" />
                         <h:outputText value="Senha da internet" />
 
-                        <p:calendar navigator="true" id="dataAdesao" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" required="true" requiredMessage="Data de Adesão: Campo obrigatório" value="#{mbeanModel.dataAdesao}" styleClass="coluna90" style="color:red" timeZone="America/Recife" />
-                        <p:password value="#{mbean.senha}" maxlength="15" required="true" requiredMessage="Senha da internet: Campo obrigatório" redisplay="true" rendered="#{mbeanModel.id == null}"/>
+                        <p:calendar navigator="true" id="dataAdesao" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" required="#{mbeanModel.id == null}" requiredMessage="Data de Adesão: Campo obrigatório" value="#{mbeanModel.dataAdesao}" styleClass="coluna90" style="color:red" timeZone="America/Recife" />
+                        <p:password value="#{mbean.senha}" maxlength="15" required="#{mbeanModel.id == null}" requiredMessage="Senha da internet: Campo obrigatório" redisplay="true" rendered="#{mbeanModel.id == null}"/>
                         <p:password value="#{mbean.senha}" maxlength="15" redisplay="true" rendered="#{mbeanModel.id != null}"/>
 
                     </h:panelGrid>
@@ -66,8 +83,8 @@
                         <p:outputLabel for="nome" value="Nome" />
                         <p:outputLabel for="email" value="E-mail" />
 
-                        <p:inputText id="matricula" value="#{mbeanModel.matricula}" required="true" requiredMessage="Matrícula: Campo obrigatório" maxlength="30" styleClass="coluna90" />
-                        <p:inputText id="nome" value="#{mbeanModel.nome}" required="true" requiredMessage="Nome: Campo obrigatório" maxlength="100" styleClass="coluna95" />
+                        <p:inputText id="matricula" value="#{mbeanModel.matricula}" required="#{mbeanModel.id == null}" requiredMessage="Matrícula: Campo obrigatório" maxlength="30" styleClass="coluna90" />
+                        <p:inputText id="nome" value="#{mbeanModel.nome}" required="#{mbeanModel.id == null}" requiredMessage="Nome: Campo obrigatório" maxlength="100" styleClass="coluna95" />
                         <p:inputText id="email" value="#{mbeanModel.email}" validatorMessage="E-mail inválido" maxlength="50" styleClass="coluna90">
                             <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" for="email" />
                         </p:inputText>
@@ -81,10 +98,10 @@
                         <p:outputLabel for="dataNascimento" value="Data de Nascimento" />
                         <p:outputLabel for="estadoCivil" value="Estado Civil" />
 
-                        <p:inputMask id="cpf" required="true" requiredMessage="CPF: Campo obrigatório" mask="999.999.999-99" value="#{mbeanModel.cpf}" maxlength="15" styleClass="coluna90" />
-                        <p:inputText id="rg" required="true" requiredMessage="RG: Campo obrigatório" value="#{mbeanModel.rg}" maxlength="20" styleClass="coluna90" />
-                        <p:calendar navigator="true" id="dataNascimento" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" yearRange="c-100:c" required="true" requiredMessage="Data de Nascimento: Campo obrigatório" value="#{mbeanModel.dataNascimento}" style="width:95%" timeZone="America/Recife" />
-                        <p:selectOneMenu id="estadoCivil" required="true" requiredMessage="Estado Civil: Campo obrigatório" value="#{mbeanModel.estadoCivil.id}" style="width:100%">
+                        <p:inputMask id="cpf" required="#{mbeanModel.id == null}" requiredMessage="CPF: Campo obrigatório" mask="999.999.999-99" value="#{mbeanModel.cpf}" maxlength="15" styleClass="coluna90" />
+                        <p:inputText id="rg" required="#{mbeanModel.id == null}" requiredMessage="RG: Campo obrigatório" value="#{mbeanModel.rg}" maxlength="20" styleClass="coluna90" />
+                        <p:calendar navigator="true" id="dataNascimento" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" yearRange="c-100:c" required="#{mbeanModel.id == null}" requiredMessage="Data de Nascimento: Campo obrigatório" value="#{mbeanModel.dataNascimento}" style="width:95%" timeZone="America/Recife" />
+                        <p:selectOneMenu id="estadoCivil" required="#{mbeanModel.id == null}" requiredMessage="Estado Civil: Campo obrigatório" value="#{mbeanModel.estadoCivil.id}" style="width:100%">
                             <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                             <f:selectItems value="#{mbean.estadosCivis}" />
                         </p:selectOneMenu>
@@ -110,7 +127,7 @@
 
                 </p:outputPanel>
 
-                <p:outputPanel autoUpdate="true" style="width:100%; text-align: center;">
+                <p:outputPanel autoUpdate="true" styleClass="Coluna20" layout="block" style="text-align: center;">
 
                     <img src="${mbeanModel.urlImagem}" width="120" height="150" />
                     <br />
@@ -119,7 +136,7 @@
 
                 </p:outputPanel>
 
-            </h:panelGrid>
+            </p:outputPanel>
 
         </p:fieldset>
 
@@ -132,9 +149,9 @@
                 <p:outputLabel for="numero" value="Número" />
                 <p:outputLabel for="complemento" value="Complemento" />
 
-                <p:inputMask id="cep" required="true" requiredMessage="Cep: Campo obrigatório" mask="99.999-999" value="#{mbeanModel.cep}" maxlength="10" styleClass="coluna85" />
-                <p:inputText id="logradouro" required="true" requiredMessage="Logradouro: Campo obrigatório" value="#{mbeanModel.logradouro}" maxlength="100" styleClass="coluna95" />
-                <p:inputText id="numero" required="true" requiredMessage="Número: Campo obrigatório" value="#{mbeanModel.numero}" maxlength="6" styleClass="coluna80" />
+                <p:inputMask id="cep" required="#{mbeanModel.id == null}" requiredMessage="Cep: Campo obrigatório" mask="99.999-999" value="#{mbeanModel.cep}" maxlength="10" styleClass="coluna85" />
+                <p:inputText id="logradouro" required="#{mbeanModel.id == null}" requiredMessage="Logradouro: Campo obrigatório" value="#{mbeanModel.logradouro}" maxlength="100" styleClass="coluna95" />
+                <p:inputText id="numero" required="#{mbeanModel.id == null}" requiredMessage="Número: Campo obrigatório" value="#{mbeanModel.numero}" maxlength="6" styleClass="coluna80" />
                 <p:inputText id="complemento" value="#{mbeanModel.complemento}" maxlength="30" styleClass="coluna90" />
 
             </h:panelGrid>
@@ -147,14 +164,14 @@
                 <p:outputLabel for="telefone" value="Telefone" />
                 <p:outputLabel for="celular" value="Celular" />
 
-                <p:inputText id="bairro" required="true" requiredMessage="Bairro: Campo obrigatório" value="#{mbeanModel.bairro}" maxlength="80" styleClass="coluna92" />
-                <p:selectOneMenu id="estado" value="#{mbeanModel.cidade.estado.id}" required="true" requiredMessage="Estado: Campo obrigatório" style="width:95%">
+                <p:inputText id="bairro" required="#{mbeanModel.id == null}" requiredMessage="Bairro: Campo obrigatório" value="#{mbeanModel.bairro}" maxlength="80" styleClass="coluna92" />
+                <p:selectOneMenu id="estado" value="#{mbeanModel.cidade.estado.id}" required="#{mbeanModel.id == null}" requiredMessage="Estado: Campo obrigatório" style="width:95%">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbean.estados}" />
-                    <p:ajax update="opCidade" listener="#{mbean.atualizarComboCidades}" process="@this" global="false" />
+                    <p:ajax update="opCidade" listener="#{mbean.atualizarComboCidades}" process="@this" />
                 </p:selectOneMenu>
                 <p:outputPanel id="opCidade">
-                    <p:selectOneMenu id="cidade" value="#{mbeanModel.cidade.id}" required="true" requiredMessage="Cidade: Campo obrigatório" style="width:95%" disabled="#{mbeanModel.cidade.estado.id == null}">
+                    <p:selectOneMenu id="cidade" value="#{mbeanModel.cidade.id}" required="#{mbeanModel.id == null}" requiredMessage="Cidade: Campo obrigatório" style="width:95%" disabled="#{mbeanModel.cidade.estado.id == null}">
                         <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                         <f:selectItems value="#{mbean.cidades}" />
                     </p:selectOneMenu>
@@ -168,30 +185,38 @@
 
         <p:fieldset legend="Informações Funcionais">
 
-            <h:panelGrid columns="2" columnClasses="coluna30, coluna70" style="width:100%">
-
-                <p:outputLabel for="cadastroPM" value="Cadastro PM" />
-                <p:outputLabel for="lotacao" value="Lotação" />
-
-                <p:inputText id="cadastroPM" value="#{mbeanModel.cadastroPM}" maxlength="15" styleClass="coluna90" />
-                <p:outputPanel autoUpdate="true">
-                    <p:inputText id="lotacao" value="#{mbeanModel.lotacao.descricao}" readonly="true" styleClass="coluna70" />
-                    <p:commandButton type="button" icon="ui-icon-plus" value="Adicionar" onclick="dlgLotacao.show();" rendered="#{mbeanModel.lotacao.id == null}" />
-                    <p:commandButton value="Remover" process="@this" rendered="#{mbeanModel.lotacao.id != null}">
-                        <f:setPropertyActionListener target="#{mbeanModel.lotacao}" value="#{null}" />
-                    </p:commandButton>
+            <p:outputPanel styleClass="DuasColunas">
+                
+                <p:outputPanel layout="block" styleClass="Coluna30">
+                
+                    <p:outputLabel for="cadastroPM" value="Cadastro PM" style="margin-top:10px"/><br/>
+                    <p:inputText id="cadastroPM" value="#{mbeanModel.cadastroPM}" maxlength="15" styleClass="coluna90" style="margin-top:3px" /><br/><br/>
+                
+                    <p:outputLabel for="graduacao" value="Graduação" /><br/>
+                    <p:selectOneMenu id="graduacao" value="#{mbeanModel.graduacao.id}" style="width:90%">
+                        <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+                        <f:selectItems value="#{mbean.graduacoes}" />
+                    </p:selectOneMenu>
+                    
+                </p:outputPanel>
+                
+                <p:outputPanel layout="block" styleClass="Coluna70">
+                
+                    <p:outputLabel for="lotacao" value="Lotação" /><br/>
+                    <p:outputPanel autoUpdate="true">
+                        <p:inputText id="lotacao" value="#{mbeanModel.lotacao.descricao}" readonly="true" styleClass="coluna70" />
+                        <p:commandButton type="button" icon="ui-icon-plus" value="Adicionar" onclick="dlgLotacao.show();" rendered="#{mbeanModel.lotacao.id == null}" />
+                        <p:commandButton value="Remover" process="@this" rendered="#{mbeanModel.lotacao.id != null}" >
+                            <f:setPropertyActionListener target="#{mbeanModel.lotacao}" value="#{null}" />
+                        </p:commandButton>
+                    </p:outputPanel><br/><br/>
+                    
+                    <p:outputLabel for="flagStatusPM" value="PM Ativo" /><br/>
+                    <p:selectBooleanCheckbox id="flagStatusPM" value="#{mbeanModel.flagStatusPM}" />
+                    
                 </p:outputPanel>
 
-                <p:outputLabel for="graduacao" value="Graduação" />
-                <p:outputLabel for="flagStatusPM" value="PM Ativo" />
-
-                <p:selectOneMenu id="graduacao" value="#{mbeanModel.graduacao.id}" style="width:90%">
-                    <f:selectItem itemLabel="Não Selecionado" itemValue="" />
-                    <f:selectItems value="#{mbean.graduacoes}" />
-                </p:selectOneMenu>
-                <p:selectBooleanCheckbox id="flagStatusPM" value="#{mbeanModel.flagStatusPM}" />
-
-            </h:panelGrid>
+            </p:outputPanel>
 
         </p:fieldset>
 
@@ -215,40 +240,38 @@
                 <p:outputLabel for="plano" value="Plano" />
                 <p:outputLabel for="diaVencimento" value="Dia de Vencimento" />
 
-                <p:selectOneMenu id="plano" value="#{mbeanModel.plano.id}" required="true" requiredMessage="Plano: Campo obrigatório" style="width:90%">
+                <p:selectOneMenu id="plano" value="#{mbeanModel.plano.id}" required="#{mbeanModel.id == null}" requiredMessage="Plano: Campo obrigatório" style="width:90%">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbean.planos}" />
                 </p:selectOneMenu>
-                <p:inputText mask="99" maxlength="2" id="diaVencimento" required="true" requiredMessage="Dia de Vencimento: Campo obrigatório" value="#{mbeanModel.diaVencimento}" onkeypress="mascara(this,integer);" styleClass="coluna90" />
+                <p:inputText mask="99" maxlength="2" id="diaVencimento" required="#{mbeanModel.id == null}" requiredMessage="Dia de Vencimento: Campo obrigatório" value="#{mbeanModel.diaVencimento}" onkeypress="mascara(this,integer);" styleClass="coluna90" />
 
             </h:panelGrid>
 
-            <h:panelGrid columns="4" columnClasses="coluna50, coluna10, coluna10, coluna30" style="width:60%">
+            <h:panelGrid columns="3" columnClasses="coluna70, coluna15, coluna15" style="width:40%">
 
                 <p:outputLabel for="tipoPagamento" value="Tipo de Pagamento" />
                 <p:outputLabel for="flagAtivo" value="Ativo" />
                 <p:outputLabel for="flagRematricula" value="Rematrícula" />
-                <h:outputText value="" />
 
-                <p:selectOneMenu id="tipoPagamento" required="true" requiredMessage="Tipo de Pagamento: Campo obrigatório" value="#{mbeanModel.tipoPagamento.id}" style="width:90%">
+                <p:selectOneMenu id="tipoPagamento" required="#{mbeanModel.id == null}" requiredMessage="Tipo de Pagamento: Campo obrigatório" value="#{mbeanModel.tipoPagamento.id}" style="width:90%">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbean.tiposPagamentos}" />
                 </p:selectOneMenu>
                 <p:selectBooleanCheckbox id="flagAtivo" value="#{mbeanModel.flagAtivo}">
-                    <p:ajax update="pgInformacoesCancelamento" listener="#{mbean.mudarStatusCliente}" global="false" />
+                    <p:ajax update="pgInformacoesCancelamento" listener="#{mbean.mudarStatusCliente}" />
                 </p:selectBooleanCheckbox>
                 <p:selectBooleanCheckbox id="flagRematricula" value="#{mbeanModel.flagRematricula}" />
-                <p:commandButton value="Imprimir Termo de Cancelamento de contrato" action="#{mbean.imprimirTermoCancelamentoContrato}" ajax="false" rendered="#{mbean.flagAlterar}" style="width:300px" />
 
             </h:panelGrid>
 
-            <h:panelGrid id="pgInformacoesCancelamento" columns="2" columnClasses="coluna50, coluna50" style="width:50%">
+            <h:panelGrid id="pgInformacoesCancelamento" columns="2" columnClasses="coluna40, coluna60" style="width:40%">
 
                 <p:outputLabel for="dataCancelamento" value="Data de Cancelamento" rendered="#{!mbeanModel.flagAtivo}" />
                 <p:outputLabel for="motivoCancelamento" value="Motivo de Cancelamento" rendered="#{!mbeanModel.flagAtivo}" />
 
-                <p:calendar navigator="true" id="dataCancelamento" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Cancelamento: Campo obrigatório" value="#{mbeanModel.dataCancelamento}" styleClass="coluna90" rendered="#{!mbeanModel.flagAtivo}" timeZone="America/Recife" />
-                <p:selectOneMenu id="motivoCancelamento" required="true" requiredMessage="Motivo do Cancelamento: Campo obrigatório" value="#{mbeanModel.motivoCancelamento.id}" style="width:95%" rendered="#{!mbeanModel.flagAtivo}">
+                <p:calendar navigator="true" id="dataCancelamento" pattern="dd/MM/yyyy" required="#{mbeanModel.id == null}" requiredMessage="Data de Cancelamento: Campo obrigatório" value="#{mbeanModel.dataCancelamento}" styleClass="coluna90" rendered="#{!mbeanModel.flagAtivo}" timeZone="America/Recife" />
+                <p:selectOneMenu id="motivoCancelamento" required="#{mbeanModel.id == null}" requiredMessage="Motivo do Cancelamento: Campo obrigatório" value="#{mbeanModel.motivoCancelamento.id}" style="width:95%" rendered="#{!mbeanModel.flagAtivo}">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbean.motivosCancelamentos}" />
                 </p:selectOneMenu>
@@ -390,7 +413,7 @@
 
             <h:panelGrid columns="1" style="width: 98%">
                 
-                <p:fieldset legend="Processos" toggleable="true" style="width: 100%" rendered="#{mbeanModel.id != null and not empty mbean.processoAux.processos}">
+                <p:fieldset legend="Processos (#{mbean.processoAux.processos.size()})" toggleable="true" style="width: 100%" rendered="#{mbeanModel.id != null and not empty mbean.processoAux.processos}">
 
                     <p:outputPanel layout="inline">
                     
@@ -400,7 +423,7 @@
 
                 </p:fieldset>
                 
-                <p:fieldset legend="Visitas" toggleable="true" style="width: 100%" rendered="#{mbeanModel.id != null and not empty mbeanModel.visitas}">
+                <p:fieldset legend="Visitas (#{mbeanModel.visitas.size()})" toggleable="true" style="width: 100%" rendered="#{mbeanModel.id != null and not empty mbeanModel.visitas}">
                 
                     <p:outputPanel layout="inline">
 

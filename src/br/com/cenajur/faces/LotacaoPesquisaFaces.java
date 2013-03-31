@@ -15,6 +15,9 @@ import br.com.cenajur.model.Lotacao;
 @ManagedBean(name = "lotacaoPesquisaFaces")
 public class LotacaoPesquisaFaces extends PesquisaFaces<Lotacao> {
 
+	private Lotacao lotacao;
+	private boolean cadastrando;
+	
 	private List<SelectItem> estados;
 	private List<SelectItem> cidades;
 	
@@ -26,6 +29,9 @@ public class LotacaoPesquisaFaces extends PesquisaFaces<Lotacao> {
 	
 	@Override
 	public String limpar() {
+		this.lotacao = new Lotacao();
+		this.lotacao.setCidade(new Cidade());
+		this.lotacao.getCidade().setEstado(new Estado());
 		setModel(new Lotacao());
 		getModel().setCidade(new Cidade());
 		getModel().getCidade().setEstado(new Estado());
@@ -55,6 +61,22 @@ public class LotacaoPesquisaFaces extends PesquisaFaces<Lotacao> {
 
 	public void setCidades(List<SelectItem> cidades) {
 		this.cidades = cidades;
+	}
+
+	public Lotacao getLotacao() {
+		return lotacao;
+	}
+
+	public void setLotacao(Lotacao lotacao) {
+		this.lotacao = lotacao;
+	}
+
+	public boolean isCadastrando() {
+		return cadastrando;
+	}
+
+	public void setCadastrando(boolean cadastrando) {
+		this.cadastrando = cadastrando;
 	}	
 	
 }

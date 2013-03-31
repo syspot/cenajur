@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="distratoContrato" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f37734dc-0305-41c0-ba1d-0a06a2e568bb">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="232"/>
+	<parameter name="P_COLABORADOR_ID" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT C.ID, C.NOME, C.OAB, COALESCE(CASE WHEN C.LOGRADOURO = '' THEN NULL ELSE C.LOGRADOURO END || ', ', '') || COALESCE('n. ' || CASE WHEN C.NUMERO = '' THEN NULL ELSE C.NUMERO || ', ' END, '') || COALESCE(CASE WHEN C.COMPLEMENTO = '' THEN NULL ELSE C.COMPLEMENTO END || ', ', '')
+       || COALESCE(CASE WHEN C.BAIRRO = '' THEN NULL ELSE C.BAIRRO END || ', ', '') || COALESCE(CID.DESCRICAO || '/' || E.DESCRICAO || ', ', '') || COALESCE('CEP ' || CASE WHEN C.CEP = '' THEN NULL ELSE C.CEP END, '') ENDERECO FROM COLABORADORES C
+              LEFT OUTER JOIN CIDADES CID ON C.CIDADE_ID = CID.ID
+       LEFT OUTER JOIN ESTADOS E ON E.ID = CID.ESTADO_ID
+WHERE C.ID = $P{P_COLABORADOR_ID}]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="oab" class="java.lang.String"/>
+	<field name="endereco" class="java.lang.String"/>
+	<summary>
+		<band height="684">
+			<textField>
+				<reportElement uuid="b078e291-5e6a-466a-94e6-2144d138c91e" x="46" y="264" width="471" height="169"/>
+				<textElement textAlignment="Justified" markup="styled">
+					<font fontName="Garamond" size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">Associação Geral dos Policiais – AGEPOL</style> comunica o(a) Sr(a) " + $F{nome} + ", brasileiro(a)" + ($F{oab} == null ? "" : ", advogado(a), regularmente inscrito(a) na OAB/BA sob n. " + $F{oab}) + ", residente na " + $F{endereco} + ", nesta capital, <style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">DENÚNCIA</style> do contrato de prestação de serviço firmado, eis que não tem mais interesse na manutenção do mesmo, conforme clausula sétima do contrato. " +
+"Informa da necessidade de devolver todos os documentos, pastas, tablet e seus acessórios, que estejam em V. poder, além de renunciar a todos os processos virtuais, sob pena de responsabilidade."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="9fdd87e7-024b-4383-bbd1-71b2384541c8" x="177" y="501" width="95" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Garamond" size="13"/>
+				</textElement>
+				<text><![CDATA[Salvador/Bahia,]]></text>
+			</staticText>
+			<textField pattern="dd &apos;de&apos; MMMMM &apos;de&apos; yyyy">
+				<reportElement uuid="ff1a0100-e23f-4772-af68-6ace4c6a02a2" x="283" y="501" width="148" height="20"/>
+				<textElement>
+					<font fontName="Garamond" size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ed1253d4-56fd-4a13-ba2b-08c42472132d" x="310" y="618" width="221" height="20"/>
+				<textElement textAlignment="Center" markup="styled">
+					<font fontName="Garamond" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">" + $F{nome} + "</style>"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="e8cad775-280e-48ec-897e-6a2c8aee2548" x="22" y="610" width="250" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="3c43ae35-7576-45b0-8c4d-2d54fba48e76" x="310" y="610" width="221" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="ed1253d4-56fd-4a13-ba2b-08c42472132d" x="22" y="618" width="250" height="20"/>
+				<textElement textAlignment="Center" markup="styled">
+					<font fontName="Garamond" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">Associação Geral dos Policiais – AGEPOL</style>"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ed1253d4-56fd-4a13-ba2b-08c42472132d" x="46" y="33" width="462" height="57"/>
+				<textElement textAlignment="Center" markup="styled">
+					<font fontName="Garamond" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">DISTRATO DO CONTRATO DE PRESTAÇÃO DE SERVIÇOS PROFISSIONAIS DE ADVOCACIA</style>"]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

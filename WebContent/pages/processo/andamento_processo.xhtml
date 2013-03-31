@@ -8,9 +8,9 @@
 
     <ui:define name="cadastro">
 
-        <h:panelGrid columns="2" columnClasses="coluna50_2, coluna50_2" style="width:100%">
+        <p:outputPanel layout="block" styleClass="DuasColunas">
 
-            <h:panelGrid columns="1" columnClasses="coluna100" style="width:100%">
+            <h:panelGrid columns="1" columnClasses="coluna100">
 
                 <p:outputPanel autoUpdate="true">
                     <p:outputLabel for="processo" value="Processo" />
@@ -33,7 +33,7 @@
 
             </h:panelGrid>
 
-            <h:panelGrid columns="1" style="width:100%">
+            <h:panelGrid>
 
                 <p:commandButton type="button" value="Adicionar Documento" icon="ui-icon-plus" onclick="dlgDocumentoAndamentoProcesso.show();" update="pgCategoriaDocumento" />
 
@@ -41,7 +41,7 @@
 
             </h:panelGrid>
 
-        </h:panelGrid>
+        </p:outputPanel>
 
     </ui:define>
 
@@ -50,18 +50,17 @@
         <h:panelGrid columns="1" style="width:50%">
 
             <p:outputLabel for="processoPesquisa" value="Processo" />
+            <p:inputText id="processoPesquisa" value="#{mbeanPesquisaModel.processoNumero.numero}" styleClass="coluna90" />
 
-            <p:inputText id="processoPesquisa" value="#{mbeanPesquisaModel.processoNumero.numero}" styleClass="coluna95" />
-
-        </h:panelGrid>
-
-        <h:panelGrid columns="2" columnClasses="coluna20, coluna50" style="width:50%">
-
-            <p:outputLabel for="dataAndamentoPesquisa" value="Data do Andamento" />
+            <h:outputText value="Período do Andamento" />
+            <h:panelGrid columns="3" columnClasses="coluna25, coluna5, coluna25" style="width: 50%">
+                <p:calendar navigator="true" size="15" pattern="dd/MM/yyyy" locale="pt_BR" value="#{mbeanPesquisaModel.dataInicial}"  timeZone="America/Recife"/>
+                <h:outputLabel value="a" />
+                <p:calendar navigator="true" pattern="dd/MM/yyyy" locale="pt_BR" size="15" value="#{mbeanPesquisaModel.dataFinal}"  timeZone="America/Recife"/>
+            </h:panelGrid>
+            
             <p:outputLabel for="tipoAndamentoProcessoPesquisa" value="Tipo do Andamento" />
-
-            <p:calendar navigator="true" id="dataAndamentoPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataAndamento}" timeZone="America/Recife" />
-            <p:selectOneMenu id="tipoAndamentoProcessoPesquisa" value="#{mbeanPesquisaModel.tipoAndamentoProcesso.id}" style="width:95%">
+            <p:selectOneMenu id="tipoAndamentoProcessoPesquisa" value="#{mbeanPesquisaModel.tipoAndamentoProcesso.id}" style="width:50%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbean.tiposAndamentosProcessos}" />
             </p:selectOneMenu>
@@ -71,7 +70,7 @@
         <h:panelGrid columns="1" columnClasses="coluna100" style="width: 50%">
 
             <p:outputLabel for="descricaoPesquisa" value="Descrição" />
-            <p:inputTextarea id="descricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" autoResize="false" rows="10" maxlength="500" styleClass="coluna90" />
+            <p:inputTextarea id="descricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" autoResize="false" rows="5" maxlength="500" styleClass="coluna90" />
 
         </h:panelGrid>
 

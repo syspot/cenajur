@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:component xmlns="http://www.w3.org/1999/xhtml"
-              xmlns:ui="http://java.sun.com/jsf/facelets"
-              xmlns:h="http://java.sun.com/jsf/html"
-              xmlns:p="http://primefaces.org/ui"
-              xmlns:f="http://java.sun.com/jsf/core">
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 
-	<ui:param name="mbeanPesquisa" value="${colaboradorPesquisaFaces}" />
-	<ui:param name="mbeanColaboradorAcao" value="${clienteFaces.processoAux.processoAudienciaUtil}" />
-	<ui:param name="nomeDialog" value="dlgAdvogado5" />
-	<ui:param name="buscaAdvogado" value="#{true}" />
-	<ui:param name="metodoAdicao" value="addAdvogado" />
-	<ui:param name="colaboradorSelecionado" value="advogadoSelecionado" />
+    <ui:param name="mbeanPesquisa" value="${colaboradorPesquisaFaces}" />
+    <ui:param name="mbeanColaboradorAcao" value="${clienteFaces.processoAux.processoAudienciaUtil}" />
+    <ui:param name="nomeDialog" value="dlgAdvogado5" />
+    <ui:param name="buscaAdvogado" value="#{true}" />
+    <ui:param name="metodoAdicao" value="addAdvogado" />
+    <ui:param name="colaboradorSelecionado" value="advogadoSelecionado" />
 
-	<h:form rendered="#{autenticacaoFaces.mostrarDialogAdvogado5}">
-		
-		<p:dialog id="dialogAdvogado5" header="Pesquisa de Advogados" widgetVar="dlgAdvogado5" width="550" height="350" modal="true">
-	  
-	  		<ui:include src="/resources/templates/includes/include_dialog_colaborador.xhtml" />
-			  			
-		</p:dialog>
-	
-	</h:form>
+    <h:form rendered="#{autenticacaoFaces.mostrarDialogAdvogado5}">
+
+        <p:dialog id="dialogAdvogado5" header="Pesquisa de Advogados" widgetVar="dlgAdvogado5" width="550" height="350" modal="true">
+
+            <ui:include src="/resources/templates/includes/include_dialog_colaborador.xhtml" />
+
+        </p:dialog>
+
+    </h:form>
 
 </ui:component>

@@ -183,6 +183,13 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		this.nome = nome;
 	}
 	
+	public Cliente(Long id, String nome, String celular) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.celular = celular;
+	}
+	
 	public Cliente(Long id, String nome, String telefone, String celular, String email, Date dataAudiencia) {
 		super();
 		this.id = id;
@@ -226,7 +233,7 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	}
 
 	public String getEmail() {
-		return email;
+		return TSUtil.tratarString(email);
 	}
 
 	public void setEmail(String email) {
@@ -839,6 +846,10 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	
 	public List<Cliente> pesquisarClientesInadimplentesComAudiencia(Date dataInicial, Date dataFinal, Integer mes, Integer ano){
 		return super.find("select distinct new Cliente(c.id, c.nome, c.telefone, c.celular, c.email, a.dataAudiencia) from Audiencia a inner join a.processoNumero pn inner join pn.processo p inner join p.processosClientes pc inner join pc.cliente c inner join c.faturamentos f where date(a.dataAudiencia) between date(?) and date(?) and f.flagPago = false and f.flagCancelado = false and f.mes < ? and f.ano <= ? ", "c.nome", dataInicial, dataFinal, mes, ano);
+	}
+	
+	public List<Cliente> pesquisarClientesComCelular(){
+		return super.find("select distinct new Cliente(c.id, c.nome, c.celular) from Cliente c where c.flagAtivo = true and c.celular is not null ", "c.nome");
 	}
 	
 	public void inativarDependentes() throws TSApplicationException{

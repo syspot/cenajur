@@ -334,7 +334,7 @@ public class Faturamento extends TSActiveRecordAb<Faturamento>{
 	}
 	
 	public void pagar() throws TSApplicationException {
-		super.update(" update Faturamento set identificacao = ?, flagPago = ?, dataBaixa = ?, colaboradorBaixa.id = ?, lote = ?  where id = ? ", getIdentificacao(), getFlagPago(), getDataBaixa(), getColaboradorBaixa().getId(), getLote(), getId());
+		super.update(" update Faturamento set identificacao = ?, flagPago = ?, dataBaixa = ?, colaboradorBaixa.id = ?  where id = ? ", getIdentificacao(), getFlagPago(), getDataBaixa(), getColaboradorBaixa().getId(), getId());
 	}
 	
 }

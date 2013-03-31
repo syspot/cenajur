@@ -1,42 +1,38 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:component xmlns="http://www.w3.org/1999/xhtml"
-              xmlns:ui="http://java.sun.com/jsf/facelets"
-              xmlns:h="http://java.sun.com/jsf/html"
-              xmlns:p="http://primefaces.org/ui"
-              xmlns:f="http://java.sun.com/jsf/core">
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 
-	<ui:param name="mbean" value="${clienteFaces.processoAux}" />
+    <ui:param name="mbean" value="${clienteFaces.processoAux}" />
 
-	<h:form rendered="#{autenticacaoFaces.mostrarDialogNumeroProcesso2}">
-		
-		<p:dialog id="dialogNumeroProcesso2" widgetVar="dlgNumeroProcesso2"  header="Adicionar Número do Processo" width="400" modal="true" closable="false">
-			
-			<p:commandButton icon="ui-icon-plus" value="adicionar" action="#{mbean.addNumeroProcesso}" process="@this, opNumeroProcesso2" style="margin-bottom: 10px"/>
-			
-			<p:outputPanel id="opNumeroProcesso2" autoUpdate="true" style="width: 100%">
-			
-				<p:dataTable value="#{mbean.processoSelecionado.processosNumerosTemp}" var="processoNumero" emptyMessage="Nenhum número adicionado" rendered="#{not empty mbean.processoSelecionado}">
-			
-					<p:column headerText="Número">
-						<p:inputText required="true" requiredMessage="Número: Campo obrigatório" value="#{processoNumero.numero}" maxlength="30" styleClass="coluna90" />
-					</p:column>
-					
-					<p:column headerText="Excluir" styleClass="coluna5">
-						<p:commandLink icon="delete16" global="false" action="#{mbean.removerNumeroProcesso}" process="@this">
-							<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
-							<f:setPropertyActionListener target="#{mbean.processoNumeroSelecionado}" value="#{processoNumero}" />
-						</p:commandLink>
-					</p:column>
-				
-				</p:dataTable>
-				
-			</p:outputPanel>
-			
-			<p:commandButton value="Salvar" oncomplete="handleRequest('dialogNumeroProcesso2', dlgNumeroProcesso2, args)" style="margin-top: 10px"/>
-			<p:commandButton value="Fechar" oncomplete="handleRequest('dialogNumeroProcesso2', dlgNumeroProcesso2, args)" style="margin-top: 10px"/>
-			
-		</p:dialog>
-	
-	</h:form>
+    <h:form rendered="#{autenticacaoFaces.mostrarDialogNumeroProcesso2}">
+
+        <p:dialog id="dialogNumeroProcesso2" widgetVar="dlgNumeroProcesso2" header="Adicionar Número do Processo" width="400" modal="true" closable="false">
+
+            <p:commandButton icon="ui-icon-plus" value="adicionar" action="#{mbean.addNumeroProcesso}" process="@this, opNumeroProcesso2" style="margin-bottom: 10px" />
+
+            <p:outputPanel id="opNumeroProcesso2" autoUpdate="true" style="width: 100%">
+
+                <p:dataTable value="#{mbean.processoSelecionado.processosNumerosTemp}" var="processoNumero" emptyMessage="Nenhum número adicionado" rendered="#{not empty mbean.processoSelecionado}">
+
+                    <p:column headerText="Número">
+                        <p:inputText required="true" requiredMessage="Número: Campo obrigatório" value="#{processoNumero.numero}" maxlength="30" styleClass="coluna90" />
+                    </p:column>
+
+                    <p:column headerText="Excluir" styleClass="coluna5">
+                        <p:commandLink icon="delete16" global="false" action="#{mbean.removerNumeroProcesso}" process="@this">
+                            <h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+                            <f:setPropertyActionListener target="#{mbean.processoNumeroSelecionado}" value="#{processoNumero}" />
+                        </p:commandLink>
+                    </p:column>
+
+                </p:dataTable>
+
+            </p:outputPanel>
+
+            <p:commandButton value="Salvar" oncomplete="handleRequest('dialogNumeroProcesso2', dlgNumeroProcesso2, args)" style="margin-top: 10px" />
+            <p:commandButton value="Fechar" oncomplete="handleRequest('dialogNumeroProcesso2', dlgNumeroProcesso2, args)" style="margin-top: 10px" />
+
+        </p:dialog>
+
+    </h:form>
 
 </ui:component>

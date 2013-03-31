@@ -1,63 +1,53 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:composition 
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
-  	
-	<h:panelGrid id="pgDocumentoAll" style="width:100%">
-	
-		<h:panelGrid id="pgCategoriaDocumento" columns="2" columnClasses="coluna60, coluna40" style="width:50%">
-			
-			<p:outputPanel style="width:100%">
-			
-				<p:outputLabel for="categoriaDocumento" value="Categoria" /><br/>
-				<p:selectOneMenu id="categoriaDocumento" required="true" requiredMessage="Categoria do Documento: Campo obrigatório" value="#{mbeanDocumentoAcao.categoriaDocumento.id}" >
-					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-					<f:selectItems value="#{mbeanDocumento.categoriasDocumentos}" />
-				</p:selectOneMenu>
-			
-			</p:outputPanel>
-			
-			<h:panelGrid columns="1" style="width:100%">
-			
-				<p:outputLabel for="permissaoAssociado" value="Liberado" style="width:100%"/>
-				<p:selectBooleanCheckbox id="permissaoAssociado" value="#{mbeanDocumentoModel.flagPermissaoCliente}" />
-			
-			</h:panelGrid>
-			
-	  		
-		</h:panelGrid>
-		
-		<h:panelGrid id="pgDocumento" columns="1" columnClasses="coluna90" style="width:100%">
-		
-			<p:outputLabel for="descricaoDocumento" value="Descrição" />
-			<p:inputTextarea id="descricaoDocumento" value="#{mbeanDocumentoModel.descricao}" autoResize="false" rows="10" maxlength="500" style="width:88%"/>
-					
-			<h:panelGrid id="pgDocumentoView" columns="2" columnClasses="coluna70_4, coluna30_4" style="width: 450px; vertical-align: bottom;">
-					
-				<p:outputPanel>
-					<p:outputLabel for="documento" value="Documento" />
-					<p:fileUpload id="documento" label="Selecionar Documento" update="pgDocumentoView" fileUploadListener="#{mbeanDocumentoAcao.enviarDocumento}" auto="true" multiple="false" style="width:90%"/>
-				</p:outputPanel>
-				
-				<p:outputPanel id="opVisualizacaoDocumento" rendered="#{mbeanDocumentoModel.arquivo != null}">
-				
-					<style type="text/css">
-						.imagemVisualizacaoDocumento img{height: 56px; align: left;}
-					</style>
-					
-					<div class="imagemVisualizacaoDocumento" align="left" style="text-align: center">
-						<h:graphicImage value="../resources/images/img_upload.jpg" style="border: 0px" />
-						<h:outputText value="#{mbeanDocumentoModel.arquivo}" />
-					</div>
-					
-				</p:outputPanel>
-				
-			</h:panelGrid>
-		 		
-		</h:panelGrid>
-		
-	</h:panelGrid>
-	  		
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+    <p:outputPanel id="pgDocumentoAll" style="width:100%">
+
+        <h:panelGrid id="pgCategoriaDocumento" columnClasses="coluna40, coluna60" columns="2" style="width: 100%">
+
+            <p:outputLabel for="categoriaDocumento" value="Categoria" />
+            <p:outputLabel for="permissaoAssociado" value="Liberado" style="width:100%" />
+            
+            <p:selectOneMenu id="categoriaDocumento" required="true" requiredMessage="Categoria do Documento: Campo obrigatório" value="#{mbeanDocumentoAcao.categoriaDocumento.id}">
+                <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+                <f:selectItems value="#{mbeanDocumento.categoriasDocumentos}" />
+            </p:selectOneMenu>
+            <p:selectBooleanCheckbox id="permissaoAssociado" value="#{mbeanDocumentoModel.flagPermissaoCliente}" />
+
+        </h:panelGrid>
+
+        <h:panelGrid id="pgDocumento" columns="1" columnClasses="coluna90" style="width:100%">
+
+            <p:outputLabel for="descricaoDocumento" value="Descrição" />
+            <p:inputTextarea id="descricaoDocumento" value="#{mbeanDocumentoModel.descricao}" autoResize="false" rows="10" maxlength="500" style="width:88%" />
+        
+        </h:panelGrid>
+        
+        <h:panelGrid id="pgDocumentoView" columns="2" columnClasses="coluna70_4, coluna30_4" style="width: 450px; vertical-align: bottom;">
+
+            <p:outputPanel>
+                <p:outputLabel for="documento" value="Documento" />
+                <p:fileUpload id="documento" label="Selecionar Documento" update="pgDocumentoView" fileUploadListener="#{mbeanDocumentoAcao.enviarDocumento}" auto="true" multiple="false" style="width:90%" />
+            </p:outputPanel>
+
+            <p:outputPanel id="opVisualizacaoDocumento" rendered="#{mbeanDocumentoModel.arquivo != null}">
+
+                <style type="text/css">
+                    .imagemVisualizacaoDocumento img {
+           height: 56px;
+           align: left;
+                    }
+                </style>
+
+                <div class="imagemVisualizacaoDocumento" align="left" style="text-align: center">
+                    <h:graphicImage value="../resources/images/img_upload.jpg" style="border: 0px" />
+                    <h:outputText value="#{mbeanDocumentoModel.arquivo}" />
+                </div>
+
+            </p:outputPanel>
+
+        </h:panelGrid>
+
+    </p:outputPanel>
+
 </ui:composition>

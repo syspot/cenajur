@@ -602,7 +602,7 @@ public class AutenticacaoFaces extends TSMainFaces{
 	}
 	
 	public boolean isMostrarDialogAdvogado6(){
-		return (!TSUtil.isEmpty(this.permissaoSelecionada)) && Constantes.PERMISSAO_MENSAGENS.equals(this.permissaoSelecionada.getId());
+		return (!TSUtil.isEmpty(this.permissaoSelecionada)) && Constantes.PERMISSAO_AGENDA.equals(this.permissaoSelecionada.getId());
 	}
 	
 	public boolean isMostrarDialogAgenda(){

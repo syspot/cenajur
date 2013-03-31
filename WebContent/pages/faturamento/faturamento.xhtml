@@ -6,16 +6,20 @@
 
         <p:tab id="tabFaturamento" title="Faturamento">
 
+            <h:form id="formGerarFaturamento">
+                
+                <div align="right" style="width: 97.5%">
+                    <p:commandButton type="button" value="Adicionar Manual" global="false" onclick="dlgFaturamento.show();" icon="ui-icon-document" style="width: 150px; margin-left: 5px;"/>
+                    <p:commandButton value="Gerar Faturamento Mensal" icon="ui-icon-arrowrefresh-1-e" process="@this" action="#{mbean.gerarFaturamento}" style="width: 200px; margin-left: 5px;" />
+                </div>
+            
+            </h:form>
+            
             <h:form id="formFaturamento">
 
                 <ui:param name="mbean" value="#{faturamentoFaces}" />
                 <ui:param name="mbeanModel" value="#{faturamentoFaces.crudModel}" />
                 <ui:param name="mbeanPesquisaModel" value="#{faturamentoFaces.crudPesquisaModel}" />
-
-                <div align="right" style="width: 97.5%">
-                    <p:commandButton value="Adicionar Manual" process="@this" global="false" oncomplete="dlgFaturamento.show();" icon="ui-icon-document" style="width: 150px; margin-left: 5px;"/>
-                    <p:commandButton value="Gerar Faturamento Mensal" icon="ui-icon-arrowrefresh-1-e" action="#{mbean.gerarFaturamento}" style="width: 200px; margin-left: 5px;" />
-                </div>
 
                 <h:panelGrid style="width:50%">
 
@@ -58,7 +62,7 @@
                         <f:selectItem itemLabel="12" itemValue="#{12}" />
                     </p:selectOneMenu>
 
-                    <p:inputMask mask="9999" id="anoPesquisa" value="#{mbeanPesquisaModel.ano}" required="true" requiredMessage="Ano: Campo obrigatório" maxlength="4" />
+                    <p:inputMask mask="9999" id="anoPesquisa" value="#{mbeanPesquisaModel.ano}" onkeypress="javascript: return event.keyCode != 13" required="true" requiredMessage="Ano: Campo obrigatório" maxlength="4" />
 
                 </h:panelGrid>
 
@@ -72,7 +76,7 @@
 
                 </h:panelGrid>
 
-                <p:commandButton value="Pesquisar" action="#{mbean.findEvent}" icon="ui-icon-search" update="@form" style="margin-top: 10px" />
+                <p:commandButton tabindex="1" value="Pesquisar" action="#{mbean.findEvent}" icon="ui-icon-search" update="@form" style="margin-top: 10px" />
 
                 <p:remoteCommand name="alterarFaturamento" action="#{mbean.updateEvent}" update="@form" global="false" />
 

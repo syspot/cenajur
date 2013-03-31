@@ -90,6 +90,8 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 		getCrudPesquisaModel().setProcessoNumero(new ProcessoNumero());
 		getCrudPesquisaModel().setSituacaoAudiencia(new SituacaoAudiencia());
 		getCrudPesquisaModel().setVara(new Vara());
+		getCrudPesquisaModel().setDataInicial(new Date());
+		getCrudPesquisaModel().setDataFinal(new Date());
 		setGrid(new ArrayList<Audiencia>());
 		return null;
 	}

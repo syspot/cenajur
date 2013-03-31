@@ -7,7 +7,7 @@
   </context-param>
   <context-param>
     <param-name>primefaces.THEME</param-name>
-    <param-value>casablanca</param-value>
+    <param-value>smoothness</param-value>
   </context-param>
   <welcome-file-list>
     <welcome-file>/pages/login.xhtml</welcome-file>

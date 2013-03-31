@@ -27,15 +27,36 @@
         <p:dataTable id="gridPesquisa" widgetVar="gridProcesso" emptyMessage="Nenhum processo encontrado" value="#{mbeanPesquisa.grid}" var="processo">
     
             <p:column headerText="Número" styleClass="coluna20">
-                <h:outputText value="#{processo.processosNumeros}" />
+                <p:commandLink action="#{mbeanPesquisa.obterNumeroProcesso}" oncomplete="#{nomeDialogProcessoNumero}.show();" rendered="#{!processo.processoUnico}">
+                    <h:outputText value="#{processo.processosNumeros}" />
+                    <f:setPropertyActionListener target="#{mbeanPesquisa.processoSelecionado}" value="#{processo}" />
+                </p:commandLink>
+                <p:commandLink action="#{mbeanProcessoAcao.addProcessoNumero}" oncomplete="#{nomeDialog}.hide();" rendered="#{processo.processoUnico}">
+                    <h:outputText value="#{processo.processosNumeros}" />
+                    <f:setPropertyActionListener target="#{mbeanProcessoAcao.processoNumeroSelecionado}" value="#{processo.processoNumeroUnico}" />
+                </p:commandLink>
             </p:column>
     
             <p:column headerText="Associados" styleClass="coluna60">
-                <h:outputText value="#{processo.processosClientes}" />
+                <p:commandLink action="#{mbeanPesquisa.obterNumeroProcesso}" oncomplete="#{nomeDialogProcessoNumero}.show();" rendered="#{!processo.processoUnico}">
+                    <h:outputText value="#{processo.processosClientes}" />
+                    <f:setPropertyActionListener target="#{mbeanPesquisa.processoSelecionado}" value="#{processo}" />
+                </p:commandLink>
+                <p:commandLink action="#{mbeanProcessoAcao.addProcessoNumero}" oncomplete="#{nomeDialog}.hide();" rendered="#{processo.processoUnico}">
+                    <h:outputText value="#{processo.processosClientes}" />
+                    <f:setPropertyActionListener target="#{mbeanProcessoAcao.processoNumeroSelecionado}" value="#{processo.processoNumeroUnico}" />
+                </p:commandLink>
             </p:column>
     
             <p:column headerText="Situação" styleClass="coluna15">
-                <h:outputText value="#{processo.situacaoProcesso.descricao}" />
+                <p:commandLink action="#{mbeanPesquisa.obterNumeroProcesso}" oncomplete="#{nomeDialogProcessoNumero}.show();" rendered="#{!processo.processoUnico}">
+                    <h:outputText value="#{processo.situacaoProcesso.descricao}" />
+                    <f:setPropertyActionListener target="#{mbeanPesquisa.processoSelecionado}" value="#{processo}" />
+                </p:commandLink>
+                <p:commandLink action="#{mbeanProcessoAcao.addProcessoNumero}" oncomplete="#{nomeDialog}.hide();" rendered="#{processo.processoUnico}">
+                    <h:outputText value="#{processo.situacaoProcesso.descricao}" />
+                    <f:setPropertyActionListener target="#{mbeanProcessoAcao.processoNumeroSelecionado}" value="#{processo.processoNumeroUnico}" />
+                </p:commandLink>
             </p:column>
     
             <p:column headerText="Adicionar" style="text-align:center;" styleClass="coluna5_2">

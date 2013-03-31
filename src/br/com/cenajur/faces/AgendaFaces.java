@@ -77,6 +77,10 @@ public class AgendaFaces {
 	
 	private boolean buscaIndividual;
 	
+	private boolean flagClienteCiente;
+	
+	private Long idVaraAudiencia;
+	
 	
 	@PostConstruct
 	protected void init() {
@@ -96,7 +100,9 @@ public class AgendaFaces {
 		this.agenda.setTipoAgenda(new TipoAgenda());
 		this.agenda.setAgendasColaboradores(new ArrayList<AgendaColaborador>());
 		this.agenda.setTipoVisita(new TipoVisita());
+		this.agenda.setLocal("Cenajur");
 		this.agendaColaboradorSelecionado = new AgendaColaborador();
+		this.idVaraAudiencia = null;
 		return null;
 	}
 	
@@ -115,7 +121,7 @@ public class AgendaFaces {
         		
         		for(Agenda agenda : agendas){
         			
-        			DefaultScheduleEvent dse = new DefaultScheduleEvent(agenda.getTipoAgenda().getDescricao() + ": " + CenajurUtil.obterDescricaoAgenda(agenda), agenda.getDataInicial(), agenda.getDataFinal(), agenda);
+        			DefaultScheduleEvent dse = new DefaultScheduleEvent(agenda.getTipoAgenda().getDescricao() + ": " + CenajurUtil.obterDescricaoAgenda(agenda) + (TSUtil.isEmpty(agenda.getLocal()) ? "" : " - Local: " + agenda.getLocal()), agenda.getDataInicial(), agenda.getDataFinal(), agenda);
         			
         			agendaColaboradorAux.setAgenda(agenda);
         			agendaColaboradorAux.setColaborador(colaboradorConectado);
@@ -144,6 +150,18 @@ public class AgendaFaces {
 	public String onEventSelect(ScheduleEntrySelectEvent selectEvent) {
 		
 		this.agenda = (Agenda) selectEvent.getScheduleEvent().getData();
+		
+		if(this.agenda.isTipoAudiencia()){
+			
+			Audiencia audiencia = new Audiencia().obterPorAgenda(this.agenda);
+			
+			if(!TSUtil.isEmpty(audiencia)){
+
+				this.idVaraAudiencia = audiencia.getVara().getId(); 
+				
+			}
+			
+		}
 		
 		if(this.isUsuarioMaster()){
 			
@@ -276,6 +294,10 @@ public class AgendaFaces {
 			return null;
 		}
 		
+		if(this.agenda.isTipoAudiencia() && !TSUtil.isEmpty(TSUtil.tratarLong(idVaraAudiencia))){
+			this.agenda.setLocal(new Vara(idVaraAudiencia).getById().getDescricao());
+		}
+		
 		if(TSUtil.isEmpty(this.agenda.getId())){
 			
 			this.agenda.setColaboradorSolicitante(this.colaboradorConectado);
@@ -288,53 +310,12 @@ public class AgendaFaces {
 			
 		}
 		
+		if(this.agenda.isTipoAudiencia()){
+			this.gerarAudiencia();
+		}
+		
 		if(this.agenda.isTipoVisitaDoCliente()){
-			
-			TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_VISITAS_ID);
-			
-			RegrasEmail regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_VISITA_COM_CLIENTE).getById();
-			
-			EmailUtil emailUtil = new EmailUtil();
-			
-			ConfiguracoesReplaceEmail configuracaoReplace;
-			
-			for(ConfiguracoesEmail configuracoesEmail : regrasEmail.getConfiguracoesEmails()){
-				
-				if(configuracoesEmail.getFlagImediato()){
-				
-					if(!TSUtil.isEmpty(this.agenda.getCliente().getEmail())){
-						
-						StringBuilder corpoEmail = new StringBuilder(CenajurUtil.getTopoEmail());
-						
-						corpoEmail.append(configuracoesEmail.getCorpoEmail());
-						
-						corpoEmail.append(CenajurUtil.getRodapeEmail());
-						
-						String texto = corpoEmail.toString();
-						
-						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ASSOCIADO).getById();
-						
-						texto = texto.replace(configuracaoReplace.getCodigo(), this.agenda.getCliente().getNome());
-						
-						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DATA_ATUAL).getById();
-						
-						texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(new Date(), TSDateUtil.DD_MM_YYYY_HH_MM));
-						
-						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DATA_VISITA).getById();
-						
-						texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(this.agenda.getDataInicial(), TSDateUtil.DD_MM_YYYY_HH_MM));
-						
-						emailUtil.enviarEmailTratado(this.agenda.getCliente().getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
-						new ContadorEmail().gravarPorTipo(tipoInformacao);
-						new LogEnvioEmail(configuracoesEmail.getAssunto(), texto, this.agenda.getCliente(), this.agenda.getCliente().getEmail()).save();
-						
-						
-					}
-						
-				}
-				
-			}
-			
+			this.enviarEmailVisitaCliente();
 		}
 		
 		CenajurUtil.addInfoMessage("Operação realizada com sucesso");
@@ -422,6 +403,9 @@ public class AgendaFaces {
 				
 			} else{
 				
+				audiencia.setSituacaoAudiencia(audiencia.getSituacaoAudiencia().getById());
+				audiencia.setVara(audiencia.getVara().getById());
+				
 				this.processoAudienciaUtil.setAudiencia(audiencia);
 				
 			}
@@ -429,10 +413,12 @@ public class AgendaFaces {
 		} else{
 			
 			context.addCallbackParam("criarAudiencia", false);
-			this.agendaColaboradorSelecionado.update();
-			CenajurUtil.addInfoMessage("operação realizada com sucesso");
 			
 		}
+		
+		this.agendaColaboradorSelecionado.update();
+		
+		CenajurUtil.addInfoMessage("operação realizada com sucesso");
 		
 		return null;
 	}
@@ -453,7 +439,7 @@ public class AgendaFaces {
 		
 		return null;
 	}
-
+	
 	public String mudarStatusBusca(){
 		
 		if(this.buscaIndividual){
@@ -511,6 +497,98 @@ public class AgendaFaces {
 		
 		return null;
 		
+	}
+	
+	private void gerarAudiencia() throws TSApplicationException{
+		
+		Audiencia audiencia = new Audiencia().obterPorAgenda(this.agenda);
+		
+		this.processoAudienciaUtil = new ProcessoAudienciaUtil(this.agenda.getProcessoNumero().getProcesso());
+		this.processoAudienciaUtil.getAudiencia().setProcessoNumero(this.agenda.getProcessoNumero());
+		this.processoAudienciaUtil.setProcessoNumeroPrincipal(this.agenda.getProcessoNumero());
+		
+		if(TSUtil.isEmpty(audiencia)){
+			
+			AudienciaAdvogado audienciaAdvogado;
+			
+			for(AgendaColaborador agendaColaborador : this.agenda.getAgendasColaboradores()){
+				
+				audienciaAdvogado = new AudienciaAdvogado();
+				audienciaAdvogado.setAdvogado(agendaColaborador.getColaborador());
+				audienciaAdvogado.setAudiencia(this.processoAudienciaUtil.getAudiencia());
+				
+				this.processoAudienciaUtil.getAudiencia().getAudienciasAdvogados().add(audienciaAdvogado);
+				
+			}
+			
+			this.processoAudienciaUtil.getAudiencia().setAgenda(this.agenda);
+			this.processoAudienciaUtil.getAudiencia().setDataAudiencia(this.agenda.getDataInicial());
+			this.processoAudienciaUtil.getAudiencia().setDescricao(this.agenda.getDescricao());
+			this.processoAudienciaUtil.getAudiencia().setSituacaoAudiencia(new SituacaoAudiencia(Constantes.SITUACAO_AUDIENCIA_AGUARDANDO));
+			this.processoAudienciaUtil.getAudiencia().setVara(new Vara(idVaraAudiencia));
+			this.processoAudienciaUtil.getAudiencia().setFlagClienteCiente(flagClienteCiente);
+			
+			this.processoAudienciaUtil.cadastrarAudiencia();
+				
+		} else{
+			
+			this.processoAudienciaUtil.setAudiencia(audiencia);
+			
+			this.processoAudienciaUtil.getAudiencia().setDataAudiencia(this.agenda.getDataInicial());
+			this.processoAudienciaUtil.getAudiencia().setVara(new Vara(idVaraAudiencia));
+			
+			this.processoAudienciaUtil.alterarAudiencia();
+			
+		}
+		
+	}
+	
+	private void enviarEmailVisitaCliente() throws TSApplicationException{
+		
+		TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_VISITAS_ID);
+		
+		RegrasEmail regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_VISITA_COM_CLIENTE).getById();
+		
+		EmailUtil emailUtil = new EmailUtil();
+		
+		ConfiguracoesReplaceEmail configuracaoReplace;
+		
+		for(ConfiguracoesEmail configuracoesEmail : regrasEmail.getConfiguracoesEmails()){
+			
+			if(configuracoesEmail.getFlagImediato()){
+			
+				if(!TSUtil.isEmpty(this.agenda.getCliente().getEmail())){
+					
+					StringBuilder corpoEmail = new StringBuilder(CenajurUtil.getTopoEmail());
+					
+					corpoEmail.append(configuracoesEmail.getCorpoEmail());
+					
+					corpoEmail.append(CenajurUtil.getRodapeEmail());
+					
+					String texto = corpoEmail.toString();
+					
+					configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ASSOCIADO).getById();
+					
+					texto = texto.replace(configuracaoReplace.getCodigo(), this.agenda.getCliente().getNome());
+					
+					configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DATA_ATUAL).getById();
+					
+					texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(new Date(), TSDateUtil.DD_MM_YYYY_HH_MM));
+					
+					configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DATA_VISITA).getById();
+					
+					texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(this.agenda.getDataInicial(), TSDateUtil.DD_MM_YYYY_HH_MM));
+					
+					emailUtil.enviarEmailTratado(this.agenda.getCliente().getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
+					new ContadorEmail().gravarPorTipo(tipoInformacao);
+					new LogEnvioEmail(configuracoesEmail.getAssunto(), texto, this.agenda.getCliente(), this.agenda.getCliente().getEmail()).save();
+					
+					
+				}
+					
+			}
+			
+		}
 	}
 	
 	public boolean isUsuarioMaster(){
@@ -647,6 +725,22 @@ public class AgendaFaces {
 
 	public void setTiposVisitas(List<SelectItem> tiposVisitas) {
 		this.tiposVisitas = tiposVisitas;
+	}
+
+	public Long getIdVaraAudiencia() {
+		return idVaraAudiencia;
+	}
+
+	public void setIdVaraAudiencia(Long idVaraAudiencia) {
+		this.idVaraAudiencia = idVaraAudiencia;
+	}
+
+	public boolean isFlagClienteCiente() {
+		return flagClienteCiente;
+	}
+
+	public void setFlagClienteCiente(boolean flagClienteCiente) {
+		this.flagClienteCiente = flagClienteCiente;
 	}
 	
 }

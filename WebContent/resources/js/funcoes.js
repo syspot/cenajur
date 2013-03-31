@@ -81,6 +81,24 @@ function handleRequestActionParteContraria(idDialog, widgerVar, args){
 	
 }
 
+function handleRequestActionLotacao(idDialog, widgerVar, args){
+	if(args.validationFailed) {      	
+		jQuery(idDialog).effect("shake", { times:3 }, 100);
+	} else {  
+		addLotacao();
+	}  
+	
+}
+
+function handleRequestActionLotacao2(idDialog, widgerVar, args){
+	if(args.validationFailed) {      	
+		jQuery(idDialog).effect("shake", { times:3 }, 100);
+	} else {  
+		addLotacao2();
+	}  
+	
+}
+
 function handleRequestActionParteContraria2(idDialog, widgerVar, args){
 	if(args.validationFailed || !args.sucesso) {      	
 		jQuery(idDialog).effect("shake", { times:3 }, 100);
@@ -106,15 +124,38 @@ function handleRequestActionAgenda(idDialog, widgerVar, args){
 		
 		if(args.criarAudiencia) {
 			addAudiencia();
-			widgerVar.hide();
 		} else {  
 			widgerVar.hide();
-		}  
+		} 
 		
 		if(args.imprimirFichaAtendimento){
 			jQuery("#agendaColaboradorIdSubmit").val(jQuery("#agendaColaboradorId").val());
 			dlgAgenda.hide();
 			dlgImprimirFichaAtendimento.show();
+		}
+	}
+	
+}
+
+function handleRequestActionAgenda2(idDialog, widgerVar, args, fecharDialogAgenda){
+	
+	if(args.sucesso){
+		
+		if(args.criarAudiencia) {
+			addAudiencia();
+			widgerVar.hide();
+		} else {  
+			widgerVar.hide();
+		} 
+		
+		if(args.imprimirFichaAtendimento){
+			jQuery("#agendaColaboradorIdSubmit").val(jQuery("#agendaColaboradorId").val());
+			dlgAgenda.hide();
+			dlgImprimirFichaAtendimento.show();
+		}
+		
+		if(fecharDialogAgenda){
+			dlgAgenda.hide();
 		}
 	}
 	

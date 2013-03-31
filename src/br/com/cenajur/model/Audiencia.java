@@ -55,7 +55,7 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 	@JoinColumn(name = "situacao_audiencia_id")
 	private SituacaoAudiencia situacaoAudiencia;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	private Vara vara;
 	
 	@OneToMany(mappedBy = "audiencia", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
@@ -82,8 +82,13 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 	private Colaborador advogado;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name = "agenda_id")
 	private Agenda agenda;
+	
+	@Transient
+	private Date dataInicial;
+	
+	@Transient
+	private Date dataFinal;
 	
 	public Audiencia() {
 	}
@@ -212,6 +217,22 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 		this.agenda = agenda;
 	}
 
+	public Date getDataInicial() {
+		return dataInicial;
+	}
+
+	public void setDataInicial(Date dataInicial) {
+		this.dataInicial = dataInicial;
+	}
+
+	public Date getDataFinal() {
+		return dataFinal;
+	}
+
+	public void setDataFinal(Date dataFinal) {
+		this.dataFinal = dataFinal;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -252,8 +273,8 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 			query.append(CenajurUtil.getParamSemAcento("a.processoNumero.numero"));
 		}
 		
-		if(!TSUtil.isEmpty(dataAudiencia)){
-			query.append("and date(a.dataAudiencia) = date(?) ");
+		if(!TSUtil.isEmpty(dataInicial) && !TSUtil.isEmpty(dataFinal)){
+			query.append("and date(a.dataAudiencia) between date(?) and date(?) ");
 		}
 		
 		if(!TSUtil.isEmpty(situacaoAudiencia) && !TSUtil.isEmpty(situacaoAudiencia.getId())){
@@ -278,8 +299,9 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 			params.add(CenajurUtil.tratarString(processoNumero.getNumero()));
 		}
 		
-		if(!TSUtil.isEmpty(dataAudiencia)){
-			params.add(dataAudiencia);
+		if(!TSUtil.isEmpty(dataInicial) && !TSUtil.isEmpty(dataFinal)){
+			params.add(dataInicial);
+			params.add(dataFinal);
 		}
 		
 		if(!TSUtil.isEmpty(situacaoAudiencia) && !TSUtil.isEmpty(situacaoAudiencia.getId())){

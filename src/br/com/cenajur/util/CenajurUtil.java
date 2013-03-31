@@ -4,11 +4,9 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -201,7 +199,7 @@ public class CenajurUtil {
 	}
 	
 	public static String obterResumoGrid(String texto, int tamanho){
-		return texto.length() < tamanho ? texto : texto.substring(0, tamanho) + "...";
+		return TSUtil.isEmpty(texto) ? "" : texto.length() < tamanho ? texto : texto.substring(0, tamanho) + "...";
 	}
 	
 	public static String getDescricaoPDF(UploadedFile event){
@@ -235,21 +233,6 @@ public class CenajurUtil {
 		}
 	}
 	
-	public static String getParamData(String field){
-		StringBuilder query = new StringBuilder();
-		return query.append("and day(").append(field).append(") = ? and month(").append(field).append(") = ? and year(").append(field).append(") = ?").toString();
-	}
-	
-	public static List<Object> obterParamsDataAtual2(Date data){
-		List<Object> params = new ArrayList<Object>();
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(data);
-		params.add(calendar.get(Calendar.DAY_OF_MONTH));
-		params.add(calendar.get(Calendar.MONTH) + 1);
-		params.add(calendar.get(Calendar.YEAR));
-		return params;
-	}
-
 	public static Double tratarDouble(Double valor) {
 
 		if (!TSUtil.isEmpty(valor) && valor.equals(0.0)) {

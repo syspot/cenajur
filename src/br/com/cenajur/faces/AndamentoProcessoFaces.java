@@ -78,6 +78,8 @@ public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 		setCrudPesquisaModel(new AndamentoProcesso());
 		getCrudPesquisaModel().setProcessoNumero(new ProcessoNumero());
 		getCrudPesquisaModel().setTipoAndamentoProcesso(new TipoAndamentoProcesso());
+		getCrudPesquisaModel().setDataInicial(new Date());
+		getCrudPesquisaModel().setDataFinal(new Date());
 		setGrid(new ArrayList<AndamentoProcesso>());
 		return null;
 	}

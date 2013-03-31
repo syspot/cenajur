@@ -70,11 +70,11 @@
             <p:graphicImage value="../resources/images/ajaxloadingbar.gif" />
         </p:dialog>
 
-        <p:growl id="growl" showDetail="true" showSummary="false" sticky="false" autoUpdate="true" globalOnly="false" />
-
+        <p:growl id="growl" showDetail="true" showSummary="false" sticky="false" autoUpdate="true" globalOnly="false" rendered="#{!autenticacaoFaces.mostrarDialogAgenda}" />
+        
         <p:layout fullPage="true">
 
-            <p:layoutUnit position="west" size="240" resizable="true" header="Menu">
+            <p:layoutUnit position="west" size="255" resizable="true" header="Menu">
                 <ui:include id="uiMenu" src="/pages/menu.xhtml" />
             </p:layoutUnit>
 

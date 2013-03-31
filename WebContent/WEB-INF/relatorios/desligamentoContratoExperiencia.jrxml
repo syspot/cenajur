@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="desligamentoContratoExperiencia" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f37734dc-0305-41c0-ba1d-0a06a2e568bb">
+	<property name="ireport.zoom" value="0.9090909090909096"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="308"/>
+	<parameter name="P_COLABORADOR_ID" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT C.ID, C.NOME, COALESCE(C.OAB, '') OAB, COALESCE(CASE WHEN C.LOGRADOURO = '' THEN NULL ELSE C.LOGRADOURO END || ', ', '') || COALESCE('n. ' || CASE WHEN C.NUMERO = '' THEN NULL ELSE C.NUMERO || ', ' END, '') || COALESCE(CASE WHEN C.COMPLEMENTO = '' THEN NULL ELSE C.COMPLEMENTO END || ', ', '')
+       || COALESCE(CASE WHEN C.BAIRRO = '' THEN NULL ELSE C.BAIRRO END || ', ', '') || COALESCE(CID.DESCRICAO || '/' || E.DESCRICAO || ', ', '') || COALESCE('CEP ' || CASE WHEN C.CEP = '' THEN NULL ELSE C.CEP END, '') ENDERECO FROM COLABORADORES C
+              LEFT OUTER JOIN CIDADES CID ON C.CIDADE_ID = CID.ID
+       LEFT OUTER JOIN ESTADOS E ON E.ID = CID.ESTADO_ID
+WHERE C.ID = $P{P_COLABORADOR_ID}]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="oab" class="java.lang.String"/>
+	<field name="endereco" class="java.lang.String"/>
+	<summary>
+		<band height="684">
+			<textField>
+				<reportElement uuid="b078e291-5e6a-466a-94e6-2144d138c91e" x="77" y="264" width="440" height="20"/>
+				<textElement textAlignment="Justified" markup="styled">
+					<font fontName="Garamond" size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Sr(a). <style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">" + $F{nome} + "</style>"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="9fdd87e7-024b-4383-bbd1-71b2384541c8" x="77" y="164" width="59" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Garamond" size="13"/>
+				</textElement>
+				<text><![CDATA[Salvador, ]]></text>
+			</staticText>
+			<textField pattern="dd &apos;de&apos; MMMMM &apos;de&apos; yyyy">
+				<reportElement uuid="ff1a0100-e23f-4772-af68-6ace4c6a02a2" x="145" y="164" width="148" height="20"/>
+				<textElement>
+					<font fontName="Garamond" size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ed1253d4-56fd-4a13-ba2b-08c42472132d" x="46" y="66" width="462" height="18"/>
+				<textElement textAlignment="Center" markup="styled">
+					<font fontName="Garamond" size="13" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["COMUNICAÇÃO"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="7cf2b253-76cb-43d7-9331-374778907f25" x="77" y="335" width="440" height="67"/>
+				<textElement textAlignment="Justified">
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[Venho por meio desta informar que não se tornou conveniente a manutenção do contrato prestação de serviços firmado com V.Sa.
+E por este motivo, informamos nesta data, o seu desligamento desta empresa.
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6152c190-c419-4aac-a50c-c58a4e6911a8" x="77" y="453" width="440" height="22"/>
+				<textElement textAlignment="Justified">
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[Atenciosamente,]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement uuid="f68049b9-0a96-4055-850f-6432fcd63c91" x="77" y="606" width="191" height="63"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="da2b2472-e54c-4531-8b9d-037e13cb6d27" x="77" y="519" width="440" height="40"/>
+				<textElement textAlignment="Center">
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[CET/CENAJUR
+CGC: 00.273.879/0001-45
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="252eca52-a7cd-4afd-815f-d818c7f81c69" x="87" y="620" width="52" height="13"/>
+				<textElement>
+					<font fontName="Garamond" size="10"/>
+				</textElement>
+				<text><![CDATA[Recebi em:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e131cf62-de95-493c-b852-6126e2ec2590" x="87" y="644" width="52" height="13"/>
+				<textElement>
+					<font fontName="Garamond"/>
+				</textElement>
+				<text><![CDATA[Ass.:]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="d46280ac-45c5-4636-86b1-bf7c0ee9b23c" x="149" y="632" width="28" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="67ee6c80-1a82-43f2-9f75-430269306798" x="181" y="632" width="28" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="c71f28ff-607e-4fa0-a7ca-b7e5147a940c" x="213" y="632" width="28" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="da95527d-957f-40b4-b4ac-0d8f5fa52a50" x="177" y="609" width="19" height="23"/>
+				<textElement>
+					<font fontName="Garamond" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="162e8120-4148-44dd-b712-0793e61bba3a" x="209" y="610" width="19" height="23"/>
+				<textElement>
+					<font fontName="Garamond" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="df5a76f5-7605-487c-aece-0433eb3765e7" x="149" y="654" width="92" height="1"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

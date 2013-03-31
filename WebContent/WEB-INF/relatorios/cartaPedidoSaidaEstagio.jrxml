@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cartaPedidoSaidaEstagio" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f37734dc-0305-41c0-ba1d-0a06a2e568bb">
+	<property name="ireport.zoom" value="1.1000000000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="386"/>
+	<parameter name="P_COLABORADOR_ID" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT C.ID, C.NOME, C.CPF FROM COLABORADORES C
+WHERE C.ID = $P{P_COLABORADOR_ID}]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="cpf" class="java.lang.String"/>
+	<summary>
+		<band height="684">
+			<textField>
+				<reportElement uuid="b078e291-5e6a-466a-94e6-2144d138c91e" x="57" y="479" width="440" height="20"/>
+				<textElement textAlignment="Center" markup="styled">
+					<font fontName="Garamond" size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">" + $F{nome} + "</style>"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="9fdd87e7-024b-4383-bbd1-71b2384541c8" x="301" y="61" width="59" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Garamond" size="13"/>
+				</textElement>
+				<text><![CDATA[Salvador, ]]></text>
+			</staticText>
+			<textField pattern="dd &apos;de&apos; MMMMM &apos;de&apos; yyyy">
+				<reportElement uuid="ff1a0100-e23f-4772-af68-6ace4c6a02a2" x="369" y="61" width="148" height="20"/>
+				<textElement>
+					<font fontName="Garamond" size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ed1253d4-56fd-4a13-ba2b-08c42472132d" x="77" y="205" width="440" height="18"/>
+				<textElement markup="styled">
+					<font fontName="Garamond" size="13" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["A AGEPOL/CENAJUR"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="7cf2b253-76cb-43d7-9331-374778907f25" x="77" y="277" width="440" height="55"/>
+				<textElement textAlignment="Justified">
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[Venho, por meio desta, informar que não tenho mais interesse na continuidade do estágio.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6152c190-c419-4aac-a50c-c58a4e6911a8" x="77" y="402" width="440" height="22"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Garamond" size="13"/>
+				</textElement>
+				<text><![CDATA[Atenciosamente,]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b078e291-5e6a-466a-94e6-2144d138c91e" x="57" y="499" width="440" height="20"/>
+				<textElement textAlignment="Center" markup="styled">
+					<font fontName="Garamond" size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">CPF: " + $F{cpf} + "</style>"]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

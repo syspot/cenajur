@@ -28,6 +28,15 @@ public class SituacaoAudiencia extends TSActiveRecordAb<SituacaoAudiencia>{
 	
 	private String css;
 
+	public SituacaoAudiencia() {
+		super();
+	}
+
+	public SituacaoAudiencia(Long id) {
+		super();
+		this.id = id;
+	}
+
 	public Long getId() {
 		return TSUtil.tratarLong(id);
 	}

@@ -4,8 +4,20 @@
     <ui:param name="mbean" value="${colaboradorFaces}" />
     <ui:param name="mbeanModel" value="${colaboradorFaces.crudModel}" />
     <ui:param name="mbeanPesquisaModel" value="${colaboradorFaces.crudPesquisaModel}" />
+    <ui:param name="informacoesCadastro" value="${true}" />
     <ui:param name="gridComCss" value="${true}" />
 
+    <ui:define name="btnSuperior">
+        <p:commandButton ajax="false" value="Imprimir Contrato" icon="ui-icon-print" action="#{mbean.imprimirContrato}" rendered="#{mbeanModel.id != null and mbeanModel.tipoColaboradorAdvogado}" />    
+        <p:commandButton ajax="false" value="Imprimir Contrato de Experiência" icon="ui-icon-print" action="#{mbean.imprimirContratoExperiencia}" rendered="#{mbeanModel.id != null and mbeanModel.tipoColaboradorAdvogado}" />    
+        <p:commandButton ajax="false" value="Imprimir pedido de saída" icon="ui-icon-print" action="#{mbean.imprimirCartaPedidoSaidaEstagio}" rendered="#{mbeanModel.id != null and mbeanModel.tipoColaboradorEstagiario}" />    
+    </ui:define>
+    
+    <ui:define name="btnSuperior2">
+        <p:commandButton ajax="false" value="Imprimir Desligamento de Contrato" icon="ui-icon-print" action="#{mbean.imprimirDesligamentoContratoExperiencia}" rendered="#{mbeanModel.id != null and mbeanModel.tipoColaboradorAdvogado}" />    
+        <p:commandButton ajax="false" value="Imprimir Distrato de Contrato" icon="ui-icon-print" action="#{mbean.imprimirDistratoContrato}" rendered="#{mbeanModel.id != null and mbeanModel.tipoColaboradorAdvogado}" />    
+    </ui:define>
+    
     <ui:define name="cadastro">
 
         <p:fieldset legend="Informações Gerais">
@@ -31,17 +43,21 @@
 
             </h:panelGrid>
 
-            <h:panelGrid columns="3" styleClass="coluna30, coluna30, coluna40" style="width:53%">
+            <h:panelGrid columns="5" styleClass="coluna20, coluna20, coluna30, coluna10, coluna10" style="width:73%">
 
                 <p:outputLabel for="cpf" value="CPF" />
                 <p:outputLabel for="rg" value="RG" />
                 <p:outputLabel for="dataNascimento" value="Data de Nascimento" />
+                <p:outputLabel for="ctps" value="CTPS" />
+                <p:outputLabel for="ctpsSerie" value="CTPS - Série" />
 
                 <p:inputMask id="cpf" required="true" requiredMessage="CPF: Campo obrigatório" mask="999.999.999-99" value="#{mbeanModel.cpf}" maxlength="14" styleClass="coluna90" />
                 <p:inputText id="rg" required="true" requiredMessage="RG: Campo obrigatório" validatorMessage="RG inválido" value="#{mbeanModel.rg}" maxlength="20" styleClass="coluna90">
                     <f:validateRegex pattern="[0-9]*" for="rg" />
                 </p:inputText>
                 <p:calendar navigator="true" id="dataNascimento" pattern="dd/MM/yyyy" yearRange="c-100:c" required="true" requiredMessage="Data de Nascimento: Campo obrigatório" value="#{mbeanModel.dataNascimento}" onkeypress="formatar(this, '##/##/####')" style="width:90%" timeZone="America/Recife" />
+                <p:inputText id="ctps" value="#{mbeanModel.ctps}" maxlength="30" styleClass="coluna90" />
+                <p:inputText id="ctpsSerie" value="#{mbeanModel.ctpsSerie}" maxlength="10" styleClass="coluna90" />
 
             </h:panelGrid>
             
@@ -124,13 +140,14 @@
 
             </h:panelGrid>
 
-            <h:panelGrid columns="5" columnClasses="coluna30, coluna30, coluna30, coluna10, coluna10" style="width:55%">
+            <h:panelGrid columns="6" columnClasses="coluna30, coluna30, coluna30, coluna10, coluna10, coluna15" style="width:70%">
 
                 <p:outputLabel for="dataAdmissao" value="Data de Admissão" />
                 <p:outputLabel for="tipoColaborador" value="Tipo" />
                 <p:outputLabel for="oab" value="OAB" />
                 <p:outputLabel for="situacao" value="Ativo" />
                 <p:outputLabel for="flagPermissaoAgenda" value="Agenda" />
+                <p:outputLabel for="flagProcuracaoIndividual" value="Procuração Individual" />
 
                 <p:calendar navigator="true" id="dataAdmissao" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" required="true" requiredMessage="Data de Admissão: Campo obrigatório" value="#{mbeanModel.dataAdmissao}" style="width:95%" timeZone="America/Recife" />
                 <p:selectOneMenu id="tipoColaborador" required="true" requiredMessage="Tipo de Colaborador: Campo obrigatório" value="#{mbeanModel.tipoColaborador.id}" style="width:93%">
@@ -139,21 +156,27 @@
                     <p:ajax update="opOAB" process="@this" global="false" />
                 </p:selectOneMenu>
                 <p:outputPanel id="opOAB">
-                    <p:inputText id="oab" required="true" requiredMessage="OAB: Campo obrigatório" value="#{mbeanModel.oab}" maxlength="20" disabled="#{!mbean.advogado}" styleClass="coluna88" />
+                    <p:inputText id="oab" required="true" requiredMessage="OAB: Campo obrigatório" value="#{mbeanModel.oab}" maxlength="20" disabled="#{!mbeanModel.tipoColaboradorAdvogado}" styleClass="coluna88" />
                 </p:outputPanel>
                 <p:selectBooleanCheckbox id="situacao" value="#{mbeanModel.flagAtivo}">
                     <p:ajax update="pgDataDesligamento" process="@this" global="false" />
                 </p:selectBooleanCheckbox>
                 <p:selectBooleanCheckbox id="flagPermissaoAgenda" value="#{mbeanModel.flagPermissaoAgenda}" />
+                <p:selectBooleanCheckbox id="flagProcuracaoIndividual" value="#{mbeanModel.flagProcuracaoIndividual}" />
 
             </h:panelGrid>
 
-            <h:panelGrid columns="1" style="width:30%">
-
-                <h:panelGrid id="pgDataDesligamento">
-                    <p:outputLabel for="dataDesligamento" value="Data de Desligamento" rendered="#{!mbeanModel.flagAtivo}" />
-                    <p:calendar navigator="true" id="dataDesligamento" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" value="#{mbeanModel.dataDesligamento}" styleClass="coluna90" rendered="#{!mbeanModel.flagAtivo}" timeZone="America/Recife" />
-                </h:panelGrid>
+            <h:panelGrid id="pgDataDesligamento" style="width:30%">
+                <p:outputLabel for="dataDesligamento" value="Data de Desligamento" rendered="#{!mbeanModel.flagAtivo}" />
+                <p:calendar navigator="true" id="dataDesligamento" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" value="#{mbeanModel.dataDesligamento}" styleClass="coluna90" rendered="#{!mbeanModel.flagAtivo}" timeZone="America/Recife" />
+            </h:panelGrid>
+            
+            <h:panelGrid >
+                
+                <p:outputLabel for="ordemImpressao" value="Ordem de impressão" />
+                <p:inputText id="ordemImpressao" value="#{mbeanModel.ordemImpressao}" validatorMessage="Ordem de impressão: selecione um valor de 1 a 100">
+                    <f:validateLongRange minimum="1" maximum="100" />
+                </p:inputText>
 
             </h:panelGrid>
 
@@ -205,7 +228,7 @@
 
         </h:panelGrid>
 
-        <h:panelGrid columns="3" columnClasses="coluna40, coluna40, coluna10" style="width:40%">
+        <h:panelGrid columns="3" columnClasses="coluna30, coluna30, coluna30" style="width:50%">
 
             <p:outputLabel for="grupoPesquisa" value="Grupo de Acesso" />
             <p:outputLabel for="tipoColaboradorPesquisa" value="Tipo" />
@@ -219,7 +242,11 @@
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbean.tiposColaborador}" />
             </p:selectOneMenu>
-            <p:selectBooleanCheckbox id="situacaoPesquisa" value="#{mbeanPesquisaModel.flagAtivo}" />
+            <p:selectOneMenu id="situacaoPesquisa" value="#{mbean.statusPesquisa}" style="width:90%">
+                <f:selectItem itemLabel="Todos" itemValue="#{0}" />
+                <f:selectItem itemLabel="Ativos" itemValue="#{1}" />
+                <f:selectItem itemLabel="Inativos" itemValue="#{2}" />
+            </p:selectOneMenu>
 
         </h:panelGrid>
 

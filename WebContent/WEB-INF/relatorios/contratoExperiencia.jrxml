@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="contratoExperiencia" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f37734dc-0305-41c0-ba1d-0a06a2e568bb">
+	<property name="ireport.zoom" value="0.826446280991737"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="653"/>
+	<parameter name="P_COLABORADOR_ID" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT C.ID, C.NOME, COALESCE(C.OAB, '') OAB, C.CTPS, C.CTPS_SERIE, COALESCE(CASE WHEN C.LOGRADOURO = '' THEN NULL ELSE C.LOGRADOURO END || ', ', '') || COALESCE('n. ' || CASE WHEN C.NUMERO = '' THEN NULL ELSE C.NUMERO || ', ' END, '') || COALESCE(CASE WHEN C.COMPLEMENTO = '' THEN NULL ELSE C.COMPLEMENTO END || ', ', '')
+       || COALESCE(CASE WHEN C.BAIRRO = '' THEN NULL ELSE C.BAIRRO END || ', ', '') || COALESCE(CID.DESCRICAO || '/' || E.DESCRICAO || ', ', '') || COALESCE('CEP ' || CASE WHEN C.CEP = '' THEN NULL ELSE C.CEP END, '') ENDERECO FROM COLABORADORES C
+              LEFT OUTER JOIN CIDADES CID ON C.CIDADE_ID = CID.ID
+       LEFT OUTER JOIN ESTADOS E ON E.ID = CID.ESTADO_ID
+WHERE C.ID = $P{P_COLABORADOR_ID}]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="oab" class="java.lang.String"/>
+	<field name="ctps" class="java.lang.String"/>
+	<field name="ctps_serie" class="java.lang.String"/>
+	<field name="endereco" class="java.lang.String"/>
+	<group name="group1">
+		<groupExpression><![CDATA[$F{id}]]></groupExpression>
+		<groupHeader>
+			<band height="802">
+				<textField pattern="dd &apos;de&apos; MMMMM &apos;de&apos; yyyy">
+					<reportElement uuid="ff1a0100-e23f-4772-af68-6ace4c6a02a2" positionType="Float" x="149" y="516" width="148" height="20"/>
+					<textElement>
+						<font fontName="Arial" size="13"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="9fdd87e7-024b-4383-bbd1-71b2384541c8" positionType="Float" x="81" y="516" width="59" height="20"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="13"/>
+					</textElement>
+					<text><![CDATA[Salvador, ]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="b078e291-5e6a-466a-94e6-2144d138c91e" x="77" y="35" width="431" height="20"/>
+					<textElement textAlignment="Center" markup="styled">
+						<font fontName="Arial" size="10" isUnderline="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\" isUnderline=\"true\">CONTRATO DE EXPERIÊNCIA</style>"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="b078e291-5e6a-466a-94e6-2144d138c91e" x="81" y="68" width="427" height="15"/>
+					<textElement textAlignment="Justified" markup="styled">
+						<font fontName="Arial" size="10" isUnderline="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Pelo presente instrumento particular de Contrato de Experiência, a empresa SAMARTIN FERNANDES ADVOGADOS ASSOCIADOS com sede na UMBUZEIROS, inscrita no CNPJ sob Nº 15.583.225/0001-95, denominada a seguir EMPREGADORA, e o Sr.(a)  " + $F{nome} + ", domiciliado na " + $F{endereco} + ($F{ctps} == null ? "" : ", portador do CTPS Nº: " + $F{ctps} + ($F{ctps_serie} == null ? "" : ", série " + $F{ctps_serie})) + ", doravante designado EMPREGADO, celebram o presente Contrato Individual de Trabalho para fins de experiência, conforme legislação trabalhista em vigor, regido pelas cláusulas abaixo e demais disposições legais vigentes:"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="6b892a1b-55b4-4928-b160-5fe5c230de16" positionType="Float" x="81" y="94" width="427" height="42"/>
+					<textElement textAlignment="Justified">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[1º. O EMPREGADO trabalhará para a EMPREGADORA na função de AUXILIAR ADMINISTRATIVA e mais as funções que vierem a ser objeto de ordens verbais, cartas, ou avisos, segundo as necessidades da EMPREGADORA desde que compatíveis com suas atribuições.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="42a4a1c1-1a77-4dd4-b882-7297ad7f6884" positionType="Float" x="81" y="136" width="427" height="55"/>
+					<textElement textAlignment="Justified">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[2º. O local de trabalho situa-se na UMBUZEIROS,  638, CAMIN. DAS ARV. , SALVADOR - BA, podendo a EMPREGADORA, a qualquer tempo, transferir o EMPREGADO a título temporário ou definitivo, tanto no âmbito da unidade para o qual foi admitido, como para outras, em qualquer localidade deste estado ou de outro dentro do país.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="775e5d32-3f92-4e1c-87f8-f467e9bdc379" positionType="Float" x="81" y="191" width="427" height="30"/>
+					<textElement textAlignment="Justified">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[3º. O horário de trabalho do EMPREGADO será o seguinte: Inicio do Expediente: 08h00min, Saída para Intervalo: 12h00min, Entrada Intervalo: 13h00min e Final do Expediente: 17h30min.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="871e3742-5ac1-4abe-abca-462e77743762" positionType="Float" x="81" y="221" width="427" height="32"/>
+					<textElement textAlignment="Justified">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[4º. O EMPREGADO receberá a remuneração de: R$ 1.341,07 (hum mil trezentos e quarenta e hum reais e sete centavos) por mês.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="25d07350-f694-45a5-ae51-5c3e100e2a21" positionType="Float" x="81" y="253" width="427" height="22"/>
+					<textElement textAlignment="Justified">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[5º. O prazo deste contrato é de   ( ) dias, com inicio em:    /   /      e término em:    /   /     .]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="ad548817-23e0-4545-9408-a4da6ca4db7e" positionType="Float" x="81" y="275" width="427" height="31"/>
+					<textElement textAlignment="Justified">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[6º. Além dos descontos previstos na Lei, reserva-se a EMPREGADORA o direito de descontar do EMPREGADO às importâncias correspondentes aos danos causados por ele.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="4b7a11d5-d32a-4b13-a54d-de3d0f163102" positionType="Float" x="81" y="306" width="427" height="44"/>
+					<textElement textAlignment="Justified">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[7º. O EMPREGADO fica ciente do Regulamento da EMPREGADORA e das Normas de Segurança fornecido, sob pena de ser punido por falta grave, nos termos da Legislação vigente e demais disposições inerentes à segurança e medicina do trabalho.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="99ebb9bf-f5e5-47b7-ad5a-0451fc70dae3" positionType="Float" x="81" y="350" width="427" height="35"/>
+					<textElement textAlignment="Justified">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[8º. Permanecendo o EMPREGADO a serviço após o término da experiência, continuarão em vigor as cláusulas constantes deste contrato.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="73739c94-d4b9-487f-91e5-228237926ed5" positionType="Float" x="81" y="385" width="427" height="41"/>
+					<textElement textAlignment="Justified">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[9º_______________________________________________________________________________________________________________________________________________________]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="2f2aca0d-f222-4baf-b944-179d9b250a14" positionType="Float" x="81" y="434" width="427" height="41"/>
+					<textElement textAlignment="Justified">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[Tendo assim contratado, assinam o presente instrumento, em duas vias, na presença das testemunhas abaixo.]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="774a5510-9452-4323-9bbc-f214829ec16f" x="331" y="648" width="177" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["ANA KARINE LOPES COSTA"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="dee99999-9464-4781-a7bf-976683b4393f" x="85" y="700" width="177" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["EMPREGADORA"]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="6fe57ef1-2b3a-4a27-b10f-959b06ab19f0" x="331" y="699" width="177" height="1"/>
+				</line>
+				<textField>
+					<reportElement uuid="047b531d-4992-410f-b00a-236b6dbaddbb" x="85" y="754" width="177" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["1ª TESTEMUNHA"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="8f657104-c7f7-4f54-9392-714254981680" x="331" y="754" width="177" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["2ª TESTEMUNHA"]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="78da6dbf-d9ec-402c-ab68-74d6be2d0d08" x="331" y="647" width="177" height="1"/>
+				</line>
+				<line>
+					<reportElement uuid="964f343d-2cee-4534-8c21-18e6174ace2b" x="331" y="753" width="177" height="1"/>
+				</line>
+				<textField>
+					<reportElement uuid="14171f0f-4a1a-4cca-84cb-f35be6edecb0" x="331" y="700" width="177" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Responsável Legal (quando menor)"]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="aab9ab0c-3eb9-4bfb-af83-d1172990b2c6" x="85" y="699" width="177" height="1"/>
+				</line>
+				<line>
+					<reportElement uuid="b813dfa2-31fe-4ad6-905b-aafc8922ac27" x="85" y="753" width="177" height="1"/>
+				</line>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="group2">
+		<groupExpression><![CDATA[$F{id}]]></groupExpression>
+		<groupHeader>
+			<band height="375">
+				<textField>
+					<reportElement uuid="b078e291-5e6a-466a-94e6-2144d138c91e" x="77" y="34" width="416" height="20"/>
+					<textElement textAlignment="Center" markup="styled">
+						<font fontName="Arial" size="10" isUnderline="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\" isUnderline=\"true\">PRORROGAÇÃO DE CONTRATO DE EXPERIÊNCIA</style>"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="b736f8ce-f306-4b96-9de5-c1249339a5af" x="70" y="92" width="438" height="35"/>
+					<textElement>
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[O Contrato de Experiência firmado, que deveria terminar em    /   /     , fica prorrogado até     /   /     .]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="dee99999-9464-4781-a7bf-976683b4393f" x="70" y="258" width="177" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["EMPREGADORA"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="14171f0f-4a1a-4cca-84cb-f35be6edecb0" x="316" y="258" width="177" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Responsável Legal (quando menor)"]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="b813dfa2-31fe-4ad6-905b-aafc8922ac27" x="70" y="311" width="177" height="1"/>
+				</line>
+				<line>
+					<reportElement uuid="964f343d-2cee-4534-8c21-18e6174ace2b" x="316" y="311" width="177" height="1"/>
+				</line>
+				<textField>
+					<reportElement uuid="8f657104-c7f7-4f54-9392-714254981680" x="316" y="312" width="177" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["2ª TESTEMUNHA"]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="6fe57ef1-2b3a-4a27-b10f-959b06ab19f0" x="316" y="257" width="177" height="1"/>
+				</line>
+				<line>
+					<reportElement uuid="aab9ab0c-3eb9-4bfb-af83-d1172990b2c6" x="70" y="257" width="177" height="1"/>
+				</line>
+				<line>
+					<reportElement uuid="78da6dbf-d9ec-402c-ab68-74d6be2d0d08" x="316" y="205" width="177" height="1"/>
+				</line>
+				<textField>
+					<reportElement uuid="047b531d-4992-410f-b00a-236b6dbaddbb" x="70" y="312" width="177" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["1ª TESTEMUNHA"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="774a5510-9452-4323-9bbc-f214829ec16f" x="316" y="206" width="177" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["ANA KARINE LOPES COSTA"]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="0f64ef42-6f23-4cc5-94ca-52a5d39b45ab" x="116" y="163" width="100" height="1"/>
+				</line>
+				<staticText>
+					<reportElement uuid="4abc7a46-7d42-428b-8629-25f2d793f2ff" x="219" y="146" width="15" height="20"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[,]]></text>
+				</staticText>
+				<line>
+					<reportElement uuid="477ce4c4-92d6-4259-aaa7-a6a5bde36213" x="231" y="163" width="33" height="1"/>
+				</line>
+				<staticText>
+					<reportElement uuid="3863e2dd-88ec-4229-8b84-2fc281866574" x="266" y="146" width="19" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[de]]></text>
+				</staticText>
+				<line>
+					<reportElement uuid="0398320e-4b29-4088-9732-6360affb34a4" x="287" y="163" width="95" height="1"/>
+				</line>
+				<staticText>
+					<reportElement uuid="46d176bf-87aa-46f1-aae9-2bd6eb99c23f" x="383" y="146" width="20" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[de]]></text>
+				</staticText>
+				<line>
+					<reportElement uuid="b9d437d9-666c-45cd-be11-0fb1d17b627e" x="405" y="163" width="33" height="1"/>
+				</line>
+			</band>
+		</groupHeader>
+	</group>
+</jasperReport>

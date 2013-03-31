@@ -21,6 +21,7 @@ import br.com.cenajur.model.Banco;
 import br.com.cenajur.model.CategoriaDocumento;
 import br.com.cenajur.model.Cidade;
 import br.com.cenajur.model.Cliente;
+import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.DocumentoCliente;
 import br.com.cenajur.model.Estado;
 import br.com.cenajur.model.EstadoCivil;
@@ -77,6 +78,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	private ProcessoAux processoAux;
 	
 	private String senha;
+	private Long idAgendaColaborador;
 	
 	@PostConstruct
 	protected void init() {
@@ -278,6 +280,11 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		
 	}
 	
+	@Override
+	protected void tratarException() {
+		this.iniciaObjetosCombo();
+	}
+	
 	public String mudarStatusCliente(){
 		if(!getCrudModel().getFlagAtivo()){
 			getCrudModel().setMotivoCancelamento(new MotivoCancelamento());
@@ -378,25 +385,124 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		
 	}
 	
+	private String gerarRelatorio(String nomeRelatorio, String nomeImpressao, String msgErro){
+		try {
+            
+			Map<String, Object> parametros = CenajurUtil.getHashMapReport();
+            parametros.put("P_CLIENTE_ID", getCrudModel().getId());
+
+            new JasperUtil().gerarRelatorio(nomeRelatorio, nomeImpressao, parametros);
+            
+        } catch (Exception ex) {
+            CenajurUtil.addErrorMessage(msgErro);
+            ex.printStackTrace();
+        }
+		
+		return null;
+		
+	}
+	
 	public String imprimirTermoCancelamentoContrato(){
+		return this.gerarRelatorio("cancelamentoContrato.jasper", "termoCancelamentoContrato", "Não foi possível gerar o termo de cancelamento de contrato");
+	}
+	
+	public String imprimirAtestadoPobreza() {
+		return this.gerarRelatorio("declaracaoSituacaoEconomica.jasper", "declaracao_situacao_economica", "Não foi possível gerar a declaração de situação econômica");
+    }
+	
+	public String imprimirCartaCancelamentoContrato() {
+		return this.gerarRelatorio("cartaCancelamentoContrato.jasper", "carta_cancelamento_contrato", "Não foi possível gerar a carta de cancelamento de contrato");
+	}
+	
+	public String imprimirFichaAtendimento(){
+		
+		if(!TSUtil.isEmpty(TSUtil.tratarLong(idAgendaColaborador))){
+			
+			try {
+				
+				Map<String, Object> parametros = CenajurUtil.getHashMapReport();
+				
+				parametros.put("P_AGENDA_COLABORADOR_ID", idAgendaColaborador);
+				
+				new JasperUtil().gerarRelatorio("fichaAtendimento.jasper", "ficha_atendimento", parametros);
+				
+			} catch (Exception ex) {
+				
+				CenajurUtil.addErrorMessage("Não foi possível gerar a ficha de atendimento.");
+				
+				ex.printStackTrace();
+				
+			}
+		
+		}
+		
+		return null;
+	}
+	
+	private String gerarProcuracao(List<Colaborador> advogados){
 		
 		try {
 
-			Map<String, Object> parametros = CenajurUtil.getHashMapReport();
+        	StringBuilder outorgante = new StringBuilder("OUTORGANTE: ");
+        	
+        	outorgante.append("").append(getCrudModel().getNome()).append("");
+        	
+        	if(!TSUtil.isEmpty(getCrudModel().getRg())){
+        		outorgante.append(" RG: ").append(getCrudModel().getRg());
+        	}
+        	
+        	if(!TSUtil.isEmpty(getCrudModel().getCpf())){
+        		outorgante.append(" CPF: ").append(getCrudModel().getCpf());
+        	}
+        	
+    		outorgante.append(TSUtil.isEmpty(getCrudModel().getLogradouro()) ? "" : " ENDEREÇO: " + getCrudModel().getLogradouro() + ", ");
+        	outorgante.append(TSUtil.isEmpty(getCrudModel().getNumero()) ? "" : getCrudModel().getNumero() + ", ");
+        	outorgante.append(TSUtil.isEmpty(getCrudModel().getComplemento()) ? "" : getCrudModel().getComplemento() + ", ");
+        	outorgante.append(TSUtil.isEmpty(getCrudModel().getBairro()) ? "" : getCrudModel().getBairro() + ", ");
+        	outorgante.append(TSUtil.isEmpty(getCrudModel().getCidade()) || TSUtil.isEmpty(getCrudModel().getCidade().getId()) ? "" : getCrudModel().getCidade().getNomeCompleto());
+        	outorgante.append(TSUtil.isEmpty(getCrudModel().getCep()) ? "" : getCrudModel().getCep());
+        	
+        	if(!TSUtil.isEmpty(getCrudModel().getTelefone())){
+        		outorgante.append(" TEL: ").append(getCrudModel().getTelefone());
+        	}
+        	
+        	StringBuilder outorgados = new StringBuilder("OUTORGADOS: ");
+        	
+    		for(Colaborador advogado : advogados){
+    			outorgados.append("").append(advogado.getNome()).append("").append(!TSUtil.isEmpty(advogado.getOab()) ? " (OAB/BA n. " + advogado.getOab() + "), " : " (RG " + advogado.getRg() + "), ");
+    		}
+        		
+    		outorgados.delete(outorgados.length() - 2, outorgados.length() - 1);
+        		
+        	outorgados.append("todos com escritório profissional na Alameda dos Umbuzeiros, n. 638, Edf. Alameda Centro, " +
+        			"Terraço - Caminho das Árvores, Salvador - BA, CEP 41.820-680, nesta Capital.");
+        	
+        	String texto = outorgante.toString() + "\n\n" + outorgados.toString() + "\n\n" + "Pelo presente instrumento particular de mandato e na melhor  forma de direito, o outorgante acima qualificado, nomeia e constitui seu procurador o outorgado supramencionado com o fim de representá-lo junto aos Órgãos Federais, Estaduais e Municipais, Autarquias e Fundações, Juízos Comuns e Especiais, Instituições Financeiras e seguradoras em geral, onde figure como autor ou réu, assistente ou opoente, podendo desistir, transigir, fazer acordo, assumir compromissos, receber, passar recibos e dar quitação, exercer a adjudicação e assinar o auto e carta respectiva, substabelecer com ou sem reservas e praticar os atos necessários ao bom desempenho deste mandato, por mais especiais que sejam, além dos poderes citados na cláusula Ad Judicia.";
+        	
+            Map<String, Object> parametros = CenajurUtil.getHashMapReport();
 
-            parametros.put("P_CLIENTE_ID", getCrudModel().getId());
+            parametros.put("P_TEXTO", texto);
 
-            new JasperUtil().gerarRelatorio("cancelamentoContrato.jasper", "termoCancelamentoContrato", parametros);
+            new JasperUtil().gerarRelatorio("procuracao.jasper", "procuracao", parametros);
 
         } catch (Exception ex) {
 
-            CenajurUtil.addErrorMessage("Não foi possível gerar o termo de cancelamento de contrato");
+            CenajurUtil.addErrorMessage("Não foi possível gerar relatório.");
 
             ex.printStackTrace();
 
         }
 		
 		return null;
+		
+	}
+	
+	public String imprimirProcuracaoIndividual(){
+		return this.gerarProcuracao(new Colaborador().findAdvogadosProcuracaoIndividual());
+	}
+	
+	public String imprimirProcuracaoColetiva(){
+		return this.gerarProcuracao(new Colaborador().findAllAdvogadosOrderByOrdemImpressao());
 	}
 	
 	public List<SelectItem> getEstados() {
@@ -557,6 +663,14 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public Long getIdAgendaColaborador() {
+		return idAgendaColaborador;
+	}
+
+	public void setIdAgendaColaborador(Long idAgendaColaborador) {
+		this.idAgendaColaborador = idAgendaColaborador;
 	}
 	
 }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:param name="mbeanModel" value="${lotacaoFaces.crudModel}" />
+    <ui:param name="mbean" value="${lotacaoFaces}" />
+    
+    <h:panelGrid columns="1" columnClasses="coluna100" style="width:40%">
+
+        <p:outputLabel for="descricao" value="Descrição" />
+        <p:inputText id="descricao" value="#{lotacaoFaces.crudModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" maxlength="50" styleClass="coluna90" />
+
+    </h:panelGrid>
+
+    <h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:40%">
+
+        <p:outputLabel for="estado" value="Estado" />
+        <p:outputLabel for="cidade" value="Cidade" />
+
+        <p:selectOneMenu id="estado" value="#{lotacaoFaces.crudModel.cidade.estado.id}" required="true" requiredMessage="Estado: Campo obrigatório" style="width: 90%">
+            <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+            <f:selectItems value="#{lotacaoFaces.estados}" />
+            <p:ajax update="opCidade" listener="#{lotacaoFaces.atualizarComboCidades}" process="@this" global="false" />
+        </p:selectOneMenu>
+        <p:outputPanel id="opCidade">
+            <p:selectOneMenu id="cidade" value="#{lotacaoFaces.crudModel.cidade.id}" required="true" requiredMessage="Cidade: Campo obrigatório" disabled="#{lotacaoFaces.crudModel.cidade.estado.id == null}" style="width: 85%">
+                <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+                <f:selectItems value="#{lotacaoFaces.cidades}" />
+            </p:selectOneMenu>
+        </p:outputPanel>
+
+        <p:outputLabel for="bairro" value="Bairro" />
+        <p:outputLabel for="telefone" value="Telefone" />
+
+        <p:inputText id="bairro" value="#{lotacaoFaces.crudModel.bairro}" required="true" requiredMessage="Bairro: Campo obrigatório" maxlength="50" styleClass="coluna85" />
+        <p:inputMask id="telefone" required="true" requiredMessage="Telefone: Campo obrigatório" mask="(99) 9999-9999" value="#{lotacaoFaces.crudModel.telefone}" maxlength="14" styleClass="coluna80" />
+
+    </h:panelGrid>
+
+</ui:composition>

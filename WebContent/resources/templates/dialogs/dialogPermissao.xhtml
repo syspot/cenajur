@@ -27,11 +27,17 @@
             <p:dataTable id="gridPesquisa" widgetVar="gridPermissao" emptyMessage="Nenhuma permissão encontrada" paginator="true" paginatorAlwaysVisible="false" rows="7" value="#{mbeanPesquisa.grid}" var="permissao">
 
                 <p:column headerText="Descrição">
-                    <h:outputText value="#{permissao.descricao}" />
+                    <p:commandLink action="#{grupoFaces.addPermissao}" onclick="dlgPermissao.hide()">
+                        <h:outputText value="#{permissao.descricao}" />
+                        <f:setPropertyActionListener target="#{grupoFaces.permissaoSelecionada}" value="#{permissao}" />
+                    </p:commandLink>
                 </p:column>
 
                 <p:column headerText="Menu">
-                    <h:outputText value="#{permissao.menu.nome}" />
+                    <p:commandLink action="#{grupoFaces.addPermissao}" onclick="dlgPermissao.hide()">
+                        <h:outputText value="#{permissao.menu.nome}" />
+                        <f:setPropertyActionListener target="#{grupoFaces.permissaoSelecionada}" value="#{permissao}" />
+                    </p:commandLink>
                 </p:column>
 
                 <p:column headerText="Adicionar" styleClass="coluna10" style="text-align:center;">

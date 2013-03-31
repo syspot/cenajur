@@ -146,7 +146,7 @@ public class ProcessoAudienciaUtil {
 			CenajurUtil.addErrorMessage("Advogado: Campo obrigatório");
 		}
 
-		if(this.audiencia.getDescricao().length() > 500){
+		if(!TSUtil.isEmpty(this.audiencia.getDescricao()) && this.audiencia.getDescricao().length() > 500){
 			erro = true;
 			CenajurUtil.addErrorMessage("Descrição: Campo muito longo, tamanho máximo de 500 caracteres");
 		}

@@ -3,6 +3,7 @@ package br.com.cenajur.faces;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -22,6 +23,7 @@ import br.com.cenajur.model.Estado;
 import br.com.cenajur.model.Grupo;
 import br.com.cenajur.model.TipoCategoria;
 import br.com.cenajur.model.TipoColaborador;
+import br.com.cenajur.relat.JasperUtil;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
@@ -93,7 +95,6 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 		setCrudPesquisaModel(new Colaborador());
 		getCrudPesquisaModel().setGrupo(new Grupo());
 		getCrudPesquisaModel().setTipoColaborador(new TipoColaborador());
-		getCrudPesquisaModel().setFlagAtivo(Boolean.TRUE);
 		setGrid(new ArrayList<Colaborador>());
 		return null;
 	}
@@ -122,8 +123,19 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 	}
 	
 	@Override
+	protected void preFind() {
+		switch(getStatusPesquisa()){
+			case 1: getCrudPesquisaModel().setFlagAtivo(true); break;
+			case 2: getCrudPesquisaModel().setFlagAtivo(false); break;
+			default: getCrudPesquisaModel().setFlagAtivo(null);
+		}
+	}
+	
+	@Override
 	protected void posDetail() {
 		this.atualizarComboCidades();
+		this.senha = null;
+		this.senha2 = null;
 	}
 	
 	public String removerDocumento(){
@@ -184,10 +196,42 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 		
     }
 	
-	public boolean isAdvogado(){
-		return Constantes.TIPO_COLABORADOR_ADVOGADO.equals(getCrudModel().getTipoColaborador().getId());
-	}
+	private String gerarRelatorio(String nomeRelatorio, String nomeImpressao, String msgErro){
+		
+		try {
+            
+			Map<String, Object> parametros = CenajurUtil.getHashMapReport();
+            parametros.put("P_COLABORADOR_ID", getCrudModel().getId());
 
+            new JasperUtil().gerarRelatorio(nomeRelatorio, nomeImpressao, parametros);
+            
+        } catch (Exception ex) {
+            CenajurUtil.addErrorMessage(msgErro);
+            ex.printStackTrace();
+        }
+		return null;
+	}
+	
+	public String imprimirContrato(){
+		return this.gerarRelatorio("contrato.jasper", "contrato" , "Não foi possível imprimir o contrato.");
+	}
+	
+	public String imprimirContratoExperiencia(){
+		return this.gerarRelatorio("contratoExperiencia.jasper", "contrato_experiencia" , "Não foi possível imprimir o contrato de experiência.");
+	}
+	
+	public String imprimirDesligamentoContratoExperiencia(){
+		return this.gerarRelatorio("desligamentoContratoExperiencia.jasper", "desligamento_contrato_experiencia" , "Não foi possível imprimir o desligamento de contrato de experiência.");
+	}
+	
+	public String imprimirDistratoContrato(){
+		return this.gerarRelatorio("distratoContrato.jasper", "distrato_contrato" , "Não foi possível imprimir o distrato contrato.");
+	}
+	
+	public String imprimirCartaPedidoSaidaEstagio(){
+		return this.gerarRelatorio("cartaPedidoSaidaEstagio.jasper", "carta_pedido_saida_estagio" , "Não foi possível imprimir a carta de pedido de saída de estágio.");
+	}
+	
 	public List<SelectItem> getEstados() {
 		return estados;
 	}

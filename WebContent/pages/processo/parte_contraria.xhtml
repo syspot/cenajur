@@ -7,77 +7,36 @@
 
     <ui:define name="cadastro">
 
-        <h:panelGrid rendered="#{mbeanModel.id == null}" style="width: 100%">
+        <h:panelGrid columns="1" style="width:53%">
 
-            <h:panelGrid columns="1" style="width:53%">
-
-                <p:outputLabel for="descricao" value="Descrição" />
-                <p:inputText id="descricao" value="#{mbeanModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" styleClass="coluna60" maxlength="50" />
-
-            </h:panelGrid>
-
-            <h:panelGrid columns="2" columnClasses="coluna65, coluna35" style="width:51%">
-
-                <p:outputLabel for="nomeAdvogado" value="Nome do Advogado" />
-                <p:outputLabel for="oabAdvogado" value="Oab do Advogado" />
-
-                <p:inputText id="nomeAdvogado" value="#{mbeanModel.nomeAdvogado}" required="true" requiredMessage="Nome do Advogado: Campo obrigatório" styleClass="coluna96" maxlength="50" />
-                <p:inputText id="oabAdvogado" required="true" requiredMessage="Oab do Advogado: Campo obrigatório" value="#{mbeanModel.oabAdvogado}" maxlength="30" styleClass="coluna90" />
-
-            </h:panelGrid>
-
-            <h:panelGrid id="pgTipoDocumento" columns="3" columnClasses="coluna33, coluna33, coluna33" style="width:50%">
-
-                <p:outputLabel for="tipoDocumento" value="Tipo de Documento" />
-                <p:outputLabel for="numeroDocumento" value="Número" />
-                <p:outputLabel for="telefone" value="Telefone" />
-
-                <p:selectOneMenu id="tipoDocumento" required="true" requiredMessage="Tipo de Documento: Campo obrigatório" value="#{mbeanModel.tipoDocumento.id}" style="width:90%">
-                    <f:selectItem itemLabel="Não Selecionado" itemValue="" />
-                    <f:selectItems value="#{mbean.tiposDocumentos}" />
-                    <p:ajax update="pgTipoDocumento" global="false" />
-                </p:selectOneMenu>
-                <p:inputText id="numeroDocumento" value="#{mbeanModel.numeroDocumento}" required="true" requiredMessage="Número: Campo obrigatório" disabled="#{mbeanModel.tipoDocumento.id == null}" style="width: 90%" maxlength="50" />
-                <p:inputMask id="telefone" required="true" requiredMessage="Telefone: Campo obrigatório" mask="(99) 9999-9999" value="#{mbeanModel.telefone}" maxlength="14" styleClass="coluna90" />
-
-            </h:panelGrid>
+            <p:outputLabel for="descricao" value="Descrição" />
+            <p:inputText id="descricao" value="#{mbeanModel.descricao}" required="#{mbeanModel.id == null}" requiredMessage="Descrição: Campo obrigatório" styleClass="coluna60" maxlength="50" />
 
         </h:panelGrid>
 
-        <h:panelGrid rendered="#{mbeanModel.id != null}" style="width: 100%">
+        <h:panelGrid columns="2" columnClasses="coluna65, coluna35" style="width:51%">
 
-            <h:panelGrid columns="1" style="width:53%">
+            <p:outputLabel for="nomeAdvogado" value="Nome do Advogado" />
+            <p:outputLabel for="oabAdvogado" value="Oab do Advogado" />
 
-                <p:outputLabel for="descricao2" value="Descrição" />
-                <p:inputText id="descricao2" value="#{mbeanModel.descricao}" styleClass="coluna60" maxlength="50" />
+            <p:inputText id="nomeAdvogado" value="#{mbeanModel.nomeAdvogado}" required="#{mbeanModel.id == null}" requiredMessage="Nome do Advogado: Campo obrigatório" styleClass="coluna96" maxlength="50" />
+            <p:inputText id="oabAdvogado" required="#{mbeanModel.id == null}" requiredMessage="Oab do Advogado: Campo obrigatório" value="#{mbeanModel.oabAdvogado}" maxlength="30" styleClass="coluna90" />
 
-            </h:panelGrid>
+        </h:panelGrid>
 
-            <h:panelGrid columns="2" columnClasses="coluna65, coluna35" style="width:51%">
+        <h:panelGrid id="pgTipoDocumento" columns="3" columnClasses="coluna33, coluna33, coluna33" style="width:50%">
 
-                <p:outputLabel for="nomeAdvogado2" value="Nome do Advogado" />
-                <p:outputLabel for="oabAdvogado2" value="Oab do Advogado" />
+            <p:outputLabel for="tipoDocumento" value="Tipo de Documento" />
+            <p:outputLabel for="numeroDocumento" value="Número" />
+            <p:outputLabel for="telefone" value="Telefone" />
 
-                <p:inputText id="nomeAdvogado2" value="#{mbeanModel.nomeAdvogado}" styleClass="coluna96" maxlength="50" />
-                <p:inputText id="oabAdvogado2" value="#{mbeanModel.oabAdvogado}" maxlength="30" styleClass="coluna90" />
-
-            </h:panelGrid>
-
-            <h:panelGrid id="pgTipoDocumento2" columns="3" columnClasses="coluna33, coluna33, coluna33" style="width:50%">
-
-                <p:outputLabel for="tipoDocumento2" value="Tipo de Documento" />
-                <p:outputLabel for="numeroDocumento2" value="Número" />
-                <p:outputLabel for="telefone2" value="Telefone" />
-
-                <p:selectOneMenu id="tipoDocumento2" value="#{mbeanModel.tipoDocumento.id}" style="width:90%">
-                    <f:selectItem itemLabel="Não Selecionado" itemValue="" />
-                    <f:selectItems value="#{mbean.tiposDocumentos}" />
-                    <p:ajax update="pgTipoDocumento2" global="false" />
-                </p:selectOneMenu>
-                <p:inputText id="numeroDocumento2" value="#{mbeanModel.numeroDocumento}" disabled="#{mbeanModel.tipoDocumento.id == null}" style="width: 90%" maxlength="50" />
-                <p:inputMask id="telefone2" mask="(99) 9999-9999" value="#{mbeanModel.telefone}" maxlength="14" styleClass="coluna90" />
-
-            </h:panelGrid>
+            <p:selectOneMenu id="tipoDocumento" value="#{mbeanModel.tipoDocumento.id}" style="width:90%">
+                <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+                <f:selectItems value="#{mbean.tiposDocumentos}" />
+                <p:ajax update="pgTipoDocumento" />
+            </p:selectOneMenu>
+            <p:inputText id="numeroDocumento" value="#{mbeanModel.numeroDocumento}" disabled="#{mbeanModel.tipoDocumento.id == null}" style="width: 90%" maxlength="50" />
+            <p:inputMask id="telefone" required="#{mbeanModel.id == null}" requiredMessage="Telefone: Campo obrigatório" mask="(99) 9999-9999" value="#{mbeanModel.telefone}" maxlength="14" styleClass="coluna90" />
 
         </h:panelGrid>
 

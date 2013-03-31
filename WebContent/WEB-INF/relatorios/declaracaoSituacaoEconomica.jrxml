@@ -2,10 +2,10 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="declaracaoSituacaoEconomica" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f37734dc-0305-41c0-ba1d-0a06a2e568bb">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="P_CLIENTE_ID" class="java.lang.Long"/>
 	<queryString>
-		<![CDATA[SELECT 'Declaro para os devidos fins e por minha inteira responsabilidade que eu, ' || C.NOME || ', inscrito CPF sob o nº ' || C.CPF || ', residente e domiciliado à ' ||
+		<![CDATA[SELECT 'Declaro para os devidos fins e por minha inteira responsabilidade que eu, <style isBold="true" pdfFontName="Helvetica-Bold">' || C.NOME || ',</style> inscrito CPF sob o nº ' || C.CPF || ', residente e domiciliado à ' ||
        COALESCE(CASE WHEN C.LOGRADOURO = '' THEN NULL ELSE C.LOGRADOURO END || ', ', '') || COALESCE('NUMERO ' || CASE WHEN C.NUMERO = '' THEN NULL ELSE C.NUMERO || ', ' END, '') || COALESCE(CASE WHEN C.COMPLEMENTO = '' THEN NULL ELSE C.COMPLEMENTO END || ', ', '')
        || COALESCE(CASE WHEN C.BAIRRO = '' THEN NULL ELSE C.BAIRRO END || ', ', '') || COALESCE(CID.DESCRICAO || '/' || E.DESCRICAO || ', ', '') || COALESCE('CEP ' || CASE WHEN C.CEP = '' THEN NULL ELSE C.CEP END, '') || ', não possuo recursos econômicos de arcar com as custas do processo e os honorários de advogado, sem prejuízo do sustento próprio ou da minha família, nos estritos termos previstos pela legislação pertinente, qual seja, a Lei nº 1.060/50.' AS DESCRICAO
        FROM CLIENTES C
@@ -16,50 +16,43 @@
 	<field name="descricao" class="java.lang.String"/>
 	<detail>
 		<band height="630">
-			<staticText>
-				<reportElement uuid="02c7402a-579d-4d14-a557-cb0a417fc1d3" x="243" y="390" width="8" height="20"/>
-				<textElement>
-					<font fontName="Arial" isBold="true"/>
-				</textElement>
-				<text><![CDATA[,]]></text>
-			</staticText>
 			<line>
 				<reportElement uuid="2bbd7673-d8c3-4d46-ba94-4174cfc9768f" x="140" y="452" width="274" height="1"/>
 			</line>
 			<staticText>
 				<reportElement uuid="94767b15-8995-497b-9b4e-af7018cd04a7" x="205" y="464" width="145" height="20"/>
 				<textElement textAlignment="Center">
-					<font fontName="Arial" size="12"/>
+					<font fontName="Garamond" size="13"/>
 				</textElement>
 				<text><![CDATA[DECLARANTE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="dfc5d5ee-445c-4433-97f4-74134545bb42" x="199" y="390" width="47" height="20"/>
-				<textElement>
-					<font fontName="Arial" isBold="true"/>
+				<reportElement uuid="dfc5d5ee-445c-4433-97f4-74134545bb42" x="186" y="390" width="60" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Garamond" size="13" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Salvador]]></text>
+				<text><![CDATA[Salvador,]]></text>
 			</staticText>
 			<textField pattern="dd &apos;de&apos; MMMMM &apos;de&apos; yyyy">
 				<reportElement uuid="70ee0ff8-b39a-416b-b22c-acb9fcca9265" x="253" y="390" width="177" height="20"/>
 				<textElement>
-					<font fontName="Arial" isBold="true"/>
+					<font fontName="Garamond" size="13" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement uuid="8b61c3cd-0356-4aef-a1c9-b5e8f8f70a62" x="29" y="71" width="491" height="39"/>
-				<textElement textAlignment="Center">
-					<font fontName="Arial" size="18" isBold="true"/>
-				</textElement>
-				<text><![CDATA[DECLARAÇÃO DE SITUAÇÃO ECONÔMICA]]></text>
-			</staticText>
 			<textField>
 				<reportElement uuid="a73029bc-8d6f-4b69-b250-fdfda769fff1" x="29" y="181" width="491" height="131"/>
-				<textElement textAlignment="Justified">
-					<font size="12"/>
+				<textElement textAlignment="Justified" markup="styled">
+					<font fontName="Garamond" size="13"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a73029bc-8d6f-4b69-b250-fdfda769fff1" x="29" y="70" width="491" height="34"/>
+				<textElement textAlignment="Center" markup="styled">
+					<font fontName="Garamond" size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">DECLARAÇÃO DE SITUAÇÃO ECONÔMICA</style>"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

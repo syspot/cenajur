@@ -34,18 +34,6 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 	 */
 	private static final long serialVersionUID = -7867621300772491361L;
 	
-	public Agenda() {
-	}
-	
-	public Agenda(Long id, String tipoAgendaDescricao, Date dataInicial, Date dataFinal, String descricao) {
-		this.id = id;
-		this.tipoAgenda = new TipoAgenda();
-		this.tipoAgenda.setDescricao(tipoAgendaDescricao);
-		this.dataInicial = dataInicial;
-		this.dataFinal = dataFinal;
-		this.descricao = descricao;
-	}
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="agendas_id")
 	@SequenceGenerator(name="agendas_id", sequenceName="agendas_id_seq")
@@ -77,6 +65,8 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 	@Column(name = "telefone_cliente")
 	private String telefoneCliente;
 	
+	private String local;
+	
 	@OneToMany(mappedBy = "agenda", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<AgendaColaborador> agendasColaboradores;
 	
@@ -93,8 +83,21 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 	
 	@Transient
 	private Colaborador colaboradorBusca;
-
 	
+	@Transient
+	private boolean somenteAbertas;
+
+	public Agenda() {
+	}
+	
+	public Agenda(Long id, String tipoAgendaDescricao, Date dataInicial, Date dataFinal, String descricao) {
+		this.id = id;
+		this.tipoAgenda = new TipoAgenda();
+		this.tipoAgenda.setDescricao(tipoAgendaDescricao);
+		this.dataInicial = dataInicial;
+		this.dataFinal = dataFinal;
+		this.descricao = descricao;
+	}
 	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -138,6 +141,10 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 
 	public String getDescricao() {
 		return descricao;
+	}
+	
+	public String getResumoDescricao() {
+		return CenajurUtil.obterResumoGrid(descricao, 80);
 	}
 
 	public void setDescricao(String descricao) {
@@ -216,6 +223,22 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 		this.colaboradorBusca = colaboradorBusca;
 	}
 
+	public String getLocal() {
+		return local;
+	}
+
+	public void setLocal(String local) {
+		this.local = local;
+	}
+
+	public boolean isSomenteAbertas() {
+		return somenteAbertas;
+	}
+
+	public void setSomenteAbertas(boolean somenteAbertas) {
+		this.somenteAbertas = somenteAbertas;
+	}
+
 	public boolean isTipoAudiencia(){
 		return Constantes.TIPO_AGENDA_AUDIENCIA.equals(getTipoAgenda().getId());
 	}
@@ -256,9 +279,13 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 	@Override
 	public List<Agenda> findByModel(String... fieldsOrderBy) {
 		
-		StringBuilder query = new StringBuilder();
+		StringBuilder query = new StringBuilder(" select new Agenda(a.id, a.tipoAgenda.descricao, a.dataInicial, a.dataFinal, a.descricao) from Agenda a ");
 		
-		query.append(" select new Agenda(a.id, a.tipoAgenda.descricao, a.dataInicial, a.dataFinal, a.descricao) from Agenda a where 1 = 1 ");
+		if(somenteAbertas){
+			query.append(" inner join a.agendasColaboradores ac with ac.flagConcluido = false ");
+		}
+		
+		query.append(" where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(descricao)){
 			query.append(CenajurUtil.getParamSemAcento("a.descricao"));
@@ -287,7 +314,7 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 			params.add(dataFinal);
 		}
 		
-		return super.find(query.toString(), "dataInicial", params.toArray());
+		return super.find(query.toString(), "a.dataInicial", params.toArray());
 	}
 
 	public List<Agenda> pesquisarAgendas(Date dataInicial, Date dataFinal) {

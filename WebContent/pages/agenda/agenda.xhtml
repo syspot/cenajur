@@ -3,39 +3,47 @@
 
     <p:tab id="tabAgenda" title="Agenda">
 
-        <h:form>
+        <h:form id="formAgenda" prependId="false">
+        
+            <p:growl id="growl2" showDetail="true" showSummary="false" sticky="false" />
 
             <p:fieldset style="margin-bottom: 20px;">
-
-                <h:panelGrid columns="4" columnClasses="coluna20, coluna10, coluna40, coluna40" style="width:60%">
-
-                    <h:outputText value="Tipo de Agenda" />
-                    <p:outputLabel for="buscaIndividual" value="Individual" />
-                    <p:outputLabel for="colaboradorBusca" value="Colaborador" />
-                    <h:outputText value="" />
-
-                    <p:selectOneMenu id="comboTipoAgenda" value="#{agendaFaces.agendaBusca.tipoAgenda.id}">
-                        <f:selectItem itemLabel="Todas" itemValue="" />
-                        <f:selectItems value="#{agendaFaces.tiposAgendas}" />
-                    </p:selectOneMenu>
-
-                    <p:selectBooleanCheckbox id="buscaIndividual" value="#{agendaFaces.buscaIndividual}">
-                        <p:ajax event="change" listener="#{agendaFaces.mudarStatusBusca}" update="opComboColaborador" />
-                    </p:selectBooleanCheckbox>
-                    <p:outputPanel id="opComboColaborador">
-                        <p:selectOneMenu id="colaboradorBusca" value="#{agendaFaces.agendaBusca.colaboradorBusca.id}" disabled="#{agendaFaces.buscaIndividual}" style="width: 95%">
-                            <f:selectItem itemLabel="Todos" itemValue="" />
-                            <f:selectItems value="#{agendaFaces.colaboradores}" />
+                
+                <p:outputPanel styleClass="DuasColunas" layout="block">
+                
+                    <h:panelGrid columns="4" columnClasses="coluna30, coluna30, coluna10, coluna30">
+    
+                        <h:outputText value="Tipo de Agenda" />
+                        <p:outputLabel for="colaboradorBusca" value="Colaborador" />
+                        <p:outputLabel for="buscaIndividual" value="Próprio" />
+                        <h:outputText value="" />
+    
+                        <p:selectOneMenu id="comboTipoAgenda" value="#{agendaFaces.agendaBusca.tipoAgenda.id}">
+                            <f:selectItem itemLabel="Todas" itemValue="" />
+                            <f:selectItems value="#{agendaFaces.tiposAgendas}" />
                         </p:selectOneMenu>
-                    </p:outputPanel>
-
-                    <p:commandButton value="Atualizar" icon="ui-icon-refresh" action="#{agendaFaces.atualizarSchedule}" update="@form" style="width: 100px;" />
-
-                </h:panelGrid>
-
+    
+                        <p:outputPanel id="opComboColaborador">
+                            <p:selectOneMenu id="colaboradorBusca" value="#{agendaFaces.agendaBusca.colaboradorBusca.id}" disabled="#{agendaFaces.buscaIndividual}" style="width: 95%">
+                                <f:selectItem itemLabel="Todos" itemValue="" />
+                                <f:selectItems value="#{agendaFaces.colaboradores}" />
+                            </p:selectOneMenu>
+                        </p:outputPanel>
+                        <p:selectBooleanCheckbox id="buscaIndividual" value="#{agendaFaces.buscaIndividual}">
+                            <p:ajax event="change" listener="#{agendaFaces.mudarStatusBusca}" update="opComboColaborador" />
+                        </p:selectBooleanCheckbox>
+    
+                        <p:commandButton value="Atualizar" icon="ui-icon-refresh" action="#{agendaFaces.atualizarSchedule}" update="@form" style="width: 100px;" />
+    
+                    </h:panelGrid>
+                    
+                    <ui:include src="/resources/templates/includes/include_cores_agenda.xhtml" />
+                
+                </p:outputPanel>
+                
             </p:fieldset>
 
-            <p:schedule value="#{agendaFaces.lazyEventModel}" widgetVar="myschedule" allDaySlot="false" draggable="false" resizable="false" view="agendaWeek" axisFormat="HH:00" timeZone="America/Recife">
+            <p:schedule value="#{agendaFaces.lazyEventModel}" widgetVar="myschedule" allDaySlot="false" draggable="false" resizable="false" view="agendaWeek" axisFormat="HH:00" timeFormat="H:mm" firstHour="6" timeZone="America/Recife">
 
                 <p:ajax event="dateSelect" listener="#{agendaFaces.onDateSelect}" oncomplete="atualizarDialogAgenda();" global="false" />
                 <p:ajax event="eventSelect" listener="#{agendaFaces.onEventSelect}" oncomplete="atualizarDialogAgenda();" global="false" />

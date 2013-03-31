@@ -9,7 +9,7 @@
 
     <h:form rendered="#{autenticacaoFaces.mostrarDialogParteContraria}">
 
-        <p:dialog id="dialogParteContraria" widgetVar="dlgParteContraria" width="600" height="400" modal="true">
+        <p:dialog id="dialogParteContraria" widgetVar="dlgParteContraria" styleClass="dialog80" modal="true">
 
             <p:ajax event="close" listener="#{mbeanPersist.limpar}" update="opParteContraria, dialogParteContraria" />
 
@@ -29,11 +29,11 @@
 
                     <ui:include src="/resources/templates/includes/include_dialog_cadastro_parte_contraria.xhtml" />
 
-                    <p:commandButton value="Salvar" action="#{mbeanPersist.insertEvent}" update="opParteContraria, titleDialog" oncomplete="handleRequestActionParteContraria('dialogParteContraria', dlgParteContraria, args)" style="margin-top: 30px" >
+                    <p:commandButton value="Salvar" icon="ui-icon-disk" action="#{mbeanPersist.insertEvent}" update="opParteContraria, titleDialog" oncomplete="handleRequestActionParteContraria('dialogParteContraria', dlgParteContraria, args)" style="margin-top: 30px" >
                         <f:setPropertyActionListener target="#{mbeanPersist.viaDialog}" value="#{true}" />
                         <f:setPropertyActionListener target="#{processoFaces.parteContrariaSelecionada}" value="#{parteContrariaFaces.parteContraria}" />
                     </p:commandButton>
-                    <p:commandButton value="Voltar" process="@this" update="opParteContraria, titleDialog" style="margin-top: 30px">
+                    <p:commandButton value="Voltar" icon="ui-icon-arrowreturnthick-1-w" process="@this" update="opParteContraria, titleDialog" style="margin-top: 30px">
                         <f:setPropertyActionListener target="#{mbeanPesquisa.cadastrando}" value="#{false}" />
                     </p:commandButton>
 

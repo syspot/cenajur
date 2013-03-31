@@ -42,15 +42,24 @@
                 <p:dataTable id="gridPesquisa2" widgetVar="gridCliente2" emptyMessage="Nenhum associado encontrado" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="20" value="#{mbeanPesquisa.grid}" var="cliente">
             
                     <p:column headerText="Matrícula">
-                        <h:outputText value="#{cliente.matricula}" />
+                        <p:commandLink oncomplete="#{nomeDialog}.hide()">
+                            <h:outputText value="#{cliente.matricula}" />
+                            <f:setPropertyActionListener target="#{mbeanClienteAcao.dependente.titular}" value="#{cliente}" />
+                        </p:commandLink>
                     </p:column>
             
                     <p:column headerText="Nome">
-                        <h:outputText value="#{cliente.nome}" />
+                        <p:commandLink oncomplete="#{nomeDialog}.hide()">
+                            <h:outputText value="#{cliente.nome}" />
+                            <f:setPropertyActionListener target="#{mbeanClienteAcao.dependente.titular}" value="#{cliente}" />
+                        </p:commandLink>
                     </p:column>
             
                     <p:column headerText="Tipo">
-                        <h:outputText value="#{cliente.tipo}" />
+                        <p:commandLink oncomplete="#{nomeDialog}.hide()">
+                            <h:outputText value="#{cliente.tipo}" />
+                            <f:setPropertyActionListener target="#{mbeanClienteAcao.dependente.titular}" value="#{cliente}" />
+                        </p:commandLink>
                     </p:column>
             
                     <p:column headerText="Adicionar" styleClass="coluna10" style="text-align:center;">

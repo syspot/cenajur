@@ -19,7 +19,7 @@
             <p:selectOneMenu id="tipoAgenda" value="#{mbeanModel.tipoAgenda.id}" required="true" requiredMessage="Tipo de Agenda: Campo obrigatório" style="width:60%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbean.tiposAgendas}" />
-                <p:ajax event="change" update="pgColaboradorAgenda, pgClienteAgenda, dtAgendasColaboradores" listener="#{mbean.alterarTipoAgenda}" />
+                <p:ajax event="change" update="@form" listener="#{mbean.alterarTipoAgenda}" />
             </p:selectOneMenu>
 
         </h:panelGrid>
@@ -33,21 +33,34 @@
             <p:calendar navigator="true" id="dataFimAgenda" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data: Campo obrigatório" value="#{mbeanModel.dataFinal}" mindate="#{mbeanModel.dataFinalMinima}" timeZone="America/Recife"/>
 
         </h:panelGrid>
+        
+        <h:panelGrid id="pgLocal" style="width: 100%" rendered="#{!mbeanModel.tipoVisitaDoCliente}">
 
-        <h:panelGrid id="pgClienteAgenda" columns="3" columnClasses="coluna50, coluna15, coluna35" style="width:60%">
+            <h:outputText value="Local" />
+            <p:inputText value="#{mbeanModel.local}" styleClass="coluna30" rendered="#{!mbeanModel.tipoAudiencia}"/>
+            <p:selectOneMenu required="true" requiredMessage="Local: Campo obrigatório" value="#{mbean.idVaraAudiencia}" rendered="#{mbeanModel.tipoAudiencia}" style="width:30%">
+                <f:selectItem itemLabel="Não Selecionado" itemValue="" />
+                <f:selectItems value="#{mbean.varas}" />
+            </p:selectOneMenu>
+    
+        </h:panelGrid>
 
-            <p:outputLabel for="clienteAgenda" value="Associado" rendered="#{mbeanModel.tipoVisitaDoCliente}" />
-            <p:outputLabel for="tipoVisitaCliente" value="Tipo de Visita" rendered="#{mbeanModel.tipoVisitaDoCliente}" />
-            <p:outputLabel for="telefoneClienteAgenda" value="Telefone" rendered="#{mbeanModel.tipoVisitaDoCliente}" />
+        <h:panelGrid id="pgClienteAgenda" columns="4" columnClasses="coluna30, coluna45, coluna10, coluna15" style="width:100%" rendered="#{mbeanModel.tipoVisitaDoCliente}">
 
-            <p:outputPanel autoUpdate="true" style="width:100%" rendered="#{mbeanModel.tipoVisitaDoCliente}">
+            <h:outputText value="Local" />
+            <p:outputLabel for="clienteAgenda" value="Associado" />
+            <p:outputLabel for="tipoVisitaCliente" value="Tipo de Visita" />
+            <p:outputLabel for="telefoneClienteAgenda" value="Telefone" />
+
+            <p:inputText value="#{mbeanModel.local}" styleClass="coluna95" />
+            <p:outputPanel autoUpdate="true" style="width:100%" >
                 <p:inputText id="clienteAgenda" value="#{mbeanModel.cliente.nome}" readonly="true" style="width:75%" />
                 <p:commandButton type="button" icon="ui-icon-plus" value="Add" onclick="dlgCliente6.show();" />
             </p:outputPanel>
-            <p:selectOneMenu id="tipoVisitaCliente" value="#{mbeanModel.tipoVisita.id}" rendered="#{mbeanModel.tipoVisitaDoCliente}">
+            <p:selectOneMenu id="tipoVisitaCliente" value="#{mbeanModel.tipoVisita.id}">
                 <f:selectItems value="#{mbean.tiposVisitas}" />
             </p:selectOneMenu>
-            <p:inputMask id="telefoneClienteAgenda" mask="(99) 9999-9999" value="#{mbeanModel.telefoneCliente}" maxlength="14" styleClass="coluna90" rendered="#{mbeanModel.tipoVisitaDoCliente}" />
+            <p:inputMask id="telefoneClienteAgenda" mask="(99) 9999-9999" value="#{mbeanModel.telefoneCliente}" maxlength="14" styleClass="coluna90" />
 
         </h:panelGrid>
 
@@ -67,7 +80,7 @@
             </h:panelGrid>
         </h:panelGrid>
 
-        <p:outputPanel id="opAgendasColaboradores">
+        <p:outputPanel id="opAgendasColaboradores" autoUpdate="true">
 
             <p:dataTable id="dtAgendasColaboradores" value="#{mbeanModel.agendasColaboradores}" var="agendaColaborador" emptyMessage="Nenhum colaborador adicionado" style="width:99%">
 
@@ -124,19 +137,17 @@
             <p:calendar navigator="true" id="dataFimAgendaPesquisa" required="true" requiredMessage="Data Fim: Campo obrigatório" pattern="dd/MM/yyyy HH:mm" value="#{mbeanPesquisaModel.dataFinal}" timeZone="America/Recife"/>
 
         </h:panelGrid>
+        
+        <h:panelGrid>
+            <p:outputLabel for="somenteAbertas" value="Abertas" />
+            <p:selectBooleanCheckbox id="somenteAbertas" value="#{mbeanPesquisaModel.somenteAbertas}" />
+        </h:panelGrid>
 
     </ui:define>
 
     <ui:define name="colunasTabela">
-
-        <p:column headerText="Tipo de Agenda">
-            <p:commandLink action="#{mbean.detailEvent}" ajax="false">
-                <h:outputText value="#{linha.tipoAgenda.descricao}" />
-                <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
-            </p:commandLink>
-        </p:column>
-
-        <p:column headerText="Data Inicial">
+        
+        <p:column headerText="Data">
             <p:commandLink action="#{mbean.detailEvent}" ajax="false">
                 <h:outputText value="#{linha.dataInicial}">
                     <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
@@ -144,8 +155,15 @@
                 <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
             </p:commandLink>
         </p:column>
+        
+        <p:column headerText="Tipo de Agenda">
+            <p:commandLink action="#{mbean.detailEvent}" ajax="false">
+                <h:outputText value="#{linha.tipoAgenda.descricao}" />
+                <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+            </p:commandLink>
+        </p:column>
 
-        <p:column headerText="Data Final">
+        <p:column headerText="Data Final" rendered="false">
             <p:commandLink action="#{mbean.detailEvent}" ajax="false">
                 <h:outputText value="#{linha.dataFinal}">
                     <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
@@ -156,7 +174,7 @@
 
         <p:column headerText="Descrição">
             <p:commandLink action="#{mbean.detailEvent}" ajax="false">
-                <h:outputText value="#{linha.descricao}" />
+                <h:outputText value="#{linha.resumoDescricao}" />
                 <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
             </p:commandLink>
         </p:column>

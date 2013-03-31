@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="contratoExperiencia" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f37734dc-0305-41c0-ba1d-0a06a2e568bb">
+	<property name="ireport.zoom" value="1.100000000000007"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="248"/>
+	<parameter name="P_COLABORADOR_ID" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT C.ID, C.NOME, C.MATRICULA, C.EMAIL, G.DESCRICAO GRADUACAO, CASE WHEN C.FLAG_STATUS_PM THEN 'ATIVO' ELSE 'INATIVO' END SITUACAO_PM, C.CADASTRO_PM, C.RG, C.CPF, C.DATA_NASCIMENTO, EC.DESCRICAO ESTADO_CIVIL, C.TELEFONE, C.CELULAR, L.DESCRICAO LOTACAO, L.TELEFONE TELEFONE_LOTACAO,
+COALESCE(CASE WHEN C.LOGRADOURO = '' THEN NULL ELSE C.LOGRADOURO END || ', ', '') || COALESCE('n. ' || CASE WHEN C.NUMERO = '' THEN NULL ELSE C.NUMERO || ', ' END, '') || COALESCE(CASE WHEN C.COMPLEMENTO = '' THEN NULL ELSE C.COMPLEMENTO END || ', ', '')
+       || COALESCE(CASE WHEN C.BAIRRO = '' THEN NULL ELSE C.BAIRRO END || ', ', '') || COALESCE(CID.DESCRICAO || '/' || E.DESCRICAO || ', ', '') || COALESCE('CEP ' || CASE WHEN C.CEP = '' THEN NULL ELSE C.CEP END, '') ENDERECO FROM CLIENTES C
+	LEFT OUTER JOIN GRADUACOES G ON G.ID = C.GRADUACAO_ID
+LEFT OUTER JOIN ESTADOS_CIVIS EC ON EC.ID = C.ESTADO_CIVIL_ID
+LEFT OUTER JOIN LOTACOES L ON L.ID = C.LOTACAO_ID
+              LEFT OUTER JOIN CIDADES CID ON C.CIDADE_ID = CID.ID
+       LEFT OUTER JOIN ESTADOS E ON E.ID = CID.ESTADO_ID
+WHERE C.ID = $P{P_COLABORADOR_ID}]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="matricula" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="graduacao" class="java.lang.String"/>
+	<field name="situacao_pm" class="java.lang.String"/>
+	<field name="cadastro_pm" class="java.lang.String"/>
+	<field name="rg" class="java.lang.String"/>
+	<field name="cpf" class="java.lang.String"/>
+	<field name="data_nascimento" class="java.sql.Timestamp"/>
+	<field name="estado_civil" class="java.lang.String"/>
+	<field name="telefone" class="java.lang.String"/>
+	<field name="celular" class="java.lang.String"/>
+	<field name="lotacao" class="java.lang.String"/>
+	<field name="telefone_lotacao" class="java.lang.String"/>
+	<field name="endereco" class="java.lang.String"/>
+	<group name="group1">
+		<groupExpression><![CDATA[$F{id}]]></groupExpression>
+		<groupHeader>
+			<band height="406">
+				<line>
+					<reportElement uuid="477ce4c4-92d6-4259-aaa7-a6a5bde36213" positionType="Float" x="212" y="244" width="33" height="1"/>
+				</line>
+				<staticText>
+					<reportElement uuid="3863e2dd-88ec-4229-8b84-2fc281866574" positionType="Float" x="247" y="227" width="19" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[de]]></text>
+				</staticText>
+				<line>
+					<reportElement uuid="0398320e-4b29-4088-9732-6360affb34a4" positionType="Float" x="268" y="244" width="95" height="1"/>
+				</line>
+				<staticText>
+					<reportElement uuid="46d176bf-87aa-46f1-aae9-2bd6eb99c23f" positionType="Float" x="364" y="227" width="20" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[de]]></text>
+				</staticText>
+				<line>
+					<reportElement uuid="b9d437d9-666c-45cd-be11-0fb1d17b627e" positionType="Float" x="386" y="244" width="33" height="1"/>
+				</line>
+				<staticText>
+					<reportElement uuid="46d176bf-87aa-46f1-aae9-2bd6eb99c23f" positionType="Float" x="420" y="227" width="20" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[às]]></text>
+				</staticText>
+				<line>
+					<reportElement uuid="b9d437d9-666c-45cd-be11-0fb1d17b627e" positionType="Float" x="440" y="244" width="35" height="1"/>
+				</line>
+				<staticText>
+					<reportElement uuid="46d176bf-87aa-46f1-aae9-2bd6eb99c23f" positionType="Float" x="475" y="227" width="20" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[hs.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="9fdd87e7-024b-4383-bbd1-71b2384541c8" positionType="Float" x="46" y="227" width="162" height="20"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[Cidade do Salvador (BA),]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="b078e291-5e6a-466a-94e6-2144d138c91e" x="139" y="26" width="277" height="12"/>
+					<textElement textAlignment="Center" markup="styled">
+						<font fontName="Arial" size="10" isUnderline="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\" >CONTRATO DE PRESTAÇÃO DE SERVIÇOS</style>"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="774a5510-9452-4323-9bbc-f214829ec16f" positionType="Float" x="189" y="262" width="177" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["CONTRATANTE"]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="78da6dbf-d9ec-402c-ab68-74d6be2d0d08" positionType="Float" x="189" y="261" width="177" height="1"/>
+				</line>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="b078e291-5e6a-466a-94e6-2144d138c91e" x="19" y="175" width="517" height="46"/>
+					<textElement textAlignment="Justified" markup="styled">
+						<font fontName="Arial" size="8" isUnderline="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\" >\nCLÁUSULA PRIMEIRA: </style>O Presente contrato tem por OBJETO a prestação de serviços de treinamentos, palestras, seminários, jurídicos e cursos, dentro da Comarca de Salvador - Bahia e região metropolitana ao CONTRATANTE pelo CONTRATADO. " +
+"\nParágrafo primeiro: quando o domicilio do CONTRATANTE for no interior do Estado da Bahia, as prestações de serviços constantes do caput serão para lá estendidas, desde que na micro-região haja adesão de 300 (trezentos) contratantes. " +
+"\nParágrafo segundo: quando o objeto do serviço a ser prestado tratar-se de serviços jurídicos, conforme previsto no caput, o CONTRATADO colocará advogado, inscrito na Ordem dos Advogados do Brasil - OAB, a disposição do CONTRATANTE e refere-se somente às causas judiciais e extrajudiciais, cujo fato seja superveniente à adesão ao CONTRATO, sendo que na área penal e penal militar, os serviços jurídicos somente serão prestados, após seis meses da adesão e a quitação dos respectivos pagamentos. " +
+"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\" >\nCLÁUSULA SEGUNDA: </style>O CONTRATADO se obriga a divulgar, com antecedência, os cursos, palestras e treinamentos que serão realizados, podendo ser fornecido certificado ao CONTRATANTE. " +
+"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\" >\nCLÁUSULA TERCEIRA: </style>Por força do presente CONTRATO, o CONTRATANTE pagará ao CONTRATADO, independentemente de efetiva prestação dos serviços contratados, a importância correspondente a um salário mínimo, por ano, em 12(doze) parcelas mensais, corrigidas apenas quando houver reajuste do salário mínimo, sempre no mesmo percentual e na mesma data. "+
+"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\" >\nCLÁUSULA QUARTA: </style>o pagamento referido na cláusula anterior será adimplido, a critério do contrato por meio de débito em conta corrente indicada, através de cartões de crédito, desconto em folha de pagamento (contra-cheque) ou outra forma de pagamento legalmente permitida. " +
+"Parágrafo primeiro: o desconto será na data dos respectivos lotes, sendo que nos meses que são antecipados, os descontos também acompanharão a data de antecipação e no mês de dezembro será junto com o 13º Salário. " +
+"Parágrafo segundo: quando, por qualquer motivo, não for processado o pagamento, o CONTRATANTE  autoriza, desde já, que o referido débito seja quitado no mês subseqüente ao vencido, juntamente com a parcela do mês em curso. " +
+"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\" >\nCLÁUSULA QUINTA: </style>Quando o serviço a ser prestado for assistência jurídica, o  CONTRATANTE arcará com todas as despesas judiciais e extra judiciais necessárias ao fiel cumprimento do mandato a ser oportunamente outorgado ao causídico, tais como: custas processuais, xerox, extração e remessa de processos, preparo de recursos, autenticação, reconhecimento de firmas,  etc, bem como deverá fornecer todas as informações e documentos que o advogado lhe solicitar, sendo de inteira responsabilidade do CONTRATANTE a autenticidade dos mesmos, bem como a apresentação destes  no prazo estipulado. " +
+"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\" >\nCLÁUSULA SEXTA: </style>O presente contrato vigorará por tempo indeterminado, e a qualquer momento poderão as partes denunciá-los, contanto que o façam mediante prévia notificação, por escrito, com antecedência mínima de 30 (trinta) dias. Caso o direito de denuncia seja exercido pelo CONTRATANTE ficará obrigado a complementar o valor restante, até completar um inteiro do salário mínimo, conforme CLAUSULA TERCEIRA, desde que o CONTRATADO tenha prestado quaisquer dos serviços previstos na CLAUSULA PRIMEIRA. " +
+"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\" >\nCLÁUSULA SETIMA: </style>Na hipótese de denúncia do presente CONTRATO, caso o CONTRATANTE tenha utilizado os serviços jurídicos, conforme previsto na CLÁUSULA PRIMEIRA, parágrafo segundo, este indicará advogado de sua confiança para possibilitar o substabelecimento, sem reservas, do instrumento particular de mandato outorgado.   " +
+"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\" >\nCLÁUSULA OITAVA: </style>O CONTRATADO poderá, no caso de impedimento por motivo alheio a sua vontade, indicar outro profissional para a execução do contrato, sem qualquer ônus adicional para o CONTRATANTE. " +
+"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\" >\nCLÁUSULA NONA: </style>A verba oriunda da parte contrária, pelo princípio da Sucumbência, nas ações ajuizadas e/ou defendidas pelo advogado colocado a disposição do CONTRATANTE, será revertida em exclusivo benefício do causídico que tiver patrocinado o feito, desvinculado do presente contrato e isento de qualquer desconto por parte do CONTRATANTE. " +
+"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\" >\nCLÁUSULA DÉCIMA: </style>Ocorrendo inadimplência por 03 (três) meses, consecutivos ou não, da importância referida na cláusula TERCEIRA, haverá suspensão imediata da prestação dos serviços contratados.  " +
+"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\" >\nCLÁUSULA DÉCIMA PRIMEIRA: </style>para os CONTRATANTES que firmaram contrato de prestação de serviços anterior a data do registro deste CONTRATO, em Cartório de Registro de Títulos e Documentos, a data da vigência será a consignada na ficha de inscrição, constante nos arquivos do CONTRATADO. Para os CONTRATANTES que aderirem a este CONTRATO após o seu registro, a vigência iniciará na data da adesão. " +
+"<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\" >\nCLÁUSULA DÉCIMA SEGUNDA: </style>As partes contratantes elegem o foro desta cidade do Salvador, Estado da Bahia, para o fim de dirimir quaisquer dúvidas oriundas do presente contrato, com renúncia expressa a qualquer outro, por mais privilegiado que seja." +
+"\nE, para firmeza e como prova de assim haverem contratado, fizeram este instrumento particular impresso em 02 (duas) vias de igual teor e forma para um só efeito legal, devidamente registrado no 1º Oficio de Títulos e Documentos da Cidade de Salvador, que vai assinado pelo contratante."]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="774a5510-9452-4323-9bbc-f214829ec16f" positionType="Float" x="19" y="283" width="517" height="35"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Obs: Encontra-se suspensa a carência de seis meses, prevista para área penal e penal militar, referida no parágrafo Segundo da Cláusula Primeira."]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement uuid="f68049b9-0a96-4055-850f-6432fcd63c91" positionType="Float" x="354" y="321" width="191" height="82"/>
+				</rectangle>
+				<staticText>
+					<reportElement uuid="252eca52-a7cd-4afd-815f-d818c7f81c69" positionType="Float" x="364" y="330" width="52" height="13"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[Recebi em:]]></text>
+				</staticText>
+				<line>
+					<reportElement uuid="67ee6c80-1a82-43f2-9f75-430269306798" positionType="Float" x="458" y="342" width="28" height="1"/>
+				</line>
+				<staticText>
+					<reportElement uuid="162e8120-4148-44dd-b712-0793e61bba3a" positionType="Float" x="486" y="322" width="19" height="23"/>
+					<textElement>
+						<font fontName="Garamond" size="18" isBold="true"/>
+					</textElement>
+					<text><![CDATA[/]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="da95527d-957f-40b4-b4ac-0d8f5fa52a50" positionType="Float" x="454" y="322" width="19" height="23"/>
+					<textElement>
+						<font fontName="Garamond" size="18" isBold="true"/>
+					</textElement>
+					<text><![CDATA[/]]></text>
+				</staticText>
+				<line>
+					<reportElement uuid="d46280ac-45c5-4636-86b1-bf7c0ee9b23c" positionType="Float" x="426" y="342" width="28" height="1"/>
+				</line>
+				<line>
+					<reportElement uuid="c71f28ff-607e-4fa0-a7ca-b7e5147a940c" positionType="Float" x="490" y="342" width="28" height="1"/>
+				</line>
+				<staticText>
+					<reportElement uuid="e131cf62-de95-493c-b852-6126e2ec2590" positionType="Float" x="416" y="386" width="70" height="13"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[CET/CENAJUR]]></text>
+				</staticText>
+				<line>
+					<reportElement uuid="df5a76f5-7605-487c-aece-0433eb3765e7" positionType="Float" x="382" y="383" width="136" height="1"/>
+				</line>
+				<staticText>
+					<reportElement uuid="252eca52-a7cd-4afd-815f-d818c7f81c69" positionType="Float" x="385" y="351" width="24" height="13"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[às]]></text>
+				</staticText>
+				<line>
+					<reportElement uuid="d46280ac-45c5-4636-86b1-bf7c0ee9b23c" positionType="Float" x="414" y="361" width="28" height="1"/>
+				</line>
+				<line>
+					<reportElement uuid="d46280ac-45c5-4636-86b1-bf7c0ee9b23c" positionType="Float" x="447" y="361" width="28" height="1"/>
+				</line>
+				<staticText>
+					<reportElement uuid="252eca52-a7cd-4afd-815f-d818c7f81c69" positionType="Float" x="439" y="346" width="12" height="18"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="b078e291-5e6a-466a-94e6-2144d138c91e" x="19" y="137" width="517" height="38"/>
+					<textElement textAlignment="Justified" markup="styled">
+						<font fontName="Arial" size="8" isUnderline="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["e do outro lado como <style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">CONTRATADO</style>, CET/CENAJUR, situada na Rua da Polêmica, nº 821, Brotas, nesta Capital, CEP n.º 40275-360, CGC 00.273.879/0001-45, tem entre si justo e avançado o presente <style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">CONTRATO</style>, mediante cláusulas e condições adiante especificadas:"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="8956af9f-4680-4f9f-9b44-fa534e32ff57" x="59" y="62" width="228" height="12"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="85c581e7-7ea1-410e-a9cf-5f2ffe682027" x="19" y="62" width="41" height="12"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nome:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="c0541ab6-dfad-435d-9dd9-53a359f872bb" x="286" y="62" width="60" height="11"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[MATRICULA:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="d9676529-11bc-4482-b00e-13c28d2409b1" x="345" y="62" width="191" height="11"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{matricula} == null ? "" : $F{matricula}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="fe74367a-f341-47a7-b7c3-c2fda691da38" x="19" y="73" width="41" height="12"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[E-mail:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="c8e763e1-13c8-4b83-9c97-471dbb9a67b9" x="59" y="73" width="189" height="11"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{email} == null ? "" : $F{email}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="33505f40-a87f-4594-88da-1837dafdc092" x="79" y="84" width="128" height="11"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{graduacao} == null ? "" : $F{graduacao}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="36d03b89-cc5e-4f7c-ba19-9cd301e5f64f" x="19" y="84" width="61" height="12"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Graduação:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="49cacc97-ba68-4cf6-9bf5-38a028acb38e" x="206" y="84" width="58" height="11"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Situação PM:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="6b5e56cb-75c2-4dc8-8342-9345a37849db" x="263" y="84" width="67" height="11"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{situacao_pm}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="8b84f497-ca27-4fa4-8601-74d2a6f80aed" x="329" y="84" width="58" height="11"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cadastro:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="1afcc667-5b77-4aab-966c-27cf475a40dd" x="386" y="84" width="150" height="11"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cadastro_pm} == null ? "" : $F{cadastro_pm}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="5a5e6b78-5d82-4418-9f2b-af62d02ee344" x="19" y="95" width="27" height="12"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[RG:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="1c8cfda6-cdc1-4e59-9d0f-e931439ad821" x="45" y="95" width="88" height="11"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{rg} == null ? "" : $F{rg}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="e6d7559a-3611-4d4b-a6ce-8bb6ddde7ece" x="167" y="95" width="81" height="11"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cpf} == null ? "" : $F{cpf}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="44425491-fe79-471e-ba41-3a1e49353985" x="132" y="95" width="35" height="11"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[CPF:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="bf7d8025-523b-41aa-8f47-d1e952d29140" x="247" y="95" width="61" height="11"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nascimento:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="d8367651-5559-409f-9828-b52c9764b163" x="307" y="95" width="86" height="11"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{data_nascimento} == null ? "" : $F{data_nascimento}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="fcd4c5ce-3c2a-4a56-9bcd-d200ad4b359f" x="392" y="95" width="61" height="11"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Estado Civil:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="7692e1a2-10bc-4c05-bc1a-41db7134ae8e" x="452" y="95" width="84" height="11"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{estado_civil} == null ? "" : $F{estado_civil}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="3484f860-175e-4cc2-ad43-1ce6cba52095" x="76" y="106" width="460" height="11"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{endereco} == null ? "" : $F{endereco}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="4f6aa127-80fe-4c9e-a6a1-79f4af0fb1d5" x="19" y="106" width="58" height="12"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Endereço:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="a44bb746-c0b8-4cd3-8251-e46130cba6da" x="291" y="73" width="56" height="11"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{telefone} == null ? "" : $F{telefone}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="98e7a2a7-2a19-4b1c-9334-64e8ccf3f02d" x="247" y="73" width="44" height="11"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Telefone:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="654fa6f4-fc4c-4775-95cf-9dc2ecc92b68" x="387" y="73" width="149" height="11"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{celular} == null ? "" : $F{celular}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="0fac4cd4-4ae0-4826-8990-ffd04d9e4911" x="346" y="73" width="41" height="11"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Celular:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="3484f860-175e-4cc2-ad43-1ce6cba52095" x="106" y="117" width="223" height="12"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{lotacao} == null ? "" : $F{lotacao}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="4f6aa127-80fe-4c9e-a6a1-79f4af0fb1d5" x="19" y="117" width="88" height="12"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Endereço Funcional:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="3484f860-175e-4cc2-ad43-1ce6cba52095" x="382" y="117" width="154" height="12"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{telefone_lotacao} == null ? "" : $F{telefone_lotacao}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="4f6aa127-80fe-4c9e-a6a1-79f4af0fb1d5" x="328" y="117" width="54" height="12"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Telefone:]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="b078e291-5e6a-466a-94e6-2144d138c91e" x="19" y="50" width="517" height="12"/>
+					<textElement textAlignment="Center" markup="styled">
+						<font fontName="Arial" size="10" isUnderline="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Pelo presente instrumento particular, em que são partes, de um lado como CONTRATANTE,"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="2d09964b-e70b-42a6-9cb6-f9bc47f79e36" x="451" y="0" width="100" height="38"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Registrado no Cartório do
+ 1º Oficio de Registro de
+Títulos Documentos.
+Livro E.24 nº 112492]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+</jasperReport>

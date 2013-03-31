@@ -9,21 +9,13 @@
 
                 <p:outputPanel id="opPesquisa" layout="block" autoUpdate="#{empty autoUpdatePesquisa ? false : autoUpdatePesquisa}" style="width: 97.5%;">
 
-                    <h:panelGrid columns="1" style="width: 98%">
+                    <p:fieldset legend="Filtro" style="width: 97.5%" toggleable="true">
 
-                        <p:fieldset legend="Filtro" style="width: 100%" toggleable="true">
+                        <ui:insert name="pesquisaCampos" />
 
-                            <h:panelGrid columns="1" styleClass="coluna100">
+                        <ui:include src="comandoCRUDPesquisa.xhtml" />
 
-                                <ui:insert name="pesquisaCampos" />
-
-                            </h:panelGrid>
-
-                            <ui:include src="comandoCRUDPesquisa.xhtml" />
-
-                        </p:fieldset>
-
-                    </h:panelGrid>
+                    </p:fieldset>
 
                     <p:fieldset style="width: 97.5%">
 
@@ -31,6 +23,8 @@
                             <p:graphicImage value="../resources/images/pdf.png" />
                             <p:dataExporter type="pdf" target="gridPesquisa" fileName="relat" pageOnly="true" encoding="ISO-8859-1" />
                         </h:commandLink>
+                    
+                        <p:messages id="msgs" showDetail="true" showSummary="false" />
 
                         <p:dataTable id="gridPesquisa" widgetVar="widgetVar" emptyMessage="Nenhum registro encontrado" style="width: 100%" paginator="true" paginatorAlwaysVisible="false" rows="10" value="#{mbean.grid}" var="linha" rendered="#{empty gridComCss ? true : false}">
 
@@ -86,47 +80,47 @@
 
         <p:tab id="tabCadastro" title="Cadastro">
 
+            <h:form id="formBtnExterno" prependId="false">
+                <div align="right" style="width: 97.5%">
+                    <p:commandButton id="btnCancelar" value="Novo Cadastro" icon="ui-icon-document" action="#{mbean.limpar}" process="@this" update=":tabview" style="margin-left: 5px;" />
+                    <ui:insert name="btnSuperior" />
+                </div>
+                <div align="right" style="width: 97.5%">
+                    <ui:insert name="btnSuperior2" />
+                </div>
+            </h:form>
+            
             <h:form id="formCadastro" prependId="false">
 
                 <p:outputPanel id="opCadastro" layout="block" autoUpdate="#{empty autoUpdateCadastro ? false : autoUpdateCadastro}" style="width: 98%;">
 
-                    <h:panelGrid columns="1" style="width: 98%">
+                    <p:fieldset legend="Informações de Cadastro" toggleable="true" collapsed="true" style="width: 100%" rendered="#{empty informacoesCadastro ? false : informacoesCadastro}">
 
-                        <ui:include src="comandoCRUDLimpar.xhtml" />
+                        <h:panelGrid width="100%" columns="3" columnClasses="coluna10_3, coluna20_3, coluna25_3">
 
-                        <p:fieldset legend="Informações de Cadastro" toggleable="true" collapsed="true" style="width: 100%" rendered="#{empty informacoesCadastro ? false : informacoesCadastro}">
+                            <h:outputLabel value="Chave" />
+                            <h:outputLabel value="Data Atualização" />
+                            <h:outputLabel value="Usuario Atualização" />
 
-                            <h:panelGrid width="100%" columns="3" columnClasses="coluna10_3, coluna20_3, coluna25_3">
+                            <h:outputText value="#{mbeanModel.id}" />
+                            <h:outputText value="#{mbeanModel.dataAtualizacao}">
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
+                            </h:outputText>
+                            <h:outputText value="#{mbeanModel.colaboradorAtualizacao.nome}" />
 
-                                <h:outputLabel value="Chave" />
-                                <h:outputLabel value="Data Atualização" />
-                                <h:outputLabel value="Usuario Atualização" />
+                        </h:panelGrid>
 
-                                <h:outputText value="#{mbeanModel.id}" />
-                                <h:outputText value="#{mbeanModel.dataAtualizacao}">
-                                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" />
-                                </h:outputText>
-                                <h:outputText value="#{mbeanModel.colaboradorAtualizacao.nome}" />
+                        <ui:insert name="informacoes" />
 
-                            </h:panelGrid>
+                    </p:fieldset>
 
-                            <ui:insert name="informacoes" />
+                    <p:fieldset style="width: 100%">
 
-                        </p:fieldset>
+                        <ui:insert name="cadastro" />
 
-                        <p:fieldset style="width: 100%">
-
-                            <h:panelGrid columns="1" styleClass="coluna100">
-
-                                <ui:insert name="cadastro" />
-
-                            </h:panelGrid>
-
-                            <ui:include src="comandoCRUDCadastro.xhtml" />
-                            
-                        </p:fieldset>
-
-                    </h:panelGrid>
+                        <ui:include src="comandoCRUDCadastro.xhtml" />
+                        
+                    </p:fieldset>
 
                 </p:outputPanel>
 

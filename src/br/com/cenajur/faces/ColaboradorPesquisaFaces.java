@@ -11,6 +11,7 @@ import br.com.cenajur.model.Cidade;
 import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.TipoColaborador;
 import br.com.cenajur.util.Constantes;
+import br.com.topsys.util.TSUtil;
 
 @ViewScoped
 @ManagedBean(name = "colaboradorPesquisaFaces")
@@ -55,7 +56,7 @@ public class ColaboradorPesquisaFaces extends PesquisaFaces<Colaborador> {
 	}
 
 	public Boolean getFlagBuscaAdvogado() {
-		return flagBuscaAdvogado;
+		return TSUtil.isEmpty(flagBuscaAdvogado) ? false : flagBuscaAdvogado;
 	}
 
 	public void setFlagBuscaAdvogado(Boolean flagBuscaAdvogado) {

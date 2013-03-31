@@ -3,19 +3,19 @@
 
 
     <h:panelGrid style="width: 100%; text-align: right">
-        <p:commandButton value="Novo" process="@this" update="opParteContraria, titleDialog">
+        <p:commandButton value="Novo" icon="ui-icon-document" process="@this" update="opParteContraria, titleDialog">
             <f:setPropertyActionListener target="#{mbeanPesquisa.cadastrando}" value="#{true}" />
         </p:commandButton>
     </h:panelGrid>
 
-    <h:panelGrid columns="1" columnClasses="coluna90" style="width:85%">
+    <h:panelGrid columns="1" columnClasses="coluna90" style="width:53%">
 
         <p:outputLabel for="descricaoPesquisa" value="Descrição" />
-        <p:inputText id="descricaoPesquisa" value="#{mbeanPesquisa.model.descricao}" style="width: 89%" maxlength="50" />
+        <p:inputText id="descricaoPesquisa" value="#{mbeanPesquisa.model.descricao}" maxlength="50" styleClass="coluna60"/>
 
     </h:panelGrid>
 
-    <h:panelGrid columns="2" columnClasses="coluna35, coluna65" style="width:80%">
+    <h:panelGrid columns="2" columnClasses="coluna35, coluna65" style="width:60%">
 
         <p:outputLabel for="tipoDocumentoPesquisa" value="Tipo de Documento" />
         <p:outputLabel for="numeroDocumentoPesquisa" value="Número" />
@@ -30,19 +30,26 @@
 
     <p:commandButton value="Pesquisar" icon="ui-icon-search" onclick="gridParteContraria.getPaginator().setPage(0);" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="margin-left: 5px; margin-top:10px; margin-bottom:10px" />
 
-    <p:dataTable id="gridPesquisa" widgetVar="gridParteContraria" emptyMessage="Nenhuma parte contrária encontrada" paginator="true" paginatorAlwaysVisible="false" rows="5" value="#{mbeanPesquisa.grid}" var="parteContraria">
-
-        <p:column headerText="Descrição">
-            <h:outputText value="#{parteContraria.descricao}" />
-        </p:column>
-
-        <p:column headerText="Adicionar" styleClass="coluna10" style="text-align:center;">
-            <p:commandLink action="#{mbeanAcao.addParteContraria}" oncomplete="#{nomeDialog}.hide()">
-                <h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
-                <f:setPropertyActionListener target="#{mbeanAcao.parteContrariaSelecionada}" value="#{parteContraria}" />
-            </p:commandLink>
-        </p:column>
-
-    </p:dataTable>
-
+    <p:scrollPanel mode="native" style="width: 100%; height: 250px; margin-top: 20px">
+    
+        <p:dataTable id="gridPesquisa" widgetVar="gridParteContraria" emptyMessage="Nenhuma parte contrária encontrada" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="20" value="#{mbeanPesquisa.grid}" var="parteContraria">
+    
+            <p:column headerText="Descrição">
+                <p:commandLink action="#{mbeanAcao.addParteContraria}" oncomplete="#{nomeDialog}.hide()">
+                    <h:outputText value="#{parteContraria.descricao}" />
+                    <f:setPropertyActionListener target="#{mbeanAcao.parteContrariaSelecionada}" value="#{parteContraria}" />
+                </p:commandLink>
+            </p:column>
+    
+            <p:column headerText="Adicionar" styleClass="coluna10" style="text-align:center;">
+                <p:commandLink action="#{mbeanAcao.addParteContraria}" oncomplete="#{nomeDialog}.hide()">
+                    <h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
+                    <f:setPropertyActionListener target="#{mbeanAcao.parteContrariaSelecionada}" value="#{parteContraria}" />
+                </p:commandLink>
+            </p:column>
+    
+        </p:dataTable>
+    
+    </p:scrollPanel>
+    
 </ui:composition>

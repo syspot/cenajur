@@ -42,6 +42,8 @@ public class AgendaCrudFaces extends CrudFaces<Agenda>{
 	
 	private Colaborador colaboradorConectado;
 	
+	private Long idVaraAudiencia;
+	
 	private boolean buscaIndividual;
 	
 	
@@ -60,6 +62,7 @@ public class AgendaCrudFaces extends CrudFaces<Agenda>{
 		this.getCrudModel().setTipoVisita(new TipoVisita());
 		this.setGrid(new ArrayList<Agenda>());
 		this.agendaColaboradorSelecionado = new AgendaColaborador();
+		this.idVaraAudiencia = null;
 		return null;
 	}
 	
@@ -140,6 +143,13 @@ public class AgendaCrudFaces extends CrudFaces<Agenda>{
 		return erro;
 		
     }
+	
+	@Override
+	protected void prePersist() {
+		if(getCrudModel().isTipoAudiencia() && !TSUtil.isEmpty(TSUtil.tratarLong(idVaraAudiencia))){
+			getCrudModel().setLocal(new Vara(idVaraAudiencia).getById().getDescricao());
+		}
+	}
 	
 	@Override
 	protected void preInsert() {
@@ -303,6 +313,14 @@ public class AgendaCrudFaces extends CrudFaces<Agenda>{
 
 	public void setColaboradorConectado(Colaborador colaboradorConectado) {
 		this.colaboradorConectado = colaboradorConectado;
+	}
+
+	public Long getIdVaraAudiencia() {
+		return idVaraAudiencia;
+	}
+
+	public void setIdVaraAudiencia(Long idVaraAudiencia) {
+		this.idVaraAudiencia = idVaraAudiencia;
 	}
 	
 }

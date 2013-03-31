@@ -17,16 +17,30 @@
 
     <p:commandButton value="Pesquisar" icon="ui-icon-search" onclick="gridColaborador.getPaginator().setPage(0);" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="margin-left: 5px; margin-top: 10px; margin-bottom: 30px">
         <f:setPropertyActionListener target="#{mbeanPesquisa.flagBuscaAdvogado}" value="#{buscaAdvogado}" />
+        <f:setPropertyActionListener target="#{mbeanPesquisa.model.pesquisaComQtdVisitas}" value="#{true}" />
     </p:commandButton>
 
     <p:dataTable id="gridPesquisa" widgetVar="gridColaborador" emptyMessage="Nenhum colaborador encontrado" paginator="true" paginatorAlwaysVisible="false" rows="5" value="#{mbeanPesquisa.grid}" var="colaborador">
 
         <p:column headerText="Nome">
-            <h:outputText value="#{colaborador.nome}" />
+            <p:commandLink action="#{mbeanColaboradorAcao[metodoAdicao]}" process="@form" global="false" onclick="#{nomeDialog}.hide()" oncomplete="#{atualizar}">
+                <h:outputText value="#{colaborador.nome}" />
+                <f:setPropertyActionListener target="#{mbeanColaboradorAcao[colaboradorSelecionado]}" value="#{colaborador}" />
+            </p:commandLink>
         </p:column>
 
         <p:column headerText="Tipo">
-            <h:outputText value="#{colaborador.tipoColaborador.descricao}" />
+            <p:commandLink action="#{mbeanColaboradorAcao[metodoAdicao]}" process="@form" global="false" onclick="#{nomeDialog}.hide()" oncomplete="#{atualizar}">
+                <h:outputText value="#{colaborador.tipoColaborador.descricao}" />
+                <f:setPropertyActionListener target="#{mbeanColaboradorAcao[colaboradorSelecionado]}" value="#{colaborador}" />
+            </p:commandLink>
+        </p:column>
+
+        <p:column headerText="Qtd Visitas" styleClass="coluna5">
+            <p:commandLink action="#{mbeanColaboradorAcao[metodoAdicao]}" process="@form" global="false" onclick="#{nomeDialog}.hide()" oncomplete="#{atualizar}">
+                <h:outputText value="#{colaborador.qtdVisitasDias}" />
+                <f:setPropertyActionListener target="#{mbeanColaboradorAcao[colaboradorSelecionado]}" value="#{colaborador}" />
+            </p:commandLink>
         </p:column>
 
         <p:column headerText="Adicionar" styleClass="coluna10" style="text-align:center;">

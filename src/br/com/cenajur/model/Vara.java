@@ -30,6 +30,15 @@ public class Vara extends TSActiveRecordAb<Vara>{
 	
 	private String descricao;
 
+	public Vara() {
+		super();
+	}
+
+	public Vara(Long id) {
+		super();
+		this.id = id;
+	}
+
 	public Long getId() {
 		return TSUtil.tratarLong(id);
 	}

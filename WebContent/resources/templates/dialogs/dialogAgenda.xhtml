@@ -9,7 +9,7 @@
         <p:remoteCommand name="atualizarDialogAgenda" process="@this" update="opDialogAgenda, opAgendasColaboradores" oncomplete="dlgAgenda.show();" global="false" />
         <p:remoteCommand name="atualizarAgendasColaboradores" process="@this" update="opAgendasColaboradores" />
 
-        <p:dialog id="dialogAgenda" header="Cadastro de Agenda" widgetVar="dlgAgenda" width="720" height="460" modal="true">
+        <p:dialog id="dialogAgenda" header="Cadastro de Agenda" widgetVar="dlgAgenda" styleClass="dialog80" modal="true">
 
             <p:ajax event="close" listener="#{agendaFaces.limpar}" update="opDialogAgenda" />
 
@@ -21,8 +21,7 @@
 
                 </p:outputPanel>
 
-                <p:outputPanel rendered="#{(agendaFaces.usuarioMaster and agendaFaces.agendaColaboradorSelecionado.id != null) 
-									|| (agendaFaces.agenda.id != null and !agendaFaces.usuarioMaster)}">
+                <p:outputPanel rendered="#{(agendaFaces.usuarioMaster and agendaFaces.agendaColaboradorSelecionado.id != null) || (agendaFaces.agenda.id != null and !agendaFaces.usuarioMaster)}">
 
                     <ui:include src="/pages/agenda/include_dialog_agenda_resposta.xhtml" />
 
@@ -33,14 +32,14 @@
                 <p:outputPanel rendered="#{agendaFaces.agenda.id == null and !agendaFaces.usuarioMaster}">
                     <h:outputText value="Você não possui permissão para editar a Agenda" style="margin-top: 20px" />
                     <br />
-                    <p:commandButton type="button" value="Fechar" onclick="myschedule.update();" oncomplete="dlgAgenda.hide();" style="margin-top: 20px" />
+                    <p:commandButton type="button" icon="ui-icon-close" value="Fechar" onclick="dlgAgenda.hide()" style="margin-top: 10px;" />
                 </p:outputPanel>
 
             </p:outputPanel>
 
         </p:dialog>
 
-        <p:remoteCommand name="addAudiencia" process="@this" oncomplete="dlgAudiencia.show()" update="opDialogAudiencia" global="false" />
+        <p:remoteCommand name="addAudiencia" process="@this" oncomplete="dlgAudiencia.show(); dlgAgenda.hide();" update="opDialogAudiencia" global="false" />
 
         <p:dialog id="dialogAudiencia" header="Cadastro de Audiência" widgetVar="dlgAudiencia" width="700" modal="true">
 
@@ -52,7 +51,7 @@
 
         </p:dialog>
 
-        <p:dialog id="dialogRespostaPropria" header="Fechar Agenda" widgetVar="dlgRespostaPropria" width="700" modal="true">
+        <p:dialog id="dialogRespostaPropria" header="Fechar Agenda" widgetVar="dlgRespostaPropria" styleClass="dialog80" modal="true">
 
             <p:outputPanel autoUpdate="true" id="opDialogRespostaPropria">
 
