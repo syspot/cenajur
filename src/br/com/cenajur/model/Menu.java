@@ -39,7 +39,7 @@ public final class Menu extends TSActiveRecordAb<Menu> {
     private Boolean flagExpandido;
     
 	@OneToMany(mappedBy = "menu")
-	@org.hibernate.annotations.OrderBy(clause = "ordem asc")
+	@org.hibernate.annotations.OrderBy(clause = "descricao asc")
     private List<Permissao> permissoes;
 
 	public Menu() {
