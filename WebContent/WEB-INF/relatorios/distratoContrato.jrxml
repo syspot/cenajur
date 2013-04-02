@@ -20,7 +20,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 			<textField>
 				<reportElement uuid="b078e291-5e6a-466a-94e6-2144d138c91e" x="46" y="264" width="471" height="169"/>
 				<textElement textAlignment="Justified" markup="styled">
-					<font fontName="Garamond" size="13"/>
+					<font fontName="Arial" size="13"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">Associação Geral dos Policiais – AGEPOL</style> comunica o(a) Sr(a) " + $F{nome} + ", brasileiro(a)" + ($F{oab} == null ? "" : ", advogado(a), regularmente inscrito(a) na OAB/BA sob n. " + $F{oab}) + ", residente na " + $F{endereco} + ", nesta capital, <style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">DENÚNCIA</style> do contrato de prestação de serviço firmado, eis que não tem mais interesse na manutenção do mesmo, conforme clausula sétima do contrato. " +
 "Informa da necessidade de devolver todos os documentos, pastas, tablet e seus acessórios, que estejam em V. poder, além de renunciar a todos os processos virtuais, sob pena de responsabilidade."]]></textFieldExpression>
@@ -28,21 +28,21 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 			<staticText>
 				<reportElement uuid="9fdd87e7-024b-4383-bbd1-71b2384541c8" x="177" y="501" width="95" height="20"/>
 				<textElement textAlignment="Right">
-					<font fontName="Garamond" size="13"/>
+					<font fontName="Arial" size="13"/>
 				</textElement>
 				<text><![CDATA[Salvador/Bahia,]]></text>
 			</staticText>
 			<textField pattern="dd &apos;de&apos; MMMMM &apos;de&apos; yyyy">
 				<reportElement uuid="ff1a0100-e23f-4772-af68-6ace4c6a02a2" x="283" y="501" width="148" height="20"/>
 				<textElement>
-					<font fontName="Garamond" size="13"/>
+					<font fontName="Arial" size="13"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="ed1253d4-56fd-4a13-ba2b-08c42472132d" x="310" y="618" width="221" height="20"/>
 				<textElement textAlignment="Center" markup="styled">
-					<font fontName="Garamond" size="12" isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">" + $F{nome} + "</style>"]]></textFieldExpression>
 			</textField>
@@ -55,14 +55,14 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 			<textField>
 				<reportElement uuid="ed1253d4-56fd-4a13-ba2b-08c42472132d" x="22" y="618" width="250" height="20"/>
 				<textElement textAlignment="Center" markup="styled">
-					<font fontName="Garamond" size="12" isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">Associação Geral dos Policiais – AGEPOL</style>"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="ed1253d4-56fd-4a13-ba2b-08c42472132d" x="46" y="33" width="462" height="57"/>
 				<textElement textAlignment="Center" markup="styled">
-					<font fontName="Garamond" size="16" isBold="true"/>
+					<font fontName="Arial" size="16" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">DISTRATO DO CONTRATO DE PRESTAÇÃO DE SERVIÇOS PROFISSIONAIS DE ADVOCACIA</style>"]]></textFieldExpression>
 			</textField>

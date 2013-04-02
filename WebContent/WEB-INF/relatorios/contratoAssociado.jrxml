@@ -147,14 +147,14 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 				<staticText>
 					<reportElement uuid="162e8120-4148-44dd-b712-0793e61bba3a" positionType="Float" x="486" y="322" width="19" height="23"/>
 					<textElement>
-						<font fontName="Garamond" size="18" isBold="true"/>
+						<font fontName="Arial" size="18" isBold="true"/>
 					</textElement>
 					<text><![CDATA[/]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="da95527d-957f-40b4-b4ac-0d8f5fa52a50" positionType="Float" x="454" y="322" width="19" height="23"/>
 					<textElement>
-						<font fontName="Garamond" size="18" isBold="true"/>
+						<font fontName="Arial" size="18" isBold="true"/>
 					</textElement>
 					<text><![CDATA[/]]></text>
 				</staticText>

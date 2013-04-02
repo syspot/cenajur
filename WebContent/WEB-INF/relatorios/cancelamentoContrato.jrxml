@@ -23,28 +23,28 @@ FROM CLIENTES C LEFT OUTER JOIN MOTIVOS_CANCELAMENTOS MC ON MC.ID = C.MOTIVO_CAN
 			<staticText>
 				<reportElement uuid="662a7c9e-a1b7-4147-8fa1-16d247bdbc08" x="150" y="33" width="255" height="20"/>
 				<textElement textAlignment="Center">
-					<font fontName="Garamond" size="14" isBold="true"/>
+					<font fontName="Arial" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CANCELAMENTO DE CONTRATO]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="b1447f6a-8e8c-4f12-9ec6-b0bf6441a764" x="222" y="58" width="45" height="20"/>
 				<textElement>
-					<font fontName="Garamond" size="14" isBold="true"/>
+					<font fontName="Arial" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[MAT.:]]></text>
 			</staticText>
 			<textField>
 				<reportElement uuid="3101b2d2-4ae6-4063-ab88-4e5c8a79054b" x="273" y="58" width="100" height="20"/>
 				<textElement>
-					<font fontName="Garamond" size="14" isBold="true"/>
+					<font fontName="Arial" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{matricula}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="5c8852cb-916e-4b44-8a27-29dbdae1a58e" x="42" y="125" width="462" height="63"/>
 				<textElement textAlignment="Justified" markup="styled">
-					<font fontName="Garamond" size="12"/>
+					<font fontName="Arial" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Eu, <style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">" + $F{nome} + ",</style> RG " + $F{rg} + ", solicito o cancelamento do contrato junto ao CET/CENAJUR, por " + $F{motivo} + ", produzindo seus efeitos 30 (trinta) dias após a assinatura deste, conforme a cláusula 6ª do Contrato de Prestação de Serviços firmado entre as partes."]]></textFieldExpression>
 			</textField>
@@ -61,7 +61,7 @@ FROM CLIENTES C LEFT OUTER JOIN MOTIVOS_CANCELAMENTOS MC ON MC.ID = C.MOTIVO_CAN
 					<printWhenExpression><![CDATA[$F{possui_processo}]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Justified">
-					<font fontName="Garamond" size="12"/>
+					<font fontName="Arial" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Outrossim, regovo, neste momento, os poderes que foram outorgados aos advogados deste escritório, nos autos do(s) seguintes(s) processo(s):"]]></textFieldExpression>
 			</textField>
@@ -84,14 +84,14 @@ FROM CLIENTES C LEFT OUTER JOIN MOTIVOS_CANCELAMENTOS MC ON MC.ID = C.MOTIVO_CAN
 			<staticText>
 				<reportElement uuid="f0191b2a-c051-4b43-847a-8e2c573be015" x="392" y="34" width="18" height="20"/>
 				<textElement>
-					<font fontName="Garamond"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<text><![CDATA[de]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="6943a343-091e-4ce5-a5dc-b2b83a18698d" x="239" y="34" width="18" height="19"/>
 				<textElement>
-					<font fontName="Garamond"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<text><![CDATA[de]]></text>
 			</staticText>
@@ -106,7 +106,7 @@ FROM CLIENTES C LEFT OUTER JOIN MOTIVOS_CANCELAMENTOS MC ON MC.ID = C.MOTIVO_CAN
 			<staticText>
 				<reportElement uuid="94767b15-8995-497b-9b4e-af7018cd04a7" x="239" y="120" width="66" height="20"/>
 				<textElement>
-					<font fontName="Garamond" size="12"/>
+					<font fontName="Arial" size="12"/>
 				</textElement>
 				<text><![CDATA[Assinatura]]></text>
 			</staticText>
