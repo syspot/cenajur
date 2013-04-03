@@ -18,28 +18,28 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 			<textField>
 				<reportElement uuid="b078e291-5e6a-466a-94e6-2144d138c91e" x="57" y="479" width="440" height="20"/>
 				<textElement textAlignment="Center" markup="styled">
-					<font fontName="Arial" size="13"/>
+					<font fontName="SansSerif" size="13"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">" + $F{nome} + "</style>"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="9fdd87e7-024b-4383-bbd1-71b2384541c8" x="301" y="61" width="59" height="20"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="13"/>
+					<font fontName="SansSerif" size="13"/>
 				</textElement>
 				<text><![CDATA[Salvador, ]]></text>
 			</staticText>
 			<textField pattern="dd &apos;de&apos; MMMMM &apos;de&apos; yyyy">
 				<reportElement uuid="ff1a0100-e23f-4772-af68-6ace4c6a02a2" x="369" y="61" width="148" height="20"/>
 				<textElement>
-					<font fontName="Arial" size="13"/>
+					<font fontName="SansSerif" size="13"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="ed1253d4-56fd-4a13-ba2b-08c42472132d" x="77" y="205" width="440" height="18"/>
 				<textElement markup="styled">
-					<font fontName="Arial" size="13" isBold="false"/>
+					<font fontName="SansSerif" size="13" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["A AGEPOL/CENAJUR"]]></textFieldExpression>
 			</textField>
@@ -53,14 +53,14 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 			<staticText>
 				<reportElement uuid="6152c190-c419-4aac-a50c-c58a4e6911a8" x="77" y="402" width="440" height="22"/>
 				<textElement textAlignment="Justified">
-					<font fontName="Arial" size="13"/>
+					<font fontName="SansSerif" size="13"/>
 				</textElement>
 				<text><![CDATA[Atenciosamente,]]></text>
 			</staticText>
 			<textField>
 				<reportElement uuid="b078e291-5e6a-466a-94e6-2144d138c91e" x="57" y="499" width="440" height="20"/>
 				<textElement textAlignment="Center" markup="styled">
-					<font fontName="Arial" size="13"/>
+					<font fontName="SansSerif" size="13"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">CPF: " + $F{cpf} + "</style>"]]></textFieldExpression>
 			</textField>

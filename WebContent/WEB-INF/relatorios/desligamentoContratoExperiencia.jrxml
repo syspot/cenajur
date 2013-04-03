@@ -22,28 +22,28 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 			<textField>
 				<reportElement uuid="b078e291-5e6a-466a-94e6-2144d138c91e" x="77" y="264" width="440" height="20"/>
 				<textElement textAlignment="Justified" markup="styled">
-					<font fontName="Arial" size="13"/>
+					<font fontName="SansSerif" size="13"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Sr(a). <style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">" + $F{nome} + "</style>"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="9fdd87e7-024b-4383-bbd1-71b2384541c8" x="77" y="164" width="59" height="20"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="13"/>
+					<font fontName="SansSerif" size="13"/>
 				</textElement>
 				<text><![CDATA[Salvador, ]]></text>
 			</staticText>
 			<textField pattern="dd &apos;de&apos; MMMMM &apos;de&apos; yyyy">
 				<reportElement uuid="ff1a0100-e23f-4772-af68-6ace4c6a02a2" x="145" y="164" width="148" height="20"/>
 				<textElement>
-					<font fontName="Arial" size="13"/>
+					<font fontName="SansSerif" size="13"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="ed1253d4-56fd-4a13-ba2b-08c42472132d" x="46" y="66" width="462" height="18"/>
 				<textElement textAlignment="Center" markup="styled">
-					<font fontName="Arial" size="13" isBold="false"/>
+					<font fontName="SansSerif" size="13" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["COMUNICAÇÃO"]]></textFieldExpression>
 			</textField>
@@ -78,14 +78,14 @@ CGC: 00.273.879/0001-45
 			<staticText>
 				<reportElement uuid="252eca52-a7cd-4afd-815f-d818c7f81c69" x="87" y="620" width="52" height="13"/>
 				<textElement>
-					<font fontName="Arial" size="10"/>
+					<font fontName="SansSerif" size="10"/>
 				</textElement>
 				<text><![CDATA[Recebi em:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="e131cf62-de95-493c-b852-6126e2ec2590" x="87" y="644" width="52" height="13"/>
 				<textElement>
-					<font fontName="Arial"/>
+					<font fontName="SansSerif"/>
 				</textElement>
 				<text><![CDATA[Ass.:]]></text>
 			</staticText>
@@ -101,14 +101,14 @@ CGC: 00.273.879/0001-45
 			<staticText>
 				<reportElement uuid="da95527d-957f-40b4-b4ac-0d8f5fa52a50" x="177" y="609" width="19" height="23"/>
 				<textElement>
-					<font fontName="Arial" size="20" isBold="true"/>
+					<font fontName="SansSerif" size="20" isBold="true"/>
 				</textElement>
 				<text><![CDATA[/]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="162e8120-4148-44dd-b712-0793e61bba3a" x="209" y="610" width="19" height="23"/>
 				<textElement>
-					<font fontName="Arial" size="20" isBold="true"/>
+					<font fontName="SansSerif" size="20" isBold="true"/>
 				</textElement>
 				<text><![CDATA[/]]></text>
 			</staticText>

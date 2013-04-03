@@ -22,35 +22,35 @@
 			<staticText>
 				<reportElement uuid="94767b15-8995-497b-9b4e-af7018cd04a7" x="205" y="464" width="145" height="20"/>
 				<textElement textAlignment="Center">
-					<font fontName="Arial" size="13"/>
+					<font fontName="SansSerif" size="13"/>
 				</textElement>
 				<text><![CDATA[DECLARANTE]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="dfc5d5ee-445c-4433-97f4-74134545bb42" x="186" y="390" width="60" height="20"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="13" isBold="true"/>
+					<font fontName="SansSerif" size="13" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Salvador,]]></text>
 			</staticText>
 			<textField pattern="dd &apos;de&apos; MMMMM &apos;de&apos; yyyy">
 				<reportElement uuid="70ee0ff8-b39a-416b-b22c-acb9fcca9265" x="253" y="390" width="177" height="20"/>
 				<textElement>
-					<font fontName="Arial" size="13" isBold="true"/>
+					<font fontName="SansSerif" size="13" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="a73029bc-8d6f-4b69-b250-fdfda769fff1" x="29" y="181" width="491" height="131"/>
 				<textElement textAlignment="Justified" markup="styled">
-					<font fontName="Arial" size="13"/>
+					<font fontName="SansSerif" size="13"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="a73029bc-8d6f-4b69-b250-fdfda769fff1" x="29" y="70" width="491" height="34"/>
 				<textElement textAlignment="Center" markup="styled">
-					<font fontName="Arial" size="18"/>
+					<font fontName="SansSerif" size="18"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">DECLARAÇÃO DE SITUAÇÃO ECONÔMICA</style>"]]></textFieldExpression>
 			</textField>

@@ -24,63 +24,63 @@
 				<staticText>
 					<reportElement uuid="94767b15-8995-497b-9b4e-af7018cd04a7" positionType="Float" x="225" y="510" width="145" height="20"/>
 					<textElement textAlignment="Center">
-						<font fontName="Arial" size="13"/>
+						<font fontName="SansSerif" size="13"/>
 					</textElement>
 					<text><![CDATA[AGEPOL/CENAJUR]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="dfc5d5ee-445c-4433-97f4-74134545bb42" positionType="Float" x="197" y="451" width="58" height="20"/>
 					<textElement>
-						<font fontName="Arial" size="13" isBold="true"/>
+						<font fontName="SansSerif" size="13" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Salvador,]]></text>
 				</staticText>
 				<textField pattern="dd &apos;de&apos; MMMMM &apos;de&apos; yyyy">
 					<reportElement uuid="70ee0ff8-b39a-416b-b22c-acb9fcca9265" positionType="Float" x="255" y="451" width="157" height="20"/>
 					<textElement>
-						<font fontName="Arial" size="13" isBold="true"/>
+						<font fontName="SansSerif" size="13" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement uuid="bd2f612b-6912-4cd3-978d-8d32ca8fb27c" x="104" y="80" width="386" height="20"/>
 					<textElement textAlignment="Center" verticalAlignment="Bottom" markup="styled">
-						<font fontName="Arial" size="13"/>
+						<font fontName="SansSerif" size="13"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement uuid="bd2f612b-6912-4cd3-978d-8d32ca8fb27c" x="104" y="100" width="386" height="20"/>
 					<textElement textAlignment="Center" markup="styled">
-						<font fontName="Arial" size="13"/>
+						<font fontName="SansSerif" size="13"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{endereco}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement uuid="bd2f612b-6912-4cd3-978d-8d32ca8fb27c" x="61" y="246" width="472" height="20"/>
 					<textElement markup="styled">
-						<font fontName="Arial" size="13"/>
+						<font fontName="SansSerif" size="13"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Prezado(a) Sr(a)."]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement uuid="bd2f612b-6912-4cd3-978d-8d32ca8fb27c" x="61" y="303" width="472" height="34"/>
 					<textElement textAlignment="Justified" markup="styled">
-						<font fontName="Arial" size="13"/>
+						<font fontName="SansSerif" size="13"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Informamos a V. Sª. que, o Contrato de Prestação de Serviços Profissionais firmado com a AGEPOL/CENAJUR foi rescindido, com base na clausula 6ª do referido contrato."]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement uuid="bd2f612b-6912-4cd3-978d-8d32ca8fb27c" x="61" y="349" width="472" height="34"/>
 					<textElement textAlignment="Justified" markup="styled">
-						<font fontName="Arial" size="13"/>
+						<font fontName="SansSerif" size="13"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Informamos a V. Sª. que, o Contrato de Prestação de Serviços Profissionais firmado com a AGEPOL/CENAJUR foi rescindido, com base na clausula 6ª do referido contrato."]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement uuid="bd2f612b-6912-4cd3-978d-8d32ca8fb27c" x="61" y="393" width="472" height="34"/>
 					<textElement textAlignment="Justified" markup="styled">
-						<font fontName="Arial" size="13"/>
+						<font fontName="SansSerif" size="13"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Caso V. Sª. tenha interesse em permanecer vinculado à AGEPOL/CENAJUR, favor comparecer ao escritório."]]></textFieldExpression>
 				</textField>
@@ -95,28 +95,28 @@
 			<textField>
 				<reportElement uuid="44c36001-78ef-4cf3-9bb6-831354689206" x="19" y="9" width="556" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
-					<font fontName="Arial" size="11" isBold="true"/>
+					<font fontName="SansSerif" size="11" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">AGEPOL/CENAJUR – DESDE 2002 PRESTANDO ASSISTÊNCIA JURÍDICA EFETIVA E DE QUALIDADE</style>"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="297c04d4-c561-4dbe-94b0-287a3619e3a7" x="19" y="59" width="556" height="15"/>
 				<textElement textAlignment="Center">
-					<font fontName="Arial" size="11"/>
+					<font fontName="SansSerif" size="11"/>
 				</textElement>
 				<text><![CDATA[www.agepol.org.br]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="7e6e63fa-38a6-4254-a2d8-41af56b3a262" x="19" y="44" width="556" height="15"/>
 				<textElement textAlignment="Center">
-					<font fontName="Arial" size="11"/>
+					<font fontName="SansSerif" size="11"/>
 				</textElement>
 				<text><![CDATA[Tel.: (71) 3359 1297 / 3359 6583]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="1c815dc2-8a25-40d4-b425-4d470c2d6b66" x="19" y="29" width="556" height="15"/>
 				<textElement textAlignment="Center">
-					<font fontName="Arial" size="11"/>
+					<font fontName="SansSerif" size="11"/>
 				</textElement>
 				<text><![CDATA[Alameda dos Umbuzeiros, n. 638, Edf. Alameda Centro, Terraço, Caminho das Árvores – Salvador – BA]]></text>
 			</staticText>

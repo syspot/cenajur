@@ -43,7 +43,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 				<staticText>
 					<reportElement uuid="3863e2dd-88ec-4229-8b84-2fc281866574" positionType="Float" x="247" y="227" width="19" height="20"/>
 					<textElement textAlignment="Center" verticalAlignment="Bottom">
-						<font fontName="Arial" size="8"/>
+						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<text><![CDATA[de]]></text>
 				</staticText>
@@ -53,7 +53,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 				<staticText>
 					<reportElement uuid="46d176bf-87aa-46f1-aae9-2bd6eb99c23f" positionType="Float" x="364" y="227" width="20" height="20"/>
 					<textElement textAlignment="Center" verticalAlignment="Bottom">
-						<font fontName="Arial" size="8"/>
+						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<text><![CDATA[de]]></text>
 				</staticText>
@@ -63,7 +63,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 				<staticText>
 					<reportElement uuid="46d176bf-87aa-46f1-aae9-2bd6eb99c23f" positionType="Float" x="420" y="227" width="20" height="20"/>
 					<textElement textAlignment="Center" verticalAlignment="Bottom">
-						<font fontName="Arial" size="8"/>
+						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<text><![CDATA[às]]></text>
 				</staticText>
@@ -73,28 +73,28 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 				<staticText>
 					<reportElement uuid="46d176bf-87aa-46f1-aae9-2bd6eb99c23f" positionType="Float" x="475" y="227" width="20" height="20"/>
 					<textElement textAlignment="Center" verticalAlignment="Bottom">
-						<font fontName="Arial" size="8"/>
+						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<text><![CDATA[hs.]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="9fdd87e7-024b-4383-bbd1-71b2384541c8" positionType="Float" x="46" y="227" width="162" height="20"/>
 					<textElement textAlignment="Right" verticalAlignment="Bottom">
-						<font fontName="Arial" size="8"/>
+						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<text><![CDATA[Cidade do Salvador (BA),]]></text>
 				</staticText>
 				<textField>
 					<reportElement uuid="b078e291-5e6a-466a-94e6-2144d138c91e" x="139" y="26" width="277" height="12"/>
 					<textElement textAlignment="Center" markup="styled">
-						<font fontName="Arial" size="10" isUnderline="false"/>
+						<font fontName="SansSerif" size="10" isUnderline="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA["<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\" >CONTRATO DE PRESTAÇÃO DE SERVIÇOS</style>"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement uuid="774a5510-9452-4323-9bbc-f214829ec16f" positionType="Float" x="189" y="262" width="177" height="20"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Arial" size="8" isBold="false"/>
+						<font fontName="SansSerif" size="8" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA["CONTRATANTE"]]></textFieldExpression>
 				</textField>
@@ -104,7 +104,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 				<textField isStretchWithOverflow="true">
 					<reportElement uuid="b078e291-5e6a-466a-94e6-2144d138c91e" x="19" y="175" width="517" height="46"/>
 					<textElement textAlignment="Justified" markup="styled">
-						<font fontName="Arial" size="8" isUnderline="false"/>
+						<font fontName="SansSerif" size="8" isUnderline="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA["<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\" >\nCLÁUSULA PRIMEIRA: </style>O Presente contrato tem por OBJETO a prestação de serviços de treinamentos, palestras, seminários, jurídicos e cursos, dentro da Comarca de Salvador - Bahia e região metropolitana ao CONTRATANTE pelo CONTRATADO. " +
 "\nParágrafo primeiro: quando o domicilio do CONTRATANTE for no interior do Estado da Bahia, as prestações de serviços constantes do caput serão para lá estendidas, desde que na micro-região haja adesão de 300 (trezentos) contratantes. " +
@@ -127,7 +127,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 				<textField>
 					<reportElement uuid="774a5510-9452-4323-9bbc-f214829ec16f" positionType="Float" x="19" y="283" width="517" height="35"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Arial" size="8" isBold="false"/>
+						<font fontName="SansSerif" size="8" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Obs: Encontra-se suspensa a carência de seis meses, prevista para área penal e penal militar, referida no parágrafo Segundo da Cláusula Primeira."]]></textFieldExpression>
 				</textField>
@@ -137,7 +137,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 				<staticText>
 					<reportElement uuid="252eca52-a7cd-4afd-815f-d818c7f81c69" positionType="Float" x="364" y="330" width="52" height="13"/>
 					<textElement>
-						<font fontName="Arial" size="8"/>
+						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<text><![CDATA[Recebi em:]]></text>
 				</staticText>
@@ -147,14 +147,14 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 				<staticText>
 					<reportElement uuid="162e8120-4148-44dd-b712-0793e61bba3a" positionType="Float" x="486" y="322" width="19" height="23"/>
 					<textElement>
-						<font fontName="Arial" size="18" isBold="true"/>
+						<font fontName="SansSerif" size="18" isBold="true"/>
 					</textElement>
 					<text><![CDATA[/]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="da95527d-957f-40b4-b4ac-0d8f5fa52a50" positionType="Float" x="454" y="322" width="19" height="23"/>
 					<textElement>
-						<font fontName="Arial" size="18" isBold="true"/>
+						<font fontName="SansSerif" size="18" isBold="true"/>
 					</textElement>
 					<text><![CDATA[/]]></text>
 				</staticText>
@@ -167,7 +167,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 				<staticText>
 					<reportElement uuid="e131cf62-de95-493c-b852-6126e2ec2590" positionType="Float" x="416" y="386" width="70" height="13"/>
 					<textElement textAlignment="Center">
-						<font fontName="Arial" size="8"/>
+						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<text><![CDATA[CET/CENAJUR]]></text>
 				</staticText>
@@ -177,7 +177,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 				<staticText>
 					<reportElement uuid="252eca52-a7cd-4afd-815f-d818c7f81c69" positionType="Float" x="385" y="351" width="24" height="13"/>
 					<textElement textAlignment="Center">
-						<font fontName="Arial" size="8"/>
+						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<text><![CDATA[às]]></text>
 				</staticText>
@@ -190,14 +190,14 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 				<staticText>
 					<reportElement uuid="252eca52-a7cd-4afd-815f-d818c7f81c69" positionType="Float" x="439" y="346" width="12" height="18"/>
 					<textElement textAlignment="Center">
-						<font fontName="Arial" size="8" isBold="true"/>
+						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[:]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true">
 					<reportElement uuid="b078e291-5e6a-466a-94e6-2144d138c91e" x="19" y="137" width="517" height="38"/>
 					<textElement textAlignment="Justified" markup="styled">
-						<font fontName="Arial" size="8" isUnderline="false"/>
+						<font fontName="SansSerif" size="8" isUnderline="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA["e do outro lado como <style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">CONTRATADO</style>, CET/CENAJUR, situada na Rua da Polêmica, nº 821, Brotas, nesta Capital, CEP n.º 40275-360, CGC 00.273.879/0001-45, tem entre si justo e avançado o presente <style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">CONTRATO</style>, mediante cláusulas e condições adiante especificadas:"]]></textFieldExpression>
 				</textField>
@@ -208,7 +208,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<leftPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8"/>
+						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 				</textField>
@@ -219,7 +219,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<leftPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8" isBold="true"/>
+						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Nome:]]></text>
 				</staticText>
@@ -230,7 +230,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<leftPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8" isBold="true"/>
+						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[MATRICULA:]]></text>
 				</staticText>
@@ -242,7 +242,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<rightPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8"/>
+						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{matricula} == null ? "" : $F{matricula}]]></textFieldExpression>
 				</textField>
@@ -253,7 +253,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<leftPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8" isBold="true"/>
+						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[E-mail:]]></text>
 				</staticText>
@@ -264,7 +264,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<leftPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8"/>
+						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{email} == null ? "" : $F{email}]]></textFieldExpression>
 				</textField>
@@ -275,7 +275,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<leftPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8"/>
+						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{graduacao} == null ? "" : $F{graduacao}]]></textFieldExpression>
 				</textField>
@@ -286,7 +286,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<leftPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8" isBold="true"/>
+						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Graduação:]]></text>
 				</staticText>
@@ -297,7 +297,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<leftPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8" isBold="true"/>
+						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Situação PM:]]></text>
 				</staticText>
@@ -308,7 +308,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<leftPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8"/>
+						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{situacao_pm}]]></textFieldExpression>
 				</textField>
@@ -319,7 +319,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<leftPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8" isBold="true"/>
+						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Cadastro:]]></text>
 				</staticText>
@@ -331,7 +331,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<rightPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8"/>
+						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cadastro_pm} == null ? "" : $F{cadastro_pm}]]></textFieldExpression>
 				</textField>
@@ -342,7 +342,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<leftPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8" isBold="true"/>
+						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[RG:]]></text>
 				</staticText>
@@ -353,7 +353,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<leftPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8"/>
+						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{rg} == null ? "" : $F{rg}]]></textFieldExpression>
 				</textField>
@@ -364,7 +364,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<leftPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8"/>
+						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cpf} == null ? "" : $F{cpf}]]></textFieldExpression>
 				</textField>
@@ -375,7 +375,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<leftPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8" isBold="true"/>
+						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[CPF:]]></text>
 				</staticText>
@@ -386,7 +386,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<leftPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8" isBold="true"/>
+						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Nascimento:]]></text>
 				</staticText>
@@ -397,7 +397,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<leftPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8"/>
+						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{data_nascimento} == null ? "" : $F{data_nascimento}]]></textFieldExpression>
 				</textField>
@@ -408,7 +408,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<leftPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8" isBold="true"/>
+						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Estado Civil:]]></text>
 				</staticText>
@@ -420,7 +420,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<rightPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8"/>
+						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{estado_civil} == null ? "" : $F{estado_civil}]]></textFieldExpression>
 				</textField>
@@ -432,7 +432,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<rightPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8"/>
+						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{endereco} == null ? "" : $F{endereco}]]></textFieldExpression>
 				</textField>
@@ -443,7 +443,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<leftPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8" isBold="true"/>
+						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Endereço:]]></text>
 				</staticText>
@@ -454,7 +454,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<leftPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8"/>
+						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{telefone} == null ? "" : $F{telefone}]]></textFieldExpression>
 				</textField>
@@ -465,7 +465,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<leftPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8" isBold="true"/>
+						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Telefone:]]></text>
 				</staticText>
@@ -477,7 +477,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<rightPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8"/>
+						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{celular} == null ? "" : $F{celular}]]></textFieldExpression>
 				</textField>
@@ -488,7 +488,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<leftPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8" isBold="true"/>
+						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Celular:]]></text>
 				</staticText>
@@ -500,7 +500,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8"/>
+						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{lotacao} == null ? "" : $F{lotacao}]]></textFieldExpression>
 				</textField>
@@ -512,7 +512,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8" isBold="true"/>
+						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Endereço Funcional:]]></text>
 				</staticText>
@@ -525,7 +525,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<rightPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8"/>
+						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{telefone_lotacao} == null ? "" : $F{telefone_lotacao}]]></textFieldExpression>
 				</textField>
@@ -537,14 +537,14 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="8" isBold="true"/>
+						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Telefone:]]></text>
 				</staticText>
 				<textField>
 					<reportElement uuid="b078e291-5e6a-466a-94e6-2144d138c91e" x="19" y="50" width="517" height="12"/>
 					<textElement textAlignment="Center" markup="styled">
-						<font fontName="Arial" size="10" isUnderline="false"/>
+						<font fontName="SansSerif" size="10" isUnderline="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Pelo presente instrumento particular, em que são partes, de um lado como CONTRATANTE,"]]></textFieldExpression>
 				</textField>

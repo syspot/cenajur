@@ -588,7 +588,7 @@ public class Colaborador extends TSActiveRecordAb<Colaborador>{
 		}
 		
 		if (pesquisaComQtdVisitas) {
-			query.append(" group by c.id, c.nome, c.tipoColaborador.id, c.tipoColaborador.descricao order by qtd asc ");
+			query.append(" group by c.id, c.nome, c.apelido, c.tipoColaborador.id, c.tipoColaborador.descricao order by qtd asc ");
 		}
 		
 		return super.find(query.toString(), "c.nome", params.toArray());
