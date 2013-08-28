@@ -710,8 +710,6 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		
 		query.append(this.obterCondicionalQuery());
 		
-		query.append(" and c.flagAssociado = true ");
-		
 		return super.find(query.toString(), "nome", this.obterCondicionalParans().toArray());
 	}
 	

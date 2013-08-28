@@ -6,11 +6,11 @@
 	<parameter name="P_CLIENTE_ID" class="java.lang.Long"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT C.ID, C.NOME, C.MATRICULA, C.RG, COALESCE(MC.DESCRICAO, 'motivo pessoal') MOTIVO,
+		<![CDATA[SELECT CASE WHEN C.FLAG_ASSOCIADO THEN C.ID ELSE T.ID END, CASE WHEN C.FLAG_ASSOCIADO THEN C.NOME ELSE T.NOME END , C.FLAG_ASSOCIADO, C.NOME DEPENDENTE, CASE WHEN C.FLAG_ASSOCIADO THEN C.MATRICULA ELSE T.MATRICULA END, CASE WHEN C.FLAG_ASSOCIADO THEN C.RG ELSE T.RG END, COALESCE(MC.DESCRICAO, 'motivo pessoal') MOTIVO,
 CASE WHEN
-(SELECT COUNT(PC.ID) FROM PROCESSOS_CLIENTES PC INNER JOIN PROCESSOS P ON P.ID = PC.PROCESSO_ID AND P.TIPO_PROCESSO_ID <> 4 WHERE PC.CLIENTE_ID = C.ID)
+(SELECT COUNT(PC.ID) FROM PROCESSOS_CLIENTES PC INNER JOIN PROCESSOS P ON P.ID = PC.PROCESSO_ID AND P.TIPO_PROCESSO_ID <> 3 WHERE PC.CLIENTE_ID = C.ID)
 > 0 THEN TRUE ELSE FALSE END POSSUI_PROCESSO
-FROM CLIENTES C LEFT OUTER JOIN MOTIVOS_CANCELAMENTOS MC ON MC.ID = C.MOTIVO_CANCELAMENTO_ID WHERE C.ID = $P{P_CLIENTE_ID}]]>
+FROM CLIENTES C LEFT OUTER JOIN CLIENTES T ON C.TITULAR_ID = T.ID LEFT OUTER JOIN MOTIVOS_CANCELAMENTOS MC ON MC.ID = C.MOTIVO_CANCELAMENTO_ID WHERE C.ID = $P{P_CLIENTE_ID}]]>
 	</queryString>
 	<field name="id" class="java.lang.Long"/>
 	<field name="nome" class="java.lang.String"/>
@@ -18,10 +18,14 @@ FROM CLIENTES C LEFT OUTER JOIN MOTIVOS_CANCELAMENTOS MC ON MC.ID = C.MOTIVO_CAN
 	<field name="rg" class="java.lang.String"/>
 	<field name="motivo" class="java.lang.String"/>
 	<field name="possui_processo" class="java.lang.Boolean"/>
+	<field name="flag_associado" class="java.lang.Boolean"/>
+	<field name="dependente" class="java.lang.String"/>
 	<detail>
 		<band height="366">
 			<staticText>
-				<reportElement uuid="662a7c9e-a1b7-4147-8fa1-16d247bdbc08" x="150" y="33" width="255" height="20"/>
+				<reportElement uuid="662a7c9e-a1b7-4147-8fa1-16d247bdbc08" x="150" y="33" width="255" height="20">
+					<printWhenExpression><![CDATA[$F{flag_associado} == true]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
@@ -46,7 +50,7 @@ FROM CLIENTES C LEFT OUTER JOIN MOTIVOS_CANCELAMENTOS MC ON MC.ID = C.MOTIVO_CAN
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="SansSerif" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Eu, <style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">" + $F{nome} + ",</style> RG " + $F{rg} + ", solicito o cancelamento do contrato junto ao CET/CENAJUR, por " + $F{motivo} + ", produzindo seus efeitos 30 (trinta) dias após a assinatura deste, conforme a cláusula 6ª do Contrato de Prestação de Serviços firmado entre as partes."]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Eu, <style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">" + $F{nome} + ",</style> RG " + $F{rg} + ", solicito o cancelamento do contrato junto ao CET/CENAJUR" + ($F{flag_associado} == true ? "" : " do (a) DEPENDENTE " + $F{dependente}) + ", por " + $F{motivo} + ", produzindo seus efeitos 30 (trinta) dias após a assinatura deste, conforme a cláusula 6ª do Contrato de Prestação de Serviços firmado entre as partes."]]></textFieldExpression>
 			</textField>
 			<subreport>
 				<reportElement uuid="c33042ef-5bf1-401e-9be3-250c9533df97" x="42" y="247" width="462" height="100"/>
@@ -65,6 +69,15 @@ FROM CLIENTES C LEFT OUTER JOIN MOTIVOS_CANCELAMENTOS MC ON MC.ID = C.MOTIVO_CAN
 				</textElement>
 				<textFieldExpression><![CDATA["Outrossim, regovo, neste momento, os poderes que foram outorgados aos advogados deste escritório, nos autos do(s) seguintes(s) processo(s):"]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement uuid="662a7c9e-a1b7-4147-8fa1-16d247bdbc08" x="81" y="33" width="423" height="20">
+					<printWhenExpression><![CDATA[$F{flag_associado} == false]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANCELAMENTO DE CONTRATO DE DEPENDENTE]]></text>
+			</staticText>
 		</band>
 	</detail>
 	<lastPageFooter>

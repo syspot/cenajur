@@ -46,7 +46,7 @@
                         <f:selectItems value="#{mbean.planos}" />
                     </p:selectOneMenu>
 
-                    <p:selectOneMenu id="mesPesquisa" value="#{mbeanPesquisaModel.mes}" required="true" requiredMessage="Mês: Campo obrigatório">
+                    <p:selectOneMenu id="mesPesquisa" value="#{mbeanPesquisaModel.mes}" required="false" requiredMessage="Mês: Campo obrigatório">
                         <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                         <f:selectItem itemLabel="01" itemValue="#{1}" />
                         <f:selectItem itemLabel="02" itemValue="#{2}" />
@@ -62,7 +62,7 @@
                         <f:selectItem itemLabel="12" itemValue="#{12}" />
                     </p:selectOneMenu>
 
-                    <p:inputMask mask="9999" id="anoPesquisa" value="#{mbeanPesquisaModel.ano}" onkeypress="javascript: return event.keyCode != 13" required="true" requiredMessage="Ano: Campo obrigatório" maxlength="4" />
+                    <p:inputMask mask="9999" id="anoPesquisa" value="#{mbeanPesquisaModel.ano}" onkeypress="javascript: return event.keyCode != 13" required="false" requiredMessage="Ano: Campo obrigatório" maxlength="4" />
 
                 </h:panelGrid>
 

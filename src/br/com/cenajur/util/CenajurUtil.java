@@ -58,7 +58,7 @@ public class CenajurUtil {
 	}
 	
 	public static void addDangerMessage(String msg) {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ATENÇÃO", msg));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ATENï¿½ï¿½O", msg));
 	}
 	
 	public static void addErrorMessage(String msg) {
@@ -79,12 +79,12 @@ public class CenajurUtil {
 	}
 	
 	public static String semAcento(String campo){
-		return "translate(lower(trim(".concat(campo).concat(")), 'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ', 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')");
+		return "translate(lower(trim(".concat(campo).concat(")), 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')");
 	}
 	
 	public static String getParamSemAcento(String campo){
-		return " and translate(lower(trim(".concat(campo).concat(")), 'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ', 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')"
-				+ " like translate(lower(trim(?)), 'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ', 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC') ");
+		return " and translate(lower(trim(".concat(campo).concat(")), 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')"
+				+ " like translate(lower(trim(?)), 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC') ");
 	}
 	
 	public static Date getTrimestreAnterior(){
@@ -370,8 +370,8 @@ public class CenajurUtil {
 	}
 	
 	public static String getRodapeEmail(){
-		return "<br/><br/><br/><br/><hr width='200px' align='left'>Este e-mail da AGEPOL/CENAJUR é enviado somente para usuários cadastrados.<br/>"
-				+ "Para alterar suas opções ou cancelar o recebimento, envie mensagem para o e-mail: cenajur@cenajur.com.br com o assunto: Cancelar envio de E-mail ou acesse o quadro (deixe seu recado) na página principal da AGEPOL/CENAJUR, informando no teor da mensagem.";
+		return "<br/><br/><br/><br/><hr width='200px' align='left'>Este e-mail da AGEPOL/CENAJUR ï¿½ enviado somente para usuï¿½rios cadastrados.<br/>"
+				+ "Para alterar suas opï¿½ï¿½es ou cancelar o recebimento, envie mensagem para o e-mail: cenajur@cenajur.com.br com o assunto: Cancelar envio de E-mail ou acesse o quadro (deixe seu recado) na pï¿½gina principal da AGEPOL/CENAJUR, informando no teor da mensagem.";
 	}
 	
 	public static Long getParamFormatado(String param) {
@@ -415,6 +415,15 @@ public class CenajurUtil {
 		faturamento.setMes(c.get(Calendar.MONTH + 1));
 		
 		return faturamento;
+	}
+	
+	public static Date getDataOperacaoMinuto(int minutos){
+		
+		Calendar c = Calendar.getInstance();
+		
+		c.add(Calendar.MINUTE, minutos);
+		
+		return c.getTime();
 	}
 	
 }

@@ -1,6 +1,7 @@
 package br.com.cenajur.faces;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -60,6 +61,8 @@ public class AgendaCrudFaces extends CrudFaces<Agenda>{
 		this.getCrudModel().setTipoAgenda(new TipoAgenda());
 		this.getCrudModel().setAgendasColaboradores(new ArrayList<AgendaColaborador>());
 		this.getCrudModel().setTipoVisita(new TipoVisita());
+		this.getCrudModel().setDataInicial(new Date());
+		this.getCrudModel().setDataFinal(CenajurUtil.getDataOperacaoMinuto(30));
 		this.setGrid(new ArrayList<Agenda>());
 		this.agendaColaboradorSelecionado = new AgendaColaborador();
 		this.idVaraAudiencia = null;
@@ -70,6 +73,8 @@ public class AgendaCrudFaces extends CrudFaces<Agenda>{
 	public String limparPesquisa() {
 		this.setCrudPesquisaModel(new Agenda());
 		this.getCrudPesquisaModel().setTipoAgenda(new TipoAgenda());
+		this.getCrudPesquisaModel().setDataInicial(new Date());
+		this.getCrudPesquisaModel().setDataFinal(CenajurUtil.getDataOperacaoMinuto(30));
 		return null;
 	}
 	

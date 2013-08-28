@@ -68,6 +68,7 @@ public class ProcessoAndamentoUtil {
 		this.andamentoProcesso = new AndamentoProcesso();
 		this.andamentoProcesso.setTipoAndamentoProcesso(new TipoAndamentoProcesso());
 		this.andamentoProcesso.setDocumentos(new ArrayList<DocumentoAndamentoProcesso>());
+		this.andamentoProcesso.setDataAndamento(new Date());
 		this.processoNumeroPrincipal = this.processoNumeroBackup;
 		
 		if(TSUtil.isEmpty(processoNumeroPrincipal)){
@@ -102,13 +103,13 @@ public class ProcessoAndamentoUtil {
 		RequestContext context = RequestContext.getCurrentInstance();
 		
 		if(TSUtil.isEmpty(getDocumentoAndamentoProcesso().getArquivo())){
-			CenajurUtil.addErrorMessage("Documento: Campo obrigatório");
+			CenajurUtil.addErrorMessage("Documento: Campo obrigatï¿½rio");
 			context.addCallbackParam("sucesso", false);
 			return null;
 		}
 
 		if(getDocumentoAndamentoProcesso().getDescricao().length() > 100){
-			CenajurUtil.addErrorMessage("Descrição: Campo muito longo, tamanho máximo de 100 caracteres");
+			CenajurUtil.addErrorMessage("Descriï¿½ï¿½o: Campo muito longo, tamanho mï¿½ximo de 100 caracteres");
 			context.addCallbackParam("sucesso", false);
 			return null;
 		}
@@ -138,12 +139,12 @@ public class ProcessoAndamentoUtil {
 				|| TSUtil.isEmpty(this.andamentoProcesso.getTipoAndamentoProcesso().getId())){
 			
 			erro = true;
-			CenajurUtil.addErrorMessage("Tipo do Andamento: Campo obrigatório");
+			CenajurUtil.addErrorMessage("Tipo do Andamento: Campo obrigatï¿½rio");
 		}
 
 		if(this.andamentoProcesso.getDescricao().length() > 500){
 			erro = true;
-			CenajurUtil.addErrorMessage("Descrição: Campo muito longo, tamanho máximo de 500 caracteres");
+			CenajurUtil.addErrorMessage("Descriï¿½ï¿½o: Campo muito longo, tamanho mï¿½ximo de 500 caracteres");
 		}
 		
 		context.addCallbackParam("sucesso", !erro);
@@ -254,7 +255,7 @@ public class ProcessoAndamentoUtil {
 		
 		getCrudModel().setAndamentos(new AndamentoProcesso().findByProcesso(getCrudModel()));
 		
-		CenajurUtil.addInfoMessage("Alteração realizada com sucesso");
+		CenajurUtil.addInfoMessage("Alteraï¿½ï¿½o realizada com sucesso");
 		
 		return null;
 	}

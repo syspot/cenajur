@@ -2,12 +2,12 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cartaCancelamentoContrato" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f37734dc-0305-41c0-ba1d-0a06a2e568bb">
 	<property name="ireport.zoom" value="1.2100000000000006"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="384"/>
+	<property name="ireport.y" value="18"/>
 	<parameter name="P_CLIENTE_ID" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select c.id, '<style isBold="true" pdfFontName="Helvetica-Bold">Sr(a). ' || c.nome || '</style>' nome, COALESCE(CASE WHEN C.LOGRADOURO = '' THEN NULL ELSE C.LOGRADOURO END || ', ', '') || COALESCE('NUMERO ' || CASE WHEN C.NUMERO = '' THEN NULL ELSE C.NUMERO || ', ' END, '') || COALESCE(CASE WHEN C.COMPLEMENTO = '' THEN NULL ELSE C.COMPLEMENTO END || ', ', '')
+		<![CDATA[select c.id, '<style isBold="true" pdfFontName="Helvetica-Bold">Sr(a). ' || c.nome || ' - MAT.: ' || c.matricula || '</style>' nome, COALESCE(CASE WHEN C.LOGRADOURO = '' THEN NULL ELSE C.LOGRADOURO END || ', ', '') || COALESCE('NUMERO ' || CASE WHEN C.NUMERO = '' THEN NULL ELSE C.NUMERO || ', ' END, '') || COALESCE(CASE WHEN C.COMPLEMENTO = '' THEN NULL ELSE C.COMPLEMENTO END || ', ', '')
        || COALESCE(CASE WHEN C.BAIRRO = '' THEN NULL ELSE C.BAIRRO END || ', ', '') || COALESCE(CID.DESCRICAO || '/' || E.DESCRICAO || ' - ', '') || COALESCE(' ' || CASE WHEN C.CEP = '' THEN NULL ELSE C.CEP END, '') endereco
 	FROM CLIENTES C
        LEFT OUTER JOIN CIDADES CID ON C.CIDADE_ID = CID.ID
@@ -36,7 +36,7 @@
 					<text><![CDATA[Salvador,]]></text>
 				</staticText>
 				<textField pattern="dd &apos;de&apos; MMMMM &apos;de&apos; yyyy">
-					<reportElement uuid="70ee0ff8-b39a-416b-b22c-acb9fcca9265" positionType="Float" x="255" y="451" width="157" height="20"/>
+					<reportElement uuid="70ee0ff8-b39a-416b-b22c-acb9fcca9265" positionType="Float" x="255" y="451" width="278" height="20"/>
 					<textElement>
 						<font fontName="SansSerif" size="13" isBold="true"/>
 					</textElement>
@@ -47,14 +47,14 @@
 					<textElement textAlignment="Center" verticalAlignment="Bottom" markup="styled">
 						<font fontName="SansSerif" size="13"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{nome} == null ? "" : $F{nome}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement uuid="bd2f612b-6912-4cd3-978d-8d32ca8fb27c" x="104" y="100" width="386" height="20"/>
 					<textElement textAlignment="Center" markup="styled">
 						<font fontName="SansSerif" size="13"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{endereco}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{endereco} == null ? "" : $F{endereco}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement uuid="bd2f612b-6912-4cd3-978d-8d32ca8fb27c" x="61" y="246" width="472" height="20"/>
@@ -64,21 +64,14 @@
 					<textFieldExpression><![CDATA["Prezado(a) Sr(a)."]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement uuid="bd2f612b-6912-4cd3-978d-8d32ca8fb27c" x="61" y="303" width="472" height="34"/>
+					<reportElement uuid="bd2f612b-6912-4cd3-978d-8d32ca8fb27c" x="61" y="303" width="472" height="62"/>
 					<textElement textAlignment="Justified" markup="styled">
 						<font fontName="SansSerif" size="13"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Informamos a V. Sª. que, o Contrato de Prestação de Serviços Profissionais firmado com a AGEPOL/CENAJUR foi rescindido, com base na clausula 6ª do referido contrato."]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement uuid="bd2f612b-6912-4cd3-978d-8d32ca8fb27c" x="61" y="349" width="472" height="34"/>
-					<textElement textAlignment="Justified" markup="styled">
-						<font fontName="SansSerif" size="13"/>
-					</textElement>
-					<textFieldExpression><![CDATA["Informamos a V. Sª. que, o Contrato de Prestação de Serviços Profissionais firmado com a AGEPOL/CENAJUR foi rescindido, com base na clausula 6ª do referido contrato."]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true">
-					<reportElement uuid="bd2f612b-6912-4cd3-978d-8d32ca8fb27c" x="61" y="393" width="472" height="34"/>
+					<reportElement uuid="bd2f612b-6912-4cd3-978d-8d32ca8fb27c" x="61" y="378" width="472" height="49"/>
 					<textElement textAlignment="Justified" markup="styled">
 						<font fontName="SansSerif" size="13"/>
 					</textElement>

@@ -10,12 +10,12 @@
     
     <ui:define name="btnSuperior">
         <p:commandButton ajax="false" value="Cancelamento de Contrato" icon="ui-icon-print" action="#{mbean.imprimirTermoCancelamentoContrato}" rendered="#{mbeanModel.id != null and !mbeanModel.flagAtivo}" style="width: 200px"/>
-        <p:commandButton ajax="false" value="Atestado de Pobreza" icon="ui-icon-print" action="#{mbean.imprimirAtestadoPobreza}" style="margin-top: 20px; width: 180px" />    
+        <p:commandButton ajax="false" value="Atestado de Pobreza" icon="ui-icon-print" action="#{mbean.imprimirAtestadoPobreza}" rendered="#{mbeanModel.id != null}" style="margin-top: 20px; width: 180px" />    
     </ui:define>
     <ui:define name="btnSuperior2">
-        <p:commandButton ajax="false" value="Procuração Individual" icon="ui-icon-print" action="#{mbean.imprimirProcuracaoIndividual}" style="margin-top: 10px;" />    
-        <p:commandButton ajax="false" value="Procuração Coletiva" icon="ui-icon-print" action="#{mbean.imprimirProcuracaoColetiva}" style="margin-top: 10px; width: 200px" />    
-        <p:commandButton ajax="false" value="Carta Canc. de Contrato" icon="ui-icon-print" action="#{mbean.imprimirCartaCancelamentoContrato}" style="margin-top: 10px; width: 180px" />    
+        <p:commandButton ajax="false" value="Procuração Individual" icon="ui-icon-print" action="#{mbean.imprimirProcuracaoIndividual}" rendered="#{mbeanModel.id != null}" style="margin-top: 10px;" />    
+        <p:commandButton ajax="false" value="Procuração Coletiva" icon="ui-icon-print" action="#{mbean.imprimirProcuracaoColetiva}" rendered="#{mbeanModel.id != null}" style="margin-top: 10px; width: 200px" />    
+        <p:commandButton ajax="false" value="Carta Canc. de Contrato" icon="ui-icon-print" action="#{mbean.imprimirCartaCancelamentoContrato}" rendered="#{mbeanModel.id != null}" style="margin-top: 10px; width: 180px" />    
     </ui:define>
     
     <ui:define name="cadastro">
@@ -151,7 +151,7 @@
 
                 <p:inputMask id="cep" required="#{mbeanModel.id == null}" requiredMessage="Cep: Campo obrigatório" mask="99.999-999" value="#{mbeanModel.cep}" maxlength="10" styleClass="coluna85" />
                 <p:inputText id="logradouro" required="#{mbeanModel.id == null}" requiredMessage="Logradouro: Campo obrigatório" value="#{mbeanModel.logradouro}" maxlength="100" styleClass="coluna95" />
-                <p:inputText id="numero" required="#{mbeanModel.id == null}" requiredMessage="Número: Campo obrigatório" value="#{mbeanModel.numero}" maxlength="6" styleClass="coluna80" />
+                <p:inputText id="numero" required="false" requiredMessage="Número: Campo obrigatório" value="#{mbeanModel.numero}" maxlength="6" styleClass="coluna80" />
                 <p:inputText id="complemento" value="#{mbeanModel.complemento}" maxlength="30" styleClass="coluna90" />
 
             </h:panelGrid>
@@ -240,11 +240,11 @@
                 <p:outputLabel for="plano" value="Plano" />
                 <p:outputLabel for="diaVencimento" value="Dia de Vencimento" />
 
-                <p:selectOneMenu id="plano" value="#{mbeanModel.plano.id}" required="#{mbeanModel.id == null}" requiredMessage="Plano: Campo obrigatório" style="width:90%">
+                <p:selectOneMenu id="plano" value="#{mbeanModel.plano.id}" required="false" requiredMessage="Plano: Campo obrigatório" style="width:90%">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbean.planos}" />
                 </p:selectOneMenu>
-                <p:inputText mask="99" maxlength="2" id="diaVencimento" required="#{mbeanModel.id == null}" requiredMessage="Dia de Vencimento: Campo obrigatório" value="#{mbeanModel.diaVencimento}" onkeypress="mascara(this,integer);" styleClass="coluna90" />
+                <p:inputText mask="99" maxlength="2" id="diaVencimento" required="false" requiredMessage="Dia de Vencimento: Campo obrigatório" value="#{mbeanModel.diaVencimento}" onkeypress="mascara(this,integer);" styleClass="coluna90" />
 
             </h:panelGrid>
 

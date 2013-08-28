@@ -1,7 +1,6 @@
 package br.com.cenajur.faces;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -27,13 +26,13 @@ public class EnvioSMSFaces implements Serializable {
 		
 		if(TSUtil.isEmpty(clienteSelecionado) || TSUtil.isEmpty(clienteSelecionado.getId())){
 
-			List<Cliente> clientes = new Cliente().pesquisarClientesComCelular();
+//			List<Cliente> clientes = new Cliente().pesquisarClientesComCelular();
 			
-			for(Cliente cliente : clientes){
+//			for(Cliente cliente : clientes){
 				
 				//this.enviarSMS(cliente.getCelular(), msg);
 				
-			}
+//			}
 			
 		} else{
 			

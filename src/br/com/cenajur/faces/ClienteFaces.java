@@ -121,6 +121,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		setCategoriaDocumento(new CategoriaDocumento());
 		getCategoriaDocumento().setTipoCategoria(new TipoCategoria(Constantes.TIPO_CATEGORIA_CLIENTE));
 		getCrudModel().setDocumentos(new ArrayList<DocumentoCliente>());
+		getCrudModel().setDiaVencimento(1);
 		setDocumentoCliente(new DocumentoCliente());
 		setFlagAlterar(Boolean.FALSE);
 		this.processoAux = new ProcessoAux();
@@ -195,9 +196,25 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 			getCrudModel().setGraduacao(null);
 		}
 		
+		if(TSUtil.isEmpty(getCrudModel().getCidade()) || TSUtil.isEmpty(getCrudModel().getCidade().getId())){
+			getCrudModel().setCidade(null);
+		}
+		
+		if(TSUtil.isEmpty(getCrudModel().getMotivoCancelamento()) || TSUtil.isEmpty(getCrudModel().getMotivoCancelamento().getId())){
+			getCrudModel().setMotivoCancelamento(null);
+		}
+		
 		if(getCrudModel().getFlagAtivo()){
 			getCrudModel().setDataCancelamento(null);
 			getCrudModel().setMotivoCancelamento(null);
+		}
+		
+		if(!TSUtil.isEmpty(getCrudModel().getTitular()) && !TSUtil.isEmpty(getCrudModel().getTitular().getId())){
+			getCrudModel().setFlagAssociado(Boolean.FALSE);
+		}
+		
+		if(!TSUtil.isEmpty(getCrudModel().getPlano()) && !TSUtil.isEmpty(getCrudModel().getPlano().getId())){
+			getCrudModel().setPlano(null);
 		}
 		
 		if(!TSUtil.isEmpty(this.senha)){
@@ -226,6 +243,22 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 			
 			this.atualizarComboCidades();
 			
+		}
+		
+		if(TSUtil.isEmpty(getCrudModel().getMotivoCancelamento())){
+			getCrudModel().setMotivoCancelamento(new MotivoCancelamento());
+		}
+		
+		if(TSUtil.isEmpty(getCrudModel().getBanco())){
+			getCrudModel().setBanco(new Banco());
+		}
+		
+		if(TSUtil.isEmpty(getCrudModel().getGraduacao())){
+			getCrudModel().setGraduacao(new Graduacao());
+		}
+		
+		if(TSUtil.isEmpty(getCrudModel().getPlano())){
+			getCrudModel().setPlano(new Plano());
 		}
 		
 		Faturamento faturamento = CenajurUtil.obterFaturamentoDevedor();
