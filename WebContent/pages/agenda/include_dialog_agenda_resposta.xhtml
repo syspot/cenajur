@@ -71,7 +71,7 @@
             <p:outputLabel for="descricaoAgendaColaborador" value="Resposta" />
             <p:inputTextarea id="descricaoAgendaColaborador" value="#{agendaFaces.agendaColaboradorSelecionado.textoResposta}" autoResize="false" required="true" requiredMessage="Descrição: Campo obrigatório" rows="3" style="width: 97%" />
     
-            <p:commandButton value="Salvar" action="#{agendaFaces.salvarAgendaColaborador}" icon="ui-icon-disk" process="@this, opDialogAgenda" oncomplete="handleRequestActionAgenda('dialogAgenda', dlgAgenda, args)" update="opDialogAgenda" style="margin-top: 10px" />
+            <p:commandButton value="Salvar" action="#{agendaFaces.salvarAgendaColaborador}" icon="ui-icon-disk" process="@this, opDialogAgenda" oncomplete="handleRequestActionAgenda('dialogAgenda', dlgAgenda, args)" update="opDialogAgenda :tabview:formAgenda" style="margin-top: 10px" />
     
         </h:panelGrid>
 
