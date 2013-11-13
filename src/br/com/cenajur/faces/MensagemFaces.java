@@ -57,6 +57,7 @@ public class MensagemFaces{
 	public String limpar(){
 		this.mensagem = new Mensagem();
 		this.mensagem.setMensagensDestinatarios(new ArrayList<MensagemDestinatario>());
+		setTabIndex(1);
 		return null;
 	}
 	

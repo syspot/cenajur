@@ -32,6 +32,7 @@ public class CidadeFaces extends CrudFaces<Cidade> {
 		setCrudModel(new Cidade());
 		getCrudModel().setEstado(new Estado());
 		setFlagAlterar(Boolean.FALSE);
+		setTabIndex(1);
 		return null;
 	}
 

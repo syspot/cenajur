@@ -36,7 +36,7 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 	
 	public String limpar(){
 		this.flagAlterar = false;
-		this.tabIndex = 0;
+		this.tabIndex = 1;
 		try {
 			this.crudModel = modelClass.newInstance();
 		} catch (Exception e) {
@@ -47,7 +47,7 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 	
 	public String limparPesquisa(){
 		this.grid = Collections.emptyList();
-		this.tabIndex = 1;
+		this.tabIndex = 0;
 		try {
 			this.crudPesquisaModel = modelClass.newInstance();
 		} catch (Exception e) {

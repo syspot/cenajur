@@ -46,6 +46,7 @@ public class LotacaoFaces extends CrudFaces<Lotacao> {
 		getCrudModel().setCidade(new Cidade());
 		getCrudModel().getCidade().setEstado(new Estado());
 		setFlagAlterar(Boolean.FALSE);
+		setTabIndex(1);
 		return null;
 	}
 

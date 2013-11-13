@@ -19,6 +19,7 @@ public class MensagemComprovantePagamentoFaces extends CrudFaces<MensagemComprov
 	@Override
 	public String limpar() {
 		setCrudModel(new MensagemComprovantePagamento(Constantes.MENSAGEM_COMPROVANTE_PAGAMENTO_ID).getById());
+		setTabIndex(1);
 		return null;
 	}
 	

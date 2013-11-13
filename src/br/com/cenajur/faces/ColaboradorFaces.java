@@ -87,6 +87,7 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 		setFlagAlterar(Boolean.FALSE);
 		this.senha = null;
 		this.senha2 = null;
+		setTabIndex(1);
 		return null;
 	}
 	
@@ -116,7 +117,7 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 		
 		if(TSUtil.isEmpty(getCrudModel().getId()) && !TSUtil.isValidCPF(TSUtil.removerNaoDigitos(getCrudModel().getCpf()))){
 			erro = true;
-			CenajurUtil.addErrorMessage("CPF inválido");
+			CenajurUtil.addErrorMessage("CPF invÃ¡lido");
 		}
 		
 		return erro;
@@ -165,13 +166,13 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 		RequestContext context = RequestContext.getCurrentInstance();
 		
 		if(TSUtil.isEmpty(getDocumentoColaborador().getArquivo())){
-			CenajurUtil.addErrorMessage("Documento: Campo obrigatório");
+			CenajurUtil.addErrorMessage("Documento: Campo obrigatÃ³rio");
 			context.addCallbackParam("sucesso", false);
 			return null;
 		}
 		
 		if(getDocumentoColaborador().getDescricao().length() > 100){
-			CenajurUtil.addErrorMessage("Descrição: Campo muito longo, tamanho máximo de 100 caracteres");
+			CenajurUtil.addErrorMessage("DescriÃ§Ã£o: Campo muito longo, tamanho mÃ¡ximo de 100 caracteres");
 			context.addCallbackParam("sucesso", false);
 			return null;
 		}
@@ -213,23 +214,23 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 	}
 	
 	public String imprimirContrato(){
-		return this.gerarRelatorio("contrato.jasper", "contrato" , "Não foi possível imprimir o contrato.");
+		return this.gerarRelatorio("contrato.jasper", "contrato" , "NÃ£o foi possÃ­vel imprimir o contrato.");
 	}
 	
 	public String imprimirContratoExperiencia(){
-		return this.gerarRelatorio("contratoExperiencia.jasper", "contrato_experiencia" , "Não foi possível imprimir o contrato de experiência.");
+		return this.gerarRelatorio("contratoExperiencia.jasper", "contrato_experiencia" , "NÃ£o foi possÃ­vel imprimir o contrato de experiÃªncia.");
 	}
 	
 	public String imprimirDesligamentoContratoExperiencia(){
-		return this.gerarRelatorio("desligamentoContratoExperiencia.jasper", "desligamento_contrato_experiencia" , "Não foi possível imprimir o desligamento de contrato de experiência.");
+		return this.gerarRelatorio("desligamentoContratoExperiencia.jasper", "desligamento_contrato_experiencia" , "NÃ£o foi possÃ­vel imprimir o desligamento de contrato de experiÃªncia.");
 	}
 	
 	public String imprimirDistratoContrato(){
-		return this.gerarRelatorio("distratoContrato.jasper", "distrato_contrato" , "Não foi possível imprimir o distrato contrato.");
+		return this.gerarRelatorio("distratoContrato.jasper", "distrato_contrato" , "NÃ£o foi possÃ­vel imprimir o distrato contrato.");
 	}
 	
 	public String imprimirCartaPedidoSaidaEstagio(){
-		return this.gerarRelatorio("cartaPedidoSaidaEstagio.jasper", "carta_pedido_saida_estagio" , "Não foi possível imprimir a carta de pedido de saída de estágio.");
+		return this.gerarRelatorio("cartaPedidoSaidaEstagio.jasper", "carta_pedido_saida_estagio" , "NÃ£o foi possÃ­vel imprimir a carta de pedido de saÃ­da de estÃ¡gio.");
 	}
 	
 	public List<SelectItem> getEstados() {

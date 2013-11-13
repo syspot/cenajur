@@ -29,6 +29,7 @@ public class GrupoFaces extends CrudFaces<Grupo> {
 		setCrudModel(new Grupo());
 		getCrudModel().setPermissoesGrupos(new ArrayList<PermissaoGrupo>());
 		setFlagAlterar(Boolean.FALSE);
+		setTabIndex(1);
 		return null;
 	}
 		
@@ -45,11 +46,11 @@ public class GrupoFaces extends CrudFaces<Grupo> {
 		if(!this.getCrudModel().getPermissoesGrupos().contains(permissaoGrupo)){
 			
 			this.getCrudModel().getPermissoesGrupos().add(permissaoGrupo);
-			CenajurUtil.addInfoMessage("Permiss„o adicionada com sucesso");
+			CenajurUtil.addInfoMessage("Permiss√£o adicionada com sucesso");
 			
 		} else{
 			
-			CenajurUtil.addErrorMessage("Essa permiss„o j· foi adicionada");
+			CenajurUtil.addErrorMessage("Essa permiss√£o j√° foi adicionada");
 		}
 		
 		return null;

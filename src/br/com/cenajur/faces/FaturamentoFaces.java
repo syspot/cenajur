@@ -46,6 +46,7 @@ public class FaturamentoFaces extends CrudFaces<Faturamento> {
 	public String limpar() {
 		setCrudModel(new Faturamento());
 		getCrudModel().setPlano(new Plano());
+		setTabIndex(1);
 		return null;
 	}
 	
@@ -71,7 +72,7 @@ public class FaturamentoFaces extends CrudFaces<Faturamento> {
 		if(TSUtil.isEmpty(getCrudModel().getCliente()) || TSUtil.isEmpty(getCrudModel().getCliente().getId())){
 			
 			erro = true;
-			CenajurUtil.addErrorMessage("Cliente: Campo obrigatório");
+			CenajurUtil.addErrorMessage("Cliente: Campo obrigatÃ³rio");
 			context.addCallbackParam("sucesso", false);
 			
 		} else
@@ -80,7 +81,7 @@ public class FaturamentoFaces extends CrudFaces<Faturamento> {
 			
 			if(getCrudModel().getObservacao().length() > 200){
 				erro = true;
-				CenajurUtil.addErrorMessage("O campo Descrição excedeu o limite de 200 caracteres");
+				CenajurUtil.addErrorMessage("O campo DescriÃ§Ã£o excedeu o limite de 200 caracteres");
 				context.addCallbackParam("sucesso", false);
 			}
 			
@@ -88,7 +89,7 @@ public class FaturamentoFaces extends CrudFaces<Faturamento> {
 			
 			if(!TSUtil.isEmpty(faturamento)){
 				erro = true;
-				CenajurUtil.addErrorMessage("Existe um faturamento ativo para o cliente no mês selecionado");
+				CenajurUtil.addErrorMessage("Existe um faturamento ativo para o cliente no mÃªs selecionado");
 				context.addCallbackParam("sucesso", false);
 			}
 			
@@ -167,7 +168,7 @@ public class FaturamentoFaces extends CrudFaces<Faturamento> {
 			
 		}
 		
-		super.addInfoMessage("Operação realizada com sucesso");
+		super.addInfoMessage("OperaÃ§Ã£o realizada com sucesso");
 		
 		return null;
 	}
@@ -185,7 +186,7 @@ public class FaturamentoFaces extends CrudFaces<Faturamento> {
 			
 		}
 		
-		super.addInfoMessage("Operação realizada com sucesso");
+		super.addInfoMessage("OperaÃ§Ã£o realizada com sucesso");
 
 		return null;
 	}
@@ -203,7 +204,7 @@ public class FaturamentoFaces extends CrudFaces<Faturamento> {
 
         } catch (Exception ex) {
 
-            CenajurUtil.addErrorMessage("Não foi possível gerar relatório.");
+            CenajurUtil.addErrorMessage("NÃ£o foi possÃ­vel gerar relatÃ³rio.");
 
             ex.printStackTrace();
 

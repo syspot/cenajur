@@ -1,5 +1,6 @@
 package br.com.cenajur.faces;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -49,9 +50,10 @@ import br.com.topsys.util.TSParseUtil;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.util.TSFacesUtil;
 
+@SuppressWarnings("serial")
 @ViewScoped
 @ManagedBean(name = "agendaFaces")
-public class AgendaFaces {
+public class AgendaFaces implements Serializable{
 	
 	private ScheduleModel lazyEventModel;
 	private ScheduleModel eventModel;
@@ -106,7 +108,6 @@ public class AgendaFaces {
 		return null;
 	}
 	
-	@SuppressWarnings("serial")
 	public String atualizarSchedule(){
 		
 		this.lazyEventModel = new LazyScheduleModel() {  

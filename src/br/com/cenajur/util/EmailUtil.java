@@ -53,14 +53,14 @@ public class EmailUtil {
         SimpleAuth auth = null;  
         auth = new SimpleAuth (email.getEmail(), email.getSenha());  
           
-        //Session - objeto que ira realizar a conex„o com o servidor  
-        /*Como h· necessidade de autenticaÁ„o È criada uma autenticacao que 
-         * È responsavel por solicitar e retornar o usu·rio e senha para  
-         * autenticaÁ„o */  
+        //Session - objeto que ira realizar a conex√£o com o servidor  
+        /*Como h√° necessidade de autentica√ß√£o √© criada uma autenticacao que 
+         * √© responsavel por solicitar e retornar o usu√°rio e senha para  
+         * autentica√ß√£o */  
         Session session = Session.getDefaultInstance(props, auth);  
-        //session.setDebug(true); //Habilita o LOG das aÁıes executadas durante o envio do email  
+        //session.setDebug(true); //Habilita o LOG das a√ß√µes executadas durante o envio do email  
   
-        //Objeto que contÈm a mensagem  
+        //Objeto que cont√©m a mensagem  
         Message msg = new MimeMessage(session);  
 
         msg.setRecipient(Message.RecipientType.TO, new InternetAddress(to)); 

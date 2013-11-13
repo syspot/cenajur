@@ -70,6 +70,7 @@ public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 		getCrudModel().setDocumentos(new ArrayList<DocumentoAndamentoProcesso>());
 		setDocumentoAndamentoProcesso(new DocumentoAndamentoProcesso());
 		setFlagAlterar(Boolean.FALSE);
+		setTabIndex(1);
 		return null;
 	}
 	

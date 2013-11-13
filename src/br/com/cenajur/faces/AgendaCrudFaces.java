@@ -66,6 +66,7 @@ public class AgendaCrudFaces extends CrudFaces<Agenda>{
 		this.setGrid(new ArrayList<Agenda>());
 		this.agendaColaboradorSelecionado = new AgendaColaborador();
 		this.idVaraAudiencia = null;
+		setTabIndex(1);
 		return null;
 	}
 	

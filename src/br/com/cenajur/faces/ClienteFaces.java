@@ -114,7 +114,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		getCrudModel().setBanco(new Banco());
 		getCrudModel().setGraduacao(new Graduacao());
 		getCrudModel().setTipoPagamento(new TipoPagamento());
-		getCrudModel().setPlano(new Plano());
+		getCrudModel().setPlano(new Plano(Constantes.PLANO_MENSAL));
 		getCrudModel().setFlagAtivo(Boolean.TRUE);
 		getCrudModel().setFlagStatusPM(Boolean.TRUE);
 		getCrudModel().setFlagAssociado(Boolean.TRUE);
@@ -126,6 +126,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		setFlagAlterar(Boolean.FALSE);
 		this.processoAux = new ProcessoAux();
 		this.senha = null;
+		setTabIndex(1);
 		return null;
 	}
 
@@ -213,7 +214,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 			getCrudModel().setFlagAssociado(Boolean.FALSE);
 		}
 		
-		if(!TSUtil.isEmpty(getCrudModel().getPlano()) && !TSUtil.isEmpty(getCrudModel().getPlano().getId())){
+		if(TSUtil.isEmpty(getCrudModel().getPlano()) || TSUtil.isEmpty(getCrudModel().getPlano().getId())){
 			getCrudModel().setPlano(null);
 		}
 		

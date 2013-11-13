@@ -74,12 +74,12 @@ public class ProcessoAux extends TSMainFaces{
 		}
 
 		if(this.processos.get(indexProcesso).getProcessosPartesContrarias().isEmpty()){
-			this.addErrorMessage("Selecione ao menos uma parte contr·ria");
+			this.addErrorMessage("Selecione ao menos uma parte contr√°ria");
 			erro = true;
 		}
 		
 		if(TSUtil.isEmpty(this.processos.get(indexProcesso).getAdvogado().getId())){
-			this.addErrorMessage("Advogado: Campo obrigatÛrio");
+			this.addErrorMessage("Advogado: Campo obrigat√≥rio");
 			erro = true;
 		}
 		
@@ -134,7 +134,7 @@ public class ProcessoAux extends TSMainFaces{
 		
 		this.posUpdate();
 		
-		CenajurUtil.addInfoMessage("AlteraÁ„o realizada com sucesso");
+		CenajurUtil.addInfoMessage("Altera√ß√£o realizada com sucesso");
 		
 		return null;
 		
@@ -153,7 +153,7 @@ public class ProcessoAux extends TSMainFaces{
 			
 		} else{
 			
-			CenajurUtil.addErrorMessage("Esse associado j· foi adicionado");
+			CenajurUtil.addErrorMessage("Esse associado j√° foi adicionado");
 			
 		}
 		
@@ -175,11 +175,11 @@ public class ProcessoAux extends TSMainFaces{
 		if(!this.processos.get(indexProcesso).getProcessosPartesContrarias().contains(processoClienteSelecionado)){
 			
 			this.processos.get(indexProcesso).getProcessosPartesContrarias().add(processoClienteSelecionado);
-			CenajurUtil.addInfoMessage("Parte contr·ria adicionada com sucesso");
+			CenajurUtil.addInfoMessage("Parte contr√°ria adicionada com sucesso");
 			
 		} else{
 			
-			CenajurUtil.addErrorMessage("Essa parte contr·ria j· foi adicionada");
+			CenajurUtil.addErrorMessage("Essa parte contr√°ria j√° foi adicionada");
 			
 		}
 		
@@ -188,7 +188,7 @@ public class ProcessoAux extends TSMainFaces{
 	
 	public String removeParteContraria(){
 		this.processos.get(indexProcesso).getProcessosPartesContrarias().remove(this.processoParteContrariaSelecionada);
-		CenajurUtil.addInfoMessage("Parte Contr·ria removida com sucesso");
+		CenajurUtil.addInfoMessage("Parte Contr√°ria removida com sucesso");
 		return null;
 	}
 	
@@ -213,7 +213,7 @@ public class ProcessoAux extends TSMainFaces{
 				
 				this.processoNumeroSelecionado.delete();
 				this.processos.get(indexProcesso).getProcessosNumerosTemp().remove(this.processoNumeroSelecionado);
-				CenajurUtil.addInfoMessage("RemoÁ„o realizada com sucesso");
+				CenajurUtil.addInfoMessage("Remo√ß√£o realizada com sucesso");
 				
 			} catch (TSApplicationException e) {
 				
@@ -247,7 +247,7 @@ public class ProcessoAux extends TSMainFaces{
 		RequestContext context = RequestContext.getCurrentInstance();
 		
 		if(TSUtil.isEmpty(getDocumentoProcesso().getArquivo())){
-			CenajurUtil.addErrorMessage("Documento: Campo obrigatÛrio");
+			CenajurUtil.addErrorMessage("Documento: Campo obrigat√≥rio");
 			context.addCallbackParam("sucesso", false);
 			return null;
 		}

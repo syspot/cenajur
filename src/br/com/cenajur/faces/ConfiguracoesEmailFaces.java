@@ -36,6 +36,7 @@ public class ConfiguracoesEmailFaces extends CrudFaces<ConfiguracoesEmail> {
 		getCrudModel().setFlagImediato(Boolean.TRUE);
 		setFlagAlterar(Boolean.FALSE);
 		this.configuracoesReplaceEmail = new ConfiguracoesReplaceEmail().findAll("descricao");
+		setTabIndex(1);
 		return null;
 	}
 

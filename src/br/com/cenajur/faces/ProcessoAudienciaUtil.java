@@ -109,13 +109,13 @@ public class ProcessoAudienciaUtil {
 		RequestContext context = RequestContext.getCurrentInstance();
 		
 		if(TSUtil.isEmpty(getDocumentoAudiencia().getArquivo())){
-			CenajurUtil.addErrorMessage("Documento: Campo obrigatório");
+			CenajurUtil.addErrorMessage("Documento: Campo obrigatÃ³rio");
 			context.addCallbackParam("sucesso", false);
 			return null;
 		}
 		
 		if(getDocumentoAudiencia().getDescricao().length() > 100){
-			CenajurUtil.addErrorMessage("Descrição: Campo muito longo, tamanho máximo de 100 caracteres");
+			CenajurUtil.addErrorMessage("DescriÃ§Ã£o: Campo muito longo, tamanho mÃ¡ximo de 100 caracteres");
 			context.addCallbackParam("sucesso", false);
 			return null;
 		}
@@ -143,26 +143,26 @@ public class ProcessoAudienciaUtil {
 		
 		if(TSUtil.isEmpty(this.audiencia.getAudienciasAdvogados())){
 			erro = true;
-			CenajurUtil.addErrorMessage("Advogado: Campo obrigatório");
+			CenajurUtil.addErrorMessage("Advogado: Campo obrigatÃ³rio");
 		}
 
 		if(!TSUtil.isEmpty(this.audiencia.getDescricao()) && this.audiencia.getDescricao().length() > 500){
 			erro = true;
-			CenajurUtil.addErrorMessage("Descrição: Campo muito longo, tamanho máximo de 500 caracteres");
+			CenajurUtil.addErrorMessage("DescriÃ§Ã£o: Campo muito longo, tamanho mÃ¡ximo de 500 caracteres");
 		}
 		
 		if(TSUtil.isEmpty(this.audiencia.getSituacaoAudiencia()) 
 				|| TSUtil.isEmpty(this.audiencia.getSituacaoAudiencia().getId())){
 			
 			erro = true;
-			CenajurUtil.addErrorMessage("Situação: Campo obrigatório");
+			CenajurUtil.addErrorMessage("SituaÃ§Ã£o: Campo obrigatÃ³rio");
 		}
 		
 		if(TSUtil.isEmpty(this.audiencia.getVara()) 
 				|| TSUtil.isEmpty(this.audiencia.getVara().getId())){
 			
 			erro = true;
-			CenajurUtil.addErrorMessage("Vara: Campo obrigatório");
+			CenajurUtil.addErrorMessage("Vara: Campo obrigatÃ³rio");
 		}
 		
 		context.addCallbackParam("sucesso", !erro);
@@ -247,7 +247,7 @@ public class ProcessoAudienciaUtil {
 		
 		this.enviarEmail();
 		
-		CenajurUtil.addInfoMessage("Audiência cadastrada com sucesso");
+		CenajurUtil.addInfoMessage("AudiÃªncia cadastrada com sucesso");
 		
 		this.initAudiencia();
 		
@@ -259,7 +259,7 @@ public class ProcessoAudienciaUtil {
 	public String removerAudiencia() throws TSApplicationException{
 		getCrudModel().getAudiencias().remove(this.audienciaSelecionada);
 		getCrudModel().update();
-		CenajurUtil.addInfoMessage("Audiência removida com sucesso");
+		CenajurUtil.addInfoMessage("AudiÃªncia removida com sucesso");
 		return null;
 	}
 	
@@ -279,7 +279,7 @@ public class ProcessoAudienciaUtil {
 		
 		getCrudModel().setAudiencias(new Audiencia().findByProcesso(getCrudModel()));
 		
-		CenajurUtil.addInfoMessage("Alteração realizada com sucesso");
+		CenajurUtil.addInfoMessage("AlteraÃ§Ã£o realizada com sucesso");
 		
 		return null;
 	}
@@ -294,7 +294,7 @@ public class ProcessoAudienciaUtil {
 			this.audiencia.getAudienciasAdvogados().add(audienciaAdvogado);
 			CenajurUtil.addInfoMessage("Advogado adicionado com sucesso");
 		} else{
-			CenajurUtil.addErrorMessage("Esse Advogado já foi adicionado");
+			CenajurUtil.addErrorMessage("Esse Advogado jÃ¡ foi adicionado");
 		}
 		
 		return null;

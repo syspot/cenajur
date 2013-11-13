@@ -19,8 +19,8 @@
             <p:outputLabel for="nomeAdvogado" value="Nome do Advogado" />
             <p:outputLabel for="oabAdvogado" value="Oab do Advogado" />
 
-            <p:inputText id="nomeAdvogado" value="#{mbeanModel.nomeAdvogado}" required="#{mbeanModel.id == null}" requiredMessage="Nome do Advogado: Campo obrigatório" styleClass="coluna96" maxlength="50" />
-            <p:inputText id="oabAdvogado" required="#{mbeanModel.id == null}" requiredMessage="Oab do Advogado: Campo obrigatório" value="#{mbeanModel.oabAdvogado}" maxlength="30" styleClass="coluna90" />
+            <p:inputText id="nomeAdvogado" value="#{mbeanModel.nomeAdvogado}" required="false" requiredMessage="Nome do Advogado: Campo obrigatório" styleClass="coluna96" maxlength="50" />
+            <p:inputText id="oabAdvogado" required="false" requiredMessage="Oab do Advogado: Campo obrigatório" value="#{mbeanModel.oabAdvogado}" maxlength="30" styleClass="coluna90" />
 
         </h:panelGrid>
 
@@ -36,7 +36,7 @@
                 <p:ajax update="pgTipoDocumento" />
             </p:selectOneMenu>
             <p:inputText id="numeroDocumento" value="#{mbeanModel.numeroDocumento}" disabled="#{mbeanModel.tipoDocumento.id == null}" style="width: 90%" maxlength="50" />
-            <p:inputMask id="telefone" required="#{mbeanModel.id == null}" requiredMessage="Telefone: Campo obrigatório" mask="(99) 9999-9999" value="#{mbeanModel.telefone}" maxlength="14" styleClass="coluna90" />
+            <p:inputMask id="telefone" required="false" requiredMessage="Telefone: Campo obrigatório" mask="(99) 9999-9999" value="#{mbeanModel.telefone}" maxlength="14" styleClass="coluna90" />
 
         </h:panelGrid>
 

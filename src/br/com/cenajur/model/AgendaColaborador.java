@@ -98,7 +98,7 @@ public class AgendaColaborador extends TSActiveRecordAb<AgendaColaborador>{
 	}
 	
 	public String getStatus(){
-		return getFlagConcluido() ? "Concluído" : "Aguardando";
+		return getFlagConcluido() ? "ConcluÃ­do" : "Aguardando";
 	}
 	
 	public String getCss(){

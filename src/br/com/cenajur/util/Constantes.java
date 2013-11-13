@@ -27,6 +27,8 @@ public class Constantes {
 	public static final Long TIPO_CATEGORIA_GERAL = 5L;
 	public static final Long TIPO_CATEGORIA_COLABORADOR = 6L;
 	
+	public static final Long PLANO_MENSAL = 1L;
+	
 	public static final Long TIPO_AGENDA_TAREFA = 1L;
 	public static final Long TIPO_AGENDA_AUDIENCIA = 3L;
 	public static final Long TIPO_AGENDA_VISITA_DO_CLIENTE = 4L;
@@ -38,16 +40,16 @@ public class Constantes {
 	//public static final String PASTA_UPLOAD_ARQUIVO = "E:\\arquivos\\";
 	public static final String PASTA_UPLOAD_ARQUIVO = "/arquivos/";
 	//public static final String PASTA_UPLOAD_IMAGEM = "E:\\imagens\\";
-	public static final String PASTA_UPLOAD_IMAGEM = "/imagens/";
+	public static final String PASTA_UPLOAD_IMAGEM = "/arquivos/imagens/";
 	//public static final String PASTA_UPLOAD_IMAGEM_TEMP = "E:\\imagens\\tmp/";
-	public static final String PASTA_UPLOAD_IMAGEM_TEMP = "/imagens/tmp/";
+	public static final String PASTA_UPLOAD_IMAGEM_TEMP = "/arquivos/imagens/tmp/";
 	
 	//public static final String PASTA_DOWNLOAD_ARQUIVO = "http://localhost:80/arquivos/";
 	public static final String PASTA_DOWNLOAD_ARQUIVO = "http://www.agepol.org.br/arquivos/";
 	//public static final String PASTA_DOWNLOAD_IMAGEM = "http://localhost:80/imagens/";
-	public static final String PASTA_DOWNLOAD_IMAGEM = "http://www.agepol.org.br/imagens/";
+	public static final String PASTA_DOWNLOAD_IMAGEM = "http://www.agepol.org.br/arquivos/imagens/";
 	//public static final String PASTA_DOWNLOAD_IMAGEM_TMP = "http://localhost:80/imagens/tmp/";
-	public static final String PASTA_DOWNLOAD_IMAGEM_TMP = "http://www.agepol.org.br/imagens/tmp/";
+	public static final String PASTA_DOWNLOAD_IMAGEM_TMP = "http://www.agepol.org.br/arquivos/imagens/tmp/";
 	
 	//public static final String PASTA_ANDAMENTO_PROCESSO = "andamentos_processos\\";
 	public static final String PASTA_ANDAMENTO_PROCESSO = "andamentos_processos/";

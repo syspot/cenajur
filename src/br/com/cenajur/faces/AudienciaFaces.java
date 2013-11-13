@@ -80,6 +80,7 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 		getCrudModel().setDocumentos(new ArrayList<DocumentoAudiencia>());
 		setDocumentoAudiencia(new DocumentoAudiencia());
 		setFlagAlterar(Boolean.FALSE);
+		setTabIndex(1);
 		return null;
 	}
 	

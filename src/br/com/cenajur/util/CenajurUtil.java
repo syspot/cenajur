@@ -58,7 +58,7 @@ public class CenajurUtil {
 	}
 	
 	public static void addDangerMessage(String msg) {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ATEN��O", msg));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ATENÇÃO", msg));
 	}
 	
 	public static void addErrorMessage(String msg) {
@@ -79,12 +79,12 @@ public class CenajurUtil {
 	}
 	
 	public static String semAcento(String campo){
-		return "translate(lower(trim(".concat(campo).concat(")), '����������������������������������������������', 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')");
+		return "translate(lower(trim(".concat(campo).concat(")), 'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ', 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')");
 	}
 	
 	public static String getParamSemAcento(String campo){
-		return " and translate(lower(trim(".concat(campo).concat(")), '����������������������������������������������', 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')"
-				+ " like translate(lower(trim(?)), '����������������������������������������������', 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC') ");
+		return " and translate(lower(trim(".concat(campo).concat(")), 'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ', 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')"
+				+ " like translate(lower(trim(?)), 'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ', 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC') ");
 	}
 	
 	public static Date getTrimestreAnterior(){
@@ -370,8 +370,8 @@ public class CenajurUtil {
 	}
 	
 	public static String getRodapeEmail(){
-		return "<br/><br/><br/><br/><hr width='200px' align='left'>Este e-mail da AGEPOL/CENAJUR � enviado somente para usu�rios cadastrados.<br/>"
-				+ "Para alterar suas op��es ou cancelar o recebimento, envie mensagem para o e-mail: cenajur@cenajur.com.br com o assunto: Cancelar envio de E-mail ou acesse o quadro (deixe seu recado) na p�gina principal da AGEPOL/CENAJUR, informando no teor da mensagem.";
+		return "<br/><br/><br/><br/><hr width='200px' align='left'>Este e-mail da AGEPOL/CENAJUR é enviado somente para usuários cadastrados.<br/>"
+				+ "Para alterar suas opções ou cancelar o recebimento, envie mensagem para o e-mail: cenajur@cenajur.com.br com o assunto: Cancelar envio de E-mail ou acesse o quadro (deixe seu recado) na página principal da AGEPOL/CENAJUR, informando no teor da mensagem.";
 	}
 	
 	public static Long getParamFormatado(String param) {

@@ -159,6 +159,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		this.processoAndamentoUtil = new ProcessoAndamentoUtil(getCrudModel());
 		this.processoAudienciaUtil = new ProcessoAudienciaUtil(getCrudModel());
 		setFlagAlterar(Boolean.FALSE);
+		setTabIndex(1);
 		return null;
 	}
 	
@@ -227,12 +228,12 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		}
 
 		if(getCrudModel().getProcessosPartesContrarias().isEmpty()){
-			this.addErrorMessage("Selecione ao menos uma parte contr·ria");
+			this.addErrorMessage("Selecione ao menos uma parte contr√°ria");
 			erro = true;
 		}
 		
 		if(TSUtil.isEmpty(getCrudModel().getAdvogado().getId())){
-			this.addErrorMessage("Advogado: Campo obrigatÛrio");
+			this.addErrorMessage("Advogado: Campo obrigat√≥rio");
 			erro = true;
 		}
 		
@@ -289,7 +290,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		RequestContext context = RequestContext.getCurrentInstance();
 		
 		if(TSUtil.isEmpty(getDocumentoProcesso().getArquivo())){
-			CenajurUtil.addErrorMessage("Documento: Campo obrigatÛrio");
+			CenajurUtil.addErrorMessage("Documento: Campo obrigat√≥rio");
 			context.addCallbackParam("sucesso", false);
 			return null;
 		}
@@ -317,7 +318,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	
 	public String removeParteContraria(){
 		getCrudModel().getProcessosPartesContrarias().remove(this.processoParteContrariaSelecionada);
-		CenajurUtil.addInfoMessage("Parte Contr·ria removida com sucesso");
+		CenajurUtil.addInfoMessage("Parte Contr√°ria removida com sucesso");
 		return null;
 	}
 	
@@ -334,7 +335,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 			
 		} else{
 			
-			CenajurUtil.addErrorMessage("Esse associado j· foi adicionado");
+			CenajurUtil.addErrorMessage("Esse associado j√° foi adicionado");
 			
 		}
 		
@@ -350,11 +351,11 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 		if(!this.getCrudModel().getProcessosPartesContrarias().contains(processoClienteSelecionado)){
 			
 			getCrudModel().getProcessosPartesContrarias().add(processoClienteSelecionado);
-			CenajurUtil.addInfoMessage("Parte contr·ria adicionada com sucesso");
+			CenajurUtil.addInfoMessage("Parte contr√°ria adicionada com sucesso");
 			
 		} else{
 			
-			CenajurUtil.addErrorMessage("Essa parte contr·ria j· foi adicionada");
+			CenajurUtil.addErrorMessage("Essa parte contr√°ria j√° foi adicionada");
 			
 		}
 		
@@ -382,7 +383,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 				
 				this.processoNumeroSelecionado.delete();
 				getCrudModel().getProcessosNumerosTemp().remove(this.processoNumeroSelecionado);
-				CenajurUtil.addInfoMessage("RemoÁ„o realizada com sucesso");
+				CenajurUtil.addInfoMessage("Remo√ß√£o realizada com sucesso");
 				
 			} catch (TSApplicationException e) {
 				

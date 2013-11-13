@@ -33,6 +33,7 @@ public class CategoriaDocumentoFaces extends CrudFaces<CategoriaDocumento> {
 		setCrudModel(new CategoriaDocumento());
 		getCrudModel().setTipoCategoria(new TipoCategoria());
 		setFlagAlterar(Boolean.FALSE);
+		setTabIndex(1);
 		return null;
 	}
 	

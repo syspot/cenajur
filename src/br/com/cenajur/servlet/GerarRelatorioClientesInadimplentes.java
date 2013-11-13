@@ -96,7 +96,7 @@ public class GerarRelatorioClientesInadimplentes extends HttpServlet {
 
 		} else {
 
-			TSFacesUtil.addErrorMessage("Não foi possível encontrar o arquivo.");
+			TSFacesUtil.addErrorMessage("NÃ£o foi possÃ­vel encontrar o arquivo.");
 		}
 
 	}

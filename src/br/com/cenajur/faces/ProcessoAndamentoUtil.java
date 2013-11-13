@@ -103,13 +103,13 @@ public class ProcessoAndamentoUtil {
 		RequestContext context = RequestContext.getCurrentInstance();
 		
 		if(TSUtil.isEmpty(getDocumentoAndamentoProcesso().getArquivo())){
-			CenajurUtil.addErrorMessage("Documento: Campo obrigat�rio");
+			CenajurUtil.addErrorMessage("Documento: Campo obrigatório");
 			context.addCallbackParam("sucesso", false);
 			return null;
 		}
 
 		if(getDocumentoAndamentoProcesso().getDescricao().length() > 100){
-			CenajurUtil.addErrorMessage("Descri��o: Campo muito longo, tamanho m�ximo de 100 caracteres");
+			CenajurUtil.addErrorMessage("Descrição: Campo muito longo, tamanho máximo de 100 caracteres");
 			context.addCallbackParam("sucesso", false);
 			return null;
 		}
@@ -139,12 +139,12 @@ public class ProcessoAndamentoUtil {
 				|| TSUtil.isEmpty(this.andamentoProcesso.getTipoAndamentoProcesso().getId())){
 			
 			erro = true;
-			CenajurUtil.addErrorMessage("Tipo do Andamento: Campo obrigat�rio");
+			CenajurUtil.addErrorMessage("Tipo do Andamento: Campo obrigatório");
 		}
 
 		if(this.andamentoProcesso.getDescricao().length() > 500){
 			erro = true;
-			CenajurUtil.addErrorMessage("Descri��o: Campo muito longo, tamanho m�ximo de 500 caracteres");
+			CenajurUtil.addErrorMessage("Descrição: Campo muito longo, tamanho máximo de 500 caracteres");
 		}
 		
 		context.addCallbackParam("sucesso", !erro);
@@ -255,7 +255,7 @@ public class ProcessoAndamentoUtil {
 		
 		getCrudModel().setAndamentos(new AndamentoProcesso().findByProcesso(getCrudModel()));
 		
-		CenajurUtil.addInfoMessage("Altera��o realizada com sucesso");
+		CenajurUtil.addInfoMessage("Alteração realizada com sucesso");
 		
 		return null;
 	}

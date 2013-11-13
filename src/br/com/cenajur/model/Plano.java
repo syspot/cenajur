@@ -39,6 +39,11 @@ public class Plano extends TSActiveRecordAb<Plano>{
 	public Plano() {
 	}
 	
+	public Plano(Long id) {
+		super();
+		this.id = id;
+	}
+	
 	public Plano(Long id, String descricao) {
 		super();
 		this.id = id;

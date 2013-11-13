@@ -329,7 +329,7 @@ public class Faturamento extends TSActiveRecordAb<Faturamento>{
 		try{
 			getSession().createSQLQuery("select fc_gerar_faturamento(" + colaboradorGeracao.getId() + ")").executeUpdate();
 		}catch(Exception e){
-			// a function � executada, mas sobe exce��o no retorno que deve ser abafada.
+			// a function é executada, mas sobe exceção no retorno que deve ser abafada.
 		}
 	}
 	
