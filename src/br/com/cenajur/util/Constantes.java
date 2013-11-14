@@ -38,11 +38,11 @@ public class Constantes {
 	public static final Long REGRA_BLOQUEIO_AUDIENCIA = 3L;
 	
 	//public static final String PASTA_UPLOAD_ARQUIVO = "E:\\arquivos\\";
-	public static final String PASTA_UPLOAD_ARQUIVO = "/arquivos/";
+	public static final String PASTA_UPLOAD_ARQUIVO = "/home/cenajurc/arquivos/";
 	//public static final String PASTA_UPLOAD_IMAGEM = "E:\\imagens\\";
-	public static final String PASTA_UPLOAD_IMAGEM = "/arquivos/imagens/";
+	public static final String PASTA_UPLOAD_IMAGEM = "/home/cenajurc/arquivos/imagens/";
 	//public static final String PASTA_UPLOAD_IMAGEM_TEMP = "E:\\imagens\\tmp/";
-	public static final String PASTA_UPLOAD_IMAGEM_TEMP = "/arquivos/imagens/tmp/";
+	public static final String PASTA_UPLOAD_IMAGEM_TEMP = "/home/cenajurc/arquivos/imagens/tmp/";
 	
 	//public static final String PASTA_DOWNLOAD_ARQUIVO = "http://localhost:80/arquivos/";
 	public static final String PASTA_DOWNLOAD_ARQUIVO = "http://www.agepol.org.br/arquivos/";
