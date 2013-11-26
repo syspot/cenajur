@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 
-
+	<ui:param name="mbean" value="#{faturamentoFaces}" />
+    <ui:param name="mbeanModel" value="#{faturamentoFaces.crudModel}" />
+    <ui:param name="mbeanPesquisaModel" value="#{faturamentoFaces.crudPesquisaModel}" />
+                
     <p:tabView id="tabview" dynamic="false">
 
         <p:tab id="tabFaturamento" title="Faturamento">
@@ -16,10 +19,6 @@
             </h:form>
             
             <h:form id="formFaturamento">
-
-                <ui:param name="mbean" value="#{faturamentoFaces}" />
-                <ui:param name="mbeanModel" value="#{faturamentoFaces.crudModel}" />
-                <ui:param name="mbeanPesquisaModel" value="#{faturamentoFaces.crudPesquisaModel}" />
 
                 <h:panelGrid style="width:50%">
 

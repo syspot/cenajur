@@ -43,8 +43,6 @@ public class AgendaCrudFaces extends CrudFaces<Agenda>{
 	
 	private Colaborador colaboradorConectado;
 	
-	private Long idVaraAudiencia;
-	
 	private boolean buscaIndividual;
 	
 	
@@ -65,7 +63,7 @@ public class AgendaCrudFaces extends CrudFaces<Agenda>{
 		this.getCrudModel().setDataFinal(CenajurUtil.getDataOperacaoMinuto(30));
 		this.setGrid(new ArrayList<Agenda>());
 		this.agendaColaboradorSelecionado = new AgendaColaborador();
-		this.idVaraAudiencia = null;
+		setFlagAlterar(Boolean.FALSE);
 		setTabIndex(1);
 		return null;
 	}
@@ -122,7 +120,7 @@ public class AgendaCrudFaces extends CrudFaces<Agenda>{
 			
 			if(TSUtil.isEmpty(this.getCrudModel().getCliente())){
 				context.addCallbackParam("sucesso", false);
-				CenajurUtil.addErrorMessage("Cliente: Campo obrigatório");
+				CenajurUtil.addErrorMessage("Associado: Campo obrigatório");
 				erro = true;
 			}
 			
@@ -152,8 +150,8 @@ public class AgendaCrudFaces extends CrudFaces<Agenda>{
 	
 	@Override
 	protected void prePersist() {
-		if(getCrudModel().isTipoAudiencia() && !TSUtil.isEmpty(TSUtil.tratarLong(idVaraAudiencia))){
-			getCrudModel().setLocal(new Vara(idVaraAudiencia).getById().getDescricao());
+		if(getCrudModel().isTipoAudiencia() && !TSUtil.isEmpty(TSUtil.tratarLong(getCrudModel().getLocalId()))){
+			getCrudModel().setLocal(new Vara(getCrudModel().getLocalId()).getById().getDescricao());
 		}
 	}
 	
@@ -321,12 +319,4 @@ public class AgendaCrudFaces extends CrudFaces<Agenda>{
 		this.colaboradorConectado = colaboradorConectado;
 	}
 
-	public Long getIdVaraAudiencia() {
-		return idVaraAudiencia;
-	}
-
-	public void setIdVaraAudiencia(Long idVaraAudiencia) {
-		this.idVaraAudiencia = idVaraAudiencia;
-	}
-	
 }

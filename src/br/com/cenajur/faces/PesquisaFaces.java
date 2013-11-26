@@ -1,16 +1,14 @@
 package br.com.cenajur.faces;
 
 import java.lang.reflect.ParameterizedType;
-import java.util.Collection;
 import java.util.List;
-
-import javax.faces.model.SelectItem;
 
 import br.com.topsys.database.hibernate.TSActiveRecordIf;
 import br.com.topsys.exception.TSSystemException;
+import br.com.topsys.web.faces.TSMainFaces;
 import br.com.topsys.web.util.TSFacesUtil;
 
-public abstract class PesquisaFaces <T extends TSActiveRecordIf<T>>{
+public abstract class PesquisaFaces <T extends TSActiveRecordIf<T>> extends TSMainFaces{
 
 	private T model;
 	
@@ -48,11 +46,6 @@ public abstract class PesquisaFaces <T extends TSActiveRecordIf<T>>{
 		
 	}
 	
-	@SuppressWarnings("rawtypes")
-	protected final List<SelectItem> initCombo(Collection coll,String nomeValue,String nomeLabel) {
-		return TSFacesUtil.initCombo(coll, nomeValue, nomeLabel);
-	}
-
 	public T getModel() {
 		return model;
 	}

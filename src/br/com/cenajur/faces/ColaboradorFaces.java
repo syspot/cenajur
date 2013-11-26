@@ -17,7 +17,6 @@ import org.primefaces.event.FileUploadEvent;
 import br.com.cenajur.model.CategoriaDocumento;
 import br.com.cenajur.model.Cidade;
 import br.com.cenajur.model.Colaborador;
-import br.com.cenajur.model.DocumentoCliente;
 import br.com.cenajur.model.DocumentoColaborador;
 import br.com.cenajur.model.Estado;
 import br.com.cenajur.model.Grupo;
@@ -43,7 +42,7 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 	private DocumentoColaborador documentoColaborador;
 	private CategoriaDocumento categoriaDocumento;
 	private List<SelectItem> categoriasDocumentos;
-	private DocumentoCliente documentoSelecionado;
+	private DocumentoColaborador documentoSelecionado;
 	
 	private String senha;
 	private String senha2;
@@ -289,14 +288,6 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 		this.categoriasDocumentos = categoriasDocumentos;
 	}
 
-	public DocumentoCliente getDocumentoSelecionado() {
-		return documentoSelecionado;
-	}
-
-	public void setDocumentoSelecionado(DocumentoCliente documentoSelecionado) {
-		this.documentoSelecionado = documentoSelecionado;
-	}
-
 	public String getSenha() {
 		return senha;
 	}
@@ -311,6 +302,14 @@ public class ColaboradorFaces extends CrudFaces<Colaborador> {
 
 	public void setSenha2(String senha2) {
 		this.senha2 = senha2;
+	}
+
+	public DocumentoColaborador getDocumentoSelecionado() {
+		return documentoSelecionado;
+	}
+
+	public void setDocumentoSelecionado(DocumentoColaborador documentoSelecionado) {
+		this.documentoSelecionado = documentoSelecionado;
 	}
 	
 }

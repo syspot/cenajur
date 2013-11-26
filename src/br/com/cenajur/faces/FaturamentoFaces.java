@@ -46,6 +46,7 @@ public class FaturamentoFaces extends CrudFaces<Faturamento> {
 	public String limpar() {
 		setCrudModel(new Faturamento());
 		getCrudModel().setPlano(new Plano());
+		setFlagAlterar(Boolean.FALSE);
 		setTabIndex(1);
 		return null;
 	}

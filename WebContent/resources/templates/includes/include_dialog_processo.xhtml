@@ -9,7 +9,7 @@
         <p:outputLabel for="situacaoProcessoPesquisa" value="Situação" />
         <h:outputText value="" />
 
-        <p:inputText id="numeroProcessoPesquisa" value="#{mbeanPesquisa.model.processoNumeroPrincipal.numero}" required="true" requiredMessage="Número do Processo: Campo obrigatório" maxlength="30" styleClass="coluna90" />
+        <p:inputText id="numeroProcessoPesquisa" value="#{mbeanPesquisa.model.processoNumeroPrincipal.numero}" maxlength="30" styleClass="coluna90" />
         <p:selectOneMenu id="advogadoPesquisa" value="#{mbeanPesquisa.model.advogado.id}" style="width: 90%">
             <f:selectItem itemLabel="Não Selecionado" itemValue="" />
             <f:selectItems value="#{mbeanPesquisa.advogados}" />

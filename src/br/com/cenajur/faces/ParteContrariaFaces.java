@@ -44,6 +44,7 @@ public class ParteContrariaFaces extends CrudFaces<ParteContraria> {
 		this.parteContraria = new ParteContraria();
 		this.parteContraria.setTipoDocumento(new TipoDocumento());
 		setFlagAlterar(Boolean.FALSE);
+		setTabIndex(1);
 		return null;
 	}
 	

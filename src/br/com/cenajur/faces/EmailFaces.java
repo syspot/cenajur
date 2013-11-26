@@ -33,6 +33,7 @@ public class EmailFaces extends CrudFaces<Email> {
 	@Override
 	public String limpar() {
 		setCrudModel(new Email(Constantes.EMAIL_ID).getById());
+		setFlagAlterar(Boolean.FALSE);
 		setTabIndex(1);
 		return null;
 	}

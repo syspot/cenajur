@@ -73,6 +73,9 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 	@Column(name = "flag_geral")
 	private Boolean flagGeral;
 	
+	@Column(name = "local_id")
+	private Long localId;
+	
 	@ManyToOne
 	@JoinColumn(name = "colaborador_solicitante_id")
 	private Colaborador colaboradorSolicitante;
@@ -237,6 +240,14 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 
 	public void setSomenteAbertas(boolean somenteAbertas) {
 		this.somenteAbertas = somenteAbertas;
+	}
+
+	public Long getLocalId() {
+		return TSUtil.tratarLong(localId);
+	}
+
+	public void setLocalId(Long localId) {
+		this.localId = TSUtil.tratarLong(localId);
 	}
 
 	public boolean isTipoAudiencia(){
