@@ -41,7 +41,7 @@
 
             </p:outputPanel>
 
-            <p:remoteCommand name="addParteContraria" action="#{processoFaces.addParteContraria}" oncomplete="dialogParteContraria.hide();" process="@this" update="opParteContraria">
+            <p:remoteCommand name="addParteContraria" action="#{processoFaces.addParteContraria}" oncomplete="dlgParteContraria.hide();" process="@this" update="opParteContraria">
                 <f:setPropertyActionListener target="#{mbeanPesquisa.cadastrando}" value="#{false}" />
             </p:remoteCommand>
 
