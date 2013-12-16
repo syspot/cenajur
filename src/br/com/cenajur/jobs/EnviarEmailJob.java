@@ -274,7 +274,7 @@ public class EnviarEmailJob {
 		
 		Calendar data = Calendar.getInstance();
 		
-		if(data.get(Calendar.DAY_OF_MONTH) == 10){
+		if(data.get(Calendar.DAY_OF_MONTH) == 22){
 			
 			List<Cliente> clientes = new Cliente().pesquisarInadimplentes(data.get(Calendar.MONTH), data.get(Calendar.YEAR));
 			
