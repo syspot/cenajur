@@ -120,6 +120,12 @@ public class EnviarEmailJob {
 								new ContadorEmail().gravarPorTipo(tipoInformacao);
 								new LogEnvioEmail(configuracoesEmail.getAssunto(), texto, processoCliente.getCliente(), processoCliente.getCliente().getEmail()).save();
 								
+								try {
+									Thread.sleep(5000);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+								
 							}
 							
 							if(!TSUtil.isEmpty(processoCliente.getCliente().getCelular())){
@@ -173,6 +179,12 @@ public class EnviarEmailJob {
 						new ContadorEmail().gravarPorTipo(tipoInformacao);
 						new LogEnvioEmail(ASSUNTO_GERAL, texto, processoCliente.getCliente(), processoCliente.getCliente().getEmail()).save();
 						
+						try {
+							Thread.sleep(5000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						
 					}
 					
 					if(!TSUtil.isEmpty(processoCliente.getCliente().getCelular())){
@@ -216,6 +228,12 @@ public class EnviarEmailJob {
 					new ContadorEmail().gravarPorTipo(tipoInformacao);
 					new LogEnvioEmail(assunto, corpoEmail.toString(), cliente, cliente.getEmail()).save();
 					
+					try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					
 				}
 				
 				if(!TSUtil.isEmpty(cliente.getCelular())){
@@ -254,6 +272,12 @@ public class EnviarEmailJob {
 					emailUtil.enviarEmailTratado(cliente.getEmail(), ASSUNTO_GERAL, corpoEmail.toString(), "text/html");
 					new ContadorEmail().gravarPorTipo(tipoInformacao);
 					new LogEnvioEmail(ASSUNTO_GERAL, corpoEmail.toString(), cliente, cliente.getEmail()).save();
+					
+					try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 					
 				}
 				
@@ -298,6 +322,12 @@ public class EnviarEmailJob {
 						new ContadorEmail().gravarPorTipo(tipoInformacao);
 						new LogEnvioEmail(ASSUNTO_GERAL, corpoEmail.toString(), cliente, cliente.getEmail()).save();
 						
+						try {
+							Thread.sleep(5000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						
 					}
 					
 					if(!TSUtil.isEmpty(cliente.getCelular())){
@@ -340,6 +370,12 @@ public class EnviarEmailJob {
 						emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), ASSUNTO_GERAL, corpoEmail.toString(), "text/html");
 						new ContadorEmail().gravarPorTipo(tipoInformacao);
 						new LogEnvioEmail(ASSUNTO_GERAL, corpoEmail.toString(), processoCliente.getCliente(), processoCliente.getCliente().getEmail()).save();
+						
+						try {
+							Thread.sleep(5000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 						
 					}
 					
@@ -395,6 +431,12 @@ public class EnviarEmailJob {
 							emailUtil.enviarEmailTratado(visita.getCliente().getEmail(), configuracoesEmail.getAssunto(), textoLimpo, "text/html");
 							new ContadorEmail().gravarPorTipo(tipoInformacao);
 							new LogEnvioEmail(configuracoesEmail.getAssunto(), textoLimpo, visita.getCliente(), visita.getCliente().getEmail()).save();
+							
+							try {
+								Thread.sleep(5000);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
 							
 						}
 						

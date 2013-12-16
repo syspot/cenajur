@@ -397,7 +397,7 @@ public class AutenticacaoFaces extends TSMainFaces{
 	    		
 	    		String texto = "Prezado(a), sua nova senha para acessar o sistema do Cenajur é: " + novaSenha;
 	    		
-	    		new EmailUtil().sendMail(colaborador.getEmail(), "Recuperação de Senha", texto, null);
+	    		new EmailUtil().enviarEmailTratado(colaborador.getEmail(), "Recuperação de Senha", texto, null);
 	    		
 	    		super.addInfoMessage("Uma nova senha foi enviada para seu e-mail");
 	    		
