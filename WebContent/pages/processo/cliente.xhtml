@@ -14,8 +14,9 @@
     </ui:define>
     <ui:define name="btnSuperior2">
         <p:commandButton ajax="false" value="Procuração Individual" icon="ui-icon-print" action="#{mbean.imprimirProcuracaoIndividual}" rendered="#{mbeanModel.id != null}" style="margin-top: 10px;" />    
-        <p:commandButton ajax="false" value="Procuração Coletiva" icon="ui-icon-print" action="#{mbean.imprimirProcuracaoColetiva}" rendered="#{mbeanModel.id != null}" style="margin-top: 10px; width: 200px" />    
-        <p:commandButton ajax="false" value="Carta Canc. de Contrato" icon="ui-icon-print" action="#{mbean.imprimirCartaCancelamentoContrato}" rendered="#{mbeanModel.id != null}" style="margin-top: 10px; width: 180px" />    
+        <p:commandButton ajax="false" value="Procuração Coletiva" icon="ui-icon-print" action="#{mbean.imprimirProcuracaoColetiva}" rendered="#{mbeanModel.id != null}" style="margin-top: 10px;" />    
+        <p:commandButton ajax="false" value="Carta Canc. de Contrato" icon="ui-icon-print" action="#{mbean.imprimirCartaCancelamentoContrato}" rendered="#{mbeanModel.id != null}" style="margin-top: 10px; width: 200px" />    
+        <p:commandButton ajax="false" value="Contrato" icon="ui-icon-print" action="#{mbean.imprimirContrato}" rendered="#{mbeanModel.id != null}" style="margin-top: 10px; width: 180px" />    
     </ui:define>
     
     <ui:define name="cadastro">

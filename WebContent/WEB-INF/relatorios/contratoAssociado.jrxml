@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="contratoExperiencia" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f37734dc-0305-41c0-ba1d-0a06a2e568bb">
-	<property name="ireport.zoom" value="1.100000000000007"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="248"/>
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="1036"/>
+	<property name="ireport.y" value="949"/>
 	<parameter name="P_COLABORADOR_ID" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -36,7 +36,10 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 	<group name="group1">
 		<groupExpression><![CDATA[$F{id}]]></groupExpression>
 		<groupHeader>
-			<band height="406">
+			<band height="380">
+				<rectangle>
+					<reportElement uuid="f68049b9-0a96-4055-850f-6432fcd63c91" positionType="Float" x="354" y="299" width="182" height="77"/>
+				</rectangle>
 				<line>
 					<reportElement uuid="477ce4c4-92d6-4259-aaa7-a6a5bde36213" positionType="Float" x="212" y="244" width="33" height="1"/>
 				</line>
@@ -125,70 +128,67 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 "\nE, para firmeza e como prova de assim haverem contratado, fizeram este instrumento particular impresso em 02 (duas) vias de igual teor e forma para um só efeito legal, devidamente registrado no 1º Oficio de Títulos e Documentos da Cidade de Salvador, que vai assinado pelo contratante."]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement uuid="774a5510-9452-4323-9bbc-f214829ec16f" positionType="Float" x="19" y="283" width="517" height="35"/>
+					<reportElement uuid="774a5510-9452-4323-9bbc-f214829ec16f" positionType="Float" x="19" y="283" width="517" height="21"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" size="8" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Obs: Encontra-se suspensa a carência de seis meses, prevista para área penal e penal militar, referida no parágrafo Segundo da Cláusula Primeira."]]></textFieldExpression>
 				</textField>
-				<rectangle>
-					<reportElement uuid="f68049b9-0a96-4055-850f-6432fcd63c91" positionType="Float" x="354" y="321" width="191" height="82"/>
-				</rectangle>
 				<staticText>
-					<reportElement uuid="252eca52-a7cd-4afd-815f-d818c7f81c69" positionType="Float" x="364" y="330" width="52" height="13"/>
+					<reportElement uuid="252eca52-a7cd-4afd-815f-d818c7f81c69" positionType="Float" x="364" y="307" width="52" height="13"/>
 					<textElement>
 						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<text><![CDATA[Recebi em:]]></text>
 				</staticText>
 				<line>
-					<reportElement uuid="67ee6c80-1a82-43f2-9f75-430269306798" positionType="Float" x="458" y="342" width="28" height="1"/>
+					<reportElement uuid="67ee6c80-1a82-43f2-9f75-430269306798" positionType="Float" x="458" y="319" width="28" height="1"/>
 				</line>
 				<staticText>
-					<reportElement uuid="162e8120-4148-44dd-b712-0793e61bba3a" positionType="Float" x="486" y="322" width="19" height="23"/>
+					<reportElement uuid="162e8120-4148-44dd-b712-0793e61bba3a" positionType="Float" x="486" y="299" width="19" height="23"/>
 					<textElement>
 						<font fontName="SansSerif" size="18" isBold="true"/>
 					</textElement>
 					<text><![CDATA[/]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="da95527d-957f-40b4-b4ac-0d8f5fa52a50" positionType="Float" x="454" y="322" width="19" height="23"/>
+					<reportElement uuid="da95527d-957f-40b4-b4ac-0d8f5fa52a50" positionType="Float" x="454" y="299" width="19" height="23"/>
 					<textElement>
 						<font fontName="SansSerif" size="18" isBold="true"/>
 					</textElement>
 					<text><![CDATA[/]]></text>
 				</staticText>
 				<line>
-					<reportElement uuid="d46280ac-45c5-4636-86b1-bf7c0ee9b23c" positionType="Float" x="426" y="342" width="28" height="1"/>
+					<reportElement uuid="d46280ac-45c5-4636-86b1-bf7c0ee9b23c" positionType="Float" x="426" y="319" width="28" height="1"/>
 				</line>
 				<line>
-					<reportElement uuid="c71f28ff-607e-4fa0-a7ca-b7e5147a940c" positionType="Float" x="490" y="342" width="28" height="1"/>
+					<reportElement uuid="c71f28ff-607e-4fa0-a7ca-b7e5147a940c" positionType="Float" x="490" y="319" width="28" height="1"/>
 				</line>
 				<staticText>
-					<reportElement uuid="e131cf62-de95-493c-b852-6126e2ec2590" positionType="Float" x="416" y="386" width="70" height="13"/>
+					<reportElement uuid="e131cf62-de95-493c-b852-6126e2ec2590" positionType="Float" x="416" y="363" width="70" height="13"/>
 					<textElement textAlignment="Center">
 						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<text><![CDATA[CET/CENAJUR]]></text>
 				</staticText>
 				<line>
-					<reportElement uuid="df5a76f5-7605-487c-aece-0433eb3765e7" positionType="Float" x="382" y="383" width="136" height="1"/>
+					<reportElement uuid="df5a76f5-7605-487c-aece-0433eb3765e7" positionType="Float" x="382" y="360" width="136" height="1"/>
 				</line>
 				<staticText>
-					<reportElement uuid="252eca52-a7cd-4afd-815f-d818c7f81c69" positionType="Float" x="385" y="351" width="24" height="13"/>
+					<reportElement uuid="252eca52-a7cd-4afd-815f-d818c7f81c69" positionType="Float" x="385" y="328" width="24" height="13"/>
 					<textElement textAlignment="Center">
 						<font fontName="SansSerif" size="8"/>
 					</textElement>
 					<text><![CDATA[às]]></text>
 				</staticText>
 				<line>
-					<reportElement uuid="d46280ac-45c5-4636-86b1-bf7c0ee9b23c" positionType="Float" x="414" y="361" width="28" height="1"/>
+					<reportElement uuid="d46280ac-45c5-4636-86b1-bf7c0ee9b23c" positionType="Float" x="414" y="338" width="28" height="1"/>
 				</line>
 				<line>
-					<reportElement uuid="d46280ac-45c5-4636-86b1-bf7c0ee9b23c" positionType="Float" x="447" y="361" width="28" height="1"/>
+					<reportElement uuid="d46280ac-45c5-4636-86b1-bf7c0ee9b23c" positionType="Float" x="447" y="338" width="28" height="1"/>
 				</line>
 				<staticText>
-					<reportElement uuid="252eca52-a7cd-4afd-815f-d818c7f81c69" positionType="Float" x="439" y="346" width="12" height="18"/>
+					<reportElement uuid="252eca52-a7cd-4afd-815f-d818c7f81c69" positionType="Float" x="439" y="323" width="12" height="18"/>
 					<textElement textAlignment="Center">
 						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
@@ -390,7 +390,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 					</textElement>
 					<text><![CDATA[Nascimento:]]></text>
 				</staticText>
-				<textField isStretchWithOverflow="true">
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
 					<reportElement uuid="d8367651-5559-409f-9828-b52c9764b163" x="307" y="95" width="86" height="11"/>
 					<box leftPadding="5">
 						<topPen lineWidth="0.25"/>
@@ -399,7 +399,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 					<textElement verticalAlignment="Middle">
 						<font fontName="SansSerif" size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{data_nascimento} == null ? "" : $F{data_nascimento}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{data_nascimento}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement uuid="fcd4c5ce-3c2a-4a56-9bcd-d200ad4b359f" x="392" y="95" width="61" height="11"/>
@@ -448,7 +448,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 					<text><![CDATA[Endereço:]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true">
-					<reportElement uuid="a44bb746-c0b8-4cd3-8251-e46130cba6da" x="291" y="73" width="56" height="11"/>
+					<reportElement uuid="a44bb746-c0b8-4cd3-8251-e46130cba6da" x="291" y="73" width="84" height="11"/>
 					<box leftPadding="5">
 						<topPen lineWidth="0.25"/>
 						<leftPen lineWidth="0.25"/>
@@ -470,7 +470,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 					<text><![CDATA[Telefone:]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true">
-					<reportElement uuid="654fa6f4-fc4c-4775-95cf-9dc2ecc92b68" x="387" y="73" width="149" height="11"/>
+					<reportElement uuid="654fa6f4-fc4c-4775-95cf-9dc2ecc92b68" x="416" y="73" width="120" height="11"/>
 					<box leftPadding="5">
 						<topPen lineWidth="0.25"/>
 						<leftPen lineWidth="0.25"/>
@@ -482,7 +482,7 @@ WHERE C.ID = $P{P_COLABORADOR_ID}]]>
 					<textFieldExpression><![CDATA[$F{celular} == null ? "" : $F{celular}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement uuid="0fac4cd4-4ae0-4826-8990-ffd04d9e4911" x="346" y="73" width="41" height="11"/>
+					<reportElement uuid="0fac4cd4-4ae0-4826-8990-ffd04d9e4911" x="375" y="73" width="41" height="11"/>
 					<box leftPadding="5">
 						<topPen lineWidth="0.25"/>
 						<leftPen lineWidth="0.25"/>
