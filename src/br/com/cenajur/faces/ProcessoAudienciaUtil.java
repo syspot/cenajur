@@ -186,42 +186,56 @@ public class ProcessoAudienciaUtil {
 			
 			if(configuracoesEmail.getFlagImediato()){
 				
+				StringBuilder corpoEmail = new StringBuilder(CenajurUtil.getTopoEmail());
+				
+				corpoEmail.append(configuracoesEmail.getCorpoEmail());
+				
+				corpoEmail.append(CenajurUtil.getRodapeEmail());
+				
+				String texto = corpoEmail.toString();
+				
+				configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_PROCESSO).getById();
+				
+				texto = texto.replace(configuracaoReplace.getCodigo(), new ProcessoNumero().obterNumeroProcessoPrincipal(processo).getNumero());
+				
+				configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ADVOGADO).getById();
+				
+				texto = texto.replace(configuracaoReplace.getCodigo(), this.audiencia.getAudienciasAdvogados().toString());
+				
+				configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DATA).getById();
+				
+				texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(this.audiencia.getDataAudiencia(), TSDateUtil.DD_MM_YYYY));
+				
+				configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_HORA).getById();
+				
+				texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(this.audiencia.getDataAudiencia(), TSDateUtil.HH_MM));
+				
+				configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_LOCAL).getById();
+				
+				texto = texto.replace(configuracaoReplace.getCodigo(), this.audiencia.getVara().getById().getDescricao());
+				
 				for(ProcessoCliente processoCliente : processo.getProcessosClientes()){
 					
 					if(!TSUtil.isEmpty(processoCliente.getCliente().getEmail())){
-						
-						StringBuilder corpoEmail = new StringBuilder(CenajurUtil.getTopoEmail());
-						
-						corpoEmail.append(configuracoesEmail.getCorpoEmail());
-						
-						corpoEmail.append(CenajurUtil.getRodapeEmail());
-						
-						String texto = corpoEmail.toString();
-						
-						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_PROCESSO).getById();
-						
-						texto = texto.replace(configuracaoReplace.getCodigo(), new ProcessoNumero().obterNumeroProcessoPrincipal(processo).getNumero());
-						
-						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ADVOGADO).getById();
-						
-						texto = texto.replace(configuracaoReplace.getCodigo(), this.audiencia.getAudienciasAdvogados().toString());
-						
-						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DATA).getById();
-						
-						texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(this.audiencia.getDataAudiencia(), TSDateUtil.DD_MM_YYYY));
-						
-						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_HORA).getById();
-						
-						texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(this.audiencia.getDataAudiencia(), TSDateUtil.HH_MM));
-						
-						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_LOCAL).getById();
-						
-						texto = texto.replace(configuracaoReplace.getCodigo(), this.audiencia.getVara().getById().getDescricao());
 						
 						emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
 						new ContadorEmail().gravarPorTipo(tipoInformacao);
 						
 						new LogEnvioEmail(configuracoesEmail.getAssunto(), texto, processoCliente.getCliente(), processoCliente.getCliente().getEmail()).save();
+						
+					}
+					
+				}
+				
+				Colaborador advogado = null;
+				
+				for(AudienciaAdvogado audienciaAdvogado : this.audiencia.getAudienciasAdvogados()){
+					
+					advogado = audienciaAdvogado.getAdvogado().getById();
+					
+					if(!TSUtil.isEmpty(advogado.getEmail())){
+						
+						emailUtil.enviarEmailTratado(advogado.getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
 						
 					}
 					

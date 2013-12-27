@@ -27,6 +27,7 @@ public class ClientePesquisaFaces extends PesquisaFaces<Cliente> {
 	private Cliente dependente;
 	private boolean cadastrando;
 	private boolean pesquisaComDependentes;
+	private int ativo;
 	
 	@PostConstruct
 	protected void init() {
@@ -55,11 +56,21 @@ public class ClientePesquisaFaces extends PesquisaFaces<Cliente> {
 		initDependente();
 		this.cadastrando = Boolean.FALSE;
 		setGrid(new ArrayList<Cliente>());
+		this.ativo = 3;
 		return null;
 	}
 	
 	@Override
 	public String find() {
+		
+		switch (ativo) {
+		case 1:
+			getModel().setFlagAtivo(Boolean.TRUE); break;
+		case 2:
+			getModel().setFlagAtivo(Boolean.FALSE); break;
+		default:
+			getModel().setFlagAtivo(null); break;
+		}
 		
 		if(pesquisaComDependentes){
 			setGrid(getModel().pesquisarComDependentes());
@@ -131,6 +142,14 @@ public class ClientePesquisaFaces extends PesquisaFaces<Cliente> {
 
 	public void setPesquisaComDependentes(boolean pesquisaComDependentes) {
 		this.pesquisaComDependentes = pesquisaComDependentes;
+	}
+
+	public int getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(int ativo) {
+		this.ativo = ativo;
 	}
 
 }

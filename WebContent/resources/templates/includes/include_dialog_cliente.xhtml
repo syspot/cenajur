@@ -2,7 +2,7 @@
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 
 
-    <h:panelGrid columns="5" columnClasses="coluna15, coluna35, coluna15, coluna30, coluna5" style="width:100%">
+    <h:panelGrid columns="5" columnClasses="coluna15, coluna35, coluna15, coluna20, coluna15" style="width:100%">
 
         <p:outputLabel for="matriculaPesquisa" value="Matrícula" />
         <p:outputLabel for="nomePesquisa" value="Nome" />
@@ -21,7 +21,11 @@
             <f:selectItem itemLabel="Não Selecionado" itemValue="" />
             <f:selectItems value="#{mbeanPesquisa.cidades}" />
         </p:selectOneMenu>
-        <p:selectBooleanCheckbox id="flagAtivoPesquisa" value="#{mbeanPesquisa.model.flagAtivo}" />
+        <p:selectOneMenu id="flagAtivoPesquisa" value="#{mbeanPesquisa.ativo}" style="width: 95%">
+            <f:selectItem itemLabel="Todos" itemValue="#{3}" />
+            <f:selectItem itemLabel="Ativo" itemValue="#{1}" />
+            <f:selectItem itemLabel="Inativo" itemValue="#{2}" />
+        </p:selectOneMenu>
 
     </h:panelGrid>
 

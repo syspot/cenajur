@@ -9,7 +9,9 @@ import java.util.List;
 import br.com.cenajur.model.Agenda;
 import br.com.cenajur.model.AndamentoProcesso;
 import br.com.cenajur.model.Audiencia;
+import br.com.cenajur.model.AudienciaAdvogado;
 import br.com.cenajur.model.Cliente;
+import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.ConfiguracoesEmail;
 import br.com.cenajur.model.ConfiguracoesReplaceEmail;
 import br.com.cenajur.model.ContadorEmail;
@@ -80,39 +82,41 @@ public class EnviarEmailJob {
 					
 					processo = audiencia.getProcessoNumero().getProcesso().getById();
 					
+					
+					StringBuilder corpoEmail = new StringBuilder(CenajurUtil.getTopoEmail());
+					
+					String textoLimpo = configuracoesEmail.getCorpoEmail();
+					
+					configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_PROCESSO).getById();
+					
+					textoLimpo = textoLimpo.replace(configuracaoReplace.getCodigo(), new ProcessoNumero().obterNumeroProcessoPrincipal(processo).getNumero());
+					
+					configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ADVOGADO).getById();
+					
+					textoLimpo = textoLimpo.replace(configuracaoReplace.getCodigo(), audiencia.getAudienciasAdvogados().toString());
+					
+					configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DATA).getById();
+					
+					textoLimpo = textoLimpo.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(audiencia.getDataAudiencia(), TSDateUtil.DD_MM_YYYY));
+					
+					configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_HORA).getById();
+					
+					textoLimpo = textoLimpo.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(audiencia.getDataAudiencia(), TSDateUtil.HH_MM));
+					
+					configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_LOCAL).getById();
+					
+					textoLimpo = textoLimpo.replace(configuracaoReplace.getCodigo(), audiencia.getVara().getDescricao());
+					
+					corpoEmail.append(textoLimpo);
+					
+					corpoEmail.append(CenajurUtil.getRodapeEmail());
+					
+					String texto = corpoEmail.toString();
+					
+					
 					for(ProcessoCliente processoCliente : processo.getProcessosClientes()){
 						
 						if(!TSUtil.isEmpty(processoCliente.getCliente().getEmail()) || !TSUtil.isEmpty(processoCliente.getCliente().getCelular())){
-							
-							StringBuilder corpoEmail = new StringBuilder(CenajurUtil.getTopoEmail());
-							
-							String textoLimpo = configuracoesEmail.getCorpoEmail();
-							
-							configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_PROCESSO).getById();
-							
-							textoLimpo = textoLimpo.replace(configuracaoReplace.getCodigo(), new ProcessoNumero().obterNumeroProcessoPrincipal(processo).getNumero());
-							
-							configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ADVOGADO).getById();
-							
-							textoLimpo = textoLimpo.replace(configuracaoReplace.getCodigo(), audiencia.getAudienciasAdvogados().toString());
-							
-							configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DATA).getById();
-							
-							textoLimpo = textoLimpo.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(audiencia.getDataAudiencia(), TSDateUtil.DD_MM_YYYY));
-							
-							configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_HORA).getById();
-							
-							textoLimpo = textoLimpo.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(audiencia.getDataAudiencia(), TSDateUtil.HH_MM));
-							
-							configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_LOCAL).getById();
-							
-							textoLimpo = textoLimpo.replace(configuracaoReplace.getCodigo(), audiencia.getVara().getDescricao());
-							
-							corpoEmail.append(textoLimpo);
-							
-							corpoEmail.append(CenajurUtil.getRodapeEmail());
-							
-							String texto = corpoEmail.toString();
 							
 							if(!TSUtil.isEmpty(processoCliente.getCliente().getEmail())){
 								
@@ -133,6 +137,26 @@ public class EnviarEmailJob {
 //								this.enviarMensagem(processoCliente.getCliente().getCelular(), textoLimpo);
 //								new ContadorSms().gravarPorTipo(tipoInformacao);
 								
+							}
+							
+						}
+						
+					}
+					
+					Colaborador advogado = null;
+					
+					for(AudienciaAdvogado audienciaAdvogado : audiencia.getAudienciasAdvogados()){
+						
+						advogado = audienciaAdvogado.getAdvogado().getById();
+						
+						if(!TSUtil.isEmpty(advogado.getEmail())){
+							
+							emailUtil.enviarEmailTratado(advogado.getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
+							
+							try {
+								Thread.sleep(5000);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
 							}
 							
 						}

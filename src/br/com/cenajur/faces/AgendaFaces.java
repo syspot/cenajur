@@ -408,10 +408,17 @@ public class AgendaFaces extends TSMainFaces {
 				}
 
 				this.processoAudienciaUtil.getAudiencia().setAgenda(this.agendaColaboradorSelecionado.getAgenda());
+				this.processoAudienciaUtil.getAudiencia().setDescricao(this.agendaColaboradorSelecionado.getTextoResposta());
 				this.processoAudienciaUtil.getAudiencia().setDataAudiencia(this.agendaColaboradorSelecionado.getAgenda().getDataInicial());
 
 			} else {
 
+				if(TSUtil.isEmpty(audiencia.getDescricao())){
+					audiencia.setDescricao(this.agendaColaboradorSelecionado.getTextoResposta());
+				} else{
+					audiencia.setDescricao(audiencia.getDescricao() + " ------------ " + this.agendaColaboradorSelecionado.getTextoResposta());
+				}
+				
 				audiencia.setSituacaoAudiencia(audiencia.getSituacaoAudiencia().getById());
 				audiencia.setVara(audiencia.getVara().getById());
 
