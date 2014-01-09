@@ -15,10 +15,10 @@
                     <p:outputLabel for="situacaoProcessoCliente2" value="Situação" />
                     <p:outputLabel for="dataArquivamentoProcessoCliente2" value="Data Arquivamento" />
 
-                    <p:selectOneMenu id="situacaoProcessoCliente2" value="#{mbeanAcao.processoClienteSelecionado.situacaoProcessoClienteTemp.id}" style="width:95%">
+                    <h:selectOneMenu id="situacaoProcessoCliente2" value="#{mbeanAcao.processoClienteSelecionado.situacaoProcessoClienteTemp.id}" styleClass="combo" style="width:95%">
                         <f:selectItems value="#{mbean.situacoesProcessosClientes}" />
                         <p:ajax update="pgDataArquivamentoProcessoCliente2" listener="#{mbeanAcao.limparDataArquivamentoProcessoCliente}" process="@this" global="false" />
-                    </p:selectOneMenu>
+                    </h:selectOneMenu>
                     <p:calendar navigator="true" id="dataArquivamentoProcessoCliente2" required="true" requiredMessage="Data de Arquivamento: Campo obrigatório" pattern="dd/MM/yyyy" value="#{mbeanAcao.processoClienteSelecionado.dataArquivamento}" disabled="#{!mbeanAcao.processoClienteSelecionado.processoClienteArquivado}" styleClass="coluna95"
                         timeZone="America/Recife" />
 

@@ -22,14 +22,14 @@
             <p:outputLabel for="situacaoAudienciaAgenda" value="Situação" />
             <p:outputLabel for="varaAudienciaAgenda" value="Local" />
 
-            <p:selectOneMenu id="situacaoAudienciaAgenda" required="true" requiredMessage="Situação: Campo obrigatório" value="#{agendaFaces.processoAudienciaUtil.audiencia.situacaoAudiencia.id}" style="width:95%">
+            <h:selectOneMenu id="situacaoAudienciaAgenda" required="true" requiredMessage="Situação: Campo obrigatório" value="#{agendaFaces.processoAudienciaUtil.audiencia.situacaoAudiencia.id}" styleClass="combo" style="width:95%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{agendaFaces.situacoesAudiencias}" />
-            </p:selectOneMenu>
-            <p:selectOneMenu id="varaAudienciaAgenda" required="true" requiredMessage="Local: Campo obrigatório" value="#{agendaFaces.processoAudienciaUtil.audiencia.vara.id}" style="width:94%">
+            </h:selectOneMenu>
+            <h:selectOneMenu id="varaAudienciaAgenda" required="true" requiredMessage="Local: Campo obrigatório" value="#{agendaFaces.processoAudienciaUtil.audiencia.vara.id}" styleClass="combo" style="width:94%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{agendaFaces.varas}" />
-            </p:selectOneMenu>
+            </h:selectOneMenu>
 
         </h:panelGrid>
 

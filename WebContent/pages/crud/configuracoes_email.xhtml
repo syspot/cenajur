@@ -12,10 +12,10 @@
             <h:panelGrid style="width:100%">
 
                 <p:outputLabel for="regrasEmail" value="Regra de Email" />
-                <p:selectOneMenu id="regrasEmail" required="true" requiredMessage="Regra de Email: Campo obrigatório" value="#{mbeanModel.regrasEmail.id}">
+                <h:selectOneMenu id="regrasEmail" required="true" requiredMessage="Regra de Email: Campo obrigatório" value="#{mbeanModel.regrasEmail.id}" styleClass="combo">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbean.regrasEmails}" />
-                </p:selectOneMenu>
+                </h:selectOneMenu>
 
                 <p:outputLabel for="assunto" value="Assunto" />
                 <p:inputText id="assunto" value="#{mbeanModel.assunto}" required="true" requiredMessage="Assunto: Campo obrigatório" style="width: 80%" maxlength="200" />
@@ -59,10 +59,10 @@
         <h:panelGrid style="width: 100%">
         
             <p:outputLabel for="regrasEmailPesquisa" value="Regra de Email" />
-            <p:selectOneMenu id="regrasEmailPesquisa" value="#{mbeanPesquisaModel.regrasEmail.id}" style="width:20%">
+            <h:selectOneMenu id="regrasEmailPesquisa" value="#{mbeanPesquisaModel.regrasEmail.id}" styleClass="combo" style="width:20%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbean.regrasEmails}" />
-            </p:selectOneMenu>
+            </h:selectOneMenu>
     
             <p:outputLabel for="assuntoPesquisa" value="Assunto" />
             <p:inputText id="assuntoPesquisa" value="#{mbeanPesquisaModel.assunto}" style="width: 40%" maxlength="200" />

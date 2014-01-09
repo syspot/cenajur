@@ -29,14 +29,14 @@
                             <p:outputLabel for="situacaoAudiencia" value="Situação" />
                             <p:outputLabel for="varaAudiencia" value="Local" />
 
-                            <p:selectOneMenu id="situacaoAudiencia" value="#{mbeanProcessoAudiencia.audiencia.situacaoAudiencia.id}" style="width:95%">
+                            <h:selectOneMenu id="situacaoAudiencia" value="#{mbeanProcessoAudiencia.audiencia.situacaoAudiencia.id}" styleClass="combo" style="width:95%">
                                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                                 <f:selectItems value="#{mbeanProcesso.situacoesAudiencias}" />
-                            </p:selectOneMenu>
-                            <p:selectOneMenu id="varaAudiencia" value="#{mbeanProcessoAudiencia.audiencia.vara.id}" style="width:94%">
+                            </h:selectOneMenu>
+                            <h:selectOneMenu id="varaAudiencia" value="#{mbeanProcessoAudiencia.audiencia.vara.id}"  styleClass="combo" style="width:94%">
                                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                                 <f:selectItems value="#{mbeanProcesso.varas}" />
-                            </p:selectOneMenu>
+                            </h:selectOneMenu>
 
                         </h:panelGrid>
 
@@ -45,10 +45,11 @@
                             <p:outputPanel autoUpdate="true">
                                 <h:outputLabel value="Advogado" />
                                 <br />
-                                <p:inputText required="true" requiredMessage="Advogado: Campo obrigatório" readonly="true" rendered="#{empty mbeanProcessoAudiencia.audiencia.audienciasAdvogados}" styleClass="coluna72" />
-                                <p:inputText value="#{mbeanProcessoAudiencia.audiencia.audienciasAdvogados}" required="true" requiredMessage="Advogado: Campo obrigatório" readonly="true" rendered="#{not empty mbeanProcessoAudiencia.audiencia.audienciasAdvogados}" styleClass="coluna72" />
-                                <p:commandButton type="button" value="Adicionar" icon="ui-icon-plus" onclick="dlgAdvogado2.show();" rendered="#{empty cadastroViaCliente ? true : false}" />
-                                <p:commandButton type="button" value="Adicionar" icon="ui-icon-plus" onclick="dlgAdvogado5.show();" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}" />
+                                <p:inputText required="true" requiredMessage="Advogado: Campo obrigatório" readonly="true" rendered="#{empty mbeanProcessoAudiencia.audiencia.audienciasAdvogados}" styleClass="coluna70" />
+                                <p:inputText value="#{mbeanProcessoAudiencia.audiencia.audienciasAdvogados}" required="true" requiredMessage="Advogado: Campo obrigatório" readonly="true" rendered="#{not empty mbeanProcessoAudiencia.audiencia.audienciasAdvogados}" styleClass="coluna70" />
+                                <p:commandButton icon="ui-icon-closethick" title="Remover" action="#{mbeanProcessoAudiencia.limparAdvogados}" process="@this" rendered="#{not empty mbeanProcessoAudiencia.audiencia.audienciasAdvogados}" style="margin-left: 3px"/>
+                                <p:commandButton type="button" value="Add" icon="ui-icon-plus" onclick="dlgAdvogado2.show();" rendered="#{empty cadastroViaCliente ? true : false}" style="margin-left: 3px" />
+                                <p:commandButton type="button" value="Add" icon="ui-icon-plus" onclick="dlgAdvogado5.show();" rendered="#{not empty cadastroViaCliente ? cadastroViaCliente : false}" style="margin-left: 3px" />
                             </p:outputPanel>
 
                             <p:outputLabel for="descricaoAudiencia" value="Descrição" />
@@ -69,18 +70,13 @@
 
                 </h:panelGrid>
 
-                <p:commandButton id="btnCadastrarAudiencia" value="Cadastrar" icon="salvar" action="#{mbeanProcessoAudiencia.cadastrarAudiencia}" update="@form" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" rendered="#{false}"
-                    disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagInserir}" />
-                <p:commandButton id="btnCadastrarAudiencia2" value="Cadastrar" icon="salvar" action="#{mbeanProcessoAudiencia.cadastrarAudiencia}" oncomplete="handleRequest('dialogCadastroAudiencia', dlgCadastroAudiencia, args)" update="pgAlteracaoAudiencia, :tabview:tabAudienciaAndamento:formCadastroAudiencia:opGridAudiencia" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" rendered="#{mbeanProcessoAudiencia.audiencia.id == null and empty cadastroViaCliente ? true : false}"
-                    disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagInserir}" />
+                <p:commandButton id="btnCadastrarAudiencia" value="Cadastrar" icon="salvar" action="#{mbeanProcessoAudiencia.cadastrarAudiencia}" update="@form" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" rendered="#{false}" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagInserir}" />
+                <p:commandButton id="btnCadastrarAudiencia2" value="Cadastrar" icon="salvar" action="#{mbeanProcessoAudiencia.cadastrarAudiencia}" oncomplete="handleRequest('dialogCadastroAudiencia', dlgCadastroAudiencia, args)" update="pgAlteracaoAudiencia, :tabview:tabAudienciaAndamento:formCadastroAudiencia:opGridAudiencia" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" rendered="#{mbeanProcessoAudiencia.audiencia.id == null and empty cadastroViaCliente ? true : false}" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagInserir}" />
                     
-                <p:commandButton id="btnAlterarAudiencia" value="Alterar" icon="salvar" action="#{mbeanProcessoAudiencia.alterarAudiencia}" update="@form" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" rendered="#{false}"
-                    disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}" />
+                <p:commandButton id="btnAlterarAudiencia" value="Alterar" icon="salvar" action="#{mbeanProcessoAudiencia.alterarAudiencia}" update="@form" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" rendered="#{false}" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}" />
 
-                <p:commandButton value="Alterar" icon="salvar" process="@this, pgAlteracaoAudiencia" action="#{mbeanProcessoAux.alterarAudiencia}" oncomplete="handleRequest('dialogVisualizarAudiencia', dlgVisualizarAudiencia, args)" style="margin-left: 5px; margin-top:10px; margin-bottom:20px"
-                    rendered="#{mbeanProcessoAudiencia.audiencia.id != null and not empty cadastroViaCliente ? cadastroViaCliente : false}" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}" update=":tabview:apProcessos:formProcesso#{clienteFaces.processoAux.indexProcesso}:apProcesso:opGridAudiencia"/>
-                <p:commandButton value="Alterar" icon="salvar" process="@this, pgAlteracaoAudiencia" action="#{mbeanProcessoAudiencia.alterarAudiencia}" oncomplete="handleRequest('dialogCadastroAudiencia', dlgCadastroAudiencia, args)" style="margin-left: 5px; margin-top:10px; margin-bottom:20px"
-                    rendered="#{mbeanProcessoAudiencia.audiencia.id != null and empty cadastroViaCliente ? true : false}" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}" update="pgAlteracaoAudiencia, :tabview:tabAudienciaAndamento:formCadastroAudiencia:opGridAudiencia"/>
+                <p:commandButton value="Alterar" icon="salvar" process="@this, pgAlteracaoAudiencia" action="#{mbeanProcessoAux.alterarAudiencia}" oncomplete="handleRequest('dialogVisualizarAudiencia', dlgVisualizarAudiencia, args)" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" rendered="#{mbeanProcessoAudiencia.audiencia.id != null and not empty cadastroViaCliente ? cadastroViaCliente : false}" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}" update=":tabview:apProcessos:formProcesso#{clienteFaces.processoAux.indexProcesso}:apProcesso:opGridAudiencia"/>
+                <p:commandButton value="Alterar" icon="salvar" process="@this, pgAlteracaoAudiencia" action="#{mbeanProcessoAudiencia.alterarAudiencia}" oncomplete="handleRequest('dialogCadastroAudiencia', dlgCadastroAudiencia, args)" style="margin-left: 5px; margin-top:10px; margin-bottom:20px" rendered="#{mbeanProcessoAudiencia.audiencia.id != null and empty cadastroViaCliente ? true : false}" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}" update="pgAlteracaoAudiencia, :tabview:tabAudienciaAndamento:formCadastroAudiencia:opGridAudiencia"/>
                     
                 <p:commandButton id="btnCancelarAudiencia" value="Novo Cadastro" icon="ui-icon-document" action="#{mbeanProcessoAudiencia.limpar}" process="@this" update="pgDadosCadastroAudienciaDialog" style="margin-left: 5px;" rendered="#{empty cadastroViaCliente ? true : false}" />
 

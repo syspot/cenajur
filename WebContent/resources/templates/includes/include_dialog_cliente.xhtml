@@ -12,20 +12,20 @@
 
         <p:inputText id="matriculaPesquisa" value="#{mbeanPesquisa.model.matricula}" maxlength="30" styleClass="coluna90" />
         <p:inputText id="nomePesquisa" value="#{mbeanPesquisa.model.nome}" maxlength="100" styleClass="coluna95" />
-        <p:selectOneMenu id="estadoPesquisa" value="#{mbeanPesquisa.model.cidade.estado.id}" style="width: 90%">
+        <h:selectOneMenu id="estadoPesquisa" value="#{mbeanPesquisa.model.cidade.estado.id}" styleClass="combo" style="width: 90%">
             <f:selectItem itemLabel="Não Selecionado" itemValue="" />
             <f:selectItems value="#{mbeanPesquisa.estados}" />
             <p:ajax update="cidadePesquisa" listener="#{mbeanPesquisa.atualizarComboCidades}" />
-        </p:selectOneMenu>
-        <p:selectOneMenu id="cidadePesquisa" value="#{mbeanPesquisa.model.cidade.id}" disabled="#{mbeanPesquisa.model.cidade.estado.id == null}" style="width: 90%">
+        </h:selectOneMenu>
+        <h:selectOneMenu id="cidadePesquisa" value="#{mbeanPesquisa.model.cidade.id}" disabled="#{mbeanPesquisa.model.cidade.estado.id == null}" styleClass="combo" style="width: 90%">
             <f:selectItem itemLabel="Não Selecionado" itemValue="" />
             <f:selectItems value="#{mbeanPesquisa.cidades}" />
-        </p:selectOneMenu>
-        <p:selectOneMenu id="flagAtivoPesquisa" value="#{mbeanPesquisa.ativo}" style="width: 95%">
+        </h:selectOneMenu>
+        <h:selectOneMenu id="flagAtivoPesquisa" value="#{mbeanPesquisa.ativo}" styleClass="combo" style="width: 95%">
             <f:selectItem itemLabel="Todos" itemValue="#{3}" />
             <f:selectItem itemLabel="Ativo" itemValue="#{1}" />
             <f:selectItem itemLabel="Inativo" itemValue="#{2}" />
-        </p:selectOneMenu>
+        </h:selectOneMenu>
 
     </h:panelGrid>
 

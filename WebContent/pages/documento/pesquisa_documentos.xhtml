@@ -18,10 +18,10 @@
                         <p:inputText id="descricao" value="#{mbeanModel.descricaoBusca}" styleClass="coluna90" />
                         
                         <p:outputLabel for="tipoDocumento" value="Tipo" />
-                         <p:selectOneMenu id="tipoDocumento" value="#{mbeanModel.tipoCategoria.id}" style="width:94%">
+                         <h:selectOneMenu id="tipoDocumento" value="#{mbeanModel.tipoCategoria.id}" styleClass="combo" style="width:94%">
                             <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                             <f:selectItems value="#{mbean.tiposCategorias}" />
-                        </p:selectOneMenu>
+                        </h:selectOneMenu>
 
                         <p:commandButton value="Pesquisar" action="#{mbean.find}" update="@form" />
                     </h:panelGrid>

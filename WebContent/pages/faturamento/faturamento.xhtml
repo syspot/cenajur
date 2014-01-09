@@ -40,12 +40,12 @@
                     <p:outputLabel for="mesPesquisa" value="Mês" />
                     <p:outputLabel for="anoPesquisa" value="Ano" />
 
-                    <p:selectOneMenu id="planoPesquisa" value="#{mbeanPesquisaModel.plano.id}">
+                    <h:selectOneMenu id="planoPesquisa" value="#{mbeanPesquisaModel.plano.id}" styleClass="combo">
                         <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                         <f:selectItems value="#{mbean.planos}" />
-                    </p:selectOneMenu>
+                    </h:selectOneMenu>
 
-                    <p:selectOneMenu id="mesPesquisa" value="#{mbeanPesquisaModel.mes}" required="false" requiredMessage="Mês: Campo obrigatório">
+                    <h:selectOneMenu id="mesPesquisa" value="#{mbeanPesquisaModel.mes}" required="false" requiredMessage="Mês: Campo obrigatório" styleClass="combo">
                         <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                         <f:selectItem itemLabel="01" itemValue="#{1}" />
                         <f:selectItem itemLabel="02" itemValue="#{2}" />
@@ -59,7 +59,7 @@
                         <f:selectItem itemLabel="10" itemValue="#{10}" />
                         <f:selectItem itemLabel="11" itemValue="#{11}" />
                         <f:selectItem itemLabel="12" itemValue="#{12}" />
-                    </p:selectOneMenu>
+                    </h:selectOneMenu>
 
                     <p:inputMask mask="9999" id="anoPesquisa" value="#{mbeanPesquisaModel.ano}" onkeypress="javascript: return event.keyCode != 13" required="false" requiredMessage="Ano: Campo obrigatório" maxlength="4" />
 

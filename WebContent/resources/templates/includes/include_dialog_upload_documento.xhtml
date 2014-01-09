@@ -8,10 +8,10 @@
             <p:outputLabel for="categoriaDocumento" value="Categoria" />
             <p:outputLabel for="permissaoAssociado" value="Liberado" style="width:100%" />
             
-            <p:selectOneMenu id="categoriaDocumento" required="true" requiredMessage="Categoria do Documento: Campo obrigatório" value="#{mbeanDocumentoAcao.categoriaDocumento.id}">
+            <h:selectOneMenu id="categoriaDocumento" required="true" requiredMessage="Categoria do Documento: Campo obrigatório" value="#{mbeanDocumentoAcao.categoriaDocumento.id}" styleClass="combo">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbeanDocumento.categoriasDocumentos}" />
-            </p:selectOneMenu>
+            </h:selectOneMenu>
             <p:selectBooleanCheckbox id="permissaoAssociado" value="#{mbeanDocumentoModel.flagPermissaoCliente}" />
 
         </h:panelGrid>

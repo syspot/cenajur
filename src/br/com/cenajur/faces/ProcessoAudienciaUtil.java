@@ -91,6 +91,11 @@ public class ProcessoAudienciaUtil {
 		this.initAudiencia();
 		return null;
 	}
+	
+	public String limparAdvogados(){
+		this.audiencia.setAudienciasAdvogados(new ArrayList<AudienciaAdvogado>());
+		return null;
+	}
 
 	public void enviarDocumento(FileUploadEvent event) {
 		

@@ -20,10 +20,10 @@
         <p:outputLabel for="tipoDocumentoPesquisa" value="Tipo de Documento" />
         <p:outputLabel for="numeroDocumentoPesquisa" value="Número" />
 
-        <p:selectOneMenu id="tipoDocumentoPesquisa" value="#{mbeanPesquisa.model.tipoDocumento.id}" style="width:90%">
+        <h:selectOneMenu id="tipoDocumentoPesquisa" value="#{mbeanPesquisa.model.tipoDocumento.id}" styleClass="combo" style="width:90%">
             <f:selectItem itemLabel="Não Selecionado" itemValue="" />
             <f:selectItems value="#{mbeanPesquisa.tiposDocumentos}" />
-        </p:selectOneMenu>
+        </h:selectOneMenu>
         <p:inputText id="numeroDocumentoPesquisa" value="#{mbeanPesquisa.model.numeroDocumento}" maxlength="50" styleClass="coluna90" />
 
     </h:panelGrid>

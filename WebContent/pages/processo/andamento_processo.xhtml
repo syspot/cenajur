@@ -23,10 +23,10 @@
                 <p:calendar navigator="true" id="dataAndamento" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" required="true" requiredMessage="Data do Andamento: Campo obrigatório" value="#{mbeanModel.dataAndamento}" timeZone="America/Recife" />
 
                 <p:outputLabel for="tipoAndamentoProcesso" value="Tipo do Andamento" />
-                <p:selectOneMenu id="tipoAndamentoProcesso" required="true" requiredMessage="Tipo do Andamento: Campo obrigatório" value="#{mbeanModel.tipoAndamentoProcesso.id}" style="width:92%">
+                <h:selectOneMenu id="tipoAndamentoProcesso" required="true" requiredMessage="Tipo do Andamento: Campo obrigatório" value="#{mbeanModel.tipoAndamentoProcesso.id}" styleClass="combo" style="width:92%">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbean.tiposAndamentosProcessos}" />
-                </p:selectOneMenu>
+                </h:selectOneMenu>
 
                 <p:outputLabel for="descricao" value="Descrição" />
                 <p:inputTextarea id="descricao" value="#{mbeanModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" autoResize="false" rows="10" maxlength="500" styleClass="coluna90" />
@@ -60,10 +60,10 @@
             </h:panelGrid>
             
             <p:outputLabel for="tipoAndamentoProcessoPesquisa" value="Tipo do Andamento" />
-            <p:selectOneMenu id="tipoAndamentoProcessoPesquisa" value="#{mbeanPesquisaModel.tipoAndamentoProcesso.id}" style="width:50%">
+            <h:selectOneMenu id="tipoAndamentoProcessoPesquisa" value="#{mbeanPesquisaModel.tipoAndamentoProcesso.id}" styleClass="combo" style="width:50%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbean.tiposAndamentosProcessos}" />
-            </p:selectOneMenu>
+            </h:selectOneMenu>
 
         </h:panelGrid>
 

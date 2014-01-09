@@ -114,6 +114,7 @@ public class FaturamentoFaces extends CrudFaces<Faturamento> {
 		if(getCrudModel().getFlagPago()){
 			getCrudModel().setDataBaixa(new Date());
 			getCrudModel().setColaboradorBaixa(this.colaboradorConectado);
+			getCrudModel().setIdentificacao(TSUtil.gerarId());
 		}
 		
 	}

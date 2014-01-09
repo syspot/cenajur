@@ -25,10 +25,10 @@
         <p:outputLabel for="numeroDocumentoParteContraria" value="Número" />
         <p:outputLabel for="telefoneParteContraria" value="Telefone" />
 
-        <p:selectOneMenu id="tipoDocumentoParteContraria" value="#{mbeanPersistModel.tipoDocumento.id}" style="width:95%">
+        <h:selectOneMenu id="tipoDocumentoParteContraria" value="#{mbeanPersistModel.tipoDocumento.id}" styleClass="combo" style="width:95%">
             <f:selectItem itemLabel="Não Selecionado" itemValue="" />
             <f:selectItems value="#{mbeanPersist.tiposDocumentos}" />
-        </p:selectOneMenu>
+        </h:selectOneMenu>
         <p:inputText id="numeroDocumentoParteContraria" value="#{mbeanPersistModel.numeroDocumento}" style="width: 90%" maxlength="50" />
         <p:inputMask id="telefoneParteContraria" mask="(99) 9999-9999" value="#{mbeanPersistModel.telefone}" required="false" requiredMessage="Telefone: Campo obrigatório" maxlength="14" styleClass="coluna90" />
 

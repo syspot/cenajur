@@ -32,7 +32,7 @@
                     <p:outputLabel for="valor" value="Valor" />
                     <p:outputLabel for="flagPago" value="Pago" />
 
-                    <p:selectOneMenu id="mes" value="#{mbeanModel.mes}" required="true" requiredMessage="Mês: Campo obrigatório">
+                    <h:selectOneMenu id="mes" value="#{mbeanModel.mes}" required="true" requiredMessage="Mês: Campo obrigatório" styleClass="combo">
                         <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                         <f:selectItem itemLabel="01" itemValue="#{1}" />
                         <f:selectItem itemLabel="02" itemValue="#{2}" />
@@ -46,7 +46,7 @@
                         <f:selectItem itemLabel="10" itemValue="#{10}" />
                         <f:selectItem itemLabel="11" itemValue="#{11}" />
                         <f:selectItem itemLabel="12" itemValue="#{12}" />
-                    </p:selectOneMenu>
+                    </h:selectOneMenu>
 
                     <p:inputMask mask="9999" id="ano" value="#{mbeanModel.ano}" maxlength="4" />
 

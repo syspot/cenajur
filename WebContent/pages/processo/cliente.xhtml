@@ -28,7 +28,7 @@
             
         </h:panelGrid>
         
-        <h:panelGrid columns="2" rendered="#{mbeanModel.id != null and mbeanModel.observacoes != null}" style="margin-bottom: 20px">
+        <h:panelGrid columns="2" rendered="#{mbeanModel.id != null and !empty mbeanModel.observacoes}" >
             
             <h:outputText value="Aviso:" style="font-weight: bold; font-size: 1.6em; text-align: left" />
             <h:outputText value="#{mbeanModel.observacoes}" style="font-weight: bold; font-size: 1.6em; color: red; text-align: left" />
@@ -73,8 +73,8 @@
                         <h:outputText value="Senha da internet" />
 
                         <p:calendar navigator="true" id="dataAdesao" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" required="#{mbeanModel.id == null}" requiredMessage="Data de Adesão: Campo obrigatório" value="#{mbeanModel.dataAdesao}" styleClass="coluna90" style="color:red" timeZone="America/Recife" />
-                        <p:password value="#{mbean.senha}" maxlength="15" required="#{mbeanModel.id == null}" requiredMessage="Senha da internet: Campo obrigatório" redisplay="true" rendered="#{mbeanModel.id == null}"/>
-                        <p:password value="#{mbean.senha}" maxlength="15" redisplay="true" rendered="#{mbeanModel.id != null}"/>
+                        <p:password value="#{mbean.senha}" maxlength="15" autocomplete="off" required="#{mbeanModel.id == null}" requiredMessage="Senha da internet: Campo obrigatório" redisplay="true" rendered="#{mbeanModel.id == null}"/>
+                        <p:password value="#{mbean.senha}" maxlength="15" autocomplete="off" redisplay="true" rendered="#{mbeanModel.id != null}"/>
 
                     </h:panelGrid>
 
@@ -102,10 +102,10 @@
                         <p:inputMask id="cpf" required="#{mbeanModel.id == null}" requiredMessage="CPF: Campo obrigatório" mask="999.999.999-99" value="#{mbeanModel.cpf}" maxlength="15" styleClass="coluna90" />
                         <p:inputText id="rg" required="#{mbeanModel.id == null}" requiredMessage="RG: Campo obrigatório" value="#{mbeanModel.rg}" maxlength="20" styleClass="coluna90" />
                         <p:calendar navigator="true" id="dataNascimento" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" yearRange="c-100:c" required="#{mbeanModel.id == null}" requiredMessage="Data de Nascimento: Campo obrigatório" value="#{mbeanModel.dataNascimento}" style="width:95%" timeZone="America/Recife" />
-                        <p:selectOneMenu id="estadoCivil" required="#{mbeanModel.id == null}" requiredMessage="Estado Civil: Campo obrigatório" value="#{mbeanModel.estadoCivil.id}" style="width:100%">
+                        <h:selectOneMenu id="estadoCivil" required="#{mbeanModel.id == null}" requiredMessage="Estado Civil: Campo obrigatório" value="#{mbeanModel.estadoCivil.id}" styleClass="combo" style="width:100%">
                             <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                             <f:selectItems value="#{mbean.estadosCivis}" />
-                        </p:selectOneMenu>
+                        </h:selectOneMenu>
 
                     </h:panelGrid>
 
@@ -166,16 +166,16 @@
                 <p:outputLabel for="celular" value="Celular" />
 
                 <p:inputText id="bairro" required="#{mbeanModel.id == null}" requiredMessage="Bairro: Campo obrigatório" value="#{mbeanModel.bairro}" maxlength="80" styleClass="coluna92" />
-                <p:selectOneMenu id="estado" value="#{mbeanModel.cidade.estado.id}" required="#{mbeanModel.id == null}" requiredMessage="Estado: Campo obrigatório" style="width:95%">
+                <h:selectOneMenu id="estado" value="#{mbeanModel.cidade.estado.id}" required="#{mbeanModel.id == null}" requiredMessage="Estado: Campo obrigatório" styleClass="combo" style="width:95%">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbean.estados}" />
                     <p:ajax update="opCidade" listener="#{mbean.atualizarComboCidades}" process="@this" />
-                </p:selectOneMenu>
+                </h:selectOneMenu>
                 <p:outputPanel id="opCidade">
-                    <p:selectOneMenu id="cidade" value="#{mbeanModel.cidade.id}" required="#{mbeanModel.id == null}" requiredMessage="Cidade: Campo obrigatório" style="width:95%" disabled="#{mbeanModel.cidade.estado.id == null}">
+                    <h:selectOneMenu id="cidade" value="#{mbeanModel.cidade.id}" required="#{mbeanModel.id == null}" requiredMessage="Cidade: Campo obrigatório" styleClass="combo" style="width:95%" disabled="#{mbeanModel.cidade.estado.id == null}">
                         <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                         <f:selectItems value="#{mbean.cidades}" />
-                    </p:selectOneMenu>
+                    </h:selectOneMenu>
                 </p:outputPanel>
                 <p:inputMask id="telefone" mask="(99) 9999-9999" value="#{mbeanModel.telefone}" maxlength="14" styleClass="coluna90" />
                 <p:inputMask id="celular" mask="(99) 9999-9999" value="#{mbeanModel.celular}" maxlength="14" styleClass="coluna90" />
@@ -194,10 +194,10 @@
                     <p:inputText id="cadastroPM" value="#{mbeanModel.cadastroPM}" maxlength="15" styleClass="coluna90" style="margin-top:3px" /><br/><br/>
                 
                     <p:outputLabel for="graduacao" value="Graduação" /><br/>
-                    <p:selectOneMenu id="graduacao" value="#{mbeanModel.graduacao.id}" style="width:90%">
+                    <h:selectOneMenu id="graduacao" value="#{mbeanModel.graduacao.id}" styleClass="combo" style="width:90%">
                         <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                         <f:selectItems value="#{mbean.graduacoes}" />
-                    </p:selectOneMenu>
+                    </h:selectOneMenu>
                     
                 </p:outputPanel>
                 
@@ -241,10 +241,10 @@
                 <p:outputLabel for="plano" value="Plano" />
                 <p:outputLabel for="diaVencimento" value="Dia de Vencimento" />
 
-                <p:selectOneMenu id="plano" value="#{mbeanModel.plano.id}" required="false" requiredMessage="Plano: Campo obrigatório" style="width:90%">
+                <h:selectOneMenu id="plano" value="#{mbeanModel.plano.id}" required="false" requiredMessage="Plano: Campo obrigatório" styleClass="combo" style="width:90%">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbean.planos}" />
-                </p:selectOneMenu>
+                </h:selectOneMenu>
                 <p:inputText mask="99" maxlength="2" id="diaVencimento" required="false" requiredMessage="Dia de Vencimento: Campo obrigatório" value="#{mbeanModel.diaVencimento}" onkeypress="mascara(this,integer);" styleClass="coluna90" />
 
             </h:panelGrid>
@@ -255,10 +255,10 @@
                 <p:outputLabel for="flagAtivo" value="Ativo" />
                 <p:outputLabel for="flagRematricula" value="Rematrícula" />
 
-                <p:selectOneMenu id="tipoPagamento" required="#{mbeanModel.id == null}" requiredMessage="Tipo de Pagamento: Campo obrigatório" value="#{mbeanModel.tipoPagamento.id}" style="width:90%">
+                <h:selectOneMenu id="tipoPagamento" required="#{mbeanModel.id == null}" requiredMessage="Tipo de Pagamento: Campo obrigatório" value="#{mbeanModel.tipoPagamento.id}" styleClass="combo" style="width:90%">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbean.tiposPagamentos}" />
-                </p:selectOneMenu>
+                </h:selectOneMenu>
                 <p:selectBooleanCheckbox id="flagAtivo" value="#{mbeanModel.flagAtivo}">
                     <p:ajax update="pgInformacoesCancelamento" listener="#{mbean.mudarStatusCliente}" />
                 </p:selectBooleanCheckbox>
@@ -272,10 +272,10 @@
                 <p:outputLabel for="motivoCancelamento" value="Motivo de Cancelamento" rendered="#{!mbeanModel.flagAtivo}" />
 
                 <p:calendar navigator="true" id="dataCancelamento" pattern="dd/MM/yyyy" required="#{mbeanModel.id == null}" requiredMessage="Data de Cancelamento: Campo obrigatório" value="#{mbeanModel.dataCancelamento}" styleClass="coluna90" rendered="#{!mbeanModel.flagAtivo}" timeZone="America/Recife" />
-                <p:selectOneMenu id="motivoCancelamento" required="#{mbeanModel.id == null}" requiredMessage="Motivo do Cancelamento: Campo obrigatório" value="#{mbeanModel.motivoCancelamento.id}" style="width:95%" rendered="#{!mbeanModel.flagAtivo}">
+                <h:selectOneMenu id="motivoCancelamento" required="#{mbeanModel.id == null}" requiredMessage="Motivo do Cancelamento: Campo obrigatório" value="#{mbeanModel.motivoCancelamento.id}" styleClass="combo" style="width:95%" rendered="#{!mbeanModel.flagAtivo}">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbean.motivosCancelamentos}" />
-                </p:selectOneMenu>
+                </h:selectOneMenu>
 
             </h:panelGrid>
 
@@ -290,10 +290,10 @@
                 <p:outputLabel for="conta" value="Conta" />
                 <p:outputLabel for="lote" value="Lote" />
 
-                <p:selectOneMenu id="banco" value="#{mbeanModel.banco.id}" style="width:90%">
+                <h:selectOneMenu id="banco" value="#{mbeanModel.banco.id}" styleClass="combo" style="width:90%">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbean.bancos}" />
-                </p:selectOneMenu>
+                </h:selectOneMenu>
                 <p:inputText id="agencia" value="#{mbeanModel.agencia}" maxlength="15" styleClass="coluna90" />
                 <p:inputText id="conta" value="#{mbeanModel.conta}" maxlength="15" styleClass="coluna90" />
                 <p:inputText id="lote" value="#{mbeanModel.lote}" maxlength="25" styleClass="coluna90" />
@@ -336,20 +336,20 @@
             <p:outputLabel for="cidadePesquisa" value="Cidade" />
             <p:outputLabel for="statusAssociado" value="Situação" />
 
-            <p:selectOneMenu id="estadoPesquisa" value="#{mbeanPesquisaModel.cidade.estado.id}" style="width:95%">
+            <h:selectOneMenu id="estadoPesquisa" value="#{mbeanPesquisaModel.cidade.estado.id}" styleClass="combo" style="width:95%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbean.estados}" />
                 <p:ajax update="pgCidadePesquisa" listener="#{mbean.atualizarComboCidadesPesquisa}" global="false" />
-            </p:selectOneMenu>
-            <p:selectOneMenu id="cidadePesquisa" value="#{mbeanPesquisaModel.cidade.id}" disabled="#{mbeanPesquisaModel.cidade.estado.id == null}" style="width:95%">
+            </h:selectOneMenu>
+            <h:selectOneMenu id="cidadePesquisa" value="#{mbeanPesquisaModel.cidade.id}" disabled="#{mbeanPesquisaModel.cidade.estado.id == null}" styleClass="combo" style="width:95%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbean.cidadesPesquisa}" />
-            </p:selectOneMenu>
-            <p:selectOneMenu id="statusAssociado" value="#{mbean.statusCliente}">
+            </h:selectOneMenu>
+            <h:selectOneMenu id="statusAssociado" value="#{mbean.statusCliente}" styleClass="combo">
                 <f:selectItem itemLabel="Todos" itemValue="#{0}" />
                 <f:selectItem itemLabel="Ativo" itemValue="#{1}" />
                 <f:selectItem itemLabel="Cancelado" itemValue="#{2}" />
-            </p:selectOneMenu>
+            </h:selectOneMenu>
 
         </h:panelGrid>
 

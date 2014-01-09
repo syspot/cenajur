@@ -13,10 +13,10 @@
             <p:inputText id="titulo" value="#{mbeanModel.titulo}" required="true" requiredMessage="Título: Campo obrigatório" maxlength="50" styleClass="coluna90" />
 
             <p:outputLabel for="categoriaDocumento" value="Categoria" />
-            <p:selectOneMenu id="categoriaDocumento" required="true" requiredMessage="Categoria do Documento: Campo obrigatório" value="#{mbeanModel.categoriaDocumento.id}" style="width: 91%">
+            <h:selectOneMenu id="categoriaDocumento" required="true" requiredMessage="Categoria do Documento: Campo obrigatório" value="#{mbeanModel.categoriaDocumento.id}" styleClass="combo" style="width: 91%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbean.categoriasDocumentos}" />
-            </p:selectOneMenu>
+            </h:selectOneMenu>
 
             <p:outputLabel for="descricao" value="Descrição" />
             <p:inputTextarea id="descricao" value="#{mbeanModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" autoResize="false" rows="10" maxlength="500" styleClass="coluna90" />
@@ -56,10 +56,10 @@
         <h:panelGrid columns="1" columnClasses="coluna90" style="width:40%">
 
             <p:outputLabel for="categoriaDocumentoPesquisa" value="Categoria" />
-            <p:selectOneMenu id="categoriaDocumentoPesquisa" value="#{mbeanPesquisaModel.categoriaDocumento.id}" style="width: 91%">
+            <h:selectOneMenu id="categoriaDocumentoPesquisa" value="#{mbeanPesquisaModel.categoriaDocumento.id}" styleClass="combo" style="width: 91%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbean.categoriasDocumentos}" />
-            </p:selectOneMenu>
+            </h:selectOneMenu>
 
             <p:outputLabel for="descricaoPesquisa" value="Descrição" />
             <p:inputText id="descricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" maxlength="500" styleClass="coluna90" />

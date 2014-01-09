@@ -19,16 +19,16 @@
             <p:outputLabel for="estado" value="Estado" />
             <p:outputLabel for="cidade" value="Cidade" />
 
-            <p:selectOneMenu id="estado" value="#{mbeanModel.cidade.estado.id}" required="true" requiredMessage="Estado: Campo obrigatório" style="width: 90%">
+            <h:selectOneMenu id="estado" value="#{mbeanModel.cidade.estado.id}" required="true" requiredMessage="Estado: Campo obrigatório" styleClass="combo" style="width: 90%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbean.estados}" />
                 <p:ajax update="opCidade" listener="#{mbean.atualizarComboCidades}" process="@this" global="false" />
-            </p:selectOneMenu>
+            </h:selectOneMenu>
             <p:outputPanel id="opCidade">
-                <p:selectOneMenu id="cidade" value="#{mbeanModel.cidade.id}" required="true" requiredMessage="Cidade: Campo obrigatório" disabled="#{mbeanModel.cidade.estado.id == null}" style="width: 85%">
+                <h:selectOneMenu id="cidade" value="#{mbeanModel.cidade.id}" required="true" requiredMessage="Cidade: Campo obrigatório" disabled="#{mbeanModel.cidade.estado.id == null}" styleClass="combo" style="width: 85%">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbean.cidades}" />
-                </p:selectOneMenu>
+                </h:selectOneMenu>
             </p:outputPanel>
 
             <p:outputLabel for="bairro" value="Bairro" />
@@ -55,16 +55,16 @@
             <p:outputLabel for="estadoPesquisa" value="Estado" />
             <p:outputLabel for="cidadePesquisa" value="Cidade" />
 
-            <p:selectOneMenu id="estadoPesquisa" value="#{mbeanPesquisaModel.cidade.estado.id}" style="width:90%">
+            <h:selectOneMenu id="estadoPesquisa" value="#{mbeanPesquisaModel.cidade.estado.id}" styleClass="combo" style="width:90%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbean.estados}" />
                 <p:ajax update="opCidadePesquisa" listener="#{mbean.atualizarComboCidadesPesquisa}" process="@this" global="false" />
-            </p:selectOneMenu>
+            </h:selectOneMenu>
             <p:outputPanel id="opCidadePesquisa">
-                <p:selectOneMenu id="cidadePesquisa" value="#{mbeanPesquisaModel.cidade.id}" disabled="#{mbeanPesquisaModel.cidade.estado.id == null}" style="width:85%">
+                <h:selectOneMenu id="cidadePesquisa" value="#{mbeanPesquisaModel.cidade.id}" disabled="#{mbeanPesquisaModel.cidade.estado.id == null}" styleClass="combo" style="width:85%">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbean.cidadesPesquisa}" />
-                </p:selectOneMenu>
+                </h:selectOneMenu>
             </p:outputPanel>
 
         </h:panelGrid>

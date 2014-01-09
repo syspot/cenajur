@@ -26,10 +26,10 @@
     
             <h:outputText value="Local" />
             <p:inputText value="#{agendaFaces.agenda.local}" readonly="true" styleClass="coluna30" rendered="#{!agendaFaces.agenda.tipoAudiencia}"/>
-            <p:selectOneMenu required="true" requiredMessage="Local: Campo obrigatório" value="#{agendaFaces.agenda.localId}" rendered="#{agendaFaces.agenda.tipoAudiencia}" readonly="true" style="width:30%">
+            <h:selectOneMenu required="true" requiredMessage="Local: Campo obrigatório" value="#{agendaFaces.agenda.localId}" rendered="#{agendaFaces.agenda.tipoAudiencia}" readonly="true" styleClass="combo" style="width:30%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{agendaFaces.varas}" />
-            </p:selectOneMenu>
+            </h:selectOneMenu>
     
         </h:panelGrid>
     

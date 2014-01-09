@@ -76,18 +76,18 @@
                 <p:outputLabel for="partePesquisa" value="Tipo de Parte" />
                 <p:outputLabel for="advogadoPesquisa" value="Advogado" />
 
-                <p:selectOneMenu id="tipoProcessoPesquisa" value="#{mbeanProcessoPesquisaModel.tipoProcesso.id}" style="width:95%">
+                <h:selectOneMenu id="tipoProcessoPesquisa" value="#{mbeanProcessoPesquisaModel.tipoProcesso.id}" styleClass="combo" style="width:95%">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbeanProcesso.tiposProcessos}" />
-                </p:selectOneMenu>
-                <p:selectOneMenu id="partePesquisa" value="#{mbeanProcessoPesquisaModel.tipoParte.id}" style="width:95%">
+                </h:selectOneMenu>
+                <h:selectOneMenu id="partePesquisa" value="#{mbeanProcessoPesquisaModel.tipoParte.id}" styleClass="combo" style="width:95%">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbeanProcesso.tiposPartes}" />
-                </p:selectOneMenu>
-                <p:selectOneMenu id="advogadoPesquisa" value="#{mbeanProcessoPesquisaModel.advogado.id}" style="width:95%">
+                </h:selectOneMenu>
+                <h:selectOneMenu id="advogadoPesquisa" value="#{mbeanProcessoPesquisaModel.advogado.id}" styleClass="combo" style="width:95%">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbeanProcesso.advogados}" />
-                </p:selectOneMenu>
+                </h:selectOneMenu>
 
             </h:panelGrid>
 
@@ -97,18 +97,18 @@
                 <p:outputLabel for="comarcaPesquisa" value="Comarca" />
                 <p:outputLabel for="varaPesquisa" value="Vara" />
 
-                <p:selectOneMenu id="objetoPesquisa" value="#{mbeanProcessoPesquisaModel.objeto.id}" style="width:95%">
+                <h:selectOneMenu id="objetoPesquisa" value="#{mbeanProcessoPesquisaModel.objeto.id}" styleClass="combo" style="width:95%">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbeanProcesso.objetos}" />
-                </p:selectOneMenu>
-                <p:selectOneMenu id="comarcaPesquisa" value="#{mbeanProcessoPesquisaModel.comarca.id}" style="width:95%">
+                </h:selectOneMenu>
+                <h:selectOneMenu id="comarcaPesquisa" value="#{mbeanProcessoPesquisaModel.comarca.id}" styleClass="combo" style="width:95%">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbeanProcesso.comarcas}" />
-                </p:selectOneMenu>
-                <p:selectOneMenu id="varaPesquisa" value="#{mbeanProcessoPesquisaModel.vara.id}" style="width:95%">
+                </h:selectOneMenu>
+                <h:selectOneMenu id="varaPesquisa" value="#{mbeanProcessoPesquisaModel.vara.id}" styleClass="combo" style="width:95%">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbeanProcesso.varas}" />
-                </p:selectOneMenu>
+                </h:selectOneMenu>
 
             </h:panelGrid>
 
@@ -122,15 +122,15 @@
                 <p:outputLabel for="situacaoProcessoPesquisa" value="Situação" />
                 <p:outputLabel for="dataArquivamentoPesquisa" value="Data de Arquivamento" />
 
-                <p:selectOneMenu id="turnoPesquisa" value="#{mbeanProcessoPesquisaModel.turno.id}" style="width:95%">
+                <h:selectOneMenu id="turnoPesquisa" value="#{mbeanProcessoPesquisaModel.turno.id}" styleClass="combo" style="width:95%">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbeanProcesso.turnos}" />
-                </p:selectOneMenu>
-                <p:selectOneMenu id="situacaoProcessoPesquisa" value="#{mbeanProcessoPesquisaModel.situacaoProcesso.id}" style="width:95%">
+                </h:selectOneMenu>
+                <h:selectOneMenu id="situacaoProcessoPesquisa" value="#{mbeanProcessoPesquisaModel.situacaoProcesso.id}" styleClass="combo" style="width:95%">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbeanProcesso.situacoesProcessos}" />
                     <p:ajax update="pgDataArquivamentoPesquisa" process="pgDataArquivamentoPesquisa" global="false" />
-                </p:selectOneMenu>
+                </h:selectOneMenu>
                 <p:calendar navigator="true" id="dataArquivamentoPesquisa" pattern="dd/MM/yyyy" value="#{mbeanProcessoPesquisaModel.dataArquivamento}" disabled="#{!mbeanProcessoPesquisaModel.processoArquivado}" style="width:90%" timeZone="America/Recife" />
 
             </h:panelGrid>

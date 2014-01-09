@@ -200,7 +200,7 @@ public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 	}
 	
 	public List<AndamentoProcesso> findByProcesso(Processo processo){
-		return super.find("from AndamentoProcesso a where a.processoNumero.processo.id = ?", "a.dataAndamento" ,processo.getId());
+		return super.find("from AndamentoProcesso a where a.processoNumero.processo.id = ?", "a.dataAndamento desc" ,processo.getId());
 	}
 	
 	@Override

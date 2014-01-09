@@ -88,6 +88,9 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 	private Colaborador colaboradorBusca;
 	
 	@Transient
+	private Cliente clienteBusca;
+	
+	@Transient
 	private boolean somenteAbertas;
 
 	public Agenda() {
@@ -127,7 +130,7 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 	}
 	
 	public String getTitleAba() {
-		return TSParseUtil.dateToString(dataInicial, TSDateUtil.DD_MM_YYYY_HH_MM) + " -- | --  " + CenajurUtil.obterResumoGrid(getDescricao(), 100);
+		return TSParseUtil.dateToString(dataInicial, TSDateUtil.DD_MM_YYYY_HH_MM) + "  |  " + (this.getAgendasColaboradores().isEmpty() ? "-" : this.getAgendasColaboradores().toString()) + "  |  " + CenajurUtil.obterResumoGrid(getDescricao(), (this.getAgendasColaboradores().isEmpty() ? 100 : 60));
 	}
 
 	public void setDataInicial(Date dataInicial) {
@@ -250,6 +253,14 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 		this.localId = TSUtil.tratarLong(localId);
 	}
 
+	public Cliente getClienteBusca() {
+		return clienteBusca;
+	}
+
+	public void setClienteBusca(Cliente clienteBusca) {
+		this.clienteBusca = clienteBusca;
+	}
+
 	public boolean isTipoAudiencia(){
 		return Constantes.TIPO_AGENDA_AUDIENCIA.equals(getTipoAgenda().getId());
 	}
@@ -290,7 +301,7 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 	@Override
 	public List<Agenda> findByModel(String... fieldsOrderBy) {
 		
-		StringBuilder query = new StringBuilder(" select new Agenda(a.id, a.tipoAgenda.descricao, a.dataInicial, a.dataFinal, a.descricao) from Agenda a ");
+		StringBuilder query = new StringBuilder(" select distinct new Agenda(a.id, a.tipoAgenda.descricao, a.dataInicial, a.dataFinal, a.descricao) from Agenda a left join a.processoNumero.processo.processosClientes pc left join a.agendasColaboradores ac");
 		
 		if(somenteAbertas){
 			query.append(" inner join a.agendasColaboradores ac with ac.flagConcluido = false ");
@@ -307,7 +318,15 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 		}
 		
 		if(!TSUtil.isEmpty(dataInicial) && !TSUtil.isEmpty(dataFinal)){
-			query.append(" and a.dataInicial between ? and ? ");
+			query.append(" and date(a.dataInicial) between date(?) and date(?) ");
+		}
+		
+		if(!TSUtil.isEmpty(clienteBusca) && !TSUtil.isEmpty(clienteBusca.getNome())){
+			query.append(CenajurUtil.getParamSemAcento("pc.cliente.nome"));
+		}
+		
+		if(!TSUtil.isEmpty(colaboradorBusca) && !TSUtil.isEmpty(colaboradorBusca.getNome())){
+			query.append(CenajurUtil.getParamSemAcento("ac.colaborador.nome"));
 		}
 		
 		List<Object> params = new ArrayList<Object>();
@@ -323,6 +342,14 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 		if(!TSUtil.isEmpty(dataInicial) && !TSUtil.isEmpty(dataFinal)){
 			params.add(dataInicial);
 			params.add(dataFinal);
+		}
+		
+		if(!TSUtil.isEmpty(clienteBusca) && !TSUtil.isEmpty(clienteBusca.getNome())){
+			params.add(CenajurUtil.tratarString(clienteBusca.getNome()));
+		}
+		
+		if(!TSUtil.isEmpty(colaboradorBusca) && !TSUtil.isEmpty(colaboradorBusca.getNome())){
+			params.add(CenajurUtil.tratarString(colaboradorBusca.getNome()));
 		}
 		
 		return super.find(query.toString(), "a.dataInicial", params.toArray());

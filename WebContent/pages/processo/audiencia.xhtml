@@ -34,14 +34,14 @@
                     <p:outputLabel for="situacaoAudiencia" value="Situação" />
                     <p:outputLabel for="vara" value="Local" />
     
-                    <p:selectOneMenu id="situacaoAudiencia" required="true" requiredMessage="Situação: Campo obrigatório" value="#{mbeanModel.situacaoAudiencia.id}" style="width:95%">
+                    <h:selectOneMenu id="situacaoAudiencia" required="true" requiredMessage="Situação: Campo obrigatório" value="#{mbeanModel.situacaoAudiencia.id}" styleClass="combo" style="width:95%">
                         <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                         <f:selectItems value="#{mbean.situacoesAudiencias}" />
-                    </p:selectOneMenu>
-                    <p:selectOneMenu id="vara" required="true" requiredMessage="Local: Campo obrigatório" value="#{mbeanModel.vara.id}" style="width:94%">
+                    </h:selectOneMenu>
+                    <h:selectOneMenu id="vara" required="true" requiredMessage="Local: Campo obrigatório" value="#{mbeanModel.vara.id}" styleClass="combo" style="width:94%">
                         <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                         <f:selectItems value="#{mbean.varas}" />
-                    </p:selectOneMenu>
+                    </h:selectOneMenu>
     
                 </h:panelGrid>
     
@@ -50,9 +50,10 @@
                     <p:outputPanel autoUpdate="true">
                         <h:outputLabel value="Advogado" />
                         <br />
-                        <p:inputText required="true" requiredMessage="Advogado: Campo obrigatório" readonly="true" rendered="#{empty mbeanModel.audienciasAdvogados}" styleClass="coluna72" />
-                        <p:inputText value="#{mbeanModel.audienciasAdvogados}" required="true" requiredMessage="Advogado: Campo obrigatório" readonly="true" rendered="#{not empty mbeanModel.audienciasAdvogados}" styleClass="coluna72" />
-                        <p:commandButton type="button" value="Adicionar" icon="ui-icon-plus" onclick="dlgAdvogado.show();" />
+                        <p:inputText required="true" requiredMessage="Advogado: Campo obrigatório" readonly="true" rendered="#{empty mbeanModel.audienciasAdvogados}" styleClass="coluna70" />
+                        <p:inputText value="#{mbeanModel.audienciasAdvogados}" required="true" requiredMessage="Advogado: Campo obrigatório" readonly="true" rendered="#{not empty mbeanModel.audienciasAdvogados}" styleClass="coluna70" />
+                        <p:commandButton icon="ui-icon-closethick" title="Remover" action="#{mbean.limparAdvogados}" process="@this" rendered="#{not empty mbeanModel.audienciasAdvogados}" style="margin-left: 3px"/>
+                        <p:commandButton type="button" value="Add" icon="ui-icon-plus" onclick="dlgAdvogado.show();" />
                     </p:outputPanel>
     
                     <p:outputLabel for="descricao" value="Descrição" />
@@ -89,10 +90,10 @@
             </h:panelGrid>
             
             <p:outputLabel for="situacaoAudienciaPesquisa" value="Situação" />
-            <p:selectOneMenu id="situacaoAudienciaPesquisa" value="#{mbeanPesquisaModel.situacaoAudiencia.id}" style="width:50%">
+            <h:selectOneMenu id="situacaoAudienciaPesquisa" value="#{mbeanPesquisaModel.situacaoAudiencia.id}" styleClass="combo" style="width:50%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbean.situacoesAudiencias}" />
-            </p:selectOneMenu>
+            </h:selectOneMenu>
 
         </h:panelGrid>
 
@@ -101,14 +102,14 @@
             <p:outputLabel for="advogadoPesquisa" value="Advogado" />
             <p:outputLabel for="varaPesquisa" value="Local" />
 
-            <p:selectOneMenu id="advogadoPesquisa" value="#{mbeanPesquisaModel.advogado.id}" style="width:92%">
+            <h:selectOneMenu id="advogadoPesquisa" value="#{mbeanPesquisaModel.advogado.id}" styleClass="combo" style="width:92%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbean.advogados}" />
-            </p:selectOneMenu>
-            <p:selectOneMenu id="varaPesquisa" value="#{mbeanPesquisaModel.vara.id}" style="width:97%">
+            </h:selectOneMenu>
+            <h:selectOneMenu id="varaPesquisa" value="#{mbeanPesquisaModel.vara.id}" styleClass="combo" style="width:97%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbean.varas}" />
-            </p:selectOneMenu>
+            </h:selectOneMenu>
 
         </h:panelGrid>
 

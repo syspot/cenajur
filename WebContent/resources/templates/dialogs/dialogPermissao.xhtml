@@ -13,10 +13,10 @@
                 <p:outputLabel for="dlgMenuPermissao" value="Menu" />
 
                 <p:inputText id="dlgDescricaoPermissao" value="#{mbeanPesquisa.model.descricao}" maxlength="100" styleClass="coluna90" />
-                <p:selectOneMenu id="dlgMenuPermissao" value="#{mbeanPesquisa.model.menu.id}" style="width:90%">
+                <h:selectOneMenu id="dlgMenuPermissao" value="#{mbeanPesquisa.model.menu.id}" styleClass="combo" style="width:90%">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbeanPesquisa.menus}" />
-                </p:selectOneMenu>
+                </h:selectOneMenu>
 
                 <p:commandButton value="Pesquisar" icon="ui-icon-search" onclick="gridPermissao.getPaginator().setPage(0);" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="margin-left: 5px; margin-top: 10px; margin-bottom: 10px;" />
 

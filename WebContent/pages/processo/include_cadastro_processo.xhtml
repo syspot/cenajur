@@ -160,38 +160,38 @@
             <p:outputLabel for="parte" value="Tipo de Parte" />
             <p:outputLabel for="advogado" value="Advogado" />
 
-            <p:selectOneMenu id="parte" required="true" requiredMessage="Tipo de Parte: Campo obrigatório" value="#{mbeanProcessoModel.tipoParte.id}" style="width:95%">
+            <h:selectOneMenu id="parte" required="true" requiredMessage="Tipo de Parte: Campo obrigatório" value="#{mbeanProcessoModel.tipoParte.id}" styleClass="combo" style="width:95%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbeanProcesso.tiposPartes}" />
-            </p:selectOneMenu>
-            <p:selectOneMenu id="advogado" value="#{mbeanProcessoModel.advogado.id}" style="width:95%">
+            </h:selectOneMenu>
+            <h:selectOneMenu id="advogado" value="#{mbeanProcessoModel.advogado.id}" styleClass="combo" style="width:95%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbeanProcesso.advogados}" />
-            </p:selectOneMenu>
+            </h:selectOneMenu>
 
             <p:outputLabel for="tipoProcesso" value="Tipo de Processo" />
             <p:outputLabel for="objeto" value="Objeto" />
 
-            <p:selectOneMenu id="tipoProcesso" required="true" requiredMessage="Tipo de Processo: Campo obrigatório" value="#{mbeanProcessoModel.tipoProcesso.id}" style="width:95%">
+            <h:selectOneMenu id="tipoProcesso" required="true" requiredMessage="Tipo de Processo: Campo obrigatório" value="#{mbeanProcessoModel.tipoProcesso.id}" styleClass="combo" style="width:95%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbeanProcesso.tiposProcessos}" />
-            </p:selectOneMenu>
-            <p:selectOneMenu id="objeto" required="true" requiredMessage="Objeto: Campo obrigatório" value="#{mbeanProcessoModel.objeto.id}" style="width:95%">
+            </h:selectOneMenu>
+            <h:selectOneMenu id="objeto" required="true" requiredMessage="Objeto: Campo obrigatório" value="#{mbeanProcessoModel.objeto.id}" styleClass="combo" style="width:95%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbeanProcesso.objetos}" />
-            </p:selectOneMenu>
+            </h:selectOneMenu>
 
             <p:outputLabel for="vara" value="Vara" />
             <p:outputLabel for="comarca" value="Comarca" />
 
-            <p:selectOneMenu id="vara" required="true" requiredMessage="Vara: Campo obrigatório" value="#{mbeanProcessoModel.vara.id}" style="width:95%">
+            <h:selectOneMenu id="vara" required="true" requiredMessage="Vara: Campo obrigatório" value="#{mbeanProcessoModel.vara.id}" styleClass="combo" style="width:95%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbeanProcesso.varas}" />
-            </p:selectOneMenu>
-            <p:selectOneMenu id="comarca" required="true" requiredMessage="Comarca: Campo obrigatório" value="#{mbeanProcessoModel.comarca.id}" style="width:95%">
+            </h:selectOneMenu>
+            <h:selectOneMenu id="comarca" required="true" requiredMessage="Comarca: Campo obrigatório" value="#{mbeanProcessoModel.comarca.id}" styleClass="combo" style="width:95%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbeanProcesso.comarcas}" />
-            </p:selectOneMenu>
+            </h:selectOneMenu>
 
         </h:panelGrid>
 
@@ -207,15 +207,15 @@
             <p:outputLabel for="dataArquivamento" value="Data de Arquivamento" />
 
             <p:calendar navigator="true" id="dataAjuizamento" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" required="true" requiredMessage="Data de Ajuizamento: Campo obrigatório" value="#{mbeanProcessoModel.dataAjuizamento}" style="width:90%" timeZone="America/Recife" />
-            <p:selectOneMenu id="turno" value="#{mbeanProcessoModel.turno.id}" style="width:95%">
+            <h:selectOneMenu id="turno" value="#{mbeanProcessoModel.turno.id}" styleClass="combo" style="width:95%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbeanProcesso.turnos}" />
-            </p:selectOneMenu>
-            <p:selectOneMenu id="situacaoProcesso" required="true" requiredMessage="Situação: Campo obrigatório" value="#{mbeanProcessoModel.situacaoProcesso.id}" style="width:95%">
+            </h:selectOneMenu>
+            <h:selectOneMenu id="situacaoProcesso" required="true" requiredMessage="Situação: Campo obrigatório" value="#{mbeanProcessoModel.situacaoProcesso.id}" styleClass="combo" style="width:95%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbeanProcesso.situacoesProcessos}" />
                 <p:ajax update="opDataArquivamento" process="@this" global="false" />
-            </p:selectOneMenu>
+            </h:selectOneMenu>
             <p:outputPanel id="opDataArquivamento">
                 <p:calendar navigator="true" id="dataArquivamento" pattern="dd/MM/yyyy" required="true" requiredMessage="Data de Arquivamento: Campo obrigatório" value="#{mbeanProcessoModel.dataArquivamento}" disabled="#{!mbeanProcessoModel.processoArquivado}" style="width:90%" timeZone="America/Recife" />
             </p:outputPanel>

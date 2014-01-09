@@ -20,10 +20,10 @@
                 <h:panelGrid>
 
                     <p:outputLabel for="tipoInformacao" value="Tipo" />
-                    <p:selectOneMenu id="tipoInformacao" value="#{mbean.tipoInformacao.id}">
+                    <h:selectOneMenu id="tipoInformacao" value="#{mbean.tipoInformacao.id}" styleClass="combo">
                         <f:selectItem itemLabel="TODOS" itemValue="#{null}" />
                         <f:selectItems value="#{mbean.tiposInformacoes}" />
-                    </p:selectOneMenu>
+                    </h:selectOneMenu>
                 </h:panelGrid>
 
                 <p:commandButton value="Gerar" icon="ui-icon-print" action="#{mbean.atualizar}" ajax="false" style="margin-top: 20px" />

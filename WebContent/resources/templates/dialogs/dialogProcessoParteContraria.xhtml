@@ -14,10 +14,10 @@
                     <p:outputLabel for="situacaoProcessoParteContraria" value="Situação" />
                     <p:outputLabel for="dataArquivamentoProcessoParteContraria" value="Data Arquivamento" />
 
-                    <p:selectOneMenu id="situacaoProcessoParteContraria" value="#{mbean.processoParteContrariaSelecionada.situacaoProcessoParteContrariaTemp.id}" style="width:95%">
+                    <h:selectOneMenu id="situacaoProcessoParteContraria" value="#{mbean.processoParteContrariaSelecionada.situacaoProcessoParteContrariaTemp.id}" styleClass="combo" style="width:95%">
                         <f:selectItems value="#{mbean.situacoesProcessosPartesContrarias}" />
                         <p:ajax update="pgDataArquivamentoProcessoParteContraria" listener="#{mbean.limparDataArquivamentoProcessoParteContraria}" process="@this" global="false" />
-                    </p:selectOneMenu>
+                    </h:selectOneMenu>
                     <p:calendar navigator="true" id="dataArquivamentoProcessoParteContraria" required="true" requiredMessage="Data de Arquivamento: Campo obrigatório" pattern="dd/MM/yyyy" value="#{mbean.processoParteContrariaSelecionada.dataArquivamento}" disabled="#{!mbean.processoParteContrariaSelecionada.processoParteContrariaArquivado}"
                         styleClass="coluna95" timeZone="America/Recife" />
 

@@ -63,10 +63,10 @@
                         <p:outputLabel for="tipoColaboradorPesquisa" value="Tipo" />
                 
                         <p:inputText id="nomePesquisa" value="#{mbeanPesquisaAdvogado.model.nome}" maxlength="100" styleClass="coluna95" />
-                        <p:selectOneMenu id="tipoColaboradorPesquisa" value="#{mbeanPesquisaAdvogado.model.tipoColaborador.id}" disabled="#{empty buscaAdvogado ? false : true}">
+                        <h:selectOneMenu id="tipoColaboradorPesquisa" value="#{mbeanPesquisaAdvogado.model.tipoColaborador.id}" disabled="#{empty buscaAdvogado ? false : true}" styleClass="combo">
                             <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                             <f:selectItems value="#{mbeanPesquisaAdvogado.tiposColaborador}" />
-                        </p:selectOneMenu>
+                        </h:selectOneMenu>
                 
                     </h:panelGrid>
                 

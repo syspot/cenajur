@@ -22,6 +22,12 @@
                             <p:inputText id="email" value="#{mbeanModel.email}" required="true" requiredMessage="Email: Campo obrigatório" styleClass="coluna90" maxlength="100" />
                             <p:password id="senha" value="#{mbeanModel.senha}" required="true" requiredMessage="Senha: Campo obrigatório" styleClass="coluna90" maxlength="30" />
 
+                            <p:outputLabel for="smtp" value="Smtp" />
+                            <p:outputLabel for="porta" value="Porta" />
+
+                            <p:inputText id="smtp" value="#{mbeanModel.smtp}" required="true" requiredMessage="Smtp: Campo obrigatório" styleClass="coluna90" maxlength="100" />
+                            <p:inputText id="porta" value="#{mbeanModel.porta}" required="true" requiredMessage="Porta: Campo obrigatório" styleClass="coluna90" maxlength="100" />
+
                         </h:panelGrid>
 
                         <h:panelGrid>

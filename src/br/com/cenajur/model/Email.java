@@ -28,6 +28,10 @@ public class Email extends TSActiveRecordAb<Email>{
 	private String email;
 	
 	private String senha;
+
+	private String smtp;
+	
+	private Long porta;
 	
 	public Email() {
 	}
@@ -58,6 +62,22 @@ public class Email extends TSActiveRecordAb<Email>{
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public String getSmtp() {
+		return smtp;
+	}
+
+	public void setSmtp(String smtp) {
+		this.smtp = smtp;
+	}
+
+	public Long getPorta() {
+		return porta;
+	}
+
+	public void setPorta(Long porta) {
+		this.porta = porta;
 	}
 
 	@Override

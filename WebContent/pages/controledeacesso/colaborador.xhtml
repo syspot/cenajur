@@ -97,16 +97,16 @@
                 <p:outputLabel for="celular" value="Celular" />
 
                 <p:inputText id="bairro" required="true" requiredMessage="Bairro: Campo obrigatório" value="#{mbeanModel.bairro}" maxlength="50" styleClass="coluna92" />
-                <p:selectOneMenu id="estado" value="#{mbeanModel.cidade.estado.id}" required="true" requiredMessage="Estado: Campo obrigatório" style="width:95%">
+                <h:selectOneMenu id="estado" value="#{mbeanModel.cidade.estado.id}" required="true" requiredMessage="Estado: Campo obrigatório" styleClass="combo" style="width:95%">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbean.estados}" />
                     <p:ajax update="opCidade" listener="#{mbean.atualizarComboCidades}" process="@this" global="false" />
-                </p:selectOneMenu>
+                </h:selectOneMenu>
                 <p:outputPanel id="opCidade">
-                    <p:selectOneMenu id="cidade" value="#{mbeanModel.cidade.id}" required="true" requiredMessage="Cidade: Campo obrigatório" style="width:90%" disabled="#{mbeanModel.cidade.estado.id == null}">
+                    <h:selectOneMenu id="cidade" value="#{mbeanModel.cidade.id}" required="true" requiredMessage="Cidade: Campo obrigatório" styleClass="combo" style="width:90%" disabled="#{mbeanModel.cidade.estado.id == null}">
                         <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                         <f:selectItems value="#{mbean.cidades}" />
-                    </p:selectOneMenu>
+                    </h:selectOneMenu>
                 </p:outputPanel>
                 <p:inputMask id="telefone" required="true" requiredMessage="Telefone: Campo obrigatório" mask="(99) 9999-9999" value="#{mbeanModel.telefone}" maxlength="14" styleClass="coluna95" />
                 <p:inputMask id="celular" mask="(99) 9999-9999" value="#{mbeanModel.celular}" maxlength="14" styleClass="coluna95" />
@@ -128,10 +128,10 @@
                 <p:outputLabel for="senha" value="Senha" rendered="#{mbeanModel.id == null}" />
                 <p:outputLabel for="senha2" value="Confirmar Senha" rendered="#{mbeanModel.id == null}" />
 
-                <p:selectOneMenu id="grupo" value="#{mbeanModel.grupo.id}" required="true" requiredMessage="Grupo de Acesso: Campo obrigatório" style="width:95%">
+                <h:selectOneMenu id="grupo" value="#{mbeanModel.grupo.id}" required="true" requiredMessage="Grupo de Acesso: Campo obrigatório" styleClass="combo" style="width:95%">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbean.grupos}" />
-                </p:selectOneMenu>
+                </h:selectOneMenu>
                 <p:inputText id="usuario" required="true" requiredMessage="Usuário: Campo obrigatório" value="#{mbeanModel.login}" maxlength="20" />
                 <p:password id="senhaEdit" value="#{mbean.senha}" maxlength="20" redisplay="true" match="senhaEdit2" rendered="#{mbeanModel.id != null}" />
                 <p:password id="senhaEdit2" value="#{mbean.senha2}" maxlength="20" redisplay="true" rendered="#{mbeanModel.id != null}" />
@@ -150,11 +150,11 @@
                 <p:outputLabel for="flagProcuracaoIndividual" value="Procuração Individual" />
 
                 <p:calendar navigator="true" id="dataAdmissao" pattern="dd/MM/yyyy" onkeypress="formatar(this, '##/##/####')" required="true" requiredMessage="Data de Admissão: Campo obrigatório" value="#{mbeanModel.dataAdmissao}" style="width:95%" timeZone="America/Recife" />
-                <p:selectOneMenu id="tipoColaborador" required="true" requiredMessage="Tipo de Colaborador: Campo obrigatório" value="#{mbeanModel.tipoColaborador.id}" style="width:93%">
+                <h:selectOneMenu id="tipoColaborador" required="true" requiredMessage="Tipo de Colaborador: Campo obrigatório" value="#{mbeanModel.tipoColaborador.id}" styleClass="combo" style="width:93%">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbean.tiposColaborador}" />
                     <p:ajax update="opOAB" process="@this" global="false" />
-                </p:selectOneMenu>
+                </h:selectOneMenu>
                 <p:outputPanel id="opOAB">
                     <p:inputText id="oab" required="true" requiredMessage="OAB: Campo obrigatório" value="#{mbeanModel.oab}" maxlength="20" disabled="#{!mbeanModel.tipoColaboradorAdvogado}" styleClass="coluna88" />
                 </p:outputPanel>
@@ -234,19 +234,19 @@
             <p:outputLabel for="tipoColaboradorPesquisa" value="Tipo" />
             <p:outputLabel for="situacaoPesquisa" value="Situação" />
 
-            <p:selectOneMenu id="grupoPesquisa" value="#{mbeanPesquisaModel.grupo.id}" style="width:90%">
+            <h:selectOneMenu id="grupoPesquisa" value="#{mbeanPesquisaModel.grupo.id}" styleClass="combo" style="width:90%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="0" />
                 <f:selectItems value="#{mbean.grupos}" />
-            </p:selectOneMenu>
-            <p:selectOneMenu id="tipoColaboradorPesquisa" value="#{mbeanPesquisaModel.tipoColaborador.id}" style="width:90%">
+            </h:selectOneMenu>
+            <h:selectOneMenu id="tipoColaboradorPesquisa" value="#{mbeanPesquisaModel.tipoColaborador.id}" styleClass="combo" style="width:90%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbean.tiposColaborador}" />
-            </p:selectOneMenu>
-            <p:selectOneMenu id="situacaoPesquisa" value="#{mbean.statusPesquisa}" style="width:90%">
+            </h:selectOneMenu>
+            <h:selectOneMenu id="situacaoPesquisa" value="#{mbean.statusPesquisa}" styleClass="combo" style="width:90%">
                 <f:selectItem itemLabel="Todos" itemValue="#{0}" />
                 <f:selectItem itemLabel="Ativos" itemValue="#{1}" />
                 <f:selectItem itemLabel="Inativos" itemValue="#{2}" />
-            </p:selectOneMenu>
+            </h:selectOneMenu>
 
         </h:panelGrid>
 

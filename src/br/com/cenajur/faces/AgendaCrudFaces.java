@@ -13,6 +13,8 @@ import org.primefaces.context.RequestContext;
 
 import br.com.cenajur.model.Agenda;
 import br.com.cenajur.model.AgendaColaborador;
+import br.com.cenajur.model.Audiencia;
+import br.com.cenajur.model.AudienciaAdvogado;
 import br.com.cenajur.model.Cliente;
 import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.ProcessoNumero;
@@ -22,6 +24,8 @@ import br.com.cenajur.model.TipoVisita;
 import br.com.cenajur.model.Vara;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
+import br.com.cenajur.util.Constantes;
+import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.util.TSFacesUtil;
 
@@ -60,7 +64,6 @@ public class AgendaCrudFaces extends CrudFaces<Agenda>{
 		this.getCrudModel().setAgendasColaboradores(new ArrayList<AgendaColaborador>());
 		this.getCrudModel().setTipoVisita(new TipoVisita());
 		this.getCrudModel().setDataInicial(new Date());
-		this.getCrudModel().setDataFinal(CenajurUtil.getDataOperacaoMinuto(30));
 		this.setGrid(new ArrayList<Agenda>());
 		this.agendaColaboradorSelecionado = new AgendaColaborador();
 		setFlagAlterar(Boolean.FALSE);
@@ -74,6 +77,8 @@ public class AgendaCrudFaces extends CrudFaces<Agenda>{
 		this.getCrudPesquisaModel().setTipoAgenda(new TipoAgenda());
 		this.getCrudPesquisaModel().setDataInicial(new Date());
 		this.getCrudPesquisaModel().setDataFinal(CenajurUtil.getDataOperacaoMinuto(30));
+		this.getCrudPesquisaModel().setColaboradorBusca(new Colaborador());
+		this.getCrudPesquisaModel().setClienteBusca(new Cliente());
 		return null;
 	}
 	
@@ -134,12 +139,6 @@ public class AgendaCrudFaces extends CrudFaces<Agenda>{
 			
 		}
 		
-		if(this.getCrudModel().getDataInicial().after(this.getCrudModel().getDataFinal())){
-			context.addCallbackParam("sucesso", false);
-			CenajurUtil.addErrorMessage("Data final não pode ser menor que data inicial");
-			erro = true;
-		}
-		
 		if(!erro){
 			context.addCallbackParam("sucesso", true);
 		}
@@ -150,9 +149,13 @@ public class AgendaCrudFaces extends CrudFaces<Agenda>{
 	
 	@Override
 	protected void prePersist() {
+		
 		if(getCrudModel().isTipoAudiencia() && !TSUtil.isEmpty(TSUtil.tratarLong(getCrudModel().getLocalId()))){
 			getCrudModel().setLocal(new Vara(getCrudModel().getLocalId()).getById().getDescricao());
 		}
+		
+		getCrudModel().setDataFinal(CenajurUtil.getDataOperacaoMinuto(getCrudModel().getDataInicial(), 15));
+		
 	}
 	
 	@Override
@@ -163,6 +166,59 @@ public class AgendaCrudFaces extends CrudFaces<Agenda>{
 	@Override
 	protected void preUpdate() {
 		this.getCrudModel().setColaboradorAtualizacao(this.colaboradorConectado);
+	}
+	
+	@Override
+	protected void posPersist() throws TSApplicationException {
+		
+		if (this.getCrudModel().isTipoAudiencia()) {
+			this.gerarAudiencia();
+		}
+		
+	}
+	
+	private void gerarAudiencia() throws TSApplicationException {
+
+		Audiencia audiencia = new Audiencia().obterPorAgenda(this.getCrudModel());
+
+		this.processoAudienciaUtil = new ProcessoAudienciaUtil(this.getCrudModel().getProcessoNumero().getProcesso());
+		this.processoAudienciaUtil.getAudiencia().setProcessoNumero(this.getCrudModel().getProcessoNumero());
+		this.processoAudienciaUtil.setProcessoNumeroPrincipal(this.getCrudModel().getProcessoNumero());
+
+		if (TSUtil.isEmpty(audiencia)) {
+
+			AudienciaAdvogado audienciaAdvogado;
+
+			for (AgendaColaborador agendaColaborador : this.getCrudModel().getAgendasColaboradores()) {
+
+				audienciaAdvogado = new AudienciaAdvogado();
+				audienciaAdvogado.setAdvogado(agendaColaborador.getColaborador());
+				audienciaAdvogado.setAudiencia(this.processoAudienciaUtil.getAudiencia());
+
+				this.processoAudienciaUtil.getAudiencia().getAudienciasAdvogados().add(audienciaAdvogado);
+
+			}
+
+			this.processoAudienciaUtil.getAudiencia().setAgenda(this.getCrudModel());
+			this.processoAudienciaUtil.getAudiencia().setDataAudiencia(this.getCrudModel().getDataInicial());
+			this.processoAudienciaUtil.getAudiencia().setDescricao(this.getCrudModel().getDescricao());
+			this.processoAudienciaUtil.getAudiencia().setSituacaoAudiencia(new SituacaoAudiencia(Constantes.SITUACAO_AUDIENCIA_AGUARDANDO));
+			this.processoAudienciaUtil.getAudiencia().setVara(new Vara(this.getCrudModel().getLocalId()));
+			this.processoAudienciaUtil.getAudiencia().setFlagClienteCiente(false);
+
+			this.processoAudienciaUtil.cadastrarAudiencia();
+
+		} else {
+
+			this.processoAudienciaUtil.setAudiencia(audiencia);
+
+			this.processoAudienciaUtil.getAudiencia().setDataAudiencia(this.getCrudModel().getDataInicial());
+			this.processoAudienciaUtil.getAudiencia().setVara(new Vara(this.getCrudModel().getLocalId()));
+
+			this.processoAudienciaUtil.alterarAudiencia();
+
+		}
+
 	}
 	
 	public String addProcessoNumero(){

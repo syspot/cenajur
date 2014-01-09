@@ -18,15 +18,15 @@
         <p:outputLabel for="dlgEstadoLotacao" value="Estado" />
         <p:outputLabel for="dlgCidadeLotacao" value="Cidade" />
 
-        <p:selectOneMenu id="dlgEstadoLotacao" value="#{mbeanPesquisa.model.cidade.estado.id}" style="width:92%">
+        <h:selectOneMenu id="dlgEstadoLotacao" value="#{mbeanPesquisa.model.cidade.estado.id}" styleClass="combo" style="width:92%">
             <f:selectItem itemLabel="Não Selecionado" itemValue="" />
             <f:selectItems value="#{mbeanPesquisa.estados}" />
             <p:ajax listener="#{mbeanPesquisa.atualizarComboCidades}" update="pgCampos" />
-        </p:selectOneMenu>
-        <p:selectOneMenu id="dlgCidadeLotacao" value="#{mbeanPesquisa.model.cidade.id}" style="width:90%" disabled="#{mbeanPesquisa.model.cidade.estado.id == null}">
+        </h:selectOneMenu>
+        <h:selectOneMenu id="dlgCidadeLotacao" value="#{mbeanPesquisa.model.cidade.id}" styleClass="combo" style="width:90%" disabled="#{mbeanPesquisa.model.cidade.estado.id == null}">
             <f:selectItem itemLabel="Não Selecionado" itemValue="" />
             <f:selectItems value="#{mbeanPesquisa.cidades}" />
-        </p:selectOneMenu>
+        </h:selectOneMenu>
 
         <p:commandButton value="Pesquisar" icon="ui-icon-search" onclick="gridLotacao.getPaginator().setPage(0);" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="margin-left: 5px;" />
 

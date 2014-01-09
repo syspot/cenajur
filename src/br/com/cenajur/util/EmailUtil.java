@@ -4,18 +4,18 @@ import java.util.Properties;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 import br.com.cenajur.model.Email;
 
 public class EmailUtil {
-
-	private static final String mailSMTPServer = "smtp.gmail.com";
-	private static final String mailSMTPServerPort = "465";
 
 	public void enviarEmailTratado(String to, String subject, String message, String mimeType) {
 
@@ -23,21 +23,27 @@ public class EmailUtil {
 
 			Properties props = new Properties();
 
-			props.put("mail.debug", "true");
-			props.put("mail.host", mailSMTPServer);
-			props.put("mail.smtp.port", mailSMTPServerPort);
-			props.put("mail.smtp.auth", "true");
-			props.put("mail.smtp.ssl.enable", "true");
-
 			Email email = new Email(Constantes.EMAIL_ID);
 
 			email = email.getById();
 
+			props.put("mail.debug", "false");
+			props.put("mail.smtp.host", email.getSmtp());
+			props.put("mail.smtp.port", email.getPorta().toString());
+			props.put("mail.smtp.auth", "true");
+			props.put("mail.smtp.ssl.enable", "false");
+
 			Session session = Session.getInstance(props, new SimpleAuth(email.getEmail(), email.getSenha()));
 
 			MimeMessage msg = new MimeMessage(session);
+			Multipart multiPart = new MimeMultipart();
 
-			msg.setText(message);
+			MimeBodyPart htmlPart = new MimeBodyPart();
+			htmlPart.setContent(message, "text/html; charset=utf-8");
+
+			multiPart.addBodyPart(htmlPart);
+
+			msg.setContent(multiPart);
 			msg.setSubject(subject);
 			msg.setFrom(new InternetAddress(email.getEmail()));
 			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(to));

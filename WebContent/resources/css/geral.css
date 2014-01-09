@@ -1232,3 +1232,5 @@ table.Coluna100 { float:left; width:100%; list-style:none; margin:0; padding:0; 
 }
 
 .ui-datatable .table100 table, .ui-widget .table100 table{width:100%;}
+
+.combo{padding: 3px; border: 1px solid #cbc7bd; border-radius: 6px; box-shadow: inset 0 2px 2px #8f8f8f;}

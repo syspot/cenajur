@@ -9,11 +9,11 @@
         <p:outputLabel for="dataFimAgenda" value="Data Fim" />
         <p:outputLabel for="processoAgenda" value="Processo" />
 
-        <p:selectOneMenu id="tipoAgenda" value="#{agendaFaces.agenda.tipoAgenda.id}" required="true" requiredMessage="Tipo de Agenda: Campo obrigatório">
+        <h:selectOneMenu id="tipoAgenda" value="#{agendaFaces.agenda.tipoAgenda.id}" required="true" requiredMessage="Tipo de Agenda: Campo obrigatório" styleClass="combo">
             <f:selectItem itemLabel="Não Selecionado" itemValue="" />
             <f:selectItems value="#{agendaFaces.tiposAgendas}" />
             <p:ajax event="change" update="opDialogAgendaSolicitante" listener="#{agendaFaces.alterarTipoAgenda}" />
-        </p:selectOneMenu>
+        </h:selectOneMenu>
         <p:calendar navigator="true" id="dataInicioAgenda" pattern="dd/MM/yyyy HH:mm" onkeypress="formatar(this, '##/##/#### ##:##')" required="true" requiredMessage="Data: Campo obrigatório" value="#{agendaFaces.agenda.dataInicial}" timeZone="America/Recife">
             <p:ajax event="blur" update="opDataFinal" />
         </p:calendar>
@@ -31,10 +31,10 @@
 
         <h:outputText value="Local" />
         <p:inputText value="#{agendaFaces.agenda.local}" styleClass="coluna30" rendered="#{!agendaFaces.agenda.tipoAudiencia}"/>
-        <p:selectOneMenu required="true" requiredMessage="Local: Campo obrigatório" value="#{agendaFaces.agenda.localId}" rendered="#{agendaFaces.agenda.tipoAudiencia}" style="width:30%">
+        <h:selectOneMenu required="true" requiredMessage="Local: Campo obrigatório" value="#{agendaFaces.agenda.localId}" rendered="#{agendaFaces.agenda.tipoAudiencia}" styleClass="combo" style="width:30%">
             <f:selectItem itemLabel="Não Selecionado" itemValue="" />
             <f:selectItems value="#{agendaFaces.varas}" />
-        </p:selectOneMenu>
+        </h:selectOneMenu>
 
     </h:panelGrid>
 
@@ -50,9 +50,9 @@
             <p:inputText id="clienteAgenda" value="#{agendaFaces.agenda.cliente.nome}" readonly="true" styleClass="coluna80" />
             <p:commandButton type="button" icon="ui-icon-plus" value="Add" onclick="dlgCliente5.show();" style="margin-left: 5px"/>
         </p:outputPanel>
-        <p:selectOneMenu id="tipoVisitaCliente" value="#{agendaFaces.agenda.tipoVisita.id}" rendered="#{agendaFaces.agenda.tipoVisitaDoCliente}">
+        <h:selectOneMenu id="tipoVisitaCliente" value="#{agendaFaces.agenda.tipoVisita.id}" rendered="#{agendaFaces.agenda.tipoVisitaDoCliente}" styleClass="combo">
             <f:selectItems value="#{agendaFaces.tiposVisitas}" />
-        </p:selectOneMenu>
+        </h:selectOneMenu>
         <p:inputMask id="telefoneClienteAgenda" mask="(99) 9999-9999" value="#{agendaFaces.agenda.telefoneCliente}" maxlength="14" styleClass="coluna90" rendered="#{agendaFaces.agenda.tipoVisitaDoCliente}" />
 
     </h:panelGrid>

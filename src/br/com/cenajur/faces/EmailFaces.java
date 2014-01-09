@@ -18,19 +18,6 @@ public class EmailFaces extends CrudFaces<Email> {
 	}
 	
 	@Override
-	protected boolean validaCampos() {
-		
-		boolean erro = false;
-		
-		if(!getCrudModel().getEmail().contains("gmail.com")){
-			erro = true;
-			super.addErrorMessage("É necessário utilizar um endereço gmail");
-		}
-		
-		return erro;
-	}
-	
-	@Override
 	public String limpar() {
 		setCrudModel(new Email(Constantes.EMAIL_ID).getById());
 		setFlagAlterar(Boolean.FALSE);

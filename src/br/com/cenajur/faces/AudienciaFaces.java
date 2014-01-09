@@ -97,6 +97,11 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 		return null;
 	}
 	
+	public String limparAdvogados(){
+		getCrudModel().setAudienciasAdvogados(new ArrayList<AudienciaAdvogado>());
+		return null;
+	}
+	
 	@Override
 	protected void preInsert() {
 		getCrudModel().setDataCadastro(new Date());

@@ -51,12 +51,12 @@
               
               <h:panelGrid styleClass="coluna100" columns="2" columnClasses="coluna40,coluna60">
 	              <p:outputLabel for="opcaoLogin" value="Ação:"/>
-	              <p:selectOneMenu id="opcaoLogin" value="#{autenticacaoFaces.opcao}" style="width:100%; margin-bottom:10px">
+	              <h:selectOneMenu id="opcaoLogin" value="#{autenticacaoFaces.opcao}" styleClass="combo" style="width:100%; margin-bottom:10px">
 	              	<f:selectItem itemLabel="Autenticar" itemValue="1" />
 	              	<f:selectItem itemLabel="Esqueci a senha" itemValue="2" />
 	              	<f:selectItem itemLabel="Alterar senha" itemValue="3" />
 	              	<p:ajax event="change" update="panelLogin" />
-	              </p:selectOneMenu>
+	              </h:selectOneMenu>
               </h:panelGrid>
               
               <div align="right">

@@ -55,7 +55,7 @@ PrimeFaces.locales['en_US'] = {
     };
 
 function handleRequest(idDialog, widgerVar, args){
-	if(args.validationFailed && !args.sucesso) {      	
+	if(args.validationFailed || !args.sucesso) {      	
 		jQuery(idDialog).effect("shake", { times:3 }, 100);
 	} else {  
 		widgerVar.hide();

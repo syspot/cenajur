@@ -18,10 +18,10 @@
                         <p:calendar navigator="true" id="dataAndamentoAndamento" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data do Andamento: Campo obrigatório" value="#{mbeanProcessoAndamento.andamentoProcesso.dataAndamento}" timeZone="America/Recife" />
 
                         <p:outputLabel for="tipoAndamentoProcessoAndamento" value="Tipo do Andamento" />
-                        <p:selectOneMenu id="tipoAndamentoProcessoAndamento" value="#{mbeanProcessoAndamento.andamentoProcesso.tipoAndamentoProcesso.id}" style="width:92%">
+                        <h:selectOneMenu id="tipoAndamentoProcessoAndamento" value="#{mbeanProcessoAndamento.andamentoProcesso.tipoAndamentoProcesso.id}" styleClass="combo" style="width:92%">
                             <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                             <f:selectItems value="#{mbeanProcesso.tiposAndamentosProcessos}" />
-                        </p:selectOneMenu>
+                        </h:selectOneMenu>
 
                         <p:outputLabel for="descricaoAndamento" value="Descrição" />
                         <p:inputTextarea id="descricaoAndamento" value="#{mbeanProcessoAndamento.andamentoProcesso.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" autoResize="false" rows="10" maxlength="500" styleClass="coluna90" />

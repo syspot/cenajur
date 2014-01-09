@@ -509,7 +509,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 
 			StringBuilder outorgante = new StringBuilder("OUTORGANTE: ");
 
-			outorgante.append("").append(getCrudModel().getNome()).append("");
+			outorgante.append("<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">").append(getCrudModel().getNome()).append("</style>");
 
 			if (!TSUtil.isEmpty(getCrudModel().getRg())) {
 				outorgante.append(" RG: ").append(getCrudModel().getRg());
@@ -534,7 +534,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 			StringBuilder outorgados = new StringBuilder("OUTORGADOS: ");
 
 			for (Colaborador advogado : advogados) {
-				outorgados.append("").append(advogado.getNome()).append("")
+				outorgados.append("<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">").append(advogado.getNome()).append("</style>")
 						.append(!TSUtil.isEmpty(advogado.getOab()) ? " (OAB/BA n. " + advogado.getOab() + "), " : " (RG " + advogado.getRg() + "), ");
 			}
 

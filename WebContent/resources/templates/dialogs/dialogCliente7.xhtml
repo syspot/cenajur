@@ -19,15 +19,15 @@
         
                 <p:inputText id="matriculaPesquisa2" value="#{mbeanPesquisa.model.matricula}" maxlength="30" styleClass="coluna90" />
                 <p:inputText id="nomePesquisa2" value="#{mbeanPesquisa.model.nome}" maxlength="100" styleClass="coluna95" />
-                <p:selectOneMenu id="estadoPesquisa2" value="#{mbeanPesquisa.model.cidade.estado.id}" style="width: 90%">
+                <h:selectOneMenu id="estadoPesquisa2" value="#{mbeanPesquisa.model.cidade.estado.id}" styleClass="combo" style="width: 90%">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbeanPesquisa.estados}" />
                     <p:ajax update="cidadePesquisa2" listener="#{mbeanPesquisa.atualizarComboCidades}" />
-                </p:selectOneMenu>
-                <p:selectOneMenu id="cidadePesquisa2" value="#{mbeanPesquisa.model.cidade.id}" disabled="#{mbeanPesquisa.model.cidade.estado.id == null}" style="width: 90%">
+                </h:selectOneMenu>
+                <h:selectOneMenu id="cidadePesquisa2" value="#{mbeanPesquisa.model.cidade.id}" disabled="#{mbeanPesquisa.model.cidade.estado.id == null}" styleClass="combo" style="width: 90%">
                     <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                     <f:selectItems value="#{mbeanPesquisa.cidades}" />
-                </p:selectOneMenu>
+                </h:selectOneMenu>
                 <p:selectBooleanCheckbox id="flagAtivoPesquisa2" value="#{mbeanPesquisa.model.flagAtivo}" />
         
             </h:panelGrid>

@@ -16,21 +16,21 @@
             </p:outputPanel>
 
             <p:outputLabel for="tipoAgenda" value="Tipo de Agenda" />
-            <p:selectOneMenu id="tipoAgenda" value="#{mbeanModel.tipoAgenda.id}" required="true" requiredMessage="Tipo de Agenda: Campo obrigatório" style="width:60%">
+            <h:selectOneMenu id="tipoAgenda" value="#{mbeanModel.tipoAgenda.id}" required="true" requiredMessage="Tipo de Agenda: Campo obrigatório" styleClass="combo" style="width:60%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbean.tiposAgendas}" />
                 <p:ajax event="change" update="@form" listener="#{mbean.alterarTipoAgenda}" />
-            </p:selectOneMenu>
+            </h:selectOneMenu>
 
         </h:panelGrid>
 
-        <h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width: 30%">
+        <h:panelGrid columns="1" columnClasses="coluna50, coluna50" style="width: 30%">
 
-            <p:outputLabel for="dataInicioAgenda" value="Data Início" />
-            <p:outputLabel for="dataFimAgenda" value="Data Fim" />
+            <p:outputLabel for="dataInicioAgenda" value="Data" />
+            <p:outputLabel for="dataFimAgenda" value="Data Fim" rendered="false"/>
 
             <p:calendar navigator="true" id="dataInicioAgenda" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data: Campo obrigatório" value="#{mbeanModel.dataInicial}" timeZone="America/Recife"/>
-            <p:calendar navigator="true" id="dataFimAgenda" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data: Campo obrigatório" value="#{mbeanModel.dataFinal}" mindate="#{mbeanModel.dataFinalMinima}" timeZone="America/Recife"/>
+            <p:calendar rendered="false" navigator="true" id="dataFimAgenda" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data: Campo obrigatório" value="#{mbeanModel.dataFinal}" mindate="#{mbeanModel.dataFinalMinima}" timeZone="America/Recife"/>
 
         </h:panelGrid>
         
@@ -38,10 +38,10 @@
 
             <h:outputText value="Local" />
             <p:inputText value="#{mbeanModel.local}" styleClass="coluna30" rendered="#{!mbeanModel.tipoAudiencia}"/>
-            <p:selectOneMenu required="true" requiredMessage="Local: Campo obrigatório" value="#{mbeanModel.localId}" rendered="#{mbeanModel.tipoAudiencia}" style="width:30%">
+            <h:selectOneMenu required="true" requiredMessage="Local: Campo obrigatório" value="#{mbeanModel.localId}" rendered="#{mbeanModel.tipoAudiencia}" styleClass="combo" style="width:30%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbean.varas}" />
-            </p:selectOneMenu>
+            </h:selectOneMenu>
     
         </h:panelGrid>
 
@@ -57,9 +57,9 @@
                 <p:inputText id="clienteAgenda" value="#{mbeanModel.cliente.nome}" readonly="true" style="width:75%" />
                 <p:commandButton type="button" icon="ui-icon-plus" value="Add" onclick="dlgCliente6.show();" />
             </p:outputPanel>
-            <p:selectOneMenu id="tipoVisitaCliente" value="#{mbeanModel.tipoVisita.id}">
+            <h:selectOneMenu id="tipoVisitaCliente" value="#{mbeanModel.tipoVisita.id}" styleClass="combo">
                 <f:selectItems value="#{mbean.tiposVisitas}" />
-            </p:selectOneMenu>
+            </h:selectOneMenu>
             <p:inputMask id="telefoneClienteAgenda" mask="(99) 9999-9999" value="#{mbeanModel.telefoneCliente}" maxlength="14" styleClass="coluna90" />
 
         </h:panelGrid>
@@ -120,11 +120,17 @@
             <p:outputLabel for="descricaoPesquisa" value="Descrição" />
             <p:inputText id="descricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" maxlength="100" styleClass="coluna60" />
 
+            <p:outputLabel for="associadoPesquisa" value="Associado" />
+            <p:inputText id="associadoPesquisa" value="#{mbeanPesquisaModel.clienteBusca.nome}" maxlength="100" styleClass="coluna60" />
+
+            <p:outputLabel for="colaboradorPesquisa" value="Colaborador" />
+            <p:inputText id="colaboradorPesquisa" value="#{mbeanPesquisaModel.colaboradorBusca.nome}" maxlength="100" styleClass="coluna60" />
+
             <p:outputLabel for="tipoAgendaPesquisa" value="Tipo de Agenda" />
-            <p:selectOneMenu id="tipoAgendaPesquisa" value="#{mbeanPesquisaModel.tipoAgenda.id}" style="width:61%">
+            <h:selectOneMenu id="tipoAgendaPesquisa" value="#{mbeanPesquisaModel.tipoAgenda.id}" styleClass="combo" style="width:61%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbean.tiposAgendas}" />
-            </p:selectOneMenu>
+            </h:selectOneMenu>
 
         </h:panelGrid>
 
@@ -133,8 +139,8 @@
             <p:outputLabel for="dataInicioAgendaPesquisa" value="Data Início" />
             <p:outputLabel for="dataFimAgendaPesquisa" value="Data Fim" />
 
-            <p:calendar navigator="true" id="dataInicioAgendaPesquisa" required="true" requiredMessage="Data Início: Campo obrigatório" pattern="dd/MM/yyyy HH:mm" value="#{mbeanPesquisaModel.dataInicial}" timeZone="America/Recife"/>
-            <p:calendar navigator="true" id="dataFimAgendaPesquisa" required="true" requiredMessage="Data Fim: Campo obrigatório" pattern="dd/MM/yyyy HH:mm" value="#{mbeanPesquisaModel.dataFinal}" timeZone="America/Recife"/>
+            <p:calendar navigator="true" id="dataInicioAgendaPesquisa" required="true" requiredMessage="Data Início: Campo obrigatório" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataInicial}" timeZone="America/Recife"/>
+            <p:calendar navigator="true" id="dataFimAgendaPesquisa" required="true" requiredMessage="Data Fim: Campo obrigatório" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.dataFinal}" timeZone="America/Recife"/>
 
         </h:panelGrid>
         
@@ -172,9 +178,9 @@
             </p:commandLink>
         </p:column>
 
-        <p:column headerText="Descrição">
+        <p:column headerText="Associado">
             <p:commandLink action="#{mbean.detailEvent}" ajax="false">
-                <h:outputText value="#{linha.resumoDescricao}" />
+                <h:outputText value="#{linha.cliente.nome}" />
                 <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
             </p:commandLink>
         </p:column>

@@ -26,7 +26,7 @@
                     
                         <p:messages id="msgs" showDetail="true" showSummary="false" />
 
-                        <p:dataTable id="gridPesquisa" widgetVar="widgetVar" emptyMessage="Nenhum registro encontrado" style="width: 100%" paginator="true" paginatorAlwaysVisible="false" rows="10" value="#{mbean.grid}" var="linha" rendered="#{empty gridComCss ? true : false}">
+                        <p:dataTable id="gridPesquisa" widgetVar="widgetVar" emptyMessage="Nenhum registro encontrado" style="width: 100%" paginator="true" paginatorAlwaysVisible="false" rows="100" value="#{mbean.grid}" var="linha" rendered="#{empty gridComCss ? true : false}">
 
                             <ui:insert name="colunasTabela" />
 
@@ -46,7 +46,7 @@
 
                         </p:dataTable>
                         
-                        <p:dataTable id="gridPesquisaComCss" rowStyleClass="#{linha.css}" emptyMessage="Nenhum registro encontrado" style="width: 100%" paginator="true" paginatorAlwaysVisible="false" rows="10" value="#{mbean.grid}" var="linha" rendered="#{not empty gridComCss ? gridComCss : false}">
+                        <p:dataTable id="gridPesquisaComCss" widgetVar="widgetVar" rowStyleClass="#{linha.css}" emptyMessage="Nenhum registro encontrado" style="width: 100%" paginator="true" paginatorAlwaysVisible="false" rows="100" value="#{mbean.grid}" var="linha" rendered="#{not empty gridComCss ? gridComCss : false}">
 
                             <ui:insert name="colunasTabelaComCss" />
 

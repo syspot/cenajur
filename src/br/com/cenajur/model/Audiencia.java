@@ -259,7 +259,7 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 	}
 	
 	public List<Audiencia> findByProcesso(Processo processo){
-		return super.find("from Audiencia a where a.processoNumero.processo.id = ? ", "a.dataAudiencia",processo.getId());
+		return super.find("from Audiencia a where a.processoNumero.processo.id = ? ", "a.dataAudiencia desc",processo.getId());
 	}
 	
 	@Override

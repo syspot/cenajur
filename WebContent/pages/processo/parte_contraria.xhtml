@@ -30,11 +30,11 @@
             <p:outputLabel for="numeroDocumento" value="Número" />
             <p:outputLabel for="telefone" value="Telefone" />
 
-            <p:selectOneMenu id="tipoDocumento" value="#{mbeanModel.tipoDocumento.id}" style="width:90%">
+            <h:selectOneMenu id="tipoDocumento" value="#{mbeanModel.tipoDocumento.id}" styleClass="combo" style="width:90%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbean.tiposDocumentos}" />
                 <p:ajax update="pgTipoDocumento" />
-            </p:selectOneMenu>
+            </h:selectOneMenu>
             <p:inputText id="numeroDocumento" value="#{mbeanModel.numeroDocumento}" disabled="#{mbeanModel.tipoDocumento.id == null}" style="width: 90%" maxlength="50" />
             <p:inputMask id="telefone" required="false" requiredMessage="Telefone: Campo obrigatório" mask="(99) 9999-9999" value="#{mbeanModel.telefone}" maxlength="14" styleClass="coluna90" />
 
@@ -56,10 +56,10 @@
             <p:outputLabel for="tipoDocumentoPesquisa" value="Tipo de Documento" />
             <p:outputLabel for="numeroDocumentoPesquisa" value="Número" />
 
-            <p:selectOneMenu id="tipoDocumentoPesquisa" value="#{mbeanPesquisaModel.tipoDocumento.id}" style="width:90%">
+            <h:selectOneMenu id="tipoDocumentoPesquisa" value="#{mbeanPesquisaModel.tipoDocumento.id}" styleClass="combo" style="width:90%">
                 <f:selectItem itemLabel="Não Selecionado" itemValue="" />
                 <f:selectItems value="#{mbean.tiposDocumentos}" />
-            </p:selectOneMenu>
+            </h:selectOneMenu>
             <p:inputText id="numeroDocumentoPesquisa" value="#{mbeanPesquisaModel.numeroDocumento}" style="width: 90%" maxlength="50" />
 
         </h:panelGrid>

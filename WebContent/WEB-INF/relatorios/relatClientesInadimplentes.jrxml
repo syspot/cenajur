@@ -5,13 +5,14 @@
 	<property name="ireport.y" value="0"/>
 	<style name="Crosstab Data Text"/>
 	<queryString>
-		<![CDATA[select distinct c.nome cliente, mes, ano, case flag_pago when true then NULL else 1 end inadimplente
-  from clientes c, faturamento f
+		<![CDATA[select distinct b.descricao || ' - ' || COALESCE('L. ' || NULLIF(c.lote, '') || ' - ', '') || c.nome cliente, mes, ano, case flag_pago when true then NULL else 1 end inadimplente
+  from clientes c, faturamento f, bancos b
  where c.id = f.cliente_id
+   and b.id = c.banco_id
    and flag_cancelado = false
    and flag_pago = false
    and to_date(TEXT(F.MES) || '/' || TEXT(F.ANO), 'MM/YYYY') < TO_DATE(TO_CHAR(CURRENT_DATE, 'MM/YYYY'), 'MM/YYYY')
- order by cliente, ano, mes]]>
+ order by 1, ano, mes]]>
 	</queryString>
 	<field name="cliente" class="java.lang.String"/>
 	<field name="mes" class="java.lang.Integer"/>
@@ -24,6 +25,7 @@
 		<band height="200" splitType="Stretch">
 			<crosstab columnBreakOffset="0" ignoreWidth="true">
 				<reportElement uuid="5974ba45-bede-4d8f-b3d5-f5edd4f64c0d" isPrintRepeatedValues="false" x="0" y="0" width="555" height="200" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<crosstabDataset isDataPreSorted="true"/>
 				<rowGroup name="cliente" width="342" totalPosition="End">
 					<bucket class="java.lang.String">
 						<bucketExpression><![CDATA[$F{cliente}]]></bucketExpression>

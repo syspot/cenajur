@@ -10,14 +10,14 @@
         <h:outputText value="" />
 
         <p:inputText id="numeroProcessoPesquisa" value="#{mbeanPesquisa.model.processoNumeroPrincipal.numero}" maxlength="30" styleClass="coluna90" />
-        <p:selectOneMenu id="advogadoPesquisa" value="#{mbeanPesquisa.model.advogado.id}" style="width: 90%">
+        <h:selectOneMenu id="advogadoPesquisa" value="#{mbeanPesquisa.model.advogado.id}" styleClass="combo" style="width: 90%">
             <f:selectItem itemLabel="Não Selecionado" itemValue="" />
             <f:selectItems value="#{mbeanPesquisa.advogados}" />
-        </p:selectOneMenu>
-        <p:selectOneMenu id="situacaoProcessoPesquisa" value="#{mbeanPesquisa.model.situacaoProcesso.id}" style="width: 90%">
+        </h:selectOneMenu>
+        <h:selectOneMenu id="situacaoProcessoPesquisa" value="#{mbeanPesquisa.model.situacaoProcesso.id}" styleClass="combo" style="width: 90%">
             <f:selectItem itemLabel="Não Selecionado" itemValue="" />
             <f:selectItems value="#{mbeanPesquisa.situacoesProcessos}" />
-        </p:selectOneMenu>
+        </h:selectOneMenu>
         <p:commandButton value="Pesquisar" icon="ui-icon-search" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="" />
 
     </h:panelGrid>

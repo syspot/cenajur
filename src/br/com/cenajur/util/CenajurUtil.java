@@ -412,7 +412,7 @@ public class CenajurUtil {
 		Faturamento faturamento = new Faturamento();
 		
 		faturamento.setAno(c.get(Calendar.YEAR));
-		faturamento.setMes(c.get(Calendar.MONTH + 1));
+		faturamento.setMes(c.get(Calendar.MONTH) + 1);
 		
 		return faturamento;
 	}
@@ -420,6 +420,17 @@ public class CenajurUtil {
 	public static Date getDataOperacaoMinuto(int minutos){
 		
 		Calendar c = Calendar.getInstance();
+		
+		c.add(Calendar.MINUTE, minutos);
+		
+		return c.getTime();
+	}
+	
+	public static Date getDataOperacaoMinuto(Date data, int minutos){
+		
+		Calendar c = Calendar.getInstance();
+		
+		c.setTime(data);
 		
 		c.add(Calendar.MINUTE, minutos);
 		

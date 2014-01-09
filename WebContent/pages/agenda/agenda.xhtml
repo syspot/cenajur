@@ -18,16 +18,16 @@
                         <p:outputLabel for="buscaIndividual" value="Próprio" />
                         <h:outputText value="" />
     
-                        <p:selectOneMenu id="comboTipoAgenda" value="#{agendaFaces.agendaBusca.tipoAgenda.id}">
+                        <h:selectOneMenu id="comboTipoAgenda" value="#{agendaFaces.agendaBusca.tipoAgenda.id}" styleClass="combo">
                             <f:selectItem itemLabel="Todas" itemValue="" />
                             <f:selectItems value="#{agendaFaces.tiposAgendas}" />
-                        </p:selectOneMenu>
+                        </h:selectOneMenu>
     
                         <p:outputPanel id="opComboColaborador">
-                            <p:selectOneMenu id="colaboradorBusca" value="#{agendaFaces.agendaBusca.colaboradorBusca.id}" disabled="#{agendaFaces.buscaIndividual}" style="width: 95%">
+                            <h:selectOneMenu id="colaboradorBusca" value="#{agendaFaces.agendaBusca.colaboradorBusca.id}" disabled="#{agendaFaces.buscaIndividual}" styleClass="combo" style="width: 95%">
                                 <f:selectItem itemLabel="Todos" itemValue="" />
                                 <f:selectItems value="#{agendaFaces.colaboradores}" />
-                            </p:selectOneMenu>
+                            </h:selectOneMenu>
                         </p:outputPanel>
                         <p:selectBooleanCheckbox id="buscaIndividual" value="#{agendaFaces.buscaIndividual}">
                             <p:ajax event="change" listener="#{agendaFaces.mudarStatusBusca}" update="opComboColaborador" />
