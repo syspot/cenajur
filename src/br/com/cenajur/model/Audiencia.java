@@ -51,7 +51,7 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 	@Column(name = "data_cadastro")
 	private Date dataCadastro;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "situacao_audiencia_id")
 	private SituacaoAudiencia situacaoAudiencia;
 	
