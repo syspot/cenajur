@@ -26,6 +26,15 @@ public class TipoAndamentoProcesso extends TSActiveRecordAb<TipoAndamentoProcess
 	
 	private String descricao;
 
+	public TipoAndamentoProcesso(Long id) {
+		super();
+		this.id = id;
+	}
+
+	public TipoAndamentoProcesso() {
+		super();
+	}
+
 	public Long getId() {
 		return TSUtil.tratarLong(id);
 	}

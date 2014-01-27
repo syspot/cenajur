@@ -133,10 +133,10 @@
                     <f:selectItems value="#{mbean.grupos}" />
                 </h:selectOneMenu>
                 <p:inputText id="usuario" required="true" requiredMessage="Usuário: Campo obrigatório" value="#{mbeanModel.login}" maxlength="20" />
-                <p:password id="senhaEdit" value="#{mbean.senha}" maxlength="20" redisplay="true" match="senhaEdit2" rendered="#{mbeanModel.id != null}" />
-                <p:password id="senhaEdit2" value="#{mbean.senha2}" maxlength="20" redisplay="true" rendered="#{mbeanModel.id != null}" />
-                <p:password id="senha" required="true" requiredMessage="Senha: Campo obrigatório" value="#{mbean.senha}" maxlength="20" redisplay="true" match="senha2" styleClass="coluna90" rendered="#{mbeanModel.id == null}" />
-                <p:password id="senha2" required="true" requiredMessage="Confirmar Senha: Campo obrigatório" value="#{mbean.senha2}" maxlength="20" redisplay="true" styleClass="coluna90" rendered="#{mbeanModel.id == null}" />
+                <p:password id="senhaEdit" autocomplete="off" value="#{mbean.senha}" maxlength="20" redisplay="true" match="senhaEdit2" rendered="#{mbeanModel.id != null}" />
+                <p:password id="senhaEdit2" autocomplete="off" value="#{mbean.senha2}" maxlength="20" redisplay="true" rendered="#{mbeanModel.id != null}" />
+                <p:password id="senha" autocomplete="off" required="true" requiredMessage="Senha: Campo obrigatório" value="#{mbean.senha}" maxlength="20" redisplay="true" match="senha2" styleClass="coluna90" rendered="#{mbeanModel.id == null}" />
+                <p:password id="senha2" autocomplete="off" required="true" requiredMessage="Confirmar Senha: Campo obrigatório" value="#{mbean.senha2}" maxlength="20" redisplay="true" styleClass="coluna90" rendered="#{mbeanModel.id == null}" />
 
             </h:panelGrid>
 

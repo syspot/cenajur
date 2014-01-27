@@ -21,7 +21,7 @@
 
                         <h:commandLink rendered="#{not empty mbean.grid}" style="margin-bottom:10px">
                             <p:graphicImage value="../resources/images/pdf.png" />
-                            <p:dataExporter type="pdf" target="gridPesquisa" fileName="relat" pageOnly="true" encoding="ISO-8859-1" />
+                            <p:dataExporter type="pdf" target="#{empty gridComCss ? 'gridPesquisa' : 'gridPesquisaComCss'}" fileName="relat" pageOnly="true" encoding="ISO-8859-1" />
                         </h:commandLink>
                     
                         <p:messages id="msgs" showDetail="true" showSummary="false" />

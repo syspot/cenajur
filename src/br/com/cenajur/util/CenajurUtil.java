@@ -73,6 +73,10 @@ public class CenajurUtil {
 		return "%" + str.toLowerCase() + "%"; 
 	}
 	
+	public static String tratarStringNull(String valor){
+		return TSUtil.isEmpty(valor) ? null : valor.trim().replaceAll("  ", " ");
+	}
+	
 	public static String formataNumeroProcessoBusca(String campo){
 		return " and translate(lower(trim(".concat(campo).concat(")), '.-_*/\\<>|=+;:', '%%%%%%%%%%%%%')"
 				+ " like translate(lower(trim(?)), '.-_*/\\<>|=+;:', '%%%%%%%%%%%%%') ");
@@ -366,12 +370,11 @@ public class CenajurUtil {
 	}
 	
 	public static String getTopoEmail(){
-		return "<img src='http://www.cenajur.com.br/cenajurdigital/img/top1_index.jpg' /><br/><br/><br/><br/>";
+		return "";
 	}
 	
 	public static String getRodapeEmail(){
-		return "<br/><br/><br/><br/><hr width='200px' align='left'>Este e-mail da AGEPOL/CENAJUR é enviado somente para usuários cadastrados.<br/>"
-				+ "Para alterar suas opções ou cancelar o recebimento, envie mensagem para o e-mail: cenajur@cenajur.com.br com o assunto: Cancelar envio de E-mail ou acesse o quadro (deixe seu recado) na página principal da AGEPOL/CENAJUR, informando no teor da mensagem.";
+		return "<br/><br/><br/>Maiores informações, contactar a Associação através dos telefones (71) 3359-1297 / 3359-6583 Cel. (71) 8898-7707<br/><br/>Este e-mail, gerado automaticamente pelo sistema, é confidencial e enviados somente para o usuário cadastrado no sistema.<br/>Para alterar suas opções ou cancelar o recebimento entre em contato com o setor administrativo da Associação.";
 	}
 	
 	public static Long getParamFormatado(String param) {

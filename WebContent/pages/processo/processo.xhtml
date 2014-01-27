@@ -10,16 +10,19 @@
     <ui:param name="mbeanProcessoPesquisaModel" value="${processoFaces.crudPesquisaModel}" />
     <ui:param name="informacoesCadastro" value="${true}" />
     <ui:param name="gridComCss" value="${true}" />
+    <ui:param name="mostrarBtnUpdate" value="${false}" />
 
     <ui:define name="cadastro">
 
         <ui:include src="/pages/processo/include_cadastro_processo.xhtml" />
+        
+        <p:commandButton id="btnAlterar2" value="Alterar" icon="salvar" action="#{mbean.updateEvent}" update="@form, :tabview:opDadosExtrasProcessos" style="margin-left: 5px; margin-top: 10px;" rendered="#{mbean.flagAlterar}" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}"/>
 
     </ui:define>
 
     <ui:define name="fimCadastro">
 
-        <p:outputPanel layout="block" style="width: 98%;">
+        <p:outputPanel id="opDadosExtrasProcessos" layout="block" style="width: 99.5%;">
 
             <p:fieldset style="width: 98.5%">
 

@@ -30,7 +30,7 @@ public class RelatorioProcessosColetivosFaces{
 
        this.objetos = new Objeto().pesquisaPorProcessosColetivos();
        
-       List<Model> models = new Processo().pesquisarAnosProcesso();
+       List<Model> models = new Processo().pesquisarAnosProcessosColetivos();
        
        this.anos = new ArrayList<String>();
        

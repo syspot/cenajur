@@ -276,6 +276,11 @@ public class ProcessoAudienciaUtil {
 	}
 	
 	public String removerAudiencia() throws TSApplicationException{
+		
+		if(TSUtil.isEmpty(getCrudModel().getTurno()) || TSUtil.isEmpty(getCrudModel().getTurno().getId())){
+			getCrudModel().setTurno(null);
+		}
+		
 		getCrudModel().getAudiencias().remove(this.audienciaSelecionada);
 		getCrudModel().update();
 		CenajurUtil.addInfoMessage("Audiência removida com sucesso");

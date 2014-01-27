@@ -572,7 +572,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	}
 
 	public String imprimirProcuracaoColetiva() {
-		return this.gerarProcuracao(new Colaborador().findAllAdvogadosOrderByOrdemImpressao());
+		return this.gerarProcuracao(new Colaborador().findColaboradoresProcuracaoColetiva());
 	}
 
 	public List<SelectItem> getEstados() {

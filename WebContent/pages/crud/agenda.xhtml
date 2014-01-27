@@ -64,7 +64,7 @@
 
         </h:panelGrid>
 
-        <h:panelGrid style="width: 50%">
+        <h:panelGrid rendered="#{!mbeanModel.tipoVisitaDoCliente and !mbeanModel.tipoAudiencia}" style="width: 50%">
 
             <p:outputLabel for="descricaoAgenda" value="Descrição" />
             <p:inputTextarea id="descricaoAgenda" value="#{mbeanModel.descricao}" cols="80" rows="10" />
@@ -88,7 +88,7 @@
                     <h:outputText value="#{agendaColaborador.colaborador.apelido}" />
                 </p:column>
 
-                <p:column headerText="Mensagem individual" styleClass="coluna75">
+                <p:column headerText="Mensagem individual" rendered="false" styleClass="coluna75">
                     <p:inputText value="#{agendaColaborador.descricao}" maxlength="200" styleClass="coluna97">
                         <p:ajax event="blur" global="false" />
                     </p:inputText>

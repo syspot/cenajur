@@ -21,10 +21,15 @@
     
     <ui:define name="cadastro">
 
-        <h:panelGrid columns="2" rendered="#{mbeanModel.id != null}">
+        <h:panelGrid columns="4" rendered="#{mbeanModel.id != null}">
             
             <h:outputText value="Situação:" style="font-weight: bold; font-size: 1.6em; text-align: left" rendered="#{!mbeanModel.flagAtivo}"/>
             <h:outputText value="Cancelado" style="font-weight: bold; font-size: 1.6em; color: red; text-align: left" rendered="#{!mbeanModel.flagAtivo}"/>
+            
+            <h:outputText value="Data de Cancelamento:" style="font-weight: bold; font-size: 1.6em; text-align: left; margin-left: 20px" rendered="#{!mbeanModel.flagAtivo}"/>
+            <h:outputText value="#{mbeanModel.dataCancelamento}" style="font-weight: bold; font-size: 1.6em; color: red; text-align: left" rendered="#{!mbeanModel.flagAtivo}">
+                <f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="America/Recife" />
+            </h:outputText>
             
         </h:panelGrid>
         
@@ -86,7 +91,7 @@
 
                         <p:inputText id="matricula" value="#{mbeanModel.matricula}" required="#{mbeanModel.id == null}" requiredMessage="Matrícula: Campo obrigatório" maxlength="30" styleClass="coluna90" />
                         <p:inputText id="nome" value="#{mbeanModel.nome}" required="#{mbeanModel.id == null}" requiredMessage="Nome: Campo obrigatório" maxlength="100" styleClass="coluna95" />
-                        <p:inputText id="email" value="#{mbeanModel.email}" validatorMessage="E-mail inválido" maxlength="50" styleClass="coluna90">
+                        <p:inputText id="email" value="#{mbeanModel.email}" required="true" requiredMessage="E-mail: Campo obrigatório" validatorMessage="E-mail inválido" maxlength="50" styleClass="coluna90">
                             <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" for="email" />
                         </p:inputText>
 

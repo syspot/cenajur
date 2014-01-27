@@ -7,7 +7,7 @@
 
         <p:dialog id="dialogArquivarProcessoCliente" header="Alterar Status" modal="true" widgetVar="dlgArquivarProcessoCliente" width="330">
 
-            <p:outputPanel autoUpdate="true">
+            <p:outputPanel id="opDialogArquivarProcessoCliente" autoUpdate="true">
 
                 <h:panelGrid id="pgDataArquivamentoProcessoCliente" columns="2" columnClasses="coluna50, coluna50">
 
@@ -26,7 +26,7 @@
             </p:outputPanel>
 
             <h:panelGrid columns="1" style="width:100%; text-align: left">
-                <p:commandButton value="Alterar" oncomplete="handleRequest('dialogArquivarProcessoCliente', dlgArquivarProcessoCliente, args)" update="pgDataArquivamentoProcessoCliente" />
+                <p:commandButton value="Alterar" oncomplete="handleRequestSimple('dialogArquivarProcessoCliente', dlgArquivarProcessoCliente, args)" process="@this, opDialogArquivarProcessoCliente" update="pgDataArquivamentoProcessoCliente" />
             </h:panelGrid>
 
         </p:dialog>

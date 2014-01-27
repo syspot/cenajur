@@ -127,6 +127,11 @@ public class ParteContraria extends TSActiveRecordAb<ParteContraria>{
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
+	
+	@Override
+	public String toString() {
+		return this.descricao;
+	}
 
 	@Override
 	public int hashCode() {

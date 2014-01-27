@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-    <a target="_blank" href="#{request.contextPath}/GerarRelatorioClientesInadimplentes" >
-    <h:panelGrid style="margin-left:10px; margin-top:30px; text-align: center">
-            <p:graphicImage value="../resources/images/pdf.png" /><br/>
-            clique aqui para visualizar o relatório
-    </h:panelGrid>
+    <a id="link" target="_blank" href="#{request.contextPath}/GerarRelatorioClientesInadimplentes" >
     </a>
+    
+    <h:panelGrid>
+    	<p:commandButton type="button" value="Gerar Relatório" icon="ui-icon-print" onclick="link.click()" style="margin:30px;" />
+    </h:panelGrid>
     
 </ui:composition>

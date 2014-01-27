@@ -116,7 +116,7 @@ public class ContadorEmail extends TSActiveRecordAb<ContadorEmail>{
 			query.append(" and tipo_informacao_id = ? ");
 		}
 		
-		query.append(" group by ti.descricao, ce.data");
+		query.append(" group by ti.descricao, ce.data order by ce.data, ti.descricao");
 		
 		List<Object> params = new ArrayList<Object>();
 		

@@ -233,7 +233,7 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	}
 
 	public String getEmail() {
-		return TSUtil.tratarString(email);
+		return CenajurUtil.tratarStringNull(email);
 	}
 
 	public void setEmail(String email) {
@@ -827,7 +827,7 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	}
 	
 	public List<Cliente> pesquisarAniversariantes(){
-		return super.find("select c from Cliente c where to_char(c.dataNascimento, 'dd/mm') = to_char(current_date(), 'dd/mm') and c.flagAtivo = true and c.flagAssociado = true", null);
+		return super.find("select c from Cliente c where to_char(c.dataNascimento, 'dd/mm') = to_char(current_date(), 'dd/mm')", null);
 	}
 	
 	public List<Cliente> pesquisarInadimplentes(Integer mes, Integer ano){

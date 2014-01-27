@@ -101,6 +101,11 @@ public class ProcessoParteContraria extends TSActiveRecordAb<ProcessoParteContra
 	public void setSituacaoProcessoParteContrariaTemp(SituacaoProcessoParteContraria situacaoProcessoParteContrariaTemp) {
 		this.situacaoProcessoParteContrariaTemp = situacaoProcessoParteContrariaTemp;
 	}
+	
+	@Override
+	public String toString() {
+		return this.parteContraria.toString();
+	}
 
 	@Override
 	public int hashCode() {
@@ -132,7 +137,6 @@ public class ProcessoParteContraria extends TSActiveRecordAb<ProcessoParteContra
 			return false;
 		return true;
 	}
-	
 
 	public boolean isProcessoParteContrariaArquivado(){
 		return Constantes.SITUACAO_PROCESSO_PARTE_CONTRARIA_ARQUIVADO.equals(this.situacaoProcessoParteContrariaTemp.getId());

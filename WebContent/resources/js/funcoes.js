@@ -9,7 +9,7 @@ PrimeFaces.locales['pt_BR'] = {
         dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','S&aacute;b'],
         dayNamesMin: ['D','S','T','Q','Q','S','S'],
         weekHeader: 'Semana',
-        firstDay: 1,
+        firstDay: 0,
         isRTL: false,
         showMonthAfterYear: false,
         yearSuffix: '',
@@ -54,13 +54,22 @@ PrimeFaces.locales['en_US'] = {
         allDayText : 'Todo Dia'
     };
 
+function handleRequestSimple(idDialog, widgerVar, args){
+	if(args.validationFailed) {      	
+		jQuery(idDialog).effect("shake", { times:3 }, 100);
+	} else {  
+		widgerVar.hide();
+	}  
+
+}
+
 function handleRequest(idDialog, widgerVar, args){
 	if(args.validationFailed || !args.sucesso) {      	
 		jQuery(idDialog).effect("shake", { times:3 }, 100);
 	} else {  
 		widgerVar.hide();
 	}  
-
+	
 }
 
 function handleRequestFaces(idDialog, widgerVar, args){

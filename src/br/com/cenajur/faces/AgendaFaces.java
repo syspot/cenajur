@@ -259,7 +259,7 @@ public class AgendaFaces extends TSMainFaces {
 
 			if (TSUtil.isEmpty(this.agenda.getCliente())) {
 				context.addCallbackParam("sucesso", false);
-				CenajurUtil.addErrorMessage("Cliente: Campo obrigatório");
+				CenajurUtil.addErrorMessage("Associado: Campo obrigatório");
 				erro = true;
 			}
 
@@ -313,10 +313,6 @@ public class AgendaFaces extends TSMainFaces {
 
 			if (this.agenda.isTipoAudiencia()) {
 				this.gerarAudiencia();
-			}
-
-			if (this.agenda.isTipoVisitaDoCliente()) {
-				this.enviarEmailVisitaCliente();
 			}
 
 		} catch (TSApplicationException e) {
@@ -431,8 +427,12 @@ public class AgendaFaces extends TSMainFaces {
 			context.addCallbackParam("criarAudiencia", false);
 
 		}
-
+		
 		try {
+
+			if (this.agenda.isTipoVisitaDoCliente() && this.agendaColaboradorSelecionado.getFlagConcluido()) {
+				this.enviarEmailVisitaCliente();
+			}
 
 			this.agendaColaboradorSelecionado.update();
 
@@ -567,7 +567,8 @@ public class AgendaFaces extends TSMainFaces {
 		} else {
 
 			this.processoAudienciaUtil.setAudiencia(audiencia);
-
+			
+			this.processoAudienciaUtil.getAudiencia().setDescricao(this.agenda.getDescricao());
 			this.processoAudienciaUtil.getAudiencia().setDataAudiencia(this.agenda.getDataInicial());
 			this.processoAudienciaUtil.getAudiencia().setVara(new Vara(this.agenda.getLocalId()));
 
@@ -586,12 +587,14 @@ public class AgendaFaces extends TSMainFaces {
 		EmailUtil emailUtil = new EmailUtil();
 
 		ConfiguracoesReplaceEmail configuracaoReplace;
+		
+		Agenda agenda = this.agendaColaboradorSelecionado.getAgenda().getById();
 
 		for (ConfiguracoesEmail configuracoesEmail : regrasEmail.getConfiguracoesEmails()) {
 
 			if (configuracoesEmail.getFlagImediato()) {
 
-				if (!TSUtil.isEmpty(this.agenda.getCliente().getEmail())) {
+				if (!TSUtil.isEmpty(agenda.getCliente().getEmail())) {
 
 					StringBuilder corpoEmail = new StringBuilder(CenajurUtil.getTopoEmail());
 
@@ -603,7 +606,7 @@ public class AgendaFaces extends TSMainFaces {
 
 					configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ASSOCIADO).getById();
 
-					texto = texto.replace(configuracaoReplace.getCodigo(), this.agenda.getCliente().getNome());
+					texto = texto.replace(configuracaoReplace.getCodigo(), agenda.getCliente().getNome());
 
 					configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DATA_ATUAL).getById();
 
@@ -611,11 +614,15 @@ public class AgendaFaces extends TSMainFaces {
 
 					configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DATA_VISITA).getById();
 
-					texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(this.agenda.getDataInicial(), TSDateUtil.DD_MM_YYYY_HH_MM));
+					texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(agenda.getDataInicial(), TSDateUtil.DD_MM_YYYY_HH_MM));
+					
+					configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ADVOGADO).getById();
+					
+					texto = texto.replace(configuracaoReplace.getCodigo(), this.agendaColaboradorSelecionado.getColaborador().getNome());
 
-					emailUtil.enviarEmailTratado(this.agenda.getCliente().getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
+					emailUtil.enviarEmailTratado(agenda.getCliente().getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
 					new ContadorEmail().gravarPorTipo(tipoInformacao);
-					new LogEnvioEmail(configuracoesEmail.getAssunto(), texto, this.agenda.getCliente(), this.agenda.getCliente().getEmail()).save();
+					new LogEnvioEmail(configuracoesEmail.getAssunto(), texto, agenda.getCliente(), agenda.getCliente().getEmail()).save();
 
 				}
 

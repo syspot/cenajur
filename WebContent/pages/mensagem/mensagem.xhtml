@@ -21,8 +21,6 @@
 
                     <p:tab id="tabMensagemRecebida" title="Recebidas">
 
-                        <p:poll interval="120" listener="#{mensagemFaces.pesquisarMensagens}" update="dgMensagem" process="@this" global="false" />
-
                         <p:remoteCommand name="abrirModelMensagem" oncomplete="dlgViewMensagem.show();" update="pgMensagem, dgMensagem" process="@this" global="false" />
                         <p:remoteCommand name="atualizarMensagensRecebidas" process="@this" global="false" update="dgMensagem" />
 

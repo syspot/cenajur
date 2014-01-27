@@ -19,12 +19,11 @@ public class RelatorioFaturamentoPorAnoFaces {
 	private Long ano;
 	
 	public RelatorioFaturamentoPorAnoFaces() {
-		
+		this.ano = new Long(Calendar.getInstance().get(Calendar.YEAR));
 		this.atualizar();
 	}
 	
 	public String atualizar(){
-		this.ano = new Long(Calendar.getInstance().get(Calendar.YEAR));
 		this.bancos = new Banco().findAll("descricao");
 		return null;
 	}

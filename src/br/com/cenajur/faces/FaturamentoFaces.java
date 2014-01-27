@@ -73,7 +73,7 @@ public class FaturamentoFaces extends CrudFaces<Faturamento> {
 		if(TSUtil.isEmpty(getCrudModel().getCliente()) || TSUtil.isEmpty(getCrudModel().getCliente().getId())){
 			
 			erro = true;
-			CenajurUtil.addErrorMessage("Cliente: Campo obrigatório");
+			CenajurUtil.addErrorMessage("Associado: Campo obrigatório");
 			context.addCallbackParam("sucesso", false);
 			
 		} else

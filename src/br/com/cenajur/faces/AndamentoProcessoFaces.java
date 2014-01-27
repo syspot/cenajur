@@ -26,6 +26,7 @@ import br.com.cenajur.model.RegrasEmail;
 import br.com.cenajur.model.TipoAndamentoProcesso;
 import br.com.cenajur.model.TipoCategoria;
 import br.com.cenajur.model.TipoInformacao;
+import br.com.cenajur.model.Vara;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
@@ -153,6 +154,22 @@ public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_PROCESSO).getById();
 						
 						texto = texto.replace(configuracaoReplace.getCodigo(), new ProcessoNumero().obterNumeroProcessoPrincipal(processo).getNumero());
+						
+						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_LOCAL).getById();
+						
+						texto = texto.replace(configuracaoReplace.getCodigo(), new Vara(processo.getVara().getId()).getById().getDescricao());
+						
+						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ADVOGADO).getById();
+						
+						texto = texto.replace(configuracaoReplace.getCodigo(), processo.getAdvogado().getNome());
+						
+						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_TIPO_ANDAMENTO).getById();
+						
+						texto = texto.replace(configuracaoReplace.getCodigo(), new TipoAndamentoProcesso(getCrudModel().getTipoAndamentoProcesso().getId()).getById().getDescricao());
+						
+						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DESCRICAO).getById();
+						
+						texto = texto.replace(configuracaoReplace.getCodigo(), getCrudModel().getDescricao());
 						
 						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ASSOCIADO).getById();
 						
