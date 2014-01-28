@@ -57,7 +57,7 @@
 
     </h:panelGrid>
 
-    <h:panelGrid style="width: 100%">
+    <h:panelGrid style="width: 100%" rendered="#{!agendaFaces.agenda.tipoVisitaDoCliente and !agendaFaces.agenda.tipoAudiencia}">
 
         <p:outputLabel for="descricaoAgenda" value="Descrição" />
         <p:inputTextarea id="descricaoAgenda" value="#{agendaFaces.agenda.descricao}" rows="3" style="width: 98%" />
@@ -83,16 +83,16 @@
     
                 <p:column headerText="Nome" styleClass="coluna35">
                     <h:outputText value="#{agendaColaborador.colaborador.apelido}" />
-                </p:column>
-    
-                <p:column headerText="Mensagem individual" styleClass="coluna60">
-                    <p:inputText value="#{agendaColaborador.descricao}" maxlength="200" styleClass="coluna90">
-                        <p:ajax event="blur" global="false" />
-                    </p:inputText>
                     <p:commandLink process="@this" global="false" oncomplete="dlgRespostaPropria.show()" rendered="#{agendaColaborador.colaborador.id == colaboradorConectado.id and agendaColaborador.id != null}">
                         <h:graphicImage value="../resources/images/show.png" style="border: 0px; margin-left: 10px" />
                         <f:setPropertyActionListener target="#{agendaFaces.agendaColaboradorSelecionado}" value="#{agendaColaborador}" />
                     </p:commandLink>
+                </p:column>
+    
+                <p:column headerText="Mensagem individual" rendered="false" styleClass="coluna60">
+                    <p:inputText value="#{agendaColaborador.descricao}" maxlength="200" styleClass="coluna90">
+                        <p:ajax event="blur" global="false" />
+                    </p:inputText>
                 </p:column>
     
                 <p:column headerText="Status" styleClass="coluna5">

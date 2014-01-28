@@ -47,7 +47,7 @@
             
         </h:panelGrid>
         
-        <h:panelGrid style="width: 100%">
+        <h:panelGrid style="width: 100%" rendered="#{!agendaFaces.agenda.tipoVisitaDoCliente and !agendaFaces.agenda.tipoAudiencia}">
     
             <p:outputLabel for="descricaoAgendaViewRespostaPropria" value="Descrição" />
             <p:inputTextarea id="descricaoAgendaViewRespostaPropria" value="#{agendaFaces.agenda.descricao}" autoResize="false" readonly="true" rows="3" style="width: 97%" />
