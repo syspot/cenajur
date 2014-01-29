@@ -14,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -37,8 +36,7 @@ public class Audiencia extends TSActiveRecordAb<Audiencia>{
 	private static final long serialVersionUID = 5140592857414734323L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="audiencias_id")
-	@SequenceGenerator(name="audiencias_id", sequenceName="audiencias_id_seq")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@ManyToOne(fetch=FetchType.LAZY)

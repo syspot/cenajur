@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
@@ -24,8 +23,7 @@ public class AgendaColaborador extends TSActiveRecordAb<AgendaColaborador>{
 	private static final long serialVersionUID = 4541430641342646947L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="agendas_colaboradores_id")
-	@SequenceGenerator(name="agendas_colaboradores_id", sequenceName="agendas_colaboradores_id_seq")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@ManyToOne

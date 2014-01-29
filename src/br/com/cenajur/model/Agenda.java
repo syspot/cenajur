@@ -14,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -35,8 +34,7 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 	private static final long serialVersionUID = -7867621300772491361L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="agendas_id")
-	@SequenceGenerator(name="agendas_id", sequenceName="agendas_id_seq")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
