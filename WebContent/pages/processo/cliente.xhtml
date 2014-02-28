@@ -319,7 +319,7 @@
 
         </p:fieldset>
         
-        <p:commandButton id="btnAlterar3" value="Alterar" icon="salvar" action="#{mbean.updateEvent}" update="@form, :tabview:opDadosExtras" style="margin-left: 5px; margin-top: 10px;" rendered="#{mbeanModel.id != null}" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}"/>        
+        <p:commandButton id="btnAlterar3" value="Alterar" icon="salvar" action="#{mbean.updateEvent}" update="@form :tabview:opDadosExtras :tabview:formBtnExterno" style="margin-left: 5px; margin-top: 10px;" rendered="#{mbeanModel.id != null}" disabled="#{!autenticacaoFaces.permissaoGrupoSelecionada.flagAlterar}"/>        
 
     </ui:define>
 

@@ -27,15 +27,15 @@
             <p:panel id="panelLogin" header="Controle de Acesso" style="width: 280px; text-align: left">
             
               <h:panelGrid styleClass="coluna100" columns="2" columnClasses="coluna40,coluna60" rendered="#{autenticacaoFaces.opcao == 1}">
-                <p:outputLabel for="usuario" value="Usuário:"/>
-                <p:inputText id="usuario" required="true" requiredMessage="Usuário: Obrigatório" value="#{autenticacaoFaces.colaborador.login}" style="width: 97%;" />
+                <p:outputLabel for="usuario" value="Matrícula:"/>
+                <p:inputText id="usuario" required="true" requiredMessage="Matrícula: Obrigatório" value="#{autenticacaoFaces.colaborador.login}" style="width: 97%;" />
                 <p:outputLabel for="senha" value="Senha:"/>
                 <p:password id="senha" required="true" requiredMessage="Senha: Obrigatório" value="#{autenticacaoFaces.colaborador.senha}" maxlength="20" style="width: 97%;" />
               </h:panelGrid>
               
               <h:panelGrid styleClass="coluna100" columns="2" columnClasses="coluna40,coluna60" rendered="#{autenticacaoFaces.opcao == 3}">
-                <p:outputLabel for="usuarioAlterar" value="Usuário:"/>
-                <p:inputText id="usuarioAlterar" required="true" requiredMessage="Usuário: Obrigatório" value="#{autenticacaoFaces.colaborador.login}" style="width: 97%;" />
+                <p:outputLabel for="usuarioAlterar" value="Matrícula:"/>
+                <p:inputText id="usuarioAlterar" required="true" requiredMessage="Matrícula: Obrigatório" value="#{autenticacaoFaces.colaborador.login}" style="width: 97%;" />
                 <p:outputLabel for="senhaAlterarOriginal" value="Senha:"/>
                 <p:password id="senhaAlterarOriginal" required="true" requiredMessage="Senha: Obrigatório" value="#{autenticacaoFaces.colaborador.senha}" maxlength="20" style="width: 97%;" />
                 <p:outputLabel for="senhaAlterar" value="Nova Senha:"/>
@@ -45,8 +45,8 @@
               </h:panelGrid>
               
               <h:panelGrid styleClass="coluna100" columns="2" columnClasses="coluna40,coluna60" rendered="#{autenticacaoFaces.opcao == 2}">
-                <p:outputLabel for="usuarioEsqueciSenha" value="Usuário:"/>
-                <p:inputText id="usuarioEsqueciSenha" required="true" requiredMessage="Usuário: Obrigatório" value="#{autenticacaoFaces.colaborador.login}" style="width: 97%;" />
+                <p:outputLabel for="usuarioEsqueciSenha" value="Matrícula:"/>
+                <p:inputText id="usuarioEsqueciSenha" required="true" requiredMessage="Matrícula: Obrigatório" value="#{autenticacaoFaces.colaborador.login}" style="width: 97%;" />
               </h:panelGrid>
               
               <h:panelGrid styleClass="coluna100" columns="2" columnClasses="coluna40,coluna60">
