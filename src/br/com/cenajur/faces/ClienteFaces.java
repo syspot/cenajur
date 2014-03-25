@@ -22,12 +22,14 @@ import br.com.cenajur.model.CategoriaDocumento;
 import br.com.cenajur.model.Cidade;
 import br.com.cenajur.model.Cliente;
 import br.com.cenajur.model.Colaborador;
+import br.com.cenajur.model.ContadorEmail;
 import br.com.cenajur.model.ContadorSms;
 import br.com.cenajur.model.DocumentoCliente;
 import br.com.cenajur.model.Estado;
 import br.com.cenajur.model.EstadoCivil;
 import br.com.cenajur.model.Faturamento;
 import br.com.cenajur.model.Graduacao;
+import br.com.cenajur.model.LogEnvioEmail;
 import br.com.cenajur.model.Lotacao;
 import br.com.cenajur.model.MotivoCancelamento;
 import br.com.cenajur.model.Permissao;
@@ -47,6 +49,7 @@ import br.com.cenajur.relat.JasperUtil;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
+import br.com.cenajur.util.EmailUtil;
 import br.com.cenajur.util.SMSUtil;
 import br.com.cenajur.util.Utilitarios;
 import br.com.topsys.exception.TSApplicationException;
@@ -362,14 +365,16 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	}
 
 	@Override
-	protected void posInsert() {
+	protected void posInsert() throws TSApplicationException {
+		this.enviarEmailAssociadoNovo();
 		this.enviarSMSAssociadoNovo();
 	}
 
 	@Override
-	protected void posUpdate() {
+	protected void posUpdate() throws TSApplicationException {
 
 		if (!this.flagAssociadoAtivo && getCrudModel().getFlagAtivo()) {
+			this.enviarEmailAssociadoNovo();
 			this.enviarSMSAssociadoNovo();
 		}
 
@@ -386,6 +391,36 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 
 		}
 
+	}
+	
+	private void enviarEmailAssociadoNovo() throws TSApplicationException {
+		
+		if (!TSUtil.isEmpty(getCrudModel().getEmail())) {
+			
+			if (!TSUtil.isEmpty(getCrudModel().getEmail())) {
+
+				StringBuilder corpoEmail = new StringBuilder(CenajurUtil.getTopoEmail());
+
+				corpoEmail.append("Prezado(a) ");
+				corpoEmail.append(getCrudModel().getNome());
+				corpoEmail.append("<br/><br/>Obrigado por escolher o CENAJUR, aproveitamos a oportunidade e reafirmamos nosso compromisso de prestar uma assistência jurídica efetiva e com qualidade, ética, responsabilidade e experiência.");
+				corpoEmail.append("<br/><br/>Para verificar as informações dos seus processos e audiências, além de notícias atualizadas da Associação, acesse www.cenajur.com.br com sua matrícula ");
+				corpoEmail.append(getCrudModel().getMatricula());
+				corpoEmail.append(" e sua senha que é seu CPF");
+
+				corpoEmail.append(CenajurUtil.getRodapeEmail());
+
+				TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_ASSOCIADOS_NOVOS_ID);
+
+				new EmailUtil().enviarEmailTratado(getCrudModel().getEmail(), "CENAJUR AGRADECE", corpoEmail.toString(), "text/html");
+				new ContadorEmail().gravarPorTipo(tipoInformacao);
+				new LogEnvioEmail("CENAJUR AGRADECE", corpoEmail.toString(), getCrudModel(), getCrudModel().getEmail()).save();
+
+
+			}
+			
+		}
+		
 	}
 
 	@Override

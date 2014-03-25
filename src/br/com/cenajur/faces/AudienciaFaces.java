@@ -118,7 +118,21 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 	@Override
 	protected void posPersist() throws TSApplicationException {
 
-		RegrasEmail regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_AUDIENCIA).getById();
+		RegrasEmail regrasEmail = null;
+
+		if(Constantes.SITUACAO_AUDIENCIA_AGUARDANDO.equals(getCrudModel().getSituacaoAudiencia().getId())){
+			
+			regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_AUDIENCIA_SITUACAO_AGUARDANDO).getById();
+			
+		} else if(Constantes.SITUACAO_AUDIENCIA_REALIZADA.equals(getCrudModel().getSituacaoAudiencia().getId())){
+			
+			regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_AUDIENCIA_SITUACAO_REALIZADA).getById();
+			
+		} else if(Constantes.SITUACAO_AUDIENCIA_NAO_REALIZADA.equals(getCrudModel().getSituacaoAudiencia().getId())){
+			
+			regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_AUDIENCIA_SITUACAO_NAO_REALIZADA).getById();
+			
+		}
 
 		TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_AUDIENCIA_ID);
 
@@ -127,46 +141,40 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 		ConfiguracoesReplaceEmail configuracaoReplace;
 
 		Processo processo = getCrudModel().getProcessoNumero().getProcesso().getById();
+		
+		List<ConfiguracoesReplaceEmail> configuracoesReplaceEmails = new ConfiguracoesReplaceEmail().findAll();
 
 		for (ConfiguracoesEmail configuracoesEmail : regrasEmail.getConfiguracoesEmails()) {
 
 			if (configuracoesEmail.getFlagImediato()) {
 
-				StringBuilder corpoEmail = new StringBuilder(CenajurUtil.getTopoEmail());
+				String texto = CenajurUtil.getTopoEmail() + configuracoesEmail.getCorpoEmail();
 
-				corpoEmail.append(configuracoesEmail.getCorpoEmail());
-
-				corpoEmail.append(CenajurUtil.getRodapeEmail());
-
-				String texto = corpoEmail.toString();
-
-				configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_PROCESSO).getById();
-
+				configuracaoReplace = configuracoesReplaceEmails.get(configuracoesReplaceEmails.indexOf(new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_PROCESSO)));
 				texto = texto.replace(configuracaoReplace.getCodigo(), new ProcessoNumero().obterNumeroProcessoPrincipal(processo).getNumero());
 
-				configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ADVOGADO).getById();
+				configuracaoReplace = configuracoesReplaceEmails.get(configuracoesReplaceEmails.indexOf(new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ADVOGADO)));
+				texto = texto.replace(configuracaoReplace.getCodigo(), getCrudModel().getAudienciasAdvogados().toString().substring(1, getCrudModel().getAudienciasAdvogados().toString().length()-1));
 
-				texto = texto.replace(configuracaoReplace.getCodigo(), getCrudModel().getAudienciasAdvogados().toString());
-
-				configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DATA).getById();
-
+				configuracaoReplace = configuracoesReplaceEmails.get(configuracoesReplaceEmails.indexOf(new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DATA)));
 				texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(getCrudModel().getDataAudiencia(), TSDateUtil.DD_MM_YYYY));
 
-				configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_HORA).getById();
-
+				configuracaoReplace = configuracoesReplaceEmails.get(configuracoesReplaceEmails.indexOf(new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_HORA)));
 				texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(getCrudModel().getDataAudiencia(), TSDateUtil.HH_MM));
 
-				configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_LOCAL).getById();
-
+				configuracaoReplace = configuracoesReplaceEmails.get(configuracoesReplaceEmails.indexOf(new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_LOCAL)));
 				texto = texto.replace(configuracaoReplace.getCodigo(), getCrudModel().getVara().getById().getDescricao());
 
 				for (ProcessoCliente processoCliente : processo.getProcessosClientes()) {
 
+					configuracaoReplace = configuracoesReplaceEmails.get(configuracoesReplaceEmails.indexOf(new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ASSOCIADO)));
+					String email = texto.replace(configuracaoReplace.getCodigo(), processoCliente.getCliente().getNome()) + CenajurUtil.getRodapeEmail();
+					
 					if (!TSUtil.isEmpty(processoCliente.getCliente().getEmail())) {
 
-						emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
+						emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), configuracoesEmail.getAssunto(), email, "text/html");
 						new ContadorEmail().gravarPorTipo(tipoInformacao);
-						new LogEnvioEmail(configuracoesEmail.getAssunto(), texto, processoCliente.getCliente(), processoCliente.getCliente().getEmail()).save();
+						new LogEnvioEmail(configuracoesEmail.getAssunto(), email, processoCliente.getCliente(), processoCliente.getCliente().getEmail()).save();
 
 					}
 
@@ -177,10 +185,13 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 				for (AudienciaAdvogado audienciaAdvogado : getCrudModel().getAudienciasAdvogados()) {
 
 					advogado = audienciaAdvogado.getAdvogado().getById();
+					
+					configuracaoReplace = configuracoesReplaceEmails.get(configuracoesReplaceEmails.indexOf(new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ASSOCIADO)));
+					String email = texto.replace(configuracaoReplace.getCodigo(), advogado.getApelido()) + CenajurUtil.getRodapeEmail();
 
 					if (!TSUtil.isEmpty(advogado.getEmail())) {
 
-						emailUtil.enviarEmailTratado(advogado.getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
+						emailUtil.enviarEmailTratado(advogado.getEmail(), configuracoesEmail.getAssunto(), email, "text/html");
 
 					}
 

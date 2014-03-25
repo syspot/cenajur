@@ -71,6 +71,9 @@ public class Constantes {
 	public static final Long REGRA_EMAIL_AUDIENCIA = 1L;
 	public static final Long REGRA_EMAIL_VISITA_COM_CLIENTE = 2L;
 	public static final Long REGRA_EMAIL_ANDAMENTO_PROCESSO = 3L;
+	public static final Long REGRA_EMAIL_AUDIENCIA_SITUACAO_AGUARDANDO = 4L;
+	public static final Long REGRA_EMAIL_AUDIENCIA_SITUACAO_REALIZADA = 5L;
+	public static final Long REGRA_EMAIL_AUDIENCIA_SITUACAO_NAO_REALIZADA = 6L;
 	
 	public static final Long CONFIGURACOES_REPLACE_EMAIL_ASSOCIADO = 1L;
 	public static final Long CONFIGURACOES_REPLACE_EMAIL_PROCESSO = 2L;

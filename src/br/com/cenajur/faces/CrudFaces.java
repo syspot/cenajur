@@ -79,10 +79,10 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 	protected void posPersist() throws TSApplicationException{
 	}
 	
-	protected void posInsert(){
+	protected void posInsert() throws TSApplicationException{
 	}
 	
-	protected void posUpdate(){
+	protected void posUpdate() throws TSApplicationException {
 	}
 	
 	protected void posFind(){

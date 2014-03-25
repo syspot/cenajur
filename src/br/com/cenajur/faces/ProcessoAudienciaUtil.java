@@ -179,7 +179,21 @@ public class ProcessoAudienciaUtil {
 	
 	private void enviarEmail() throws TSApplicationException{
 		
-		RegrasEmail regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_AUDIENCIA).getById();
+		RegrasEmail regrasEmail = null;
+
+		if(Constantes.SITUACAO_AUDIENCIA_AGUARDANDO.equals(this.audiencia.getSituacaoAudiencia().getId())){
+			
+			regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_AUDIENCIA_SITUACAO_AGUARDANDO).getById();
+			
+		} else if(Constantes.SITUACAO_AUDIENCIA_REALIZADA.equals(this.audiencia.getSituacaoAudiencia().getId())){
+			
+			regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_AUDIENCIA_SITUACAO_REALIZADA).getById();
+			
+		} else if(Constantes.SITUACAO_AUDIENCIA_NAO_REALIZADA.equals(this.audiencia.getSituacaoAudiencia().getId())){
+			
+			regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_AUDIENCIA_SITUACAO_NAO_REALIZADA).getById();
+			
+		}
 		
 		TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_AUDIENCIA_ID);
 		
@@ -189,63 +203,59 @@ public class ProcessoAudienciaUtil {
 		
 		ConfiguracoesReplaceEmail configuracaoReplace;
 		
+		List<ConfiguracoesReplaceEmail> configuracoesReplaceEmails = new ConfiguracoesReplaceEmail().findAll();
+		
 		for(ConfiguracoesEmail configuracoesEmail : regrasEmail.getConfiguracoesEmails()){
 			
 			if(configuracoesEmail.getFlagImediato()){
 				
-				StringBuilder corpoEmail = new StringBuilder(CenajurUtil.getTopoEmail());
-				
-				corpoEmail.append(configuracoesEmail.getCorpoEmail());
-				
-				corpoEmail.append(CenajurUtil.getRodapeEmail());
-				
-				String texto = corpoEmail.toString();
-				
-				configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_PROCESSO).getById();
-				
+				String texto = CenajurUtil.getTopoEmail() + configuracoesEmail.getCorpoEmail();
+
+				configuracaoReplace = configuracoesReplaceEmails.get(configuracoesReplaceEmails.indexOf(new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_PROCESSO)));
 				texto = texto.replace(configuracaoReplace.getCodigo(), new ProcessoNumero().obterNumeroProcessoPrincipal(processo).getNumero());
-				
-				configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ADVOGADO).getById();
-				
-				texto = texto.replace(configuracaoReplace.getCodigo(), this.audiencia.getAudienciasAdvogados().toString());
-				
-				configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DATA).getById();
-				
+
+				configuracaoReplace = configuracoesReplaceEmails.get(configuracoesReplaceEmails.indexOf(new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ADVOGADO)));
+				texto = texto.replace(configuracaoReplace.getCodigo(), this.audiencia.getAudienciasAdvogados().toString().substring(1, this.audiencia.getAudienciasAdvogados().toString().length()-1));
+
+				configuracaoReplace = configuracoesReplaceEmails.get(configuracoesReplaceEmails.indexOf(new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DATA)));
 				texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(this.audiencia.getDataAudiencia(), TSDateUtil.DD_MM_YYYY));
-				
-				configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_HORA).getById();
-				
+
+				configuracaoReplace = configuracoesReplaceEmails.get(configuracoesReplaceEmails.indexOf(new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_HORA)));
 				texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(this.audiencia.getDataAudiencia(), TSDateUtil.HH_MM));
-				
-				configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_LOCAL).getById();
-				
+
+				configuracaoReplace = configuracoesReplaceEmails.get(configuracoesReplaceEmails.indexOf(new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_LOCAL)));
 				texto = texto.replace(configuracaoReplace.getCodigo(), this.audiencia.getVara().getById().getDescricao());
-				
-				for(ProcessoCliente processoCliente : processo.getProcessosClientes()){
+
+				for (ProcessoCliente processoCliente : processo.getProcessosClientes()) {
+
+					configuracaoReplace = configuracoesReplaceEmails.get(configuracoesReplaceEmails.indexOf(new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ASSOCIADO)));
+					String email = texto.replace(configuracaoReplace.getCodigo(), processoCliente.getCliente().getNome()) + CenajurUtil.getRodapeEmail();
 					
-					if(!TSUtil.isEmpty(processoCliente.getCliente().getEmail())){
-						
-						emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
+					if (!TSUtil.isEmpty(processoCliente.getCliente().getEmail())) {
+
+						emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), configuracoesEmail.getAssunto(), email, "text/html");
 						new ContadorEmail().gravarPorTipo(tipoInformacao);
-						
-						new LogEnvioEmail(configuracoesEmail.getAssunto(), texto, processoCliente.getCliente(), processoCliente.getCliente().getEmail()).save();
-						
+						new LogEnvioEmail(configuracoesEmail.getAssunto(), email, processoCliente.getCliente(), processoCliente.getCliente().getEmail()).save();
+
 					}
-					
+
 				}
-				
+
 				Colaborador advogado = null;
-				
-				for(AudienciaAdvogado audienciaAdvogado : this.audiencia.getAudienciasAdvogados()){
-					
+
+				for (AudienciaAdvogado audienciaAdvogado : this.audiencia.getAudienciasAdvogados()) {
+
 					advogado = audienciaAdvogado.getAdvogado().getById();
 					
-					if(!TSUtil.isEmpty(advogado.getEmail())){
-						
-						emailUtil.enviarEmailTratado(advogado.getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
-						
+					configuracaoReplace = configuracoesReplaceEmails.get(configuracoesReplaceEmails.indexOf(new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ASSOCIADO)));
+					String email = texto.replace(configuracaoReplace.getCodigo(), advogado.getApelido()) + CenajurUtil.getRodapeEmail();
+
+					if (!TSUtil.isEmpty(advogado.getEmail())) {
+
+						emailUtil.enviarEmailTratado(advogado.getEmail(), configuracoesEmail.getAssunto(), email, "text/html");
+
 					}
-					
+
 				}
 				
 			}

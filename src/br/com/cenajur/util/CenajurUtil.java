@@ -374,7 +374,7 @@ public class CenajurUtil {
 	}
 	
 	public static String getRodapeEmail(){
-		return "<br/><br/><br/>Maiores informações, contactar a Associação através dos telefones (71) 3359-1297 / 3359-6583 Cel. (71) 8898-7707<br/><br/>Este e-mail, gerado automaticamente pelo sistema, é confidencial e enviados somente para o usuário cadastrado no sistema.<br/>Para alterar suas opções ou cancelar o recebimento entre em contato com o setor administrativo da Associação.";
+		return "<font face='Arial, Verdana' size='2'><br/><br/><br/>O CENAJUR envia mensagens por e-mail e SMS, assim é importante que Vossa Senhoria mantenha seus dados sempre atualizados.<br/><br/>Maiores informações, contactar a Associação através dos telefones (71) 3359-1297 / 3359-6583 Cel. (71) 8898-7707, ou do e-mail cenajur@cenajur.com.br.<br/><br/>Este e-mail, gerado automaticamente pelo sistema, é confidencial e enviado somente para o usuário cadastrado no sistema. Para alterar suas opções ou cancelar o recebimento entre em contato com o setor administrativo da Associação.</font>";
 	}
 	
 	public static Long getParamFormatado(String param) {

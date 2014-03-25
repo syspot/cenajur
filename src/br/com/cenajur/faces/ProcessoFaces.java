@@ -19,8 +19,10 @@ import br.com.cenajur.model.CategoriaDocumento;
 import br.com.cenajur.model.Cliente;
 import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.Comarca;
+import br.com.cenajur.model.ContadorEmail;
 import br.com.cenajur.model.ContadorSms;
 import br.com.cenajur.model.DocumentoProcesso;
+import br.com.cenajur.model.LogEnvioEmail;
 import br.com.cenajur.model.Objeto;
 import br.com.cenajur.model.ParteContraria;
 import br.com.cenajur.model.Processo;
@@ -41,6 +43,7 @@ import br.com.cenajur.model.Vara;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
+import br.com.cenajur.util.EmailUtil;
 import br.com.cenajur.util.SMSUtil;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.file.TSFile;
@@ -221,15 +224,45 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	}
 	
 	@Override
-	protected void posInsert() {
+	protected void posInsert() throws TSApplicationException {
 		
+		EmailUtil emailUtil = new EmailUtil();
 		SMSUtil smsUtil = new SMSUtil();
 		
-		ProcessoNumero processoNumero = new ProcessoNumero().obterNumeroProcessoPrincipal(getCrudModel());
 		Processo processo = getCrudModel().getById();
+		ProcessoNumero processoNumero = new ProcessoNumero().obterNumeroProcessoPrincipal(getCrudModel());
 		
-		for (ProcessoCliente processoCliente : getCrudModel().getProcessosClientes()) {
+		for (ProcessoCliente processoCliente : processo.getProcessosClientes()) {
 
+			if (!TSUtil.isEmpty(processoCliente.getCliente().getEmail())) {
+
+				StringBuilder corpoEmail = new StringBuilder(CenajurUtil.getTopoEmail());
+
+				corpoEmail.append("Prezado(a) ");
+				corpoEmail.append(processoCliente.getCliente().getNome());
+				corpoEmail.append("<br/><br/>Vossa Senhoria possui um processo novo. Veja abaixo informações:");
+				corpoEmail.append("<br/><br/>Número do Processo: ");
+				corpoEmail.append(processoNumero.getNumero());
+				corpoEmail.append("<br/>Local: ");
+				corpoEmail.append(processoNumero.getProcesso().getVara().getById().getDescricao());
+				corpoEmail.append("<br/>Objeto: ");
+				corpoEmail.append(processoNumero.getProcesso().getObjeto().getById().getDescricao());
+				corpoEmail.append("<br/>Parte Contrária: ");
+				corpoEmail.append(processoNumero.getProcesso().getProcessosPartesContrarias());
+				corpoEmail.append("<br/>Advogado: ");
+				corpoEmail.append(processoNumero.getProcesso().getAdvogado().getById().getApelido());
+
+				corpoEmail.append(CenajurUtil.getRodapeEmail());
+
+				TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_PROCESSO_NOVO_ID);
+
+				emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), "CENAJUR INFORMA UM PROCESSO NOVO", corpoEmail.toString(), "text/html");
+				new ContadorEmail().gravarPorTipo(tipoInformacao);
+				new LogEnvioEmail("CENAJUR INFORMA UM PROCESSO NOVO", corpoEmail.toString(), processoCliente.getCliente(), processoCliente.getCliente().getEmail()).save();
+
+
+			}
+			
 			if (!TSUtil.isEmpty(processoCliente.getCliente().getCelular())) {
 
 				String msg = Constantes.TEMPLATE_SMS_PROCESSO_NOVO;
@@ -246,7 +279,7 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 				new ContadorSms().gravarPorTipo(tipoInformacao);
 
 			}
-			
+
 		}
 
 	}
