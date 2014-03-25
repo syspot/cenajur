@@ -96,10 +96,14 @@
 
         <p:column headerText="Descrição" styleClass="coluna50">
             <p:commandLink action="#{mbean.detailEvent}" ajax="false">
-                <h:outputText value="#{linha.resumoDescricao}" />
+                <h:outputText value="#{linha.descricao}" />
                 <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
             </p:commandLink>
         </p:column>
+        
+        <p:column headerText="Anexo" styleClass="coluna5">
+			<h:graphicImage value="../resources/images/clip.png" rendered="#{linha.flagPossuiAnexo}" />
+		</p:column>
 
     </ui:define>
 

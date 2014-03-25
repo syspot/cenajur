@@ -36,7 +36,7 @@
 
     <h:panelGrid columns="2" columnClasses="coluna50_2, coluna50_2" style="width:100%">
 
-        <p:fieldset legend="Parte">
+        <p:fieldset legend="Parte (#{mbeanProcessoModel.processosClientes.size()})">
 
             <p:outputPanel id="opAssociados" autoUpdate="true">
 
@@ -48,14 +48,17 @@
                 <p:scrollPanel style="width: 100%;height: 200px" mode="native">
 
                     <p:dataTable value="#{mbeanProcessoModel.processosClientes}" var="processoCliente" sortBy="#{processoCliente.cliente.matricula}"
-                            emptyMessage="Nenhum associado selecionado" rowIndexVar="index" style="width:100%">
+                            emptyMessage="Nenhum associado selecionado" rowIndexVar="index" rowStyleClass="#{processoCliente.situacaoProcessoCliente.css}" style="width:100%">
 
                         <p:column headerText="Matrícula" styleClass="coluna25">
                             <h:outputText value="#{processoCliente.cliente.matricula}" />
                         </p:column>
 
                         <p:column headerText="Nome" styleClass="coluna70">
-                            <h:outputText value="#{processoCliente.cliente.nome}" />
+                        	<p:commandLink title="Abrir cadastro do Associado" action="#{autenticacaoFaces.redirecionarParaCliente}" ajax="false">
+                                 <h:outputText value="#{processoCliente.cliente.nome}" />
+                                 <f:setPropertyActionListener target="#{autenticacaoFaces.clienteSelecionado}" value="#{processoCliente.cliente}" />
+                             </p:commandLink>
                         </p:column>
 
                         <p:column headerText="Alterar Situação" styleClass="coluna5">
@@ -96,7 +99,7 @@
 
         </p:fieldset>
 
-        <p:fieldset legend="Parte Contrária">
+        <p:fieldset legend="Parte Contrária (#{mbeanProcessoModel.processosPartesContrarias.size()})">
 
             <p:outputPanel autoUpdate="true">
 

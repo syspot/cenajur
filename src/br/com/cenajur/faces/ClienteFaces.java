@@ -22,6 +22,7 @@ import br.com.cenajur.model.CategoriaDocumento;
 import br.com.cenajur.model.Cidade;
 import br.com.cenajur.model.Cliente;
 import br.com.cenajur.model.Colaborador;
+import br.com.cenajur.model.ContadorSms;
 import br.com.cenajur.model.DocumentoCliente;
 import br.com.cenajur.model.Estado;
 import br.com.cenajur.model.EstadoCivil;
@@ -29,6 +30,8 @@ import br.com.cenajur.model.Faturamento;
 import br.com.cenajur.model.Graduacao;
 import br.com.cenajur.model.Lotacao;
 import br.com.cenajur.model.MotivoCancelamento;
+import br.com.cenajur.model.Permissao;
+import br.com.cenajur.model.PermissaoGrupo;
 import br.com.cenajur.model.Plano;
 import br.com.cenajur.model.Processo;
 import br.com.cenajur.model.ProcessoCliente;
@@ -37,12 +40,14 @@ import br.com.cenajur.model.ProcessoParteContraria;
 import br.com.cenajur.model.SituacaoProcessoCliente;
 import br.com.cenajur.model.SituacaoProcessoParteContraria;
 import br.com.cenajur.model.TipoCategoria;
+import br.com.cenajur.model.TipoInformacao;
 import br.com.cenajur.model.TipoPagamento;
 import br.com.cenajur.model.Turno;
 import br.com.cenajur.relat.JasperUtil;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
+import br.com.cenajur.util.SMSUtil;
 import br.com.cenajur.util.Utilitarios;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.file.TSFile;
@@ -79,9 +84,15 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 
 	private String senha;
 	private Long idAgendaColaborador;
+	private PermissaoGrupo permissaoGrupoProcesso;
+	private PermissaoGrupo permissaoGrupoAudiencia;
+	private PermissaoGrupo permissaoGrupoAndamento;
+
+	private boolean flagAssociadoAtivo;
 
 	@PostConstruct
 	protected void init() {
+
 		this.clearFields();
 		this.initCombo();
 
@@ -90,8 +101,20 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		if (!TSUtil.isEmpty(autenticacaoFaces) && !TSUtil.isEmpty(autenticacaoFaces.getClienteSelecionado())) {
 			this.setCrudModel(autenticacaoFaces.getClienteSelecionado());
 			this.detailEvent();
+			this.setTabIndex(1);
 		}
 
+		this.permissaoGrupoProcesso = this.instanciarPermissao(Constantes.PERMISSAO_PROCESSO);
+		this.permissaoGrupoAudiencia = this.instanciarPermissao(Constantes.PERMISSAO_AUDIENCIA);
+		this.permissaoGrupoAndamento = this.instanciarPermissao(Constantes.PERMISSAO_ANDAMENTO);
+
+	}
+
+	private PermissaoGrupo instanciarPermissao(Long permissaoId) {
+		PermissaoGrupo permissaoGrupo = new PermissaoGrupo();
+		permissaoGrupo.setGrupo(ColaboradorUtil.obterColaboradorConectado().getGrupo());
+		permissaoGrupo.setPermissao(new Permissao(permissaoId));
+		return permissaoGrupo.obterPorGrupoPermissao();
 	}
 
 	private void initCombo() {
@@ -229,7 +252,18 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	}
 
 	@Override
+	protected void preUpdate() {
+
+		if (!this.flagAssociadoAtivo && getCrudModel().getFlagAtivo()) {
+
+		}
+
+	}
+
+	@Override
 	protected void posDetail() {
+
+		this.flagAssociadoAtivo = getCrudModel().getFlagAtivo();
 
 		if (getCrudModel().getDataAtualizacao().before(CenajurUtil.getTrimestreAnterior())) {
 			CenajurUtil.addDangerMessage("O endereço e telefone estão desatualizados");
@@ -291,7 +325,19 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 			}
 
 			for (ProcessoCliente processoCliente : processo.getProcessosClientes()) {
+
 				processoCliente.setSituacaoProcessoClienteTemp(new SituacaoProcessoCliente(processoCliente.getSituacaoProcessoCliente().getId()));
+
+				if (processoCliente.getCliente().equals(getCrudModel())) {
+
+					if (!Constantes.SITUACAO_PROCESSO_CLIENTE_ATIVO.equals(processoCliente.getSituacaoProcessoCliente().getId())) {
+
+						processo.setCss(processoCliente.getSituacaoProcessoCliente().getCss());
+
+					}
+
+				}
+
 			}
 
 		}
@@ -312,6 +358,33 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		}
 
 		this.iniciaObjetosCombo();
+
+	}
+
+	@Override
+	protected void posInsert() {
+		this.enviarSMSAssociadoNovo();
+	}
+
+	@Override
+	protected void posUpdate() {
+
+		if (!this.flagAssociadoAtivo && getCrudModel().getFlagAtivo()) {
+			this.enviarSMSAssociadoNovo();
+		}
+
+	}
+
+	private void enviarSMSAssociadoNovo() {
+
+		if (!TSUtil.isEmpty(getCrudModel().getCelular())) {
+
+			String msg = Constantes.TEMPLATE_SMS_ASSOCIADO_NOVO;
+
+			new SMSUtil().enviarMensagem(getCrudModel().getCelular(), msg);
+			new ContadorSms().gravarPorTipo(new TipoInformacao(Constantes.TIPO_INFORMACAO_ASSOCIADOS_NOVOS_ID));
+
+		}
 
 	}
 
@@ -741,6 +814,38 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 
 	public void setIdAgendaColaborador(Long idAgendaColaborador) {
 		this.idAgendaColaborador = idAgendaColaborador;
+	}
+
+	public PermissaoGrupo getPermissaoGrupoProcesso() {
+		return permissaoGrupoProcesso;
+	}
+
+	public void setPermissaoGrupoProcesso(PermissaoGrupo permissaoGrupoProcesso) {
+		this.permissaoGrupoProcesso = permissaoGrupoProcesso;
+	}
+
+	public PermissaoGrupo getPermissaoGrupoAudiencia() {
+		return permissaoGrupoAudiencia;
+	}
+
+	public void setPermissaoGrupoAudiencia(PermissaoGrupo permissaoGrupoAudiencia) {
+		this.permissaoGrupoAudiencia = permissaoGrupoAudiencia;
+	}
+
+	public PermissaoGrupo getPermissaoGrupoAndamento() {
+		return permissaoGrupoAndamento;
+	}
+
+	public void setPermissaoGrupoAndamento(PermissaoGrupo permissaoGrupoAndamento) {
+		this.permissaoGrupoAndamento = permissaoGrupoAndamento;
+	}
+
+	public boolean isFlagAssociadoAtivo() {
+		return flagAssociadoAtivo;
+	}
+
+	public void setFlagAssociadoAtivo(boolean flagAssociadoAtivo) {
+		this.flagAssociadoAtivo = flagAssociadoAtivo;
 	}
 
 }

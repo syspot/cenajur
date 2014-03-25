@@ -440,4 +440,14 @@ public class CenajurUtil {
 		return c.getTime();
 	}
 	
+	public static String getMesAnoFormatado(Integer mes, Integer ano){
+		
+		String mesString = String.valueOf(mes);
+		
+		mesString = mesString.length() > 1 ? mesString : "0" + mesString;
+		
+		return String.valueOf(ano) + mesString;
+		
+	}
+	
 }

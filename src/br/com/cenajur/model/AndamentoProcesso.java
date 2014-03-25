@@ -71,15 +71,19 @@ public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 	@Transient
 	private Date dataFinal;
 	
+	@Transient
+	private Boolean flagPossuiAnexo;
+	
 	public AndamentoProcesso() {
 	}
 	
-	public AndamentoProcesso(Long id, String descricao, String descricaoTipoAndamento, Date dataAndamento) {
+	public AndamentoProcesso(Long id, String descricao, String descricaoTipoAndamento, Date dataAndamento, String possuiAnexo) {
 		this.id = id;
 		this.descricao = descricao;
 		this.tipoAndamentoProcesso = new TipoAndamentoProcesso();
 		this.tipoAndamentoProcesso.setDescricao(descricaoTipoAndamento);
 		this.dataAndamento = dataAndamento;
+		this.flagPossuiAnexo = !TSUtil.isEmpty(possuiAnexo);
 	}
 	
 	public Long getId() {
@@ -173,6 +177,14 @@ public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 	public void setDataFinal(Date dataFinal) {
 		this.dataFinal = dataFinal;
 	}
+	
+	public Boolean getFlagPossuiAnexo() {
+		return flagPossuiAnexo;
+	}
+
+	public void setFlagPossuiAnexo(Boolean flagPossuiAnexo) {
+		this.flagPossuiAnexo = flagPossuiAnexo;
+	}
 
 	@Override
 	public int hashCode() {
@@ -208,7 +220,7 @@ public class AndamentoProcesso extends TSActiveRecordAb<AndamentoProcesso>{
 		
 		StringBuilder query = new StringBuilder();
 		
-		query.append(" select new AndamentoProcesso(a.id, a.descricao, a.tipoAndamentoProcesso.descricao, a.dataAndamento) from AndamentoProcesso a  where 1 = 1 ");
+		query.append(" select new AndamentoProcesso(a.id, a.descricao, a.tipoAndamentoProcesso.descricao, a.dataAndamento, case when exists (from DocumentoAndamentoProcesso dap where dap.andamentoProcesso.id = a.id) then 'possui' else '' end) from AndamentoProcesso a  where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(processoNumero) && !TSUtil.isEmpty(processoNumero.getNumero())){
 			query.append(CenajurUtil.getParamSemAcento("a.processoNumero.numero"));

@@ -14,6 +14,7 @@ import br.com.cenajur.model.CategoriaDocumento;
 import br.com.cenajur.model.ConfiguracoesEmail;
 import br.com.cenajur.model.ConfiguracoesReplaceEmail;
 import br.com.cenajur.model.ContadorEmail;
+import br.com.cenajur.model.ContadorSms;
 import br.com.cenajur.model.DocumentoAndamentoProcesso;
 import br.com.cenajur.model.LogEnvioEmail;
 import br.com.cenajur.model.Processo;
@@ -27,6 +28,7 @@ import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
 import br.com.cenajur.util.EmailUtil;
+import br.com.cenajur.util.SMSUtil;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSDateUtil;
@@ -72,7 +74,13 @@ public class ProcessoAndamentoUtil {
 		this.processoNumeroPrincipal = this.processoNumeroBackup;
 		
 		if(TSUtil.isEmpty(processoNumeroPrincipal)){
+			
 			this.processoNumeroPrincipal = new ProcessoNumero();
+			
+		} else {
+			
+			this.andamentoProcesso.setProcessoNumero(this.processoNumeroPrincipal);
+			
 		}
 		
 	}
@@ -206,6 +214,32 @@ public class ProcessoAndamentoUtil {
 		}
 	}
 	
+	private void enviarSMS(){
+		
+		Processo processo = getCrudModel().getById();
+		
+		String msg = Constantes.TEMPLATE_SMS_ANDAMENTO;
+
+		msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_NUMERO_PROCESSO, new ProcessoNumero().obterNumeroProcessoPrincipal(processo).getNumero());
+		msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_LOCAL, processo.getVara().getById().getDescricao());
+		msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_COLABORADOR, processo.getAdvogado().getApelido());
+
+		SMSUtil smsUtil = new SMSUtil();
+
+		for (ProcessoCliente processoCliente : processo.getProcessosClientes()) {
+
+			if (!TSUtil.isEmpty(processoCliente.getCliente().getCelular())
+					&& Constantes.SITUACAO_PROCESSO_CLIENTE_ATIVO.equals(processoCliente.getSituacaoProcessoCliente().getId())) {
+
+				smsUtil.enviarMensagem(processoCliente.getCliente().getCelular(), msg.toString());
+				new ContadorSms().gravarPorTipo(new TipoInformacao(Constantes.TIPO_INFORMACAO_ANDAMENTO_ID));
+
+			}
+
+		}
+
+	}
+	
 	public String cadastrarAndamentoProcesso() throws TSApplicationException{
 		
 		if(validaCampos()){
@@ -220,6 +254,7 @@ public class ProcessoAndamentoUtil {
 		this.andamentoProcesso.save();
 		
 		this.enviarEmail();
+		this.enviarSMS();
 		
 		CenajurUtil.addInfoMessage("Andamento cadastrado com sucesso");
 
@@ -248,6 +283,7 @@ public class ProcessoAndamentoUtil {
 		this.andamentoProcesso.update();
 		
 		this.enviarEmail();
+		this.enviarSMS();
 		
 		this.processoNumeroBackup = this.processoNumeroPrincipal;
 		

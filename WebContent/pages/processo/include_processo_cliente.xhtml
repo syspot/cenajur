@@ -9,7 +9,7 @@
 
         <ui:include src="/pages/processo/include_cadastro_processo.xhtml" />
 
-        <p:commandButton value="Alterar" process="tabProcesso" icon="salvar" action="#{clienteFaces.processoAux.updateProcesso}" update="@form" style="margin-left: 5px; margin-top: 10px;">
+        <p:commandButton value="Alterar" process="tabProcesso" icon="salvar" action="#{clienteFaces.processoAux.updateProcesso}" update="@form" disabled="#{!clienteFaces.permissaoGrupoProcesso.flagAlterar}" style="margin-left: 5px; margin-top: 10px;">
             <f:setPropertyActionListener target="#{clienteFaces.processoAux.indexProcesso}" value="#{linha2.index}" />
         </p:commandButton>
 

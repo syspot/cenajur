@@ -79,6 +79,12 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 	protected void posPersist() throws TSApplicationException{
 	}
 	
+	protected void posInsert(){
+	}
+	
+	protected void posUpdate(){
+	}
+	
 	protected void posFind(){
 	}
 	
@@ -107,6 +113,8 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 			tratarException();
 			throw new TSApplicationException(e.getMessage());
 		}
+		
+		this.posInsert();
 		
 		this.posPersist();
 		
@@ -144,6 +152,8 @@ public abstract class CrudFaces <T extends TSActiveRecordIf<T>> extends TSMainFa
 			tratarException();
 			throw new TSApplicationException(e.getMessage());
 		}
+		
+		this.posUpdate();
 		
 		this.posPersist();
 		

@@ -153,6 +153,10 @@
                 <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
             </p:commandLink>
         </p:column>
+        
+        <p:column headerText="Anexo" styleClass="coluna5">
+			<h:graphicImage value="../resources/images/clip.png" rendered="#{not empty linha.documentos}" />
+		</p:column>
 
     </ui:define>
 

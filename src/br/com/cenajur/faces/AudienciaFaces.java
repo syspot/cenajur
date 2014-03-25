@@ -19,6 +19,7 @@ import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.ConfiguracoesEmail;
 import br.com.cenajur.model.ConfiguracoesReplaceEmail;
 import br.com.cenajur.model.ContadorEmail;
+import br.com.cenajur.model.ContadorSms;
 import br.com.cenajur.model.DocumentoAudiencia;
 import br.com.cenajur.model.LogEnvioEmail;
 import br.com.cenajur.model.Processo;
@@ -33,6 +34,7 @@ import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
 import br.com.cenajur.util.EmailUtil;
+import br.com.cenajur.util.SMSUtil;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSDateUtil;
@@ -47,27 +49,27 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 	private List<SelectItem> advogados;
 	private List<SelectItem> situacoesAudiencias;
 	private List<SelectItem> categoriasDocumentos;
-	
+
 	private ProcessoNumero processoNumeroSelecionado;
-	
+
 	private CategoriaDocumento categoriaDocumento;
 	private DocumentoAudiencia documentoAudiencia;
 	private DocumentoAudiencia documentoSelecionado;
 	private Colaborador advogadoSelecionado;
-	
+
 	@PostConstruct
 	protected void init() {
 		this.clearFields();
 		this.initCombo();
 	}
-	
-	private void initCombo(){
+
+	private void initCombo() {
 		this.varas = this.initCombo(new Vara().findAll("descricao"), "id", "descricao");
 		this.advogados = this.initCombo(new Colaborador().findAllAdvogados(), "id", "apelido");
 		this.situacoesAudiencias = this.initCombo(new SituacaoAudiencia().findAll("descricao"), "id", "descricao");
 		this.categoriasDocumentos = this.initCombo(getCategoriaDocumento().findByModel("descricao"), "id", "descricao");
 	}
-	
+
 	@Override
 	public String limpar() {
 		setCrudModel(new Audiencia());
@@ -83,9 +85,9 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 		setTabIndex(1);
 		return null;
 	}
-	
+
 	@Override
-	public String limparPesquisa(){
+	public String limparPesquisa() {
 		setCrudPesquisaModel(new Audiencia());
 		getCrudPesquisaModel().setAdvogado(new Colaborador());
 		getCrudPesquisaModel().setProcessoNumero(new ProcessoNumero());
@@ -96,190 +98,234 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 		setGrid(new ArrayList<Audiencia>());
 		return null;
 	}
-	
-	public String limparAdvogados(){
+
+	public String limparAdvogados() {
 		getCrudModel().setAudienciasAdvogados(new ArrayList<AudienciaAdvogado>());
 		return null;
 	}
-	
+
 	@Override
 	protected void preInsert() {
 		getCrudModel().setDataCadastro(new Date());
 	}
-	
+
 	@Override
 	protected void prePersist() {
 		getCrudModel().setDataAtualizacao(new Date());
 		getCrudModel().setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 	}
-	
+
 	@Override
-	protected void posPersist() throws TSApplicationException{
-		
+	protected void posPersist() throws TSApplicationException {
+
 		RegrasEmail regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_AUDIENCIA).getById();
-		
+
 		TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_AUDIENCIA_ID);
-		
+
 		EmailUtil emailUtil = new EmailUtil();
-		
+
 		ConfiguracoesReplaceEmail configuracaoReplace;
-		
+
 		Processo processo = getCrudModel().getProcessoNumero().getProcesso().getById();
-		
-		for(ConfiguracoesEmail configuracoesEmail : regrasEmail.getConfiguracoesEmails()){
-			
-			if(configuracoesEmail.getFlagImediato()){
-				
+
+		for (ConfiguracoesEmail configuracoesEmail : regrasEmail.getConfiguracoesEmails()) {
+
+			if (configuracoesEmail.getFlagImediato()) {
+
 				StringBuilder corpoEmail = new StringBuilder(CenajurUtil.getTopoEmail());
-				
+
 				corpoEmail.append(configuracoesEmail.getCorpoEmail());
-				
+
 				corpoEmail.append(CenajurUtil.getRodapeEmail());
-				
+
 				String texto = corpoEmail.toString();
-				
+
 				configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_PROCESSO).getById();
-				
+
 				texto = texto.replace(configuracaoReplace.getCodigo(), new ProcessoNumero().obterNumeroProcessoPrincipal(processo).getNumero());
-				
+
 				configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ADVOGADO).getById();
-				
+
 				texto = texto.replace(configuracaoReplace.getCodigo(), getCrudModel().getAudienciasAdvogados().toString());
-				
+
 				configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DATA).getById();
-				
+
 				texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(getCrudModel().getDataAudiencia(), TSDateUtil.DD_MM_YYYY));
-				
+
 				configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_HORA).getById();
-				
+
 				texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(getCrudModel().getDataAudiencia(), TSDateUtil.HH_MM));
-				
+
 				configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_LOCAL).getById();
-				
+
 				texto = texto.replace(configuracaoReplace.getCodigo(), getCrudModel().getVara().getById().getDescricao());
-				
-				for(ProcessoCliente processoCliente : processo.getProcessosClientes()){
-					
-					if(!TSUtil.isEmpty(processoCliente.getCliente().getEmail())){
-						
+
+				for (ProcessoCliente processoCliente : processo.getProcessosClientes()) {
+
+					if (!TSUtil.isEmpty(processoCliente.getCliente().getEmail())) {
+
 						emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
 						new ContadorEmail().gravarPorTipo(tipoInformacao);
 						new LogEnvioEmail(configuracoesEmail.getAssunto(), texto, processoCliente.getCliente(), processoCliente.getCliente().getEmail()).save();
-						
+
 					}
-					
+
 				}
-				
+
 				Colaborador advogado = null;
-				
-				for(AudienciaAdvogado audienciaAdvogado : getCrudModel().getAudienciasAdvogados()){
-					
+
+				for (AudienciaAdvogado audienciaAdvogado : getCrudModel().getAudienciasAdvogados()) {
+
 					advogado = audienciaAdvogado.getAdvogado().getById();
-					
-					if(!TSUtil.isEmpty(advogado.getEmail())){
-						
+
+					if (!TSUtil.isEmpty(advogado.getEmail())) {
+
 						emailUtil.enviarEmailTratado(advogado.getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
-						
+
 					}
-					
+
 				}
-				
+
 			}
-			
+
 		}
-		
+
+		String msg = Constantes.TEMPLATE_SMS_AUDIENCIA_AGUARDANDO;
+
+		if (Constantes.SITUACAO_AUDIENCIA_REALIZADA.equals(getCrudModel().getSituacaoAudiencia().getId())) {
+
+			msg = Constantes.TEMPLATE_SMS_AUDIENCIA_REALIZADA;
+
+		} else if (Constantes.SITUACAO_AUDIENCIA_NAO_REALIZADA.equals(getCrudModel().getSituacaoAudiencia().getId())) {
+
+			msg = Constantes.TEMPLATE_SMS_AUDIENCIA_NAO_REALIZADA;
+
+		}
+
+		msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_NUMERO_PROCESSO, new ProcessoNumero().obterNumeroProcessoPrincipal(processo).getNumero());
+		msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_DATA, TSParseUtil.dateToString(getCrudModel().getDataAudiencia(), TSDateUtil.DD_MM_YYYY));
+		msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_HORA, TSParseUtil.dateToString(getCrudModel().getDataAudiencia(), TSDateUtil.HH_MM));
+		msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_LOCAL, getCrudModel().getVara().getById().getDescricao());
+		msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_COLABORADOR, getCrudModel().getAudienciasAdvogados().toString().substring(1, getCrudModel().getAudienciasAdvogados().toString().length() - 1));
+
+		SMSUtil smsUtil = new SMSUtil();
+
+		for (ProcessoCliente processoCliente : processo.getProcessosClientes()) {
+
+			if (!TSUtil.isEmpty(processoCliente.getCliente().getCelular())
+					&& Constantes.SITUACAO_PROCESSO_CLIENTE_ATIVO.equals(processoCliente.getSituacaoProcessoCliente().getId())) {
+
+				smsUtil.enviarMensagem(processoCliente.getCliente().getCelular(), msg.toString());
+				new ContadorSms().gravarPorTipo(tipoInformacao);
+
+			}
+
+		}
+
+		Colaborador advogado = null;
+
+		for (AudienciaAdvogado audienciaAdvogado : getCrudModel().getAudienciasAdvogados()) {
+
+			advogado = audienciaAdvogado.getAdvogado().getById();
+
+			if (!TSUtil.isEmpty(advogado.getCelular())) {
+
+				smsUtil.enviarMensagem(advogado.getCelular(), msg.toString());
+				new ContadorSms().gravarPorTipo(tipoInformacao);
+
+			}
+
+		}
+
 	}
-	
+
 	@Override
 	protected boolean validaCampos() {
-		
+
 		boolean erro = false;
-		
-		if(TSUtil.isEmpty(getCrudModel().getProcessoNumero()) || TSUtil.isEmpty(getCrudModel().getProcessoNumero().getId())){
+
+		if (TSUtil.isEmpty(getCrudModel().getProcessoNumero()) || TSUtil.isEmpty(getCrudModel().getProcessoNumero().getId())) {
 			erro = true;
 			CenajurUtil.addErrorMessage("Processo: Campo obrigatório");
 		}
-		
-		if(TSUtil.isEmpty(getCrudModel().getAudienciasAdvogados())){
+
+		if (TSUtil.isEmpty(getCrudModel().getAudienciasAdvogados())) {
 			erro = true;
 			CenajurUtil.addErrorMessage("Advogado: Campo obrigatório");
 		}
 
-		if(getCrudModel().getDescricao().length() > 500){
+		if (getCrudModel().getDescricao().length() > 500) {
 			erro = true;
 			CenajurUtil.addErrorMessage("Descrição: Campo muito longo, tamanho máximo de 500 caracteres");
 		}
-		
-		if(TSUtil.isEmpty(getCrudModel().getSituacaoAudiencia()) 
-				|| TSUtil.isEmpty(getCrudModel().getSituacaoAudiencia().getId())){
-			
+
+		if (TSUtil.isEmpty(getCrudModel().getSituacaoAudiencia()) || TSUtil.isEmpty(getCrudModel().getSituacaoAudiencia().getId())) {
+
 			erro = true;
 			CenajurUtil.addErrorMessage("Situação: Campo obrigatório");
 		}
-		
-		if(TSUtil.isEmpty(getCrudModel().getVara()) 
-				|| TSUtil.isEmpty(getCrudModel().getVara().getId())){
-			
+
+		if (TSUtil.isEmpty(getCrudModel().getVara()) || TSUtil.isEmpty(getCrudModel().getVara().getId())) {
+
 			erro = true;
 			CenajurUtil.addErrorMessage("Vara: Campo obrigatório");
 		}
-		
+
 		return erro;
 	}
-	
-	public String addProcessoNumero(){
+
+	public String addProcessoNumero() {
 		getCrudModel().setProcessoNumero(this.processoNumeroSelecionado);
 		CenajurUtil.addInfoMessage("Processo adicionado com sucesso");
 		return null;
 	}
-	
-	public String addAdvogado(){
-		
+
+	public String addAdvogado() {
+
 		AudienciaAdvogado audienciaAdvogado = new AudienciaAdvogado();
 		audienciaAdvogado.setAudiencia(getCrudModel());
 		audienciaAdvogado.setAdvogado(this.advogadoSelecionado);
-		
-		if(!getCrudModel().getAudienciasAdvogados().contains(audienciaAdvogado)){
+
+		if (!getCrudModel().getAudienciasAdvogados().contains(audienciaAdvogado)) {
 			getCrudModel().getAudienciasAdvogados().add(audienciaAdvogado);
 			CenajurUtil.addInfoMessage("Advogado adicionado com sucesso");
-		} else{
+		} else {
 			CenajurUtil.addErrorMessage("Esse Advogado já foi adicionado");
 		}
-		
-		
+
 		return null;
-		
+
 	}
-	
+
 	public void enviarDocumento(FileUploadEvent event) {
 
 		getDocumentoAudiencia().setArquivo(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
-		
-		if(CenajurUtil.isDocumentoPdf(event.getFile())){
+
+		if (CenajurUtil.isDocumentoPdf(event.getFile())) {
 			getDocumentoAudiencia().setDescricaoBusca(CenajurUtil.getDescricaoPDF(event.getFile()));
 		}
-		
+
 		CenajurUtil.criaArquivo(event.getFile(), getDocumentoAudiencia().getCaminhoUploadCompleto());
 	}
-		
-	public String addDocumento(){
-		
+
+	public String addDocumento() {
+
 		RequestContext context = RequestContext.getCurrentInstance();
-		
-		if(TSUtil.isEmpty(getDocumentoAudiencia().getArquivo())){
+
+		if (TSUtil.isEmpty(getDocumentoAudiencia().getArquivo())) {
 			CenajurUtil.addErrorMessage("Documento: Campo obrigatório");
 			context.addCallbackParam("sucesso", false);
 			return null;
 		}
-		
-		if(getDocumentoAudiencia().getDescricao().length() > 100){
+
+		if (getDocumentoAudiencia().getDescricao().length() > 100) {
 			CenajurUtil.addErrorMessage("Descrição: Campo muito longo, tamanho máximo de 100 caracteres");
 			context.addCallbackParam("sucesso", false);
 			return null;
 		}
-		
+
 		context.addCallbackParam("sucesso", true);
-		
+
 		getDocumentoAudiencia().setAudiencia(getCrudModel());
 		getDocumentoAudiencia().setCategoriaDocumento(getCategoriaDocumento().getById());
 		getCrudModel().getDocumentos().add(getDocumentoAudiencia());
@@ -287,8 +333,8 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 		setDocumentoAudiencia(new DocumentoAudiencia());
 		return null;
 	}
-	
-	public String removerDocumento(){
+
+	public String removerDocumento() {
 		getCrudModel().getDocumentos().remove(this.documentoSelecionado);
 		return null;
 	}
@@ -364,5 +410,5 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 	public void setAdvogadoSelecionado(Colaborador advogadoSelecionado) {
 		this.advogadoSelecionado = advogadoSelecionado;
 	}
-	
+
 }

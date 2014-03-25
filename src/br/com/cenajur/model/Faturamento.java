@@ -15,6 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import br.com.cenajur.util.CenajurUtil;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSUtil;
@@ -314,7 +315,7 @@ public class Faturamento extends TSActiveRecordAb<Faturamento>{
 	}
 	
 	public List<Faturamento> pesquisarFaturasAbertas(){
-		return super.find(" select new Faturamento(f.mes, f.ano) from Faturamento f where f.flagPago = false and f.flagCancelado = false and f.cliente.id = ? and str(f.ano) || str(f.mes)  < ? order by f.ano, f.mes", null, getCliente().getId(), "" + getAno() + getMes());
+		return super.find(" select new Faturamento(f.mes, f.ano) from Faturamento f where f.flagPago = false and f.flagCancelado = false and f.cliente.id = ? and str(f.ano) || case when length(str(f.mes)) > 1 then str(f.mes) else str(str(0)||f.mes) end  < ? order by f.ano, f.mes", null, getCliente().getId(), "" + CenajurUtil.getMesAnoFormatado(getMes(), getAno()));
 	}
 	
 	public Model obterMenorData(){

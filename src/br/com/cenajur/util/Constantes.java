@@ -12,9 +12,9 @@ public class Constantes {
 	
 	public static final Long SITUACAO_PROCESSO_ARQUIVADO = 3L;
 	public static final Long SITUACAO_PROCESSO_CLIENTE_ATIVO = 1L;
-	public static final Long SITUACAO_PROCESSO_CLIENTE_ARQUIVADO = 2L;
+	public static final Long SITUACAO_PROCESSO_CLIENTE_ARQUIVADO = 3L;
 	public static final Long SITUACAO_PROCESSO_PARTE_CONTRARIA_ATIVO = 1L;
-	public static final Long SITUACAO_PROCESSO_PARTE_CONTRARIA_ARQUIVADO = 2L;
+	public static final Long SITUACAO_PROCESSO_PARTE_CONTRARIA_ARQUIVADO = 3L;
 	
 	public static final Long SITUACAO_AUDIENCIA_AGUARDANDO = 3L;
 	public static final Long SITUACAO_AUDIENCIA_REALIZADA = 1L;
@@ -108,5 +108,22 @@ public class Constantes {
 	
 	public static final Long TIPO_PROCESSO_COLETIVO = 3L;
 	
+	public static final String CONFIGURACAO_REPLACE_NUMERO_PROCESSO = "(numero_processo)";
+	public static final String CONFIGURACAO_REPLACE_DATA = "(data)";
+	public static final String CONFIGURACAO_REPLACE_HORA = "(hora)";
+	public static final String CONFIGURACAO_REPLACE_LOCAL = "(local)";
+	public static final String CONFIGURACAO_REPLACE_COLABORADOR = "(colaborador)";
+	public static final String CONFIGURACAO_REPLACE_OBJETO = "(objeto)";
+	public static final String CONFIGURACAO_REPLACE_PARTE_CONTRARIA = "(parte_contraria)";
+	
+	public static final String TEMPLATE_SMS_AUDIENCIA_AGUARDANDO = "AUDIÊNCIA: Prezado(a), Vossa Senhoria possui uma nova Audiência. "+ CONFIGURACAO_REPLACE_NUMERO_PROCESSO +", em "+ CONFIGURACAO_REPLACE_DATA +", "+ CONFIGURACAO_REPLACE_HORA +", no(a) "+ CONFIGURACAO_REPLACE_LOCAL +" e será acompanhado(a) por "+ CONFIGURACAO_REPLACE_COLABORADOR;
+	public static final String TEMPLATE_SMS_AUDIENCIA_REALIZADA = "AUDIÊNCIA: Prezado(a), A sua opinião é importante! Em "+ CONFIGURACAO_REPLACE_DATA +" às "+ CONFIGURACAO_REPLACE_HORA +", Vossa Senhoria foi acompanhado na audiência realizada no(a) "+ CONFIGURACAO_REPLACE_LOCAL +" pelo "+ CONFIGURACAO_REPLACE_COLABORADOR +". Assim pedimos que envie sua crítica ou sugestão para o Coordenador Jurídico.";
+	public static final String TEMPLATE_SMS_AUDIENCIA_NAO_REALIZADA = "AUDIÊNCIA: Prezado(a), A audiência anteriormente designada para o dia "+ CONFIGURACAO_REPLACE_DATA +" às "+ CONFIGURACAO_REPLACE_HORA +" na "+ CONFIGURACAO_REPLACE_LOCAL +" foi SUSPENSA, e não será mais realizada nesta data.";
+	public static final String TEMPLATE_SMS_ANDAMENTO = "ANDAMENTO PROCESSUAL: Prezado(a), Vossa Senhoria possui um novo Andamento no seu processo " + CONFIGURACAO_REPLACE_NUMERO_PROCESSO + ", que tramita "+ CONFIGURACAO_REPLACE_LOCAL + ", tendo como Advogado responsável "+ CONFIGURACAO_REPLACE_COLABORADOR + ".";
+	public static final String TEMPLATE_SMS_VISITA_ASSOCIADO = "CENAJUR AGRADECE SUA VISITA: Prezado(a), Agradecemos sua visita na Associação em " + CONFIGURACAO_REPLACE_DATA + ", sendo atendido por " + CONFIGURACAO_REPLACE_COLABORADOR;
+	public static final String TEMPLATE_SMS_ANIVERSARIANTE = "FELIZ ANIVERSÁRIO: Prezado(a), A equipe do CENAJUR deseja SAÚDE, PAZ e cada vez mais SEGURANÇA JURÍDICA. Feliz Aniversário!";
+	public static final String TEMPLATE_SMS_INADIMPLENTES = "CENAJUR INFORMA: Prezado(a), Até o momento não consta o pagamento do último mês. Favor Contactar a Associação. Caso já tenha efetuado o pagamento, desconsidere esta mensagem.";
+	public static final String TEMPLATE_SMS_PROCESSO_NOVO = "PROCESSO NOVO: Prezado(a), Vossa Senhoria possui um processo novo. Número do Processo: " + CONFIGURACAO_REPLACE_NUMERO_PROCESSO + ", Local : " + CONFIGURACAO_REPLACE_LOCAL + ", Objeto: " + CONFIGURACAO_REPLACE_OBJETO + ", Parte Contrária: " + CONFIGURACAO_REPLACE_PARTE_CONTRARIA + " e Advogado: " + CONFIGURACAO_REPLACE_COLABORADOR;
+	public static final String TEMPLATE_SMS_ASSOCIADO_NOVO = "CENAJUR AGRADECE: Prezado(a), Obrigado por escolher o CENAJUR, aproveitamos a oportunidade e reafirmamos nosso compromisso de prestar uma assistência jurídica efetiva e com qualidade, ética, responsabilidade e experiência.";
 	
 }

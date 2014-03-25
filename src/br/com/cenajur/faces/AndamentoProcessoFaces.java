@@ -17,6 +17,7 @@ import br.com.cenajur.model.CategoriaDocumento;
 import br.com.cenajur.model.ConfiguracoesEmail;
 import br.com.cenajur.model.ConfiguracoesReplaceEmail;
 import br.com.cenajur.model.ContadorEmail;
+import br.com.cenajur.model.ContadorSms;
 import br.com.cenajur.model.DocumentoAndamentoProcesso;
 import br.com.cenajur.model.LogEnvioEmail;
 import br.com.cenajur.model.Processo;
@@ -31,6 +32,7 @@ import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
 import br.com.cenajur.util.EmailUtil;
+import br.com.cenajur.util.SMSUtil;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.exception.TSSystemException;
 import br.com.topsys.file.TSFile;
@@ -161,7 +163,7 @@ public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 						
 						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ADVOGADO).getById();
 						
-						texto = texto.replace(configuracaoReplace.getCodigo(), processo.getAdvogado().getNome());
+						texto = texto.replace(configuracaoReplace.getCodigo(), processo.getAdvogado().getApelido());
 						
 						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_TIPO_ANDAMENTO).getById();
 						
@@ -191,6 +193,26 @@ public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 			
 		}
 		
+		String msg = Constantes.TEMPLATE_SMS_ANDAMENTO;
+
+		msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_NUMERO_PROCESSO, new ProcessoNumero().obterNumeroProcessoPrincipal(processo).getNumero());
+		msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_LOCAL, processo.getVara().getById().getDescricao());
+		msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_COLABORADOR, processo.getAdvogado().getApelido());
+
+		SMSUtil smsUtil = new SMSUtil();
+
+		for (ProcessoCliente processoCliente : processo.getProcessosClientes()) {
+
+			if (!TSUtil.isEmpty(processoCliente.getCliente().getCelular())
+					&& Constantes.SITUACAO_PROCESSO_CLIENTE_ATIVO.equals(processoCliente.getSituacaoProcessoCliente().getId())) {
+
+				smsUtil.enviarMensagem(processoCliente.getCliente().getCelular(), msg.toString());
+				new ContadorSms().gravarPorTipo(tipoInformacao);
+
+			}
+
+		}
+
 	}
 	
 	public String addProcessoNumero(){

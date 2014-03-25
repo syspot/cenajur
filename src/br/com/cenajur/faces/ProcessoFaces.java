@@ -19,6 +19,7 @@ import br.com.cenajur.model.CategoriaDocumento;
 import br.com.cenajur.model.Cliente;
 import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.Comarca;
+import br.com.cenajur.model.ContadorSms;
 import br.com.cenajur.model.DocumentoProcesso;
 import br.com.cenajur.model.Objeto;
 import br.com.cenajur.model.ParteContraria;
@@ -32,6 +33,7 @@ import br.com.cenajur.model.SituacaoProcessoCliente;
 import br.com.cenajur.model.SituacaoProcessoParteContraria;
 import br.com.cenajur.model.TipoAndamentoProcesso;
 import br.com.cenajur.model.TipoCategoria;
+import br.com.cenajur.model.TipoInformacao;
 import br.com.cenajur.model.TipoParte;
 import br.com.cenajur.model.TipoProcesso;
 import br.com.cenajur.model.Turno;
@@ -39,6 +41,7 @@ import br.com.cenajur.model.Vara;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
+import br.com.cenajur.util.SMSUtil;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
@@ -215,6 +218,37 @@ public class ProcessoFaces extends CrudFaces<Processo> {
 	protected void posPersist() throws TSApplicationException{
 		getCrudModel().setProcessosNumerosTemp(new ProcessoNumero().pesquisarOutrosNumerosProcessos(getCrudModel()));
 		
+	}
+	
+	@Override
+	protected void posInsert() {
+		
+		SMSUtil smsUtil = new SMSUtil();
+		
+		ProcessoNumero processoNumero = new ProcessoNumero().obterNumeroProcessoPrincipal(getCrudModel());
+		Processo processo = getCrudModel().getById();
+		
+		for (ProcessoCliente processoCliente : getCrudModel().getProcessosClientes()) {
+
+			if (!TSUtil.isEmpty(processoCliente.getCliente().getCelular())) {
+
+				String msg = Constantes.TEMPLATE_SMS_PROCESSO_NOVO;
+
+				msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_NUMERO_PROCESSO, processoNumero.getNumero());
+				msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_LOCAL, processo.getVara().getById().getDescricao());
+				msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_OBJETO, processo.getObjeto().getById().getDescricao());
+				msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_PARTE_CONTRARIA, processo.getProcessosPartesContrarias().toString().substring(1, processo.getProcessosPartesContrarias().toString().length() - 1));
+				msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_COLABORADOR, processo.getAdvogado().getById().getApelido());
+
+				TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_PROCESSO_NOVO_ID);
+
+				smsUtil.enviarMensagem(processoCliente.getCliente().getCelular(), msg);
+				new ContadorSms().gravarPorTipo(tipoInformacao);
+
+			}
+			
+		}
+
 	}
 	
 	@Override

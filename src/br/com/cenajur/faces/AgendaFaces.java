@@ -30,6 +30,7 @@ import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.ConfiguracoesEmail;
 import br.com.cenajur.model.ConfiguracoesReplaceEmail;
 import br.com.cenajur.model.ContadorEmail;
+import br.com.cenajur.model.ContadorSms;
 import br.com.cenajur.model.LogEnvioEmail;
 import br.com.cenajur.model.ProcessoNumero;
 import br.com.cenajur.model.RegrasEmail;
@@ -43,6 +44,7 @@ import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
 import br.com.cenajur.util.EmailUtil;
+import br.com.cenajur.util.SMSUtil;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSDateUtil;
 import br.com.topsys.util.TSParseUtil;
@@ -432,6 +434,7 @@ public class AgendaFaces extends TSMainFaces {
 
 			if (this.agenda.isTipoVisitaDoCliente() && this.agendaColaboradorSelecionado.getFlagConcluido()) {
 				this.enviarEmailVisitaCliente();
+				this.enviarSMSVisitaCliente();
 			}
 
 			this.agendaColaboradorSelecionado.update();
@@ -618,7 +621,7 @@ public class AgendaFaces extends TSMainFaces {
 					
 					configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ADVOGADO).getById();
 					
-					texto = texto.replace(configuracaoReplace.getCodigo(), this.agendaColaboradorSelecionado.getColaborador().getNome());
+					texto = texto.replace(configuracaoReplace.getCodigo(), this.agendaColaboradorSelecionado.getColaborador().getApelido());
 
 					emailUtil.enviarEmailTratado(agenda.getCliente().getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
 					new ContadorEmail().gravarPorTipo(tipoInformacao);
@@ -629,6 +632,27 @@ public class AgendaFaces extends TSMainFaces {
 			}
 
 		}
+		
+	}
+	
+	private void enviarSMSVisitaCliente(){
+		
+		String msg = Constantes.TEMPLATE_SMS_VISITA_ASSOCIADO;
+		
+		Agenda agenda = this.agendaColaboradorSelecionado.getAgenda().getById();
+
+		msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_DATA, TSParseUtil.dateToString(agenda.getDataInicial(), TSDateUtil.DD_MM_YYYY));
+		msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_COLABORADOR, this.agendaColaboradorSelecionado.getColaborador().getApelido());
+
+		SMSUtil smsUtil = new SMSUtil();
+
+		if (!TSUtil.isEmpty(agenda.getCliente().getCelular())) {
+
+			smsUtil.enviarMensagem(agenda.getCliente().getCelular(), msg);
+			new ContadorSms().gravarPorTipo(new TipoInformacao(Constantes.TIPO_INFORMACAO_VISITAS_ID));
+
+		}
+
 	}
 
 	public boolean isUsuarioMaster() {

@@ -144,14 +144,14 @@
 
     <ui:define name="colunasTabelaComCss">
 
-        <p:column headerText="Número" styleClass="coluna35">
+        <p:column headerText="Número" styleClass="coluna25">
             <p:commandLink action="#{mbeanProcesso.detailEvent}" ajax="false">
                 <h:outputText value="#{linha.processosNumeros}" />
                 <f:setPropertyActionListener target="#{mbeanProcessoModel}" value="#{linha}" />
             </p:commandLink>
         </p:column>
 
-        <p:column headerText="Associados" styleClass="coluna40">
+        <p:column headerText="Associados" styleClass="coluna35">
             <p:commandLink action="#{mbeanProcesso.detailEvent}" ajax="false">
                 <h:outputText value="#{linha.processosClientes}" />
                 <f:setPropertyActionListener target="#{mbeanProcessoModel}" value="#{linha}" />
@@ -165,21 +165,19 @@
             </p:commandLink>
         </p:column>
 
-        <!-- 		<p:column headerText="Tipo" styleClass="coluna10"> -->
-        <!-- 			<p:commandLink action="#{mbeanProcesso.detailEvent}" ajax="false"> -->
-        <!-- 				<h:outputText value="#{linha.tipoProcesso.descricao}" /> -->
-        <!-- 				<f:setPropertyActionListener target="#{mbeanProcessoModel}" value="#{linha}" /> -->
-        <!-- 			</p:commandLink> -->
-        <!-- 		</p:column> -->
+        <p:column headerText="Objeto" styleClass="coluna10">
+            <p:commandLink action="#{mbeanProcesso.detailEvent}" ajax="false">
+                <h:outputText value="#{linha.objeto.descricao}" />
+                <f:setPropertyActionListener target="#{mbeanProcessoModel}" value="#{linha}" />
+            </p:commandLink>
+        </p:column>
 
-        <!-- 		<p:column headerText="Data de Abertura" styleClass="coluna15"> -->
-        <!-- 			<p:commandLink action="#{mbeanProcesso.detailEvent}" ajax="false"> -->
-        <!-- 				<h:outputText value="#{linha.dataAbertura}"> -->
-        <!-- 					<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Recife" /> -->
-        <!-- 				</h:outputText> -->
-        <!-- 				<f:setPropertyActionListener target="#{mbeanProcessoModel}" value="#{linha}" /> -->
-        <!-- 			</p:commandLink> -->
-        <!-- 		</p:column> -->
+        <p:column headerText="Lote" styleClass="coluna10">
+            <p:commandLink action="#{mbeanProcesso.detailEvent}" ajax="false">
+                <h:outputText value="#{linha.lote}" />
+                <f:setPropertyActionListener target="#{mbeanProcessoModel}" value="#{linha}" />
+            </p:commandLink>
+        </p:column>
 
         <p:column headerText="Situação" styleClass="coluna10">
             <p:commandLink action="#{mbeanProcesso.detailEvent}" ajax="false">

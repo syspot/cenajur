@@ -1,7 +1,5 @@
 package br.com.cenajur.jobs;
 
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +13,7 @@ import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.ConfiguracoesEmail;
 import br.com.cenajur.model.ConfiguracoesReplaceEmail;
 import br.com.cenajur.model.ContadorEmail;
+import br.com.cenajur.model.ContadorSms;
 import br.com.cenajur.model.LogEnvioEmail;
 import br.com.cenajur.model.Processo;
 import br.com.cenajur.model.ProcessoCliente;
@@ -26,6 +25,7 @@ import br.com.cenajur.model.Vara;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.Constantes;
 import br.com.cenajur.util.EmailUtil;
+import br.com.cenajur.util.SMSUtil;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSDateUtil;
 import br.com.topsys.util.TSParseUtil;
@@ -38,25 +38,34 @@ public class EnviarEmailJob {
 	public void processarEnvioEmail() {
 
 		EmailUtil emailUtil = new EmailUtil();
+		SMSUtil smsUtil = new SMSUtil();
 
 		try {
 
-			this.enviarEmailAudiencia(emailUtil);
+			// this.enviarSMSAudienciaSituacaoAguardando(smsUtil);
 
-			//this.enviarEmailAndamento(emailUtil);
+			// this.enviarSMSAniversariantes(smsUtil);
 
-			//this.enviarEmailNovosAssociados(emailUtil);
-
-			this.enviarEmailAniversariantes(emailUtil);
-
-			this.enviarEmailInadimplentes(emailUtil);
-
-			this.enviarEmailProcessosNovos(emailUtil);
-
-			//this.enviarEmailVisitas(emailUtil);
-
-			// this.enviarMensagem2("557188992709",
-			// "Teste oficial pelo Java 2");
+			this.enviarSMSInadimplentes(smsUtil);
+			
+			/*
+			 * this.enviarEmailAudiencia(emailUtil);
+			 * 
+			 * // this.enviarEmailAndamento(emailUtil);
+			 * 
+			 * // this.enviarEmailNovosAssociados(emailUtil);
+			 * 
+			 * this.enviarEmailAniversariantes(emailUtil);
+			 * 
+			 * this.enviarEmailInadimplentes(emailUtil);
+			 * 
+			 * this.enviarEmailProcessosNovos(emailUtil);
+			 * 
+			 * // this.enviarEmailVisitas(emailUtil);
+			 * 
+			 * // this.enviarMensagem2("557188992709", //
+			 * "Teste oficial pelo Java 2");
+			 */
 
 		} catch (TSApplicationException e) {
 			e.printStackTrace();
@@ -175,6 +184,58 @@ public class EnviarEmailJob {
 
 	}
 
+	private void enviarSMSAudienciaSituacaoAguardando(SMSUtil smsUtil) throws TSApplicationException {
+
+		List<Audiencia> audiencias = new Audiencia().pesquisarAudienciasProximas(1);
+
+		TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_AUDIENCIA_ID);
+
+		Processo processo = null;
+
+		for (Audiencia audiencia : audiencias) {
+
+			processo = audiencia.getProcessoNumero().getProcesso().getById();
+
+			String msg = Constantes.TEMPLATE_SMS_AUDIENCIA_AGUARDANDO;
+
+			msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_NUMERO_PROCESSO, new ProcessoNumero().obterNumeroProcessoPrincipal(processo).getNumero());
+			msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_DATA, TSParseUtil.dateToString(audiencia.getDataAudiencia(), TSDateUtil.DD_MM_YYYY));
+			msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_HORA, TSParseUtil.dateToString(audiencia.getDataAudiencia(), TSDateUtil.HH_MM));
+			msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_LOCAL, audiencia.getVara().getDescricao());
+			msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_COLABORADOR,
+					audiencia.getAudienciasAdvogados().toString().substring(1, audiencia.getAudienciasAdvogados().toString().length() - 1));
+
+			for (ProcessoCliente processoCliente : processo.getProcessosClientes()) {
+
+				if (!TSUtil.isEmpty(processoCliente.getCliente().getCelular())
+						&& Constantes.SITUACAO_PROCESSO_CLIENTE_ATIVO.equals(processoCliente.getSituacaoProcessoCliente().getId())) {
+
+					smsUtil.enviarMensagem(processoCliente.getCliente().getCelular(), msg.toString());
+					new ContadorSms().gravarPorTipo(tipoInformacao);
+
+				}
+
+			}
+
+			Colaborador advogado = null;
+
+			for (AudienciaAdvogado audienciaAdvogado : audiencia.getAudienciasAdvogados()) {
+
+				advogado = audienciaAdvogado.getAdvogado().getById();
+
+				if (!TSUtil.isEmpty(advogado.getCelular())) {
+
+					smsUtil.enviarMensagem(advogado.getCelular(), msg.toString());
+					new ContadorSms().gravarPorTipo(tipoInformacao);
+
+				}
+
+			}
+
+		}
+
+	}
+
 	private void enviarEmailAndamento(EmailUtil emailUtil) throws TSApplicationException {
 
 		List<AndamentoProcesso> andamentos = new AndamentoProcesso().pesquisarAndamentoRecente();
@@ -184,7 +245,7 @@ public class EnviarEmailJob {
 		Processo processo = null;
 		ConfiguracoesReplaceEmail configuracaoReplace = null;
 		RegrasEmail regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_ANDAMENTO_PROCESSO).getById();
-		
+
 		for (AndamentoProcesso andamentoProcesso : andamentos) {
 
 			processo = andamentoProcesso.getProcessoNumero().getProcesso().getById();
@@ -219,8 +280,8 @@ public class EnviarEmailJob {
 
 							configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_TIPO_ANDAMENTO).getById();
 
-							texto = texto.replace(configuracaoReplace.getCodigo(), new TipoAndamentoProcesso(andamentoProcesso.getTipoAndamentoProcesso().getId())
-									.getById().getDescricao());
+							texto = texto.replace(configuracaoReplace.getCodigo(), new TipoAndamentoProcesso(andamentoProcesso.getTipoAndamentoProcesso()
+									.getId()).getById().getDescricao());
 
 							configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DESCRICAO).getById();
 
@@ -238,7 +299,8 @@ public class EnviarEmailJob {
 
 								emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
 								new ContadorEmail().gravarPorTipo(tipoInformacao);
-								new LogEnvioEmail(configuracoesEmail.getAssunto(), texto, processoCliente.getCliente(), processoCliente.getCliente().getEmail()).save();
+								new LogEnvioEmail(configuracoesEmail.getAssunto(), texto, processoCliente.getCliente(), processoCliente.getCliente().getEmail())
+										.save();
 
 								try {
 									Thread.sleep(5000);
@@ -362,6 +424,25 @@ public class EnviarEmailJob {
 
 	}
 
+	private void enviarSMSAniversariantes(SMSUtil smsUtil) throws TSApplicationException {
+
+		List<Cliente> clientes = new Cliente().pesquisarAniversariantes();
+
+		for (Cliente cliente : clientes) {
+
+			if (!TSUtil.isEmpty(cliente.getCelular())) {
+
+				TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_ANIVERSARIO_ID);
+
+				smsUtil.enviarMensagem(cliente.getCelular(), Constantes.TEMPLATE_SMS_ANIVERSARIANTE);
+				new ContadorSms().gravarPorTipo(tipoInformacao);
+
+			}
+
+		}
+
+	}
+
 	private void enviarEmailInadimplentes(EmailUtil emailUtil) throws TSApplicationException {
 
 		Calendar data = Calendar.getInstance();
@@ -378,7 +459,8 @@ public class EnviarEmailJob {
 
 					corpoEmail.append("Prezado(a) ");
 					corpoEmail.append(cliente.getNome());
-					corpoEmail.append(", <br/><br/>Até o momento não consta o pagamento do ultimo mês. Favor Contactar a Associação. Caso já tenha efetuado o pagamento, desconsidere esta mensagem.");
+					corpoEmail
+							.append(", <br/><br/>Até o momento não consta o pagamento do ultimo mês. Favor Contactar a Associação. Caso já tenha efetuado o pagamento, desconsidere esta mensagem.");
 
 					corpoEmail.append(CenajurUtil.getRodapeEmail());
 
@@ -405,6 +487,33 @@ public class EnviarEmailJob {
 						// new ContadorSms().gravarPorTipo(tipoInformacao);
 
 					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+	private void enviarSMSInadimplentes(SMSUtil smsUtil) throws TSApplicationException {
+
+		Calendar data = Calendar.getInstance();
+
+		if (data.get(Calendar.DAY_OF_MONTH) == 22) {
+
+			List<Cliente> clientes = new Cliente().pesquisarInadimplentes(data.get(Calendar.MONTH), data.get(Calendar.YEAR));
+
+			for (Cliente cliente : clientes) {
+
+				if (!TSUtil.isEmpty(cliente.getCelular())) {
+
+					String msg = Constantes.TEMPLATE_SMS_INADIMPLENTES;
+
+					TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_INADIMPLENCIA_ID);
+
+					smsUtil.enviarMensagem(cliente.getCelular(), msg);
+					new ContadorSms().gravarPorTipo(tipoInformacao);
 
 				}
 
@@ -446,7 +555,8 @@ public class EnviarEmailJob {
 
 					if (!TSUtil.isEmpty(processoCliente.getCliente().getEmail())) {
 
-						emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), "CENAJUR INFORMA UM PROCESSO NOVO", corpoEmail.toString(), "text/html");
+						emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), "CENAJUR INFORMA UM PROCESSO NOVO", corpoEmail.toString(),
+								"text/html");
 						new ContadorEmail().gravarPorTipo(tipoInformacao);
 						new LogEnvioEmail(ASSUNTO_GERAL, corpoEmail.toString(), processoCliente.getCliente(), processoCliente.getCliente().getEmail()).save();
 
@@ -537,91 +647,6 @@ public class EnviarEmailJob {
 
 		}
 
-	}
-
-	public void enviarMensagem(String tel, String msg) {
-
-		tel = tel.replaceAll("\\D", "");
-
-		if (tel.length() == 8) {
-
-			tel = "5571" + tel;
-
-		} else if (tel.length() == 10) {
-
-			tel = "55" + tel;
-
-		} else if (tel.length() != 12) {
-
-			return;
-
-		}
-
-		String urlString = "http://sms.televia.com.br/sms/sms.php?tel=param1&msg=param2";
-
-		urlString = urlString.replace("param1", tel);
-		urlString = urlString.replace("param2", msg);
-		urlString = urlString.replaceAll(" ", "+");
-
-		System.out.println(urlString);
-
-		try {
-
-			URL url = new URL(urlString);
-			URLConnection connection = url.openConnection();
-			connection.connect();
-			connection.getContent();
-
-			// HttpURLConnection connection =
-			// (HttpURLConnection)url.openConnection();
-			// connection.setRequestMethod("GET");
-			// connection.connect();
-
-			// HttpURLConnection connection = (HttpURLConnection)
-			// url.openConnection();
-
-			// connection.setRequestProperty("Request-Method", "GET");
-
-			// connection.setDoInput(true);
-			// connection.setDoOutput(true);
-
-			// connection.connect();
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-
-		}
-
-	}
-
-	public void enviarMensagem2(String celular, String mensagem) {
-
-		StringBuilder url = new StringBuilder("http://sms.televia.com.br/sms/sms.php");
-
-		url.append("?tel=");
-
-		url.append(celular);
-
-		url.append("&msg=");
-
-		mensagem = mensagem.replaceAll(" ", "+");
-
-		url.append(mensagem);
-
-		try {
-
-			URL conexao = new URL(url.toString());
-
-			URLConnection connection = conexao.openConnection();
-
-			connection.connect();
-
-			connection.getContent();
-
-		} catch (Exception ex) {
-
-		}
 	}
 
 }

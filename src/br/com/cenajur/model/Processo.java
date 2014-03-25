@@ -139,6 +139,9 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	@Transient
 	private String nomeClienteBusca;
 	
+	@Transient
+	private String css;
+	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
 	}
@@ -388,7 +391,16 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	}
 	
 	public String getCss(){
-		return TSUtil.isEmpty(getSituacaoProcesso()) ? "" : getSituacaoProcesso().getCss();
+		
+		if(TSUtil.isEmpty(this.css)){
+			this.css = TSUtil.isEmpty(getSituacaoProcesso()) ? "" : getSituacaoProcesso().getCss();
+		}
+		
+		return this.css;
+	}
+
+	public void setCss(String css) {
+		this.css = css;
 	}
 
 	@Override
@@ -667,12 +679,12 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	
 	@SuppressWarnings("unchecked")
 	public List<Model> pesquisarAnosProcessosColetivos(){
-		return super.findBySQL(Model.class, new String[]{"ano"}, "SELECT DISTINCT TO_CHAR(data_abertura, 'YYYY') AS ANO FROM PROCESSOS P WHERE P.TIPO_PROCESSO_ID = ? ORDER BY ANO DESC", Constantes.TIPO_PROCESSO_COLETIVO);
+		return super.findBySQL(Model.class, new String[]{"ano"}, "SELECT DISTINCT TO_CHAR(data_ajuizamento, 'YYYY') AS ANO FROM PROCESSOS P WHERE P.TIPO_PROCESSO_ID = ? ORDER BY ANO DESC", Constantes.TIPO_PROCESSO_COLETIVO);
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Model> pesquisarAnosProcesso(){
-		return super.findBySQL(Model.class, new String[]{"ano"}, "SELECT DISTINCT TO_CHAR(data_abertura, 'YYYY') AS ANO FROM PROCESSOS P ORDER BY ANO DESC");
+		return super.findBySQL(Model.class, new String[]{"ano"}, "SELECT DISTINCT TO_CHAR(data_ajuizamento, 'YYYY') AS ANO FROM PROCESSOS P ORDER BY ANO DESC");
 	}
 	
 }

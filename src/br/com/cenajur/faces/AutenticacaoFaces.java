@@ -104,15 +104,19 @@ public class AutenticacaoFaces extends TSMainFaces{
     	
     	if(isFlagBloqueado()){
     		
-    		this.flagBloqueado = false;
+    		if(!this.permissaoSelecionada.getId().equals(Constantes.PERMISSAO_AGENDA) && !this.permissaoSelecionada.getId().equals(Constantes.PERMISSAO_MENSAGENS)){
     		
-    		this.verificarBloqueioPorMensagem();
-        	this.verificarBloqueioPorTarefa();
-        	this.verificarBloqueioPorAudiencia();
-        	
-        	if(isFlagBloqueado()){
-	    		this.permissaoSelecionada = new Permissao(Constantes.PERMISSAO_MENSAGENS).getById();
-        	}
+    			this.flagBloqueado = false;
+    			
+    			this.verificarBloqueioPorMensagem();
+    			this.verificarBloqueioPorTarefa();
+    			this.verificarBloqueioPorAudiencia();
+    			
+    			if(isFlagBloqueado()){
+    				this.permissaoSelecionada = new Permissao(Constantes.PERMISSAO_MENSAGENS).getById();
+    			}
+    			
+    		}
         	
     	}
     	
@@ -230,6 +234,7 @@ public class AutenticacaoFaces extends TSMainFaces{
     	}
     	
     	if(this.isPossuiPermissao()){
+    		TSFacesUtil.removeObjectInSession("clienteFaces");
     		redirecionar();
     	}
     	

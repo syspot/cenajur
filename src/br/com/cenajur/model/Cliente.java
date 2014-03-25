@@ -725,8 +725,6 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		
 		query.append(this.obterCondicionalQuery());
 		
-		query.append(" and c.flagAssociado = true ");
-		
 		return super.find(query.toString(), "nome", this.obterCondicionalParans().toArray());
 		
 	}
@@ -823,7 +821,7 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	}
 	
 	public List<Cliente> pesquisarNovosAssociados(){
-		return super.find("select c from Cliente c where date(c.dataAdesao) = date(current_date() - 1) and c.flagAtivo = true and c.flagAssociado = true ", null);
+		return super.find("select c from Cliente c where date(c.dataAdesao) = date(current_date() - 1) and c.flagAtivo = true ", null);
 	}
 	
 	public List<Cliente> pesquisarAniversariantes(){
@@ -831,7 +829,7 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	}
 	
 	public List<Cliente> pesquisarInadimplentes(Integer mes, Integer ano){
-		return super.find("select f.cliente from Faturamento f where f.flagPago = false and f.flagCancelado = false and f.mes <= ? and f.ano <= ? ", null, mes, ano);
+		return super.find("select distinct f.cliente from Faturamento f where f.cliente.flagAtivo = true and f.flagPago = false and f.flagCancelado = false and str(f.ano) || case when length(str(f.mes)) > 1 then str(f.mes) else str(str(0)||f.mes) end < ? ", null, CenajurUtil.getMesAnoFormatado(mes, ano));
 	}
 	
 	public List<Cliente> pesquisarInadimplentes(){
