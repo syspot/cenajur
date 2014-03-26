@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
   
   <h:head>
     <title>Cenajur</title>   
@@ -73,7 +74,7 @@
       <p:layoutUnit position="south" size="35">
         <h:panelGrid columns="1" width="100%" style="height: 100%" columnClasses="colunaInformativo100">
           <h:column>
-            <h:outputText value="Cenajur - Gestão da Informação." />
+            <ui:include src="/pages/sobre.xhtml" />
           </h:column>
         </h:panelGrid>
       </p:layoutUnit>
