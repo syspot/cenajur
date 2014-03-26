@@ -1,80 +1,31 @@
 package br.com.cenajur.util;
 
+import java.net.URL;
+import java.net.URLConnection;
+
+import br.com.topsys.util.TSStringUtil;
+import br.com.topsys.util.TSUtil;
 
 public class SMSUtil {
 
 	public void enviarMensagem(String tel, String msg) {
 
-		System.out.println(msg);
+		msg = TSStringUtil.removerAcentos(msg);
 		
-		/*
-		tel = tel.replaceAll("\\D", "");
-
-		if (tel.length() == 8) {
-
-			tel = "5571" + tel;
-
-		} else if (tel.length() == 10) {
-
-			tel = "55" + tel;
-
-		} else if (tel.length() != 12) {
-
-			return;
-
-		}
-
-		String urlString = "http://sms.televia.com.br/sms/sms.php?tel=param1&msg=param2";
-
-		urlString = urlString.replace("param1", tel);
-		urlString = urlString.replace("param2", msg);
-		urlString = urlString.replaceAll(" ", "+");
-
-		System.out.println(urlString);
-
+		String urlString = "http://cenajursms.hopto.org/sendsms.php?message=" + (msg.length() > 160 ? msg.substring(0, 160) : msg).replaceAll(" ", "%20")  + "&telefone=" + TSUtil.removerNaoDigitos(tel);
+		
 		try {
-
+			
 			URL url = new URL(urlString);
 			URLConnection connection = url.openConnection();
 			connection.connect();
 			connection.getContent();
-
-			// HttpURLConnection connection =
-			// (HttpURLConnection)url.openConnection();
-			// connection.setRequestMethod("GET");
-			// connection.connect();
-
-			// HttpURLConnection connection = (HttpURLConnection)
-			// url.openConnection();
-
-			// connection.setRequestProperty("Request-Method", "GET");
-
-			// connection.setDoInput(true);
-			// connection.setDoOutput(true);
-
-			// connection.connect();
 
 		} catch (Exception e) {
 
 			e.printStackTrace();
 
 		}
-		
-		try {
-
-			URL conexao = new URL(url.toString());
-
-			URLConnection connection = conexao.openConnection();
-
-			connection.connect();
-
-			connection.getContent();
-
-		} catch (Exception ex) {
-
-		}
-		
-		*/
 
 	}
 }
