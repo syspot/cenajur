@@ -1,6 +1,7 @@
 
 package br.com.cenajur.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,6 +33,12 @@ public class Email extends TSActiveRecordAb<Email>{
 	private String smtp;
 	
 	private Long porta;
+	
+	@Column(name = "url_sms")
+	private String urlSMS;
+	
+	@Column(name = "flag_sms_ativo")
+	private Boolean flagSMSAtivo;
 	
 	public Email() {
 	}
@@ -78,6 +85,22 @@ public class Email extends TSActiveRecordAb<Email>{
 
 	public void setPorta(Long porta) {
 		this.porta = porta;
+	}
+
+	public Boolean getFlagSMSAtivo() {
+		return flagSMSAtivo;
+	}
+
+	public void setFlagSMSAtivo(Boolean flagSMSAtivo) {
+		this.flagSMSAtivo = flagSMSAtivo;
+	}
+
+	public String getUrlSMS() {
+		return urlSMS;
+	}
+
+	public void setUrlSMS(String urlSMS) {
+		this.urlSMS = urlSMS;
 	}
 
 	@Override

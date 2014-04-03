@@ -27,6 +27,12 @@
 
                             <p:inputText id="smtp" value="#{mbeanModel.smtp}" required="true" requiredMessage="Smtp: Campo obrigatório" styleClass="coluna90" maxlength="100" />
                             <p:inputText id="porta" value="#{mbeanModel.porta}" required="true" requiredMessage="Porta: Campo obrigatório" styleClass="coluna90" maxlength="100" />
+                            
+                            <p:outputLabel for="urlSMS" value="URL SMS" />
+                        	<p:outputLabel for="flagSMSAtivo" value="SMS Ativo" />
+                            
+                            <p:inputText id="urlSMS" value="#{mbeanModel.urlSMS}" required="true" requiredMessage="URL SMS: Campo obrigatório" styleClass="coluna90" maxlength="100" />
+                        	<p:selectBooleanCheckbox id="flagSMSAtivo" value="#{mbeanModel.flagSMSAtivo}" />
 
                         </h:panelGrid>
 

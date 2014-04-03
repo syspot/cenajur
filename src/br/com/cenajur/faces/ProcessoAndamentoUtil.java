@@ -150,11 +150,6 @@ public class ProcessoAndamentoUtil {
 			CenajurUtil.addErrorMessage("Tipo do Andamento: Campo obrigatório");
 		}
 
-		if(this.andamentoProcesso.getDescricao().length() > 500){
-			erro = true;
-			CenajurUtil.addErrorMessage("Descrição: Campo muito longo, tamanho máximo de 500 caracteres");
-		}
-		
 		context.addCallbackParam("sucesso", !erro);
 		
 		return erro;

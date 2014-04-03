@@ -105,11 +105,6 @@ public class AndamentoProcessoFaces extends CrudFaces<AndamentoProcesso> {
 			CenajurUtil.addErrorMessage("Tipo do Andamento: Campo obrigatório");
 		}
 
-		if(getCrudModel().getDescricao().length() > 500){
-			erro = true;
-			CenajurUtil.addErrorMessage("Descrição: Campo muito longo, tamanho máximo de 500 caracteres");
-		}
-		
 		return erro;
 	}
 	

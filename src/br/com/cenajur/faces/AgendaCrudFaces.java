@@ -64,6 +64,7 @@ public class AgendaCrudFaces extends CrudFaces<Agenda>{
 		this.getCrudModel().setAgendasColaboradores(new ArrayList<AgendaColaborador>());
 		this.getCrudModel().setTipoVisita(new TipoVisita());
 		this.getCrudModel().setDataInicial(new Date());
+		this.getCrudModel().setLocal("Cenajur");
 		this.setGrid(new ArrayList<Agenda>());
 		this.agendaColaboradorSelecionado = new AgendaColaborador();
 		setFlagAlterar(Boolean.FALSE);
