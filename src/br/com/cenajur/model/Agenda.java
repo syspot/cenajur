@@ -128,7 +128,7 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 	}
 	
 	public String getTitleAba() {
-		return TSParseUtil.dateToString(dataInicial, TSDateUtil.DD_MM_YYYY_HH_MM) + "  |  " + (this.getAgendasColaboradores().isEmpty() ? "-" : this.getAgendasColaboradores().toString()) + "  |  " + CenajurUtil.obterResumoGrid(getDescricao(), (this.getAgendasColaboradores().isEmpty() ? 100 : 60));
+		return TSParseUtil.dateToString(dataInicial, TSDateUtil.DD_MM_YYYY_HH_MM) + "  |  " + (this.getAgendasColaboradores().isEmpty() ? "-" : this.getAgendasColaboradores().toString()) + "  |  " + CenajurUtil.obterResumoGrid((this.getAgendasColaboradores().isEmpty() ? "" : this.getAgendasColaboradores().get(0).getTextoResposta()), (this.getAgendasColaboradores().isEmpty() ? 100 : 60));
 	}
 
 	public void setDataInicial(Date dataInicial) {

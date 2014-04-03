@@ -18,7 +18,7 @@ import br.com.cenajur.model.Email;
 public class EmailUtil {
 
 	public void enviarEmailTratado(String to, String subject, String message, String mimeType) {
-/*
+
 		try {
 
 			Properties props = new Properties();
@@ -57,7 +57,7 @@ public class EmailUtil {
 			e.printStackTrace();
 
 		}
-*/
+
 	}
 
 	class SimpleAuth extends Authenticator {

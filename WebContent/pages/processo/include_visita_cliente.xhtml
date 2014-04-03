@@ -30,7 +30,7 @@
 
                     </h:panelGrid>
 
-                    <h:panelGrid style="width: 50%">
+                    <h:panelGrid style="width: 50%" rendered="false">
 
                         <p:outputLabel for="descricaoAgenda" value="Descrição" />
                         <p:inputTextarea id="descricaoAgenda" value="#{visita.descricao}" readonly="true" cols="80" rows="10" />
@@ -45,7 +45,7 @@
                                 <h:outputText value="#{agendaColaborador.colaborador.apelido}" />
                             </p:column>
 
-                            <p:column headerText="Resposta" styleClass="coluna60" rendered="false">
+                            <p:column headerText="Resposta" styleClass="coluna60">
                                 <h:outputText value="#{agendaColaborador.textoResposta}" />
                             </p:column>
 
