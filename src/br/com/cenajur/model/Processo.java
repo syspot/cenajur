@@ -144,6 +144,15 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	@Transient
 	private String css;
 	
+	public Processo() {
+		super();
+	}
+
+	public Processo(Long id) {
+		super();
+		this.id = id;
+	}
+
 	public Long getId() {
 		return TSUtil.tratarLong(id);
 	}

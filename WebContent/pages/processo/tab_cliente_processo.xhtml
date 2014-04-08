@@ -10,10 +10,12 @@
     <ui:param name="mbeanProcessoAux" value="${clienteFaces.processoAux}" />
 
     <p:accordionPanel id="apProcessos" multiple="true" dynamic="true" rendered="#{clienteModel.id != null and not empty clienteFaces.processoAux.processos}">
-
+		
+		<p:ajax event="tabChange" listener="#{clienteFaces.onTabChange}" process="@this" />
+		
         <c:forEach items="#{clienteFaces.processoAux.processos}" var="processo" varStatus="linha2">
 
-            <p:tab title="Número: #{processo.processoNumeroPrincipal.numero}  -  Vara: #{processo.vara.descricao}  -  Objeto: #{processo.objeto.descricao}  -  Lote: #{processo.lote}" titleStyleClass="#{processo.css}" titleStyle="word-spacing: 10px">
+            <p:tab id="aaa_#{linha2.index}" title="Número: #{processo.processoNumeroPrincipal.numero}  -  Vara: #{processo.vara.descricao}  -  Objeto: #{processo.objeto.descricao}  -  Lote: #{processo.lote}" titleStyleClass="#{processo.css}" titleStyle="word-spacing: 10px">
 
                 <h:form id="formProcesso#{linha2.index}">
 

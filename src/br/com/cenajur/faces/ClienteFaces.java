@@ -13,6 +13,7 @@ import javax.faces.model.SelectItem;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.CaptureEvent;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.TabChangeEvent;
 
 import br.com.cenajur.model.Agenda;
 import br.com.cenajur.model.AgendaColaborador;
@@ -306,64 +307,64 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		
 		this.iniciaObjetosCombo();
 		
-		this.pesquisarProcessos();
+		this.processoAux.setProcessos(getCrudModel().getProcessos());
+		
+		if(!TSUtil.isEmpty(getCrudModel().getProcessos())){
+			this.processarProcesso(getCrudModel().getProcessos().get(0));
+			
+		}
+		
 		this.pesquisarVisitas();
 		
 	}
 	
-	public String pesquisarProcessos(){
+	private void processarProcesso(Processo processo){
 		
-		for (Processo processo : getCrudModel().getProcessos()) {
+		processo.setProcessoNumeroPrincipal(new ProcessoNumero().obterNumeroProcessoPrincipal(processo));
+		processo.setAudiencias(new Audiencia().findByProcesso(processo));
+		processo.setAndamentos(new AndamentoProcesso().findByProcesso(processo));
+		processo.setProcessosNumerosTemp(new ProcessoNumero().pesquisarOutrosNumerosProcessos(processo));
+		
+		if (TSUtil.isEmpty(processo.getTurno())) {
+			processo.setTurno(new Turno());
+		}
 
-			processo.setProcessoNumeroPrincipal(new ProcessoNumero().obterNumeroProcessoPrincipal(processo));
-			processo.setAudiencias(new Audiencia().findByProcesso(processo));
-			processo.setAndamentos(new AndamentoProcesso().findByProcesso(processo));
-			processo.setProcessosNumerosTemp(new ProcessoNumero().pesquisarOutrosNumerosProcessos(processo));
+		for (ProcessoParteContraria processoParteContraria : processo.getProcessosPartesContrarias()) {
+			processoParteContraria.setSituacaoProcessoParteContrariaTemp(new SituacaoProcessoParteContraria(processoParteContraria
+					.getSituacaoProcessoParteContraria().getId()));
+		}
 
-			if (TSUtil.isEmpty(processo.getTurno())) {
-				processo.setTurno(new Turno());
-			}
+		for (ProcessoCliente processoCliente : processo.getProcessosClientes()) {
 
-			for (ProcessoParteContraria processoParteContraria : processo.getProcessosPartesContrarias()) {
-				processoParteContraria.setSituacaoProcessoParteContrariaTemp(new SituacaoProcessoParteContraria(processoParteContraria
-						.getSituacaoProcessoParteContraria().getId()));
-			}
+			processoCliente.setSituacaoProcessoClienteTemp(new SituacaoProcessoCliente(processoCliente.getSituacaoProcessoCliente().getId()));
 
-			for (ProcessoCliente processoCliente : processo.getProcessosClientes()) {
+			if (processoCliente.getCliente().equals(getCrudModel())) {
 
-				processoCliente.setSituacaoProcessoClienteTemp(new SituacaoProcessoCliente(processoCliente.getSituacaoProcessoCliente().getId()));
+				if (!Constantes.SITUACAO_PROCESSO_CLIENTE_ATIVO.equals(processoCliente.getSituacaoProcessoCliente().getId())) {
 
-				if (processoCliente.getCliente().equals(getCrudModel())) {
-
-					if (!Constantes.SITUACAO_PROCESSO_CLIENTE_ATIVO.equals(processoCliente.getSituacaoProcessoCliente().getId())) {
-
-						processo.setCss(processoCliente.getSituacaoProcessoCliente().getCss());
-
-					}
+					processo.setCss(processoCliente.getSituacaoProcessoCliente().getCss());
 
 				}
 
 			}
 
 		}
-		
-		this.processoAux.setProcessos(getCrudModel().getProcessos());
-		
-		return null;
-		
 	}
+	
+	public void onTabChange(TabChangeEvent event) {
+		
+		String nomeTab = event.getTab().getId();
+		
+		Integer index = new Integer(nomeTab.substring(nomeTab.lastIndexOf("_")+1));
+		
+		this.processarProcesso(this.processoAux.getProcessos().get(index));
+		
+    }
 	
 	public String pesquisarVisitas(){
 
 		getCrudModel().setVisitas(new Agenda().pesquisarVisitasPorCliente(getCrudModel()));
 		
-		AgendaColaborador agendaColaborador = new AgendaColaborador();
-		
-		for(Agenda agenda : getCrudModel().getVisitas()){
-			
-			agenda.setAgendasColaboradores(agendaColaborador.perquisarPorAgenda2(agenda));
-			
-		}
 		
 		return null;
 	
