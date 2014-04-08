@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import br.com.topsys.database.hibernate.TSActiveRecordAb;
+import br.com.cenajur.model.*;
 import br.com.topsys.util.TSUtil;
 
 @Entity
@@ -45,6 +45,20 @@ public class AgendaColaborador extends TSActiveRecordAb<AgendaColaborador>{
 	
 	public AgendaColaborador(Colaborador colaborador) {
 		this.colaborador = colaborador;
+	}
+
+	public AgendaColaborador(Long id, Long agendaId, Long colaboradorId, String colaboradorNome, String colaboradorApelido, String descricao, String textoResposta, Boolean flagConcluido) {
+		super();
+		this.id = id;
+		this.agenda = new Agenda();
+		this.agenda.setId(agendaId);
+		this.colaborador = new Colaborador();
+		this.colaborador.setId(colaboradorId);
+		this.colaborador.setNome(colaboradorNome);
+		this.colaborador.setApelido(colaboradorApelido);
+		this.descricao = descricao;
+		this.textoResposta = textoResposta;
+		this.flagConcluido = flagConcluido;
 	}
 
 	public Long getId() {
@@ -144,6 +158,10 @@ public class AgendaColaborador extends TSActiveRecordAb<AgendaColaborador>{
 	
 	public List<AgendaColaborador> perquisarPorAgenda(Agenda agenda){
 		return super.find(" from AgendaColaborador ac where ac.agenda.id = ? ", null, agenda.getId());
+	}
+
+	public List<AgendaColaborador> perquisarPorAgenda2(Agenda agenda){
+		return super.find(" select new AgendaColaborador(ac.id, ac.agenda.id, ac.colaborador.id, ac.colaborador.nome, ac.colaborador.apelido, ac.descricao, ac.textoResposta, ac.flagConcluido) from AgendaColaborador ac where ac.agenda.id = ? ", null, agenda.getId());
 	}
 	
 	public List<AgendaColaborador> perquisarNaoFechadas(Colaborador colaborador, int dias, TipoAgenda tipoAgenda){

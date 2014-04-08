@@ -12,7 +12,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.cenajur.util.CenajurUtil;
-import br.com.topsys.database.hibernate.TSActiveRecordAb;
+import br.com.cenajur.model.*;
 import br.com.topsys.util.TSUtil;
 
 @Entity

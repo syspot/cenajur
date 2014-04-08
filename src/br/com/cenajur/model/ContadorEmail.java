@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import br.com.topsys.database.hibernate.TSActiveRecordAb;
+import br.com.cenajur.model.*;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSUtil;
 

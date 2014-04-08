@@ -15,6 +15,7 @@ import org.primefaces.event.CaptureEvent;
 import org.primefaces.event.FileUploadEvent;
 
 import br.com.cenajur.model.Agenda;
+import br.com.cenajur.model.AgendaColaborador;
 import br.com.cenajur.model.AndamentoProcesso;
 import br.com.cenajur.model.Audiencia;
 import br.com.cenajur.model.Banco;
@@ -198,15 +199,23 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	}
 
 	private void iniciaObjetosCombo() {
+		
 		if (TSUtil.isEmpty(getCrudModel().getBanco())) {
 			getCrudModel().setBanco(new Banco());
 		}
+		
 		if (TSUtil.isEmpty(getCrudModel().getGraduacao())) {
 			getCrudModel().setGraduacao(new Graduacao());
 		}
+		
 		if (TSUtil.isEmpty(getCrudModel().getMotivoCancelamento())) {
 			getCrudModel().setMotivoCancelamento(new MotivoCancelamento());
 		}
+		
+		if (TSUtil.isEmpty(getCrudModel().getPlano())) {
+			getCrudModel().setPlano(new Plano());
+		}
+		
 	}
 
 	@Override
@@ -283,22 +292,6 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 
 		}
 
-		if (TSUtil.isEmpty(getCrudModel().getMotivoCancelamento())) {
-			getCrudModel().setMotivoCancelamento(new MotivoCancelamento());
-		}
-
-		if (TSUtil.isEmpty(getCrudModel().getBanco())) {
-			getCrudModel().setBanco(new Banco());
-		}
-
-		if (TSUtil.isEmpty(getCrudModel().getGraduacao())) {
-			getCrudModel().setGraduacao(new Graduacao());
-		}
-
-		if (TSUtil.isEmpty(getCrudModel().getPlano())) {
-			getCrudModel().setPlano(new Plano());
-		}
-
 		Faturamento faturamento = CenajurUtil.obterFaturamentoDevedor();
 
 		faturamento.setCliente(getCrudModel());
@@ -306,11 +299,20 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		List<Faturamento> faturasAbertas = faturamento.pesquisarFaturasAbertas();
 
 		getCrudModel().setFaturasAbertas("");
-
+		
 		for (Faturamento fatura : faturasAbertas) {
 			getCrudModel().setFaturasAbertas(getCrudModel().getFaturasAbertas() + " " + fatura.getMes() + "/" + fatura.getAno() + " ");
 		}
-
+		
+		this.iniciaObjetosCombo();
+		
+		this.pesquisarProcessos();
+		this.pesquisarVisitas();
+		
+	}
+	
+	public String pesquisarProcessos(){
+		
 		for (Processo processo : getCrudModel().getProcessos()) {
 
 			processo.setProcessoNumeroPrincipal(new ProcessoNumero().obterNumeroProcessoPrincipal(processo));
@@ -344,13 +346,27 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 			}
 
 		}
-
-		this.iniciaObjetosCombo();
-
+		
 		this.processoAux.setProcessos(getCrudModel().getProcessos());
+		
+		return null;
+		
+	}
+	
+	public String pesquisarVisitas(){
 
 		getCrudModel().setVisitas(new Agenda().pesquisarVisitasPorCliente(getCrudModel()));
-
+		
+		AgendaColaborador agendaColaborador = new AgendaColaborador();
+		
+		for(Agenda agenda : getCrudModel().getVisitas()){
+			
+			agenda.setAgendasColaboradores(agendaColaborador.perquisarPorAgenda2(agenda));
+			
+		}
+		
+		return null;
+	
 	}
 
 	@Override

@@ -19,7 +19,7 @@ import javax.persistence.Transient;
 
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.Constantes;
-import br.com.topsys.database.hibernate.TSActiveRecordAb;
+import br.com.cenajur.model.*;
 import br.com.topsys.util.TSDateUtil;
 import br.com.topsys.util.TSParseUtil;
 import br.com.topsys.util.TSUtil;
@@ -64,6 +64,9 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 	private String telefoneCliente;
 	
 	private String local;
+	
+	@Transient
+	private String textoResposta;
 	
 	@OneToMany(mappedBy = "agenda", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<AgendaColaborador> agendasColaboradores;
@@ -128,7 +131,16 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 	}
 	
 	public String getTitleAba() {
-		return TSParseUtil.dateToString(dataInicial, TSDateUtil.DD_MM_YYYY_HH_MM) + "  |  " + (this.getAgendasColaboradores().isEmpty() ? "-" : this.getAgendasColaboradores().toString()) + "  |  " + CenajurUtil.obterResumoGrid((this.getAgendasColaboradores().isEmpty() ? "" : this.getAgendasColaboradores().get(0).getTextoResposta()), (this.getAgendasColaboradores().isEmpty() ? 100 : 60));
+		
+		if(this.getAgendasColaboradores().isEmpty()){
+			
+			return TSParseUtil.dateToString(dataInicial, TSDateUtil.DD_MM_YYYY_HH_MM);
+			
+		} else {
+			
+			return TSParseUtil.dateToString(dataInicial, TSDateUtil.DD_MM_YYYY_HH_MM) + "  |  " + this.getAgendasColaboradores().toString() + "  |  " + CenajurUtil.obterResumoGrid(getAgendasColaboradores().get(0).getTextoResposta(), 60);
+			
+		}
 	}
 
 	public void setDataInicial(Date dataInicial) {
@@ -393,11 +405,28 @@ public class Agenda extends TSActiveRecordAb<Agenda>{
 		return super.find(query.toString(), "a.dataInicial", params.toArray());
 	}
 	
+	public Agenda(Long id, Long tipoAgendaId, String tipoAgendaDescricao, Date dataInicial, Date dataFinal, String descricao, Long tipoVisitaId, String tipoVisitaDescricao, String telefoneCliente,
+			String local) {
+		super();
+		this.id = id;
+		this.tipoAgenda = new TipoAgenda();
+		this.tipoAgenda.setId(tipoAgendaId);
+		this.tipoAgenda.setDescricao(tipoAgendaDescricao);
+		this.dataInicial = dataInicial;
+		this.dataFinal = dataFinal;
+		this.descricao = descricao;
+		this.tipoVisita = new TipoVisita();
+		this.tipoVisita.setId(tipoVisitaId);
+		this.tipoVisita.setDescricao(tipoVisitaDescricao);
+		this.telefoneCliente = telefoneCliente;
+		this.local = local;
+	}
+	
 	public List<Agenda> pesquisarVisitasPorCliente(Cliente cliente) {
 		
 		StringBuilder query = new StringBuilder();
 		
-		query.append(" select distinct a from Agenda a left outer join fetch a.agendasColaboradores ac where 1 = 1 ");
+		query.append(" select new Agenda(a.id, a.tipoAgenda.id, a.tipoAgenda.descricao, a.dataInicial, a.dataFinal, a.descricao, a.tipoVisita.id, a.tipoVisita.descricao, a.telefoneCliente, a.local) from Agenda a join a.tipoAgenda ta left join a.tipoVisita tv where 1 = 1 ");
 		
 		if(!TSUtil.isEmpty(cliente) && !TSUtil.isEmpty(cliente.getId())){
 			

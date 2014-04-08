@@ -1,5 +1,6 @@
 package br.com.cenajur.model;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,7 +30,7 @@ import org.hibernate.transform.Transformers;
 
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.Constantes;
-import br.com.topsys.database.hibernate.TSActiveRecordAb;
+import br.com.cenajur.model.*;
 import br.com.topsys.exception.TSSystemException;
 import br.com.topsys.util.TSUtil;
 
@@ -71,6 +72,7 @@ public class Processo extends TSActiveRecordAb<Processo>{
 	private String lote;
 	
 	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL, orphanRemoval = true)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<ProcessoParteContraria> processosPartesContrarias;
 	
 	@ManyToOne

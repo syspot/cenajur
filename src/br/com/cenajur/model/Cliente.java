@@ -1,5 +1,6 @@
 package br.com.cenajur.model;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +22,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import br.com.cenajur.util.CenajurUtil;
-import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSUtil;
 
@@ -173,6 +173,12 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	
 	@Transient
 	private Date dataAudiencia;
+	
+	@Transient
+	private BigInteger qtdProcessos;
+	
+	@Transient
+	private BigInteger qtdVisitas;
 	
 	public Cliente() {
 	}
@@ -564,6 +570,22 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 		this.observacoes = observacoes;
 	}
 
+	public BigInteger getQtdProcessos() {
+		return qtdProcessos;
+	}
+
+	public void setQtdProcessos(BigInteger qtdProcessos) {
+		this.qtdProcessos = qtdProcessos;
+	}
+
+	public BigInteger getQtdVisitas() {
+		return qtdVisitas;
+	}
+
+	public void setQtdVisitas(BigInteger qtdVisitas) {
+		this.qtdVisitas = qtdVisitas;
+	}
+
 	public String getTipo(){
 		return getFlagAssociado() ? "Associado" : "Dependente";
 	}
@@ -850,5 +872,13 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	
 	public void inativarDependentes() throws TSApplicationException{
 		super.update("update Cliente set flagAtivo = false where titular.id = ? ", getId());
+	}
+	
+	public BigInteger obterQtdProcessos(){
+		return ((Cliente) super.getBySQL(Cliente.class, new String[]{"qtdProcessos"}, "select count(*) qtdProcessos from processos_clientes pc where pc.cliente_id = ? ", getId())).getQtdProcessos();
+	}
+	
+	public BigInteger obterQtdVisitas(){
+		return ((Cliente) super.getBySQL(Cliente.class, new String[]{"qtdVisitas"}, "select count(*) qtdVisitas from agendas a where a.cliente_id = ? ", getId())).getQtdVisitas();
 	}
 }

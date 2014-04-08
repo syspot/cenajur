@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import br.com.cenajur.util.Constantes;
-import br.com.topsys.database.hibernate.TSActiveRecordAb;
+import br.com.cenajur.model.*;
 import br.com.topsys.util.TSUtil;
 
 @Entity

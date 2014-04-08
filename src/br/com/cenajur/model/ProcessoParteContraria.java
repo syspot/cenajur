@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import br.com.cenajur.util.Constantes;
-import br.com.topsys.database.hibernate.TSActiveRecordAb;
+import br.com.cenajur.model.*;
 
 @Entity
 @Table(name = "processos_partes_contrarias")
