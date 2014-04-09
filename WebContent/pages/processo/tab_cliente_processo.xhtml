@@ -15,7 +15,7 @@
 		
         <c:forEach items="#{clienteFaces.processoAux.processos}" var="processo" varStatus="linha2">
 
-            <p:tab id="aaa_#{linha2.index}" title="Número: #{processo.processoNumeroPrincipal.numero}  -  Vara: #{processo.vara.descricao}  -  Objeto: #{processo.objeto.descricao}  -  Lote: #{processo.lote}" titleStyleClass="#{processo.css}" titleStyle="word-spacing: 10px">
+            <p:tab id="aaa_#{linha2.index}" title="Número: #{processo.numeroProcessoPrincipal}  -  Vara: #{processo.vara.descricao}  -  Objeto: #{processo.objeto.descricao}  -  Lote: #{processo.lote}" titleStyleClass="#{processo.css}" titleStyle="word-spacing: 10px">
 
                 <h:form id="formProcesso#{linha2.index}">
 

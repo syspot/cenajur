@@ -401,6 +401,10 @@ public class Processo extends TSActiveRecordAb<Processo>{
 		return !TSUtil.isEmpty(getProcessosNumeros()) && getProcessosNumeros().size() < 2 ? getProcessosNumeros().get(0) : null;
 	}
 	
+	public String getNumeroProcessoPrincipal(){
+		return TSUtil.isEmpty(getProcessosNumeros()) ? "" : getProcessosNumeros().get(0).getNumero();
+	}
+	
 	public String getCss(){
 		
 		if(TSUtil.isEmpty(this.css)){
