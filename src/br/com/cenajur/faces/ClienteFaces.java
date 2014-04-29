@@ -23,14 +23,11 @@ import br.com.cenajur.model.CategoriaDocumento;
 import br.com.cenajur.model.Cidade;
 import br.com.cenajur.model.Cliente;
 import br.com.cenajur.model.Colaborador;
-import br.com.cenajur.model.ContadorEmail;
-import br.com.cenajur.model.ContadorSms;
 import br.com.cenajur.model.DocumentoCliente;
 import br.com.cenajur.model.Estado;
 import br.com.cenajur.model.EstadoCivil;
 import br.com.cenajur.model.Faturamento;
 import br.com.cenajur.model.Graduacao;
-import br.com.cenajur.model.LogEnvioEmail;
 import br.com.cenajur.model.Lotacao;
 import br.com.cenajur.model.MotivoCancelamento;
 import br.com.cenajur.model.Permissao;
@@ -43,15 +40,14 @@ import br.com.cenajur.model.ProcessoParteContraria;
 import br.com.cenajur.model.SituacaoProcessoCliente;
 import br.com.cenajur.model.SituacaoProcessoParteContraria;
 import br.com.cenajur.model.TipoCategoria;
-import br.com.cenajur.model.TipoInformacao;
 import br.com.cenajur.model.TipoPagamento;
 import br.com.cenajur.model.Turno;
 import br.com.cenajur.relat.JasperUtil;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
-import br.com.cenajur.util.EmailUtil;
-import br.com.cenajur.util.SMSUtil;
+import br.com.cenajur.util.EmailLayoutUtil;
+import br.com.cenajur.util.SMSLayoutUtil;
 import br.com.cenajur.util.Utilitarios;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.file.TSFile;
@@ -199,23 +195,23 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 	}
 
 	private void iniciaObjetosCombo() {
-		
+
 		if (TSUtil.isEmpty(getCrudModel().getBanco())) {
 			getCrudModel().setBanco(new Banco());
 		}
-		
+
 		if (TSUtil.isEmpty(getCrudModel().getGraduacao())) {
 			getCrudModel().setGraduacao(new Graduacao());
 		}
-		
+
 		if (TSUtil.isEmpty(getCrudModel().getMotivoCancelamento())) {
 			getCrudModel().setMotivoCancelamento(new MotivoCancelamento());
 		}
-		
+
 		if (TSUtil.isEmpty(getCrudModel().getPlano())) {
 			getCrudModel().setPlano(new Plano());
 		}
-		
+
 	}
 
 	@Override
@@ -299,31 +295,31 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 		List<Faturamento> faturasAbertas = faturamento.pesquisarFaturasAbertas();
 
 		getCrudModel().setFaturasAbertas("");
-		
+
 		for (Faturamento fatura : faturasAbertas) {
 			getCrudModel().setFaturasAbertas(getCrudModel().getFaturasAbertas() + " " + fatura.getMes() + "/" + fatura.getAno() + " ");
 		}
-		
+
 		this.iniciaObjetosCombo();
-		
+
 		this.processoAux.setProcessos(getCrudModel().getProcessos());
-		
-		if(!TSUtil.isEmpty(getCrudModel().getProcessos())){
+
+		if (!TSUtil.isEmpty(getCrudModel().getProcessos())) {
 			this.processarProcesso(getCrudModel().getProcessos().get(0));
-			
+
 		}
-		
+
 		this.pesquisarVisitas();
-		
+
 	}
-	
-	private void processarProcesso(Processo processo){
-		
+
+	private void processarProcesso(Processo processo) {
+
 		processo.setProcessoNumeroPrincipal(new ProcessoNumero().obterNumeroProcessoPrincipal(processo));
 		processo.setAudiencias(new Audiencia().findByProcesso(processo));
 		processo.setAndamentos(new AndamentoProcesso().findByProcesso(processo));
 		processo.setProcessosNumerosTemp(new ProcessoNumero().pesquisarOutrosNumerosProcessos(processo));
-		
+
 		if (TSUtil.isEmpty(processo.getTurno())) {
 			processo.setTurno(new Turno());
 		}
@@ -349,24 +345,23 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 
 		}
 	}
-	
+
 	public void onTabChange(TabChangeEvent event) {
-		
+
 		String nomeTab = event.getTab().getId();
-		
-		Integer index = new Integer(nomeTab.substring(nomeTab.lastIndexOf("_")+1));
-		
+
+		Integer index = new Integer(nomeTab.substring(nomeTab.lastIndexOf("_") + 1));
+
 		this.processarProcesso(this.processoAux.getProcessos().get(index));
-		
-    }
-	
-	public String pesquisarVisitas(){
+
+	}
+
+	public String pesquisarVisitas() {
 
 		getCrudModel().setVisitas(new Agenda().pesquisarVisitasPorCliente(getCrudModel()));
-		
-		
+
 		return null;
-	
+
 	}
 
 	@Override
@@ -382,61 +377,18 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 
 	@Override
 	protected void posInsert() throws TSApplicationException {
-		this.enviarEmailAssociadoNovo();
-		this.enviarSMSAssociadoNovo();
+		new EmailLayoutUtil().enviarEmailAssociadoNovo(getCrudModel());
+		new SMSLayoutUtil().enviarSMSAssociadoNovo(getCrudModel());
 	}
 
 	@Override
 	protected void posUpdate() throws TSApplicationException {
 
 		if (!this.flagAssociadoAtivo && getCrudModel().getFlagAtivo()) {
-			this.enviarEmailAssociadoNovo();
-			this.enviarSMSAssociadoNovo();
+			new EmailLayoutUtil().enviarEmailAssociadoNovo(getCrudModel());
+			new SMSLayoutUtil().enviarSMSAssociadoNovo(getCrudModel());
 		}
 
-	}
-
-	private void enviarSMSAssociadoNovo() {
-
-		if (!TSUtil.isEmpty(getCrudModel().getCelular())) {
-
-			String msg = Constantes.TEMPLATE_SMS_ASSOCIADO_NOVO;
-
-			new SMSUtil().enviarMensagem(getCrudModel().getCelular(), msg);
-			new ContadorSms().gravarPorTipo(new TipoInformacao(Constantes.TIPO_INFORMACAO_ASSOCIADOS_NOVOS_ID));
-
-		}
-
-	}
-	
-	private void enviarEmailAssociadoNovo() throws TSApplicationException {
-		
-		if (!TSUtil.isEmpty(getCrudModel().getEmail())) {
-			
-			if (!TSUtil.isEmpty(getCrudModel().getEmail())) {
-
-				StringBuilder corpoEmail = new StringBuilder(CenajurUtil.getTopoEmail());
-
-				corpoEmail.append("Prezado(a) ");
-				corpoEmail.append(getCrudModel().getNome());
-				corpoEmail.append("<br/><br/>Obrigado por escolher o CENAJUR, aproveitamos a oportunidade e reafirmamos nosso compromisso de prestar uma assistência jurídica efetiva e com qualidade, ética, responsabilidade e experiência.");
-				corpoEmail.append("<br/><br/>Para verificar as informações dos seus processos e audiências, além de notícias atualizadas da Associação, acesse www.cenajur.com.br com sua matrícula ");
-				corpoEmail.append(getCrudModel().getMatricula());
-				corpoEmail.append(" e sua senha que é seu CPF");
-
-				corpoEmail.append(CenajurUtil.getRodapeEmail());
-
-				TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_ASSOCIADOS_NOVOS_ID);
-
-				new EmailUtil().enviarEmailTratado(getCrudModel().getEmail(), "CENAJUR AGRADECE", corpoEmail.toString(), "text/html");
-				new ContadorEmail().gravarPorTipo(tipoInformacao);
-				new LogEnvioEmail("CENAJUR AGRADECE", corpoEmail.toString(), getCrudModel(), getCrudModel().getEmail()).save();
-
-
-			}
-			
-		}
-		
 	}
 
 	@Override

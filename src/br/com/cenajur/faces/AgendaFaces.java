@@ -27,27 +27,18 @@ import br.com.cenajur.model.Audiencia;
 import br.com.cenajur.model.AudienciaAdvogado;
 import br.com.cenajur.model.Cliente;
 import br.com.cenajur.model.Colaborador;
-import br.com.cenajur.model.ConfiguracoesEmail;
-import br.com.cenajur.model.ConfiguracoesReplaceEmail;
-import br.com.cenajur.model.ContadorEmail;
-import br.com.cenajur.model.ContadorSms;
-import br.com.cenajur.model.LogEnvioEmail;
 import br.com.cenajur.model.ProcessoNumero;
-import br.com.cenajur.model.RegrasEmail;
 import br.com.cenajur.model.SituacaoAudiencia;
 import br.com.cenajur.model.TipoAgenda;
-import br.com.cenajur.model.TipoInformacao;
 import br.com.cenajur.model.TipoVisita;
 import br.com.cenajur.model.Vara;
 import br.com.cenajur.relat.JasperUtil;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
-import br.com.cenajur.util.EmailUtil;
-import br.com.cenajur.util.SMSUtil;
+import br.com.cenajur.util.EmailLayoutUtil;
+import br.com.cenajur.util.SMSLayoutUtil;
 import br.com.topsys.exception.TSApplicationException;
-import br.com.topsys.util.TSDateUtil;
-import br.com.topsys.util.TSParseUtil;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.faces.TSMainFaces;
 import br.com.topsys.web.util.TSFacesUtil;
@@ -433,8 +424,8 @@ public class AgendaFaces extends TSMainFaces {
 		try {
 
 			if (this.agenda.isTipoVisitaDoCliente() && this.agendaColaboradorSelecionado.getFlagConcluido()) {
-				this.enviarEmailVisitaCliente();
-				this.enviarSMSVisitaCliente();
+				new EmailLayoutUtil().enviarEmailVisita(this.agendaColaboradorSelecionado);
+				new SMSLayoutUtil().enviarSMSVisita(this.agendaColaboradorSelecionado);
 			}
 
 			this.agendaColaboradorSelecionado.update();
@@ -576,80 +567,6 @@ public class AgendaFaces extends TSMainFaces {
 			this.processoAudienciaUtil.getAudiencia().setVara(new Vara(this.agenda.getLocalId()));
 
 			this.processoAudienciaUtil.alterarAudiencia();
-
-		}
-
-	}
-
-	private void enviarEmailVisitaCliente() throws TSApplicationException {
-
-		TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_VISITAS_ID);
-
-		RegrasEmail regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_VISITA_COM_CLIENTE).getById();
-
-		EmailUtil emailUtil = new EmailUtil();
-
-		ConfiguracoesReplaceEmail configuracaoReplace;
-		
-		Agenda agenda = this.agendaColaboradorSelecionado.getAgenda().getById();
-
-		for (ConfiguracoesEmail configuracoesEmail : regrasEmail.getConfiguracoesEmails()) {
-
-			if (configuracoesEmail.getFlagImediato()) {
-
-				if (!TSUtil.isEmpty(agenda.getCliente().getEmail())) {
-
-					StringBuilder corpoEmail = new StringBuilder(CenajurUtil.getTopoEmail());
-
-					corpoEmail.append(configuracoesEmail.getCorpoEmail());
-
-					corpoEmail.append(CenajurUtil.getRodapeEmail());
-
-					String texto = corpoEmail.toString();
-
-					configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ASSOCIADO).getById();
-
-					texto = texto.replace(configuracaoReplace.getCodigo(), agenda.getCliente().getNome());
-
-					configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DATA_ATUAL).getById();
-
-					texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(new Date(), TSDateUtil.DD_MM_YYYY_HH_MM));
-
-					configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DATA_VISITA).getById();
-
-					texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(agenda.getDataInicial(), TSDateUtil.DD_MM_YYYY_HH_MM));
-					
-					configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ADVOGADO).getById();
-					
-					texto = texto.replace(configuracaoReplace.getCodigo(), this.agendaColaboradorSelecionado.getColaborador().getApelido());
-
-					emailUtil.enviarEmailTratado(agenda.getCliente().getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
-					new ContadorEmail().gravarPorTipo(tipoInformacao);
-					new LogEnvioEmail(configuracoesEmail.getAssunto(), texto, agenda.getCliente(), agenda.getCliente().getEmail()).save();
-
-				}
-
-			}
-
-		}
-		
-	}
-	
-	private void enviarSMSVisitaCliente(){
-		
-		String msg = Constantes.TEMPLATE_SMS_VISITA_ASSOCIADO;
-		
-		Agenda agenda = this.agendaColaboradorSelecionado.getAgenda().getById();
-
-		msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_DATA, TSParseUtil.dateToString(agenda.getDataInicial(), TSDateUtil.DD_MM_YYYY));
-		msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_COLABORADOR, this.agendaColaboradorSelecionado.getColaborador().getApelido());
-
-		SMSUtil smsUtil = new SMSUtil();
-
-		if (!TSUtil.isEmpty(agenda.getCliente().getCelular())) {
-
-			smsUtil.enviarMensagem(agenda.getCliente().getCelular(), msg);
-			new ContadorSms().gravarPorTipo(new TipoInformacao(Constantes.TIPO_INFORMACAO_VISITAS_ID));
 
 		}
 

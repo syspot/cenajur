@@ -1,7 +1,10 @@
 package br.com.cenajur.util;
 
+import br.com.cenajur.model.Agenda;
+import br.com.cenajur.model.AgendaColaborador;
 import br.com.cenajur.model.Audiencia;
 import br.com.cenajur.model.AudienciaAdvogado;
+import br.com.cenajur.model.Cliente;
 import br.com.cenajur.model.Colaborador;
 import br.com.cenajur.model.ContadorSms;
 import br.com.cenajur.model.Processo;
@@ -89,5 +92,38 @@ public class SMSLayoutUtil {
 			}
 
 		}
+	}
+
+	public void enviarSMSVisita(AgendaColaborador agendaColaborador) {
+
+		String msg = Constantes.TEMPLATE_SMS_VISITA_ASSOCIADO;
+
+		Agenda agenda = agendaColaborador.getAgenda().getById();
+
+		msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_DATA, TSParseUtil.dateToString(agenda.getDataInicial(), TSDateUtil.DD_MM_YYYY));
+		msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_COLABORADOR, agendaColaborador.getColaborador().getApelido());
+
+		SMSUtil smsUtil = new SMSUtil();
+
+		if (!TSUtil.isEmpty(agenda.getCliente().getCelular())) {
+
+			smsUtil.enviarMensagem(agenda.getCliente().getCelular(), msg);
+			new ContadorSms().gravarPorTipo(new TipoInformacao(Constantes.TIPO_INFORMACAO_VISITAS_ID));
+
+		}
+
+	}
+	
+	public void enviarSMSAssociadoNovo(Cliente cliente) {
+
+		if (!TSUtil.isEmpty(cliente.getCelular())) {
+
+			String msg = Constantes.TEMPLATE_SMS_ASSOCIADO_NOVO;
+
+			new SMSUtil().enviarMensagem(cliente.getCelular(), msg);
+			new ContadorSms().gravarPorTipo(new TipoInformacao(Constantes.TIPO_INFORMACAO_ASSOCIADOS_NOVOS_ID));
+
+		}
+
 	}
 }
