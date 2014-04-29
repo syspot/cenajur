@@ -180,6 +180,9 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	@Transient
 	private BigInteger qtdVisitas;
 	
+	@Transient
+	private boolean flagSelecionado;
+	
 	public Cliente() {
 	}
 	
@@ -633,6 +636,14 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 
 	public void setVisitas(List<Agenda> visitas) {
 		this.visitas = visitas;
+	}
+
+	public boolean isFlagSelecionado() {
+		return flagSelecionado;
+	}
+
+	public void setFlagSelecionado(boolean flagSelecionado) {
+		this.flagSelecionado = flagSelecionado;
 	}
 
 	@Override

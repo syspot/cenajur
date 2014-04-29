@@ -16,7 +16,6 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.TabChangeEvent;
 
 import br.com.cenajur.model.Agenda;
-import br.com.cenajur.model.AgendaColaborador;
 import br.com.cenajur.model.AndamentoProcesso;
 import br.com.cenajur.model.Audiencia;
 import br.com.cenajur.model.Banco;

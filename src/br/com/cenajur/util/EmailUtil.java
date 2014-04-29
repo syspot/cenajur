@@ -1,19 +1,33 @@
 package br.com.cenajur.util;
 
+import java.util.Properties;
+
 import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+
+import br.com.cenajur.model.Email;
 
 public class EmailUtil {
 
+	private Email email;
+
+	public EmailUtil() {
+		this.email = new Email(Constantes.EMAIL_ID).getById();
+	}
+
 	public void enviarEmailTratado(String to, String subject, String message, String mimeType) {
-/*
+
 		try {
 
 			Properties props = new Properties();
-
-			Email email = new Email(Constantes.EMAIL_ID);
-
-			email = email.getById();
 
 			props.put("mail.debug", "false");
 			props.put("mail.smtp.host", email.getSmtp());
@@ -37,14 +51,14 @@ public class EmailUtil {
 			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
 			Transport.send(msg);
-			
+
 		} catch (Exception e) {
 
 			CenajurUtil.addErrorMessage("Ocorreu um erro ao enviar o e-mail");
 
 			e.printStackTrace();
 
-		}*/
+		}
 
 	}
 

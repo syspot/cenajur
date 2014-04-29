@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:param name="mbean" value="${enviarSMSFaces}" />
+	<ui:param name="mbeanPesquisaModel" value="${enviarSMSFaces.clientePesquisa}" />
+
+	<h:form id="formCadastro" prependId="false">
+
+		<h:panelGrid columns="2" columnClasses="coluna40_2, coluna60_2" styleClass="coluna100">
+
+			<p:fieldset legend="Filtro" style="width: 90%">
+
+				<h:panelGrid columns="2" columnClasses="coluna30, coluna70" style="width:100%">
+
+					<p:outputLabel for="matriculaPesquisa" value="Matrícula" />
+					<p:outputLabel for="nomePesquisa" value="Nome" />
+
+					<p:inputText id="matriculaPesquisa" value="#{mbeanPesquisaModel.matricula}" maxlength="30" styleClass="coluna90" />
+					<p:inputText id="nomePesquisa" value="#{mbeanPesquisaModel.nome}" maxlength="100" styleClass="coluna90" />
+
+				</h:panelGrid>
+
+				<h:panelGrid id="pgCidadePesquisa" columns="3" columnClasses="coluna40, coluna40, coluna20" style="width:100%">
+
+					<p:outputLabel for="estadoPesquisa" value="Estado" />
+					<p:outputLabel for="cidadePesquisa" value="Cidade" />
+					<p:outputLabel for="statusAssociado" value="Situação" />
+
+					<h:selectOneMenu id="estadoPesquisa" value="#{mbeanPesquisaModel.cidade.estado.id}" styleClass="combo" style="width:95%">
+						<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+						<f:selectItems value="#{mbean.estados}" />
+						<p:ajax update="pgCidadePesquisa" listener="#{mbean.atualizarComboCidadesPesquisa}" global="false" />
+					</h:selectOneMenu>
+					<h:selectOneMenu id="cidadePesquisa" value="#{mbeanPesquisaModel.cidade.id}" disabled="#{mbeanPesquisaModel.cidade.estado.id == null}" styleClass="combo" style="width:95%">
+						<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+						<f:selectItems value="#{mbean.cidades}" />
+					</h:selectOneMenu>
+					<h:selectOneMenu id="statusAssociado" value="#{mbean.statusCliente}" styleClass="combo">
+						<f:selectItem itemLabel="Todos" itemValue="#{0}" />
+						<f:selectItem itemLabel="Ativo" itemValue="#{1}" />
+						<f:selectItem itemLabel="Cancelado" itemValue="#{2}" />
+					</h:selectOneMenu>
+
+				</h:panelGrid>
+
+				<h:panelGrid style="width: 100%">
+
+					<p:commandButton value="Pesquisar" icon="ui-icon-search" action="#{mbean.findEvent}" update="@form" />
+
+					<p:scrollPanel style="height: 300px; width: 100%" mode="native">
+
+						<p:dataTable id="gridPesquisa" widgetVar="widgetVar" emptyMessage="Nenhum registro encontrado" value="#{mbean.grid}" var="linha" style="width: 100%; margin-top: 10px">
+
+							<p:column headerText="Matrícula" sortBy="#{linha.matricula}">
+								<h:outputText value="#{linha.matricula}" />
+							</p:column>
+
+							<p:column headerText="Nome" sortBy="#{linha.nome}">
+								<h:outputText value="#{linha.nome}" />
+							</p:column>
+
+							<p:column headerText="" styleClass="coluna5">
+								<p:selectBooleanCheckbox value="#{linha.flagSelecionado}" />
+							</p:column>
+
+						</p:dataTable>
+
+					</p:scrollPanel>
+
+				</h:panelGrid>
+
+				<div align="right">
+					<h:outputText value="Tempo de Espera (ms)" />
+					<p:inputText value="#{mbean.sleep}" maxlength="5" onkeyup="mascara(this, 'integer')" />
+					<p:commandButton value="Selecionar todos" icon="ui-icon-check" action="#{mbean.selecionarTodos}" update="@form" />
+				</div>
+
+			</p:fieldset>
+
+			<p:tabView id="tabview" dynamic="false">
+
+				<p:tab id="tabEmail" title="Enviar Email">
+
+					<h:panelGrid style="width: 100%">
+
+						
+						<h:outputText value="Assunto" />
+						<p:inputText value="#{mbean.assuntoEmail}" maxlength="100" styleClass="coluna90" />
+
+						<h:outputText value="Mensagem" />
+						<p:inputTextarea value="#{mbean.msgEmail}" rows="15" styleClass="coluna90" />
+
+						<h:outputText value="*Para colocar o nome do associado digite (associado)" />
+						
+						<p:commandButton value="Enviar" icon="ui-icon-check" action="#{mbean.enviarEmail}" update="@form" />
+
+					</h:panelGrid>
+
+				</p:tab>
+
+				<p:tab id="tabSms" title="Enviar SMS">
+
+					<h:panelGrid columns="2" columnClasses="coluna70, coluna30" style="width: 100%">
+
+						<h:outputText value="Mensagem" />
+						<h:outputText value="" />
+
+						<p:inputText value="#{mbean.msg}" maxlength="160" styleClass="coluna90" />
+						
+						<p:commandButton value="Enviar" icon="ui-icon-check" action="#{mbean.enviarSMS}" update="@form" />
+						<h:outputText value="*Para colocar o nome do associado digite (associado)" />
+
+					</h:panelGrid>
+
+				</p:tab>
+
+			</p:tabView>
+
+		</h:panelGrid>
+
+
+
+	</h:form>
+
+</ui:composition>

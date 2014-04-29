@@ -16,6 +16,7 @@ encoding//src/br/com/cenajur/faces/DeclaracaoSituacaoEconomicaFaces.java=ISO-885
 encoding//src/br/com/cenajur/faces/DocumentoFaces.java=ISO-8859-1
 encoding//src/br/com/cenajur/faces/DocumentoPesquisaFaces.java=ISO-8859-1
 encoding//src/br/com/cenajur/faces/EmailFaces.java=ISO-8859-1
+encoding//src/br/com/cenajur/faces/EnviarSMSFaces.java=ISO-8859-1
 encoding//src/br/com/cenajur/faces/EnvioSMSFaces.java=ISO-8859-1
 encoding//src/br/com/cenajur/faces/FichaAtendimentoFaces.java=ISO-8859-1
 encoding//src/br/com/cenajur/faces/MensagemComprovantePagamentoFaces.java=ISO-8859-1
