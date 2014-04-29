@@ -1,24 +1,12 @@
 package br.com.cenajur.util;
 
-import java.util.Properties;
-
 import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-
-import br.com.cenajur.model.Email;
 
 public class EmailUtil {
 
 	public void enviarEmailTratado(String to, String subject, String message, String mimeType) {
-
+/*
 		try {
 
 			Properties props = new Properties();
@@ -56,7 +44,7 @@ public class EmailUtil {
 
 			e.printStackTrace();
 
-		}
+		}*/
 
 	}
 

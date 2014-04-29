@@ -16,29 +16,18 @@ import br.com.cenajur.model.Audiencia;
 import br.com.cenajur.model.AudienciaAdvogado;
 import br.com.cenajur.model.CategoriaDocumento;
 import br.com.cenajur.model.Colaborador;
-import br.com.cenajur.model.ConfiguracoesEmail;
-import br.com.cenajur.model.ConfiguracoesReplaceEmail;
-import br.com.cenajur.model.ContadorEmail;
-import br.com.cenajur.model.ContadorSms;
 import br.com.cenajur.model.DocumentoAudiencia;
-import br.com.cenajur.model.LogEnvioEmail;
-import br.com.cenajur.model.Processo;
-import br.com.cenajur.model.ProcessoCliente;
 import br.com.cenajur.model.ProcessoNumero;
-import br.com.cenajur.model.RegrasEmail;
 import br.com.cenajur.model.SituacaoAudiencia;
 import br.com.cenajur.model.TipoCategoria;
-import br.com.cenajur.model.TipoInformacao;
 import br.com.cenajur.model.Vara;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
-import br.com.cenajur.util.EmailUtil;
-import br.com.cenajur.util.SMSUtil;
+import br.com.cenajur.util.EmailLayoutUtil;
+import br.com.cenajur.util.SMSLayoutUtil;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.file.TSFile;
-import br.com.topsys.util.TSDateUtil;
-import br.com.topsys.util.TSParseUtil;
 import br.com.topsys.util.TSUtil;
 
 @ViewScoped
@@ -118,135 +107,8 @@ public class AudienciaFaces extends CrudFaces<Audiencia> {
 	@Override
 	protected void posPersist() throws TSApplicationException {
 
-		RegrasEmail regrasEmail = null;
-
-		if(Constantes.SITUACAO_AUDIENCIA_AGUARDANDO.equals(getCrudModel().getSituacaoAudiencia().getId())){
-			
-			regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_AUDIENCIA_SITUACAO_AGUARDANDO).getById();
-			
-		} else if(Constantes.SITUACAO_AUDIENCIA_REALIZADA.equals(getCrudModel().getSituacaoAudiencia().getId())){
-			
-			regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_AUDIENCIA_SITUACAO_REALIZADA).getById();
-			
-		} else if(Constantes.SITUACAO_AUDIENCIA_NAO_REALIZADA.equals(getCrudModel().getSituacaoAudiencia().getId())){
-			
-			regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_AUDIENCIA_SITUACAO_NAO_REALIZADA).getById();
-			
-		}
-
-		TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_AUDIENCIA_ID);
-
-		EmailUtil emailUtil = new EmailUtil();
-
-		ConfiguracoesReplaceEmail configuracaoReplace;
-
-		Processo processo = getCrudModel().getProcessoNumero().getProcesso().getById();
-		
-		List<ConfiguracoesReplaceEmail> configuracoesReplaceEmails = new ConfiguracoesReplaceEmail().findAll();
-
-		for (ConfiguracoesEmail configuracoesEmail : regrasEmail.getConfiguracoesEmails()) {
-
-			if (configuracoesEmail.getFlagImediato()) {
-
-				String texto = CenajurUtil.getTopoEmail() + configuracoesEmail.getCorpoEmail();
-
-				configuracaoReplace = configuracoesReplaceEmails.get(configuracoesReplaceEmails.indexOf(new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_PROCESSO)));
-				texto = texto.replace(configuracaoReplace.getCodigo(), new ProcessoNumero().obterNumeroProcessoPrincipal(processo).getNumero());
-
-				configuracaoReplace = configuracoesReplaceEmails.get(configuracoesReplaceEmails.indexOf(new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ADVOGADO)));
-				texto = texto.replace(configuracaoReplace.getCodigo(), getCrudModel().getAudienciasAdvogados().toString().substring(1, getCrudModel().getAudienciasAdvogados().toString().length()-1));
-
-				configuracaoReplace = configuracoesReplaceEmails.get(configuracoesReplaceEmails.indexOf(new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DATA)));
-				texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(getCrudModel().getDataAudiencia(), TSDateUtil.DD_MM_YYYY));
-
-				configuracaoReplace = configuracoesReplaceEmails.get(configuracoesReplaceEmails.indexOf(new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_HORA)));
-				texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(getCrudModel().getDataAudiencia(), TSDateUtil.HH_MM));
-
-				configuracaoReplace = configuracoesReplaceEmails.get(configuracoesReplaceEmails.indexOf(new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_LOCAL)));
-				texto = texto.replace(configuracaoReplace.getCodigo(), getCrudModel().getVara().getById().getDescricao());
-
-				for (ProcessoCliente processoCliente : processo.getProcessosClientes()) {
-
-					configuracaoReplace = configuracoesReplaceEmails.get(configuracoesReplaceEmails.indexOf(new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ASSOCIADO)));
-					String email = texto.replace(configuracaoReplace.getCodigo(), processoCliente.getCliente().getNome()) + CenajurUtil.getRodapeEmail();
-					
-					if (!TSUtil.isEmpty(processoCliente.getCliente().getEmail())) {
-
-						emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), configuracoesEmail.getAssunto(), email, "text/html");
-						new ContadorEmail().gravarPorTipo(tipoInformacao);
-						new LogEnvioEmail(configuracoesEmail.getAssunto(), email, processoCliente.getCliente(), processoCliente.getCliente().getEmail()).save();
-
-					}
-
-				}
-
-				Colaborador advogado = null;
-
-				for (AudienciaAdvogado audienciaAdvogado : getCrudModel().getAudienciasAdvogados()) {
-
-					advogado = audienciaAdvogado.getAdvogado().getById();
-					
-					configuracaoReplace = configuracoesReplaceEmails.get(configuracoesReplaceEmails.indexOf(new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ASSOCIADO)));
-					String email = texto.replace(configuracaoReplace.getCodigo(), advogado.getApelido()) + CenajurUtil.getRodapeEmail();
-
-					if (!TSUtil.isEmpty(advogado.getEmail())) {
-
-						emailUtil.enviarEmailTratado(advogado.getEmail(), configuracoesEmail.getAssunto(), email, "text/html");
-
-					}
-
-				}
-
-			}
-
-		}
-
-		String msg = Constantes.TEMPLATE_SMS_AUDIENCIA_AGUARDANDO;
-
-		if (Constantes.SITUACAO_AUDIENCIA_REALIZADA.equals(getCrudModel().getSituacaoAudiencia().getId())) {
-
-			msg = Constantes.TEMPLATE_SMS_AUDIENCIA_REALIZADA;
-
-		} else if (Constantes.SITUACAO_AUDIENCIA_NAO_REALIZADA.equals(getCrudModel().getSituacaoAudiencia().getId())) {
-
-			msg = Constantes.TEMPLATE_SMS_AUDIENCIA_NAO_REALIZADA;
-
-		}
-
-		msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_NUMERO_PROCESSO, new ProcessoNumero().obterNumeroProcessoPrincipal(processo).getNumero());
-		msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_DATA, TSParseUtil.dateToString(getCrudModel().getDataAudiencia(), TSDateUtil.DD_MM_YYYY));
-		msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_HORA, TSParseUtil.dateToString(getCrudModel().getDataAudiencia(), TSDateUtil.HH_MM));
-		msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_LOCAL, getCrudModel().getVara().getById().getDescricao());
-		msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_COLABORADOR, getCrudModel().getAudienciasAdvogados().toString().substring(1, getCrudModel().getAudienciasAdvogados().toString().length() - 1));
-
-		SMSUtil smsUtil = new SMSUtil();
-
-		for (ProcessoCliente processoCliente : processo.getProcessosClientes()) {
-
-			if (!TSUtil.isEmpty(processoCliente.getCliente().getCelular())
-					&& Constantes.SITUACAO_PROCESSO_CLIENTE_ATIVO.equals(processoCliente.getSituacaoProcessoCliente().getId())) {
-
-				smsUtil.enviarMensagem(processoCliente.getCliente().getCelular(), msg.toString());
-				new ContadorSms().gravarPorTipo(tipoInformacao);
-
-			}
-
-		}
-
-		Colaborador advogado = null;
-
-		for (AudienciaAdvogado audienciaAdvogado : getCrudModel().getAudienciasAdvogados()) {
-
-			advogado = audienciaAdvogado.getAdvogado().getById();
-
-			if (!TSUtil.isEmpty(advogado.getCelular())) {
-
-				smsUtil.enviarMensagem(advogado.getCelular(), msg.toString());
-				new ContadorSms().gravarPorTipo(tipoInformacao);
-
-			}
-
-		}
+		new EmailLayoutUtil().enviarEmailAudiencia(getCrudModel());
+		new SMSLayoutUtil().enviarSMSAudiencia(getCrudModel());
 
 	}
 

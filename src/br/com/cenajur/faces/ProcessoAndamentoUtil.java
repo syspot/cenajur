@@ -11,28 +11,18 @@ import org.primefaces.event.FileUploadEvent;
 
 import br.com.cenajur.model.AndamentoProcesso;
 import br.com.cenajur.model.CategoriaDocumento;
-import br.com.cenajur.model.ConfiguracoesEmail;
-import br.com.cenajur.model.ConfiguracoesReplaceEmail;
-import br.com.cenajur.model.ContadorEmail;
-import br.com.cenajur.model.ContadorSms;
 import br.com.cenajur.model.DocumentoAndamentoProcesso;
-import br.com.cenajur.model.LogEnvioEmail;
 import br.com.cenajur.model.Processo;
-import br.com.cenajur.model.ProcessoCliente;
 import br.com.cenajur.model.ProcessoNumero;
-import br.com.cenajur.model.RegrasEmail;
 import br.com.cenajur.model.TipoAndamentoProcesso;
 import br.com.cenajur.model.TipoCategoria;
-import br.com.cenajur.model.TipoInformacao;
 import br.com.cenajur.util.CenajurUtil;
 import br.com.cenajur.util.ColaboradorUtil;
 import br.com.cenajur.util.Constantes;
-import br.com.cenajur.util.EmailUtil;
-import br.com.cenajur.util.SMSUtil;
+import br.com.cenajur.util.EmailLayoutUtil;
+import br.com.cenajur.util.SMSLayoutUtil;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.file.TSFile;
-import br.com.topsys.util.TSDateUtil;
-import br.com.topsys.util.TSParseUtil;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.util.TSFacesUtil;
 
@@ -155,86 +145,6 @@ public class ProcessoAndamentoUtil {
 		return erro;
 	}
 	
-	private void enviarEmail() throws TSApplicationException{
-		
-		RegrasEmail regrasEmail = new RegrasEmail(Constantes.REGRA_EMAIL_ANDAMENTO_PROCESSO).getById();
-		
-		TipoInformacao tipoInformacao = new TipoInformacao(Constantes.TIPO_INFORMACAO_ANDAMENTO_ID);
-		
-		EmailUtil emailUtil = new EmailUtil();
-		
-		Processo processo = getCrudModel().getById();
-		
-		ConfiguracoesReplaceEmail configuracaoReplace;
-		
-		for(ConfiguracoesEmail configuracoesEmail : regrasEmail.getConfiguracoesEmails()){
-			
-			if(configuracoesEmail.getFlagImediato()){
-				
-				for(ProcessoCliente processoCliente : processo.getProcessosClientes()){
-					
-					if(!TSUtil.isEmpty(processoCliente.getCliente().getEmail())){
-						
-						StringBuilder corpoEmail = new StringBuilder(CenajurUtil.getTopoEmail());
-						
-						corpoEmail.append(configuracoesEmail.getCorpoEmail());
-						
-						corpoEmail.append(CenajurUtil.getRodapeEmail());
-						
-						String texto = corpoEmail.toString();
-						
-						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_PROCESSO).getById();
-						
-						texto = texto.replace(configuracaoReplace.getCodigo(), new ProcessoNumero().obterNumeroProcessoPrincipal(processo).getNumero());
-						
-						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_ASSOCIADO).getById();
-						
-						texto = texto.replace(configuracaoReplace.getCodigo(), processoCliente.getCliente().getNome());
-						
-						configuracaoReplace = new ConfiguracoesReplaceEmail(Constantes.CONFIGURACOES_REPLACE_EMAIL_DATA_ATUAL).getById();
-						
-						texto = texto.replace(configuracaoReplace.getCodigo(), TSParseUtil.dateToString(new Date(), TSDateUtil.DD_MM_YYYY_HH_MM));
-						
-						emailUtil.enviarEmailTratado(processoCliente.getCliente().getEmail(), configuracoesEmail.getAssunto(), texto, "text/html");
-						new ContadorEmail().gravarPorTipo(tipoInformacao);
-						
-						new LogEnvioEmail(configuracoesEmail.getAssunto(), texto, processoCliente.getCliente(), processoCliente.getCliente().getEmail()).save();
-						
-					}
-					
-				}
-				
-			}
-			
-		}
-	}
-	
-	private void enviarSMS(){
-		
-		Processo processo = getCrudModel().getById();
-		
-		String msg = Constantes.TEMPLATE_SMS_ANDAMENTO;
-
-		msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_NUMERO_PROCESSO, new ProcessoNumero().obterNumeroProcessoPrincipal(processo).getNumero());
-		msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_LOCAL, processo.getVara().getById().getDescricao());
-		msg = msg.replace(Constantes.CONFIGURACAO_REPLACE_COLABORADOR, processo.getAdvogado().getApelido());
-
-		SMSUtil smsUtil = new SMSUtil();
-
-		for (ProcessoCliente processoCliente : processo.getProcessosClientes()) {
-
-			if (!TSUtil.isEmpty(processoCliente.getCliente().getCelular())
-					&& Constantes.SITUACAO_PROCESSO_CLIENTE_ATIVO.equals(processoCliente.getSituacaoProcessoCliente().getId())) {
-
-				smsUtil.enviarMensagem(processoCliente.getCliente().getCelular(), msg.toString());
-				new ContadorSms().gravarPorTipo(new TipoInformacao(Constantes.TIPO_INFORMACAO_ANDAMENTO_ID));
-
-			}
-
-		}
-
-	}
-	
 	public String cadastrarAndamentoProcesso() throws TSApplicationException{
 		
 		if(validaCampos()){
@@ -248,8 +158,7 @@ public class ProcessoAndamentoUtil {
 		this.andamentoProcesso.setDataCadastro(new Date());
 		this.andamentoProcesso.save();
 		
-		this.enviarEmail();
-		this.enviarSMS();
+		this.posPersist();
 		
 		CenajurUtil.addInfoMessage("Andamento cadastrado com sucesso");
 
@@ -277,8 +186,7 @@ public class ProcessoAndamentoUtil {
 		this.andamentoProcesso.setColaboradorAtualizacao(ColaboradorUtil.obterColaboradorConectado());
 		this.andamentoProcesso.update();
 		
-		this.enviarEmail();
-		this.enviarSMS();
+		this.posPersist();
 		
 		this.processoNumeroBackup = this.processoNumeroPrincipal;
 		
@@ -289,6 +197,11 @@ public class ProcessoAndamentoUtil {
 		CenajurUtil.addInfoMessage("Alteração realizada com sucesso");
 		
 		return null;
+	}
+	
+	protected void posPersist() throws TSApplicationException{
+		new EmailLayoutUtil().enviarEmailAndamentoProcesso(this.andamentoProcesso);
+		new SMSLayoutUtil().enviarSMSAndamentoProcesso(getCrudModel().getById());
 	}
 	
 	public String abrirDialogAndamento(){
