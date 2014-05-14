@@ -109,7 +109,7 @@ public class ProcessoCliente extends TSActiveRecordAb<ProcessoCliente>{
 	}
 
 	public boolean isProcessoClienteArquivado(){
-		return Constantes.SITUACAO_PROCESSO_CLIENTE_ARQUIVADO.equals(this.situacaoProcessoClienteTemp.getId());
+		return !TSUtil.isEmpty(this.situacaoProcessoClienteTemp) && Constantes.SITUACAO_PROCESSO_CLIENTE_ARQUIVADO.equals(this.situacaoProcessoClienteTemp.getId());
 	}
 	
 	@Override
