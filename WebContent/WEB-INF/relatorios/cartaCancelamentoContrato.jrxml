@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cartaCancelamentoContrato" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f37734dc-0305-41c0-ba1d-0a06a2e568bb">
-	<property name="ireport.zoom" value="1.2100000000000006"/>
+	<property name="ireport.zoom" value="0.8264462809917359"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="18"/>
+	<property name="ireport.y" value="164"/>
 	<parameter name="P_CLIENTE_ID" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select c.id, '<style isBold="true" pdfFontName="Helvetica-Bold">Sr(a). ' || c.nome || ' - MAT.: ' || c.matricula || '</style>' nome, COALESCE(CASE WHEN C.LOGRADOURO = '' THEN NULL ELSE C.LOGRADOURO END || ', ', '') || COALESCE('NUMERO ' || CASE WHEN C.NUMERO = '' THEN NULL ELSE C.NUMERO || ', ' END, '') || COALESCE(CASE WHEN C.COMPLEMENTO = '' THEN NULL ELSE C.COMPLEMENTO END || ', ', '')
-       || COALESCE(CASE WHEN C.BAIRRO = '' THEN NULL ELSE C.BAIRRO END || ', ', '') || COALESCE(CID.DESCRICAO || '/' || E.DESCRICAO || ' - ', '') || COALESCE(' ' || CASE WHEN C.CEP = '' THEN NULL ELSE C.CEP END, '') endereco
+       || COALESCE(CASE WHEN C.BAIRRO = '' THEN NULL ELSE C.BAIRRO END || ', ', '') || COALESCE(CID.DESCRICAO || '/' || E.DESCRICAO || ' - ', '') || COALESCE(' ' || CASE WHEN C.CEP = '' THEN NULL ELSE C.CEP END, '') endereco, (select c.valor from configuracao c where c.id = 1) endereco_cenajur
 	FROM CLIENTES C
        LEFT OUTER JOIN CIDADES CID ON C.CIDADE_ID = CID.ID
        LEFT OUTER JOIN ESTADOS E ON E.ID = CID.ESTADO_ID
@@ -17,6 +17,7 @@
 	<field name="id" class="java.lang.Long"/>
 	<field name="nome" class="java.lang.String"/>
 	<field name="endereco" class="java.lang.String"/>
+	<field name="endereco_cenajur" class="java.lang.String"/>
 	<group name="group1">
 		<groupExpression><![CDATA[$F{id}]]></groupExpression>
 		<groupHeader>
@@ -93,29 +94,29 @@
 				<textFieldExpression><![CDATA["<style isBold=\"true\" pdfFontName=\"Helvetica-Bold\">AGEPOL/CENAJUR – DESDE 2002 PRESTANDO ASSISTÊNCIA JURÍDICA EFETIVA E DE QUALIDADE</style>"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="297c04d4-c561-4dbe-94b0-287a3619e3a7" x="19" y="59" width="556" height="15"/>
+				<reportElement uuid="297c04d4-c561-4dbe-94b0-287a3619e3a7" positionType="Float" x="19" y="59" width="556" height="15"/>
 				<textElement textAlignment="Center">
-					<font fontName="SansSerif" size="11"/>
+					<font fontName="SansSerif" size="10"/>
 				</textElement>
 				<text><![CDATA[www.agepol.org.br]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="7e6e63fa-38a6-4254-a2d8-41af56b3a262" x="19" y="44" width="556" height="15"/>
+				<reportElement uuid="7e6e63fa-38a6-4254-a2d8-41af56b3a262" positionType="Float" x="19" y="44" width="556" height="15"/>
 				<textElement textAlignment="Center">
-					<font fontName="SansSerif" size="11"/>
+					<font fontName="SansSerif" size="10"/>
 				</textElement>
 				<text><![CDATA[Tel.: (71) 3359 1297 / 3359 6583]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="1c815dc2-8a25-40d4-b425-4d470c2d6b66" x="19" y="29" width="556" height="15"/>
-				<textElement textAlignment="Center">
-					<font fontName="SansSerif" size="11"/>
-				</textElement>
-				<text><![CDATA[Alameda dos Umbuzeiros, n. 638, Edf. Alameda Centro, Terraço, Caminho das Árvores – Salvador – BA]]></text>
 			</staticText>
 			<line>
 				<reportElement uuid="de6a0df8-fa40-436e-aacf-6ee339521f69" x="19" y="8" width="556" height="1"/>
 			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="54c22b8f-b210-49d2-bd8c-8a98977c0c5a" x="19" y="29" width="556" height="15" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{endereco_cenajur}]]></textFieldExpression>
+			</textField>
 		</band>
 	</lastPageFooter>
 </jasperReport>

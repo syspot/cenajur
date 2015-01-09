@@ -129,4 +129,6 @@ public class Constantes {
 	public static final String TEMPLATE_SMS_PROCESSO_NOVO = "PROCESSO NOVO: Novo Processo: " + CONFIGURACAO_REPLACE_NUMERO_PROCESSO + ", " + CONFIGURACAO_REPLACE_LOCAL + ", " + CONFIGURACAO_REPLACE_OBJETO + ", e Advogado: " + CONFIGURACAO_REPLACE_COLABORADOR;
 	public static final String TEMPLATE_SMS_ASSOCIADO_NOVO = "CENAJUR AGRADECE: Obrigado por escolher o CENAJUR. Nosso compromisso é prestar uma assistência jurídica efetiva e com qualidade, ética, responsabilidade e experiência.";
 	
+	public static final Long CONFIGURACAO_ENDERECO_CENAJUR = 1L;
+	
 }

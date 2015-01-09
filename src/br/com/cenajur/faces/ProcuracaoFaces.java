@@ -9,8 +9,10 @@ import javax.faces.bean.ViewScoped;
 
 import br.com.cenajur.model.Cliente;
 import br.com.cenajur.model.Colaborador;
+import br.com.cenajur.model.Configuracao;
 import br.com.cenajur.relat.JasperUtil;
 import br.com.cenajur.util.CenajurUtil;
+import br.com.cenajur.util.Constantes;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.faces.TSMainFaces;
 
@@ -95,8 +97,7 @@ public class ProcuracaoFaces extends TSMainFaces{
         		
         	}
         	
-        	outorgados.append("todos com escritório profissional na Alameda dos Umbuzeiros, n. 638, Edf. Alameda Centro, " +
-        			"Terraço - Caminho das Árvores, Salvador - BA, CEP 41.820-680, nesta Capital.");
+        	outorgados.append("todos com escritório profissional na " + new Configuracao(Constantes.CONFIGURACAO_ENDERECO_CENAJUR).getById().getValor() + ", nesta Capital.");
         	
         	String texto = outorgante.toString() + "<br/><br/>" + outorgados.toString() + "<br/><br/>" + "Pelo presente instrumento particular de mandato e na melhor  forma de direito, o outorgante acima qualificado, nomeia e constitui seu procurador o outorgado supramencionado com o fim de representá-lo junto aos Órgãos Federais, Estaduais e Municipais, Autarquias e Fundações, Juízos Comuns e Especiais, Instituições Financeiras e seguradoras em geral, onde figure como autor ou réu, assistente ou opoente, podendo desistir, transigir, fazer acordo, assumir compromissos, receber, passar recibos e dar quitação, exercer a adjudicação e assinar o auto e carta respectiva, substabelecer com ou sem reservas e praticar os atos necessários ao bom desempenho deste mandato, por mais especiais que sejam, além dos poderes citados na cláusula <em><strong>Ad Judicia</strong></em>.";
         	

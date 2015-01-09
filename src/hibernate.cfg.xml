@@ -25,6 +25,7 @@
         <mapping class="br.com.cenajur.model.Cliente" />
         <mapping class="br.com.cenajur.model.Colaborador" />
         <mapping class="br.com.cenajur.model.Comarca" />
+        <mapping class="br.com.cenajur.model.Configuracao" />
         <mapping class="br.com.cenajur.model.ConfiguracoesEmail" />
         <mapping class="br.com.cenajur.model.ConfiguracoesReplaceEmail" />
         <mapping class="br.com.cenajur.model.ContadorEmail" />

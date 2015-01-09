@@ -1,0 +1,44 @@
+<ui:composition
+	template="/resources/templates/templateCRUD.xhtml" 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+	<ui:param name="mbean" value="${configuracaoFaces}" />
+  	<ui:param name="mbeanModel" value="${configuracaoFaces.crudModel}" />
+  	<ui:param name="mbeanPesquisaModel" value="${configuracaoFaces.crudPesquisaModel}" />
+  	
+  	<ui:define name="cadastro">
+        
+        <h:panelGrid style="width: 100%">
+            <p:outputLabel for="descricao" value="Descrição" />
+            <p:inputText id="descricao" value="#{mbeanModel.descricao}" required="true" requiredMessage="Descri��o: Campo obrigat�rio" style="width: 40%" maxlength="50" />
+            
+            <p:outputLabel for="valor" value="Valor" />
+            <p:inputTextarea id="valor" value="#{mbeanModel.valor}" required="true" requiredMessage="Valor: Campo obrigatório" rows="10" style="width: 100%" />
+        </h:panelGrid>
+        
+    </ui:define>
+
+    <ui:define name="pesquisaCampos">
+        
+        <h:panelGrid style="width: 100%">
+            <p:outputLabel for="descricaoPesquisa" value="Descrição" />
+            <p:inputText id="descricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" style="width: 40%" maxlength="50" />
+        </h:panelGrid>
+        
+    </ui:define>
+
+    <ui:define name="colunasTabela">
+
+        <p:column headerText="Descrição">
+            <p:commandLink action="#{mbean.detailEvent}" ajax="false">
+                <h:outputText value="#{linha.descricao}" />
+                <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+            </p:commandLink>
+        </p:column>
+
+    </ui:define>
+  	
+</ui:composition>

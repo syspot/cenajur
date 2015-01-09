@@ -23,6 +23,7 @@ import br.com.cenajur.model.CategoriaDocumento;
 import br.com.cenajur.model.Cidade;
 import br.com.cenajur.model.Cliente;
 import br.com.cenajur.model.Colaborador;
+import br.com.cenajur.model.Configuracao;
 import br.com.cenajur.model.DocumentoCliente;
 import br.com.cenajur.model.Estado;
 import br.com.cenajur.model.EstadoCivil;
@@ -651,8 +652,7 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 
 			outorgados.delete(outorgados.length() - 2, outorgados.length() - 1);
 
-			outorgados.append("todos com escritório profissional na Alameda dos Umbuzeiros, n. 638, Edf. Alameda Centro, "
-					+ "Terraço - Caminho das Árvores, Salvador - BA, CEP 41.820-680, nesta Capital.");
+			outorgados.append("todos com escritório profissional na " + new Configuracao(Constantes.CONFIGURACAO_ENDERECO_CENAJUR).getById().getValor() + ", nesta Capital.");
 
 			String texto = outorgante.toString()
 					+ "\n\n"
