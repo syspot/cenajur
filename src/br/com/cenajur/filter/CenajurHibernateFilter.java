@@ -36,14 +36,17 @@ public class CenajurHibernateFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
 		try {
-			sf.getCurrentSession().beginTransaction();
+			if(request.getRequestURI().contains("arquivos") && TSUtil.isEmpty(request.getSession().getAttribute("colaboradorConectado")){
+				// enviar para login
+			}else{
+				sf.getCurrentSession().beginTransaction();
 
-			chain.doFilter(request, response);
+				chain.doFilter(request, response);
 
-			if (sf.getCurrentSession().getTransaction().isActive()) {
-				sf.getCurrentSession().getTransaction().commit();
+				if (sf.getCurrentSession().getTransaction().isActive()) {
+					sf.getCurrentSession().getTransaction().commit();
+				}
 			}
-
 		} catch (StaleObjectStateException staleEx) {
 			log.error("This interceptor does not implement optimistic concurrency control!");
 			log.error("Your application will not work until you add compensation actions!");
