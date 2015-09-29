@@ -16,6 +16,7 @@ import org.hibernate.StaleObjectStateException;
 
 import br.com.topsys.util.TSHibernateUtil;
 import br.com.topsys.web.filter.TSHibernateFilter;
+import br.com.topsys.util.TSUtil;
 
 /**
  * Servlet Filter implementation class CenajurHibernateFilter
@@ -33,11 +34,13 @@ public class CenajurHibernateFilter implements Filter {
 
 	}
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
+	public void doFilter(ServletRequest request1, ServletResponse response1, FilterChain chain) throws IOException, ServletException {
+		HttpServletRequest request = (HttpServletRequest)request1;
+		HttpServletResponse response = (HttpServletResponse)response1;
+		
 		try {
 			if(request.getRequestURI().contains("arquivos") && TSUtil.isEmpty(request.getSession().getAttribute("colaboradorConectado")){
-				// enviar para login
+				response.sendRedirect(request.getContextPath() + "/pages/login.xhtml");
 			}else{
 				sf.getCurrentSession().beginTransaction();
 
