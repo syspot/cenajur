@@ -8,7 +8,7 @@
 	</parameter>
 	<queryString>
 		<![CDATA[select c.id, '<style isBold="true" pdfFontName="Helvetica-Bold">Sr(a). ' || c.nome || ' - MAT.: ' || c.matricula || '</style>' nome, COALESCE(CASE WHEN C.LOGRADOURO = '' THEN NULL ELSE C.LOGRADOURO END || ', ', '') || COALESCE('NUMERO ' || CASE WHEN C.NUMERO = '' THEN NULL ELSE C.NUMERO || ', ' END, '') || COALESCE(CASE WHEN C.COMPLEMENTO = '' THEN NULL ELSE C.COMPLEMENTO END || ', ', '')
-       || COALESCE(CASE WHEN C.BAIRRO = '' THEN NULL ELSE C.BAIRRO END || ', ', '') || COALESCE(CID.DESCRICAO || '/' || E.DESCRICAO || ' - ', '') || COALESCE(' ' || CASE WHEN C.CEP = '' THEN NULL ELSE C.CEP END, '') endereco, (select c.valor from configuracao c where c.id = 1) endereco_cenajur
+       || COALESCE(CASE WHEN C.BAIRRO = '' THEN NULL ELSE C.BAIRRO END || ', ', '') || COALESCE(CID.DESCRICAO || '/' || E.DESCRICAO || ' - ', '') || COALESCE(' ' || CASE WHEN C.CEP = '' THEN NULL ELSE C.CEP END, '') endereco, (select c.valor from configuracoes c where c.id = 1) endereco_cenajur
 	FROM CLIENTES C
        LEFT OUTER JOIN CIDADES CID ON C.CIDADE_ID = CID.ID
        LEFT OUTER JOIN ESTADOS E ON E.ID = CID.ESTADO_ID

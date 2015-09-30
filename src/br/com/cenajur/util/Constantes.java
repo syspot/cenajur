@@ -45,11 +45,11 @@ public class Constantes {
 	public static final String PASTA_UPLOAD_IMAGEM_TEMP = "/home/cenajurc/arquivos/imagens/tmp/";
 	
 	//public static final String PASTA_DOWNLOAD_ARQUIVO = "http://localhost:80/arquivos/";
-	public static final String PASTA_DOWNLOAD_ARQUIVO = "http://www.agepol.org.br/arquivos/";
+	public static final String PASTA_DOWNLOAD_ARQUIVO = "http://www.agepol.org.br/cenajur/arquivos/";
 	//public static final String PASTA_DOWNLOAD_IMAGEM = "http://localhost:80/imagens/";
-	public static final String PASTA_DOWNLOAD_IMAGEM = "http://www.agepol.org.br/arquivos/imagens/";
+	public static final String PASTA_DOWNLOAD_IMAGEM = "http://www.agepol.org.br/cenajur/arquivos/imagens/";
 	//public static final String PASTA_DOWNLOAD_IMAGEM_TMP = "http://localhost:80/imagens/tmp/";
-	public static final String PASTA_DOWNLOAD_IMAGEM_TMP = "http://www.agepol.org.br/arquivos/imagens/tmp/";
+	public static final String PASTA_DOWNLOAD_IMAGEM_TMP = "http://www.agepol.org.br/cenajur/arquivos/imagens/tmp/";
 	
 	//public static final String PASTA_ANDAMENTO_PROCESSO = "andamentos_processos\\";
 	public static final String PASTA_ANDAMENTO_PROCESSO = "andamentos_processos/";

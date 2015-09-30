@@ -8,6 +8,8 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,8 +17,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.StaleObjectStateException;
 
 import br.com.topsys.util.TSHibernateUtil;
-import br.com.topsys.web.filter.TSHibernateFilter;
 import br.com.topsys.util.TSUtil;
+import br.com.topsys.web.filter.TSHibernateFilter;
 
 /**
  * Servlet Filter implementation class CenajurHibernateFilter
@@ -35,13 +37,18 @@ public class CenajurHibernateFilter implements Filter {
 	}
 
 	public void doFilter(ServletRequest request1, ServletResponse response1, FilterChain chain) throws IOException, ServletException {
+		
 		HttpServletRequest request = (HttpServletRequest)request1;
 		HttpServletResponse response = (HttpServletResponse)response1;
 		
 		try {
-			if(request.getRequestURI().contains("arquivos") && TSUtil.isEmpty(request.getSession().getAttribute("colaboradorConectado")){
+			
+			if(request.getRequestURI().contains("arquivos") && TSUtil.isEmpty(request.getSession().getAttribute("colaboradorConectado"))){
+				
 				response.sendRedirect(request.getContextPath() + "/pages/login.xhtml");
-			}else{
+				
+			} else{
+				
 				sf.getCurrentSession().beginTransaction();
 
 				chain.doFilter(request, response);
@@ -50,6 +57,7 @@ public class CenajurHibernateFilter implements Filter {
 					sf.getCurrentSession().getTransaction().commit();
 				}
 			}
+			
 		} catch (StaleObjectStateException staleEx) {
 			log.error("This interceptor does not implement optimistic concurrency control!");
 			log.error("Your application will not work until you add compensation actions!");
