@@ -328,15 +328,6 @@ public class ClienteFaces extends CrudFaces<Cliente> {
 			
 		}
 		
-		//reordenando
-		for (int j = 0; j < posicoesArquivados.size(); j++) {
-			
-			Processo processoAux = getCrudModel().getProcessos().get(posicoesArquivados.get(j));
-			getCrudModel().getProcessos().remove(processoAux);
-			getCrudModel().getProcessos().add(processoAux);
-			
-		}
-		
 		this.processoAux.setProcessos(getCrudModel().getProcessos());
 
 		if (!TSUtil.isEmpty(getCrudModel().getProcessos())) {
