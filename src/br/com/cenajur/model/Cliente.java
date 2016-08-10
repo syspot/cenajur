@@ -137,7 +137,7 @@ public class Cliente extends TSActiveRecordAb<Cliente>{
 	@JoinTable(name = "processos_clientes", joinColumns = {
 	@JoinColumn(name = "cliente_id") }, inverseJoinColumns = {
 	@JoinColumn(name = "processo_id") })
-	@org.hibernate.annotations.OrderBy(clause = "situacao_processo_cliente_id")
+	@org.hibernate.annotations.OrderBy(clause = "situacao_processo_cliente_id, situacao_processo_id")
 	private List<Processo> processos;
 	
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
